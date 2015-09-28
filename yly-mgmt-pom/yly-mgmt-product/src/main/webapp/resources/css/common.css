@@ -1,0 +1,60 @@
+.form-table{
+	display:none;
+}
+.form-table th{
+	text-align:right;
+	width:100px;
+}
+
+.form-table input{
+	width:130px;
+}
+.form-table .radio-text{
+	width:30px;
+}
+
+
+fieldset{
+	min-width: 0;
+    padding:5px;
+    margin:3px;
+    border: 1px solid silver;
+}
+
+fieldset legend {
+    display: inline-block;
+    width:auto;
+    margin-bottom:0;
+    font-size: 18px;
+    line-height: inherit;
+    color: #333;
+}
+
+fieldset div{
+	 display: inline-block;
+}
+
+fieldset label{
+	font-weight: 500;
+}
+
+fieldset .combo{
+	width:100px !important;
+}
+fieldset .search-form{
+	display: inline-block !important;
+	display:-moz-inline-stack;
+	zoom:1;
+	*display:inline !important;
+}
+fieldset .search-item{
+	margin-right:4px;
+	display:-moz-inline-stack;
+	zoom:1;
+	*display:inline;
+}
+
+fieldset .search-item button{
+	margin-left:30px;
+	width:70px;
+}

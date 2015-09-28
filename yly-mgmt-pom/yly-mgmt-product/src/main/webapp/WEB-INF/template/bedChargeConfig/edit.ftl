@@ -1,0 +1,26 @@
+<form id="editBedChargeConfig_form" method="post">   
+		<input value="${bedChargeConfig.id}" type="hidden" name="id" />
+	    <table class="table table-striped">
+	    	<tr>
+	    		<th>${message("yly.bedCharge.bedType")}</th>
+	    		<td>
+	    			 ${bedChargeConfig.chargeItem.configValue}   
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.bedCharge.day")}</th>
+	    		<td>
+	    			 <input class="easyui-numberbox" value="${bedChargeConfig.amountPerDay}" type="text" name="amountPerDay" data-options="required:true,min:0,precision:2" /> 
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.bedCharge.month")}</th>
+	    		<td>
+	    			 <input class="easyui-numberbox" value="${bedChargeConfig.amountPerMonth}" type="text" name="amountPerMonth" data-options="required:true,min:0,precision:2" /> 
+	    		</td>
+	    	</tr>
+	    </table>
+</form>
+
+
+
