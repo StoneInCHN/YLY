@@ -8,13 +8,13 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.bedCharge.day")}</th>
+	    		<th>${message("yly.charge.day")}</th>
 	    		<td>
 	    			 <input class="easyui-numberbox" value="${bedChargeConfig.amountPerDay}" type="text" name="amountPerDay" data-options="required:true,min:0,precision:2" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.bedCharge.month")}</th>
+	    		<th>${message("yly.charge.month")}</th>
 	    		<td>
 	    			 <input class="easyui-numberbox" value="${bedChargeConfig.amountPerMonth}" type="text" name="amountPerMonth" data-options="required:true,min:0,precision:2" /> 
 	    		</td>

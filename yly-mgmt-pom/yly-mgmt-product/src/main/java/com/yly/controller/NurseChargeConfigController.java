@@ -1,6 +1,9 @@
 package com.yly.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.NurseChargeConfig;
+import com.yly.entity.SystemConfig;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.NurseChargeConfigService;
@@ -32,9 +38,9 @@ public class NurseChargeConfigController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
+  @RequestMapping(value = "/nurseChargeConfig", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/nurseChargeConfig/list";
+    return "/nurseChargeConfig/nurseChargeConfig";
   }
 
   /**
@@ -45,63 +51,50 @@ public class NurseChargeConfigController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<NurseChargeConfig> list(Pageable pageable, ModelMap model) {
-    
-  /*  List<Filter> filters = new ArrayList<Filter>();
-    if(beginDate !=null){
-      Filter beginDateFilter = new Filter("createDate", Operator.gt, beginDate);
-      filters.add(beginDateFilter);
-    }
-    if(endDate!= null){
-      Filter endDateFilter = new Filter("createDate", Operator.lt, endDate);
-      filters.add(endDateFilter);
-    }
-    pageable.setFilters(filters);*/
-    
-    
-    return nurseChargeConfigService.findPage(pageable);
+    return nurseChargeConfigService.findPage(pageable,true);
   }
 
 
   /**
    * 编辑页面
    * @param model
-   * @param vendorId
+   * @param id
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    model.addAttribute("billing", nurseChargeConfigService.find(id));
+    model.addAttribute("nurseChargeConfig", nurseChargeConfigService.find(id));
     return "/nurseChargeConfig/edit";
   }
   
   /**
-   *  添加页面
+   *  添加
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public String add(ModelMap model, Long id) {
-    return "/nurseChargeConfig/add";
-  }
-
-  /**
-   * 保存
-   * @return
-   */
-  @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(NurseChargeConfig nurseChargeConfig) {
-    nurseChargeConfigService.save(nurseChargeConfig);
+  public Message add(NurseChargeConfig nurseChargeConfig, Long chargeItemId) {
+    SystemConfig chargeItem = systemConfigService.find(chargeItemId);
+    List<Filter> filters = new ArrayList<Filter>();
+    Filter itemFilter = new Filter("chargeItem",Operator.eq,chargeItem);
+    filters.add(itemFilter);
+    List<NurseChargeConfig> nurseChargeConfigs = nurseChargeConfigService.findList(null,filters,null,true,null);
+    if (nurseChargeConfigs!=null && nurseChargeConfigs.size()>0) {
+       return Message.error("yly.nurseCharge.config.duplicate");
+    }
+    nurseChargeConfig.setChargeItem(chargeItem); 
+    nurseChargeConfigService.save(nurseChargeConfig,true);
     return SUCCESS_MESSAGE;
   }
-  
+
   /**
    * 更新
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(NurseChargeConfig nurseChargeConfig) {
-    nurseChargeConfigService.update(nurseChargeConfig);
+    nurseChargeConfigService.update(nurseChargeConfig,"chargeItem","tenantID");
     return SUCCESS_MESSAGE;
   }
   
