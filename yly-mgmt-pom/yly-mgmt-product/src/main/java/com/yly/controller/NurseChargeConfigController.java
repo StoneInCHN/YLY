@@ -39,7 +39,7 @@ public class NurseChargeConfigController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/nurseChargeConfig", method = RequestMethod.GET)
-  public String list(ModelMap model) {
+  public String nurseChargeConfig(ModelMap model) {
     return "/nurseChargeConfig/nurseChargeConfig";
   }
 

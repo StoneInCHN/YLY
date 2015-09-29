@@ -220,6 +220,10 @@ public class CommonEnum {
      */
     NURSELEVEL,
     /**
+     * 伙食类别
+     */
+    MEALTYPE,
+    /**
      * 支付方式
      */
     PAYMENTTYPE,
