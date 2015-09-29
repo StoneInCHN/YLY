@@ -32,8 +32,8 @@
 	    	<tr>
 	    		<th>${message("yly.visitelderly.elderlyInfo")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="elderlyInfo" data-options="required:true" style="width:85px;"/>  
-	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo()" iconCls="icon-search" plain=true"></a> 
+	    			 <input class="easyui-textbox" id="addVisitElderly_elderlyInfo" type="text" name="elderlyInfoID" data-options="required:true,editable:false" style="width:85px;"/>  
+	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addVisitElderly_elderlyInfo')" iconCls="icon-search" plain=true"></a> 
 	    		</td>
 	    		
 	    		<th>${message("yly.visitelderly.visitor")}:</th>
@@ -44,7 +44,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.idcard")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="IDCard"  style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="idcard"  style="width:85px;"/> 
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>

@@ -149,7 +149,7 @@ function listRemove(id, url) {
 /**
  * 老人查询功能
  */
-function searchElderlyInfo() {
+function searchElderlyInfo(id) {
 	$('#searchElderlyInfo').dialog({    
 	    title: message("yly.visitelderly.search"),    
 	    width: 1000,
@@ -176,6 +176,8 @@ function searchElderlyInfo() {
 	    	 loadMsg:message("yly.common.loading"),
 	    	 striped:true,
 	    	 onDblClickRow : function (rowIndex, rowData){
+	    		 $("#"+id).textbox('setValue',rowData.id);
+	    		 $('#searchElderlyInfo').dialog("close");
 	    	 },
 	    	 columns:[
 	    	    [
