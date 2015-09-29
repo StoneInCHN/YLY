@@ -125,8 +125,10 @@ var messages = {
 	"yly.visitelderly.visitDate":"来访时间",
 	"yly.visitelderly.dueLeaveDate":"预计离开时间",
 	"yly.visitelderly.reasonForVisit":"来访原因",
-	"yly.visitelderly.search":"老人查询"
+	"yly.visitelderly.search":"老人查询",
 		
+	//elderlyinfo
+	"yly.elderlyinfo":"老人信息"
 
 };
 

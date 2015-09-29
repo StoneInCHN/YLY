@@ -111,9 +111,7 @@ $(function(){
 		]
 
 	});
-	 
-	 
-
+	
 	consultation_manager_tool = {
 			add:function(){		
 				$('#addConsultation').dialog({    
