@@ -146,6 +146,9 @@ function listRemove(id, url) {
 	}
 }
 
+/**
+ * 老人查询功能
+ */
 function searchElderlyInfo() {
 	$('#searchElderlyInfo').dialog({    
 	    title: message("yly.visitelderly.search"),    
@@ -176,7 +179,6 @@ function searchElderlyInfo() {
 	    	 },
 	    	 columns:[
 	    	    [
-	    	       {field:'ck',checkbox:true},
 	    	       {title:message("yly.consultation.vistor"),field:"vistor",width:100,sortable:true},
 	    	       {title:message("yly.common.phonenumber"),field:"phoneNumber",width:100,sortable:true},
 	    	    ]
