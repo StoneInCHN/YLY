@@ -127,7 +127,7 @@
 		    		<li><a href="#">${message("yly.nurse.personal")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">
-		    		<li><a href="#">${message("yly.volunteer.manage")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.logistics.config")}" id="logistics">
 		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>

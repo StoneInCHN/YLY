@@ -54,7 +54,6 @@ $(function(){
 						handler:function(){
 							var validate = $('#addvolunteer_form').form('validate');
 							if(validate){
-								alert("test");
 								$.ajax({
 									url:"../volunteer/add.jhtml",
 									type:"post",
