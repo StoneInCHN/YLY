@@ -28,7 +28,14 @@ $(function(){
 		   [
 		      {field:'ck',checkbox:true},
 		      {title:message("yly.volunteer.name"),field:"volunteerName",width:100,sortable:true},
-		      {title:message("yly.volunteer.type"),field:"volunteerType",width:100,sortable:true},
+		      {title:message("yly.volunteer.type"),field:"volunteerType",width:100,sortable:true, formatter: function(value,row,index){
+		    	  	if(value == "PERSONAL"){
+		    	  		return  message("yly.volunteer.personal");
+		    	  	}
+		    	  	if(value == "ORGANIZATION"){
+		    	  		return  message("yly.volunteer.organization");
+		    	  	}
+		      	}},
 		      {title:message("yly.volunteer.idCard"),field:"idcard",width:100,sortable:true},
 		      {title:message("yly.volunteer.email"),field:"email",width:100,sortable:true},
 		      {title:message("yly.volunteer.address"),field:"address",width:100,sortable:true},

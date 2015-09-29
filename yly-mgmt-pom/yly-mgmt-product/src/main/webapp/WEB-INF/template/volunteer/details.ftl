@@ -8,8 +8,8 @@
 	    		<th>${message("yly.type")}:</th>
 	    		<td>
 	    		  <select id="gender" class="easyui-combobox" name="volunteerType" style="width:85px;">   
-    			  	<option value="PERSONAL">${message("yly.volunteer.personal")}</option>
-					<option value="ORGANIZATION">${message("yly.volunteer.organization")}</option>  
+    			  	<option value="PERSONAL" [#if volunteer.volunteerType =="PERSONAL"] selected="selected" [/#if]>${message("yly.volunteer.personal")}</option>
+					<option value="ORGANIZATION" [#if volunteer.volunteerType =="ORGANIZATION"] selected="selected" [/#if]>${message("yly.volunteer.organization")}</option>  
 				  </select>  
 	    		</td>
 	    	</tr>
