@@ -125,10 +125,33 @@ var messages = {
 	"yly.visitelderly.visitDate":"来访时间",
 	"yly.visitelderly.dueLeaveDate":"预计离开时间",
 	"yly.visitelderly.reasonForVisit":"来访原因",
+<<<<<<< HEAD
 	"yly.visitelderly.search":"老人查询",
+=======
+	"yly.visitelderly.search":"老人查询"
+<<<<<<< HEAD
+	// volunteer
+	"yly.volunteer.record":"志愿者记录",
+	"yly.volunteer.name":"志愿者姓名",
+	"yly.volunteer.type":"类型",
+	"yly.volunteer.idCard":"证件号",
+	"yly.volunteer.email":"邮件",
+	"yly.volunteer.address":"地址",
+	"yly.volunteer.zipCode":"邮编",
+	"yly.volunteer.telephone":"电话",
+	"yly.volunteer.mobile":"手机",
+	"yly.volunteer.add":"添加志愿者",
+	"yly.volunteer.personal":"个人",
+	"yly.volunteer.organization":"组织机构"
+=======
+>>>>>>> branch 'master' of git@github.com:StoneInCHN/YLY.git
 		
+<<<<<<< HEAD
 	//elderlyinfo
 	"yly.elderlyinfo":"老人信息"
+=======
+>>>>>>> branch 'master' of https://github.com/StoneInCHN/YLY.git
+>>>>>>> branch 'master' of git@github.com:StoneInCHN/YLY.git
 
 };
 
