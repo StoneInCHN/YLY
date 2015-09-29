@@ -28,11 +28,12 @@
 </div> 
 <div id="addVisitElderly">
 	<form id="addVisitElderly_form" method="post" class="form-table">   
+	 	  <input type="hidden" name="elderlyInfoID" id="addVisitElderly_elderlyInfoID">
 	   	  <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.visitelderly.elderlyInfo")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" id="addVisitElderly_elderlyInfo" type="text" name="elderlyInfoID" data-options="required:true,editable:false" style="width:85px;"/>  
+	    			 <input class="easyui-textbox" id="addVisitElderly_elderlyInfo" type="text"  data-options="required:true,editable:false" style="width:85px;"/>  
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addVisitElderly_elderlyInfo')" iconCls="icon-search" plain=true"></a> 
 	    		</td>
 	    		
