@@ -400,3 +400,48 @@ function listRemove(id, url) {
 
 	}
 }
+
+function searchElderlyInfo() {
+	$('#searchElderlyInfo').dialog({    
+	    title: message("yly.visitelderly.search"),    
+	    width: 1000,
+	    height: 500,
+	    modal:true,
+	    cache: false,   
+	    href:'../visitElderly/elderlyInfoSearch.jhtml',
+	    buttons:[{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#searchElderlyInfo').dialog("close");
+			}
+	    }],
+	    onLoad:function(){
+	    	/**
+	    	 * 此datagrid 用户展示老人数据,并且提供查询功能
+	    	 */
+	    	$("#elderlyInfoSearch-table-list").datagrid({
+	    	 title:message("yly.elderlyinfo"),
+	    	 fitColumns:true,
+	    	 url:'../visitElderly/elderlyInfoList.jhtml',  
+	    	 pagination:true,
+	    	 loadMsg:message("yly.common.loading"),
+	    	 striped:true,
+	    	 onDblClickRow : function (rowIndex, rowData){
+	    	 },
+	    	 columns:[
+	    	    [
+	    	       {field:'ck',checkbox:true},
+	    	       {title:message("yly.consultation.vistor"),field:"vistor",width:100,sortable:true},
+	    	       {title:message("yly.common.phonenumber"),field:"phoneNumber",width:100,sortable:true},
+	    	    ]
+	    	 ]
+
+	    	});
+	    	
+	    }
+	});  
+}
+
+
+

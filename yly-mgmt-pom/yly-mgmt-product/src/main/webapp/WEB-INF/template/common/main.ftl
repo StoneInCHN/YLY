@@ -144,10 +144,10 @@
 		        <p>欢迎来到管理系统</p>
 		    </div>    
 		</div> 
-    
-    
-    
     </div>   
+    
+    <div id="searchElderlyInfo"></div>
+    
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="${base}/resources/js/jquery.min.js"></script>
@@ -157,7 +157,6 @@
 	<script type="text/javascript" src="${base}/resources/js/main.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/dropdown.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
-	<script src="${base}/resources/js/common.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
   </body>
 </html>

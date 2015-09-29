@@ -33,7 +33,7 @@
 	    		<th>${message("yly.visitelderly.elderlyInfo")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="elderlyInfo" data-options="required:true" style="width:85px;"/>  
-	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" iconCls="icon-search" plain=true"></a> 
+	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo()" iconCls="icon-search" plain=true"></a> 
 	    		</td>
 	    		
 	    		<th>${message("yly.visitelderly.visitor")}:</th>
@@ -96,7 +96,7 @@
 	</form>
 	</div>
 <div id="editVisitElderly"></div> 
-<div id="searchElderlyInfo"></div>
+
 
 
 
