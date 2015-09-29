@@ -29,9 +29,9 @@ public class DrugsInfoController extends BaseController {
   @Resource(name = "drugsInfoServiceImpl")
   private DrugsInfoService drugsService;
 
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
+  @RequestMapping(value = "/drugsInfo", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "drugs/list";
+    return "drugsInfo/drugsInfo";
   }
 
   /**
@@ -41,7 +41,7 @@ public class DrugsInfoController extends BaseController {
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   public String add(ModelMap model) {
-    return "drugs/add";
+    return "drugsInfo/add";
   }
   
   @RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class DrugsInfoController extends BaseController {
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
     model.addAttribute("drugs", drugsService.find(id));
-    return "drugs/edit";
+    return "drugsInfo/edit";
   }
 
 

@@ -69,7 +69,7 @@
     <div class="left-content" data-options="region:'west',title:'导航菜单',split:true" >
 		    	<ul title="来访登记" id="visitor">
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">咨询记录</a></li>
-		    		<li><a href="#">探望登记</a></li>
+		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">探望登记</a></li>
 		    		<li><a href="#">预约登记</a></li>
 		    		<li><a href="#">在院老人</a></li>
 		    		<li><a href="#">床位状态</a></li>
@@ -115,9 +115,9 @@
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		<li><a href="#" data-url="${base}/console/bedChargeConfig/bedChargeConfig.jhtml">${message("yly.charge.bed")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.nurse")}</a></li>
-		    		<li><a href="#">${message("yly.charge.meal")}</a></li>
-		    		<li><a href="#">${message("yly.charge.water.electricity")}</a></li>
-		    		<li><a href="#">${message("yly.charge.personalized.service")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/mealChargeConfig/mealChargeConfig.jhtml">${message("yly.charge.meal")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.water.electricity")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.personalized.service")}</a></li>
 		    	</ul>     
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
 		    		<li><a href="#">${message("yly.nurse.arrange")}</a></li>
@@ -127,7 +127,7 @@
 		    		<li><a href="#">${message("yly.nurse.personal")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">
-		    		<li><a href="#">${message("yly.volunteer.manage")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.logistics.config")}" id="logistics">
 		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>

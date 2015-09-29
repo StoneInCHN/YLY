@@ -14,7 +14,7 @@ $(function() {
 			field : 'ck',
 			checkbox : true
 		},
-		// 床位类型
+		// 护理级别
 		{
 			title : message("yly.nurseCharge.nurseLevel"),
 			field : "chargeItem",

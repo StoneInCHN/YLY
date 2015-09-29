@@ -39,7 +39,7 @@ public class BedChargeConfigController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/bedChargeConfig", method = RequestMethod.GET)
-  public String list(ModelMap model) {
+  public String bedChargeConfig(ModelMap model) {
     return "/bedChargeConfig/bedChargeConfig";
   }
 
