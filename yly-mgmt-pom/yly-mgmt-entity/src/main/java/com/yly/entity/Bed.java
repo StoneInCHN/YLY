@@ -8,6 +8,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Index;
+
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -27,6 +29,12 @@ public class Bed extends BaseEntity{
    */
   private static final long serialVersionUID = -6055255863529939746L;
 
+  
+  /**
+   * 租户ID
+   */
+  private Long tenantID;
+  
   /**
    * 床位号
    */
@@ -90,12 +98,21 @@ public class Bed extends BaseEntity{
 
 
   @OneToOne
-public ElderlyInfo getElderlyInfo() {
-	return elderlyInfo;
-}
-
-public void setElderlyInfo(ElderlyInfo elderlyInfo) {
-	this.elderlyInfo = elderlyInfo;
-}
+  public ElderlyInfo getElderlyInfo() {
+  	return elderlyInfo;
+  }
   
+  public void setElderlyInfo(ElderlyInfo elderlyInfo) {
+  	this.elderlyInfo = elderlyInfo;
+  }
+  
+  @Index(name = "bed_tenantid")
+  public Long getTenantID() {
+        return tenantID;
+  }
+    
+   public void setTenantID(Long tenantID) {
+      this.tenantID = tenantID;
+   }
+
 }

@@ -21,7 +21,7 @@ import com.yly.service.BuildingService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.FieldFilterUtils;
 
-@Controller
+@Controller("buildingController")
 @RequestMapping("console/building")
 public class BuildingController extends BaseController {
 
