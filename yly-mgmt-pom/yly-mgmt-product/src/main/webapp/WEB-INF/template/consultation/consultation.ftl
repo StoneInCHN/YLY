@@ -32,17 +32,17 @@
 	    	<tr>
 	    		<th>${message("yly.consultation.vistor")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="vistor" value="${consultation.vistor}" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="vistor" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="phoneNumber" value="${consultation.phoneNumber}" validtype="mobile" style="width:110px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="phoneNumber" validtype="mobile" style="width:110px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderly.name")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="elderlyName" value="${consultation.elderlyName}" validtype="length[0,15] style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="elderlyName" validtype="length[0,15] style="width:85px;"/> 
 	    		</td>
 	    		<th>${message("yly.gender")}:</th>
 	    		<td>
