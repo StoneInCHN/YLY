@@ -1,14 +1,13 @@
 var drugs_manager_tool = {
 			add:function(){		
 				$('#addDrugs').dialog({    
-				    title: '添加药品',    
+				    title: message("yly.drugsInfo.add"),    
 				    width: 380,    
 				    height: 270,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
-				    href:'../drugs/add.jhtml',
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addDrugs_form').form('validate');
