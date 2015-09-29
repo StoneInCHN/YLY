@@ -69,6 +69,7 @@
     <div class="left-content" data-options="region:'west',title:'导航菜单',split:true" >
 		    	<ul title="来访登记" id="visitor">
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">咨询记录</a></li>
+<<<<<<< HEAD
 		    		<li><a href="#">探望登记</a></li>
 		    		<li><a href="#">预约登记</a></li>
 		    		<li><a href="#">在院老人</a></li>
@@ -232,6 +233,8 @@
     <div class="left-content" data-options="region:'west',title:'导航菜单',split:true" >
 		    	<ul title="来访登记" id="visitor">
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">咨询记录</a></li>
+=======
+>>>>>>> branch 'master' of https://github.com/StoneInCHN/YLY.git
 		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">探望登记</a></li>
 		    		<li><a href="#">预约登记</a></li>
 		    		<li><a href="#">在院老人</a></li>

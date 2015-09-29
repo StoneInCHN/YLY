@@ -126,6 +126,7 @@ var messages = {
 	"yly.visitelderly.dueLeaveDate":"预计离开时间",
 	"yly.visitelderly.reasonForVisit":"来访原因",
 	"yly.visitelderly.search":"老人查询"
+<<<<<<< HEAD
 	// volunteer
 	"yly.volunteer.record":"志愿者记录",
 	"yly.volunteer.name":"志愿者姓名",
@@ -139,6 +140,9 @@ var messages = {
 	"yly.volunteer.add":"添加志愿者",
 	"yly.volunteer.personal":"个人",
 	"yly.volunteer.organization":"组织机构"
+=======
+		
+>>>>>>> branch 'master' of https://github.com/StoneInCHN/YLY.git
 
 };
 

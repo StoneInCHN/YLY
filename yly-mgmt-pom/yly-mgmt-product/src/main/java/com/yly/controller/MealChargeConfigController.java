@@ -1,6 +1,9 @@
 package com.yly.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.MealChargeConfig;
+import com.yly.entity.SystemConfig;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.MealChargeConfigService;
@@ -32,9 +38,9 @@ public class MealChargeConfigController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
-  public String list(ModelMap model) {
-    return "/mealChargeConfig/list";
+  @RequestMapping(value = "/mealChargeConfig", method = RequestMethod.GET)
+  public String mealChargeConfig(ModelMap model) {
+    return "/mealChargeConfig/mealChargeConfig";
   }
 
   /**
@@ -46,19 +52,7 @@ public class MealChargeConfigController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<MealChargeConfig> list(Pageable pageable, ModelMap model) {
     
-  /*  List<Filter> filters = new ArrayList<Filter>();
-    if(beginDate !=null){
-      Filter beginDateFilter = new Filter("createDate", Operator.gt, beginDate);
-      filters.add(beginDateFilter);
-    }
-    if(endDate!= null){
-      Filter endDateFilter = new Filter("createDate", Operator.lt, endDate);
-      filters.add(endDateFilter);
-    }
-    pageable.setFilters(filters);*/
-    
-    
-    return mealChargeConfigService.findPage(pageable);
+    return mealChargeConfigService.findPage(pageable,true);
   }
 
 
@@ -70,28 +64,27 @@ public class MealChargeConfigController extends BaseController {
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    model.addAttribute("billing", mealChargeConfigService.find(id));
+    model.addAttribute("mealChargeConfig", mealChargeConfigService.find(id));
     return "/mealChargeConfig/edit";
   }
   
-  /**
-   *  添加页面
-   * @param model
-   * @param id
-   * @return
-   */
-  @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public String add(ModelMap model, Long id) {
-    return "/mealChargeConfig/add";
-  }
 
   /**
-   * 保存
+   * 添加
    * @return
    */
-  @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(MealChargeConfig mealChargeConfig) {
-    mealChargeConfigService.save(mealChargeConfig);
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public @ResponseBody Message add(MealChargeConfig mealChargeConfig,Long chargeItemId) {
+    SystemConfig chargeItem = systemConfigService.find(chargeItemId);
+    List<Filter> filters = new ArrayList<Filter>();
+    Filter itemFilter = new Filter("chargeItem",Operator.eq,chargeItem);
+    filters.add(itemFilter);
+    List<MealChargeConfig> mealChargeConfigs = mealChargeConfigService.findList(null,filters,null,true,null);
+    if (mealChargeConfigs!=null && mealChargeConfigs.size()>0) {
+       return Message.error("yly.mealCharge.config.duplicate");
+    }
+    mealChargeConfig.setChargeItem(chargeItem); 
+    mealChargeConfigService.save(mealChargeConfig,true);
     return SUCCESS_MESSAGE;
   }
   
@@ -101,7 +94,7 @@ public class MealChargeConfigController extends BaseController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(MealChargeConfig mealChargeConfig) {
-    mealChargeConfigService.update(mealChargeConfig);
+    mealChargeConfigService.update(mealChargeConfig,"chargeItem","tenantID");
     return SUCCESS_MESSAGE;
   }
   

@@ -1,28 +1,28 @@
 <script src="${base}/resources/modules/consultation.js"></script>
 <div>
 	  <fieldset>
-	    <legend>咨询查询</legend>
+	    <legend>${message("yly.consultation.search")}</legend>
 	    <form id="consultation_search_form" class="search-form">
 			<div class="search-item">
-			    <label> 查询时间从:</label>
+			    <label> ${message("yly.consultation.date")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
-			    <label>到:</label>
+			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="consultation_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="consultation_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
 <table id="consultation-table-list"></table>
 <div id="consultation_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="consultation_manager_tool.add();">添加</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="consultation_manager_tool.edit();">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="consultation_manager_tool.remove();">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="consultation_manager_tool.add();">${message("yly.button.add")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="consultation_manager_tool.edit();">${message("yly.button.update")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="consultation_manager_tool.remove();">${message("yly.button.delete")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
@@ -32,17 +32,17 @@
 	    	<tr>
 	    		<th>${message("yly.consultation.vistor")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="vistor" value="${consultation.vistor}" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="vistor" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="phoneNumber" value="${consultation.phoneNumber}" validtype="mobile" style="width:110px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="phoneNumber" validtype="mobile" style="width:110px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderly.name")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="elderlyName" value="${consultation.elderlyName}" validtype="length[0,15] style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="elderlyName" validtype="length[0,15] style="width:85px;"/> 
 	    		</td>
 	    		<th>${message("yly.gender")}:</th>
 	    		<td>

@@ -14,10 +14,12 @@ import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Building;
 import com.yly.entity.Room;
+import com.yly.entity.SystemConfig;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BuildingService;
 import com.yly.service.RoomService;
+import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 
 /**
@@ -25,7 +27,7 @@ import com.yly.service.TenantAccountService;
  * @author tanbiao
  *
  */
-@Controller
+@Controller("roomController")
 @RequestMapping("console/room")
 public class RoomController extends BaseController {
 
@@ -37,6 +39,9 @@ public class RoomController extends BaseController {
   
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
+  
+  @Resource(name = "systemConfigServiceImpl")
+  private SystemConfigService systemConfigService;
 
   /**
    * 进入room主页面
@@ -82,12 +87,13 @@ public class RoomController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(Long buildingId ,Room room) {
+  public @ResponseBody Message save(Long buildingId,Long roomTypeId ,Room room) {
     Building building = buildingService.find(buildingId);
-    if(building!=null){
+    SystemConfig roomType =systemConfigService.find(roomTypeId);
+    if(building!=null && roomType!=null ){
       room.setBuilding(building);
-      room.setTenantID(tenantAccountService.getCurrentTenantID());
-      roomService.save(room);
+      room.setRoomType(roomType);
+      roomService.save(room,true);
       return SUCCESS_MESSAGE;
     }else{
       return ERROR_MESSAGE;

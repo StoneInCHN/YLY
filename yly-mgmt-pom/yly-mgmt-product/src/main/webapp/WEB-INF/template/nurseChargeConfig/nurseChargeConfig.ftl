@@ -34,7 +34,7 @@
 	    </table>
     </form>
 </div>  
-<div id="editBedChargeConfig"></div>  
+<div id="editNurseChargeConfig"></div>  
 
 
 

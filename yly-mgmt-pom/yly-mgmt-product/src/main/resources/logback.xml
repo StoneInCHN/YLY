@@ -75,10 +75,10 @@
 	<!-- 3p settings -->
 	<!-- ================================================================================= -->
 
-	<logger name="org.springframework" level="off">
+	<logger name="org.springframework" level="debug">
 		<appender-ref ref="rolling_file_appender" />
 	</logger>
-	<logger name="org.hibernate" level="off">
+	<logger name="org.hibernate" level="debug">
 		<appender-ref ref="rolling_file_appender" />
 	</logger>
 

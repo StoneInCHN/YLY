@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Index;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.Relation;
 
 /**
  * 探望老人
@@ -78,7 +79,7 @@ public class VisitElderlyRecord extends BaseEntity {
   /**
 	 * 咨询人和老人关系
   */
-  private String relation;
+  private Relation relation;
 
   /**
    * 备注
@@ -136,6 +137,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.phoneNumber = phoneNumber;
   }
 
+  @Column(length = 50)
   public String getReasonForVisit() {
     return reasonForVisit;
   }
@@ -144,6 +146,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.reasonForVisit = reasonForVisit;
   }
 
+  @Column(length = 150)
   public String getRemark() {
     return remark;
   }
@@ -161,12 +164,11 @@ public class VisitElderlyRecord extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
- @Column(length = 10)
-public String getRelation() {
+public Relation getRelation() {
 	return relation;
 }
 
-public void setRelation(String relation) {
+public void setRelation(Relation relation) {
 	this.relation = relation;
 }
 

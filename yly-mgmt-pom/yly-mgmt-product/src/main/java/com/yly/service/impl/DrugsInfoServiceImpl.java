@@ -1,5 +1,7 @@
 package com.yly.service.impl;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -23,9 +25,9 @@ public class DrugsInfoServiceImpl extends BaseServiceImpl<DrugsInfo, Long> imple
   }
 
   @Override
-  public Page<DrugsInfo> search (String keyword, Pageable pageable)
+  public Page<DrugsInfo> search (String keyword, Pageable pageable ,String startDate, String endDate)
   {
-    return drugsInfoDao.search (keyword, pageable);
+    return drugsInfoDao.search (keyword, pageable, startDate,endDate);
   }
 
   @Override

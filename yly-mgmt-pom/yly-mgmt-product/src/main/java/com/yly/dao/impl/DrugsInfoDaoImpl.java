@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.lucene.document.DateTools;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -15,7 +16,9 @@ import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.QueryWrapperFilter;
 import org.apache.lucene.search.TermRangeFilter;
+import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
@@ -37,7 +40,7 @@ public class DrugsInfoDaoImpl extends BaseDaoImpl<DrugsInfo, Long> implements Dr
    * 关键字搜索
    */
   @Override
-  public Page<DrugsInfo> search(String keyword, Pageable pageable) {
+  public Page<DrugsInfo> search(String keyword, Pageable pageable,String startDate, String endDate) {
     Page<DrugsInfo> DrugsInfoPage = null;
     
     if (pageable == null) {
@@ -54,32 +57,25 @@ public class DrugsInfoDaoImpl extends BaseDaoImpl<DrugsInfo, Long> implements Dr
           new QueryParser(Version.LUCENE_35, "name", analyzer);
       Query nameQuery = name.parse(text);
       
-//      SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
-//      String sDateStr;
-//      String endDateString;
-//      
-//      sDateStr = df.format (new Date (2015, 9, 1));
-//      endDateString = df.format (new Date ());
-//      
-//      Term tstart = new Term("createDate", sDateStr);  
-//      Term tend = new Term("createDate", sDateStr);  
       
+      TermRangeQuery tQuery=new TermRangeQuery ("createDate", startDate, endDate, true, true);
+     
       BooleanQuery query = new BooleanQuery();
       query.add (nameQuery,Occur.MUST);
+      query.add (tQuery,Occur.MUST);
       
       FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
       FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, DrugsInfo.class);
 
       
-      Filter filter = null; 
       
       list = fullTextQuery.getResultList();
       for (Object o : list) {
         if (o instanceof DrugsInfo) {
-//          if (LogUtil.isDebugEnabled(SearchDaoImpl.class)) {
-//            LogUtil.debug(SearchDaoImpl.class, "search", "Found Lawyer %s",
-//                ((Lawyer) o).getUserName());
-//          }
+          if (LogUtil.isDebugEnabled(DrugsInfoDaoImpl.class)) {
+            LogUtil.debug(DrugsInfoDaoImpl.class, "search", "Found Lawyer %s",
+                ((DrugsInfo) o).getName ());
+          }
           if (!drugsInfoList.contains((DrugsInfo) o)) {
             drugsInfoList.add((DrugsInfo) o);
           }

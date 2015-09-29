@@ -33,7 +33,7 @@ import com.yly.entity.commonenum.CommonEnum.DrugStatus;
 @Entity
 @Table(name = "yly_drugs_info")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_drugs_info_sequence")
-@Indexed(index="drugsInfo")
+@Indexed(index="medical/drugsInfo")
 public class DrugsInfo extends BaseEntity {
 
   /**

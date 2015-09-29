@@ -2,7 +2,6 @@ package com.yly.controller;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -14,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.DrugsInfo;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.DrugsInfoSearchRequest;
 import com.yly.service.DrugsInfoService;
+import com.yly.utils.DateTimeUtils;
 
 @Controller
 @RequestMapping("console/drugs")
@@ -78,8 +80,24 @@ public class DrugsInfoController extends BaseController {
   }
   
   @RequestMapping(value = "/search", method = RequestMethod.POST)
-  public @ResponseBody Page<DrugsInfo> search(@RequestBody String keyword) {
-    return drugsService.search (keyword, null);
+  public @ResponseBody Page<DrugsInfo> search(@RequestBody DrugsInfoSearchRequest request) {
+    String startDateStr = null;
+    String endDateStr = null;
+    if (request.getStartDate () != null && DateTimeUtils.isValidDate (request.getStartDate ()))
+    {
+      startDateStr = request.getStartDate ();
+    }
+    if (request.getEndDate () != null && DateTimeUtils.isValidDate (request.getEndDate ()))
+    {
+      endDateStr = request.getEndDate ();
+    }
+    if (LogUtil.isDebugEnabled(DrugsInfoController.class)) {
+      LogUtil.debug(DrugsInfoController.class, "search", "Search keyword: "+ request.getKeyword ()+""
+          + ", start date: "+startDateStr+", end date: "+endDateStr
+         );
+    }
+    
+    return drugsService.search (request.getKeyword (), null,startDateStr,endDateStr);
   }
 
 
