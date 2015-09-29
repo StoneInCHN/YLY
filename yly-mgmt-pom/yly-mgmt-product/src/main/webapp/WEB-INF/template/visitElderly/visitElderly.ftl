@@ -1,28 +1,28 @@
 <script src="${base}/resources/modules/visitElderly.js"></script>
 <div>
 	  <fieldset>
-	    <legend>${("yly.visitelderly.search")}</legend>
+	    <legend>${message("yly.visitelderly.search")}</legend>
 	    <form id="visitElderly_search_form" class="search-form">
 			<div class="search-item">
-			    <label> ${("yly.visitelderly.visitDate")}:</label>
+			    <label> ${message("yly.visitelderly.visitDate")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
-			    <label>${("yly.to")}:</label>
+			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="visitElderly_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="visitElderly_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
 <table id="visitElderly-table-list"></table>
 <div id="visitElderly_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="visitElderly_manager_tool.add();">添加</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="visitElderly_manager_tool.edit();">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="visitElderly_manager_tool.remove();">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="visitElderly_manager_tool.add();">${message("yly.button.add")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="visitElderly_manager_tool.edit();">${message("yly.button.update")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="visitElderly_manager_tool.remove();">${message("yly.button.delete")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
