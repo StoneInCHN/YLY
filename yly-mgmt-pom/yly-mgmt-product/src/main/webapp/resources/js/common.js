@@ -85,7 +85,7 @@ var messages = {
 	 */
 	"yly.nurse.charge.config" : "护理费费配置",
 	"yly.meal.charge.config" : "伙食费配置",
-	"yly.waterElectrity.charge.config" : "水电费配置",
+	"yly.waterElectricity.charge.config" : "水电费配置",
 	"yly.bed.charge.config" : "床位费配置",
 	"yly.service.charge.config" : "服务费配置",
 	"yly.charge.amount.day" : "金额(元)/天",
@@ -102,6 +102,11 @@ var messages = {
 	"yly.mealCharge.mealType" : "伙食类型",
 	"yly.mealCharge.add" : "添加伙食费配置",
 	"yly.mealCharge.edit" : "编辑伙食费配置",
+	//waterElectricityChargeConfig
+	"yly.charge.water.amount" : "水(元/吨)",
+	"yly.charge.electricity.amount" : "电(元/度)",
+	"yly.waterElectricityCharge.add" : "添加水电费配置",
+	"yly.waterElectricityCharge.edit" : "编辑水电费配置",
 	//consultation
 	"yly.consultation.record":"咨询记录",
 	"yly.consultation.vistor":"咨询人",

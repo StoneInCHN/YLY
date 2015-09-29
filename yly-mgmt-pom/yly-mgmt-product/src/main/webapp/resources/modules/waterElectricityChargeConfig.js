@@ -1,10 +1,10 @@
 $(function() {
 
-	$("#bedChargeConfig_table_list").datagrid({
-		title : message("yly.bed.charge.config"),
+	$("#waterElectricityChargeConfig_table_list").datagrid({
+		title : message("yly.waterElectricity.charge.config"),
 		fitColumns : true,
-		toolbar : "#bedChargeConfig_manager_tool",
-		url : '../bedChargeConfig/list.jhtml',
+		toolbar : "#waterElectricityChargeConfig_manager_tool",
+		url : '../waterElectricityChargeConfig/list.jhtml',
 		pagination : true,
 		loadMsg : message("yly.common.loading"),
 		striped : true,
@@ -14,29 +14,17 @@ $(function() {
 			field : 'ck',
 			checkbox : true
 		},
-		// 床位类型
+		// 水(元/吨)
 		{
-			title : message("yly.bedCharge.bedType"),
-			field : "chargeItem",
-			width : 80,
-			sortable : true,
-			formatter : function(value, row, index) {
-				if (value) {
-					return value.configValue;
-				}
-			}
-		},
-		// 金额(元)/天
-		{
-			title : message("yly.charge.amount.day"),
-			field : "amountPerDay",
+			title : message("yly.charge.water.amount"),
+			field : "waterUnitPrice",
 			width : 50,
 			sortable : true
 		},
-		// 金额(元)/月
+		// 电(元/度)
 		{
-			title : message("yly.charge.amount.month"),
-			field : "amountPerMonth",
+			title : message("yly.charge.electricity.amount"),
+			field : "electricityUnitPrice",
 			width : 50,
 			sortable : true
 		},
@@ -55,14 +43,14 @@ $(function() {
 
 })
 
-var bedChargeConfig_manager_tool = {
+var waterElectricityChargeConfig_manager_tool = {
 	add : function() {
-		$('#addBedChargeConfig')
+		$('#addWaterElectricityChargeConfig')
 				.dialog(
 						{
-							title : message("yly.bedCharge.add"),
+							title : message("yly.waterElectricityCharge.add"),
 							width : 380,
-							height : 270,
+							height : 200,
 							modal : true,
 							iconCls : 'icon-mini-add',
 							cache : false,
@@ -72,15 +60,15 @@ var bedChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#addBedChargeConfig_form')
+													'#addWaterElectricityChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../bedChargeConfig/add.jhtml",
+															url : "../waterElectricityChargeConfig/add.jhtml",
 															type : "post",
 															data : $(
-																	"#addBedChargeConfig_form")
+																	"#addWaterElectricityChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -98,10 +86,10 @@ var bedChargeConfig_manager_tool = {
 																
 																if(result.type == "success"){
 																	$(
-																	'#addBedChargeConfig')
+																	'#addWaterElectricityChargeConfig')
 																	.dialog("close");
-																	$('#addBedChargeConfig_form').form('reset');		
-																	$("#bedChargeConfig_table_list")
+																	$('#addWaterElectricityChargeConfig_form').form('reset');		
+																	$("#waterElectricityChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																}
@@ -125,29 +113,29 @@ var bedChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#addBedChargeConfig')
+											$('#addWaterElectricityChargeConfig')
 													.dialog("close");
-											$('#addBedChargeConfig_form').form('reset');
+											$('#addWaterElectricityChargeConfig_form').form('reset');
 										}
 									} ],
 									
-									onOpen:function(){
-								    	$('#addBedChargeConfig_form').show();
-								    	$("#bedType").combobox({    
-										    valueField:'id',    
-										    textField:'configValue',
-										    cache: true,
-										    url:'../systemConfig/findByConfigKey.jhtml',
-										    onBeforeLoad : function(param) {
-										        param.configKey = 'ROOMTYPE';// 参数
-										    }
-										});
-								    },
+//									onOpen:function(){
+//								    	$('#addWaterElectricityChargeConfig_form').show();
+//								    	$("#bedType").combobox({    
+//										    valueField:'id',    
+//										    textField:'configValue',
+//										    cache: true,
+//										    url:'../systemConfig/findByConfigKey.jhtml',
+//										    onBeforeLoad : function(param) {
+//										        param.configKey = 'ROOMTYPE';// 参数
+//										    }
+//										});
+//								    },
 								    
 						});
 	},
 	edit : function() {
-		var _edit_row = $('#bedChargeConfig_table_list')
+		var _edit_row = $('#waterElectricityChargeConfig_table_list')
 				.datagrid('getSelections');
 		if (_edit_row.length == 0) {
 			$.messager.alert(message("yly.common.prompt"),
@@ -159,15 +147,15 @@ var bedChargeConfig_manager_tool = {
 					message("yly.common.select.editRow.unique"), 'warning');
 			return false;
 		}
-		var _dialog = $('#editBedChargeConfig')
+		var _dialog = $('#editWaterElectricityChargeConfig')
 				.dialog(
 						{
-							title : message("yly.bedCharge.edit"),
+							title : message("yly.waterElectricityCharge.edit"),
 							width : 400,
 							height : 270,
 							modal : true,
 							iconCls : 'icon-mini-edit',
-							href : '../bedChargeConfig/edit.jhtml?id='
+							href : '../waterElectricityChargeConfig/edit.jhtml?id='
 									+ _edit_row[0].id,
 							buttons : [
 									{
@@ -175,15 +163,15 @@ var bedChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#editBedChargeConfig_form')
+													'#editWaterElectricityChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../bedChargeConfig/update.jhtml",
+															url : "../waterElectricityChargeConfig/update.jhtml",
 															type : "post",
 															data : $(
-																	"#editBedChargeConfig_form")
+																	"#editWaterElectricityChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -200,11 +188,11 @@ var bedChargeConfig_manager_tool = {
 																if (response == "success") {
 																	showSuccessMsg(result.content);
 																	$(
-																			'#editBedChargeConfig')
+																			'#editWaterElectricityChargeConfig')
 																			.dialog(
 																					"close");
 																	$(
-																			"#bedChargeConfig_table_list")
+																			"#waterElectricityChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																} else {
@@ -220,7 +208,7 @@ var bedChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#editBedChargeConfig').dialog(
+											$('#editWaterElectricityChargeConfig').dialog(
 													"close");
 										}
 									} ]
@@ -228,7 +216,7 @@ var bedChargeConfig_manager_tool = {
 	},
 
 	remove : function() {
-		listRemove('bedChargeConfig_table_list',
-				'../bedChargeConfig/delete.jhtml');
+		listRemove('waterElectricityChargeConfig_table_list',
+				'../waterElectricityChargeConfig/delete.jhtml');
 	}
 }

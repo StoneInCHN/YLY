@@ -116,7 +116,7 @@
 		    		<li><a href="#" data-url="${base}/console/bedChargeConfig/bedChargeConfig.jhtml">${message("yly.charge.bed")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.nurse")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/mealChargeConfig/mealChargeConfig.jhtml">${message("yly.charge.meal")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.water.electricity")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/waterElectricityChargeConfig/waterElectricityChargeConfig.jhtml">${message("yly.charge.water.electricity")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.personalized.service")}</a></li>
 		    	</ul>     
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
