@@ -1,10 +1,10 @@
 $(function() {
 
-	$("#bedChargeConfig_table_list").datagrid({
+	$("#nurseChargeConfig_table_list").datagrid({
 		title : message("yly.bed.charge.config"),
 		fitColumns : true,
-		toolbar : "#bedChargeConfig_manager_tool",
-		url : '../bedChargeConfig/list.jhtml',
+		toolbar : "#nurseChargeConfig_manager_tool",
+		url : '../nurseChargeConfig/list.jhtml',
 		pagination : true,
 		loadMsg : message("yly.common.loading"),
 		striped : true,
@@ -16,7 +16,7 @@ $(function() {
 		},
 		// 床位类型
 		{
-			title : message("yly.bedCharge.bedType"),
+			title : message("yly.nurseCharge.nurseLevel"),
 			field : "chargeItem",
 			width : 80,
 			sortable : true,
@@ -55,12 +55,12 @@ $(function() {
 
 })
 
-var bedChargeConfig_manager_tool = {
+var nurseChargeConfig_manager_tool = {
 	add : function() {
-		$('#addBedChargeConfig')
+		$('#addNurseChargeConfig')
 				.dialog(
 						{
-							title : message("yly.bedCharge.add"),
+							title : message("yly.nurseCharge.add"),
 							width : 380,
 							height : 270,
 							modal : true,
@@ -72,15 +72,15 @@ var bedChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#addBedChargeConfig_form')
+													'#addNurseChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../bedChargeConfig/add.jhtml",
+															url : "../nurseChargeConfig/add.jhtml",
 															type : "post",
 															data : $(
-																	"#addBedChargeConfig_form")
+																	"#addNurseChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -98,10 +98,10 @@ var bedChargeConfig_manager_tool = {
 																
 																if(result.type == "success"){
 																	$(
-																	'#addBedChargeConfig')
+																	'#addNurseChargeConfig')
 																	.dialog("close");
-																	$('#addBedChargeConfig_form').form('reset');		
-																	$("#bedChargeConfig_table_list")
+																	$('#addNurseChargeConfig_form').form('reset');		
+																	$("#nurseChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																}
@@ -125,30 +125,30 @@ var bedChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#addBedChargeConfig')
+											$('#addNurseChargeConfig')
 													.dialog("close");
-											$('#addBedChargeConfig_form').form('reset');
+											$('#addNurseChargeConfig_form').form('reset');
 										}
 									} ],
 									
 									onOpen:function(){
-								    	$('#addBedChargeConfig_form').show();
-								    	$("#bedType").combobox({    
+								    	$('#addNurseChargeConfig_form').show();
+								    	$("#nurseLevel").combobox({    
 										    valueField:'id',    
 										    textField:'configValue',
 										    cache: true,
 										    url:'../systemConfig/findByConfigKey.jhtml',
 										    onBeforeLoad : function(param) {
-										        param.configKey = 'ROOMTYPE';// 参数
+										        param.configKey = 'NURSELEVEL';// 参数
 										    }
 										});
 								    },
 								    
 						});
-		$('#addBedChargeConfig_form').show();
+		$('#addNurseChargeConfig_form').show();
 	},
 	edit : function() {
-		var _edit_row = $('#bedChargeConfig_table_list')
+		var _edit_row = $('#nurseChargeConfig_table_list')
 				.datagrid('getSelections');
 		if (_edit_row.length == 0) {
 			$.messager.alert(message("yly.common.prompt"),
@@ -160,15 +160,15 @@ var bedChargeConfig_manager_tool = {
 					message("yly.common.select.editRow.unique"), 'warning');
 			return false;
 		}
-		var _dialog = $('#editBedChargeConfig')
+		var _dialog = $('#editNurseChargeConfig')
 				.dialog(
 						{
-							title : message("yly.bedCharge.edit"),
+							title : message("yly.nurseCharge.edit"),
 							width : 400,
 							height : 270,
 							modal : true,
 							iconCls : 'icon-mini-edit',
-							href : '../bedChargeConfig/edit.jhtml?id='
+							href : '../nurseChargeConfig/edit.jhtml?id='
 									+ _edit_row[0].id,
 							buttons : [
 									{
@@ -176,15 +176,15 @@ var bedChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#editBedChargeConfig_form')
+													'#editNurseChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../bedChargeConfig/update.jhtml",
+															url : "../nurseChargeConfig/update.jhtml",
 															type : "post",
 															data : $(
-																	"#editBedChargeConfig_form")
+																	"#editNurseChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -201,11 +201,11 @@ var bedChargeConfig_manager_tool = {
 																if (response == "success") {
 																	showSuccessMsg(result.content);
 																	$(
-																			'#editBedChargeConfig')
+																			'#editNurseChargeConfig')
 																			.dialog(
 																					"close");
 																	$(
-																			"#bedChargeConfig_table_list")
+																			"#nurseChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																} else {
@@ -221,7 +221,7 @@ var bedChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#editBedChargeConfig').dialog(
+											$('#editNurseChargeConfig').dialog(
 													"close");
 										}
 									} ]
@@ -229,7 +229,7 @@ var bedChargeConfig_manager_tool = {
 	},
 
 	remove : function() {
-		listRemove('bedChargeConfig_table_list',
-				'../bedChargeConfig/delete.jhtml');
+		listRemove('nurseChargeConfig_table_list',
+				'../nurseChargeConfig/delete.jhtml');
 	}
 }

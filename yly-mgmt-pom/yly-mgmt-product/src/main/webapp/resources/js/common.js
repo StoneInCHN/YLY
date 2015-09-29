@@ -87,12 +87,16 @@ var messages = {
 	"yly.waterElectrity.charge.config" : "水电费配置列表",
 	"yly.bed.charge.config" : "床位费配置列表",
 	"yly.service.charge.config" : "服务费配置列表",
-	// bedCharge
+	"yly.charge.amount.day" : "金额(元)/天",
+	"yly.charge.amount.month" : "金额(元)/月",
+	// bedChargeConfig
 	"yly.bedCharge.bedType" : "床位类型",
-	"yly.bedCharge.amount.day" : "金额(元)/天",
-	"yly.bedCharge.amount.month" : "金额(元)/月",
 	"yly.bedCharge.add" : "添加床位费配置",
 	"yly.bedCharge.edit" : "编辑床位费配置",
+	// nurseChargeConfig
+	"yly.nurseCharge.nurseLevel" : "护理级别",
+	"yly.nurseCharge.add" : "添加护理费配置",
+	"yly.nurseCharge.edit" : "编辑护理费配置",
 	
 	//consultation
 	"yly.consultation.record":"咨询记录",
