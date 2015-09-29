@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.VolunteerType;
 
@@ -39,7 +40,7 @@ public class Volunteer extends BaseEntity {
   private String volunteerName;
   
   /**身份证号码*/
-  private String IDCard;
+  private String idcard;
   
   
   /** E-mail */
@@ -62,7 +63,7 @@ public class Volunteer extends BaseEntity {
    */
   private String remark;
   
-  
+  @JsonProperty
   public VolunteerType getVolunteerType() {
     return volunteerType;
   }
@@ -71,6 +72,7 @@ public class Volunteer extends BaseEntity {
     this.volunteerType = volunteerType;
   }
 
+  @JsonProperty
   @Column(length = 30)
   public String getVolunteerName() {
     return volunteerName;
@@ -80,6 +82,7 @@ public class Volunteer extends BaseEntity {
     this.volunteerName = volunteerName;
   }
 
+  @JsonProperty
   @Column(length = 50)
   public String getRemark() {
     return remark;
@@ -89,15 +92,17 @@ public class Volunteer extends BaseEntity {
     this.remark = remark;
   }
   
+  @JsonProperty
   @Column(length=30)
-  public String getIDCard() {
-    return IDCard;
+  public String getIdcard() {
+    return idcard;
   }
 
-  public void setIDCard(String iDCard) {
-    IDCard = iDCard;
+  public void setIdcard(String idcard) {
+    this.idcard = idcard;
   }
 
+  @JsonProperty
   @Column(length=200)
   public String getAddress() {
     return address;
@@ -107,6 +112,7 @@ public class Volunteer extends BaseEntity {
     this.address = address;
   }
 
+  @JsonProperty
   @Column(length=50)
   public String getZipCode() {
     return zipCode;
@@ -116,6 +122,7 @@ public class Volunteer extends BaseEntity {
     this.zipCode = zipCode;
   }
 
+  @JsonProperty
   @Column(length=30)
   public String getTelephone() {
     return telephone;
@@ -125,6 +132,7 @@ public class Volunteer extends BaseEntity {
     this.telephone = telephone;
   }
 
+  @JsonProperty
   @Column(length=30)
   public String getMobile() {
     return mobile;
@@ -134,6 +142,7 @@ public class Volunteer extends BaseEntity {
     this.mobile = mobile;
   }
 
+  @JsonProperty
   @Column(length=60)
   public String getEmail() {
     return email;

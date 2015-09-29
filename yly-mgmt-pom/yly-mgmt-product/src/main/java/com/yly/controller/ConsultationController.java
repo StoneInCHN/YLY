@@ -24,7 +24,7 @@ import com.yly.service.TenantAccountService;
  * @author shijun
  *
  */
-@Controller
+@Controller("consultationController")
 @RequestMapping("console/consultation")
 public class ConsultationController extends BaseController {
 
