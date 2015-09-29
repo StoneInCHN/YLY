@@ -119,18 +119,9 @@ var waterElectricityChargeConfig_manager_tool = {
 										}
 									} ],
 									
-//									onOpen:function(){
-//								    	$('#addWaterElectricityChargeConfig_form').show();
-//								    	$("#bedType").combobox({    
-//										    valueField:'id',    
-//										    textField:'configValue',
-//										    cache: true,
-//										    url:'../systemConfig/findByConfigKey.jhtml',
-//										    onBeforeLoad : function(param) {
-//										        param.configKey = 'ROOMTYPE';// 参数
-//										    }
-//										});
-//								    },
+									onOpen:function(){
+								    	$('#addWaterElectricityChargeConfig_form').show();
+								    },
 								    
 						});
 	},

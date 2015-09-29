@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -48,6 +49,7 @@ public class WaterElectricityChargeConfig extends BaseEntity{
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getWaterUnitPrice() {
     return waterUnitPrice;
@@ -57,6 +59,7 @@ public class WaterElectricityChargeConfig extends BaseEntity{
     this.waterUnitPrice = waterUnitPrice;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getElectricityUnitPrice() {
     return electricityUnitPrice;
