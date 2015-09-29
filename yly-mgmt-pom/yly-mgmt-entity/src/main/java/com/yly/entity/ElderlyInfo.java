@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.EducationLevel;
 import com.yly.entity.commonenum.CommonEnum.Gender;
@@ -199,7 +200,7 @@ public class ElderlyInfo extends BaseEntity {
    * 居住情况
    */
   private LivingState livingState;
-  
+
   /**
    * 住房信息
    */
@@ -276,19 +277,19 @@ public class ElderlyInfo extends BaseEntity {
    * 老人探望记录
    */
   private Set<VisitElderlyRecord> visitElderlyRecords = new HashSet<VisitElderlyRecord>();
-  
+
   /**
    * 病历
    */
-  private Set<MedicalRecord> medicalRecords = new HashSet<MedicalRecord>(); 
-  
+  private Set<MedicalRecord> medicalRecords = new HashSet<MedicalRecord>();
+
   /**
    * 处方
    */
   private Set<Prescription> prescriptions = new HashSet<Prescription>();
-  
-  
-  
+
+
+
   @OneToMany(mappedBy = "elderlyInfo")
   public Set<VisitElderlyRecord> getVisitElderlyRecords() {
     return visitElderlyRecords;
@@ -352,7 +353,7 @@ public class ElderlyInfo extends BaseEntity {
     this.deposit = deposit;
   }
 
-  @Index(name="elderly_info_tenantid")
+  @Index(name = "elderly_info_tenantid")
   public Long getTenantID() {
     return tenantID;
   }
@@ -388,6 +389,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyFamilyMembers = elderlyFamilyMembers;
   }
 
+  @JsonProperty
   @Column(length = 15)
   public String getIdentifier() {
     return identifier;
@@ -397,6 +399,7 @@ public class ElderlyInfo extends BaseEntity {
     this.identifier = identifier;
   }
 
+  @JsonProperty
   @Column(length = 15)
   public String getName() {
     return name;
@@ -406,6 +409,7 @@ public class ElderlyInfo extends BaseEntity {
     this.name = name;
   }
 
+  @JsonProperty
   public Gender getGender() {
     return gender;
   }
@@ -430,6 +434,7 @@ public class ElderlyInfo extends BaseEntity {
     this.nation = nation;
   }
 
+  @JsonProperty
   @Column(length = 25)
   public String getIDCard() {
     return IDCard;
@@ -439,6 +444,7 @@ public class ElderlyInfo extends BaseEntity {
     IDCard = iDCard;
   }
 
+  @JsonProperty
   public Integer getAge() {
     return age;
   }
@@ -447,6 +453,7 @@ public class ElderlyInfo extends BaseEntity {
     this.age = age;
   }
 
+  @JsonProperty
   public Date getBirthday() {
     return birthday;
   }
@@ -481,18 +488,19 @@ public class ElderlyInfo extends BaseEntity {
     this.evaluatingScore = evaluatingScore;
   }
 
-
+  @JsonProperty
   @OneToOne(mappedBy = "elderlyInfo")
   public Bed getBed() {
-	return bed;
-}
+    return bed;
+  }
 
 
-public void setBed(Bed bed) {
-	this.bed = bed;
-}
+  public void setBed(Bed bed) {
+    this.bed = bed;
+  }
 
-@Column(length = 15)
+  @JsonProperty
+  @Column(length = 15)
   public String getElderlyPhoneNumber() {
     return elderlyPhoneNumber;
   }
@@ -666,7 +674,7 @@ public void setBed(Bed bed) {
     this.sourceOfIncome = sourceOfIncome;
   }
 
-  @Column(length=300)
+  @Column(length = 300)
   public String getPhoto() {
     return photo;
   }

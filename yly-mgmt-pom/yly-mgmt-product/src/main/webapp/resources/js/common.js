@@ -179,8 +179,14 @@ function searchElderlyInfo() {
 	    	 },
 	    	 columns:[
 	    	    [
-	    	       {title:message("yly.consultation.vistor"),field:"vistor",width:100,sortable:true},
-	    	       {title:message("yly.common.phonenumber"),field:"phoneNumber",width:100,sortable:true},
+	    	       {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:100,sortable:true},
+	    	       {title:message("yly.common.name"),field:"name",width:100,sortable:true},
+	    	       {title:message("yly.common.gender"),field:"gender",width:100,sortable:true},
+	    	       {title:message("yly.common.birthday"),field:"birthday",width:100,sortable:true},
+	    	       {title:message("yly.common.age"),field:"age",width:100,sortable:true},
+	    	       {title:message("yly.common.idcard"),field:"idcard",width:100,sortable:true},
+	    	       {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:100,sortable:true},
+	    	       {title:message("yly.elderlyinfo.bed"),field:"bed",width:100,sortable:true},
 	    	    ]
 	    	 ]
 

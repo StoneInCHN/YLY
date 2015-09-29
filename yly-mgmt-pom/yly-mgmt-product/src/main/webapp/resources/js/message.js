@@ -20,6 +20,9 @@ var messages = {
 	"yly.common.confirm" : "确认",
 	"yly.common.delete.confirm" : "您确认想要删除记录吗？",
 	"yly.common.gender": "性别",
+	"yly.common.name":"姓名",
+	"yly.common.age":"年龄",
+	"yly.common.birthday":"出生日期",
 	"yly.common.relation":"与老人关系",
 	"yly.common.infoChannel":"信息来源",
 	"yly.common.remark":"备注",
@@ -111,7 +114,9 @@ var messages = {
 	"yly.volunteer.organization":"组织机构",
 	
 	//elderlyinfo
-	"yly.elderlyinfo":"老人信息"
+	"yly.elderlyinfo":"老人信息",
+	"yly.elderlyinfo.identifier":"编号",
+	"yly.elderlyinfo.bed":"床位"
 };
 //多语言
 function message(code) {
