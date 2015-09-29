@@ -1,6 +1,15 @@
 var drugs_manager_tool = {
 			add:function(){		
 				$('#addDrugs').dialog({    
+<<<<<<< HEAD
+				    title: message("yly.drugsInfo.add"),    
+				    width: 380,    
+				    height: 270,
+				    iconCls:'icon-mini-add',
+				    cache: false, 
+				    buttons:[{
+				    	text:message("yly.common.save"),
+=======
 				    title: '添加药品',    
 				    width: 380,    
 				    height: 270,
@@ -9,6 +18,7 @@ var drugs_manager_tool = {
 				    href:'../drugs/add.jhtml',
 				    buttons:[{
 				    	text:'保存',
+>>>>>>> branch 'master' of https://github.com/StoneInCHN/YLY.git
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addDrugs_form').form('validate');
