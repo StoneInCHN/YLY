@@ -31,8 +31,8 @@ $(function(){
 			add:function(){
 				$('#addDrugs').dialog({
 				    title: message("yly.drugsInfo.add"),    
-				    width: 380,    
-				    height: 270,
+				    width: 700,    
+				    height: 550,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -69,7 +69,38 @@ $(function(){
 						handler:function(){
 							 $('#addDrugs').dialog("close").form("reset");
 						}
-				    }]
+				    }],
+				    onOpen:function(){
+				    	$('#addDrugs_form').show();
+				    	$("#conventionalUnit").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'UNITS';// 参数
+						    }
+						});
+				    	$("#minUnit").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'UNITS';// 参数
+						    }
+						});
+				    	$("#drugCategory").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'DRUGSCATEGORY';// 参数
+						    }
+						});
+				    },
+				
 				});  
 				 $('#addDrugs_form').show();
 			},

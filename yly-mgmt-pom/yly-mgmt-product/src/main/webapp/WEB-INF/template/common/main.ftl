@@ -98,7 +98,7 @@
 		    		<li><a href="#">病历档案</a></li>
 		    		<li><a href="#">老人药方</a></li>
 		    		<li><a href="#">体检记录</a></li>
-		    		<li><a href="#" data-url="${base}/console/drugs/main.jhtml">药品管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/drugs/drugsInfo.jhtml">药品管理</a></li>
 		    	</ul>
 		    	<ul title="院内事务" id="affairs">
 		    		<li><a href="#">固定资产</a></li>

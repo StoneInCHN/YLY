@@ -37,8 +37,7 @@
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="name" data-options="required:true" />   
 	    		</td>
-	    	</tr>
-	    	<tr>
+	    	
 	    		<th>别名:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="alias"  />   
@@ -49,27 +48,102 @@
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="phoneticCode"  />   
 	    		</td>
-	    	</tr>
-	    	<!--
-	    	<tr>
 	    		<th>药品分类:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="drugCategory" />   
+	    			 <input class="easyui-textbox" type="text" name="drugCategory" id="drugCategory"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>药品常用单位:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="conventionalUnit"  />   
+	    			 <input class="easyui-textbox" type="text" id = "conventionalUnit" name="conventionalUnit"  />   
+	    		</td>
+	    		<th>最小单位:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" id="minUnit" name="minUnit"  />   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>描述 :</th>
+	    		<th>换算单位:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="description"  /> 
+	    			 <input class="easyui-textbox" type="text" name="conversionUnit"  />   
+	    		</td>
+	    		<th>剂量单位:</th>
+	    		<td>
+	    			 <select id="dosageUnit" class="easyui-combobox" name="dosageUnit" style="width:60px;">   
+						<option value="G">克</option>
+						<option value="KG">千克</option>
+						<option value="MG">毫克</option> 
+						<option value="ML">毫升</option> 
+						<option value="L">升</option>
+				  	</select>   
 	    		</td>
 	    	</tr>
-	    	-->
+	    	<tr>
+	    		<th>药品用法:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="drugUseMethod"  />   
+	    		</td>
+	    		<th>剂量:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="dosage"  />   
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>药品规格:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="drugSpecifications"  />   
+	    		</td>
+	    		<th>频度:</th>
+	    		<td>
+	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:100px;">   
+						<option value="Qd">一天一次</option>
+						<option value="Bid">一天两次</option>
+						<option value="Tid">一天三次</option> 
+						<option value="Qid">一天四次</option> 
+						<option value="Q2h">两小时一次</option> 
+						<option value="Q4h">四小时一次</option>						 
+				  	</select>    
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>单次用量:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="singleDose"  />   
+	    		</td>
+	    		<th>生产厂家:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="manufacturer"  />   
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr>
+	    		<th>药品状态:</th>
+	    		<td>
+	    			<select id="drugStatus" class="easyui-combobox" name="drugStatus" style="width:60px;">   
+						<option value="ENABLED">启用</option>
+						<option value="DISABLED">禁用</option> 
+				  </select>     
+	    		</td>
+	    		
+    		</tr>
+    		<tr>
+	    		<th>处方价格:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="prescriptionPrice"  />   
+	    		</td>
+	    		<th>采购价格:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="purchasePrice"  />   
+	    		</td>
+	    	</tr>
+    		<tr>
+    			<th>描述 :</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="description" data-options="multiline:true,height:90,width:300" /> 
+	    		</td>
+	    	</tr>
+	    	
 	    </table>
 	</form>
 </div>

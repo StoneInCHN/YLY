@@ -212,29 +212,37 @@ public class CommonEnum {
    */
   public enum ConfigKey {
     /**
-     * 房间类型
+     * 房间类型,0
      */
     ROOMTYPE,
     /**
-     * 护理级别
+     * 护理级别,1
      */
     NURSELEVEL,
     /**
-     * 伙食类别
+     * 伙食类别,2
      */
     MEALTYPE,
     /**
-     * 支付方式
+     * 支付方式,3
      */
     PAYMENTTYPE,
     /**
-     * 表单类型
+     * 表单类型,4
      */
     FORMTYPE,
     /**
-     * 计量单位
+     * 计量单位,5
      */
-    UNITS
+    UNITS,
+    /**
+     * 药品分类,6
+     */
+    DRUGSCATEGORY,
+    /**
+     * 药品用法,7
+     */
+    DRUGSMETHOD
   }
 
   /**
