@@ -44,7 +44,7 @@
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="IDCard"  style="width:85px;"/> 
 	    		</td>
-	    		<th>${message("yly.common.phoneNumber")}:</th>
+	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="phoneNumber" validtype="mobile"  style="width:85px;"/> 
 	    		</td>

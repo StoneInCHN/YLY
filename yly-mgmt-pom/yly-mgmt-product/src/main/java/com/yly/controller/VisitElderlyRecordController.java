@@ -41,7 +41,7 @@ public class VisitElderlyRecordController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/visitelderly", method = RequestMethod.GET)
+  @RequestMapping(value = "/visitElderly", method = RequestMethod.GET)
   public String list(ModelMap model) {
     return "/visitElderly/visitElderly";
   }

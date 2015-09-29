@@ -77,6 +77,7 @@ var messages = {
 	"yly.common.relation.infochannel.community":"社区",
 	"yly.common.relation.infochannel.ohter_introduct":"他人介绍",
 	"yly.common.relation.infochannel.advertisement":"广告",
+	"yly.common.idcard":"身份证号码",
 	
 	
 	/**
@@ -111,7 +112,16 @@ var messages = {
 	"yly.consultation.checkinIntention.will_to_checkin_strongly":"入住意愿强",
 	"yly.consultation.checkinIntention.will_to_checkin_not_strongly":"入住意愿不强",
 	"yly.consultation.checkinIntention.will_not_checkin":"不入住",
-
+	
+	//visitelderly
+	"yly.visitelderly.add":"添加探望",
+	"yly.visitelderly.record":"探望记录",
+	"yly.visitelderly.elderlyInfo":"被探望老人",
+	"yly.visitelderly.visitor":"来访者",
+	"yly.visitelderly.visitPersonnelNumber":"来访人数",
+	"yly.visitelderly.visitDate":"来访时间",
+	"yly.visitelderly.dueLeaveDate":"预计离开时间",
+	"yly.visitelderly.reasonForVisit":"来访原因"
 		
 
 };
