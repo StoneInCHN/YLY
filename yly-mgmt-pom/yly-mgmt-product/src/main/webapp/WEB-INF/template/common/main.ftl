@@ -154,6 +154,7 @@
 	<script type="text/javascript" src="${base}/resources/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/common.js"></script>
+	<script type="text/javascript" src="${base}/resources/js/message.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/main.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/dropdown.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>

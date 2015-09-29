@@ -84,6 +84,7 @@ if (applicationContext != null) {
 	<script type="text/javascript" src="<%=base%>/resources/js/rsa.js"></script>
 	<script type="text/javascript" src="<%=base%>/resources/js/base64.js"></script>
 	<script type="text/javascript" src="<%=base%>/resources/js/common.js"></script>
+	<script type="text/javascript" src="<%=base%>/resources/js/message.js"></script>
 	<script type="text/javascript" src="<%=base%>/resources/js/input.js"></script>
 	<script src="<%=base%>/resources/js/jquery.backstretch.min.js" type="text/javascript"></script>
 	<script type="text/javascript"> 
