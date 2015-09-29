@@ -73,8 +73,8 @@ public class NurseChargeConfigController extends BaseController {
    * @param id
    * @return
    */
-  @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public Message add(NurseChargeConfig nurseChargeConfig, Long chargeItemId) {
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public @ResponseBody Message add(NurseChargeConfig nurseChargeConfig, Long chargeItemId) {
     SystemConfig chargeItem = systemConfigService.find(chargeItemId);
     List<Filter> filters = new ArrayList<Filter>();
     Filter itemFilter = new Filter("chargeItem",Operator.eq,chargeItem);

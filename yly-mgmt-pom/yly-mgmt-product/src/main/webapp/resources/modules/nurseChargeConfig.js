@@ -133,13 +133,13 @@ var nurseChargeConfig_manager_tool = {
 									
 									onOpen:function(){
 								    	$('#addNurseChargeConfig_form').show();
-								    	$("#bedType").combobox({    
+								    	$("#nurseLevel").combobox({    
 										    valueField:'id',    
 										    textField:'configValue',
 										    cache: true,
 										    url:'../systemConfig/findByConfigKey.jhtml',
 										    onBeforeLoad : function(param) {
-										        param.configKey = 'ROOMTYPE';// 参数
+										        param.configKey = 'NURSELEVEL';// 参数
 										    }
 										});
 								    },
