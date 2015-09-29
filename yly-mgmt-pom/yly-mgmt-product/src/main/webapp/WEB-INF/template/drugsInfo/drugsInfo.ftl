@@ -30,7 +30,7 @@
 	<div class="tool-filter"></div>
 </div>
 <div id="addDrugs"> 
-<form id="addDrugs_form" method="post" class="form-table">   
+	<form id="addDrugs_form" method="post" class="form-table">   
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>药品名称:</th>
