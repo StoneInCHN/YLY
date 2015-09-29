@@ -92,7 +92,7 @@ public class BaseEntity implements Serializable {
   @JsonProperty
   @Column(nullable = false, updatable = false)
   @Field(index = Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.MINUTE)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getCreateDate() {
     return createDate;
   }
