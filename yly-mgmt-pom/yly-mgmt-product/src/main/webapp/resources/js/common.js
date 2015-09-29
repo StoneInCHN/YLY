@@ -77,16 +77,17 @@ var messages = {
 	"yly.common.relation.infochannel.community":"社区",
 	"yly.common.relation.infochannel.ohter_introduct":"他人介绍",
 	"yly.common.relation.infochannel.advertisement":"广告",
+	"yly.common.idcard":"身份证号码",
 	
 	
 	/**
 	 * charge config
 	 */
-	"yly.nurse.charge.config" : "护理费费配置列表",
-	"yly.meal.charge.config" : "伙食费配置列表",
-	"yly.waterElectrity.charge.config" : "水电费配置列表",
-	"yly.bed.charge.config" : "床位费配置列表",
-	"yly.service.charge.config" : "服务费配置列表",
+	"yly.nurse.charge.config" : "护理费费配置",
+	"yly.meal.charge.config" : "伙食费配置",
+	"yly.waterElectrity.charge.config" : "水电费配置",
+	"yly.bed.charge.config" : "床位费配置",
+	"yly.service.charge.config" : "服务费配置",
 	"yly.charge.amount.day" : "金额(元)/天",
 	"yly.charge.amount.month" : "金额(元)/月",
 	// bedChargeConfig
@@ -97,7 +98,10 @@ var messages = {
 	"yly.nurseCharge.nurseLevel" : "护理级别",
 	"yly.nurseCharge.add" : "添加护理费配置",
 	"yly.nurseCharge.edit" : "编辑护理费配置",
-	
+	//mealCharegeConfig
+	"yly.mealCharge.mealType" : "伙食类型",
+	"yly.mealCharge.add" : "添加伙食费配置",
+	"yly.mealCharge.edit" : "编辑伙食费配置",
 	//consultation
 	"yly.consultation.record":"咨询记录",
 	"yly.consultation.vistor":"咨询人",
@@ -111,8 +115,43 @@ var messages = {
 	"yly.consultation.checkinIntention.will_to_checkin_strongly":"入住意愿强",
 	"yly.consultation.checkinIntention.will_to_checkin_not_strongly":"入住意愿不强",
 	"yly.consultation.checkinIntention.will_not_checkin":"不入住",
-
+	
+	//visitelderly
+	"yly.visitelderly.add":"添加探望",
+	"yly.visitelderly.record":"探望记录",
+	"yly.visitelderly.elderlyInfo":"被探望老人",
+	"yly.visitelderly.visitor":"来访者",
+	"yly.visitelderly.visitPersonnelNumber":"来访人数",
+	"yly.visitelderly.visitDate":"来访时间",
+	"yly.visitelderly.dueLeaveDate":"预计离开时间",
+	"yly.visitelderly.reasonForVisit":"来访原因",
+<<<<<<< HEAD
+	"yly.visitelderly.search":"老人查询",
+=======
+	"yly.visitelderly.search":"老人查询"
+<<<<<<< HEAD
+	// volunteer
+	"yly.volunteer.record":"志愿者记录",
+	"yly.volunteer.name":"志愿者姓名",
+	"yly.volunteer.type":"类型",
+	"yly.volunteer.idCard":"证件号",
+	"yly.volunteer.email":"邮件",
+	"yly.volunteer.address":"地址",
+	"yly.volunteer.zipCode":"邮编",
+	"yly.volunteer.telephone":"电话",
+	"yly.volunteer.mobile":"手机",
+	"yly.volunteer.add":"添加志愿者",
+	"yly.volunteer.personal":"个人",
+	"yly.volunteer.organization":"组织机构"
+=======
+>>>>>>> branch 'master' of git@github.com:StoneInCHN/YLY.git
 		
+<<<<<<< HEAD
+	//elderlyinfo
+	"yly.elderlyinfo":"老人信息"
+=======
+>>>>>>> branch 'master' of https://github.com/StoneInCHN/YLY.git
+>>>>>>> branch 'master' of git@github.com:StoneInCHN/YLY.git
 
 };
 

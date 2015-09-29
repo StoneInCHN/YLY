@@ -111,9 +111,13 @@ $(function(){
 		]
 
 	});
+<<<<<<< HEAD
+	
+=======
 	 
 	 
 
+>>>>>>> branch 'master' of git@github.com:StoneInCHN/YLY.git
 	consultation_manager_tool = {
 			add:function(){		
 				$('#addConsultation').dialog({    
