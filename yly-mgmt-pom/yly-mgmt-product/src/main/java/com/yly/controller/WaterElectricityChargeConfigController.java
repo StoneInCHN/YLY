@@ -1,6 +1,8 @@
 package com.yly.controller;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,6 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.WaterElectricityChargeConfig;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.service.SystemConfigService;
 import com.yly.service.WaterElectricityChargeConfigService;
 
 @Controller("waterElectricityChargeConfigController")
@@ -24,17 +25,14 @@ public class WaterElectricityChargeConfigController extends BaseController {
   @Resource(name = "waterElectricityChargeConfigServiceImpl")
   private WaterElectricityChargeConfigService waterElectricityChargeConfigService;
   
-  @Resource(name = "systemConfigServiceImpl")
-  private SystemConfigService systemConfigService;
-  
   /**
    * 列表页面
    * @param model
    * @return
    */
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
+  @RequestMapping(value = "/waterElectricityChargeConfig", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/waterElectricityChargeConfig/list";
+    return "/waterElectricityChargeConfig/waterElectricityChargeConfig";
   }
 
   /**
@@ -45,53 +43,34 @@ public class WaterElectricityChargeConfigController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<WaterElectricityChargeConfig> list(Pageable pageable, ModelMap model) {
-    
-  /*  List<Filter> filters = new ArrayList<Filter>();
-    if(beginDate !=null){
-      Filter beginDateFilter = new Filter("createDate", Operator.gt, beginDate);
-      filters.add(beginDateFilter);
-    }
-    if(endDate!= null){
-      Filter endDateFilter = new Filter("createDate", Operator.lt, endDate);
-      filters.add(endDateFilter);
-    }
-    pageable.setFilters(filters);*/
-    
-    
-    return waterElectricityChargeConfigService.findPage(pageable);
+    return waterElectricityChargeConfigService.findPage(pageable,true);
   }
 
 
   /**
    * 编辑页面
    * @param model
-   * @param vendorId
+   * @param 
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    model.addAttribute("billing", waterElectricityChargeConfigService.find(id));
+    model.addAttribute("waterElectricityChargeConfig", waterElectricityChargeConfigService.find(id));
     return "/waterElectricityChargeConfig/edit";
   }
   
+  
   /**
-   *  添加页面
-   * @param model
-   * @param id
+   * 添加
    * @return
    */
-  @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public String add(ModelMap model, Long id) {
-    return "/waterElectricityChargeConfig/add";
-  }
-
-  /**
-   * 保存
-   * @return
-   */
-  @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(WaterElectricityChargeConfig waterElectricityChargeConfig) {
-    waterElectricityChargeConfigService.save(waterElectricityChargeConfig);
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public @ResponseBody Message add(WaterElectricityChargeConfig waterElectricityChargeConfig) {
+    List<WaterElectricityChargeConfig> waterElectricityChargeConfigs = waterElectricityChargeConfigService.findList(null, null, null, true, null);
+    if (waterElectricityChargeConfigs!=null && waterElectricityChargeConfigs.size()>0) {
+      return Message.error("yly.waterElectricityCharge.config.duplicate");
+   }
+    waterElectricityChargeConfigService.save(waterElectricityChargeConfig,true);
     return SUCCESS_MESSAGE;
   }
   
@@ -101,7 +80,7 @@ public class WaterElectricityChargeConfigController extends BaseController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(WaterElectricityChargeConfig waterElectricityChargeConfig) {
-    waterElectricityChargeConfigService.update(waterElectricityChargeConfig);
+    waterElectricityChargeConfigService.update(waterElectricityChargeConfig,"chargeItem","tenantID");
     return SUCCESS_MESSAGE;
   }
   

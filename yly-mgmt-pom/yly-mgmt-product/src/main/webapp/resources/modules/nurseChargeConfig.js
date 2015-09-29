@@ -145,7 +145,6 @@ var nurseChargeConfig_manager_tool = {
 								    },
 								    
 						});
-		$('#addNurseChargeConfig_form').show();
 	},
 	edit : function() {
 		var _edit_row = $('#nurseChargeConfig_table_list')

@@ -145,7 +145,6 @@ var mealChargeConfig_manager_tool = {
 								    },
 								    
 						});
-		$('#addMealChargeConfig_form').show();
 	},
 	edit : function() {
 		var _edit_row = $('#mealChargeConfig_table_list')
