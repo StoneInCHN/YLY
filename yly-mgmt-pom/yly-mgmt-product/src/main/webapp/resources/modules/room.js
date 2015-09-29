@@ -2,8 +2,8 @@ var room_manager_tool = {
 			add:function(){		
 				$('#addRoom').dialog({    
 				    title: '添加楼宇',    
-				    width: 350,    
-				    height: 380,
+				    width: 380,    
+				    height: 460,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
@@ -49,6 +49,15 @@ var room_manager_tool = {
 						    textField:'buildingName',
 						    cache: true,
 						    url:'../building/findAll.jhtml'
+						});
+				    	$("#addRoom_form_roomType").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'ROOMTYPE';// 参数
+						    }
 						});
 				    },
 				    onClose:function(){

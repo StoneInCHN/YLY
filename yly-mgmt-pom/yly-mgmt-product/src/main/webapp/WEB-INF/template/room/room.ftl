@@ -33,13 +33,13 @@
 	    	<tr>
 	    		<th>房间名称:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="roomName"  />   
+	    			 <input class="easyui-textbox" validtype="length[0,20]" type="text" name="roomName"  />   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>房间编号:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="roomNumber" /> 
+	    			  <input class="easyui-textbox" type="text" name="roomNumber" validtype="length[0,20]"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -54,14 +54,12 @@
 	    			  <input class="easyui-numberspinner" type="text" name="floor" data-options="min:-10,max:20,required:true" /> 
 	    		</td>
 	    	</tr>
-	    	<!--
 	    	<tr>
 	    		<th>房间类型:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="roomType"  /> 
+	    			  <input class="easyui-textbox" id="addRoom_form_roomType" type="text" name="roomTypeId"  /> 
 	    		</td>
 	    	</tr>
-	    	-->
 	    	<tr>
 	    		<th>房间状态:</th>
 	    		<td>
@@ -72,7 +70,7 @@
 			<tr>
 	    		<th>描述:</th>
 	    		<td>
-	    			  <textarea class="easyui-validatebox"   data-options="max:100"   name="description" style="height:60px;width:200px"></textarea> 
+	    			  <textarea class="easyui-textbox"   name="description" validtype="length[0,100]" data-options="multiline:true,height:115"></textarea> 
 	    		</td>
 	    	</tr>
 	    </table>

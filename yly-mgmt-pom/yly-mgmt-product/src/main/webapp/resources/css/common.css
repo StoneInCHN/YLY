@@ -9,7 +9,7 @@
 .form-table input{
 	width:130px;
 }
-.form-table .radio-text{
+.form-table input[type=radio]{
 	width:30px;
 }
 

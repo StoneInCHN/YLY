@@ -71,6 +71,7 @@ if (applicationContext != null) {
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
+	<link rel="icon" href="<%=base%>/resources/img/favicon.ico">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
 	<link href="<%=base%>/resources/css/font-awesome.css" rel="stylesheet" type="text/css" />
 	<link href="<%=base%>/resources/css/login.css" rel="stylesheet" type="text/css" />
