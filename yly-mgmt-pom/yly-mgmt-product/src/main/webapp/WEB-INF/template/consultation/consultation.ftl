@@ -1,14 +1,14 @@
 <script src="${base}/resources/modules/consultation.js"></script>
 <div>
 	  <fieldset>
-	    <legend>咨询查询</legend>
+	    <legend>${("yly.consultation.search")}</legend>
 	    <form id="consultation_search_form" class="search-form">
 			<div class="search-item">
-			    <label> 查询时间从:</label>
+			    <label> ${("yly.consultation.date")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
-			    <label>到:</label>
+			    <label>${("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>

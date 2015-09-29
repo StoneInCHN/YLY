@@ -1,14 +1,13 @@
-<script src="${base}/resources/modules/visitElderly.js"></script>
 <div>
 	  <fieldset>
-	    <legend>${("yly.visitelderly.search")}</legend>
+	    <legend>咨询查询</legend>
 	    <form id="visitElderly_search_form" class="search-form">
 			<div class="search-item">
-			    <label> ${("yly.visitelderly.visitDate")}:</label>
+			    <label> 查询时间从:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
-			    <label>${("yly.to")}:</label>
+			    <label>到:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
@@ -97,8 +96,3 @@
 	</div>
 <div id="editVisitElderly"></div> 
 <div id="searchElderlyInfo"></div>
-
-
-
-
-

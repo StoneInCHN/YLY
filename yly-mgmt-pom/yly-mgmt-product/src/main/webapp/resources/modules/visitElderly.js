@@ -169,6 +169,21 @@ $(function(){
 	  $("#visitElderly-table-list").datagrid('reload');
 	})
 	
-	 
-	 
+	$("#elderly_info_search_btn").click(function(){
+		$('#searchElderlyInfo').dialog({    
+		    title: message("yly.visitelderly.search"),    
+		    width: 1000,    
+		    height: 500, 
+		    modal:true,
+		    cache: false,   
+		    href:'../visitElderly/elderlyInfoSearch.jhtml',
+		    buttons:[{
+				text:message("yly.common.cancel"),
+				iconCls:'icon-cancel',
+				handler:function(){
+					 $('#searchElderlyInfo').dialog("close");
+				}
+		    }]
+		});  
+	})
 })
