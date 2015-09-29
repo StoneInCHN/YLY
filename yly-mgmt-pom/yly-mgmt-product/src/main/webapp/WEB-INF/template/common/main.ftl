@@ -91,7 +91,7 @@
 		        <ul class="active" id="residential" title="${message("yly.residential.residential")}">
 		    		<li><a href="#" data-url="${base}/console/building/building.jhtml">${message("yly.residential.building")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/room/room.jhtml">${message("yly.residential.room")}</a></li>
-		    		<li><a href="#">${message("yly.residential.bed")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/bed/bed.jhtml">${message("yly.residential.bed")}</a></li>
 		    		<li><a href="#">${message("yly.residential.changeRoom")}</a></li>
 		    	</ul>
 		    	 <ul title="健康管理" id="health">
