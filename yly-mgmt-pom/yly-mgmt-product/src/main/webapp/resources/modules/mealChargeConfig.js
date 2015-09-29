@@ -1,10 +1,10 @@
 $(function() {
 
-	$("#nurseChargeConfig_table_list").datagrid({
-		title : message("yly.bed.charge.config"),
+	$("#mealChargeConfig_table_list").datagrid({
+		title : message("yly.meal.charge.config"),
 		fitColumns : true,
-		toolbar : "#nurseChargeConfig_manager_tool",
-		url : '../nurseChargeConfig/list.jhtml',
+		toolbar : "#mealChargeConfig_manager_tool",
+		url : '../mealChargeConfig/list.jhtml',
 		pagination : true,
 		loadMsg : message("yly.common.loading"),
 		striped : true,
@@ -14,9 +14,9 @@ $(function() {
 			field : 'ck',
 			checkbox : true
 		},
-		// 护理级别
+		// 伙食类型
 		{
-			title : message("yly.nurseCharge.nurseLevel"),
+			title : message("yly.mealCharge.mealType"),
 			field : "chargeItem",
 			width : 80,
 			sortable : true,
@@ -55,12 +55,12 @@ $(function() {
 
 })
 
-var nurseChargeConfig_manager_tool = {
+var mealChargeConfig_manager_tool = {
 	add : function() {
-		$('#addNurseChargeConfig')
+		$('#addMealChargeConfig')
 				.dialog(
 						{
-							title : message("yly.nurseCharge.add"),
+							title : message("yly.mealCharge.add"),
 							width : 380,
 							height : 270,
 							modal : true,
@@ -72,15 +72,15 @@ var nurseChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#addNurseChargeConfig_form')
+													'#addMealChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../nurseChargeConfig/add.jhtml",
+															url : "../mealChargeConfig/add.jhtml",
 															type : "post",
 															data : $(
-																	"#addNurseChargeConfig_form")
+																	"#addMealChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -98,10 +98,10 @@ var nurseChargeConfig_manager_tool = {
 																
 																if(result.type == "success"){
 																	$(
-																	'#addNurseChargeConfig')
+																	'#addMealChargeConfig')
 																	.dialog("close");
-																	$('#addNurseChargeConfig_form').form('reset');		
-																	$("#nurseChargeConfig_table_list")
+																	$('#addMealChargeConfig_form').form('reset');		
+																	$("#mealChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																}
@@ -125,30 +125,30 @@ var nurseChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#addNurseChargeConfig')
+											$('#addMealChargeConfig')
 													.dialog("close");
-											$('#addNurseChargeConfig_form').form('reset');
+											$('#addMealChargeConfig_form').form('reset');
 										}
 									} ],
 									
 									onOpen:function(){
-								    	$('#addNurseChargeConfig_form').show();
-								    	$("#nurseLevel").combobox({    
+								    	$('#addMealChargeConfig_form').show();
+								    	$("#mealType").combobox({    
 										    valueField:'id',    
 										    textField:'configValue',
 										    cache: true,
 										    url:'../systemConfig/findByConfigKey.jhtml',
 										    onBeforeLoad : function(param) {
-										        param.configKey = 'NURSELEVEL';// 参数
+										        param.configKey = 'MEALTYPE';// 参数
 										    }
 										});
 								    },
 								    
 						});
-		$('#addNurseChargeConfig_form').show();
+		$('#addMealChargeConfig_form').show();
 	},
 	edit : function() {
-		var _edit_row = $('#nurseChargeConfig_table_list')
+		var _edit_row = $('#mealChargeConfig_table_list')
 				.datagrid('getSelections');
 		if (_edit_row.length == 0) {
 			$.messager.alert(message("yly.common.prompt"),
@@ -160,15 +160,15 @@ var nurseChargeConfig_manager_tool = {
 					message("yly.common.select.editRow.unique"), 'warning');
 			return false;
 		}
-		var _dialog = $('#editNurseChargeConfig')
+		var _dialog = $('#editMealChargeConfig')
 				.dialog(
 						{
-							title : message("yly.nurseCharge.edit"),
+							title : message("yly.mealCharge.edit"),
 							width : 400,
 							height : 270,
 							modal : true,
 							iconCls : 'icon-mini-edit',
-							href : '../nurseChargeConfig/edit.jhtml?id='
+							href : '../mealChargeConfig/edit.jhtml?id='
 									+ _edit_row[0].id,
 							buttons : [
 									{
@@ -176,15 +176,15 @@ var nurseChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#editNurseChargeConfig_form')
+													'#editMealChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../nurseChargeConfig/update.jhtml",
+															url : "../mealChargeConfig/update.jhtml",
 															type : "post",
 															data : $(
-																	"#editNurseChargeConfig_form")
+																	"#editMealChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -201,11 +201,11 @@ var nurseChargeConfig_manager_tool = {
 																if (response == "success") {
 																	showSuccessMsg(result.content);
 																	$(
-																			'#editNurseChargeConfig')
+																			'#editMealChargeConfig')
 																			.dialog(
 																					"close");
 																	$(
-																			"#nurseChargeConfig_table_list")
+																			"#mealChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																} else {
@@ -221,7 +221,7 @@ var nurseChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#editNurseChargeConfig').dialog(
+											$('#editMealChargeConfig').dialog(
 													"close");
 										}
 									} ]
@@ -229,7 +229,7 @@ var nurseChargeConfig_manager_tool = {
 	},
 
 	remove : function() {
-		listRemove('nurseChargeConfig_table_list',
-				'../nurseChargeConfig/delete.jhtml');
+		listRemove('mealChargeConfig_table_list',
+				'../mealChargeConfig/delete.jhtml');
 	}
 }
