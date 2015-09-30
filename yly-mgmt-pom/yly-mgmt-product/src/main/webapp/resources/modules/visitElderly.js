@@ -11,12 +11,12 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.visitelderly.elderlyInfo"),field:"elderlyInfo",width:100,sortable:true},
-		      {title:message("yly.visitelderly.visitor"),field:"visitor",width:100,sortable:true},
-		      {title:message("yly.common.idcard"),field:"idcard",width:100,sortable:true},
-		      {title:message("yly.common.phonenumber"),field:"phoneNumber",width:100,sortable:true},
-		      {title:message("yly.visitelderly.visitPersonnelNumber"),field:"visitPersonnelNumber",width:100,sortable:true},
-		      {title:message("yly.common.relation"),field:"relation",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.visitelderly.elderlyInfo"),field:"elderlyInfo",width:60,align:'center',sortable:true},
+		      {title:message("yly.visitelderly.visitor"),field:"visitor",width:60,align:'center',sortable:true},
+		      {title:message("yly.common.idcard"),field:"idcard",width:110,align:'center',sortable:true},
+		      {title:message("yly.common.phonenumber"),field:"phoneNumber",width:75,align:'center',sortable:true},
+		      {title:message("yly.visitelderly.visitPersonnelNumber"),field:"visitPersonnelNumber",width:50,align:'center',sortable:true},
+		      {title:message("yly.common.relation"),field:"relation",width:75,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "SELF"){
 		    	  		return  message("yly.common.relation.self");
 		    	  	}
@@ -43,20 +43,46 @@ $(function(){
 		    	  	}
 		      	}},
 		   
-		      {title:message("yly.visitelderly.visitDate"),field:"visitDate",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.visitelderly.visitDate"),field:"visitDate",width:100,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
 		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm");
 		    	  	}
 				}},
-			  {title:message("yly.visitelderly.dueLeaveDate"),field:"dueLeaveDate",width:100,sortable:true,formatter: function(value,row,index){
+			  {title:message("yly.visitelderly.dueLeaveDate"),field:"dueLeaveDate",width:110,align:'center',sortable:true,formatter: function(value,row,index){
 			    	  	if(value != null){
 			    	  		return new Date(value).Format("yyyy-MM-dd hh:mm");
 			      	}
 				}},
-			{title:message("yly.visitelderly.reasonForVisit"),field:"reasonForVisit",width:100,sortable:true},
-			{title:message("yly.common.remark"),field:"remark",width:100,sortable:true}
+			{title:message("yly.visitelderly.reasonForVisit"),field:"reasonForVisit",width:120,align:'center',sortable:true,formatter: function(value,row,index){
+				if(value && value.length >15){
+					var abValue =  value.substring(0,10) +"...";
+					var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
+					return content;
+				}else{
+					return value
+				}
+	      	}},
+			{title:message("yly.common.remark"),field:"remark",width:100,align:'center',sortable:true,formatter: function(value,row,index){
+				if(value && value.length >15){
+					var abValue =  value.substring(0,10) +"...";
+					var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
+					return content;
+				}else{
+					return value
+				}
+	      	}}
 		   ]
-		]
+		],
+		onLoadSuccess:function(data){
+	           $(".tips-span").tooltip({
+	        	   position: 'top',
+	               onShow: function(){
+	                   $(this).tooltip('tip').css({ 
+	                       width:'300'
+	                   });
+	               }
+	           });
+	        }
 
 	});
 	 

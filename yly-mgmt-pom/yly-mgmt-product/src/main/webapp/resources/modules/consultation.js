@@ -27,10 +27,10 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.consultation.vistor"),field:"vistor",width:100,sortable:true},
-		      {title:message("yly.common.phonenumber"),field:"phoneNumber",width:100,sortable:true},
-		      {title:message("yly.consultation.elderlyname"),field:"elderlyName",width:100,sortable:true},
-		      {title:message("yly.common.gender"),field:"gender",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.consultation.vistor"),field:"vistor",width:40,align:'center',sortable:true},
+		      {title:message("yly.common.phonenumber"),field:"phoneNumber",width:50,align:'center',sortable:true},
+		      {title:message("yly.consultation.elderlyname"),field:"elderlyName",width:40,align:'center',sortable:true},
+		      {title:message("yly.common.gender"),field:"gender",width:30,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "MALE"){
 		    	  		return  message("yly.common.male");
 		    	  	}
@@ -38,7 +38,7 @@ $(function(){
 		    	  		return  message("yly.common.female");
 		    	  	}
 		      	}},
-		      {title:message("yly.consultation.checkinintention"),field:"checkinIntention",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.consultation.checkinintention"),field:"checkinIntention",width:80,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "CONFIRMED"){
 		    	  		return  message("yly.consultation.checkinIntention.confirmed");
 		    	  	}
@@ -52,7 +52,7 @@ $(function(){
 		    	  		return  message("yly.consultation.checkinIntention.will_not_checkin");
 		    	  	}
 		      	}},
-		      {title:message("yly.common.relation"),field:"relation",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.relation"),field:"relation",width:75,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "SELF"){
 		    	  		return  message("yly.common.relation.self");
 		    	  	}
@@ -78,7 +78,7 @@ $(function(){
 		    	  		return  message("yly.common.other");
 		    	  	}
 		      	}},
-		      {title:message("yly.common.infoChannel"),field:"infoChannel",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.infoChannel"),field:"infoChannel",width:30,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "NETWORK"){
 		    	  		return  message("yly.common.relation.infochannel.network");
 		    	  	}
@@ -95,14 +95,14 @@ $(function(){
 		    	  		return  message("yly.common.other");
 		    	  	}
 		      	}},
-		      {title:message("yly.consultation.returnVisit"),field:"returnVisit",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.consultation.returnVisit"),field:"returnVisit",width:20,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == true){
 		    	  		return  message("yly.common.yes");
 		    	  	}else{
 		    	  		return  message("yly.common.no");
 		    	  	}
 		      	}},
-		      {title:message("yly.consultation.returnVisitDate"),field:"returnVisitDate",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.consultation.returnVisitDate"),field:"returnVisitDate",width:60,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
 		    	  		return new Date(value).Format("yyyy-MM-dd");
 		    	  	}
