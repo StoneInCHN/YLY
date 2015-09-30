@@ -28,38 +28,38 @@
 </div> 
 <div id="addVisitElderly">
 	<form id="addVisitElderly_form" method="post" class="form-table">   
+	 	  <input type="hidden" name="elderlyInfoID" id="addVisitElderly_elderlyInfoID">
 	   	  <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.visitelderly.elderlyInfo")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="elderlyInfo" data-options="required:true" style="width:85px;"/>  
-	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo()" iconCls="icon-search" plain=true"></a> 
+	    			 <input class="easyui-textbox" id="addVisitElderly_elderlyInfo" type="text"  data-options="required:true,editable:false" style="width:85px;"/>  
+	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addVisitElderly_elderlyInfo')" iconCls="icon-search" plain=true"></a> 
 	    		</td>
 	    		
 	    		<th>${message("yly.visitelderly.visitor")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="visitor" validtype="length[0,15]" style="width:110px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="visitor" data-options="required:true" validtype="length[0,15]" style="width:85px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.common.idcard")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="IDCard"  style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="IDCard"  style="width:120px;"/> 
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="phoneNumber" validtype="mobile"  style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="phoneNumber" validtype="mobile"  style="width:110px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 				<th>${message("yly.visitelderly.visitPersonnelNumber")}:</th>
 	    		<td>
-	    			  <input class="easyui-numberspinner" type="text" name="visitPersonnelNumber" data-options="min:1,max:100,required:true" /> 
+	    			  <input class="easyui-numberspinner" type="text" name="visitPersonnelNumber" data-options="min:1,max:100,required:true,editable:false" style="width:50px;"/> 
 	    		</td>
 	    		<th>${message("yly.visitelderly.relation")}:</th>
 	    		<td>
     			  <select id="relation" class="easyui-combobox" name="relation" style="width:100px;">   
-					<option value="SELF">${message("yly.common.relation.self")}</option>
 					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
 					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
 					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
@@ -73,11 +73,11 @@
 	    	<tr>
 	    		<th>${message("yly.visitelderly.visitDate")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate" id="visitDate" name="visitDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    			  <input class="easyui-datetimebox" name="visitDate" data-options="required:true,showSeconds:false,editable:false" style="width:140px">  
 	    		</td>
 	    		<th>${message("yly.visitelderly.dueLeaveDate")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate" id="dueLeaveDate" name="dueLeaveDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    			  <input class="easyui-datetimebox" name="dueLeaveDate" data-options="required:true,showSeconds:false,editable:false" style="width:140px">
 	    		</td>
 	    	</tr>
 	    	<tr>

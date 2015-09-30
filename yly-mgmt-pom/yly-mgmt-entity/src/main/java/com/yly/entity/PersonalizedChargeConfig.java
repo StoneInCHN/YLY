@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -32,7 +33,7 @@ public class PersonalizedChargeConfig extends BaseEntity{
   /**
    * 收费项目
    */
-  private String changeItem;
+  private String chargeItem;
   
   /**
    * 金额/次
@@ -48,15 +49,17 @@ public class PersonalizedChargeConfig extends BaseEntity{
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   @Column(length = 15)
-  public String getChangeItem() {
-    return changeItem;
+  public String getChargeItem() {
+    return chargeItem;
   }
 
-  public void setChangeItem(String changeItem) {
-    this.changeItem = changeItem;
+  public void setChargeItem(String chargeItem) {
+    this.chargeItem = chargeItem;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getAmountPerTime() {
     return amountPerTime;

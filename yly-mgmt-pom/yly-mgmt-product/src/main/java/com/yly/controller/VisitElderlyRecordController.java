@@ -73,10 +73,13 @@ public class VisitElderlyRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(VisitElderlyRecord visitElderlyRecord) {
-
+  public @ResponseBody Message add(Long elderlyInfoID , VisitElderlyRecord visitElderlyRecord) {
+    
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+    
     if (visitElderlyRecord != null) {
       visitElderlyRecord.setTenantID(tenantAccountService.getCurrentTenantID());
+      visitElderlyRecord.setElderlyInfo(elderlyInfo);
       visitElderlyRecordService.save(visitElderlyRecord);
     }
     return SUCCESS_MESSAGE;

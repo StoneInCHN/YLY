@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -60,6 +61,7 @@ public class Bed extends BaseEntity{
   
   private ElderlyInfo elderlyInfo;
 
+  @JsonProperty
   @Column(length = 20, nullable = false)
   public String getBedNumber() {
     return bedNumber;
@@ -69,8 +71,8 @@ public class Bed extends BaseEntity{
     this.bedNumber = bedNumber;
   }
 
-
-
+  @JsonProperty
+  @Column(length=4)
   public String getStatus() {
     return status;
   }
@@ -79,6 +81,8 @@ public class Bed extends BaseEntity{
     this.status = status;
   }
 
+  @JsonProperty
+  @Column(length=100)
   public String getDescription() {
     return description;
   }
@@ -87,6 +91,7 @@ public class Bed extends BaseEntity{
     this.description = description;
   }
 
+  @JsonProperty
   @ManyToOne(fetch = FetchType.EAGER)
   public Room getRoom() {
     return room;

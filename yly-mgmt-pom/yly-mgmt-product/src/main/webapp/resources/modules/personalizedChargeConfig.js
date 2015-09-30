@@ -1,10 +1,10 @@
 $(function() {
 
-	$("#waterElectricityChargeConfig_table_list").datagrid({
-		title : message("yly.waterElectricity.charge.config"),
+	$("#personalizedChargeConfig_table_list").datagrid({
+		title : message("yly.personalized.charge.config"),
 		fitColumns : true,
-		toolbar : "#waterElectricityChargeConfig_manager_tool",
-		url : '../waterElectricityChargeConfig/list.jhtml',
+		toolbar : "#personalizedChargeConfig_manager_tool",
+		url : '../personalizedChargeConfig/list.jhtml',
 		pagination : true,
 		loadMsg : message("yly.common.loading"),
 		striped : true,
@@ -14,17 +14,17 @@ $(function() {
 			field : 'ck',
 			checkbox : true
 		},
-		// 水(元/吨)
+		//个性化服务项目
 		{
-			title : message("yly.charge.water.amount"),
-			field : "waterUnitPrice",
+			title : message("yly.personalizedCharge.item"),
+			field : "chargeItem",
 			width : 50,
 			sortable : true
 		},
-		// 电(元/度)
+		// 金额(元/次)
 		{
-			title : message("yly.charge.electricity.amount"),
-			field : "electricityUnitPrice",
+			title : message("yly.charge.amount.times"),
+			field : "amountPerTime",
 			width : 50,
 			sortable : true
 		},
@@ -43,12 +43,12 @@ $(function() {
 
 })
 
-var waterElectricityChargeConfig_manager_tool = {
+var personalizedChargeConfig_manager_tool = {
 	add : function() {
-		$('#addWaterElectricityChargeConfig')
+		$('#addPersonalizedChargeConfig')
 				.dialog(
 						{
-							title : message("yly.waterElectricityCharge.add"),
+							title : message("yly.personalizedCharge.add"),
 							width : 380,
 							height : 200,
 							modal : true,
@@ -60,15 +60,15 @@ var waterElectricityChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#addWaterElectricityChargeConfig_form')
+													'#addPersonalizedChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../waterElectricityChargeConfig/add.jhtml",
+															url : "../personalizedChargeConfig/add.jhtml",
 															type : "post",
 															data : $(
-																	"#addWaterElectricityChargeConfig_form")
+																	"#addPersonalizedChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -86,10 +86,10 @@ var waterElectricityChargeConfig_manager_tool = {
 																
 																if(result.type == "success"){
 																	$(
-																	'#addWaterElectricityChargeConfig')
+																	'#addPersonalizedChargeConfig')
 																	.dialog("close");
-																	$('#addWaterElectricityChargeConfig_form').form('reset');		
-																	$("#waterElectricityChargeConfig_table_list")
+																	$('#addPersonalizedChargeConfig_form').form('reset');		
+																	$("#personalizedChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																}
@@ -113,20 +113,20 @@ var waterElectricityChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#addWaterElectricityChargeConfig')
+											$('#addPersonalizedChargeConfig')
 													.dialog("close");
-											$('#addWaterElectricityChargeConfig_form').form('reset');
+											$('#addPersonalizedChargeConfig_form').form('reset');
 										}
 									} ],
 									
 									onOpen:function(){
-								    	$('#addWaterElectricityChargeConfig_form').show();
+								    	$('#addPersonalizedChargeConfig_form').show();
 								    },
 								    
 						});
 	},
 	edit : function() {
-		var _edit_row = $('#waterElectricityChargeConfig_table_list')
+		var _edit_row = $('#personalizedChargeConfig_table_list')
 				.datagrid('getSelections');
 		if (_edit_row.length == 0) {
 			$.messager.alert(message("yly.common.prompt"),
@@ -138,15 +138,15 @@ var waterElectricityChargeConfig_manager_tool = {
 					message("yly.common.select.editRow.unique"), 'warning');
 			return false;
 		}
-		var _dialog = $('#editWaterElectricityChargeConfig')
+		var _dialog = $('#editPersonalizedChargeConfig')
 				.dialog(
 						{
-							title : message("yly.waterElectricityCharge.edit"),
+							title : message("yly.personalizedCharge.edit"),
 							width : 400,
 							height : 200,
 							modal : true,
 							iconCls : 'icon-mini-edit',
-							href : '../waterElectricityChargeConfig/edit.jhtml?id='
+							href : '../personalizedChargeConfig/edit.jhtml?id='
 									+ _edit_row[0].id,
 							buttons : [
 									{
@@ -154,15 +154,15 @@ var waterElectricityChargeConfig_manager_tool = {
 										iconCls : 'icon-save',
 										handler : function() {
 											var validate = $(
-													'#editWaterElectricityChargeConfig_form')
+													'#editPersonalizedChargeConfig_form')
 													.form('validate');
 											if (validate) {
 												$
 														.ajax({
-															url : "../waterElectricityChargeConfig/update.jhtml",
+															url : "../personalizedChargeConfig/update.jhtml",
 															type : "post",
 															data : $(
-																	"#editWaterElectricityChargeConfig_form")
+																	"#editPersonalizedChargeConfig_form")
 																	.serialize(),
 															beforeSend : function() {
 																$.messager
@@ -179,11 +179,11 @@ var waterElectricityChargeConfig_manager_tool = {
 																if (response == "success") {
 																	showSuccessMsg(result.content);
 																	$(
-																			'#editWaterElectricityChargeConfig')
+																			'#editPersonalizedChargeConfig')
 																			.dialog(
 																					"close");
 																	$(
-																			"#waterElectricityChargeConfig_table_list")
+																			"#personalizedChargeConfig_table_list")
 																			.datagrid(
 																					'reload');
 																} else {
@@ -199,7 +199,7 @@ var waterElectricityChargeConfig_manager_tool = {
 										text : message("yly.common.cancel"),
 										iconCls : 'icon-cancel',
 										handler : function() {
-											$('#editWaterElectricityChargeConfig').dialog(
+											$('#editPersonalizedChargeConfig').dialog(
 													"close");
 										}
 									} ]
@@ -207,7 +207,7 @@ var waterElectricityChargeConfig_manager_tool = {
 	},
 
 	remove : function() {
-		listRemove('waterElectricityChargeConfig_table_list',
-				'../waterElectricityChargeConfig/delete.jhtml');
+		listRemove('personalizedChargeConfig_table_list',
+				'../personalizedChargeConfig/delete.jhtml');
 	}
 }

@@ -98,7 +98,7 @@
 		    		<li><a href="#">病历档案</a></li>
 		    		<li><a href="#">老人药方</a></li>
 		    		<li><a href="#">体检记录</a></li>
-		    		<li><a href="#" data-url="${base}/console/drugs/main.jhtml">药品管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/drugs/drugsInfo.jhtml">药品管理</a></li>
 		    	</ul>
 		    	<ul title="院内事务" id="affairs">
 		    		<li><a href="#">固定资产</a></li>
@@ -117,7 +117,7 @@
 		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.nurse")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/mealChargeConfig/mealChargeConfig.jhtml">${message("yly.charge.meal")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/waterElectricityChargeConfig/waterElectricityChargeConfig.jhtml">${message("yly.charge.water.electricity")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/nurseChargeConfig/nurseChargeConfig.jhtml">${message("yly.charge.personalized.service")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/personalizedChargeConfig/personalizedChargeConfig.jhtml">${message("yly.charge.personalized.service")}</a></li>
 		    	</ul>     
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
 		    		<li><a href="#">${message("yly.nurse.arrange")}</a></li>

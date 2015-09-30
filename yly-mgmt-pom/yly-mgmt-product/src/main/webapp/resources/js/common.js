@@ -146,7 +146,10 @@ function listRemove(id, url) {
 	}
 }
 
-function searchElderlyInfo() {
+/**
+ * 老人查询功能
+ */
+function searchElderlyInfo(id) {
 	$('#searchElderlyInfo').dialog({    
 	    title: message("yly.visitelderly.search"),    
 	    width: 1000,
@@ -173,12 +176,20 @@ function searchElderlyInfo() {
 	    	 loadMsg:message("yly.common.loading"),
 	    	 striped:true,
 	    	 onDblClickRow : function (rowIndex, rowData){
+	    		 $("#"+id).textbox('setValue',rowData.name);
+	    		 $("#"+id+"ID").val(rowData.id);
+	    		 $('#searchElderlyInfo').dialog("close");
 	    	 },
 	    	 columns:[
 	    	    [
-	    	       {field:'ck',checkbox:true},
-	    	       {title:message("yly.consultation.vistor"),field:"vistor",width:100,sortable:true},
-	    	       {title:message("yly.common.phonenumber"),field:"phoneNumber",width:100,sortable:true},
+	    	       {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:100,sortable:true},
+	    	       {title:message("yly.common.name"),field:"name",width:100,sortable:true},
+	    	       {title:message("yly.common.gender"),field:"gender",width:100,sortable:true},
+	    	       {title:message("yly.common.birthday"),field:"birthday",width:100,sortable:true},
+	    	       {title:message("yly.common.age"),field:"age",width:100,sortable:true},
+	    	       {title:message("yly.common.idcard"),field:"idcard",width:100,sortable:true},
+	    	       {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:100,sortable:true},
+	    	       {title:message("yly.elderlyinfo.bed"),field:"bed",width:100,sortable:true},
 	    	    ]
 	    	 ]
 

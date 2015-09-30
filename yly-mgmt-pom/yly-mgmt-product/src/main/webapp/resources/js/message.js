@@ -20,6 +20,9 @@ var messages = {
 	"yly.common.confirm" : "确认",
 	"yly.common.delete.confirm" : "您确认想要删除记录吗？",
 	"yly.common.gender": "性别",
+	"yly.common.name":"姓名",
+	"yly.common.age":"年龄",
+	"yly.common.birthday":"出生日期",
 	"yly.common.relation":"与老人关系",
 	"yly.common.infoChannel":"信息来源",
 	"yly.common.remark":"备注",
@@ -55,6 +58,7 @@ var messages = {
 	"yly.service.charge.config" : "服务费配置",
 	"yly.charge.amount.day" : "金额(元)/天",
 	"yly.charge.amount.month" : "金额(元)/月",
+	"yly.charge.amount.times" : "金额(元)/次",
 	// bedChargeConfig
 	"yly.bedCharge.bedType" : "床位类型",
 	"yly.bedCharge.add" : "添加床位费配置",
@@ -72,6 +76,10 @@ var messages = {
 	"yly.charge.electricity.amount" : "电(元/度)",
 	"yly.waterElectricityCharge.add" : "添加水电费配置",
 	"yly.waterElectricityCharge.edit" : "编辑水电费配置",
+	//personalizedChargeConfig
+	"yly.personalizedCharge.item" : "服务项目",
+	"yly.personalizedCharge.add" : "添加服务费配置",
+	"yly.personalizedCharge.edit" : "编辑服务费配置",
 	//consultation
 	"yly.consultation.record":"咨询记录",
 	"yly.consultation.vistor":"咨询人",
@@ -113,7 +121,8 @@ var messages = {
 	
 	//elderlyinfo
 	"yly.elderlyinfo":"老人信息",
-		
+	"yly.elderlyinfo.identifier":"编号",
+	"yly.elderlyinfo.bed":"床位",
 		
 	//床位管理
 	"yly.bulding.add":"添加楼宇",
@@ -138,7 +147,7 @@ var messages = {
 	"yly.bed.status":"床位状态",
 	"yly.bed.description":"描述",
 	"yly.bed.room":"所在房间"
-		
+	
 };
 //多语言
 function message(code) {

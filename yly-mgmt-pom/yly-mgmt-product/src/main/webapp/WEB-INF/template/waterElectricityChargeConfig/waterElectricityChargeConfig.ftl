@@ -16,13 +16,13 @@
 	    	<tr>
 	    		<th>${message("yly.waterElectricityCharge.config.water")}</th>
 	    		<td>
-	    			 <input class="easyui-numberbox" type="text" name="waterUnitPrice" data-options="required:true,min:0,precision:2" /> 
+	    			 <input class="easyui-numberbox" name="waterUnitPrice" data-options="required:true,min:0,precision:2" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.waterElectricityCharge.config.electricity")}</th>
 	    		<td>
-	    			 <input class="easyui-numberbox" type="text" name="electricityUnitPrice" data-options="required:true,min:0,precision:2" /> 
+	    			 <input class="easyui-numberbox" name="electricityUnitPrice" data-options="required:true,min:0,precision:2" /> 
 	    		</td>
 	    	</tr>
 	    </table>

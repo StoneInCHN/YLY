@@ -1,6 +1,9 @@
 package com.yly.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.PersonalizedChargeConfig;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.PersonalizedChargeConfigService;
@@ -33,9 +38,9 @@ public class PersonalizedChargeConfigController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
+  @RequestMapping(value = "/personalizedChargeConfig", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/personalizedChargeConfig/list";
+    return "/personalizedChargeConfig/personalizedChargeConfig";
   }
 
   /**
@@ -47,52 +52,36 @@ public class PersonalizedChargeConfigController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<PersonalizedChargeConfig> list(Pageable pageable, ModelMap model) {
     
-  /*  List<Filter> filters = new ArrayList<Filter>();
-    if(beginDate !=null){
-      Filter beginDateFilter = new Filter("createDate", Operator.gt, beginDate);
-      filters.add(beginDateFilter);
-    }
-    if(endDate!= null){
-      Filter endDateFilter = new Filter("createDate", Operator.lt, endDate);
-      filters.add(endDateFilter);
-    }
-    pageable.setFilters(filters);*/
-    
-    
-    return personalizedChargeConfigService.findPage(pageable);
+    return personalizedChargeConfigService.findPage(pageable,true);
   }
 
 
   /**
    * 编辑页面
    * @param model
-   * @param vendorId
+   * @param 
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    model.addAttribute("billing", personalizedChargeConfigService.find(id));
+    model.addAttribute("personalizedChargeConfig", personalizedChargeConfigService.find(id));
     return "/personalizedChargeConfig/edit";
   }
   
   /**
-   *  添加页面
-   * @param model
-   * @param id
+   * 添加
    * @return
    */
-  @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public String add(ModelMap model, Long id) {
-    return "/personalizedChargeConfig/add";
-  }
-
-  /**
-   * 保存
-   * @return
-   */
-  @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(PersonalizedChargeConfig personalizedChargeConfig) {
-    personalizedChargeConfigService.save(personalizedChargeConfig);
+  @RequestMapping(value = "/add", method = RequestMethod.POST)
+  public @ResponseBody Message add(PersonalizedChargeConfig personalizedChargeConfig) {
+    List<Filter> filters = new ArrayList<Filter>();
+    Filter itemFilter = new Filter("chargeItem",Operator.eq,personalizedChargeConfig.getChargeItem());
+    filters.add(itemFilter);
+    List<PersonalizedChargeConfig> personalizedChargeConfigs = personalizedChargeConfigService.findList(null, filters, null, true, null);
+    if (personalizedChargeConfigs!=null && personalizedChargeConfigs.size()>0) {
+      return Message.error("yly.personalizedCharge.config.duplicate");
+   }
+    personalizedChargeConfigService.save(personalizedChargeConfig,true);
     return SUCCESS_MESSAGE;
   }
   
@@ -102,7 +91,7 @@ public class PersonalizedChargeConfigController extends BaseController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(PersonalizedChargeConfig personalizedChargeConfig) {
-    personalizedChargeConfigService.update(personalizedChargeConfig);
+    personalizedChargeConfigService.update(personalizedChargeConfig,"chargeItem","tenantID");
     return SUCCESS_MESSAGE;
   }
   
