@@ -17,6 +17,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.Building;
 import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;
+import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BuildingService;
@@ -90,6 +91,7 @@ public class RoomController extends BaseController {
   public String edit(ModelMap model, Long id) {
     model.addAttribute("room", roomService.find(id));
     model.addAttribute("buildings", buildingService.findAll(true));
+    model.addAttribute("systemConfigs", systemConfigService.findByConfigKey(ConfigKey.ROOMTYPE, null));
     return "room/edit";
   }
 
@@ -121,10 +123,12 @@ public class RoomController extends BaseController {
    */
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(Long buildingId,Room room) {
+  public @ResponseBody Message update(Long buildingId,Room room,Long roomTypeId) {
     Building building = buildingService.find(buildingId);
-    if(building!=null){
+    SystemConfig roomType =systemConfigService.find(roomTypeId);
+    if(building!=null && roomType!=null){
       room.setBuilding(building);
+      room.setRoomType(roomType);
       roomService.update(room,"tenantID","createDate");
       return SUCCESS_MESSAGE;
     }else{

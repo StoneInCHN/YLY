@@ -13,16 +13,16 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="building_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="building_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
 <table id="building-table-list"></table>
 <div id="building_manager_tool">
 	<div class="tool-button">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="building_manager_tool.add();">添加</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="building_manager_tool.edit();">修改</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="building_manager_tool.remove();">删除</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="building_manager_tool.add();">${message("yly.button.add")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="building_manager_tool.edit();">${message("yly.button.update")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="building_manager_tool.remove();">${message("yly.button.delete")}</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true">导出</a>
 	</div>
 	<div class="tool-filter"></div>
@@ -31,13 +31,13 @@
 	<form id="addBulid_form" method="post" class="form-table">   
 	    <table class="table table-striped">
 	    	<tr>
-	    		<th>楼宇名称:</th>
+	    		<th>${message("yly.building.buildingName")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="buildingName" data-options="required:true" />   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>描述 :</th>
+	    		<th>${message("yly.building.description")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="description" data-options="required:true,multiline:true,height:100" /> 
 	    		</td>

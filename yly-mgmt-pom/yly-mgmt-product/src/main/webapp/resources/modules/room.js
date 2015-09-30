@@ -74,7 +74,7 @@ var room_manager_tool = {
 				var _dialog = $('#editRoom').dialog({    
 				    title: message("yly.room.edit"),     
 				    width: 400,    
-				    height: 380,    
+				    height: 500,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../room/edit.jhtml?id='+_edit_row.id,
@@ -129,11 +129,11 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.room.roomName"),field:"roomName",width:100,sortable:true},
-		      {title:message("yly.room.roomNumber"),field:"roomNumber",width:50,sortable:true},
-		      {title:message("yly.room.floor"),field:"floor",width:50,sortable:true},
-		      {title:message("yly.room.roomType"),field:"roomType",width:100,sortable:true},
-		      {title:message("yly.room.roomStatus"),field:"roomStatus",width:50,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.room.roomName"),field:"roomName",width:100,align:'center',sortable:true},
+		      {title:message("yly.room.roomNumber"),field:"roomNumber",width:50,align:'center',sortable:true},
+		      {title:message("yly.room.floor"),field:"floor",width:50,align:'center',sortable:true},
+		      {title:message("yly.room.roomType"),field:"roomType",width:100,align:'center',sortable:true},
+		      {title:message("yly.room.roomStatus"),field:"roomStatus",width:50,align:'center',sortable:true,formatter: function(value,row,index){
 		    		if(value == "ENABLE"){
 		    	  		return  message("yly.common.enable");
 		    	  	}
@@ -142,7 +142,7 @@ $(function(){
 		    	  	}
 		      	}
 		      },
-		      {title:message("yly.room.building"),field:"building",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.room.building"),field:"building",width:100,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  if(value){
 		    		  return  value.buildingName;
 		    	  }else{
@@ -151,7 +151,7 @@ $(function(){
 					
 		      	}
 		      },
-		      {title:message("yly.room.description"),field:"description",width:200,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.room.description"),field:"description",width:200,align:'center',sortable:true,formatter: function(value,row,index){
 					if(value && value.length >22){
 						var abValue =  value.substring(0,19) +"...";
 						var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
@@ -161,11 +161,11 @@ $(function(){
 					}
 		      	}
 		      },
-		      {title:message("yly.common.createDate"),field:"createDate",width:60,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.createDate"),field:"createDate",width:60,align:'center',sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
 		      },
-		      {title:message("yly.common.modifyDate"),field:"modifyDate",width:60,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.modifyDate"),field:"modifyDate",width:60,align:'center',sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}},
 		   ]

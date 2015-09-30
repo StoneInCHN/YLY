@@ -31,7 +31,7 @@ img {
     vertical-align: middle;
 }
 .login .content {
-    background: url("../img/login/bg-white-lock.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    background: url("../images/login/bg-white-lock.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
     margin: 0 auto;
     padding: 20px 30px 15px;
     width: 291px;
@@ -71,7 +71,7 @@ img {
 }
 
 .close {
-    background-image: url("../img/login/remove-icon-small.png") !important;
+    background-image: url("../images/login/remove-icon-small.png") !important;
     background-repeat: no-repeat !important;
     display: inline-block;
     height: 9px;
@@ -339,38 +339,4 @@ button.btn, input.btn[type="submit"] {
 .error{
 	border:1px solid red !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

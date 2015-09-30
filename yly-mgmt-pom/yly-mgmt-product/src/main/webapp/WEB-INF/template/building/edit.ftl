@@ -2,15 +2,15 @@
 		 <input value="${building.id}" type="hidden" name="id" />
 	    <table class="table table-striped">
 	    	<tr>
-	    		<th>楼宇名称:</th>
+	    		<th>${message("yly.building.buildingName")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" value="${building.buildingName}" type="text" name="buildingName" data-options="required:true" />   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>描述 :</th>
+	    		<th>${message("yly.building.description")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" value="${building.description}" name="description" data-options="required:true,multiline:true,height:100" /> 
+	    			  <input class="easyui-textbox" type="text" value="${building.description}" name="description" validtype="length[0,100]" data-options="required:true,multiline:true,height:100" /> 
 	    		</td>
 	    	</tr>
 	    </table>
