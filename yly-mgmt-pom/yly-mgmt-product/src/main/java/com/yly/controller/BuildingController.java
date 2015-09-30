@@ -43,8 +43,8 @@ public class BuildingController extends BaseController {
 
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findAll() {
-    String[] strArr = {"id","buildingName"};
-    return FieldFilterUtils.filterCollectionMap(strArr,  buildingService.findAll(true));
+    String[] propertys = {"id","buildingName"};
+    return FieldFilterUtils.filterCollectionMap(propertys,  buildingService.findAll(true));
   }
 
   
