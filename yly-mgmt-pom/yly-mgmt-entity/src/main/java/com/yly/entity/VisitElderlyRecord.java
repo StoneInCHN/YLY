@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Relation;
 
@@ -31,11 +32,11 @@ public class VisitElderlyRecord extends BaseEntity {
    */
   private static final long serialVersionUID = -5942468444145494314L;
 
-	/**
-	 * 租户ID
-	 */
-	private Long tenantID;
-  
+  /**
+   * 租户ID
+   */
+  private Long tenantID;
+
   /**
    * 被探望老人
    */
@@ -75,10 +76,10 @@ public class VisitElderlyRecord extends BaseEntity {
    * 来访原因
    */
   private String reasonForVisit;
-  
+
   /**
-	 * 咨询人和老人关系
-  */
+   * 咨询人和老人关系
+   */
   private Relation relation;
 
   /**
@@ -86,6 +87,7 @@ public class VisitElderlyRecord extends BaseEntity {
    */
   private String remark;
 
+  @JsonProperty
   @Column(length = 15)
   public String getVisitor() {
     return visitor;
@@ -95,6 +97,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.visitor = visitor;
   }
 
+  @JsonProperty
   public Date getVisitDate() {
     return visitDate;
   }
@@ -103,6 +106,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.visitDate = visitDate;
   }
 
+  @JsonProperty
   public Date getDueLeaveDate() {
     return dueLeaveDate;
   }
@@ -111,6 +115,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.dueLeaveDate = dueLeaveDate;
   }
 
+  @JsonProperty
   public Integer getVisitPersonnelNumber() {
     return visitPersonnelNumber;
   }
@@ -119,6 +124,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.visitPersonnelNumber = visitPersonnelNumber;
   }
 
+  @JsonProperty
   @Column(length = 25)
   public String getIDCard() {
     return IDCard;
@@ -128,6 +134,7 @@ public class VisitElderlyRecord extends BaseEntity {
     IDCard = iDCard;
   }
 
+  @JsonProperty
   @Column(length = 15)
   public String getPhoneNumber() {
     return phoneNumber;
@@ -137,6 +144,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.phoneNumber = phoneNumber;
   }
 
+  @JsonProperty
   @Column(length = 50)
   public String getReasonForVisit() {
     return reasonForVisit;
@@ -146,6 +154,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.reasonForVisit = reasonForVisit;
   }
 
+  @JsonProperty
   @Column(length = 150)
   public String getRemark() {
     return remark;
@@ -155,6 +164,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.remark = remark;
   }
 
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
@@ -164,21 +174,22 @@ public class VisitElderlyRecord extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
-public Relation getRelation() {
-	return relation;
-}
+  @JsonProperty
+  public Relation getRelation() {
+    return relation;
+  }
 
-public void setRelation(Relation relation) {
-	this.relation = relation;
-}
+  public void setRelation(Relation relation) {
+    this.relation = relation;
+  }
 
-@Index(name = "visit_elderly_record_tenantid")
-public Long getTenantID() {
-	return tenantID;
-}
+  @Index(name = "visit_elderly_record_tenantid")
+  public Long getTenantID() {
+    return tenantID;
+  }
 
-public void setTenantID(Long tenantID) {
-	this.tenantID = tenantID;
-}
-  
+  public void setTenantID(Long tenantID) {
+    this.tenantID = tenantID;
+  }
+
 }
