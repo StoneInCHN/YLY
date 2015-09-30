@@ -1,30 +1,31 @@
 var bed_manager_tool = {
 			add:function(){		
 				$('#addBed').dialog({    
-				    title: '添加楼宇',    
-				    width: 380,    
-				    height: 460,
+				    title: message("yly.bed.add"),    
+				    width: 350,    
+				    height: 360,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addBed_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../bed/save.jhtml",
+									url:"../bed/add.jhtml",
 									type:"post",
 									data:$("#addBed_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
-											text:"正在添加中......"
+											text:message("yly.common.saving")
 										});
 									},
 									success:function(result,response,status){
 											$.messager.progress('close');
 											showSuccessMsg(result.content);
+											$('#addBed_form').form('reset');
 											$('#addBed').dialog("close");
 											$("#bed_table_list").datagrid('reload');
 									},
@@ -36,7 +37,7 @@ var bed_manager_tool = {
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#addBed').dialog("close");
@@ -45,41 +46,28 @@ var bed_manager_tool = {
 				    onOpen:function(){
 				    	$('#addBed_form').show();
 				    	$("#addBed_form_roomId").combobox({    
-						    valueField:'id',    
-						    textField:'buildingName',
-						    cache: true,
-						    url:'../building/findAll.jhtml'
-						});
-				    	$("#addBed_form_bedType").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'bedTYPE';// 参数
-						    }
-						});
-				    },
-				    onClose:function(){
-				    	 $('#addBed_form').form('reset');
+				    	    valueField:'id',    
+				    	    textField:'roomNumber',
+				    	    url:'../room/findAll.jhtml'
+				    	})
 				    }
 				});  
 			},
 			edit:function(){
 				var _edit_row = $('#bed_table_list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert('警告','请选择要编辑的行','warning');  
+					$.messager.alert(message("yly.common.prompt"),message("yly.common.select.editRow"),'warning');    
 					return false;
 				}
-				var _dialog = $('#editbBed').dialog({    
-				    title: '楼宇编辑',     
+				$('#editBed').dialog({    
+				    title: message("yly.bed.edit"),     
 				    width: 400,    
 				    height: 380,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../bed/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#editBed_form').form('validate');
@@ -89,7 +77,7 @@ var bed_manager_tool = {
 									type:"post",
 									data:$("#editBed_form").serialize(),
 									beforeSend:function(){
-										$.messager.progress({text:"正在保存中......"});
+										$.messager.progress({text:message("yly.common.saving")});
 									},
 									success:function(result,response,status){
 											$.messager.progress('close');
@@ -105,12 +93,15 @@ var bed_manager_tool = {
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editBed').dialog("close");
 						}
-				    }]
+				    }],
+				    onOpen:function(){
+				    	$('#editBed_form').show();
+				    }
 				});  
 			},
 			remove:function(){
@@ -119,27 +110,33 @@ var bed_manager_tool = {
 	}
 $(function(){
 	$("#bed_table_list").datagrid({
-		title:"楼宇列表",
+		title:message("yly.bed.list"),
 		fitColumns:true,
 		toolbar:"#bed_manager_tool",
 		url:'../bed/list.jhtml',  
 		pagination:true,
-		loadMsg:"加载中......",
+		loadMsg:message("yly.common.loading"),
 		striped:true,
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:"床位编号",field:"bedNumber",width:50,sortable:true},
-		      {title:"床位状态",field:"bedStatus",width:50,sortable:true,formatter: function(value,row,index){
-		    	  	if(value == "ENABLE"){
-		    	  		return  "启用";
-		    	  	}
-		    	  	if(value == "DISABLE"){
-		    	  		return  "禁用";
+		      {title:message("yly.bed.bedNumber"),field:"bedNumber",width:50,sortable:true},
+		      {title:message("yly.bed.room"),field:"room",width:100,formatter: function(value,row,index){
+		    	  	if(value){
+		    	  		return value.roomNumber;
 		    	  	}
 		      	}
 		      },
-		      {title:"描述",field:"description",width:200,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.bed.status"),field:"status",width:50,sortable:true,formatter: function(value,row,index){
+		    	  	if(value == "ENABLE"){
+		    	  		return  message("yly.common.enable");
+		    	  	}
+		    	  	if(value == "DISABLE"){
+		    	  		return  message("yly.common.disable");
+		    	  	}
+		      	}
+		      },
+		      {title:message("yly.room.description"),field:"description",width:200,sortable:true,formatter: function(value,row,index){
 					if(value && value.length >22){
 						var abValue =  value.substring(0,19) +"...";
 						var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
@@ -149,11 +146,11 @@ $(function(){
 					}
 		      	}
 		      },
-		      {title:"创建时间",field:"createDate",width:60,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.createDate"),field:"createDate",width:60,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
 		      },
-		      {title:"修改时间",field:"modifyDate",width:60,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.modifyDate"),field:"modifyDate",width:60,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}},
 		   ]
@@ -170,19 +167,14 @@ $(function(){
         }
 
 	});
-	$("#bed_search_btn").click(function(){
+	/*$("#bed_search_btn").click(function(){
 	  var _queryParams = {
 			  beginDate:$("#bed_search_form #beginDate").val(),
 			  endDate:$("#bed_search_form #endDate").val()
 	  }
 	  $('#bed_table_list').datagrid('options').queryParams = _queryParams;  
 	  $("#bed_table_list").datagrid('reload');
-	})
+	})*/
+
 	
-	
-	$("#bed_search_form_buildingId").combobox({    
-	    url:'../building/findAll.jhtml',    
-	    valueField:'id',    
-	    textField:'buildingName'
-	});  
 })

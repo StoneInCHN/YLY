@@ -1,6 +1,8 @@
 package com.yly.controller;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -21,6 +23,7 @@ import com.yly.service.BuildingService;
 import com.yly.service.RoomService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
+import com.yly.utils.FieldFilterUtils;
 
 /**
  * 房间
@@ -67,6 +70,16 @@ public class RoomController extends BaseController {
     return roomService.findPage(pageable,true);
   }
 
+  /**
+   * 查询该租户下所有的房间
+   * @return
+   */
+  @RequestMapping(value = "/findAll", method = RequestMethod.POST)
+  public @ResponseBody List<Map<String, Object>> findAll() {
+    String[] strArr = {"id","roomNumber"};
+    return FieldFilterUtils.filterCollectionMap(strArr,  roomService.findAll(true));
+  }
+  
   /**
    * 获取数据进入编辑页面
    * @param model

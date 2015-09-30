@@ -1,14 +1,14 @@
  var building_manager_tool = {
 			add:function(){		
 				$('#addBulid').dialog({    
-				    title: '添加楼宇',    
+				    title: message("yly.bulding.add"),    
 				    width: 380,    
 				    height: 270,
 				    iconCls:'icon-mini-add',
 				    modal:true,
 				    cache: false, 
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 				    	handler:function(){
 							var validate = $('#addBulid_form').form('validate');
@@ -19,7 +19,7 @@
 									data:$("#addBulid_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
-											text:"正在添加中......"
+											text:message("yly.common.saving")
 										});
 									},
 									success:function(result,response,status){
@@ -36,7 +36,7 @@
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#addBulid').dialog("close");
@@ -53,18 +53,18 @@
 			edit:function(){
 				var _edit_row = $('#building-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert('警告','请选择要编辑的行');  
+					$.messager.alert(message("yly.common.prompt"),message("yly.common.select.editRow"),'warning');  
 					return false;
 				}
 				var _dialog = $('#editBuild').dialog({    
-				    title: '楼宇编辑',     
+				    title: message("yly.bulding.edit"),     
 				    width: 400,    
 				    height: 270,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../building/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#editBuild_form').form('validate');
@@ -75,7 +75,7 @@
 									data:$("#editBuild_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
-											text:"正在保存中......"
+											text:message("yly.common.saving")
 										});
 									},
 									success:function(result,response,status){
@@ -92,7 +92,7 @@
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editBuild').dialog("close");
@@ -108,22 +108,22 @@
 	
 	$(function(){
 		$("#building-table-list").datagrid({
-			title:"楼宇列表",
+			title:message("yly.bulding.list"),
 			fitColumns:true,
 			toolbar:"#building_manager_tool",
 			url:'../building/list.jhtml',  
 			pagination:true,
-			loadMsg:"加载中......",
+			loadMsg:message("yly.common.loading"),
 			striped:true,
 			columns:[
 			   [
 			      {field:'ck',checkbox:true},
-			      {title:"楼宇名称",field:"buildingName",width:100,sortable:true},
-			      {title:"描述",field:"description",width:100,sortable:true},
-			      {title:"创建时间",field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
+			      {title:message("yly.bulding.buildingName"),field:"buildingName",width:100,sortable:true},
+			      {title:message("yly.bulding.description"),field:"description",width:100,sortable:true},
+			      {title:message("yly.common.createDate"),field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
 						return new Date(value).Format("yyyy-MM-dd");
 					}},
-			      {title:"修改时间",field:"modifyDate",width:100,sortable:true,formatter: function(value,row,index){
+			      {title:message("yly.common.modifyDate"),field:"modifyDate",width:100,sortable:true,formatter: function(value,row,index){
 						return new Date(value).Format("yyyy-MM-dd");
 					}}
 			   ]

@@ -46,7 +46,8 @@ public class BedController extends BaseController {
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    model.addAttribute("building", bedService.find(id));
+    model.addAttribute("bed", bedService.find(id));
+    model.addAttribute("rooms", roomService.findAll(true));
     return "bed/edit";
   }
 
@@ -74,9 +75,19 @@ public class BedController extends BaseController {
 
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(Bed bed) {
-    bedService.update(bed, "tenantID", "createDate","room");
-    return SUCCESS_MESSAGE;
+  public @ResponseBody Message update(Bed bed,Long roomId) {
+    Room room=null;
+    if (roomId!=null) {
+       room = roomService.find(roomId);
+    }
+    if (bed != null && room!=null) {
+      bed.setRoom(room);
+      bedService.update(bed,"tenantID", "createDate");
+      return SUCCESS_MESSAGE;
+    }else{
+      return ERROR_MESSAGE;
+    }
+   
   }
 
 

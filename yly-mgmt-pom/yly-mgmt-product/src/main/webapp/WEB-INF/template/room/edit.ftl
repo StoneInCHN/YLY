@@ -47,7 +47,7 @@
 			<tr>
 	    		<th>描述:</th>
 	    		<td>
-	    			  <textarea class="easyui-validatebox"  value="${room.description}" data-options="max:100"   name="description" style="height:60px;width:200px"></textarea> 
+	    			  <textarea class="easyui-validatebox"  value="${room.description}" data-options="max:100"   name="description" style="height:60px,width:200px"></textarea> 
 	    		</td>
 	    	</tr>
 	    </table>

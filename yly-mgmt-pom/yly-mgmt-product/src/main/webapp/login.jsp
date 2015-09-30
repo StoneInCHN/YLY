@@ -71,7 +71,7 @@ if (applicationContext != null) {
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	<link rel="icon" href="<%=base%>/resources/img/favicon.ico">
+	<link rel="icon" href="<%=base%>/resources/images/favicon.ico">
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
 	<link href="<%=base%>/resources/css/font-awesome.css" rel="stylesheet" type="text/css" />
 	<link href="<%=base%>/resources/css/login.css" rel="stylesheet" type="text/css" />
@@ -174,7 +174,7 @@ if (applicationContext != null) {
 </head>
 <body class="login" onload="loadTopWindow()">
 	<div class="logo">
-		<img src="<%=base%>/resources/img/login/logo-big.png" alt="后台管理系统" /> 
+		<img src="<%=base%>/resources/images/login/logo-big.png" alt="后台管理系统" /> 
 	</div>
 	<div class="content">
 		<form class="form-vertical login-form" id="loginForm" action="login.jsp" method="post">
@@ -242,10 +242,10 @@ if (applicationContext != null) {
     $(function(){
     	//背景图片滚动显示
     	  $.backstretch([
-    	 		        "resources/img/login/bg/1.jpg",
-    	 		        "resources/img/login/bg/2.jpg",
-    	 		        "resources/img/login/bg/3.jpg",
-    	 		        "resources/img/login/bg/4.jpg"
+    	 		        "resources/images/login/bg/1.jpg",
+    	 		        "resources/images/login/bg/2.jpg",
+    	 		        "resources/images/login/bg/3.jpg",
+    	 		        "resources/images/login/bg/4.jpg"
     	 		        ], {
     	 		          fade: 1000,
     	 		          duration: 8000

@@ -42,7 +42,8 @@ var messages = {
 	"yly.common.relation.infochannel.ohter_introduct":"他人介绍",
 	"yly.common.relation.infochannel.advertisement":"广告",
 	"yly.common.idcard":"身份证号码",
-	
+	"yly.common.disable":"禁用",
+	"yly.common.enable":"启用",
 	
 	/**
 	 * charge config
@@ -111,7 +112,33 @@ var messages = {
 	"yly.volunteer.organization":"组织机构",
 	
 	//elderlyinfo
-	"yly.elderlyinfo":"老人信息"
+	"yly.elderlyinfo":"老人信息",
+		
+		
+	//床位管理
+	"yly.bulding.add":"添加楼宇",
+	"yly.bulding.edit":"楼宇编辑",
+	"yly.bulding.list":"楼宇列表",
+	"yly.bulding.buildingName":"楼宇名称",
+	"yly.bulding.description":"描述",
+	"yly.room.add":"房间添加",
+	"yly.room.edit":"房间编辑",
+	"yly.room.list":"房间列表",
+	"yly.room.roomName":"房间名称",
+	"yly.room.roomNumber":"房间编号",
+	"yly.room.floor":"房间所在楼层",
+	"yly.room.roomType":"房间类型",
+	"yly.room.roomStatus":"房间状态",
+	"yly.room.building":"所属楼宇",
+	"yly.room.description":"房间描述",
+	"yly.bed.add":"床位添加",
+	"yly.bed.edit":"床位编辑",
+	"yly.bed.list":"床位列表",
+	"yly.bed.bedNumber":"床位号",
+	"yly.bed.status":"床位状态",
+	"yly.bed.description":"描述",
+	"yly.bed.room":"所在房间"
+		
 };
 //多语言
 function message(code) {

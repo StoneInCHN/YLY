@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="${base}/resources/img/favicon.ico">
+    <link rel="icon" href="${base}/resources/images/favicon.ico">
     <title>管理中心</title>
     <link href="${base}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${base}/resources/css/font-awesome.min.css" rel="stylesheet">

@@ -1,14 +1,14 @@
 var room_manager_tool = {
 			add:function(){		
 				$('#addRoom').dialog({    
-				    title: '添加楼宇',    
+				    title: message("yly.room.add"),    
 				    width: 380,    
 				    height: 460,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addRoom_form').form('validate');
@@ -19,7 +19,7 @@ var room_manager_tool = {
 									data:$("#addRoom_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
-											text:"正在添加中......"
+											text:message("yly.common.saving")
 										});
 									},
 									success:function(result,response,status){
@@ -36,7 +36,7 @@ var room_manager_tool = {
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#addRoom').dialog("close");
@@ -68,18 +68,18 @@ var room_manager_tool = {
 			edit:function(){
 				var _edit_row = $('#room_table_list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert('警告','请选择要编辑的行','warning');  
+					$.messager.alert(message("yly.common.prompt"),message("yly.common.select.editRow"),'warning');      
 					return false;
 				}
 				var _dialog = $('#editRoom').dialog({    
-				    title: '楼宇编辑',     
+				    title: message("yly.room.edit"),     
 				    width: 400,    
 				    height: 380,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../room/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#editRoom_form').form('validate');
@@ -89,7 +89,7 @@ var room_manager_tool = {
 									type:"post",
 									data:$("#editRoom_form").serialize(),
 									beforeSend:function(){
-										$.messager.progress({text:"正在保存中......"});
+										$.messager.progress({text:message("yly.common.saving")});
 									},
 									success:function(result,response,status){
 											$.messager.progress('close');
@@ -105,7 +105,7 @@ var room_manager_tool = {
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editRoom').dialog("close");
@@ -119,30 +119,30 @@ var room_manager_tool = {
 	}
 $(function(){
 	$("#room_table_list").datagrid({
-		title:"楼宇列表",
+		title:message("yly.room.list"),
 		fitColumns:true,
 		toolbar:"#room_manager_tool",
 		url:'../room/list.jhtml',  
 		pagination:true,
-		loadMsg:"加载中......",
+		loadMsg:message("yly.common.loading"),
 		striped:true,
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:"房间名称",field:"roomName",width:100,sortable:true},
-		      {title:"房间编号",field:"roomNumber",width:50,sortable:true},
-		      {title:"所在楼层",field:"floor",width:50,sortable:true},
-		      {title:"房间类型",field:"roomType",width:100,sortable:true},
-		      {title:"房间状态",field:"roomStatus",width:50,sortable:true,formatter: function(value,row,index){
-		    	  	if(value == "ENABLE"){
-		    	  		return  "启用";
+		      {title:message("yly.room.roomName"),field:"roomName",width:100,sortable:true},
+		      {title:message("yly.room.roomNumber"),field:"roomNumber",width:50,sortable:true},
+		      {title:message("yly.room.floor"),field:"floor",width:50,sortable:true},
+		      {title:message("yly.room.roomType"),field:"roomType",width:100,sortable:true},
+		      {title:message("yly.room.roomStatus"),field:"roomStatus",width:50,sortable:true,formatter: function(value,row,index){
+		    		if(value == "ENABLE"){
+		    	  		return  message("yly.common.enable");
 		    	  	}
 		    	  	if(value == "DISABLE"){
-		    	  		return  "禁用";
+		    	  		return  message("yly.common.disable");
 		    	  	}
 		      	}
 		      },
-		      {title:"所属楼宇",field:"building",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.room.building"),field:"building",width:100,sortable:true,formatter: function(value,row,index){
 		    	  if(value){
 		    		  return  value.buildingName;
 		    	  }else{
@@ -151,7 +151,7 @@ $(function(){
 					
 		      	}
 		      },
-		      {title:"描述",field:"description",width:200,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.room.description"),field:"description",width:200,sortable:true,formatter: function(value,row,index){
 					if(value && value.length >22){
 						var abValue =  value.substring(0,19) +"...";
 						var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
@@ -161,11 +161,11 @@ $(function(){
 					}
 		      	}
 		      },
-		      {title:"创建时间",field:"createDate",width:60,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.createDate"),field:"createDate",width:60,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
 		      },
-		      {title:"修改时间",field:"modifyDate",width:60,sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.common.modifyDate"),field:"modifyDate",width:60,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}},
 		   ]
