@@ -77,7 +77,7 @@
 	    		</td>
 	    		<th>${message("yly.visitelderly.dueLeaveDate")}:</th>
 	    		<td>
-	    			  <input class="easyui-datetimebox" name="dueLeaveDate" data-options="required:true,showSeconds:false,editable:false" style="width:140px">
+	    			  <input class="easyui-datetimebox" name="dueLeaveDate" data-options="showSeconds:false,editable:false" style="width:140px">
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -1,6 +1,8 @@
 package com.yly.controller;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,6 +21,7 @@ import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
 import com.yly.service.VisitElderlyRecordService;
+import com.yly.utils.FieldFilterUtils;
 
 /**
  * 老人探望
@@ -61,9 +64,18 @@ public class VisitElderlyRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<VisitElderlyRecord> list(Date beginDate, Date endDate,
+  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
       Pageable pageable, ModelMap model) {
-    return visitElderlyRecordService.findPage(pageable, true);
+    
+      Page<VisitElderlyRecord> page = visitElderlyRecordService.findPage(pageable, true);
+      
+      String []properties = {"id","visitor","visitDate","dueLeaveDate","visitPersonnelNumber","IDCard","phoneNumber","reasonForVisit","relation","remark","elderlyInfo.id","elderlyInfo.name"};
+      
+      List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());
+      
+      Page<Map<String, Object>> filteredPage = new Page<Map<String,Object>>(rows,page.getTotal(),pageable);
+      
+      return filteredPage;
   }
 
   /**

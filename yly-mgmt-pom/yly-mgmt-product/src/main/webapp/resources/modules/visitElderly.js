@@ -11,9 +11,16 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.visitelderly.elderlyInfo"),field:"elderlyInfo",width:60,align:'center',sortable:true},
+		      {title:message("yly.visitelderly.elderlyInfo"),field:"elderlyInfo",width:60,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  if(value){
+		    		  return  value.name;
+		    	  }else{
+		    		  return  value;
+		    	  }
+					
+		      	}},
 		      {title:message("yly.visitelderly.visitor"),field:"visitor",width:60,align:'center',sortable:true},
-		      {title:message("yly.common.idcard"),field:"idcard",width:110,align:'center',sortable:true},
+		      {title:message("yly.common.idcard"),field:"IDCard",width:110,align:'center',sortable:true},
 		      {title:message("yly.common.phonenumber"),field:"phoneNumber",width:75,align:'center',sortable:true},
 		      {title:message("yly.visitelderly.visitPersonnelNumber"),field:"visitPersonnelNumber",width:50,align:'center',sortable:true},
 		      {title:message("yly.common.relation"),field:"relation",width:75,align:'center',sortable:true,formatter: function(value,row,index){

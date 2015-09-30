@@ -1,10 +1,12 @@
 package com.yly.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.cglib.beans.BeanMap;
 
@@ -40,11 +42,11 @@ public class FieldFilterUtils<T> {
    * @param collection 集合
    * @return
    */
-  public static <T> List<Map<String, Object>> filterCollectionMap(String[] propertys,
+  public static <T> List<Map<String, Object>> filterCollectionMap(String[] properties,
       Collection<T> collection) {
     List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
     for (T entity : collection) {
-      resultList.add(filterEntityMap(propertys, entity));
+      resultList.add(filterEntityMap(properties, entity));
     }
     return resultList;
 
@@ -63,7 +65,7 @@ public class FieldFilterUtils<T> {
     BeanMap beanMap = BeanMap.create(entity);
     for (String key : propertys) {
       String[] pros = key.split("\\.");
-      if (pros != null && pros.length > 1) {// 目前只支持取2级对象，参数格式如lawyer.id
+      if (pros != null && pros.length > 1) {// 目前只支持取2级对象
         String[] str = {pros[1]};
         childMap.putAll(filterEntityMap(str, beanMap.get(pros[0])));
         map.put(pros[0], childMap);
@@ -72,10 +74,5 @@ public class FieldFilterUtils<T> {
       }
     }
     return map;
-
   }
-
-
-  //
-
 }
