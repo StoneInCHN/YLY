@@ -182,13 +182,20 @@ function searchElderlyInfo(id) {
 	    	 },
 	    	 columns:[
 	    	    [
-	    	       {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:100,sortable:true},
-	    	       {title:message("yly.common.name"),field:"name",width:100,sortable:true},
-	    	       {title:message("yly.common.gender"),field:"gender",width:100,sortable:true},
-	    	       {title:message("yly.common.birthday"),field:"birthday",width:100,sortable:true},
-	    	       {title:message("yly.common.age"),field:"age",width:100,sortable:true},
-	    	       {title:message("yly.common.idcard"),field:"idcard",width:100,sortable:true},
-	    	       {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:100,sortable:true},
+	    	       {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:60,align:'center',sortable:true},
+	    	       {title:message("yly.common.name"),field:"name",width:60,align:'center',sortable:true},
+	    	       {title:message("yly.common.gender"),field:"gender",width:30,align:'center',sortable:true,formatter: function(value,row,index){
+			    	  	if(value == "MALE"){
+			    	  		return  message("yly.common.male");
+			    	  	}
+			    	  	if(value == "FEMALE"){
+			    	  		return  message("yly.common.female");
+			    	  	}
+			      	}},
+	    	       {title:message("yly.common.birthday"),field:"birthday",width:110,align:'center',sortable:true},
+	    	       {title:message("yly.common.age"),field:"age",width:30,align:'center',sortable:true},
+	    	       {title:message("yly.common.idcard"),field:"idcard",width:110,align:'center',sortable:true},
+	    	       {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:75,align:'center',sortable:true},
 	    	       {title:message("yly.elderlyinfo.bed"),field:"bed",width:100,sortable:true},
 	    	    ]
 	    	 ]
