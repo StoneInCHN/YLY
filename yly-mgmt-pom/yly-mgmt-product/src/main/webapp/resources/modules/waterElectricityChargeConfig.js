@@ -19,6 +19,7 @@ $(function() {
 			title : message("yly.charge.water.amount"),
 			field : "waterUnitPrice",
 			width : 50,
+			align:'center',
 			sortable : true
 		},
 		// 电(元/度)
@@ -26,6 +27,7 @@ $(function() {
 			title : message("yly.charge.electricity.amount"),
 			field : "electricityUnitPrice",
 			width : 50,
+			align:'center',
 			sortable : true
 		},
 		// 创建时间
@@ -33,6 +35,7 @@ $(function() {
 			title : message("yly.common.createDate"),
 			field : "createDate",
 			width : 60,
+			align:'center',
 			sortable : true,
 			formatter : function(value, row, index) {
 				return new Date(value).Format("yyyy-MM-dd");

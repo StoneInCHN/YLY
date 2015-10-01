@@ -19,6 +19,7 @@ $(function() {
 			title : message("yly.mealCharge.mealType"),
 			field : "chargeItem",
 			width : 80,
+			align:'center',
 			sortable : true,
 			formatter : function(value, row, index) {
 				if (value) {
@@ -31,6 +32,7 @@ $(function() {
 			title : message("yly.charge.amount.day"),
 			field : "amountPerDay",
 			width : 50,
+			align:'center',
 			sortable : true
 		},
 		// 金额(元)/月
@@ -38,6 +40,7 @@ $(function() {
 			title : message("yly.charge.amount.month"),
 			field : "amountPerMonth",
 			width : 50,
+			align:'center',
 			sortable : true
 		},
 		// 创建时间
@@ -45,6 +48,7 @@ $(function() {
 			title : message("yly.common.createDate"),
 			field : "createDate",
 			width : 60,
+			align:'center',
 			sortable : true,
 			formatter : function(value, row, index) {
 				return new Date(value).Format("yyyy-MM-dd");

@@ -19,6 +19,7 @@ $(function() {
 			title : message("yly.bedCharge.bedType"),
 			field : "chargeItem",
 			width : 80,
+			align:'center',
 			sortable : true,
 			formatter : function(value, row, index) {
 				if (value) {
@@ -31,6 +32,7 @@ $(function() {
 			title : message("yly.charge.amount.day"),
 			field : "amountPerDay",
 			width : 50,
+			align:'center',
 			sortable : true
 		},
 		// 金额(元)/月
@@ -38,12 +40,14 @@ $(function() {
 			title : message("yly.charge.amount.month"),
 			field : "amountPerMonth",
 			width : 50,
+			align:'center',
 			sortable : true
 		},
 		// 创建时间
 		{
 			title : message("yly.common.createDate"),
 			field : "createDate",
+			align:'center',
 			width : 60,
 			sortable : true,
 			formatter : function(value, row, index) {
