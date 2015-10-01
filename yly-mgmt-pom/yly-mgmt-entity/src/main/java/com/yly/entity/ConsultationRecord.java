@@ -94,6 +94,11 @@ public class ConsultationRecord extends BaseEntity {
 	 * 老人健康状况
 	 */
 	private String elderlyHealth;
+	
+	/**
+	 * 老人年龄
+	 */
+	private Integer age;
 
 	/**
 	 * 备注
@@ -245,4 +250,14 @@ public class ConsultationRecord extends BaseEntity {
 	public void setTenantID(Long tenantID) {
 		this.tenantID = tenantID;
 	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	
+	
 }
