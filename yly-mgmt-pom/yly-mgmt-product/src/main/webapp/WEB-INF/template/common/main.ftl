@@ -70,7 +70,7 @@
 		    	<ul title="来访登记" id="visitor">
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">咨询记录</a></li>
 		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">探望登记</a></li>
-		    		<li><a href="#">预约登记</a></li>
+		    		<li><a href="#" data-url="${base}/console/bookingRegistration/bookingRegistration.jhtml">预约登记</a></li>
 		    		<li><a href="#">在院老人</a></li>
 		    		<li><a href="#">床位状态</a></li>
 		    		<li><a href="#">科室信息</a></li>

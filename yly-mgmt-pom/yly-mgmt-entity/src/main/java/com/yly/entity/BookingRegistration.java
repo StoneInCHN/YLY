@@ -1,5 +1,7 @@
 package com.yly.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -8,6 +10,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 
@@ -28,11 +31,11 @@ public class BookingRegistration extends BaseEntity {
    */
   private static final long serialVersionUID = 3663051798910809315L;
 
-  
-	/**
-	 * 租户ID
-	 */
-	private Long tenantID;
+
+  /**
+   * 租户ID
+   */
+  private Long tenantID;
 
   /**
    * 入住老人姓名
@@ -62,13 +65,19 @@ public class BookingRegistration extends BaseEntity {
   /**
    * 预订人手机
    */
-  private String phoenNumber;
+  private String phoneNumber;
+
+  /**
+   * 预约时间
+   */
+  private Date bookingCheckInDate;
 
   /**
    * 备注
    */
   private String remark;
 
+  @JsonProperty
   @Column(length = 15)
   public String getElderlyName() {
     return elderlyName;
@@ -78,6 +87,7 @@ public class BookingRegistration extends BaseEntity {
     this.elderlyName = elderlyName;
   }
 
+  @JsonProperty
   public Gender getGender() {
     return gender;
   }
@@ -86,6 +96,7 @@ public class BookingRegistration extends BaseEntity {
     this.gender = gender;
   }
 
+  @JsonProperty
   @Column(length = 25)
   public String getIDCard() {
     return IDCard;
@@ -95,6 +106,7 @@ public class BookingRegistration extends BaseEntity {
     IDCard = iDCard;
   }
 
+  @JsonProperty
   @ManyToOne
   public SystemConfig getIntentRoomType() {
     return intentRoomType;
@@ -104,6 +116,7 @@ public class BookingRegistration extends BaseEntity {
     this.intentRoomType = intentRoomType;
   }
 
+  @JsonProperty
   @Column(length = 15)
   public String getPeopleWhoBooked() {
     return peopleWhoBooked;
@@ -113,15 +126,17 @@ public class BookingRegistration extends BaseEntity {
     this.peopleWhoBooked = peopleWhoBooked;
   }
   
+  @JsonProperty
   @Column(length = 15)
-  public String getPhoenNumber() {
-    return phoenNumber;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
-  public void setPhoenNumber(String phoenNumber) {
-    this.phoenNumber = phoenNumber;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
 
+  @JsonProperty
   public String getRemark() {
     return remark;
   }
@@ -130,14 +145,22 @@ public class BookingRegistration extends BaseEntity {
     this.remark = remark;
   }
 
-@Index(name = "booking_registration_tenantid")
-public Long getTenantID() {
-	return tenantID;
-}
+  @JsonProperty
+  @Index(name = "booking_registration_tenantid")
+  public Long getTenantID() {
+    return tenantID;
+  }
 
-public void setTenantID(Long tenantID) {
-	this.tenantID = tenantID;
-}
-  
-  
+  public void setTenantID(Long tenantID) {
+    this.tenantID = tenantID;
+  }
+
+  @JsonProperty
+  public Date getBookingCheckInDate() {
+    return bookingCheckInDate;
+  }
+
+  public void setBookingCheckInDate(Date bookingCheckInDate) {
+    this.bookingCheckInDate = bookingCheckInDate;
+  }
 }

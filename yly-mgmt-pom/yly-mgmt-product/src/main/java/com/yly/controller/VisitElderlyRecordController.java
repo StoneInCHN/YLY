@@ -150,7 +150,7 @@ public class VisitElderlyRecordController extends BaseController {
 	}
 
 	/**
-	 * 查询探望记录
+	 * 查询老人记录
 	 * 
 	 * @param beginDate
 	 * @param endDate

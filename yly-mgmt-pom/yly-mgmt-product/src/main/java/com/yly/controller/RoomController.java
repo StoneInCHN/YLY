@@ -77,8 +77,8 @@ public class RoomController extends BaseController {
    */
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findAll() {
-    String[] strArr = {"id","roomNumber"};
-    return FieldFilterUtils.filterCollectionMap(strArr,  roomService.findAll(true));
+    String[] properties = {"id","roomNumber"};
+    return FieldFilterUtils.filterCollectionMap(properties,  roomService.findAll(true));
   }
   
   /**

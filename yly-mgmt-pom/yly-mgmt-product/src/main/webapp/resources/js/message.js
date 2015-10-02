@@ -47,6 +47,7 @@ var messages = {
 	"yly.common.idcard":"身份证号码",
 	"yly.common.disable":"禁用",
 	"yly.common.enable":"启用",
+	"yly.common.elderlyname":"老人姓名",
 	
 	/**
 	 * charge config
@@ -83,7 +84,6 @@ var messages = {
 	//consultation
 	"yly.consultation.record":"咨询记录",
 	"yly.consultation.vistor":"咨询人",
-	"yly.consultation.elderlyname":"老人姓名",
 	"yly.consultation.checkinintention":"入住意向",
 	"yly.consultation.returnVisit":"是否回访",
 	"yly.consultation.returnVisitDate":"回访时间",
@@ -104,7 +104,13 @@ var messages = {
 	"yly.visitelderly.dueLeaveDate":"预计离开时间",
 	"yly.visitelderly.reasonForVisit":"来访原因",
 	"yly.visitelderly.search":"老人查询",
-
+	
+	//bookingRegistration
+	"yly.bookingRegistration.record":"预约记录",
+	"yly.bookingRegistration.peopleWhoBooked":"预约人",
+	"yly.bookingRegistration.bookingCheckInDate":"预约入住时间",
+	"yly.bookingRegistration.add":"添加预约",
+	"yly.bookingRegistration.intentRoomType":"意向房型",
 	// volunteer
 	"yly.volunteer.record":"志愿者记录",
 	"yly.volunteer.name":"志愿者姓名",
