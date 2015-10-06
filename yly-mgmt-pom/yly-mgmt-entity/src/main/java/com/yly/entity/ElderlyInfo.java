@@ -74,7 +74,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 民族
    */
-  private Nation nation;
+  private String nation;
 
   /**
    * 身份证号
@@ -427,11 +427,12 @@ public class ElderlyInfo extends BaseEntity {
     this.placeOfOrigin = placeOfOrigin;
   }
 
-  public Nation getNation() {
+  @Column(length = 10)
+  public String getNation() {
     return nation;
   }
 
-  public void setNation(Nation nation) {
+  public void setNation(String nation) {
     this.nation = nation;
   }
 

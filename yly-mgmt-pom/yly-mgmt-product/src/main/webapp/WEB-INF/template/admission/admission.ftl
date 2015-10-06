@@ -44,12 +44,12 @@
 	    	<tr>
 	    		<th>${message("yly.elderly.name")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="name" validtype="length[0,15] style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="name" validtype="length[0,15] data-options="required:true" style="width:85px;"/> 
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.photo")}:</th>
 	    		<td>
-	    			  <input class="easyui-filebox" name="photo" data-options="prompt:'Choose a file...'" style="width:200px;">
+	    			  <input class="easyui-filebox" name="photo" data-options="prompt:'${message("yly.elderlyInfo.choose.photo")}...'" style="width:200px;">
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -103,16 +103,18 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.nation")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="nation"  style="width:85px;"/> 
+	    			<input class="easyui-textbox" type="text" name="nation" validtype="length[0,10] style="width:120px;"/> 
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.religion")}:</th>
 	    		<td>
 	    			<select id="religion" class="easyui-combobox" name="religion" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="BUDDHISM">${message("yly.common.religion.buddhism")}</option>
+						<option value="TAOISM">${message("yly.common.religion.taoism")}</option> 
+						<option value="CHRISTIANITY">${message("yly.common.religion.christianity")}</option>
+						<option value="ISLAM">${message("yly.common.religion.islam")}</option>
+						<option value="CATHOLICISM">${message("yly.common.religion.catholicism")}</option>
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>     
 	    		</td>
 	    		
@@ -121,20 +123,21 @@
 	    		<th>${message("yly.elderlyInfo.politicalOutlook")}:</th>
 	    		<td>
 	    			<select id="politicalOutlook" class="easyui-combobox" name="politicalOutlook" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="ZHONGDANGDANGYUAN">${message("yly.common.politicalOutlook.dangyuan")}</option>
+						<option value="GONGQINGTUANYUAN">${message("yly.common.politicalOutlook.tuanyuan")}</option> 
+						<option value="MINZUDANGPAICHENGYUAN">${message("yly.common.politicalOutlook.minzhudangpai")}</option>
+						<option value="QUNZHONG">${message("yly.common.politicalOutlook.qunzhong")}</option>
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>  
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.marriageState")}:</th>
 	    		<td>
 	    			<select id="marriageState" class="easyui-combobox" name="marriageState" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="MARRIED">${message("yly.common.marriageState.married")}</option>
+						<option value="UNMARRIED">${message("yly.common.marriageState.unmarried")}</option> 
+						<option value="WIDOWED">${message("yly.common.marriageState.widowed")}</option>
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>  
 	    		</td>
 	    	</tr>
@@ -153,10 +156,14 @@
 	    		<th>${message("yly.elderlyInfo.educationLevel")}:</th>
 	    		<td>
 	    			<select id="educationLevel" class="easyui-combobox" name="educationLevel" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="BACHELOR">${message("yly.common.educationLevel.bachelor")}</option>
+						<option value="MASTER">${message("yly.common.educationLevel.master")}</option> 
+						<option value="DOCTOR">${message("yly.common.educationLevel.doctor")}</option>
+						<option value="HIGHSCHOOL">${message("yly.common.educationLevel.highschool")}</option>
+						<option value="ZHONGZHUAN">${message("yly.common.educationLevel.zhongzhuan")}</option>
+						<option value="JUNIORHIGHSCHOOL">${message("yly.common.educationLevel.juniorhighschool")}</option>
+						<option value="PRIMARYSCHOOL">${message("yly.common.educationLevel.primaryschool")}</option>
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>     
 	    		</td>
 	    		
@@ -192,20 +199,18 @@
 	    		<th>${message("yly.elderlyInfo.livingState")}:</th>
 	    		<td>
 	    			<select id="livingState" class="easyui-combobox" name="livingState" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="LIVINGALONE">${message("yly.elderlyInfo.LivingState.livingalone")}</option>
+						<option value="LIVINGWITHFAMILY">${message("yly.elderlyInfo.LivingState.livingwithfamily")}</option> 
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>  
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.housingInfo")}:</th>
 	    		<td>
 	    			<select id="housingInfo" class="easyui-combobox" name="housingInfo" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="PROPERTYRIGHTHOUSE">${message("yly.elderlyInfo.housingInfo.propertyrighthouse")}</option>
+						<option value="RENTALHOUSE">${message("yly.elderlyInfo.housingInfo.rentalhouse")}</option> 
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>  
 	    		</td>
 	    	</tr>
@@ -229,10 +234,10 @@
 	    		<th>${message("yly.elderlyInfo.sourceOfIncome")}:</th>
 	    		<td>
 	    			<select id="sourceOfIncome" class="easyui-combobox" name="sourceOfIncome" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="PENSION">${message("yly.elderlyInfo.sourceOfIncome.pension")}</option>
+						<option value="CHILDSUPPORT">${message("yly.elderlyInfo.sourceOfIncome.childsupport")}</option> 
+						<option value="SOCIALSUPPORT">${message("yly.elderlyInfo.sourceOfIncome.socialsupport")}</option>
+						<option value="OTHER">${message("yly.common.other")}</option>
 				  	</select>  
 	    		</td>
 	    	</tr>
@@ -245,10 +250,11 @@
 	    		<th>${message("yly.elderlyInfo.medicalExpPaymentWay")}:</th>
 	    		<td>
 	    			<select id="medicalExpPaymentWay" class="easyui-combobox" name="medicalExpPaymentWay" style="width:110px;">   
-						<option value="CONFIRMED">${message("yly.consultation.checkinIntention.confirmed")}</option>
-						<option value="WILL_TO_CHECKIN_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-						<option value="WILL_TO_CHECKIN_NOT_STRONGLY">${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-						<option value="WILL_NOT_CHECKIN">${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
+						<option value="SOCIALINSURANCE">${message("yly.elderlyInfo.medicalExpPaymentWay.socialinsurance")}</option>
+						<option value="XINNONGHE">${message("yly.elderlyInfo.medicalExpPaymentWay.xinnonghe")}</option> 
+						<option value="COMMERCIALINSURANCE">${message("yly.elderlyInfo.medicalExpPaymentWay.commercialinsurance")}</option>
+						<option value="SELFFINANCED">${message("yly.elderlyInfo.medicalExpPaymentWay.selffinanced")}</option>
+						<option value="PUBLICFINANCED">${message("yly.elderlyInfo.medicalExpPaymentWay.publicfinanced")}</option>
 				  	</select>  
 	    		</td>
 	    	</tr>

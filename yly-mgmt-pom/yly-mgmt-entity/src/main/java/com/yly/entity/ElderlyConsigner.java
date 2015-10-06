@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Index;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.Relation;
 
 /**
  * 老人入院委托人
@@ -35,12 +36,12 @@ public class ElderlyConsigner extends BaseEntity {
   /**
    * 委托人姓名
    */
-  private String name;
+  private String consignerName;
 
   /**
    * 电话号码
    */
-  private String phoneNumber;
+  private String consignerPhoneNumber;
 
   /**
    * 单位地址
@@ -48,9 +49,9 @@ public class ElderlyConsigner extends BaseEntity {
   private String companyAddress;
 
   /**
-   * 现局主席详细地址
+   * 现居住详细地址
    */
-  private String residentialAddress;
+  private String consignerResidentialAddress;
 
   /**
    * 是否和老人在同一城市
@@ -60,28 +61,45 @@ public class ElderlyConsigner extends BaseEntity {
   /**
    * 和老人关系
    */
-  private String relation;
+  private Relation relation;
   /**
    * 老人
    */
   private ElderlyInfo elderlyInfo;
 
   @Column(length = 15)
-  public String getName() {
-    return name;
+  public String getConsignerName() {
+    return consignerName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setConsignerName(String consignerName) {
+    this.consignerName = consignerName;
   }
-
+  
   @Column(length = 15)
-  public String getPhoneNumber() {
-    return phoneNumber;
+  public String getConsignerPhoneNumber() {
+    return consignerPhoneNumber;
   }
 
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
+  public void setConsignerPhoneNumber(String consignerPhoneNumber) {
+    this.consignerPhoneNumber = consignerPhoneNumber;
+  }
+
+  @Column(length = 150)
+  public String getConsignerResidentialAddress() {
+    return consignerResidentialAddress;
+  }
+
+  public void setConsignerResidentialAddress(String consignerResidentialAddress) {
+    this.consignerResidentialAddress = consignerResidentialAddress;
+  }
+
+  public Relation getRelation() {
+    return relation;
+  }
+
+  public void setRelation(Relation relation) {
+    this.relation = relation;
   }
 
   public String getCompanyAddress() {
@@ -92,13 +110,6 @@ public class ElderlyConsigner extends BaseEntity {
     this.companyAddress = companyAddress;
   }
 
-  public String getResidentialAddress() {
-    return residentialAddress;
-  }
-
-  public void setResidentialAddress(String residentialAddress) {
-    this.residentialAddress = residentialAddress;
-  }
 
   public Boolean getIsSameCity() {
     return isSameCity;
@@ -108,14 +119,6 @@ public class ElderlyConsigner extends BaseEntity {
     this.isSameCity = isSameCity;
   }
 
-  @Column(length = 15)
-  public String getRelation() {
-    return relation;
-  }
-
-  public void setRelation(String relation) {
-    this.relation = relation;
-  }
 
   @OneToOne(fetch = FetchType.LAZY)
   public ElderlyInfo getElderlyInfo() {

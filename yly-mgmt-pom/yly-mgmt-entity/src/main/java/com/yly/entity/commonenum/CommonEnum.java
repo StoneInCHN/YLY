@@ -794,6 +794,10 @@ public class CommonEnum {
      * 群众
      */
     QUNZHONG,
+    /**
+     * 其它
+     */
+    OTHER
   }
 
   /**
@@ -847,7 +851,11 @@ public class CommonEnum {
     /**
      * 丧偶
      */
-    WIDOWED
+    WIDOWED,
+    /**
+     * 其它
+     */
+    OTHER
   }
 
   /**
