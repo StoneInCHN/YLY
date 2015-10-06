@@ -418,6 +418,7 @@ public class ElderlyInfo extends BaseEntity {
     this.gender = gender;
   }
 
+  @Column(length = 50)
   public String getPlaceOfOrigin() {
     return placeOfOrigin;
   }
@@ -518,6 +519,7 @@ public class ElderlyInfo extends BaseEntity {
     this.personnelCategory = personnelCategory;
   }
 
+  @Column(length = 150)
   public String getRegisteredResidence() {
     return registeredResidence;
   }
@@ -526,6 +528,7 @@ public class ElderlyInfo extends BaseEntity {
     this.registeredResidence = registeredResidence;
   }
 
+  @Column(length = 150)
   public String getResidentialAddress() {
     return residentialAddress;
   }
@@ -552,6 +555,7 @@ public class ElderlyInfo extends BaseEntity {
     this.position = position;
   }
 
+  @Column(length = 150)
   public String getHonors() {
     return honors;
   }
@@ -560,6 +564,7 @@ public class ElderlyInfo extends BaseEntity {
     this.honors = honors;
   }
 
+  @Column(length = 150)
   public String getHobbies() {
     return hobbies;
   }
@@ -568,6 +573,7 @@ public class ElderlyInfo extends BaseEntity {
     this.hobbies = hobbies;
   }
 
+  @Column(length = 150)
   public String getPersonalHabits() {
     return personalHabits;
   }
@@ -674,7 +680,7 @@ public class ElderlyInfo extends BaseEntity {
     this.sourceOfIncome = sourceOfIncome;
   }
 
-  @Column(length = 300)
+  @Column(length = 150)
   public String getPhoto() {
     return photo;
   }
