@@ -25,8 +25,8 @@
 			<ul class="nav nav-pills">
 				<li><a href="#main"><i class="fa fa-home fa-1x"></i>首页</a></li>
 				<li><a href="#residential"><i class="fa fa-bed fa-1x"></i>${message("yly.residential.residential")}</a></li>
-				<li><a href="#visitor"><i class="fa fa-pencil-square-o fa-1x"></i>来访登记</a></li>
-				<li><a href="#comeAndLeave"><i class="fa fa-eye fa-1x"></i>入院出院</a></li>
+				<li><a href="#visitor"><i class="fa fa-pencil-square-o fa-1x"></i>${message("yly.visitelderly.visitorRegistration")}</a></li>
+				<li><a href="#admissionAndLeave"><i class="fa fa-eye fa-1x"></i>${message("yly.elderlyInfo.admissionAndLeave")}</a></li>
 				<li><a href="#seniorCitizens"><i class="fa fa-pencil fa-1x"></i>老人管理</a></li>
 				<li><a href="#health"><i class="fa fa-users fa-1x"></i>健康管理</a></li>
 				<li><a href="#affairs"><i class="fa fa-users fa-1x"></i>院内事务</a></li>
@@ -67,16 +67,16 @@
 	</div>   
     <div class="footer" data-options="region:'south',split:true,noheader:true" ></div>   
     <div class="left-content" data-options="region:'west',title:'导航菜单',split:true" >
-		    	<ul title="来访登记" id="visitor">
-		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">咨询记录</a></li>
-		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">探望登记</a></li>
-		    		<li><a href="#" data-url="${base}/console/bookingRegistration/bookingRegistration.jhtml">预约登记</a></li>
+		    	<ul title="${message("yly.visitelderly.visitorRegistration")}" id="visitor">
+		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">${message("yly.consultation.record")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">${message("yly.visitelderly.visitRegistration")}/a></li>
+		    		<li><a href="#" data-url="${base}/console/bookingRegistration/bookingRegistration.jhtml">${message("yly.bookingRegistration")}</a></li>
 		    		<li><a href="#">在院老人</a></li>
 		    		<li><a href="#">床位状态</a></li>
 		    		<li><a href="#">科室信息</a></li>
 		    	</ul>
-		        <ul title="入院与出院" id="comeAndLeave">
-		    		<li><a href="#">办理入院</a></li>
+		        <ul title="${message("yly.elderlyInfo.AdmissionAndLeave")}" id="admissionAndLeave">
+		    		<li><a href="#" data-url="${base}/console/admission/admission.jhtml">${message("yly.elderlyInfo.admission")}</a></li>
 		    		<li><a href="#">办理出院</a></li>
 		    		<li><a href="#">入院评估</a></li>
 		    	</ul> 

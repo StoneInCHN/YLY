@@ -158,7 +158,7 @@ var messages = {
 	"yly.elderlyInfo.beHospitalizedDate":"入院时间",
 	"yly.elderlyInfo.livingState":"居住情况",
 	"yly.elderlyInfo.housingInfo":"住房信息",
-	"yly.elderlyInfo.medicalExpPaymentWay":"医疗费用支付方式",
+	"yly.elderlyInfo.medicalExpPaymentWay":"医疗支付方式",
 	"yly.elderlyInfo.monthlyIncome":"月收入",
 	"yly.elderlyInfo.sourceOfIncome":"收入来源",
 	"yly.elderlyInfo.elderlyConsigner":"委托人",
