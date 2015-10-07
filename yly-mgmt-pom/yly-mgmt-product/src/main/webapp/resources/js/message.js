@@ -145,7 +145,7 @@ var messages = {
 	"yly.elderlyInfo.registeredResidence":"户口地址",
 	"yly.elderlyInfo.residentialAddress":"现居地址",
 	"yly.elderlyInfo.originalCompany":"原工作单位",
-	"yly.elderlyInfo.position":"职位",
+	"yly.elderlyInfo.position":"原职位",
 	"yly.elderlyInfo.honors":"曾获荣誉",
 	"yly.elderlyInfo.hobbies":"爱好",
 	"yly.elderlyInfo.personalHabits":"个人习惯",
