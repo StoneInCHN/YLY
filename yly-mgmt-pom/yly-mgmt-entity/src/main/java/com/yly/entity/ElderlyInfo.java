@@ -24,7 +24,6 @@ import com.yly.entity.commonenum.CommonEnum.HousingInfo;
 import com.yly.entity.commonenum.CommonEnum.LivingState;
 import com.yly.entity.commonenum.CommonEnum.MarriageState;
 import com.yly.entity.commonenum.CommonEnum.MedicalExpPaymentWay;
-import com.yly.entity.commonenum.CommonEnum.Nation;
 import com.yly.entity.commonenum.CommonEnum.PoliticalOutlook;
 import com.yly.entity.commonenum.CommonEnum.Religion;
 import com.yly.entity.commonenum.CommonEnum.SourceOfIncome;

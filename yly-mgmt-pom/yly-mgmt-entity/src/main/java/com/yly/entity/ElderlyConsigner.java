@@ -102,6 +102,7 @@ public class ElderlyConsigner extends BaseEntity {
     this.relation = relation;
   }
 
+  @Column(length = 150)
   public String getCompanyAddress() {
     return companyAddress;
   }

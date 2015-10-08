@@ -47,7 +47,7 @@ $(function(){
 				$('#addAdmission').dialog({    
 				    title: message("yly.admission.add"),    
 				    width: 1200,    
-				    height: 800,
+				    height: 700,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{

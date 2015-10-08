@@ -29,6 +29,9 @@
 <div id="addAdmission">
 	<form id="addAdmission_form" method="post" class="form-table">   
 	   	  <table class="table table-striped">
+	   	  	<tr>
+	    		<td colspan=4><h5>基础信息</h5></td>
+	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
 	    		<td>
@@ -197,6 +200,9 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
+	    		<td colspan=4><h5>居住状况</h5></td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.elderlyInfo.livingState")}:</th>
 	    		<td>
 	    			<select id="livingState" class="easyui-combobox" name="livingState" style="width:110px;">   
@@ -215,17 +221,64 @@
 				  	</select>  
 	    		</td>
 	    	</tr>
+	    	<tr>
+	    		<td colspan=4><h5>委托人</h5></td>
+	    	</tr>
 	     	<tr>
-     			<th>${message("yly.elderlyInfo.elderlyConsigner")}:</th>
+     			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerName")}:</th>
     			<td>
-    			 <input class="easyui-textbox" type="text" name="elderlyConsigner" style="width:50px;"/
+    			 <input class="easyui-textbox" type="text" name="consignerName" validtype="length[0,15]" data-options="required:true" style="width:75px;"/>
     			</td>
+    			
+    			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber")}:</th>
+    			<td>
+    			 <input class="easyui-textbox" type="text" name="consignerPhoneNumber" style="width:50px;"/
+    			</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.elderlyInfo.elderlyConsigner.companyAddress")}:</th>
+    			<td>
+    			 <input class="easyui-textbox" type="text" name="companyAddress" validtype="length[0,150]" style="width:400px;"/>
+    			</td>
+    			
+    			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerResidentialAddress")}:</th>
+    			<td>
+    			 <input class="easyui-textbox" type="text" name="consignerResidentialAddress" validtype="length[0,150]" style="width:400px;"/> 
+    			</td>
+	    	</tr>
+	    		<tr>
+	    		<th>${message("yly.elderlyInfo.elderlyConsigner.isSameCity")}:</th>
+    			<td>
+    				<select id="isSameCity" class="easyui-combobox" name="isSameCity" style="width:50px;">   
+						<option value="true">${message("yly.common.yes")}</option>
+						<option value="false">${message("yly.common.no")}</option> 
+				  	</select>  
+    			</td>
+    			
+    			<th>${message("yly.elderlyInfo.elderlyConsigner.relation")}:</th>
+    			<td>
+    			  <select id="relation" class="easyui-combobox" name="relation" style="width:100px;">   
+					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
+					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
+					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
+					<option value="BROTHERS_OR_SISTERS">${message("yly.common.relation.brothers_or_sisters")}</option>
+					<option value="DAUGHTERINLAW_OR_SONINLAW">${message("yly.common.relation.daughterinlaw_or_soninlaw")}</option>
+					<option value="FRIEND">${message("yly.common.relation.friend")}</option>
+					<option value="OTHER">${message("yly.common.other")}</option>
+				  </select>  
+    			</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan=4><h5>家庭成员</h5></td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.elderlyFamilyMembers")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="elderlyFamilyMembers" style="width:50px;"/
 	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan=4><h5>经济状况</h5></td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.monthlyIncome")}:</th>
@@ -259,6 +312,9 @@
 						<option value="PUBLICFINANCED">${message("yly.elderlyInfo.medicalExpPaymentWay.publicfinanced")}</option>
 				  	</select>  
 	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan=4><h5>评估结果</h5></td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>
