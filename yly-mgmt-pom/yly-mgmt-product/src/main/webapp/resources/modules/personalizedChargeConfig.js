@@ -1,7 +1,7 @@
 $(function() {
 
 	$("#personalizedChargeConfig_table_list").datagrid({
-		title : message("yly.personalized.charge.config"),
+		title : message("yly.service.charge.config"),
 		fitColumns : true,
 		toolbar : "#personalizedChargeConfig_manager_tool",
 		url : '../personalizedChargeConfig/list.jhtml',

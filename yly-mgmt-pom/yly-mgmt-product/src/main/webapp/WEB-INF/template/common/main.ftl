@@ -27,16 +27,16 @@
 				<li><a href="#residential"><i class="fa fa-bed fa-1x"></i>${message("yly.residential.residential")}</a></li>
 				<li><a href="#visitor"><i class="fa fa-pencil-square-o fa-1x"></i>${message("yly.visitelderly.visitorRegistration")}</a></li>
 				<li><a href="#admissionAndLeave"><i class="fa fa-eye fa-1x"></i>${message("yly.elderlyInfo.admissionAndLeave")}</a></li>
+				<li><a href="#chargeManage"><i class="fa fa-jpy fa-1x"></i>${message("yly.charge.manage")}</a></li>
+				<li><a href="#nurseManage"><i class="fa fa-hand-paper-o fa-1x"></i>${message("yly.nurseManage.config")}</a></li>
+				<li><a href="#volunteer"><i class="fa fa-gift fa-1x"></i>${message("yly.volunteer.config")}</a></li>
+				<li><a href="#chargeConfig"><i class="fa fa-jpy fa-1x"></i>${message("yly.charge.congfig")}</a></li>
+				<li><a href="#logistics"><i class="fa fa-get-pocket fa-1x"></i>${message("yly.logistics.config")}</a></li>
+				<li><a href="#blacklist"><i class="fa fa-black-tie fa-1x"></i>${message("yly.blacklist.config")}</a></li>
 				<li><a href="#seniorCitizens"><i class="fa fa-pencil fa-1x"></i>老人管理</a></li>
 				<li><a href="#health"><i class="fa fa-users fa-1x"></i>健康管理</a></li>
 				<li><a href="#affairs"><i class="fa fa-users fa-1x"></i>院内事务</a></li>
 				<li><a href="#system"><i class="fa fa-users fa-1x"></i>系统管理</a></li>
-				<li><a href="#chargeConfig"><i class="fa fa-jpy fa-1x"></i>${message("yly.charge.congfig")}</a></li>
-				<li><a href="#nurseManage"><i class="fa fa-hand-paper-o fa-1x"></i>${message("yly.nurseManage.config")}</a></li>
-				<li><a href="#volunteer"><i class="fa fa-gift fa-1x"></i>${message("yly.volunteer.config")}</a></li>
-				<li><a href="#logistics"><i class="fa fa-get-pocket fa-1x"></i>${message("yly.logistics.config")}</a></li>
-				<li><a href="#blacklist"><i class="fa fa-black-tie fa-1x"></i>${message("yly.blacklist.config")}</a></li>
-				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
 				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
 				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
 				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
@@ -129,14 +129,21 @@
 		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
 		    	</ul>   
-		    	<ul title="${message("yly.logistics.config")}" id="logistics">
-		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>
-		    		<li><a href="#">${message("yly.logistics.waterfeeRecord")}</a></li>
-		    		<li><a href="#">${message("yly.logistics.energyChargeRecord")}</a></li>
+		    	<ul title="${message("yly.charge.manage")}" id="chargeManage">
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.bed.record")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.nurse.record")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.meal.reocrd")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.water.electricity.reocrd")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.personalized.service.record")}</a></li>
 		    	</ul>          
 		    	<ul title="${message("yly.blacklist.config")}" id="blacklist">
 		    		<li><a href="#">${message("yly.blacklist.list")}</a></li>
 		    	</ul>
+		    	<ul title="${message("yly.logistics.config")}" id="logistics">
+		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>
+		    		<li><a href="#">${message("yly.logistics.waterfeeRecord")}</a></li>
+		    		<li><a href="#">${message("yly.logistics.energyChargeRecord")}</a></li>
+		    	</ul>   
     </div>   
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   
