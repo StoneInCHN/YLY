@@ -130,11 +130,10 @@
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.charge.manage")}" id="chargeManage">
-		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.bed.record")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.nurse.record")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.meal.reocrd")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.water.electricity.reocrd")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.charge.personalized.service.record")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/bedNurseChargeRecord/bedNurseChargeRecord.jhtml">${message("yly.charge.bedNurse.record")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/mealChargeRecord/mealChargeRecord.jhtml">${message("yly.charge.meal.reocrd")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/waterElectricityChargeRecord/waterElectricityChargeRecord.jhtml">${message("yly.charge.water.electricity.reocrd")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/personalizedChargeRecord/personalizedChargeRecord.jhtml">${message("yly.charge.personalized.service.record")}</a></li>
 		    	</ul>          
 		    	<ul title="${message("yly.blacklist.config")}" id="blacklist">
 		    		<li><a href="#">${message("yly.blacklist.list")}</a></li>

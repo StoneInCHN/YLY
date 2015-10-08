@@ -1,9 +1,9 @@
-<script src="${base}/resources/modules/personalizedChargeRecord.js"></script>
+<script src="${base}/resources/modules/bedNurseChargeRecord.js"></script>
 
 <div>
-	<fieldset>
+	  <fieldset>
 	    <legend>${message("yly.charge.record.search")}</legend>
-	    <form id="personalizedChargeRecord_search_form" class="search-form">
+	    <form id="bedNurseChargeRecord_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
 			   	<input class="easyui-textbox" type="text" name="realName"/>
@@ -22,12 +22,12 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="personalizedChargeRecord_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	  <button id="bedNurseChargeRecord_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
-	 </fieldset>
+	  </fieldset>
 </div>
 
-<table id="personalizedChargeRecord_table_list"></table>
+<table id="bedNurseChargeRecord_table_list"></table>
 
 
 

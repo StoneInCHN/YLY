@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.yly.dao.BillingDao;
 import com.yly.dao.PersonalizedChargeConfigDao;
 import com.yly.entity.PersonalizedChargeConfig;
 import com.yly.framework.service.impl.BaseServiceImpl;
@@ -22,7 +21,7 @@ public class PersonalizedChargeConfigServiceImpl extends BaseServiceImpl<Persona
   private PersonalizedChargeConfigDao personalizedChargeConfigDao;
   
   @Resource
-  public void setBaseDao(BillingDao billingDao) {
+  public void setBaseDao(PersonalizedChargeConfigDao personalizedChargeConfigDao) {
     super.setBaseDao(personalizedChargeConfigDao);
   }
 

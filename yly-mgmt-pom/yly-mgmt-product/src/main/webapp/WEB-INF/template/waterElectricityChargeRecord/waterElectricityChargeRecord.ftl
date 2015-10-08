@@ -1,34 +1,34 @@
-<script src="${base}/resources/modules/waterElectricityChargeConfig.js"></script>
+<script src="${base}/resources/modules/waterElectricityChargeRecord.js"></script>
 
-<table id="waterElectricityChargeConfig_table_list"></table>
-<div id="waterElectricityChargeConfig_manager_tool">
-	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="waterElectricityChargeConfig_manager_tool.add();">${message("yly.button.add")}</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="waterElectricityChargeConfig_manager_tool.edit();">${message("yly.button.update")}</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="waterElectricityChargeConfig_manager_tool.remove();">${message("yly.button.delete")}</a>
-	</div>
-	<div class="tool-filter"></div>
-</div> 
-	
-<div id="addWaterElectricityChargeConfig">
-	<form id="addWaterElectricityChargeConfig_form" method="post" class="form-table">   
-	    <table class="table table-striped">
-	    	<tr>
-	    		<th>${message("yly.waterElectricityCharge.config.water")}</th>
-	    		<td>
-	    			 <input class="easyui-numberbox" name="waterUnitPrice" data-options="required:true,min:0,precision:2" /> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.waterElectricityCharge.config.electricity")}</th>
-	    		<td>
-	    			 <input class="easyui-numberbox" name="electricityUnitPrice" data-options="required:true,min:0,precision:2" /> 
-	    		</td>
-	    	</tr>
-	    </table>
-    </form>
-</div>  
-<div id="editWaterElectricityChargeConfig"></div>  
+<div>
+	<fieldset>
+	    <legend>${message("yly.charge.record.search")}</legend>
+	    <form id="waterElectricityChargeRecord_search_form" class="search-form">
+	        <div class="search-item">
+			    <label>${message("yly.charge.record.elder.name")}:</label>
+			   	<input class="easyui-textbox" type="text" name="realName"/>
+			</div>
+			<div class="search-item">
+			    <label>${message("yly.charge.record.elder.identifier")}:</label>
+			   	<input class="easyui-textbox" type="text" name="identifier"/>
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.charge.record.date")}:</label>
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			</div>
+			<div class="search-item">
+			    <label>${message("yly.to")}:</label>
+			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			</div>
+		</form>
+		<div class="search-item">
+	  	  <button id="waterElectricityChargeRecord_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	    </div>
+	 </fieldset>
+</div>
+
+<table id="waterElectricityChargeRecord_table_list"></table>
+
 
 
 
