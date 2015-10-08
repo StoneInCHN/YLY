@@ -9,7 +9,4 @@ import com.yly.framework.service.BaseService;
 
 public interface DrugsInfoService extends BaseService<DrugsInfo, Long> {
 
-  Page<DrugsInfo> search (String keyword, Pageable pageable ,String startDate, String endDate);
-  
-  void refreshIndex();
 }

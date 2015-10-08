@@ -5,6 +5,13 @@ import java.util.List;
 
 import javax.persistence.LockModeType;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.search.Query;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.yly.beans.Message;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.paging.Page;
@@ -134,4 +141,14 @@ public interface BaseDao<T, ID extends Serializable> {
    */
   void flush();
 
+  /**
+   * 关键字搜索
+   */
+  Page<T>  search(Query query, Pageable pageable, Analyzer analyzer);
+  
+  /**
+   * 重建索引
+   */
+  void refreshIndex();
+   
 }

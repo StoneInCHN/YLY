@@ -3,6 +3,9 @@ package com.yly.framework.service;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.search.Query;
+
 import com.yly.framework.filter.Filter;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.paging.Page;
@@ -178,5 +181,12 @@ public interface BaseService<T, ID extends Serializable> {
    * @param entity 实体对象
    */
   void delete(T entity);
-
+  /**
+   * 关键字搜索
+   */
+  Page<T>  search(Query query, Pageable pageable, Analyzer analyzer);
+  /**
+   * 重建索引
+   */
+  void refreshIndex();
 }

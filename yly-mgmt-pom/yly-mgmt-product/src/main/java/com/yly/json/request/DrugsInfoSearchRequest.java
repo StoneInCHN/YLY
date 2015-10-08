@@ -1,6 +1,7 @@
 package com.yly.json.request;
 
-public class DrugsInfoSearchRequest
+
+public class DrugsInfoSearchRequest 
 {
 
   private String keyword;

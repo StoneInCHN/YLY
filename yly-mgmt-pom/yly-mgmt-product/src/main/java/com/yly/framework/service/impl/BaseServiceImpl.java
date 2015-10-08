@@ -12,6 +12,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.search.Query;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
@@ -230,5 +232,18 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
       filters.add(tenantFilter);
     }
     return baseDao.findPage(pageable);
+  }
+
+  @Override
+  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer)
+  {
+   
+    return baseDao.search (query, pageable, analyzer);
+  }
+
+  @Override
+  public void refreshIndex ()
+  {
+   baseDao.refreshIndex ();    
   }
 }

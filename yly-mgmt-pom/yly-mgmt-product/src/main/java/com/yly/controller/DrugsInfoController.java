@@ -1,16 +1,26 @@
 package com.yly.controller;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermRangeQuery;
+import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
@@ -97,7 +107,33 @@ public class DrugsInfoController extends BaseController {
          );
     }
     
-    return drugsService.search (request.getKeyword (), null,startDateStr,endDateStr);
+    String text = QueryParser.escape(request.getKeyword ());
+    List<DrugsInfo> drugsInfoList = new ArrayList<DrugsInfo>();
+    IKAnalyzer analyzer=new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+
+      QueryParser name =
+          new QueryParser(Version.LUCENE_35, "name", analyzer);
+      Query nameQuery;
+      try
+      {
+        nameQuery = name.parse(text);
+     
+      
+      
+      TermRangeQuery tQuery=new TermRangeQuery ("createDate", startDateStr, endDateStr, true, true);
+     
+      BooleanQuery query = new BooleanQuery();
+      query.add (nameQuery,Occur.MUST);
+      query.add (tQuery,Occur.MUST);
+      return drugsService.search (query, null, analyzer);
+      }
+      catch (ParseException e)
+      {
+        e.printStackTrace();
+      }
+      return null;
+    
   }
 
 
@@ -111,14 +147,6 @@ public class DrugsInfoController extends BaseController {
       // if()
       drugsService.delete(ids);
     }
-    return SUCCESS_MESSAGE;
-  }
-  /**
-   * 删除
-   */
-  @RequestMapping(value = "/refresh", method = RequestMethod.POST)
-  public @ResponseBody Message refreshIndex() {
-    drugsService.refreshIndex ();
     return SUCCESS_MESSAGE;
   }
 }
