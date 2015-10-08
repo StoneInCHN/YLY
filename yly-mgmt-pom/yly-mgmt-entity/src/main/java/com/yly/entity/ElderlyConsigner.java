@@ -61,7 +61,7 @@ public class ElderlyConsigner extends BaseEntity {
   /**
    * 和老人关系
    */
-  private Relation relation;
+  private Relation consignerRelation;
   /**
    * 老人
    */
@@ -94,12 +94,12 @@ public class ElderlyConsigner extends BaseEntity {
     this.consignerResidentialAddress = consignerResidentialAddress;
   }
 
-  public Relation getRelation() {
-    return relation;
+  public Relation getConsignerRelation() {
+    return consignerRelation;
   }
 
-  public void setRelation(Relation relation) {
-    this.relation = relation;
+  public void setConsignerRelation(Relation consignerRelation) {
+    this.consignerRelation = consignerRelation;
   }
 
   @Column(length = 150)

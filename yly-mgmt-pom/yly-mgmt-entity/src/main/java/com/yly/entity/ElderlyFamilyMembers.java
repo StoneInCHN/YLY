@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Index;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.Relation;
 
 @Entity
 @Table(name = "yly_elderly_family_members")
@@ -29,58 +30,58 @@ public class ElderlyFamilyMembers extends BaseEntity {
   /**
    * 家庭成员名称
    */
-  private String name;
+  private String memberName;
 
   /**
    * 电话号码
    */
-  private String phoneNumber;
+  private String memberPhoneNumber;
 
   /**
    * 关系
    */
-  private String relation;
+  private Relation  memberRelation;
 
   /**
    * 居住地址
    */
-  private String residentialAddress;
+  private String  memberResidentialAddress;
   
   private ElderlyInfo elderlyInfo;
 
   @Column(length = 15)
-  public String getName() {
-    return name;
+  public String getMemberName() {
+    return memberName;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @Column(length = 15)
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
+  public void setMemberName(String memberName) {
+    this.memberName = memberName;
   }
 
   @Column(length = 15)
-  public String getRelation() {
-    return relation;
+  public String getMemberPhoneNumber() {
+    return memberPhoneNumber;
   }
 
-  public void setRelation(String relation) {
-    this.relation = relation;
+  public void setMemberPhoneNumber(String memberPhoneNumber) {
+    this.memberPhoneNumber = memberPhoneNumber;
   }
 
-  public String getResidentialAddress() {
-    return residentialAddress;
+  public Relation getMemberRelation() {
+    return memberRelation;
   }
 
-  public void setResidentialAddress(String residentialAddress) {
-    this.residentialAddress = residentialAddress;
+  public void setMemberRelation(Relation memberRelation) {
+    this.memberRelation = memberRelation;
+  }
+
+  @Column(length = 150)
+  public String getMemberResidentialAddress() {
+    return memberResidentialAddress;
+  }
+
+  public void setMemberResidentialAddress(String memberResidentialAddress) {
+    this.memberResidentialAddress = memberResidentialAddress;
   }
 
   @Index(name="elderly_family_members_tenantid")
@@ -100,6 +101,5 @@ public class ElderlyFamilyMembers extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-  
   
 }

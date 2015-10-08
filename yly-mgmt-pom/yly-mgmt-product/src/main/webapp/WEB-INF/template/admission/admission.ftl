@@ -232,7 +232,7 @@
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber")}:</th>
     			<td>
-    			 <input class="easyui-textbox" type="text" name="consignerPhoneNumber" style="width:50px;"/
+    			 <input class="easyui-textbox" type="text" name="consignerPhoneNumber" "validtype="mobile"  style="width:110px;"/>
     			</td>
 	    	</tr>
 	    	<tr>
@@ -257,7 +257,7 @@
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.relation")}:</th>
     			<td>
-    			  <select id="relation" class="easyui-combobox" name="relation" style="width:100px;">   
+    			  <select id="consignerRelation" class="easyui-combobox" name="consignerRelation" style="width:100px;">   
 					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
 					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
 					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
@@ -272,10 +272,20 @@
 	    		<td colspan=4><h5>家庭成员</h5></td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.elderlyInfo.elderlyFamilyMembers")}:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="elderlyFamilyMembers" style="width:50px;"/
+	    		<td width="100px">${message("yly.elderlyInfo.familyMember.memberName")}:<input class="easyui-textbox" type="text" name="elderlyFamilyMembers[0].memberName" validtype="length[0,15]" style="width:75px;"/></td>
+	    		<td width="100px">${message("yly.elderlyInfo.familyMember.PhoneNumber")}:<input class="easyui-textbox" type="text" name="elderlyFamilyMembers[0].memberPhoneNumber" "validtype="mobile" style="width:110px;"/></td>
+	    		<td width="100px">${message("yly.elderlyInfo.familyMember.relation")}:
+	    			<select class="easyui-combobox" name="elderlyFamilyMembers[0].memberRelation" style="width:100px;">   
+					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
+					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
+					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
+					<option value="BROTHERS_OR_SISTERS">${message("yly.common.relation.brothers_or_sisters")}</option>
+					<option value="DAUGHTERINLAW_OR_SONINLAW">${message("yly.common.relation.daughterinlaw_or_soninlaw")}</option>
+					<option value="FRIEND">${message("yly.common.relation.friend")}</option>
+					<option value="OTHER">${message("yly.common.other")}</option>
+				  </select>  
 	    		</td>
+	    		<td width="100px">${message("yly.address")}:<input class="easyui-textbox" type="text" name="elderlyFamilyMembers[0].memberResidentialAddress" validtype="length[0,150]" style="width:400px;"/></td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan=4><h5>经济状况</h5></td>
