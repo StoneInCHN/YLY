@@ -1,6 +1,6 @@
 package com.yly.entity;
 
-import java.beans.Transient;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<yly>
-		<setting name="siteUrl" value=http://localhost:8080/yly-mgmt-product" />
+		<setting name="siteUrl" value="http://localhost:8080/yly-mgmt-product" />
 		<setting name="emailPattern" value="^[a-z0-9A-Z]+([-_.][a-z0-9A-Z]+)*@([a-z0-9A-Z]+[-.])+[a-zA-Z]{2,5}$" />
-		<setting name="captchaTypes" value="adminLogin,adminReg,findPassword,resetPassword,other" />
+		<setting name="captchaTypes" value="LOGIN,OTHER" />
 		<!-- 邮件相关配置 -->
 		<setting name="smtpFromMail" value="tankboo@163.com" />
 		<setting name="smtpHost" value="smtp.163.com" />

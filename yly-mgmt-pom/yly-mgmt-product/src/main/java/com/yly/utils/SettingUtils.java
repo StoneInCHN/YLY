@@ -126,7 +126,7 @@ public final class SettingUtils {
 			try {
 				File commonXmlFile = new ClassPathResource(CommonAttributes.COMMON_CONFIG_XML_PATH).getFile();
 				Document document = new SAXReader().read(commonXmlFile);
-				List<Element> elements = document.selectNodes("/lb/setting");
+				List<Element> elements = document.selectNodes("/yly/setting");
 				for (Element element : elements) {
 					String name = element.attributeValue("name");
 					String value = element.attributeValue("value");

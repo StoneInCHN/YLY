@@ -180,7 +180,7 @@ if (applicationContext != null) {
 		<form class="form-vertical login-form" id="loginForm" action="login.jsp" method="post">
 			<input type="hidden" id="enPassword" name="enPassword" />
 			<input type="hidden" id="localUrl" />
-			<%if (ArrayUtils.contains(setting.getCaptchaTypes(), CaptchaType.adminLogin)) {%>
+			<%if (ArrayUtils.contains(setting.getCaptchaTypes(), CaptchaType.LOGIN)) {%>
 						<input type="hidden" name="captchaId" value="<%=captchaId%>" />
 			<%}%>
 			<h3 class="form-title">用户登陆</h3>
@@ -217,7 +217,7 @@ if (applicationContext != null) {
 					</div>
 				</div>
 			</div>
-			<%if (ArrayUtils.contains(setting.getCaptchaTypes(), CaptchaType.adminLogin)) {%>
+			<%if (ArrayUtils.contains(setting.getCaptchaTypes(), CaptchaType.LOGIN)) {%>
 			<div  class="control-group">
 				<label class="control-label visible-ie8 visible-ie9">验证码</label>
 				<div class="controls">

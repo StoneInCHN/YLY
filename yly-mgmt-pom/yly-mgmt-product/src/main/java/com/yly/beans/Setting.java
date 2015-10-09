@@ -38,28 +38,10 @@ public class Setting implements Serializable {
     public enum CaptchaType {
 
         /** 会员登录 */
-        memberLogin,
-
-        /** 会员注册 */
-        memberRegister,
-
-        /** 后台登录 */
-        adminLogin,
-
-        /** 商品评论 */
-        review,
-
-        /** 商品咨询 */
-        consultation,
-
-        /** 找回密码 */
-        findPassword,
-
-        /** 重置密码 */
-        resetPassword,
+        LOGIN,
 
         /** 其它 */
-        other
+        OTHER
     }
 
 
