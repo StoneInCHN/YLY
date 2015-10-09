@@ -24,6 +24,7 @@ import com.yly.entity.commonenum.CommonEnum.HousingInfo;
 import com.yly.entity.commonenum.CommonEnum.LivingState;
 import com.yly.entity.commonenum.CommonEnum.MarriageState;
 import com.yly.entity.commonenum.CommonEnum.MedicalExpPaymentWay;
+import com.yly.entity.commonenum.CommonEnum.PaymentWay;
 import com.yly.entity.commonenum.CommonEnum.PoliticalOutlook;
 import com.yly.entity.commonenum.CommonEnum.Religion;
 import com.yly.entity.commonenum.CommonEnum.SourceOfIncome;
@@ -158,7 +159,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 费用支付情况
    */
-  private SystemConfig paymentWay;
+  private PaymentWay paymentWay;
 
   /**
    * 护理级别
@@ -582,12 +583,11 @@ public class ElderlyInfo extends BaseEntity {
     this.personalHabits = personalHabits;
   }
 
-  @ManyToOne
-  public SystemConfig getPaymentWay() {
+  public PaymentWay getPaymentWay() {
     return paymentWay;
   }
 
-  public void setPaymentWay(SystemConfig paymentWay) {
+  public void setPaymentWay(PaymentWay paymentWay) {
     this.paymentWay = paymentWay;
   }
 

@@ -385,7 +385,13 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.paymentWay")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="paymentWay"  name="paymentWay" style="width:90px;" data-options="editable:false" >  
+	    			<select id="paymentWay" class="easyui-combobox" name="paymentWay" style="width:110px;">   
+						<option value="CHILDREN_PAY">${message("yly.elderlyInfo.paymentway.childpay")}</option>
+						<option value="OWN_PAYMENT">${message("yly.elderlyInfo.paymentway.ownpayment")}</option> 
+						<option value="GOV_PAY">${message("yly.elderlyInfo.paymentway.govpay")}</option>
+						<option value="COMPANY_PAY">${message("yly.elderlyInfo.paymentway.companypay")}</option>
+						<option value="OTHER">${message("yly.common.other")}</option>
+				  	</select>  
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.medicalExpPaymentWay")}:</th>

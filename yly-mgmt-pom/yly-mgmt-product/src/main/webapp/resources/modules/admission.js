@@ -86,7 +86,37 @@ $(function(){
 						handler:function(){
 							 $('#addAdmission').dialog("close");
 						}
-				    }]
+				    }],
+				    onOpen:function(){
+				    	$('#addAdmission_form').show();
+				    	$("#personnelCategory").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'PERSONNELCATEGORY';
+						    }
+						});
+				     	$("#evaluatingResult").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'EVALUATINGRESULT';
+						    }
+						});
+				     	$("#nursingLevel").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'NURSELEVEL';
+						    }
+						});
+				    },
 				});  
 				 $('#addAdmission_form').show();
 			},

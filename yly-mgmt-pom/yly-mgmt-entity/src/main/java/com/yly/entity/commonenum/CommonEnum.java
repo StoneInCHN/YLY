@@ -242,7 +242,15 @@ public class CommonEnum {
     /**
      * 药品用法,7
      */
-    DRUGSMETHOD
+    DRUGSMETHOD,
+    /**
+     * 人员类别,8
+     */
+    PERSONNELCATEGORY,
+    /**
+     * 评估结果,9
+     */
+    EVALUATINGRESULT
   }
 
   /**
@@ -1106,5 +1114,34 @@ public class CommonEnum {
     OTHER
 
   }
+  
+  /**
+   * 费用支付方式
+   * @author shijun
+   *
+   */
+  public enum PaymentWay{
+    /**
+     * 子女支付
+     */
+    CHILDREN_PAY,
+    /**
+     * 老人自费
+     */
+    OWN_PAYMENT,
+    /**
+     * 政府支付
+     */
+    GOV_PAY,
+    /**
+     * 单位支付
+     */
+    COMPANY_PAY,
+    /**
+     * 其它
+     */
+    OTHER
+    
+    }
 
 }
