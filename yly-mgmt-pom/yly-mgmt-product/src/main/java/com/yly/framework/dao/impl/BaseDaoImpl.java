@@ -574,30 +574,32 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
    * 关键字搜索
    */
   @Override
-  public Page<T> search(Query query, Pageable pageable,
-      Analyzer analyzer) {
-    
-    if (pageable == null) {
-      pageable = new Pageable();
+  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer)
+  {
+
+    if (pageable == null)
+    {
+      pageable = new Pageable ();
     }
     List<?> list;
-    List<T> entityList = new ArrayList<T>();
+    List<T> entityList = new ArrayList<T> ();
 
-      FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-      FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query,entityClass);
-
-      
-      fullTextQuery.setMaxResults (pageable.getRows ());
-      fullTextQuery.setFirstResult ((pageable.getPage () - 1) * pageable.getRows ());
-      
-      list = fullTextQuery.getResultList();
-      for (Object o : list) {
-          
-          if (!entityList.contains( (T)o)) {
-            entityList.add((T) o);
-        }
+    FullTextEntityManager fullTextEntityManager = Search
+        .getFullTextEntityManager (entityManager);
+    FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery (
+        query, entityClass);
+    fullTextQuery.setMaxResults (pageable.getRows ());
+    fullTextQuery.setFirstResult ((pageable.getPage () - 1)
+        * pageable.getRows ());
+    list = fullTextQuery.getResultList ();
+    for (Object o : list)
+    {
+      if (!entityList.contains ((T) o))
+      {
+        entityList.add ((T) o);
       }
-      return new Page<T>(entityList, fullTextQuery.getResultSize(), pageable);
+    }
+    return new Page<T> (entityList, fullTextQuery.getResultSize (), pageable);
 
   }
   

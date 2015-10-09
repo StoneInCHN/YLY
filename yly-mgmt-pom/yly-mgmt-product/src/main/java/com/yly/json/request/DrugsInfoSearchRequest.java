@@ -4,16 +4,17 @@ package com.yly.json.request;
 public class DrugsInfoSearchRequest 
 {
 
-  private String keyword;
+  private String name;
   private String startDate;
   private String endDate;
-  public String getKeyword ()
+  
+  public String getName ()
   {
-    return keyword;
+    return name;
   }
-  public void setKeyword (String keyword)
+  public void setName (String name)
   {
-    this.keyword = keyword;
+    this.name = name;
   }
   public String getStartDate ()
   {

@@ -1,9 +1,7 @@
 package com.yly.controller;
 
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -102,13 +100,12 @@ public class DrugsInfoController extends BaseController {
       endDateStr = request.getEndDate ();
     }
     if (LogUtil.isDebugEnabled(DrugsInfoController.class)) {
-      LogUtil.debug(DrugsInfoController.class, "search", "Search keyword: "+ request.getKeyword ()+""
+      LogUtil.debug(DrugsInfoController.class, "search", "Search name: "+ request.getName () +""
           + ", start date: "+startDateStr+", end date: "+endDateStr
          );
     }
     
-    String text = QueryParser.escape(request.getKeyword ());
-    List<DrugsInfo> drugsInfoList = new ArrayList<DrugsInfo>();
+    String text = QueryParser.escape(request.getName ());
     IKAnalyzer analyzer=new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
@@ -118,15 +115,12 @@ public class DrugsInfoController extends BaseController {
       try
       {
         nameQuery = name.parse(text);
+        TermRangeQuery tQuery=new TermRangeQuery ("createDate", startDateStr, endDateStr, true, true);
      
-      
-      
-      TermRangeQuery tQuery=new TermRangeQuery ("createDate", startDateStr, endDateStr, true, true);
-     
-      BooleanQuery query = new BooleanQuery();
-      query.add (nameQuery,Occur.MUST);
-      query.add (tQuery,Occur.MUST);
-      return drugsService.search (query, null, analyzer);
+        BooleanQuery query = new BooleanQuery();
+        query.add (nameQuery,Occur.MUST);
+        query.add (tQuery,Occur.MUST);
+        return drugsService.search (query, null, analyzer);
       }
       catch (ParseException e)
       {
