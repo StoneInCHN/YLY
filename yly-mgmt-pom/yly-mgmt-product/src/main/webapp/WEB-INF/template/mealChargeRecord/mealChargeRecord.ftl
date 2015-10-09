@@ -28,6 +28,7 @@
 </div>
 
 <table id="mealChargeRecord_table_list"></table>
+<div id="mealChargeRecordDetail"></div>
 
 
 

@@ -57,10 +57,8 @@ public class Bed extends BaseEntity{
    */
   private Room room;
   
-
-  
   private ElderlyInfo elderlyInfo;
-
+  
   @JsonProperty
   @Column(length = 20, nullable = false)
   public String getBedNumber() {
@@ -119,5 +117,5 @@ public class Bed extends BaseEntity{
    public void setTenantID(Long tenantID) {
       this.tenantID = tenantID;
    }
-
+   
 }

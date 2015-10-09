@@ -67,7 +67,7 @@ public class ElderlyInfo extends BaseEntity {
    * 照片
    */
   private String photo;
-  
+
   /** 文件 */
   private MultipartFile file;
 
@@ -293,7 +293,31 @@ public class ElderlyInfo extends BaseEntity {
    */
   private Set<Prescription> prescriptions = new HashSet<Prescription>();
 
+  /**
+   * 床位位置
+   */
+  private String bedLocation;
 
+
+  public void setBedLocation(String bedLocation) {
+    this.bedLocation = bedLocation;
+  }
+
+  /**
+   * 获取床位所在位置（格式：楼宇+床位号+房间类型）
+   * 
+   * @return
+   */
+  @Transient
+  public String getBedLocation() {
+    StringBuffer str = new StringBuffer();
+    Room room = bed.getRoom();
+    str.append(room.getBuilding().getBuildingName());
+    str.append(bed.getBedNumber());
+    str.append(room.getRoomType().getConfigValue());
+    bedLocation = str.toString();
+    return bedLocation;
+  }
 
   @OneToMany(mappedBy = "elderlyInfo")
   public Set<VisitElderlyRecord> getVisitElderlyRecords() {
@@ -693,7 +717,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPhoto(String photo) {
     this.photo = photo;
   }
-  
+
   @Transient
   public MultipartFile getFile() {
     return file;

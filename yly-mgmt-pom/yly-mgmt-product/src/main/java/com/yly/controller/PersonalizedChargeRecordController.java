@@ -45,5 +45,19 @@ public class PersonalizedChargeRecordController extends BaseController {
   public @ResponseBody Page<PersonalizedCharge> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
     return personalizedChargeService.findPage(pageable, true);
   }
+  
+  /**
+   * 获取数据进入详情页面
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public String details(ModelMap model, Long id) {
+    PersonalizedCharge record =  personalizedChargeService.find(id);
+    model.addAttribute("personalizedCharge", record);
+    return "personalizedChargeRecord/details";
+  }
+
 
 }

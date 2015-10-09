@@ -48,6 +48,26 @@ var messages = {
 	"yly.common.disable":"禁用",
 	"yly.common.enable":"启用",
 	"yly.common.elderlyname":"老人姓名",
+	"yly.common.bedRoom":"房间",
+	"yly.common.nurseLevel":"护理等级",
+	
+	
+	/**
+	 * charge manage
+	 */
+	"yly.bedNurse.charge.record" : "床位护理费",
+	"yly.meal.charge.record" : "伙食费",
+	"yly.waterElectricity.charge.record" : "水电费",
+	"yly.service.charge.record" : "个性化服务费",
+	"yly.charge.record.invoiceNo" : "收据票号",
+	"yly.charge.record.bed" : "床位费(元)",
+	"yly.charge.record.nurse" : "护理费(元)",
+	"yly.charge.record.totalAmount" : "总金额(元)",
+	"yly.charge.record.operator" : "收款人",
+	"yly.charge.record.period" : "收款时间段",
+	"yly.charge.record.status" : "状态",
+	
+	
 	
 	/**
 	 * charge config
