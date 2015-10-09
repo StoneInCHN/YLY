@@ -27,7 +27,7 @@
 	<div class="tool-filter"></div>
 </div> 
 <div id="addAdmission">
-	<form id="addAdmission_form" method="post" class="form-table">   
+	<form id="addAdmission_form" method="post" class="form-table" enctype="multipart/form-data">   
 	   	  <table class="table table-striped">
 	   	  	<caption><h5>${message("yly.elderlyInfo.baseinfo")}</h5></caption>
 	    	<tr>
@@ -44,7 +44,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.photo")}:</th>
 	    		<td>
-	    			  <input class="easyui-filebox" name="photo" data-options="prompt:'${message("yly.elderlyInfo.choose.photo")}...'" style="width:200px;">
+	    			  <input class="easyui-filebox" name="file" data-options="prompt:'${message("yly.elderlyInfo.choose.photo")}...'" style="width:200px;">
 	    		</td>
 	    	</tr>
 	    	<tr>

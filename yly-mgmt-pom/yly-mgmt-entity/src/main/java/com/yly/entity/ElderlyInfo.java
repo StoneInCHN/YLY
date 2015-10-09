@@ -1,5 +1,6 @@
 package com.yly.entity;
 
+import java.beans.Transient;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -65,6 +67,9 @@ public class ElderlyInfo extends BaseEntity {
    * 照片
    */
   private String photo;
+  
+  /** 文件 */
+  private MultipartFile file;
 
   /**
    * 籍贯
@@ -687,6 +692,15 @@ public class ElderlyInfo extends BaseEntity {
 
   public void setPhoto(String photo) {
     this.photo = photo;
+  }
+  
+  @Transient
+  public MultipartFile getFile() {
+    return file;
+  }
+
+  public void setFile(MultipartFile file) {
+    this.file = file;
   }
 
   @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
