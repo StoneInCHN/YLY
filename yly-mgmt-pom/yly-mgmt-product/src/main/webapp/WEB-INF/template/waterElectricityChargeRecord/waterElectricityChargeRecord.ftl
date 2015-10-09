@@ -28,6 +28,7 @@
 </div>
 
 <table id="waterElectricityChargeRecord_table_list"></table>
+<div id="waterElectricityChargeRecordDetail"></div>
 
 
 

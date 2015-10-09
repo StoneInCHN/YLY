@@ -28,6 +28,7 @@
 </div>
 
 <table id="personalizedChargeRecord_table_list"></table>
+<div id="personalizedChargeRecordDetail"></div>
 
 
 

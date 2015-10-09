@@ -2,6 +2,8 @@ package com.yly.controller;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,6 +18,7 @@ import com.yly.entity.BedNurseCharge;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BedNurseChargeService;
+import com.yly.utils.FieldFilterUtils;
 
 @Controller("bedNurseChargeRecordController")
 @RequestMapping("/console/bedNurseChargeRecord")
@@ -42,8 +45,31 @@ public class BedNurseChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<BedNurseCharge> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
-    return bedNurseChargeService.findPage(pageable,true);
+  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
+    Page<BedNurseCharge> page = bedNurseChargeService.findPage(pageable, true);
+
+    String[] properties = { "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
+            "bedAmount", "nurseAmount", "totalAmount", "remark", "elderlyInfo.id", "elderlyInfo.name" };
+
+    List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());
+
+    Page<Map<String, Object>> filteredPage = new Page<Map<String, Object>>(rows, page.getTotal(), pageable);
+
+    return filteredPage;
   }
+  
+  /**
+   * 获取数据进入详情页面
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public String details(ModelMap model, Long id) {
+    BedNurseCharge record =  bedNurseChargeService.find(id);
+    model.addAttribute("bedNurseCharge", record);
+    return "bedNurseChargeRecord/details";
+  }
+
 
 }

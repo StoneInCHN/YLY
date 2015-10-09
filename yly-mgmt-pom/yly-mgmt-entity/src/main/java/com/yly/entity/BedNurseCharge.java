@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
 
@@ -76,6 +77,8 @@ public class BedNurseCharge extends BaseEntity {
    * 护理费金额
    */
   private BigDecimal nurseAmount;
+  
+  private BigDecimal totalAmount;
 
   /**
    * 经办人
@@ -214,6 +217,16 @@ public class BedNurseCharge extends BaseEntity {
 
   public void setNurseAmount(BigDecimal nurseAmount) {
     this.nurseAmount = nurseAmount;
+  }
+
+  @Transient
+  public BigDecimal getTotalAmount() {
+    totalAmount = bedAmount.add(nurseAmount);
+    return totalAmount;
+  }
+
+  public void setTotalAmount(BigDecimal totalAmount) {
+    this.totalAmount = totalAmount;
   }
 
 

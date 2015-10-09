@@ -28,6 +28,7 @@
 </div>
 
 <table id="bedNurseChargeRecord_table_list"></table>
+<div id="bedNurseChargeRecordDetail"></div>
 
 
 

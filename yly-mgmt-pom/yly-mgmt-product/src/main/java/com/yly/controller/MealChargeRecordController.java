@@ -45,5 +45,18 @@ public class MealChargeRecordController extends BaseController {
   public @ResponseBody Page<MealCharge> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
     return mealChargeService.findPage(pageable,true);
   }
+  
+  /**
+   * 获取数据进入详情页面
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public String details(ModelMap model, Long id) {
+    MealCharge record =  mealChargeService.find(id);
+    model.addAttribute("mealCharge", record);
+    return "mealChargeRecord/details";
+  }
 
 }
