@@ -33,7 +33,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="identifier" validtype="length[0,15]" data-options="required:true,editable:false" style="width:60px;"/>  
+	    			 <input class="easyui-textbox" type="text" name="identifier" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
 	    			 <a href="#" class="easyui-linkbutton" plain="true">${message("yly.common.generate.identifier")}</a>
 	    		</td>
 	    		
@@ -101,7 +101,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.personnelCategory")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="personnelCategory"  name="personnelCategory" style="width:90px;" data-options="editable:false" > 
+	    			  <input class="easyui-combobox" id="personnelCategoryId"  name="personnelCategoryId" style="width:90px;" data-options="editable:false" > 
 	    		</td>
 	    		
 	    	  	<th>${message("yly.elderlyInfo.educationLevel")}:</th>
@@ -221,17 +221,17 @@
 	     	<tr>
      			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerName")}:</th>
     			<td>
-    			 <input class="easyui-textbox" type="text" name="consignerName" validtype="length[0,15]" data-options="required:true" style="width:75px;"/>
+    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerName" validtype="length[0,15]" data-options="required:true" style="width:75px;"/>
     			</td>
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber")}:</th>
     			<td>
-    			 <input class="easyui-textbox" type="text" name="consignerPhoneNumber" "validtype="mobile"  style="width:110px;"/>
+    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerPhoneNumber" "validtype="mobile"  style="width:110px;"/>
     			</td>
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.isSameCity")}:</th>
     			<td>
-    				<select id="isSameCity" class="easyui-combobox" name="isSameCity" style="width:50px;">   
+    				<select id="isSameCity" class="easyui-combobox" name="elderlyConsigner.isSameCity" style="width:50px;">   
 						<option value="true">${message("yly.common.yes")}</option>
 						<option value="false">${message("yly.common.no")}</option> 
 				  	</select>  
@@ -239,7 +239,7 @@
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.relation")}:</th>
     			<td>
-    			  <select id="consignerRelation" class="easyui-combobox" name="consignerRelation" style="width:100px;">   
+    			  <select id="consignerRelation" class="easyui-combobox" name="elderlyConsigner.consignerRelation" style="width:100px;">   
 					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
 					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
 					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
@@ -253,12 +253,12 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.elderlyConsigner.companyAddress")}:</th>
     			<td colspan=3>
-    			 <input class="easyui-textbox" type="text" name="companyAddress" validtype="length[0,150]" style="width:400px;"/>
+    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.companyAddress" validtype="length[0,150]" style="width:400px;"/>
     			</td>
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerResidentialAddress")}:</th>
     			<td colspan=4>
-    			 <input class="easyui-textbox" type="text" name="consignerResidentialAddress" validtype="length[0,150]" style="width:400px;"/> 
+    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerResidentialAddress" validtype="length[0,150]" style="width:400px;"/> 
     			</td>
 	    	</tr>
 	    	</table>
@@ -411,7 +411,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="evaluatingResult"  name="evaluatingResult" style="width:90px;" data-options="editable:false" > 
+	    			  <input class="easyui-combobox" id="evaluatingResultId"  name="evaluatingResultId" style="width:90px;" data-options="editable:false" > 
 	    		</td>
 	    		<th>${message("yly.elderlyInfo.evaluatingScore")}:</th>
 	    		<td>
@@ -420,7 +420,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.nursingLevel")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="nursingLevel"  name="nursingLevel" style="width:90px;" data-options="editable:false" >   
+	    			  <input class="easyui-combobox" id="nursingLevelId"  name="nursingLevelId" style="width:90px;" data-options="editable:false" >   
 	    		</td>
 	    	</tr>
 	    </table>

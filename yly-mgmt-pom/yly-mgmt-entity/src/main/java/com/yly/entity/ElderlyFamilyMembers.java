@@ -1,21 +1,16 @@
 package com.yly.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
 import org.hibernate.annotations.Index;
 
-import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Relation;
 
-@Entity
-@Table(name = "yly_elderly_family_members")
-@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_elderly_family_members_sequence")
-public class ElderlyFamilyMembers extends BaseEntity {
+@Embeddable
+public class ElderlyFamilyMembers implements Serializable{
 
   /**
    * 
@@ -47,7 +42,6 @@ public class ElderlyFamilyMembers extends BaseEntity {
    */
   private String  memberResidentialAddress;
   
-  private ElderlyInfo elderlyInfo;
 
   @Column(length = 15)
   public String getMemberName() {
@@ -92,14 +86,4 @@ public class ElderlyFamilyMembers extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  public ElderlyInfo getElderlyInfo() {
-    return elderlyInfo;
-  }
-
-  public void setElderlyInfo(ElderlyInfo elderlyInfo) {
-    this.elderlyInfo = elderlyInfo;
-  }
-  
 }

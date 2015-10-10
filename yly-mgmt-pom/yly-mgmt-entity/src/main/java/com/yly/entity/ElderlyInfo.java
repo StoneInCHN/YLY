@@ -1,12 +1,16 @@
 package com.yly.entity;
 
-import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -14,8 +18,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -234,7 +241,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 家庭成员
    */
-  private Set<ElderlyFamilyMembers> elderlyFamilyMembers = new HashSet<ElderlyFamilyMembers>();
+  private List<ElderlyFamilyMembers> elderlyFamilyMembers = new ArrayList<ElderlyFamilyMembers>();
 
   /**
    * 评估记录
@@ -400,7 +407,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
   }
 
-  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
+  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY , cascade=CascadeType.PERSIST)
   public ElderlyConsigner getElderlyConsigner() {
     return elderlyConsigner;
   }
@@ -409,12 +416,14 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyConsigner = elderlyConsigner;
   }
 
-  @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
-  public Set<ElderlyFamilyMembers> getElderlyFamilyMembers() {
+  @ElementCollection
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @CollectionTable(name = "yly_elderly_family_members")
+  public List<ElderlyFamilyMembers> getElderlyFamilyMembers() {
     return elderlyFamilyMembers;
   }
 
-  public void setElderlyFamilyMembers(Set<ElderlyFamilyMembers> elderlyFamilyMembers) {
+  public void setElderlyFamilyMembers(List<ElderlyFamilyMembers> elderlyFamilyMembers) {
     this.elderlyFamilyMembers = elderlyFamilyMembers;
   }
 

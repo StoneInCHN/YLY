@@ -4,7 +4,7 @@ $(function(){
 		title:message("yly.elderlyinfo.record"),
 		fitColumns:true,
 		toolbar:"#admission_manager_tool",
-		url:'../elderlyInfo/list.jhtml',  
+		url:'../admission/list.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
@@ -14,7 +14,7 @@ $(function(){
 			    width: 700,    
 			    height: 500, 
 			    cache: false,   
-			    href:'../elderlyInfo/details.jhtml?id='+rowData.id,
+			    href:'../admission/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
@@ -57,7 +57,7 @@ $(function(){
 							var validate = $('#addAdmissionn_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../elderlyInfo/add.jhtml",
+									url:"../admission/add.jhtml",
 									type:"post",
 									data:$("#addAdmission_form").serialize(),
 									beforeSend:function(){
@@ -89,7 +89,7 @@ $(function(){
 				    }],
 				    onOpen:function(){
 				    	$('#addAdmission_form').show();
-				    	$("#personnelCategory").combobox({    
+				    	$("#personnelCategoryId").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -98,7 +98,7 @@ $(function(){
 						        param.configKey = 'PERSONNELCATEGORY';
 						    }
 						});
-				     	$("#evaluatingResult").combobox({    
+				     	$("#evaluatingResultId").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -107,7 +107,7 @@ $(function(){
 						        param.configKey = 'EVALUATINGRESULT';
 						    }
 						});
-				     	$("#nursingLevel").combobox({    
+				     	$("#nursingLevelId").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -132,7 +132,7 @@ $(function(){
 				    height: 500,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
-				    href:'../elderlyInfo/edit.jhtml?id='+_edit_row.id,
+				    href:'../admission/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
@@ -140,7 +140,7 @@ $(function(){
 							var validate = $('#editAdmission_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../elderlyInfo/update.jhtml",
+									url:"../admission/update.jhtml",
 									type:"post",
 									data:$("#editAdmission_form").serialize(),
 									beforeSend:function(){
@@ -167,7 +167,7 @@ $(function(){
 				});  
 			},
 			remove:function(){
-				listRemove('admission-table-list','../elderlyInfo/delete.jhtml');
+				listRemove('admission-table-list','../admission/delete.jhtml');
 			}
 	}
 	$("#admission_search_btn").click(function(){
