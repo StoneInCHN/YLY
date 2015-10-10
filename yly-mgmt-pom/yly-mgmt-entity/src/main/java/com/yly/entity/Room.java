@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 
 
@@ -128,6 +130,7 @@ public class Room extends BaseEntity {
 
 
   @JsonProperty
+  @OneToOne
   public SystemConfig getRoomType() {
     return roomType;
   }
@@ -137,7 +140,6 @@ public class Room extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length = 4)
   public RoomStatus getRoomStatus() {
     return roomStatus;
   }
@@ -176,7 +178,6 @@ public class Room extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length = 10)
   public Integer getFloor() {
     return floor;
   }

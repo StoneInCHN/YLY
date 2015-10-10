@@ -6,11 +6,11 @@
 	    <form id="bedNurseChargeRecord_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
-			   	<input class="easyui-textbox" type="text" name="realName"/>
+			   	<input class="easyui-textbox" type="text" name="realName" id="realName"/>
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
-			   	<input class="easyui-textbox" type="text" name="identifier"/>
+			   	<input class="easyui-textbox" type="text" name="identifier" id="identifier"/>
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.charge.record.date")}:</label>
