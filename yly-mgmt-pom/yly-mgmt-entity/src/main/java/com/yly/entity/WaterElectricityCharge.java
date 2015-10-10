@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
 
@@ -107,6 +108,18 @@ public class WaterElectricityCharge extends BaseEntity {
    * 所属账单
    */
   private Billing billing;
+  
+  private BigDecimal totalAmount;
+  
+  @Transient
+  public BigDecimal getTotalAmount() {
+    totalAmount = waterAmount.add(electricityAmount);
+    return totalAmount;
+  }
+
+  public void setTotalAmount(BigDecimal totalAmount) {
+    this.totalAmount = totalAmount;
+  }
 
   @OneToOne
   public Billing getBilling() {

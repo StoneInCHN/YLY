@@ -77,7 +77,7 @@
 	    		</td>
 	    		<th>${message("yly.common.charge.payTime")}:</th>
 	    		<td>
-	    			<input id="payTime" name="payTime" type="text" value="${bedNurseCharge.payTime}" class="easyui-datetimebox" style="width:150px;" disabled=true /> 
+	    			  <input id="payTime" name="payTime" type="text" value="${bedNurseCharge.payTime}" class="easyui-datetimebox" style="width:150px;" disabled=true /> 
 	    		</td>
 	    	</tr>
 	    	<tr>

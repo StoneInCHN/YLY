@@ -69,7 +69,12 @@ var messages = {
 	"yly.charge.record.operator" : "收款人",
 	"yly.charge.record.period" : "收款时间段",
 	"yly.charge.record.status" : "状态",
-	
+	"yly.charge.record.meal" : "伙食费(元)",
+	"yly.charge.record.service" : "个性化服务费(元)",
+	"yly.charge.record.water" : "水费(元)",
+	"yly.charge.record.electricity" : "电费(元)",
+	"yly.charge.record.water.count" : "水用量(吨)",
+	"yly.charge.record.electricity.count" : "电用量(度)",
 	
 	
 	/**
