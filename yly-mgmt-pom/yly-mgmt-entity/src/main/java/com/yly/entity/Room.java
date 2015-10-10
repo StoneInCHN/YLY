@@ -128,7 +128,6 @@ public class Room extends BaseEntity {
 
 
   @JsonProperty
-  @Column(length = 10)
   public SystemConfig getRoomType() {
     return roomType;
   }

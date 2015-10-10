@@ -57,7 +57,7 @@
 	    	<tr>
 	    		<th>${message("yly.room.roomType")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" id="editRoom_form_roomType" type="text" name="roomTypeId"  /> 
+	    			  <input class="easyui-textbox" id="addRoom_form_roomType" type="text" name="roomTypeId"  /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
