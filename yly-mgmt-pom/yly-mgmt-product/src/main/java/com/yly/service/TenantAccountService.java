@@ -98,6 +98,12 @@ public interface TenantAccountService extends BaseService<TenantAccount, Long> {
      * @return 当前登录租户ID,若不存在则返回null
      */
     Long getCurrentTenantID();
+    
+    /**
+     * 获取当前登录租户orgCode
+     * @return
+     */
+    String getCurrentTenantOrgCode();
 	
 	/**
 	 * 判断用户是否为内置

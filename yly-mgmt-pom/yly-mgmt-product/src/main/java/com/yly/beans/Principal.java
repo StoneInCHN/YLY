@@ -2,6 +2,8 @@ package com.yly.beans;
 
 import java.io.Serializable;
 
+import com.yly.entity.TenantInfo;
+
 /**
  * 身份信息
  * 
@@ -17,17 +19,17 @@ public class Principal implements Serializable {
   private String username;
 
   /** 租户ID */
-  private Long tenantID;
+  private TenantInfo tenantInfo;
 
   /**
    * @param id ID
    * @param username 用户名
    * @param tenantID 租户ID
    */
-  public Principal(Long id, String username, Long tenantID) {
+  public Principal(Long id, String username, TenantInfo tenantInfo) {
     this.id = id;
     this.username = username;
-    this.tenantID = tenantID;
+    this.tenantInfo = tenantInfo;
   }
 
   /**
@@ -72,8 +74,8 @@ public class Principal implements Serializable {
    * 
    * @return 租户ID
    */
-  public Long getTenantID() {
-    return tenantID;
+  public TenantInfo getTenantInfo() {
+    return tenantInfo;
   }
 
   /**
@@ -81,8 +83,8 @@ public class Principal implements Serializable {
    * 
    * @param tenantID 租户ID
    */
-  public void setTenantID(Long tenantID) {
-    this.tenantID = tenantID;
+  public void setTenantInfo(TenantInfo tenantInfo) {
+    this.tenantInfo = tenantInfo;
   }
 
   @Override

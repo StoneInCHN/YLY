@@ -84,7 +84,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
 			tenantAccount.setLoginIp(ip);
 			tenantAccount.setLoginDate(new Date());
 			tenantAccountService.update(tenantAccount);
-			return new SimpleAuthenticationInfo(new Principal(tenantAccount.getId(), username,tenantInfo.getId()), password, getName());
+			return new SimpleAuthenticationInfo(new Principal(tenantAccount.getId(), username,tenantInfo), password, getName());
 		}
 		throw new UnknownAccountException();
 	}

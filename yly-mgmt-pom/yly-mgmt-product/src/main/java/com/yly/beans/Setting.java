@@ -80,6 +80,9 @@ public class Setting implements Serializable {
 
     /** 图片上传路径 */
     private String imageUploadPath;
+    
+    /** 图片上传路径 */
+    private String profilePictureUploadPath;
 
     /** Flash上传路径 */
     private String flashUploadPath;
@@ -293,6 +296,29 @@ public class Setting implements Serializable {
             }
         }
         this.imageUploadPath = imageUploadPath;
+    }
+
+    /**
+     * 获取基础资料照路径
+     * 
+     * @return
+     */
+    @NotEmpty
+    @Length(max = 200)
+    public String getProfilePictureUploadPath() {
+      return profilePictureUploadPath;
+    }
+
+    public void setProfilePictureUploadPath(String profilePictureUploadPath) {
+      if (profilePictureUploadPath != null) {
+        if (!profilePictureUploadPath.startsWith("/")) {
+          profilePictureUploadPath = "/" + profilePictureUploadPath;
+        }
+        if (!profilePictureUploadPath.endsWith("/")) {
+          profilePictureUploadPath += "/";
+        }
+    }
+    this.profilePictureUploadPath = profilePictureUploadPath;
     }
 
     /**

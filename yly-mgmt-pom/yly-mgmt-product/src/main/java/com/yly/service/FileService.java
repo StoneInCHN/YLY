@@ -1,7 +1,9 @@
 package com.yly.service;
 
 import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
+
 import com.yly.beans.FileInfo;
 import com.yly.beans.FileInfo.FileType;
 import com.yly.beans.FileInfo.OrderType;
@@ -25,7 +27,7 @@ public interface FileService {
    * @param async 是否异步
    * @return 访问URL
    */
-  String upload(FileType fileType, MultipartFile multipartFile, boolean async);
+  String upload(FileType fileType, MultipartFile multipartFile, String identifier, boolean async);
 
   /**
    * 文件上传(异步)
@@ -34,7 +36,7 @@ public interface FileService {
    * @param multipartFile 上传文件
    * @return 访问URL
    */
-  String upload(FileType fileType, MultipartFile multipartFile);
+  String upload(FileType fileType, MultipartFile multipartFile, String identifier);
 
   /**
    * 文件上传至本地
@@ -43,7 +45,7 @@ public interface FileService {
    * @param multipartFile 上传文件
    * @return 路径
    */
-  String uploadLocal(FileType fileType, MultipartFile multipartFile);
+  String uploadLocal(FileType fileType, MultipartFile multipartFile , String identifier);
 
   /**
    * 文件浏览

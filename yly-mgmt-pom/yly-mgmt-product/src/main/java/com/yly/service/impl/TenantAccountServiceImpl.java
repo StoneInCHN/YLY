@@ -119,10 +119,24 @@ public class TenantAccountServiceImpl extends BaseServiceImpl<TenantAccount, Lon
     if (subject != null) {
       Principal principal = (Principal) subject.getPrincipal();
       if (principal != null) {
-        return principal.getTenantID();
+        return principal.getTenantInfo().getId();
       }
     }
     return null;
+  }
+
+  @Transactional(readOnly = true)
+  public String getCurrentTenantOrgCode() {
+
+    Subject subject = SecurityUtils.getSubject();
+    if (subject != null) {
+      Principal principal = (Principal) subject.getPrincipal();
+      if (principal != null) {
+        return principal.getTenantInfo().getOrgCode();
+      }
+    }
+    return null;
+  
   }
 
   @Override

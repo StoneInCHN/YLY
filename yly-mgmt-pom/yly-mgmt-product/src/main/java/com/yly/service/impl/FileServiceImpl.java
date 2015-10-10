@@ -29,6 +29,7 @@ import com.yly.beans.Setting;
 import com.yly.plugin.StoragePlugin;
 import com.yly.service.FileService;
 import com.yly.service.PluginService;
+import com.yly.service.TenantAccountService;
 import com.yly.utils.FreemarkerUtils;
 import com.yly.utils.SettingUtils;
 
@@ -48,6 +49,8 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
   private TaskExecutor taskExecutor;
   @Resource(name = "pluginServiceImpl")
   private PluginService pluginService;
+  @Resource(name = "tenantAccountServiceImpl")
+  private TenantAccountService tenantAccountService;
 
   public void setServletContext(ServletContext servletContext) {
     this.servletContext = servletContext;
@@ -99,24 +102,26 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
     return false;
   }
 
-  public String upload(FileType fileType, MultipartFile multipartFile, boolean async) {
+  public String upload(FileType fileType, MultipartFile multipartFile, String identifier, boolean async) {
     if (multipartFile == null) {
       return null;
     }
     Setting setting = SettingUtils.get();
-    String uploadPath;
+    String uploadPath = null;
     if (fileType == FileType.FLASH) {
       uploadPath = setting.getFlashUploadPath();
     } else if (fileType == FileType.MEDIA) {
       uploadPath = setting.getMediaUploadPath();
     } else if (fileType == FileType.FILE) {
       uploadPath = setting.getFileUploadPath();
-    } else {
-      uploadPath = setting.getImageUploadPath();
+    } else if(fileType == FileType.PROFILE_PICTURE){
+      uploadPath = setting.getProfilePictureUploadPath();
     }
     try {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("uuid", UUID.randomUUID().toString());
+//      model.put("uuid", UUID.randomUUID().toString());
+      model.put("orgCode", tenantAccountService.getCurrentTenantOrgCode());
+      model.put("identifier", identifier);
       String path = FreemarkerUtils.process(uploadPath, model);
       String destPath =
           path + UUID.randomUUID() + "."
@@ -146,24 +151,24 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
     return null;
   }
 
-  public String upload(FileType fileType, MultipartFile multipartFile) {
-    return upload(fileType, multipartFile, false);
+  public String upload(FileType fileType, MultipartFile multipartFile , String identifier) {
+    return upload(fileType, multipartFile, identifier, false);
   }
 
-  public String uploadLocal(FileType fileType, MultipartFile multipartFile) {
+  public String uploadLocal(FileType fileType, MultipartFile multipartFile , String identifier) {
     if (multipartFile == null) {
       return null;
     }
     Setting setting = SettingUtils.get();
-    String uploadPath;
+    String uploadPath = null;
     if (fileType == FileType.FLASH) {
       uploadPath = setting.getFlashUploadPath();
     } else if (fileType == FileType.MEDIA) {
       uploadPath = setting.getMediaUploadPath();
     } else if (fileType == FileType.FILE) {
       uploadPath = setting.getFileUploadPath();
-    } else {
-      uploadPath = setting.getImageUploadPath();
+    } else if(fileType == FileType.PROFILE_PICTURE){
+      uploadPath = setting.getProfilePictureUploadPath();
     }
     try {
       Map<String, Object> model = new HashMap<String, Object>();
