@@ -11,7 +11,7 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#bedNurseChargeRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
+			    width: 660,    
 			    height: 500, 
 			    cache: false,   
 			    href:'../bedNurseChargeRecord/details.jhtml?id='+rowData.id,
@@ -28,50 +28,45 @@ $(function(){
 		   [
 		      {field:'ck',checkbox:true},
 		      //老人姓名
-		      {title:message("yly.common.elderlyname"),field:"elderlyInfo",width:30,align:'center',sortable:true,formatter:function(value,row,index){
-		    	  if(value!=null){
-		    		  return value.name;
-		    	  }
+		      {title:message("yly.common.elderlyname"),field:"elderlyInfoName",width:30,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.name;
 		      }},
 		      //老人编号
-		      {title:message("yly.elderlyinfo.identifier"),field:"elderlyInfo",width:70,align:'center',sortable:true,formatter:function(value,row,index){
-		    	  if(value!=null){
-		    		  return value.identifier;
-		    	  }
+		      {title:message("yly.elderlyinfo.identifier"),field:"elderlyInfoIdentifier",width:40,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.identifier;
 		      }},
 		      //房间
-		      {title:message("yly.common.bedRoom"),field:"elderlyInfo",width:120,align:'center',sortable:true,formatter:function(value,row,index){
-		    	  if(value!=null){
-		    		  return value.bedLocation;
-		    	  }
+		      {title:message("yly.common.bedRoom"),field:"elderlyInfoBedRoom",width:50,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.bedLocation;
 		      }},
 		      //护理等级
-		      {title:message("yly.common.nurseLevel"),field:"elderlyInfo",width:40,align:'center',sortable:true,formatter:function(value,row,index){
-		    	  if(value!=null && value.nursingLevel!=null){
-		    		  return value.nursingLevel.configValue;
-		    	  }
+		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.nursingLevel.configValue;
+//		    	  if(value!=null && value.nursingLevel!=null){
+//		    		  return value.nursingLevel.configValue;
+//		    	  }
 		      }},
 		      //床位费
-		      {title:message("yly.charge.record.bed"),field:"bedAmount",width:20,align:'center',sortable:true},
+		      {title:message("yly.charge.record.bed"),field:"bedAmount",width:25,align:'center',sortable:true},
 		      //护理费
-		      {title:message("yly.charge.record.nurse"),field:"nurseAmount",width:20,align:'center',sortable:true},
+		      {title:message("yly.charge.record.nurse"),field:"nurseAmount",width:25,align:'center',sortable:true},
 		      //总金额
-		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:20,align:'center'},
+		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:25,align:'center'},
 		      //收款人
 		      {title:message("yly.charge.record.operator"),field:"operator",width:30,align:'center',sortable:true},
 		      //收款时间段
-		      {title:message("yly.charge.record.period"),field:"periodEndDate",width:60,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.charge.record.period"),field:"periodEndDate",width:25,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
 		    	  		return new Date(value).Format("yyyy-MM");
 		    	  	}
 				}},
 		      //状态
-		      {title:message("yly.charge.record.status"),field:"chargeStatus",width:120,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.charge.record.status"),field:"chargeStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "PAID"){
-		    	  		return message("yly.charge.status.paid");
+		    	  		return "<font color=#7CCD7C>"+message("yly.charge.status.paid")+"</font>";
 		    	  	}
 		    	  	if(value == "UNPAID"){
-		    	  		return message("yly.charge.status.unpaid");
+		    	  		return "<font color=#FF0000>"+message("yly.charge.status.unpaid")+"</font>";
 		    	  	}
 		      	}}
 		   ]

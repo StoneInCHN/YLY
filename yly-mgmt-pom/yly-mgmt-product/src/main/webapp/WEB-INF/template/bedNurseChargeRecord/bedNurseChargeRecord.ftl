@@ -27,7 +27,7 @@
 	  </fieldset>
 </div>
 
-<table id="bedNurseChargeRecord_table_list"></table>
+<table id="bedNurseChargeRecord-table-list"></table>
 <div id="bedNurseChargeRecordDetail"></div>
 
 

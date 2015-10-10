@@ -186,7 +186,7 @@ public class CommonEnum {
    */
   public enum PaymentType {
     /**
-     * 预付款
+     * 预存款
      */
     ADVANCE,
     /**
@@ -198,7 +198,7 @@ public class CommonEnum {
      */
     CARD,
     /**
-     * 混合支付
+     * 混合支付(现金+卡)
      */
     MIXTURE
   }

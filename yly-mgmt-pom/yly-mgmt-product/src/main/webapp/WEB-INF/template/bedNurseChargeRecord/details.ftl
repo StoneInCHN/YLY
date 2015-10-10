@@ -1,93 +1,89 @@
 <form id="bedNurseChargeRecord_form" method="post">   
 		  <table class="table table-striped">
 	    	<tr>
-	    		<th>${message("yly.consultation.vistor")}:</th>
+	    		<th width="85px">${message("yly.common.elderly.name")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="vistor" readonly=true value="${consultation.vistor}" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="elderlyInfoName" readonly=true value="${bedNurseCharge.elderlyInfo.name}" style="width:85px;"/>   
 	    		</td>
-	    		<th>${message("yly.phoneNumber")}:</th>
+	    		<th width="85px">${message("yly.common.elderly.identifier")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="phoneNumber"  readonly=true value="${consultation.phoneNumber}" style="width:110px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.elderly.name")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="elderlyName"  readonly=true value="${consultation.elderlyName}" style="width:85px;"/> 
-	    		</td>
-	    		<th>${message("yly.gender")}:</th>
-	    		<td>
-    			  <select id="gender" class="easyui-combobox" name="gender" disabled="disabled" style="width:50px;">   
-    			  	<option value="MALE" [#if consultation.gender =="MALE"] selected="selected" [/#if]>${message("yly.gender.male")}</option>
-					<option value="FEMALE" [#if consultation.gender =="FEMALE"] selected="selected" [/#if]>${message("yly.gender.female")}</option>
-				  </select>  
+	    			  <input class="easyui-textbox" type="text" name="elderlyInfoIdentifier" readonly=true value="${bedNurseCharge.elderlyInfo.identifier}" style="width:130px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.consultation.checkinIntention")}:</th>
+	    		<th>${message("yly.common.elderly.bedRoom")}:</th>
 	    		<td>
-    			  <select id="checkinIntention" class="easyui-combobox" name="checkinIntention" disabled="disabled" style="width:110px;">   
-					<option value="CONFIRMED" [#if consultation.checkinIntention =="CONFIRMED"] selected="selected" [/#if]>${message("yly.consultation.checkinIntention.confirmed")}</option>
-					<option value="WILL_TO_CHECKIN_STRONGLY" [#if consultation.checkinIntention =="WILL_TO_CHECKIN_STRONGLY"] selected="selected" [/#if]>${message("yly.consultation.checkinIntention.will_to_checkin_strongly")}</option> 
-					<option value="WILL_TO_CHECKIN_NOT_STRONGLY" [#if consultation.checkinIntention =="WILL_TO_CHECKIN_NOT_STRONGLY"] selected="selected" [/#if]>${message("yly.consultation.checkinIntention.will_to_checkin_not_strongly")}</option>
-					<option value="WILL_NOT_CHECKIN" [#if consultation.checkinIntention =="WILL_NOT_CHECKIN"] selected="selected" [/#if]>${message("yly.consultation.checkinIntention.will_not_checkin")}</option>
-				  </select>  
+	    			 <input class="easyui-textbox" type="text" name="elderlyInfoBedRoom"  readonly=true value="${bedNurseCharge.elderlyInfo.bedLocation}" style="width:180px;"/> 
 	    		</td>
-	    		
-	    		<th>${message("yly.consultation.relation")}:</th>
+	    		<th>${message("yly.common.elderly.nurseLevel")}:</th>
 	    		<td>
-    			  <select id="relation" class="easyui-combobox" name="relation" disabled="disabled" style="width:100px;">   
-					<option value="SELF" [#if consultation.relation =="SELF"] selected="selected" [/#if]>${message("yly.common.relation.self")}</option>
-					<option value="CHILDREN" [#if consultation.relation =="CHILDREN"] selected="selected" [/#if]>${message("yly.common.relation.children")}</option> 
-					<option value="MARRIAGE_RELATIONSHIP" [#if consultation.relation =="MARRIAGE_RELATIONSHIP"] selected="selected" [/#if]>${message("yly.common.relation.marriage_relationship")}</option>
-					<option value="GRANDPARENTS_AND_GRANDCHILDREN" [#if consultation.relation =="GRANDPARENTS_AND_GRANDCHILDREN"] selected="selected" [/#if]>${message("yly.common.relation.grandparents_and_grandchildren")}</option>
-					<option value="BROTHERS_OR_SISTERS" [#if consultation.relation =="BROTHERS_OR_SISTERS"] selected="selected" [/#if]>${message("yly.common.relation.brothers_or_sisters")}</option>
-					<option value="DAUGHTERINLAW_OR_SONINLAW" [#if consultation.relation =="DAUGHTERINLAW_OR_SONINLAW"] selected="selected" [/#if]>${message("yly.common.relation.daughterinlaw_or_soninlaw")}</option>
-					<option value="FRIEND" [#if consultation.relation =="FRIEND"] selected="selected" [/#if]>${message("yly.common.relation.friend")}</option>
-					<option value="OTHER" [#if consultation.relation =="OTHER"] selected="selected" [/#if]>${message("yly.common.other")}</option>
-				  </select>  
+    			  	<select id="elderlyInfoNurseLevel" class="easyui-combobox" name="elderlyInfoNurseLevel" disabled="disabled" style="width:85px;">   
+						<option value="${bedNurseCharge.elderlyInfo.nursingLevel.id}" selected="selected">${bedNurseCharge.elderlyInfo.nursingLevel.configValue}</option>
+				    </select>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.infoChannel")}:</th>
+	    		<th>${message("yly.common.charge.invoiceNo")}:</th>
 	    		<td>
-    			  <select id="infoChannel" class="easyui-combobox" name="infoChannel" disabled="disabled" style="width:80px;">   
-					<option value="NETWORK" [#if consultation.infoChannel =="NETWORK"] selected="selected" [/#if]>${message("yly.common.relation.infochannel.network")}</option>
-					<option value="COMMUNITY" [#if consultation.infoChannel =="COMMUNITY"] selected="selected" [/#if]>${message("yly.common.relation.infochannel.community")}</option> 
-					<option value="OHTER_INTRODUCT" [#if consultation.infoChannel =="OHTER_INTRODUCT"] selected="selected" [/#if]>${message("yly.common.relation.infochannel.ohter_introduct")}</option>
-					<option value="ADVERTISEMENT" [#if consultation.infoChannel =="ADVERTISEMENT"] selected="selected" [/#if]>${message("yly.common.relation.infochannel.advertisement")}</option>
-					<option value="OTHER" [#if consultation.infoChannel =="OTHER"] selected="selected" [/#if]>${message("yly.common.other")}</option>
-				  </select>  
+	    			<input class="easyui-textbox" type="text" name="invoiceNo"  readonly=true value="${bedNurseCharge.invoiceNo}" style="width:130px;"/> 
 	    		</td>
-	    		
-	    		<th>${message("yly.consultation.returnVisit")}:</th>
+	    		<th>${message("yly.common.charge.billingNo")}:</th>
 	    		<td>
-    			  <select id="returnVisit" class="easyui-combobox" name="returnVisit" disabled="disabled" style="width:45px;">   
-					<option value="true" [#if consultation.returnVisit == true] selected="selected" [/#if]>${message("yly.common.yes")}</option>
-					<option value="false" [#if consultation.returnVisit == false] selected="selected" [/#if]>${message("yly.common.no")}</option> 
-				  </select>  
+	    			<input class="easyui-textbox" type="text" name="billingNo"  readonly=true value="${bedNurseCharge.billingNo}" style="width:130px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.consultation.returnVisitDate")}:</th>
+	    		<th>${message("yly.charge.record.bed")}:</th>
 	    		<td>
-	    			  <input id="returnVisitDate" name="returnVisitDate" type="text" value="${consultation.returnVisitDate}" class="easyui-datebox" disabled=true/> 
+	    			 <input class="easyui-textbox" type="text" name="bedAmount"  readonly=true value="${bedNurseCharge.bedAmount}" style="width:75px;"/> 
 	    		</td>
-	    		<th>${message("yly.createDate")}:</th>
+	    		<th>${message("yly.charge.record.nurse")}:</th>
 	    		<td>
-	    			  <input id="createDate" name="createDate" type="text" value="${consultation.createDate}" class="easyui-datebox" disabled=true/> 
+    			     <input class="easyui-textbox" type="text" name="nurseAmount"  readonly=true value="${bedNurseCharge.nurseAmount}" style="width:75px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.consultation.elderlyHealth")}:</th>
-	    		<td colspan=3>
-	    			  <textarea  cols=60 rows=4 type="text" name="elderlyHealth" readonly=true>${consultation.elderlyHealth}</textarea> 
+	    		<th>${message("yly.common.charge.totalAmount")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="totalAmount"  readonly=true value="${bedNurseCharge.totalAmount}" style="width:75px;"/> 
+	    		</td>
+	    		<th>${message("yly.common.charge.paymentType")}:</th>
+	    		<td>
+    			  	<select id="paymentType" class="easyui-combobox" name="paymentType" disabled="disabled" style="width:85px;">   
+						<option value="${bedNurseCharge.paymentType}" selected="selected">${message("yly.common.charge.paymentType.${bedNurseCharge.paymentType}")}</option>
+				    </select>
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr>
+	    		<th>${message("yly.common.charge.period")}:</th>
+	    		<td>
+	    		    <input id="periodStartDate" name="periodStartDate" type="text" value="${bedNurseCharge.periodStartDate}" class="easyui-datebox" style="width:100px;" disabled=true/>
+	    		    ─
+    			    <input id="periodEndDate" name="periodEndDate" type="text" value="${bedNurseCharge.periodEndDate}" class="easyui-datebox" style="width:100px;" disabled=true/>
+	    		</td>
+	    		<th>${message("yly.common.charge.status")}:</th>
+	    		<td>
+	    			<select id="chargeStatus" class="easyui-combobox" name="chargeStatus" disabled="disabled" style="width:85px;">   
+						<option value="${bedNurseCharge.chargeStatus}" selected="selected">${message("yly.common.charge.status.${bedNurseCharge.chargeStatus}")}</option>
+				    </select>
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr>
+	    		<th>${message("yly.common.charge.operator")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="operator"  readonly=true value="${bedNurseCharge.operator}" style="width:85px;"/> 
+	    		</td>
+	    		<th>${message("yly.common.charge.payTime")}:</th>
+	    		<td>
+	    			  <input id="payTime" name="payTime" type="text" value="${bedNurseCharge.payTime}" class="easyui-datebox" style="width:100px;" disabled=true /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td colspan=3>
-	    			  <textarea  cols=60 rows=4 type="text" name="remark" readonly=true>${consultation.remark}</textarea> 
+	    			  <textarea  cols=60 rows=5 type="text" name="remark" readonly=true>${bedNurseCharge.remark}</textarea> 
 	    		</td>
 	    	</tr>
 	    </table>

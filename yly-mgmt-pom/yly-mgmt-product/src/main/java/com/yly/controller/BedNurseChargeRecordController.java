@@ -48,8 +48,8 @@ public class BedNurseChargeRecordController extends BaseController {
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
     Page<BedNurseCharge> page = bedNurseChargeService.findPage(pageable, true);
 
-    String[] properties = { "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
-            "bedAmount", "nurseAmount", "totalAmount", "periodEndDate", "chargeStatus" };
+    String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
+            "bedAmount", "nurseAmount", "totalAmount", "operator","periodEndDate", "chargeStatus" };
 
     List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());
 
