@@ -102,7 +102,7 @@ public class RoomController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(Long buildingId,Long roomTypeId ,Room room) {
+  public @ResponseBody Message add(Long buildingId,Long roomTypeId ,Room room) {
     Building building = buildingService.find(buildingId);
     SystemConfig roomType =systemConfigService.find(roomTypeId);
     if(building!=null && roomType!=null ){

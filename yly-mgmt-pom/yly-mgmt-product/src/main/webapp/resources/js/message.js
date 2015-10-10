@@ -55,6 +55,9 @@ var messages = {
 	/**
 	 * charge manage
 	 */
+	"yly.charge.status.paid" : "已缴费",
+	"yly.charge.status.unpaid" : "未缴费",
+	"yly.charge.status.refunded" : "已退款",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
 	"yly.waterElectricity.charge.record" : "水电费",

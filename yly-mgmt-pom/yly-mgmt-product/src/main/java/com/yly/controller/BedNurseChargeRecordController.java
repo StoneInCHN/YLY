@@ -49,7 +49,7 @@ public class BedNurseChargeRecordController extends BaseController {
     Page<BedNurseCharge> page = bedNurseChargeService.findPage(pageable, true);
 
     String[] properties = { "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
-            "bedAmount", "nurseAmount", "totalAmount", "remark", "elderlyInfo.id", "elderlyInfo.name" };
+            "bedAmount", "nurseAmount", "totalAmount", "periodEndDate", "chargeStatus" };
 
     List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());
 
