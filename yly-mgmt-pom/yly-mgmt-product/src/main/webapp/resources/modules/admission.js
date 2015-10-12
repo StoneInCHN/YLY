@@ -179,6 +179,17 @@ $(function(){
 	  $("#admission-table-list").datagrid('reload');
 	})
 	
-	 
+	$("#generateIdentifier_btn").click(function(){
+		$.ajax({
+			url:"../identifier/generateId.jhtml",
+			type:"get",
+			data:{
+			"idType":"ELDERLYINFO_IDENTIFIER"
+			},
+			success:function(result,response,status){
+				$("#identifier_input").textbox('setValue',result.id);
+			}
+		});
+	})
 	 
 })
