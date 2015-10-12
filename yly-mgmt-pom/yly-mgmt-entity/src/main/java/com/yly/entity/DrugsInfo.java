@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -171,6 +172,7 @@ public class DrugsInfo extends BaseEntity {
   }
 
   @JsonProperty
+  @ManyToOne
   public SystemConfig getDrugCategory() {
     return drugCategory;
   }
@@ -179,6 +181,7 @@ public class DrugsInfo extends BaseEntity {
     this.drugCategory = drugCategory;
   }
 
+  @ManyToOne
   public SystemConfig getConventionalUnit() {
     return conventionalUnit;
   }
@@ -187,6 +190,7 @@ public class DrugsInfo extends BaseEntity {
     this.conventionalUnit = conventionalUnit;
   }
 
+  @ManyToOne
   public SystemConfig getMinUnit() {
     return minUnit;
   }
@@ -211,6 +215,7 @@ public class DrugsInfo extends BaseEntity {
     this.dosageUnit = dosageUnit;
   }
 
+  @ManyToOne
   public SystemConfig getDrugUseMethod() {
     return drugUseMethod;
   }
@@ -286,7 +291,7 @@ public class DrugsInfo extends BaseEntity {
     this.tenantID = tenantID;
   }
 
-  @Field(index = org.hibernate.search.annotations.Index.NO)
+//  @Field(index = org.hibernate.search.annotations.Index.NO)
   public BigDecimal getPrescriptionPrice() {
     return prescriptionPrice;
   }

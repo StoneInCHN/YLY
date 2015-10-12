@@ -50,19 +50,20 @@
 	    		</td>
 	    		<th>药品分类:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="drugCategory" id="drugCategory"/>   
+	    			 <input class="easyui-textbox" type="text" name="drugCategoryId" id="drugCategory"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>药品常用单位:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id = "conventionalUnit" name="conventionalUnit"  />   
+	    			 <input class="easyui-textbox" type="text" id = "conventionalUnit" name="conventionalUnitId"  />   
 	    		</td>
 	    		<th>最小单位:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="minUnit" name="minUnit"  />   
+	    			 <input class="easyui-textbox" type="text" id="minUnit" name="minUnitId"  />   
 	    		</td>
 	    	</tr>
+	    	
 	    	<tr>
 	    		<th>换算单位:</th>
 	    		<td>
@@ -79,16 +80,18 @@
 				  	</select>   
 	    		</td>
 	    	</tr>
+	    	
 	    	<tr>
 	    		<th>药品用法:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="drugUseMethod"  />   
+	    			 <input class="easyui-textbox" type="text" name="drugUseMethodId" id="drugUseMethod" />   
 	    		</td>
 	    		<th>剂量:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="dosage"  />   
 	    		</td>
 	    	</tr>
+	    	
 	    	<tr>
 	    		<th>药品规格:</th>
 	    		<td>
@@ -106,6 +109,7 @@
 				  	</select>    
 	    		</td>
 	    	</tr>
+	    	
 	    	<tr>
 	    		<th>单次用量:</th>
 	    		<td>
@@ -121,12 +125,13 @@
 	    		<th>药品状态:</th>
 	    		<td>
 	    			<select id="drugStatus" class="easyui-combobox" name="drugStatus" style="width:60px;">   
-						<option value="ENABLED">启用</option>
-						<option value="DISABLED">禁用</option> 
+						<option value="ENABLE">启用</option>
+						<option value="DISABLE">禁用</option> 
 				  </select>     
 	    		</td>
 	    		
     		</tr>
+    		
     		<tr>
 	    		<th>处方价格:</th>
 	    		<td>
@@ -143,7 +148,12 @@
 	    			  <input class="easyui-textbox" type="text" name="description" data-options="multiline:true,height:90,width:300" /> 
 	    		</td>
 	    	</tr>
-	    	
+	    	<tr>
+    			<th>备注:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="remark" data-options="multiline:true,height:90,width:300" /> 
+	    		</td>
+	    	</tr>
 	    </table>
 	</form>
 </div>

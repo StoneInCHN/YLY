@@ -250,7 +250,11 @@ public class CommonEnum {
     /**
      * 评估结果,9
      */
-    EVALUATINGRESULT
+    EVALUATINGRESULT,
+    /**
+     * 药品用法,10
+     */
+    DRUGUSEMETHOD
   }
 
   /**
@@ -1143,6 +1147,17 @@ public class CommonEnum {
     OTHER
     
     }
+  
+  /**
+   * 人员编号
+   */
+  public enum IdentifierType{
+    /**
+     * 老人编号
+     */
+    ELDERLYINFO_IDENTIFIER
+  }
+  
   /**
    * 树节点展开状态
    * @author tanbiao
@@ -1157,5 +1172,5 @@ public class CommonEnum {
      * 关闭
      */
     closed
-  }  
+  } 
 }
