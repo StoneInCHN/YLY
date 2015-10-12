@@ -154,6 +154,7 @@
     
     <div id="searchElderlyInfo"></div>
     
+    
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="${base}/resources/js/jquery.min.js"></script>

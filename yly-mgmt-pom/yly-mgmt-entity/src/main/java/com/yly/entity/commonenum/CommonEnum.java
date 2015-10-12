@@ -1143,5 +1143,19 @@ public class CommonEnum {
     OTHER
     
     }
-
+  /**
+   * 树节点展开状态
+   * @author tanbiao
+   *
+   */
+  public enum TreeNodeState{
+    /**
+     * 展开
+     */
+    open,
+    /**
+     * 关闭
+     */
+    closed
+  }  
 }

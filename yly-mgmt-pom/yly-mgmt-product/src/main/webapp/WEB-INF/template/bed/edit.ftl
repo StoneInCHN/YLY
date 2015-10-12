@@ -10,11 +10,7 @@
 	    	<tr>
 	    		<th>${message("yly.bed.room")}:</th>
 	    		<td>
-					 <select class="easyui-combobox" name="roomId"  data-options="required:true,width:150" >   
-					     [#list rooms as room]
-		               		<option value="${room.id}" [#if room.id == bed.room.id] selected = "selected"[/#if]>${room.roomNumber}</option>
-		                 [/#list]
-					  </select>  
+					  <input class="easyui-combotree" type="text" id="editBed_form_roomId" name="roomId" data-value="${bed.room.id}" data-options="required:true,editable:false" />   
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -32,3 +28,31 @@
 	    	</tr>
 	    </table>
 	</form>
+<script>
+	$(function(){
+			$("#editBed_form_roomId").combotree({    
+				animate:true,
+				lines:true,
+				url:'../room/findAll.jhtml',
+				onLoadSuccess:function(){
+					$('#editBed_form_roomId').combotree("setValue",$("#editBed_form_roomId").attr("data-value"));
+				},
+				queryParams:{
+					roomId:$("#editBed_form_roomId").attr("data-value")
+				},
+				//选择树节点触发事件  
+				onBeforeSelect : function(node) {  
+				//返回树对象  
+				var tree = $(this).tree;  
+				//选中的节点是否为叶子节点,如果不是叶子节点,清除选中  
+				var isLeaf = tree('isLeaf', node.target);  
+				if (!isLeaf) {  
+					$.messager.alert("警告","请选择子节点","warning");
+					// 返回false表示取消本次选择操作
+					return false;
+			   }  
+		   } 
+		})
+	
+	})
+</script>

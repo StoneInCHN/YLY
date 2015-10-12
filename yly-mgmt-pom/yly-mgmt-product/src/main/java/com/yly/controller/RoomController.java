@@ -1,8 +1,10 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -18,8 +20,10 @@ import com.yly.entity.Building;
 import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
+import com.yly.entity.commonenum.CommonEnum.TreeNodeState;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.response.TreeNodeResponse;
 import com.yly.service.BuildingService;
 import com.yly.service.RoomService;
 import com.yly.service.SystemConfigService;
@@ -71,14 +75,54 @@ public class RoomController extends BaseController {
     return roomService.findPage(pageable,true);
   }
 
+ /* *
+  @RequestMapping(value = "/findAll", method = RequestMethod.POST)
+  public @ResponseBody List<Map<String, Object>> findAll() {
+    String[] properties = {"id","roomNumber"};
+    return FieldFilterUtils.filterCollectionMap(properties,  roomService.findAll(true));
+  }*/
+  
   /**
    * 查询该租户下所有的房间
    * @return
    */
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String, Object>> findAll() {
-    String[] properties = {"id","roomNumber"};
-    return FieldFilterUtils.filterCollectionMap(properties,  roomService.findAll(true));
+  public @ResponseBody List<TreeNodeResponse> findAll(Long roomId) {
+   List<TreeNodeResponse> treeNodeResponses =null;
+   List<Building> buildings =  buildingService.findAll(true);
+   if(buildings !=null && buildings.size() >0){
+    treeNodeResponses = new ArrayList<TreeNodeResponse>();
+     for (Building building : buildings) {
+       Boolean isExpand = false;//是否展开
+       TreeNodeResponse treeNodeResponse = new TreeNodeResponse();
+       treeNodeResponse.setChecked(false);
+       treeNodeResponse.setText(building.getBuildingName());
+       Set<Room> rooms = building.getRooms();
+      if (rooms !=null && rooms.size() >0) {
+        List<TreeNodeResponse> children = new ArrayList<TreeNodeResponse>();
+        for (Room room : rooms) {
+          TreeNodeResponse child = new TreeNodeResponse();
+          child.setId(room.getId());
+          child.setChecked(false);
+          child.setText(room.getRoomNumber());
+          //child.setState(TreeNodeState.closed);
+          if(roomId !=null && roomId.equals(room.getId())){
+            isExpand =true;
+          }
+          
+          children.add(child);
+        }
+        treeNodeResponse.setChildren(children);
+        if(isExpand){
+          treeNodeResponse.setState(TreeNodeState.open);
+        }else{
+          treeNodeResponse.setState(TreeNodeState.closed);
+        }
+        treeNodeResponses.add(treeNodeResponse);
+      }
+    }
+   }
+    return treeNodeResponses;
   }
   
   /**

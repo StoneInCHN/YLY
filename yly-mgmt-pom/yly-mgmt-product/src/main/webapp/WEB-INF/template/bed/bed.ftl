@@ -20,7 +20,7 @@
 	    	<tr>
 	    		<th>${message("yly.bed.room")}:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" type="text" id="addBed_form_roomId" name="roomId" data-options="required:true,editable:false" />   
+	    			 <input class="easyui-combotree" type="text" id="addBed_form_roomId" name="roomId" data-options="required:true,editable:false" />   
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -132,7 +132,14 @@ $(function(){
 		      {title:message("yly.room.roomName"),field:"roomName",width:100,align:'center',sortable:true},
 		      {title:message("yly.room.roomNumber"),field:"roomNumber",width:50,align:'center',sortable:true},
 		      {title:message("yly.room.floor"),field:"floor",width:50,align:'center',sortable:true},
-		      {title:message("yly.room.roomType"),field:"roomType",width:100,align:'center',sortable:true},
+		      {title:message("yly.room.roomType"),field:"roomType",width:100,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  if(value){
+		    		  return  value.configValue;
+		    	  }else{
+		    		  return  value;
+		    	  }
+		      	}
+		      },
 		      {title:message("yly.room.roomStatus"),field:"roomStatus",width:50,align:'center',sortable:true,formatter: function(value,row,index){
 		    		if(value == "ENABLE"){
 		    	  		return  message("yly.common.enable");
