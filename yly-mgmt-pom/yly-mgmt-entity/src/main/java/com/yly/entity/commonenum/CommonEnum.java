@@ -1143,5 +1143,15 @@ public class CommonEnum {
     OTHER
     
     }
+  
+  /**
+   * 人员编号
+   */
+  public enum IdentifierType{
+    /**
+     * 老人编号
+     */
+    ELDERLYINFO_IDENTIFIER
+  }
 
 }
