@@ -12,7 +12,7 @@ $(function(){
 			$('#personalizedChargeRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 700,    
-			    height: 600, 
+			    height: 630, 
 			    cache: false,   
 			    href:'../personalizedChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
