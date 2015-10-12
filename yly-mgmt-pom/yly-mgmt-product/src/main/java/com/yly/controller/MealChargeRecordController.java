@@ -2,6 +2,8 @@ package com.yly.controller;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,6 +18,7 @@ import com.yly.entity.MealCharge;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.MealChargeService;
+import com.yly.utils.FieldFilterUtils;
 
 @Controller("mealChargeRecordController")
 @RequestMapping("/console/mealChargeRecord")
@@ -42,8 +45,17 @@ public class MealChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<MealCharge> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
-    return mealChargeService.findPage(pageable,true);
+  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
+    Page<MealCharge> page = mealChargeService.findPage(pageable, true);
+
+    String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
+            "mealAmount","operator","periodEndDate", "chargeStatus" };
+    
+    List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());
+
+    Page<Map<String, Object>> filteredPage = new Page<Map<String, Object>>(rows, page.getTotal(), pageable);
+
+    return filteredPage;
   }
   
   /**
