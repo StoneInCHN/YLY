@@ -76,7 +76,7 @@ public class ElderlyInfo extends BaseEntity {
   private String photo;
 
   /** 文件 */
-  private MultipartFile file;
+  private MultipartFile photoFile;
 
   /**
    * 籍贯
@@ -728,13 +728,23 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @Transient
-  public MultipartFile getFile() {
-    return file;
+  public MultipartFile getPhotoFile() {
+    return photoFile;
   }
 
-  public void setFile(MultipartFile file) {
-    this.file = file;
+  public void setPhotoFile(MultipartFile photoFile) {
+    this.photoFile = photoFile;
   }
+  
+  
+//  public MultipartFile getFile() {
+//    return file;
+//  }
+//
+//
+//  public void setFile(MultipartFile file) {
+//    this.file = file;
+//  }
 
   @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
   public Set<ElderlyPhotoAlbum> getElderlyPhotoAlbum() {

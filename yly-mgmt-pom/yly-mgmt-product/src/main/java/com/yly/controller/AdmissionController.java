@@ -90,14 +90,14 @@ public class AdmissionController extends BaseController{
       evaluatingResult = systemConfigService.find(evaluatingResultId);
     }
     
-    
-    
     if (elderlyInfo != null) {
-      elderlyInfo.setTenantID(tenantAccountService.getCurrentTenantID());
+      Long currnetTenantId = tenantAccountService.getCurrentTenantID();
+      elderlyInfo.setTenantID(currnetTenantId);
       elderlyInfo.setPersonnelCategory(personnelCategory);
       elderlyInfo.setNursingLevel(nursingLevel);
       elderlyInfo.setEvaluatingResult(evaluatingResult);
       
+      elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);      
       elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
       
       elderlyInfoService.save(elderlyInfo);

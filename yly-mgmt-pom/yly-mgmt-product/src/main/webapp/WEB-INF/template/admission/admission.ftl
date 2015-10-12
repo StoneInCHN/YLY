@@ -27,7 +27,7 @@
 	<div class="tool-filter"></div>
 </div> 
 <div id="addAdmission">
-	<form id="addAdmission_form" method="post" class="form-table" enctype="multipart/form-data">   
+	<form id="addAdmission_form" action="add.jhtml" method="post" class="form-table" enctype="multipart/form-data">   
 	   	  <table class="table table-striped">
 	   	  	<caption><h5>${message("yly.elderlyInfo.baseinfo")}</h5></caption>
 	    	<tr>
@@ -38,13 +38,13 @@
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.beHospitalizedDate")}:</th>
-	    		<td width="280px">
+	    		<td width="230px">
 	    			<input type="text" class="Wdate" id="beginDate" name="beHospitalizedDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.photo")}:</th>
 	    		<td>
-	    			  <input class="easyui-filebox" name="file" data-options="prompt:'${message("yly.elderlyInfo.choose.photo")}...'" style="width:200px;">
+	    			 <input class="easyui-filebox" name="file" id="photoUpload-filebox" data-options="prompt:'${message("yly.elderlyInfo.choose.photo")}...'" style="width:200px;">
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -90,7 +90,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.placeOfOrigin")}:</th>
 	    		<td>
-    			   <input class="easyui-textbox" type="text" name="placeOfOrigin" validtype="length[0,50] style="width:100px;"/> 
+    			   <input class="easyui-textbox" type="text" name="placeOfOrigin" validtype="length[0,50]" style="width:100px;"/> 
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.nation")}:</th>

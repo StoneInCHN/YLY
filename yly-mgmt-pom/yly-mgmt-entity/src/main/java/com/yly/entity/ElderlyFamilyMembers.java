@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.hibernate.annotations.Index;
-
 import com.yly.entity.commonenum.CommonEnum.Relation;
 
 @Embeddable
@@ -16,11 +14,6 @@ public class ElderlyFamilyMembers implements Serializable{
    * 
    */
   private static final long serialVersionUID = 7445603213049873537L;
-
-  /**
-   * 租户ID
-   */
-  private Long tenantID;
   
   /**
    * 家庭成员名称
@@ -76,14 +69,5 @@ public class ElderlyFamilyMembers implements Serializable{
 
   public void setMemberResidentialAddress(String memberResidentialAddress) {
     this.memberResidentialAddress = memberResidentialAddress;
-  }
-
-  @Index(name="elderly_family_members_tenantid")
-  public Long getTenantID() {
-    return tenantID;
-  }
-
-  public void setTenantID(Long tenantID) {
-    this.tenantID = tenantID;
   }
 }
