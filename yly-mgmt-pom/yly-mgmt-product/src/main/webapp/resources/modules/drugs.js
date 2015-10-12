@@ -14,7 +14,15 @@ $(function(){
 		      {field:'ck',checkbox:true},
 		      {title:"药品名称",field:"name",width:100,sortable:true},
 		      {title:"别名",field:"alias",width:100,sortable:true},
-		      {title:"药品分类",field:"drugCategory",width:100,sortable:true},
+		      {title:"药品分类",field:"drugCategory",width:100,sortable:true,
+	    	  formatter: function(value,row,index){
+		    	  if(value){
+		    		  return  value.configValue;
+		    	  }else{
+		    		  return  value;
+		    	  }
+					
+		      	}},
 		      {title:"创建时间",field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
@@ -97,6 +105,15 @@ $(function(){
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'DRUGSCATEGORY';// 参数
+						    }
+						});
+				    	$("#drugUseMethod").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'DRUGUSEMETHOD';// 参数
 						    }
 						});
 				    },

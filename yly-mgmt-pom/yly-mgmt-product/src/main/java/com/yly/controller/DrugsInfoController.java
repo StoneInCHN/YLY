@@ -24,10 +24,12 @@ import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.DrugsInfo;
+import com.yly.entity.SystemConfig;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.request.DrugsInfoSearchRequest;
 import com.yly.service.DrugsInfoService;
+import com.yly.service.SystemConfigService;
 import com.yly.utils.DateTimeUtils;
 
 @Controller
@@ -36,7 +38,9 @@ public class DrugsInfoController extends BaseController {
 
   @Resource(name = "drugsInfoServiceImpl")
   private DrugsInfoService drugsService;
-
+  @Resource(name = "systemConfigServiceImpl")
+  private SystemConfigService systemConfigService;
+  
   @RequestMapping(value = "/drugsInfo", method = RequestMethod.GET)
   public String list(ModelMap model) {
     return "drugsInfo/drugsInfo";
@@ -75,7 +79,22 @@ public class DrugsInfoController extends BaseController {
 
 
   @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(DrugsInfo drugsInfo) {
+  public @ResponseBody Message save(DrugsInfo drugsInfo,Long drugCategoryId
+      ,Long conventionalUnitId,Long minUnitId,Long drugUseMethodId) {
+    
+    SystemConfig drugCategory=systemConfigService.find (drugCategoryId);
+    SystemConfig conventionalUnit=systemConfigService.find (conventionalUnitId);
+    SystemConfig minUnit=systemConfigService.find (minUnitId);
+    SystemConfig drugUseMethod=systemConfigService.find (drugUseMethodId);
+    
+    if (drugsInfo != null)
+    {
+      drugsInfo.setDrugCategory (drugCategory);
+      drugsInfo.setConventionalUnit (conventionalUnit);
+      drugsInfo.setMinUnit (minUnit);
+      drugsInfo.setDrugUseMethod (drugUseMethod);
+    }
+    
     drugsService.save(drugsInfo);
     return SUCCESS_MESSAGE;
   }

@@ -92,6 +92,32 @@ public class PersonalizedCharge extends BaseEntity {
    */
   private Billing billing;
   
+  /***
+   * 收费开始时间
+   */
+  private Date periodStartDate;
+
+  /**
+   * 收费结束时间
+   */
+  private Date periodEndDate;
+  
+  public Date getPeriodStartDate() {
+    return periodStartDate;
+  }
+
+  public void setPeriodStartDate(Date periodStartDate) {
+    this.periodStartDate = periodStartDate;
+  }
+
+  public Date getPeriodEndDate() {
+    return periodEndDate;
+  }
+
+  public void setPeriodEndDate(Date periodEndDate) {
+    this.periodEndDate = periodEndDate;
+  }
+
   public PaymentType getPaymentType() {
     return paymentType;
   }
