@@ -305,6 +305,21 @@ public class ElderlyInfo extends BaseEntity {
    */
   private String bedLocation;
 
+  /**
+   * 伙食类型
+   */
+  private SystemConfig mealType;
+
+  
+  @ManyToOne
+  public SystemConfig getMealType() {
+    return mealType;
+  }
+
+  public void setMealType(SystemConfig mealType) {
+    this.mealType = mealType;
+  }
+
 
   public void setBedLocation(String bedLocation) {
     this.bedLocation = bedLocation;
@@ -407,7 +422,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
   }
 
-  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY , cascade=CascadeType.PERSIST)
+  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   public ElderlyConsigner getElderlyConsigner() {
     return elderlyConsigner;
   }
@@ -735,16 +750,16 @@ public class ElderlyInfo extends BaseEntity {
   public void setPhotoFile(MultipartFile photoFile) {
     this.photoFile = photoFile;
   }
-  
-  
-//  public MultipartFile getFile() {
-//    return file;
-//  }
-//
-//
-//  public void setFile(MultipartFile file) {
-//    this.file = file;
-//  }
+
+
+  // public MultipartFile getFile() {
+  // return file;
+  // }
+  //
+  //
+  // public void setFile(MultipartFile file) {
+  // this.file = file;
+  // }
 
   @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
   public Set<ElderlyPhotoAlbum> getElderlyPhotoAlbum() {

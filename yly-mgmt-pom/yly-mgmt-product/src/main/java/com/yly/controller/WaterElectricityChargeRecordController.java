@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
 import com.yly.entity.WaterElectricityCharge;
+import com.yly.entity.WaterElectricityChargeConfig;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.WaterElectricityChargeConfigService;
 import com.yly.service.WaterElectricityChargeService;
 import com.yly.utils.FieldFilterUtils;
 
@@ -26,6 +28,9 @@ public class WaterElectricityChargeRecordController extends BaseController {
 
   @Resource(name = "waterElectricityChargeServiceImpl")
   private WaterElectricityChargeService waterElectricityChargeService;
+  
+  @Resource(name = "waterElectricityChargeConfigServiceImpl")
+  private WaterElectricityChargeConfigService waterElectricityChargeConfigService;
 
 
   /**
@@ -74,6 +79,10 @@ public class WaterElectricityChargeRecordController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
     WaterElectricityCharge record = waterElectricityChargeService.find(id);
+    List<WaterElectricityChargeConfig> configs = waterElectricityChargeConfigService.findAll(true);
+    if (configs!=null && configs.size()==1) {
+      model.addAttribute("waterElectricityChargeConfig", configs.get(0));
+    }
     model.addAttribute("waterElectricityCharge", record);
     return "waterElectricityChargeRecord/details";
   }

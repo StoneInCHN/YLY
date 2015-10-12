@@ -20,7 +20,6 @@ import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.PersonalizedChargeConfigService;
-import com.yly.service.SystemConfigService;
 
 @Controller("personalizedChargeConfigController")
 @RequestMapping("/console/personalizedChargeConfig")
@@ -28,9 +27,6 @@ public class PersonalizedChargeConfigController extends BaseController {
 
   @Resource(name = "personalizedChargeConfigServiceImpl")
   private PersonalizedChargeConfigService personalizedChargeConfigService;
-  
-  @Resource(name = "systemConfigServiceImpl")
-  private SystemConfigService systemConfigService;
   
   
   /**

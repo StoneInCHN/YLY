@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#personalizedChargeRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 500, 
+			    width: 700,    
+			    height: 600, 
 			    cache: false,   
 			    href:'../personalizedChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{

@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#waterElectricityChargeRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 500, 
+			    width: 700,    
+			    height: 600, 
 			    cache: false,   
 			    href:'../waterElectricityChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{

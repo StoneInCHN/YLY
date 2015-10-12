@@ -41,9 +41,14 @@ $(function(){
 		      }},
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
-		    	  return row.elderlyInfo.nursingLevel.configValue;
-//		    	
+		    	  return row.elderlyInfo.nursingLevel.configValue;		    	
 		      }},
+		      //伙食类型
+		      {title:message("yly.charge.record.meal.type"),field:"mealType",width:25,align:'center',sortable:true,formatter:function(value,row,index){
+		    	    if(row.elderlyInfo && row.elderlyInfo.mealType){
+		    	    	return row.elderlyInfo.mealType.configValue;
+		    	    }
+			      }},
 		      //伙食费
 		      {title:message("yly.charge.record.meal"),field:"mealAmount",width:25,align:'center',sortable:true},
 		      //收款人

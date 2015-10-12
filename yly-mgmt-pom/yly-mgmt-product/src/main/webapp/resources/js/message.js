@@ -70,6 +70,7 @@ var messages = {
 	"yly.charge.record.period" : "收款时间段",
 	"yly.charge.record.status" : "状态",
 	"yly.charge.record.meal" : "伙食费(元)",
+	"yly.charge.record.meal.type" : "伙食类型",
 	"yly.charge.record.service" : "个性化服务费(元)",
 	"yly.charge.record.water" : "水费(元)",
 	"yly.charge.record.electricity" : "电费(元)",

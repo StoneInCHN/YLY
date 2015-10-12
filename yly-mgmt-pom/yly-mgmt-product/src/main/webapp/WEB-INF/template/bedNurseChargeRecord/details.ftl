@@ -49,7 +49,7 @@
 	    		</td>
 	    		<th>${message("yly.common.charge.paymentType")}:</th>
 	    		<td>
-    			  	<select id="paymentType" class="easyui-combobox" name="paymentType" disabled="disabled" style="width:85px;">   
+    			  	<select id="paymentType" class="easyui-combobox" name="paymentType" disabled="disabled" style="width:120px;">   
 						<option value="${bedNurseCharge.paymentType}" selected="selected">${message("yly.common.charge.paymentType.${bedNurseCharge.paymentType}")}</option>
 				    </select>
 	    		</td>

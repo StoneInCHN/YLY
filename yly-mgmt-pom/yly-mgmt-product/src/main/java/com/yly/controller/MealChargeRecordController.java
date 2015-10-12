@@ -48,7 +48,7 @@ public class MealChargeRecordController extends BaseController {
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
     Page<MealCharge> page = mealChargeService.findPage(pageable, true);
 
-    String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
+    String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel","elderlyInfo.mealType",
             "mealAmount","operator","periodEndDate", "chargeStatus" };
     
     List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());

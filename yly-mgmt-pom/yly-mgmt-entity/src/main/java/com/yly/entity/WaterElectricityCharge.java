@@ -224,7 +224,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.periodEndDate = periodEndDate;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getWaterCount() {
     return waterCount;
   }
@@ -233,7 +233,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.waterCount = waterCount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getElectricityCount() {
     return electricityCount;
   }
@@ -242,7 +242,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.electricityCount = electricityCount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getWaterAmount() {
     return waterAmount;
   }
@@ -251,7 +251,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.waterAmount = waterAmount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getElectricityAmount() {
     return electricityAmount;
   }
