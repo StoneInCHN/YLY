@@ -250,7 +250,11 @@ public class CommonEnum {
     /**
      * 评估结果,9
      */
-    EVALUATINGRESULT
+    EVALUATINGRESULT,
+    /**
+     * 药品用法,10
+     */
+    DRUGUSEMETHOD
   }
 
   /**
