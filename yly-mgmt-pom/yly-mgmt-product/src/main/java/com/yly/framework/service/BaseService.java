@@ -184,7 +184,7 @@ public interface BaseService<T, ID extends Serializable> {
   /**
    * 关键字搜索
    */
-  Page<T>  search(Query query, Pageable pageable, Analyzer analyzer);
+  Page<T>  search(Query query, Pageable pageable, Analyzer analyzer,org.apache.lucene.search.Filter filter);
   /**
    * 重建索引
    */

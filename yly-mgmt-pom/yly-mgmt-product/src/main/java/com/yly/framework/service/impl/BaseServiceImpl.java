@@ -235,10 +235,10 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
   }
 
   @Override
-  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer)
+  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer,org.apache.lucene.search.Filter filter)
   {
    
-    return baseDao.search (query, pageable, analyzer);
+    return baseDao.search (query, pageable, analyzer,filter);
   }
 
   @Override

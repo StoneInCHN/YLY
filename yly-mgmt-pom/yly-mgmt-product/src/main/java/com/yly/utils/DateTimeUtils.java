@@ -262,4 +262,25 @@ public class DateTimeUtils implements Serializable {
     }
     return convertSuccess;
   }
+  
+  /**
+   * Date 转String
+   * @param date 需要转换日期
+   * @param format 格式，默认yyyy/MM/dd
+   * @return
+   */
+  public static String convertDateToString (Date date,String format)
+  {
+    // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+    if (format == null)
+    {
+      format = "yyyyMMdd";
+    }
+    SimpleDateFormat sdf = new SimpleDateFormat (format);
+      // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+    sdf.setLenient (false);
+    String strDate=sdf.format (date);
+   
+    return strDate;
+  }
 }

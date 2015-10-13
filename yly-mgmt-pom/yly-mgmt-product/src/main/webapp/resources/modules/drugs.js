@@ -222,6 +222,7 @@ $(function(){
 	};
 	$("#search-btn").click(function(){
 	  var _queryParams = {
+			  drugName:$("#drugName").val(),
 			  beginDate:$("#beginDate").val(),
 			  endDate:$("#endDate").val(),
 	  }

@@ -574,7 +574,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
    * 关键字搜索
    */
   @Override
-  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer)
+  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer,org.apache.lucene.search.Filter filter)
   {
 
     if (pageable == null)
@@ -591,7 +591,12 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
     fullTextQuery.setMaxResults (pageable.getRows ());
     fullTextQuery.setFirstResult ((pageable.getPage () - 1)
         * pageable.getRows ());
+    if (filter != null)
+    {
+      fullTextQuery.setFilter (filter);
+    }
     list = fullTextQuery.getResultList ();
+    
     for (Object o : list)
     {
       if (!entityList.contains ((T) o))
