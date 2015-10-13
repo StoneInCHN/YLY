@@ -33,7 +33,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
+	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" validtype="length[0,15]" data-options="required:true,editable:false" style="width:60px;"/>  
 	    			 <a href="#" class="easyui-linkbutton" id="generateIdentifier_btn" plain="true">${message("yly.common.generate.identifier")}</a>
 	    		</td>
 	    		
@@ -74,7 +74,7 @@
 	    	
 				<th>${message("yly.common.age")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="age" style="width:60px;"/> 
+	    			  <input type="text" class="easyui-numberbox" name="age" data-options="min:0,max:200" style="width:40px;">
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.birthday")}:</th>
@@ -90,7 +90,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.placeOfOrigin")}:</th>
 	    		<td>
-    			   <input class="easyui-textbox" type="text" name="placeOfOrigin" validtype="length[0,50]" style="width:100px;"/> 
+    			   <input class="easyui-textbox" type="text" name="placeOfOrigin" validtype="length[0,50]" style="width:150px;"/> 
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.nation")}:</th>
@@ -302,7 +302,7 @@
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber")}:</th>
     			<td>
-    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerPhoneNumber" "validtype="mobile"  style="width:110px;"/>
+    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerPhoneNumber" "validtype="mobile" data-options="required:true" style="width:110px;"/>
     			</td>
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.isSameCity")}:</th>
@@ -376,7 +376,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.monthlyIncome")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="monthlyIncome" style="width:100px;"/
+	    			 <input type="text" class="easyui-numberbox" name="monthlyIncome" data-options="min:0" style="width:60px;">
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.sourceOfIncome")}:</th>
@@ -458,7 +458,7 @@
 	    		</td>
 	    		<th>${message("yly.elderlyInfo.evaluatingScore")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="evaluatingScore"  style="width:40px;"/> 
+	    			  <input type="text" class="easyui-numberbox" name="evaluatingScore" data-options="min:0,precision:2" style="width:40px;">
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.nursingLevel")}:</th>
@@ -489,11 +489,11 @@ $().ready(function() {
 			<\/td>
 			<th>${message("yly.elderlyInfo.familyMember.PhoneNumber")}:<\/th>
 			<td>
-				<input class="easyui-textbox family-member-textbox" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberPhoneNumber" "validtype="mobile" style="width:110px;"\/>
+				<input class="easyui-textbox family-member-textbox" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberPhoneNumber" validtype="mobile" style="width:110px;"\/>
 			<\/td>
 			<th>${message("yly.elderlyInfo.familyMember.relation")}:<\/th>
 			<td>
-				<input class="easyui-combobox" id="elderlyConsigner-consignerRelation" name="elderlyConsigner.consignerRelation" style="width:100px;"/>
+				<input class="easyui-combobox family-member-combobox" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberRelation" style="width:100px;"/>
 			<\/td>
 			<th>${message("yly.address")}:<\/th>
 			<td>
@@ -509,10 +509,9 @@ $().ready(function() {
 	
 	$('.family-member-textbox').textbox({    
 	})
-	$('.family-member-combobox').combobox({    
-	});  
+
 	
-	$('#elderlyConsigner-consignerRelation').combobox({    
+	$('.family-member-combobox').combobox({    
 	    valueField: 'label',
 		textField: 'value',
 	    data: [{
