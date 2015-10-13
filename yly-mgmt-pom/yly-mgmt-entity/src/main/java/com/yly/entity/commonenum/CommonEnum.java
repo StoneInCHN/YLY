@@ -1098,7 +1098,7 @@ public class CommonEnum {
      * 兄弟或姐妹
      */
     BROTHERS_OR_SISTERS,
-    
+
     /**
      * 儿媳或女婿
      */
@@ -1107,20 +1107,21 @@ public class CommonEnum {
      * 朋友
      */
     FRIEND,
-    
+
     /**
-     *  其它
+     * 其它
      */
     OTHER
 
   }
-  
+
   /**
    * 费用支付方式
+   * 
    * @author shijun
    *
    */
-  public enum PaymentWay{
+  public enum PaymentWay {
     /**
      * 子女支付
      */
@@ -1141,25 +1142,26 @@ public class CommonEnum {
      * 其它
      */
     OTHER
-    
-    }
-  
+
+  }
+
   /**
    * 人员编号
    */
-  public enum IdentifierType{
+  public enum IdentifierType {
     /**
      * 老人编号
      */
     ELDERLYINFO_IDENTIFIER
   }
-  
+
   /**
    * 树节点展开状态
+   * 
    * @author tanbiao
    *
    */
-  public enum TreeNodeState{
+  public enum TreeNodeState {
     /**
      * 展开
      */
@@ -1168,5 +1170,22 @@ public class CommonEnum {
      * 关闭
      */
     closed
-  } 
+  }
+
+  /**
+   * 逻辑删除标记
+   * 
+   * @author shijun
+   *
+   */
+  public enum DeleteStatus {
+    /**
+     * 删除
+     */
+    DELETED,
+    /**
+     * 没有删除
+     */
+    NOT_DELETED
+  }
 }
