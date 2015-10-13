@@ -1180,12 +1180,12 @@ public class CommonEnum {
    */
   public enum DeleteStatus {
     /**
-     * 删除
-     */
-    DELETED,
-    /**
      * 没有删除
      */
-    NOT_DELETED
+    NOT_DELETED,
+    /**
+     * 删除
+     */
+    DELETED
   }
 }

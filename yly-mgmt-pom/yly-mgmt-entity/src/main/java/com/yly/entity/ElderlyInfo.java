@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.EducationLevel;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 import com.yly.entity.commonenum.CommonEnum.HousingInfo;
@@ -112,6 +113,11 @@ public class ElderlyInfo extends BaseEntity {
    * 评估结果
    */
   private SystemConfig evaluatingResult;
+
+  /**
+   * 删除标记
+   */
+  private DeleteStatus deleteStatus;
 
   /**
    * 评估分数
@@ -310,7 +316,7 @@ public class ElderlyInfo extends BaseEntity {
    */
   private SystemConfig mealType;
 
-  
+
   @ManyToOne
   public SystemConfig getMealType() {
     return mealType;
@@ -794,5 +800,13 @@ public class ElderlyInfo extends BaseEntity {
 
   public void setHousingInfo(HousingInfo housingInfo) {
     this.housingInfo = housingInfo;
+  }
+
+  public DeleteStatus getDeleteStatus() {
+    return deleteStatus;
+  }
+
+  public void setDeleteStatus(DeleteStatus deleteStatus) {
+    this.deleteStatus = deleteStatus;
   }
 }

@@ -26,17 +26,31 @@ $(function(){
 		},
 		columns:[
 		   [
-		      {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:40,align:'center',sortable:true},
-		      {title:message("yly.common.elderlyname"),field:"name",width:40,align:'center',sortable:true},
-		      {title:message("yly.elderlyInfo.birthday"),field:"birthday",width:40,align:'center',sortable:true},
-		      {title:message("yly.common.gender"),field:"gender",width:30,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:12,align:'center',sortable:true},
+		      {title:message("yly.common.elderlyname"),field:"name",width:20,align:'center',sortable:true},
+		      {title:message("yly.common.age"),field:"age",width:10,align:'center',sortable:true},
+		      {title:message("yly.elderlyInfo.birthday"),field:"birthday",width:25,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  	if(value != null){
+		    	  		return new Date(value).Format("yyyy-MM-dd");
+		      	}
+		      }},
+		      {title:message("yly.elderlyInfo.beHospitalizedDate"),field:"beHospitalizedDate",width:25,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  	if(value != null){
+		    	  		return new Date(value).Format("yyyy-MM-dd");
+		      	}
+		      }},
+		      {title:message("yly.common.gender"),field:"gender",width:10,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "MALE"){
 		    	  		return  message("yly.common.male");
 		    	  	}
 		    	  	if(value == "FEMALE"){
 		    	  		return  message("yly.common.female");
 		    	  	}
-		      	}}
+		      	}},
+		      {title:message("yly.elderlyInfo.elderlyPhoneNumber"),field:"elderlyPhoneNumber",width:15,align:'center',sortable:true},
+		      {title:message("yly.common.idcard"),field:"IDCard",width:40,align:'center',sortable:true},
+		      {title:message("yly.elderlyInfo.residentialAddress"),field:"residentialAddress",width:40,align:'center',sortable:true}
+		      
 		   ]
 		]
 
