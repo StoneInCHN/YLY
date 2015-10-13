@@ -10,7 +10,9 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermRangeFilter;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
@@ -57,10 +59,55 @@ public class DrugsInfoController extends BaseController
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<DrugsInfo> list (Date beginDate, Date endDate,
-      Pageable pageable, ModelMap model)
+      String drugName, Pageable pageable, ModelMap model)
   {
+    String startDateStr = null;
+    String endDateStr = null;
 
-    return drugsService.findPage (pageable);
+    IKAnalyzer analyzer = new IKAnalyzer ();
+    analyzer.setMaxWordLength (true);
+    BooleanQuery query = new BooleanQuery ();
+
+    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "name",
+        analyzer);
+    Query nameQuery = null;
+    Filter filter = null;
+    if (beginDate != null)
+    {
+      startDateStr = DateTimeUtils.convertDateToString (beginDate, null);
+    }
+    if (endDate != null)
+    {
+      endDateStr = DateTimeUtils.convertDateToString (endDate, null);
+    }
+    if (drugName != null)
+    {
+      String text = QueryParser.escape (drugName);
+      try
+      {
+        nameQuery = nameParser.parse (text);
+        query.add (nameQuery, Occur.SHOULD);
+        
+        if (LogUtil.isDebugEnabled (DrugsInfoController.class))
+        {
+          LogUtil.debug (DrugsInfoController.class, "search", "Search name: "
+              + null + ", start date: " + startDateStr + ", end date: "
+              + endDateStr);
+        }
+        if (startDateStr != null || endDateStr != null)
+        {
+          filter = new TermRangeFilter ("createDate", startDateStr,
+              endDateStr, true, true);
+        }
+
+        return drugsService.search (query, null, analyzer,filter);
+      }
+      catch (ParseException e)
+      {
+        e.printStackTrace ();
+      }
+    }
+      return drugsService.findPage (pageable);
   }
 
   /**
@@ -171,7 +218,7 @@ public class DrugsInfoController extends BaseController
       BooleanQuery query = new BooleanQuery ();
       query.add (nameQuery, Occur.MUST);
       query.add (tQuery, Occur.MUST);
-      return drugsService.search (query, null, analyzer);
+//      return drugsService.search (query, null, analyzer);
     }
     catch (ParseException e)
     {
