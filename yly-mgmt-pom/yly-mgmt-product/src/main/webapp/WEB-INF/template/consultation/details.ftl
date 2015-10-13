@@ -1,4 +1,4 @@
-<form id="editConsultation_form" method="post">   
+<form id="consultationDetail_form" method="post">   
 		  <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.consultation.vistor")}:</th>

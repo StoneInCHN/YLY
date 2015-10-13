@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#admissionDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
-			    height: 500, 
+			    width: 1200,    
+			    height: 700, 
 			    cache: false,   
 			    href:'../admission/details.jhtml?id='+rowData.id,
 			    buttons:[{

@@ -79,7 +79,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.birthday")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate" id="endDate"  name="birthday" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>  
+	    			  <input type="text" class="Wdate"  name="birthday" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>  
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -302,7 +302,7 @@
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber")}:</th>
     			<td>
-    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerPhoneNumber" "validtype="mobile" data-options="required:true" style="width:110px;"/>
+    			 <input class="easyui-textbox" type="text" name="elderlyConsigner.consignerPhoneNumber" validtype="mobile" data-options="required:true" style="width:110px;"/>
     			</td>
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.isSameCity")}:</th>
