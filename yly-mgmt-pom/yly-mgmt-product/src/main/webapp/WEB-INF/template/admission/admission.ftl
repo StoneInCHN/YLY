@@ -106,50 +106,108 @@
 	    		
 	    	  	<th>${message("yly.elderlyInfo.educationLevel")}:</th>
 	    		<td>
-	    			<select id="educationLevel" class="easyui-combobox" name="educationLevel" style="width:65px;">   
-						<option value="BACHELOR">${message("yly.common.educationLevel.bachelor")}</option>
-						<option value="MASTER">${message("yly.common.educationLevel.master")}</option> 
-						<option value="DOCTOR">${message("yly.common.educationLevel.doctor")}</option>
-						<option value="HIGHSCHOOL">${message("yly.common.educationLevel.highschool")}</option>
-						<option value="ZHONGZHUAN">${message("yly.common.educationLevel.zhongzhuan")}</option>
-						<option value="JUNIORHIGHSCHOOL">${message("yly.common.educationLevel.juniorhighschool")}</option>
-						<option value="PRIMARYSCHOOL">${message("yly.common.educationLevel.primaryschool")}</option>
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>     
+	    			<input class="easyui-combobox" data-options="
+					valueField: 'label',
+					textField: 'value',
+					data: [{
+						label: 'BACHELOR',
+						value: '${message("yly.common.educationLevel.bachelor")}'
+					},{
+						label: 'MASTER',
+						value: '${message("yly.common.educationLevel.master")}'
+					},{
+						label: 'DOCTOR',
+						value: '${message("yly.common.educationLevel.doctor")}'
+					},{
+						label: 'HIGHSCHOOL',
+						value: '${message("yly.common.educationLevel.highschool")}'
+					},{
+						label: 'ZHONGZHUAN',
+						value: '${message("yly.common.educationLevel.zhongzhuan")}'
+					},{
+						label: 'JUNIORHIGHSCHOOL',
+						value: '${message("yly.common.educationLevel.juniorhighschool")}'
+					},{
+						label: 'PRIMARYSCHOOL',
+						value: '${message("yly.common.educationLevel.primaryschool")}'
+					},{
+						label: 'OTHER',
+						value: '${message("yly.common.other")}'
+					}],
+					prompt:'${message("yly.common.please.select")}'"  name="educationLevel" style="width:80px;"/>
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.politicalOutlook")}:</th>
 	    		<td>
-	    			<select id="politicalOutlook" class="easyui-combobox" name="politicalOutlook" style="width:110px;">   
-						<option value="ZHONGDANGDANGYUAN">${message("yly.common.politicalOutlook.dangyuan")}</option>
-						<option value="GONGQINGTUANYUAN">${message("yly.common.politicalOutlook.tuanyuan")}</option> 
-						<option value="MINZUDANGPAICHENGYUAN">${message("yly.common.politicalOutlook.minzhudangpai")}</option>
-						<option value="QUNZHONG">${message("yly.common.politicalOutlook.qunzhong")}</option>
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>  
+	    			<input class="easyui-combobox" data-options="
+					valueField: 'label',
+					textField: 'value',
+					data: [{
+						label: 'ZHONGDANGDANGYUAN',
+						value: '${message("yly.common.politicalOutlook.dangyuan")}'
+					},{
+						label: 'GONGQINGTUANYUAN',
+						value: '${message("yly.common.politicalOutlook.tuanyuan")}'
+					},{
+						label: 'MINZUDANGPAICHENGYUAN',
+						value: '${message("yly.common.politicalOutlook.minzhudangpai")}'
+					},{
+						label: 'QUNZHONG',
+						value: '${message("yly.common.politicalOutlook.qunzhong")}'
+					},{
+						label: 'OTHER',
+						value: '${message("yly.common.other")}'
+					}],
+					prompt:'${message("yly.common.please.select")}'"  name="politicalOutlook" style="width:105px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.marriageState")}:</th>
 	    		<td>
-	    			<select id="marriageState" class="easyui-combobox" name="marriageState" style="width:70px;">   
-						<option value="MARRIED">${message("yly.common.marriageState.married")}</option>
-						<option value="UNMARRIED">${message("yly.common.marriageState.unmarried")}</option> 
-						<option value="WIDOWED">${message("yly.common.marriageState.widowed")}</option>
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>  
+		    		 <input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+							label: 'MARRIED',
+							value: '${message("yly.common.marriageState.married")}'
+						},{
+							label: 'UNMARRIED',
+							value: '${message("yly.common.marriageState.unmarried")}'
+						},{
+							label: 'WIDOWED',
+							value: '${message("yly.common.marriageState.widowed")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+						prompt:'${message("yly.common.please.select")}'"  name="marriageState" style="width:80px;"/>
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.religion")}:</th>
 	    		<td>
-	    			<select id="religion" class="easyui-combobox" name="religion" style="width:100px;">   
-						<option value="BUDDHISM">${message("yly.common.religion.buddhism")}</option>
-						<option value="TAOISM">${message("yly.common.religion.taoism")}</option> 
-						<option value="CHRISTIANITY">${message("yly.common.religion.christianity")}</option>
-						<option value="ISLAM">${message("yly.common.religion.islam")}</option>
-						<option value="CATHOLICISM">${message("yly.common.religion.catholicism")}</option>
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>     
+	    			   <input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+							label: 'BUDDHISM',
+							value: '${message("yly.common.religion.buddhism")}'
+						},{
+							label: 'TAOISM',
+							value: '${message("yly.common.religion.taoism")}'
+						},{
+							label: 'CHRISTIANITY',
+							value: '${message("yly.common.religion.christianity")}'
+						},{
+							label: 'ISLAM',
+							value: '${message("yly.common.religion.christianity")}'
+						},{
+							label: 'CATHOLICISM',
+							value: '${message("yly.common.religion.catholicism")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+						prompt:'${message("yly.common.please.select")}'"  name="religion" style="width:85px;"/>
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.originalCompany")}:</th>
@@ -199,20 +257,38 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.livingState")}:</th>
 	    		<td>
-	    			<select id="livingState" class="easyui-combobox" name="livingState" style="width:110px;">   
-						<option value="LIVINGALONE">${message("yly.elderlyInfo.LivingState.livingalone")}</option>
-						<option value="LIVINGWITHFAMILY">${message("yly.elderlyInfo.LivingState.livingwithfamily")}</option> 
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>  
+	    			<input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+							label: 'LIVINGALONE',
+							value: '${message("yly.elderlyInfo.LivingState.livingalone")}'
+						},{
+							label: 'LIVINGWITHFAMILY',
+							value: '${message("yly.elderlyInfo.LivingState.livingwithfamily")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+						prompt:'${message("yly.common.please.select")}'"  name="livingState" style="width:120px;"/>
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.housingInfo")}:</th>
 	    		<td>
-	    			<select id="housingInfo" class="easyui-combobox" name="housingInfo" style="width:110px;">   
-						<option value="PROPERTYRIGHTHOUSE">${message("yly.elderlyInfo.housingInfo.propertyrighthouse")}</option>
-						<option value="RENTALHOUSE">${message("yly.elderlyInfo.housingInfo.rentalhouse")}</option> 
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>  
+	    			<input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+							label: 'PROPERTYRIGHTHOUSE',
+							value: '${message("yly.elderlyInfo.housingInfo.propertyrighthouse")}'
+						},{
+							label: 'RENTALHOUSE',
+							value: '${message("yly.elderlyInfo.housingInfo.rentalhouse")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+						prompt:'${message("yly.common.please.select")}'"  name="housingInfo" style="width:85px;"/>
 	    		</td>
 	    	</tr>
 	    	</table>
@@ -231,23 +307,47 @@
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.isSameCity")}:</th>
     			<td>
-    				<select id="isSameCity" class="easyui-combobox" name="elderlyConsigner.isSameCity" style="width:50px;">   
-						<option value="true">${message("yly.common.yes")}</option>
-						<option value="false">${message("yly.common.no")}</option> 
-				  	</select>  
+    				<input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+							label: 'true',
+							value: '${message("yly.common.yes")}'
+						},{
+							label: 'false',
+							value: '${message("yly.common.no")}'
+						}],
+						prompt:'${message("yly.common.please.select")}'"  name="elderlyConsigner.isSameCity" style="width:80px;"/>
     			</td>
     			
     			<th>${message("yly.elderlyInfo.elderlyConsigner.relation")}:</th>
     			<td>
-    			  <select id="consignerRelation" class="easyui-combobox" name="elderlyConsigner.consignerRelation" style="width:100px;">   
-					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
-					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
-					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
-					<option value="BROTHERS_OR_SISTERS">${message("yly.common.relation.brothers_or_sisters")}</option>
-					<option value="DAUGHTERINLAW_OR_SONINLAW">${message("yly.common.relation.daughterinlaw_or_soninlaw")}</option>
-					<option value="FRIEND">${message("yly.common.relation.friend")}</option>
-					<option value="OTHER">${message("yly.common.other")}</option>
-				  </select>  
+		 			<input class="easyui-combobox" data-options="
+					valueField: 'label',
+					textField: 'value',
+					data: [{
+						label: 'CHILDREN',
+						value: '${message("yly.common.relation.children")}'
+					},{
+						label: 'MARRIAGE_RELATIONSHIP',
+						value: '${message("yly.common.relation.marriage_relationship")}'
+					},{
+						label: 'GRANDPARENTS_AND_GRANDCHILDREN',
+						value: '${message("yly.common.relation.grandparents_and_grandchildren")}'
+					},{
+						label: 'BROTHERS_OR_SISTERS',
+						value: '${message("yly.common.relation.brothers_or_sisters")}'
+					},{
+						label: 'DAUGHTERINLAW_OR_SONINLAW',
+						value: '${message("yly.common.relation.daughterinlaw_or_soninlaw")}'
+					},{
+						label: 'FRIEND',
+						value: '${message("yly.common.relation.friend")}'
+					},{
+						label: 'OTHER',
+						value: '${message("yly.common.other")}'
+					}],
+					prompt:'${message("yly.common.please.select")}'"  name="elderlyConsigner.consignerRelation" style="width:100px;"/>
     			</td>
 	    	</tr>
 	    	<tr>
@@ -276,39 +376,76 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.monthlyIncome")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="monthlyIncome" style="width:50px;"/
+	    			 <input class="easyui-textbox" type="text" name="monthlyIncome" style="width:100px;"/
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.sourceOfIncome")}:</th>
 	    		<td>
-	    			<select id="sourceOfIncome" class="easyui-combobox" name="sourceOfIncome" style="width:110px;">   
-						<option value="PENSION">${message("yly.elderlyInfo.sourceOfIncome.pension")}</option>
-						<option value="CHILDSUPPORT">${message("yly.elderlyInfo.sourceOfIncome.childsupport")}</option> 
-						<option value="SOCIALSUPPORT">${message("yly.elderlyInfo.sourceOfIncome.socialsupport")}</option>
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>  
+	    			<input class="easyui-combobox" data-options="
+					valueField: 'label',
+					textField: 'value',
+					data: [{
+							label: 'PENSION',
+							value: '${message("yly.elderlyInfo.sourceOfIncome.pension")}'
+						},{
+							label: 'CHILDSUPPORT',
+							value: '${message("yly.elderlyInfo.sourceOfIncome.childsupport")}'
+						},{
+							label: 'SOCIALSUPPORT',
+							value: '${message("yly.elderlyInfo.sourceOfIncome.socialsupport")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+					prompt:'${message("yly.common.please.select")}'"  name="sourceOfIncome" style="width:110px;"/>
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.paymentWay")}:</th>
 	    		<td>
-	    			<select id="paymentWay" class="easyui-combobox" name="paymentWay" style="width:110px;">   
-						<option value="CHILDREN_PAY">${message("yly.elderlyInfo.paymentway.childpay")}</option>
-						<option value="OWN_PAYMENT">${message("yly.elderlyInfo.paymentway.ownpayment")}</option> 
-						<option value="GOV_PAY">${message("yly.elderlyInfo.paymentway.govpay")}</option>
-						<option value="COMPANY_PAY">${message("yly.elderlyInfo.paymentway.companypay")}</option>
-						<option value="OTHER">${message("yly.common.other")}</option>
-				  	</select>  
+	    	 		<input class="easyui-combobox" data-options="
+					valueField: 'label',
+					textField: 'value',
+					data: [{
+							label: 'CHILDREN_PAY',
+							value: '${message("yly.elderlyInfo.paymentway.childpay")}'
+						},{
+							label: 'OWN_PAYMENT',
+							value: '${message("yly.elderlyInfo.paymentway.ownpayment")}'
+						},{
+							label: 'GOV_PAY',
+							value: '${message("yly.elderlyInfo.paymentway.govpay")}'
+						},{
+							label: 'COMPANY_PAY',
+							value: '${message("yly.elderlyInfo.paymentway.companypay")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+					prompt:'${message("yly.common.please.select")}'"  name="paymentWay" style="width:90px;"/>
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.medicalExpPaymentWay")}:</th>
 	    		<td>
-	    			<select id="medicalExpPaymentWay" class="easyui-combobox" name="medicalExpPaymentWay" style="width:110px;">   
-						<option value="SOCIALINSURANCE">${message("yly.elderlyInfo.medicalExpPaymentWay.socialinsurance")}</option>
-						<option value="XINNONGHE">${message("yly.elderlyInfo.medicalExpPaymentWay.xinnonghe")}</option> 
-						<option value="COMMERCIALINSURANCE">${message("yly.elderlyInfo.medicalExpPaymentWay.commercialinsurance")}</option>
-						<option value="SELFFINANCED">${message("yly.elderlyInfo.medicalExpPaymentWay.selffinanced")}</option>
-						<option value="PUBLICFINANCED">${message("yly.elderlyInfo.medicalExpPaymentWay.publicfinanced")}</option>
-				  	</select>  
+		    		  <input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+								label: 'SOCIALINSURANCE',
+								value: '${message("yly.elderlyInfo.medicalExpPaymentWay.socialinsurance")}'
+							},{
+								label: 'XINNONGHE',
+								value: '${message("yly.elderlyInfo.medicalExpPaymentWay.xinnonghe")}'
+							},{
+								label: 'COMMERCIALINSURANCE',
+								value: '${message("yly.elderlyInfo.medicalExpPaymentWay.commercialinsurance")}'
+							},{
+								label: 'SELFFINANCED',
+								value: '${message("yly.elderlyInfo.medicalExpPaymentWay.selffinanced")}'
+							},{
+								label: 'PUBLICFINANCED',
+								value: '${message("yly.elderlyInfo.medicalExpPaymentWay.publicfinanced")}'
+							}],
+						prompt:'${message("yly.common.please.select")}'"  name="medicalExpPaymentWay" style="width:90px;"/>
 	    		</td>
 	    	</tr>
 	    	</table>
@@ -317,7 +454,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="evaluatingResultId"  name="evaluatingResultId" style="width:90px;" data-options="editable:false" > 
+	    			  <input class="easyui-combobox" id="evaluatingResultId"  name="evaluatingResultId" style="width:120px;" data-options="editable:false" > 
 	    		</td>
 	    		<th>${message("yly.elderlyInfo.evaluatingScore")}:</th>
 	    		<td>
@@ -326,7 +463,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.nursingLevel")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="nursingLevelId"  name="nursingLevelId" style="width:90px;" data-options="editable:false" >   
+	    			  <input class="easyui-combobox" id="nursingLevelId"  name="nursingLevelId" style="width:120px;" data-options="editable:false" >   
 	    		</td>
 	    	</tr>
 	    </table>
@@ -352,19 +489,11 @@ $().ready(function() {
 			<\/td>
 			<th>${message("yly.elderlyInfo.familyMember.PhoneNumber")}:<\/th>
 			<td>
-				<input class="easyui-textbox family-member-textbox" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberPhoneNumber" "validtype="mobile" style="width:110px;"/>
+				<input class="easyui-textbox family-member-textbox" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberPhoneNumber" "validtype="mobile" style="width:110px;"\/>
 			<\/td>
 			<th>${message("yly.elderlyInfo.familyMember.relation")}:<\/th>
 			<td>
-				<select class="easyui-combobox family-member-combobox" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberRelation" style="width:100px;">   
-					<option value="CHILDREN">${message("yly.common.relation.children")}</option> 
-					<option value="MARRIAGE_RELATIONSHIP">${message("yly.common.relation.marriage_relationship")}</option>
-					<option value="GRANDPARENTS_AND_GRANDCHILDREN">${message("yly.common.relation.grandparents_and_grandchildren")}</option>
-					<option value="BROTHERS_OR_SISTERS">${message("yly.common.relation.brothers_or_sisters")}</option>
-					<option value="DAUGHTERINLAW_OR_SONINLAW">${message("yly.common.relation.daughterinlaw_or_soninlaw")}</option>
-					<option value="FRIEND">${message("yly.common.relation.friend")}</option>
-					<option value="OTHER">${message("yly.common.other")}</option>
-			  <\/select>  
+				<input class="easyui-combobox" id="elderlyConsigner-consignerRelation" name="elderlyConsigner.consignerRelation" style="width:100px;"/>
 			<\/td>
 			<th>${message("yly.address")}:<\/th>
 			<td>
@@ -383,11 +512,41 @@ $().ready(function() {
 	$('.family-member-combobox').combobox({    
 	});  
 	
+	$('#elderlyConsigner-consignerRelation').combobox({    
+	    valueField: 'label',
+		textField: 'value',
+	    data: [{
+				label: 'CHILDREN',
+				value: '${message("yly.common.relation.children")}'
+				},{
+					label: 'MARRIAGE_RELATIONSHIP',
+					value: '${message("yly.common.relation.marriage_relationship")}'
+				},{
+					label: 'GRANDPARENTS_AND_GRANDCHILDREN',
+					value: '${message("yly.common.relation.grandparents_and_grandchildren")}'
+				},{
+					label: 'BROTHERS_OR_SISTERS',
+					value: '${message("yly.common.relation.brothers_or_sisters")}'
+				},{
+					label: 'DAUGHTERINLAW_OR_SONINLAW',
+					value: '${message("yly.common.relation.daughterinlaw_or_soninlaw")}'
+				},{
+					label: 'FRIEND',
+					value: '${message("yly.common.relation.friend")}'
+				},{
+					label: 'OTHER',
+					value: '${message("yly.common.other")}'
+				}],
+				prompt:'${message("yly.common.please.select")}'
+	}); 
+	
+	
 	$("a.family-member-remove").click(function() {
 	var $this = $(this);
 	$this.parent().parent().remove();
 	});
 	});
+	
 	
 })
 </script>

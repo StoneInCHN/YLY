@@ -50,6 +50,7 @@ var messages = {
 	"yly.common.elderlyname":"老人姓名",
 	"yly.common.bedRoom":"房间",
 	"yly.common.nurseLevel":"护理等级",
+	"yly.common.please.select":"请选择...",
 	
 	
 	/**

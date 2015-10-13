@@ -90,15 +90,18 @@ $(function(){
 				    onOpen:function(){
 				    	$('#addAdmission_form').show();
 				    	$("#personnelCategoryId").combobox({    
+				    		prompt:message("yly.common.please.select"),
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'PERSONNELCATEGORY';
-						    }
+						    },
+				    		
 						});
 				     	$("#evaluatingResultId").combobox({    
+				     		prompt:message("yly.common.please.select"),
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -108,6 +111,7 @@ $(function(){
 						    }
 						});
 				     	$("#nursingLevelId").combobox({    
+				     		prompt:message("yly.common.please.select"),
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
