@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.WaterElectricityCharge;
 import com.yly.entity.WaterElectricityChargeConfig;
@@ -54,7 +55,18 @@ public class WaterElectricityChargeRecordController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
       String realName, String identifier, Pageable pageable, ModelMap model) {
-    Page<WaterElectricityCharge> page = waterElectricityChargeService.findPage(pageable, true);
+    Page<WaterElectricityCharge> page = new Page<WaterElectricityCharge>();
+    if (realName == null && identifier == null && beginDate == null && endDate == null) {
+      page = waterElectricityChargeService.findPage(pageable, true);
+    } else {
+      if (LogUtil.isDebugEnabled(WaterElectricityChargeRecordController.class)) {
+        LogUtil.debug(WaterElectricityChargeRecordController.class, "search", "elderlyName: " + realName
+            + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+            + endDate);
+      }
+      page = waterElectricityChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, pageable);
+    }
+    
     String[] properties =
         {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
             "elderlyInfo.nursingLevel", "waterAmount", "electricityAmount", "totalAmount", "operator",

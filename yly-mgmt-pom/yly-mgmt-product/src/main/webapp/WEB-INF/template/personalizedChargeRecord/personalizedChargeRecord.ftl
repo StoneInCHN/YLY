@@ -14,11 +14,11 @@
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.charge.record.date")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">

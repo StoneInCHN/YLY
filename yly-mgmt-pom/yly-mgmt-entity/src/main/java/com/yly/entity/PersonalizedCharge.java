@@ -14,6 +14,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -28,6 +34,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Entity
 @Table(name = "yly_personalized_charge")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_personalized_charge_sequence")
+@Indexed(index="chargeRecord/personalizedCharge")
 public class PersonalizedCharge extends BaseEntity {
 
   private static final long serialVersionUID = 8840662978230104889L;
@@ -102,6 +109,8 @@ public class PersonalizedCharge extends BaseEntity {
    */
   private Date periodEndDate;
   
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodStartDate() {
     return periodStartDate;
   }
@@ -110,6 +119,8 @@ public class PersonalizedCharge extends BaseEntity {
     this.periodStartDate = periodStartDate;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodEndDate() {
     return periodEndDate;
   }
@@ -206,6 +217,7 @@ public class PersonalizedCharge extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }

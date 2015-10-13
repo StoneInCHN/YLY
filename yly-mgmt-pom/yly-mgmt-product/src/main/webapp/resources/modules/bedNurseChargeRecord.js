@@ -1,6 +1,6 @@
 $(function(){
 	
-	$("#bedNurseChargeRecord-table-list").datagrid({
+	$("#bedNurseChargeRecord_table_list").datagrid({
 		title:message("yly.bedNurse.charge.record"),
 		fitColumns:true,
 		//toolbar:"#consultation_manager_tool",
@@ -13,7 +13,8 @@ $(function(){
 			    title: message("yly.common.detail"),    
 			    width: 660,    
 			    height: 500, 
-			    cache: false,   
+			    cache: false,
+			    modal: true,
 			    href:'../bedNurseChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
@@ -75,14 +76,10 @@ $(function(){
 	});
 	
 	$("#bedNurseChargeRecord_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-			  realName:$("#realName").val(),
-			  identifier:$("#identifier").val()
-	  }
-	  $('#bedNurseChargeRecord-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#bedNurseChargeRecord-table-list").datagrid('reload');
+	  var _queryParams = $("#bedNurseChargeRecord_search_form").serializeJSON();
+	  //console.log($("#bedNurseChargeRecord_search_form").serializeJSON());
+	  $('#bedNurseChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#bedNurseChargeRecord_table_list").datagrid('reload');
 	})
 	
 	 

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.TenantAccount;
 import com.yly.service.CaptchaService;
@@ -145,6 +146,16 @@ public String main(ModelMap model,  HttpSession session) {
     data.put("modulus", Base64.encodeBase64String(publicKey.getModulus().toByteArray()));
     data.put("exponent", Base64.encodeBase64String(publicKey.getPublicExponent().toByteArray()));
     return data;
+  }
+  
+  /**
+   * 公钥
+   */
+  @RequestMapping(value = "/refreshIndex", method = RequestMethod.GET)
+  public @ResponseBody Message
+   refreshLuceneIndex(HttpServletRequest request) {
+    tenantAccountService.refreshIndex();
+    return SUCCESS_MESSAGE;
   }
 
 //  /**

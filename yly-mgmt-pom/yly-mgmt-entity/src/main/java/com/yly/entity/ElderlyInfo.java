@@ -23,7 +23,11 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
 import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.search.annotations.Analyzer;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -450,6 +454,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getIdentifier() {
     return identifier;
   }
@@ -460,6 +465,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }

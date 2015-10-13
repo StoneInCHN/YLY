@@ -1,6 +1,7 @@
 package com.yly.framework.service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -189,4 +190,16 @@ public interface BaseService<T, ID extends Serializable> {
    * 重建索引
    */
   void refreshIndex();
+  
+  /**
+   * 缴费记录查询
+   * @param beginDate
+   * @param endDate
+   * @param realName
+   * @param identifier
+   * @param pageable
+   * @return
+   */
+  Page<T> chargeRecordSearch(Date beginDate, Date endDate,
+      String realName, String identifier, Pageable pageable);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.PersonalizedCharge;
 import com.yly.entity.PersonalizedRecord;
@@ -50,8 +51,18 @@ public class PersonalizedChargeRecordController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
-    Page<PersonalizedCharge> page = personalizedChargeService.findPage(pageable, true);
-
+    Page<PersonalizedCharge> page = new Page<PersonalizedCharge>();
+    if (realName == null && identifier == null && beginDate == null && endDate == null) {
+      page = personalizedChargeService.findPage(pageable, true);
+    } else {
+      if (LogUtil.isDebugEnabled(PersonalizedChargeRecordController.class)) {
+        LogUtil.debug(PersonalizedChargeRecordController.class, "search", "elderlyName: " + realName
+            + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+            + endDate);
+      }
+      page = personalizedChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, pageable);
+    }
+    
     String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
             "personalizedAmount", "operator","periodStartDate", "chargeStatus" };
 
