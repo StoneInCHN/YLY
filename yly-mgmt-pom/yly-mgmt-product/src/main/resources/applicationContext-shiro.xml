@@ -14,10 +14,12 @@
 				/ = anon
 				/index.jsp = anon
 				/login.jsp = authc
+				/console/common/refreshIndex.jhtml=anon
 				/console/common/logout = logout
 				/console/common/captcha.jhtml = anon
 				/console/common/captchaCheck.jhtml = anon
 				/console/** = authc
+				
 			</value>
 		</property>
 		<property name="filters">

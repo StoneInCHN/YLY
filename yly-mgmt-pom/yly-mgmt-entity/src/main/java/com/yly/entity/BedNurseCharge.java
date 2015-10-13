@@ -12,6 +12,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -26,6 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Entity
 @Table(name = "yly_bed_nurse_charge")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_bed_nurse_charge_sequence")
+@Indexed(index="chargeRecord/bedNurseCharge")
 public class BedNurseCharge extends BaseEntity {
 
   private static final long serialVersionUID = -9092276707242009884L;
@@ -177,6 +184,7 @@ public class BedNurseCharge extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -185,6 +193,8 @@ public class BedNurseCharge extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodStartDate() {
     return periodStartDate;
   }
@@ -193,6 +203,8 @@ public class BedNurseCharge extends BaseEntity {
     this.periodStartDate = periodStartDate;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodEndDate() {
     return periodEndDate;
   }

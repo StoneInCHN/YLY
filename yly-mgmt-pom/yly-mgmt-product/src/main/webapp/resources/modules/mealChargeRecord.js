@@ -13,7 +13,8 @@ $(function(){
 			    title: message("yly.common.detail"),    
 			    width: 660,    
 			    height: 500, 
-			    cache: false,   
+			    cache: false,  
+			    modal: true,
 			    href:'../mealChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
@@ -74,14 +75,9 @@ $(function(){
 	});
 	
 	$("#mealChargeRecord_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-			  realName:$("#realName").val(),
-			  identifier:$("#identifier").val()
-	  }
-	  $('#mealChargeRecord-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#mealChargeRecord-table-list").datagrid('reload');
+	  var _queryParams = $("#mealChargeRecord_search_form").serializeJSON();
+	  $('#mealChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#mealChargeRecord_table_list").datagrid('reload');
 	})
 	
 	 
