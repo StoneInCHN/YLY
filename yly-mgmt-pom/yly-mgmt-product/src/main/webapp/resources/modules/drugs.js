@@ -50,7 +50,7 @@ $(function(){
 							var validate = $('#addDrugs_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../drugs/save.jhtml",
+									url:"../drugs/add.jhtml",
 									type:"post",
 									data:$("#addDrugs_form").serialize(),
 									beforeSend:function(){
@@ -113,7 +113,7 @@ $(function(){
 						    cache: true,
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
-						        param.configKey = 'DRUGUSEMETHOD';// 参数
+						        param.configKey = 'DRUGMETHOD';// 参数
 						    }
 						});
 				    },
@@ -129,8 +129,8 @@ $(function(){
 				}
 				var _dialog = $('#editDrugs').dialog({    
 				    title: '药品编辑',     
-				    width: 400,    
-				    height: 270,    
+				    width: 700,    
+				    height: 550,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../drugs/edit.jhtml?id='+_edit_row.id,

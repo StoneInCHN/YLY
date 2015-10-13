@@ -99,13 +99,13 @@
 	    		</td>
 	    		<th>频度:</th>
 	    		<td>
-	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:100px;">   
-						<option value="Qd">一天一次</option>
-						<option value="Bid">一天两次</option>
-						<option value="Tid">一天三次</option> 
-						<option value="Qid">一天四次</option> 
-						<option value="Q2h">两小时一次</option> 
-						<option value="Q4h">四小时一次</option>						 
+	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:140px;">   
+						<option value="Qd">一天一次(Qd)</option>
+						<option value="Bid">一天两次(Bid)</option>
+						<option value="Tid">一天三次(Tid)</option> 
+						<option value="Qid">一天四次(Qid)</option> 
+						<option value="Q2h">两小时一次(Q2h)</option> 
+						<option value="Q4h">四小时一次(Q4h)</option>						 
 				  	</select>    
 	    		</td>
 	    	</tr>
