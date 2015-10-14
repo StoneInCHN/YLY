@@ -20,6 +20,7 @@ import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.PersonalizedCharge;
 import com.yly.entity.PersonalizedRecord;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.PersonalizedChargeService;
@@ -50,17 +51,17 @@ public class PersonalizedChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,PaymentStatus status,Pageable pageable, ModelMap model) {
     Page<PersonalizedCharge> page = new Page<PersonalizedCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null) {
+    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
       page = personalizedChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(PersonalizedChargeRecordController.class)) {
         LogUtil.debug(PersonalizedChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = personalizedChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,null,true, pageable);
+      page = personalizedChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,true, pageable);
     }
     
     String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",

@@ -66,7 +66,7 @@ public class DepositController extends BaseController {
 
     String[] properties =
         {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
-            "elderlyInfo.nursingLevel", "depositAmount", "payTime","operator","depositStatus"};
+            "elderlyInfo.nursingLevel", "depositAmount", "payTime","operator","chargeStatus"};
 
     List<Map<String, Object>> rows =
         FieldFilterUtils.filterCollectionMap(properties, page.getRows());

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.AdvanceCharge;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.AdvanceChargeService;
@@ -49,17 +50,17 @@ public class AdvanceChargeController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier, Pageable pageable, ModelMap model) {
+      String realName, String identifier,PaymentStatus status, Pageable pageable, ModelMap model) {
     Page<AdvanceCharge> page = new Page<AdvanceCharge>();
     if (realName == null && identifier == null && beginDate == null && endDate == null) {
       page = advanceChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
         LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+            + ",identifier: " + identifier + "" + ",status: " + status + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = advanceChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, null,false,pageable);
+      page = advanceChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, status,false,pageable);
     }
 
 

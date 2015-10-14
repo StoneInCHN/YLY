@@ -48,10 +48,10 @@ public class Deposit extends BaseEntity{
   /**
    * 支付方式
    */
-  private PaymentType payType;
+  private PaymentType paymentType;
   
   /**
-   * 发票号
+   * 收据票号
    */
   private String invoiceNo;
   
@@ -67,7 +67,7 @@ public class Deposit extends BaseEntity{
   /**
    * 押金缴纳状态
    */
-  private PaymentStatus depositStatus;
+  private PaymentStatus chargeStatus;
   
   /**
    * 押金金额
@@ -78,6 +78,20 @@ public class Deposit extends BaseEntity{
    * 备注
    */
   private String remark;
+  
+  /**
+   * 账单号
+   */
+  private String billingNo;
+  
+  @Column(length = 30)
+  public String getBillingNo() {
+    return billingNo;
+  }
+
+  public void setBillingNo(String billingNo) {
+    this.billingNo = billingNo;
+  }
   
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getDepositAmount() {
@@ -97,12 +111,12 @@ public class Deposit extends BaseEntity{
     this.remark = remark;
   }
 
-  public PaymentType getPayType() {
-    return payType;
+  public PaymentType getPaymentType() {
+    return paymentType;
   }
 
-  public void setPayType(PaymentType payType) {
-    this.payType = payType;
+  public void setPaymentType(PaymentType paymentType) {
+    this.paymentType = paymentType;
   }
 
   @Column(length=50)
@@ -134,12 +148,12 @@ public class Deposit extends BaseEntity{
   }
 
   @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
-  public PaymentStatus getDepositStatus() {
-    return depositStatus;
+  public PaymentStatus getChargeStatus() {
+    return chargeStatus;
   }
 
-  public void setDepositStatus(PaymentStatus depositStatus) {
-    this.depositStatus = depositStatus;
+  public void setChargeStatus(PaymentStatus chargeStatus) {
+    this.chargeStatus = chargeStatus;
   }
 
   @Index(name="deposit_tenantid")

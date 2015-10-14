@@ -39,7 +39,7 @@ public class AdvanceCharge extends BaseEntity {
   /**
    * 支付方式
    */
-  private PaymentType payType;
+  private PaymentType paymentType;
 
   /**
    * 收据票号
@@ -81,12 +81,12 @@ public class AdvanceCharge extends BaseEntity {
     this.remark = remark;
   }
 
-  public PaymentType getPayType() {
-    return payType;
+  public PaymentType getPaymentType() {
+    return paymentType;
   }
 
-  public void setPayType(PaymentType payType) {
-    this.payType = payType;
+  public void setPaymentType(PaymentType paymentType) {
+    this.paymentType = paymentType;
   }
 
   @Column(length = 50)

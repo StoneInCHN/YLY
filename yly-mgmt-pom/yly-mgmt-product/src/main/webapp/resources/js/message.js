@@ -59,7 +59,7 @@ var messages = {
 	"yly.charge.status.paid" : "已缴费",
 	"yly.charge.status.unpaid" : "未缴费",
 	"yly.charge.status.refunded" : "已退款",
-	"yly.deposit.charge.record" : "床位护理费",
+	"yly.deposit.charge.record" : "押金",
 	"yly.advance.charge.record" : "床位护理费",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",

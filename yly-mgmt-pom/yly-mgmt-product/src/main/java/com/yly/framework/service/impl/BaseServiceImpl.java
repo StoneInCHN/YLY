@@ -279,7 +279,7 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
       }
       if (status!=null) {
         String text = QueryParser.escape(status.toString());
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "depositStatus", analyzer);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "chargeStatus", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery,Occur.MUST);
       }

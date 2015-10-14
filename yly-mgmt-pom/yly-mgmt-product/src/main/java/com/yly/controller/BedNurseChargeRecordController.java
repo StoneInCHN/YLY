@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.BedNurseCharge;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BedNurseChargeService;
@@ -49,17 +50,17 @@ public class BedNurseChargeRecordController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier, Pageable pageable, ModelMap model) {
+      String realName, String identifier,PaymentStatus status, Pageable pageable, ModelMap model) {
     Page<BedNurseCharge> page = new Page<BedNurseCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null) {
+    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
       page = bedNurseChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(BedNurseChargeRecordController.class)) {
         LogUtil.debug(BedNurseChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,null,true,pageable);
+      page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,true,pageable);
     }
 
 

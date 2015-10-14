@@ -55,7 +55,7 @@ $(function(){
 		    	  	}
 				}},
 		      //状态
-		      {title:message("yly.charge.record.status"),field:"depositStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.charge.record.status"),field:"chargeStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "PAID"){
 		    	  		return "<font color=#7CCD7C>"+message("yly.charge.status.paid")+"</font>";
 		    	  	}
