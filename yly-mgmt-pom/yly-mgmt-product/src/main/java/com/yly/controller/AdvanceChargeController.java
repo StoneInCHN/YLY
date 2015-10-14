@@ -57,7 +57,7 @@ public class AdvanceChargeController extends BaseController {
     } else {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
         LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ",status: " + status + "" + ", start date: " + beginDate + ", end date: "
+            + ",identifier: " + identifier + "" + ",status: " + status + "" + ", start date: "+ beginDate + ", end date: "
             + endDate);
       }
       page = advanceChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, status,false,pageable);

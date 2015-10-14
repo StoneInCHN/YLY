@@ -60,7 +60,7 @@ $(function(){
 		    	  		return "<font color=#7CCD7C>"+message("yly.charge.status.paid")+"</font>";
 		    	  	}
 		    	  	if(value == "REFUNDED"){
-		    	  		return "<font color=#FF0000>"+message("yly.charge.status.unpaid")+"</font>";
+		    	  		return "<font color=#FF0000>"+message("yly.charge.status.refunded")+"</font>";
 		    	  	}
 		      	}}
 		   ]

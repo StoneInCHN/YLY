@@ -84,6 +84,7 @@ public class Deposit extends BaseEntity{
    */
   private String billingNo;
   
+  
   @Column(length = 30)
   public String getBillingNo() {
     return billingNo;
@@ -147,7 +148,7 @@ public class Deposit extends BaseEntity{
     this.operator = operator;
   }
 
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
