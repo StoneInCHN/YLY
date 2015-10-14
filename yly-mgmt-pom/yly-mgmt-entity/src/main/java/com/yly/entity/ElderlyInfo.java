@@ -594,6 +594,7 @@ public class ElderlyInfo extends BaseEntity {
     this.registeredResidence = registeredResidence;
   }
 
+  @JsonProperty
   @Column(length = 150)
   public String getResidentialAddress() {
     return residentialAddress;
@@ -705,6 +706,7 @@ public class ElderlyInfo extends BaseEntity {
     this.marriageState = marriageState;
   }
 
+  @JsonProperty
   public Date getBeHospitalizedDate() {
     return beHospitalizedDate;
   }

@@ -237,11 +237,11 @@
 		    	<tr>
 					<th>${message("yly.elderlyInfo.familyMember.memberName")}:</th>
 					<td>
-						<input class="easyui-textbox family-member-textbox" type="text" name="memberName" value="${familyMember.memberName}" validtype="length[0,15]" style="width:75px;"/>
+						<input class="easyui-textbox family-member-textbox" type="text" name="memberName" value="${familyMember.memberName}" readonly=true validtype="length[0,15]" style="width:75px;"/>
 					</td>
 					<th>${message("yly.elderlyInfo.familyMember.PhoneNumber")}:</th>
 					<td>
-						<input class="easyui-textbox family-member-textbox" type="text" name="memberPhoneNumber" value="${familyMember.memberPhoneNumber}" validtype="mobile" style="width:110px;"/>
+						<input class="easyui-textbox family-member-textbox" type="text" name="memberPhoneNumber" value="${familyMember.memberPhoneNumber}" readonly=true validtype="mobile" style="width:110px;"/>
 					</td>
 					<th>${message("yly.elderlyInfo.familyMember.relation")}:</th>
 					<td>
@@ -257,7 +257,7 @@
 					</td>
 					<th>${message("yly.address")}:</th>
 					<td>
-						<input class="easyui-textbox family-member-textbox" type="text" name="memberResidentialAddress" value="${familyMember.memberResidentialAddress}" validtype="length[0,150]" style="width:400px;"/>
+						<input class="easyui-textbox family-member-textbox" type="text" name="memberResidentialAddress" value="${familyMember.memberResidentialAddress}" readonly=true validtype="length[0,150]" style="width:400px;"/>
 					</td>
 				</tr>
 				[/#list]
@@ -310,7 +310,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>
 	    		<td>
-	    			   <input class="easyui-textbox"  name="evaluatingResultId" type="text"  value="${elderlyInfo.evaluatingResultId.configValue}" readonly=true style="width:120px;"/> 
+	    			   <input class="easyui-textbox"  name="evaluatingResultId" type="text"  value="${elderlyInfo.evaluatingResult.configValue}" readonly=true style="width:120px;"/> 
 	    		</td>
 	    		<th>${message("yly.elderlyInfo.evaluatingScore")}:</th>
 	    		<td>
@@ -319,7 +319,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.nursingLevel")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox"  name="nursingLevelId" type="text"  value="${elderlyInfo.nursingLevelId.configValue}" readonly=true style="width:120px;"/>
+	    			  <input class="easyui-textbox"  name="nursingLevelId" type="text"  value="${elderlyInfo.nursingLevel.configValue}" readonly=true style="width:120px;"/>
 	    		</td>
 	    	</tr>
 	    </table>

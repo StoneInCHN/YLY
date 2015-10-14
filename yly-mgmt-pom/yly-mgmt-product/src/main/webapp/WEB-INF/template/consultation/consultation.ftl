@@ -42,7 +42,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderly.name")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="elderlyName" validtype="length[0,15] style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="elderlyName" validtype="length[0,15]" style="width:85px;"/> 
 	    		</td>
 	    		<th>${message("yly.gender")}:</th>
 	    		<td>

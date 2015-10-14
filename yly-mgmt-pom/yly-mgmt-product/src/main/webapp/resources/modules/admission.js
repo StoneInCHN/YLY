@@ -26,6 +26,7 @@ $(function(){
 		},
 		columns:[
 		   [
+		      {field:'ck',checkbox:true},
 		      {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:12,align:'center',sortable:true},
 		      {title:message("yly.common.elderlyname"),field:"name",width:20,align:'center',sortable:true},
 		      {title:message("yly.common.age"),field:"age",width:10,align:'center',sortable:true},
@@ -48,11 +49,29 @@ $(function(){
 		    	  	}
 		      	}},
 		      {title:message("yly.elderlyInfo.elderlyPhoneNumber"),field:"elderlyPhoneNumber",width:15,align:'center',sortable:true},
-		      {title:message("yly.common.idcard"),field:"IDCard",width:40,align:'center',sortable:true},
-		      {title:message("yly.elderlyInfo.residentialAddress"),field:"residentialAddress",width:40,align:'center',sortable:true}
+		      {title:message("yly.common.idcard"),field:"idcard",width:40,align:'center',sortable:true},
+		      {title:message("yly.elderlyInfo.residentialAddress"),field:"residentialAddress",width:40,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  if(value && value.length >15){
+						var abValue =  value.substring(0,10) +"...";
+						var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
+						return content;
+					}else{
+						return value
+					}
+		      }}
 		      
 		   ]
-		]
+		],
+		onLoadSuccess:function(data){
+	           $(".tips-span").tooltip({
+	        	   position: 'top',
+	               onShow: function(){
+	                   $(this).tooltip('tip').css({ 
+	                       width:'300'
+	                   });
+	               }
+	           });
+	        }
 
 	});
 	

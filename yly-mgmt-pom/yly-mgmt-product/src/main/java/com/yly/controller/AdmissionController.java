@@ -107,6 +107,7 @@ public class AdmissionController extends BaseController{
       elderlyInfo.setPersonnelCategory(personnelCategory);
       elderlyInfo.setNursingLevel(nursingLevel);
       elderlyInfo.setEvaluatingResult(evaluatingResult);
+      elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
       
       elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);      
       elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
