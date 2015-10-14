@@ -84,6 +84,8 @@ public class SystemConfigController extends BaseController {
        List<Filter> filters = new ArrayList<Filter>();
        List<Ordering> orderings = new ArrayList<Ordering>();
        Filter keyFilter = new Filter("configKey", Operator.eq, configKey);
+       Filter enableFilter = new Filter("isEnabled",Operator.eq,true);
+       filters.add(enableFilter);
        filters.add(keyFilter);
        if (direction!=null) {
          Ordering ordering = new Ordering();
@@ -92,6 +94,18 @@ public class SystemConfigController extends BaseController {
          orderings.add(ordering);
       }
       List<SystemConfig> systemConfigs = systemConfigService.findList(null, filters, orderings,true,null);
+      if (systemConfigs == null || systemConfigs.size() == 0) {
+        filters.clear();
+        filters.add(keyFilter);
+        systemConfigs = systemConfigService.findList(null,filters,null,true,null);
+        if (systemConfigs == null || systemConfigs.size() == 0) {
+          filters.clear();
+          filters.add(keyFilter);
+          systemConfigs = systemConfigService.findList(null, filters, orderings);
+        }else {
+          return null;
+        }
+      }
       String[] propertys =
         {"id", "configValue"};
       return FieldFilterUtils.filterCollectionMap(propertys, systemConfigs);
