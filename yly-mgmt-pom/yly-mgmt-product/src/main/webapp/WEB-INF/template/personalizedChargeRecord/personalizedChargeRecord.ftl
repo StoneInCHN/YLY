@@ -6,19 +6,19 @@
 	    <form id="personalizedChargeRecord_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
-			   	<input class="easyui-textbox" type="text" name="realName"/>
+			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.elderlyName")}" name="realName"/>
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
-			   	<input class="easyui-textbox" type="text" name="identifier"/>
+			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier"/>
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.charge.record.date")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate" placeholder="${message("yly.common.prompt.beginDate")}" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate" name="endDate" placeholder="${message("yly.common.prompt.endDate")}" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">

@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
-import com.yly.entity.BedNurseCharge;
+import com.yly.entity.AdvanceCharge;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.service.BedNurseChargeService;
+import com.yly.service.AdvanceChargeService;
 import com.yly.utils.FieldFilterUtils;
 
-@Controller("bedNurseChargeRecordController")
-@RequestMapping("/console/bedNurseChargeRecord")
-public class BedNurseChargeRecordController extends BaseController {
+@Controller("advanceChargeController")
+@RequestMapping("/console/advanceCharge")
+public class AdvanceChargeController extends BaseController {
 
-  @Resource(name = "bedNurseChargeServiceImpl")
-  private BedNurseChargeService bedNurseChargeService;
+  @Resource(name = "advanceChargeServiceImpl")
+  private AdvanceChargeService advanceChargeService;
 
 
   /**
@@ -35,9 +35,9 @@ public class BedNurseChargeRecordController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/bedNurseChargeRecord", method = RequestMethod.GET)
-  public String bedNurseChargeRecord(ModelMap model) {
-    return "/bedNurseChargeRecord/bedNurseChargeRecord";
+  @RequestMapping(value = "/advanceCharge", method = RequestMethod.GET)
+  public String advanceChargeRecord(ModelMap model) {
+    return "/advanceCharge/advanceCharge";
   }
 
   /**
@@ -50,16 +50,16 @@ public class BedNurseChargeRecordController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
       String realName, String identifier, Pageable pageable, ModelMap model) {
-    Page<BedNurseCharge> page = new Page<BedNurseCharge>();
+    Page<AdvanceCharge> page = new Page<AdvanceCharge>();
     if (realName == null && identifier == null && beginDate == null && endDate == null) {
-      page = bedNurseChargeService.findPage(pageable, true);
+      page = advanceChargeService.findPage(pageable, true);
     } else {
-      if (LogUtil.isDebugEnabled(BedNurseChargeRecordController.class)) {
-        LogUtil.debug(BedNurseChargeRecordController.class, "search", "elderlyName: " + realName
+      if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
+        LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + realName
             + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,null,true,pageable);
+      page = advanceChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, null,false,pageable);
     }
 
 
@@ -86,9 +86,9 @@ public class BedNurseChargeRecordController extends BaseController {
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
-    BedNurseCharge record = bedNurseChargeService.find(id);
-    model.addAttribute("bedNurseCharge", record);
-    return "bedNurseChargeRecord/details";
+    AdvanceCharge record = advanceChargeService.find(id);
+    model.addAttribute("advanceCharge", record);
+    return "advanceCharge/details";
   }
 
 

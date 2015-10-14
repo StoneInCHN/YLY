@@ -276,6 +276,9 @@ public class DateTimeUtils implements Serializable {
     {
       format = "yyyyMMdd";
     }
+    if(date == null){
+      return null;
+    }
     SimpleDateFormat sdf = new SimpleDateFormat (format);
       // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
     sdf.setLenient (false);

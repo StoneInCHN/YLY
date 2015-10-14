@@ -64,7 +64,7 @@ public class WaterElectricityChargeRecordController extends BaseController {
             + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = waterElectricityChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, pageable);
+      page = waterElectricityChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,null,true,pageable);
     }
     
     String[] properties =

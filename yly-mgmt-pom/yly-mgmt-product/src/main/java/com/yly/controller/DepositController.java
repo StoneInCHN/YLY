@@ -15,18 +15,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
-import com.yly.entity.BedNurseCharge;
+import com.yly.entity.Deposit;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.service.BedNurseChargeService;
+import com.yly.service.DepositService;
 import com.yly.utils.FieldFilterUtils;
 
-@Controller("bedNurseChargeRecordController")
-@RequestMapping("/console/bedNurseChargeRecord")
-public class BedNurseChargeRecordController extends BaseController {
+@Controller("depositController")
+@RequestMapping("/console/deposit")
+public class DepositController extends BaseController {
 
-  @Resource(name = "bedNurseChargeServiceImpl")
-  private BedNurseChargeService bedNurseChargeService;
+  @Resource(name = "depositServiceImpl")
+  private DepositService depositService;
 
 
   /**
@@ -35,9 +36,9 @@ public class BedNurseChargeRecordController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/bedNurseChargeRecord", method = RequestMethod.GET)
-  public String bedNurseChargeRecord(ModelMap model) {
-    return "/bedNurseChargeRecord/bedNurseChargeRecord";
+  @RequestMapping(value = "/deposit", method = RequestMethod.GET)
+  public String depositChargeRecord(ModelMap model) {
+    return "/deposit/deposit";
   }
 
   /**
@@ -49,24 +50,23 @@ public class BedNurseChargeRecordController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier, Pageable pageable, ModelMap model) {
-    Page<BedNurseCharge> page = new Page<BedNurseCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null) {
-      page = bedNurseChargeService.findPage(pageable, true);
+      String realName, String identifier,PaymentStatus status, Pageable pageable, ModelMap model) {
+    Page<Deposit> page = new Page<Deposit>();
+    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
+      page = depositService.findPage(pageable, true);
     } else {
-      if (LogUtil.isDebugEnabled(BedNurseChargeRecordController.class)) {
-        LogUtil.debug(BedNurseChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+      if (LogUtil.isDebugEnabled(DepositController.class)) {
+        LogUtil.debug(DepositController.class, "search", "elderlyName: " + realName
+            +",identifier: " + identifier + "" + ",status: " + status + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,null,true,pageable);
+      page = depositService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,false,pageable);
     }
 
 
     String[] properties =
         {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
-            "elderlyInfo.nursingLevel", "bedAmount", "nurseAmount", "totalAmount", "operator",
-            "periodEndDate", "chargeStatus"};
+            "elderlyInfo.nursingLevel", "depositAmount", "payTime","operator","depositStatus"};
 
     List<Map<String, Object>> rows =
         FieldFilterUtils.filterCollectionMap(properties, page.getRows());
@@ -86,9 +86,9 @@ public class BedNurseChargeRecordController extends BaseController {
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
-    BedNurseCharge record = bedNurseChargeService.find(id);
-    model.addAttribute("bedNurseCharge", record);
-    return "bedNurseChargeRecord/details";
+    Deposit record = depositService.find(id);
+    model.addAttribute("deposit", record);
+    return "deposit/details";
   }
 
 

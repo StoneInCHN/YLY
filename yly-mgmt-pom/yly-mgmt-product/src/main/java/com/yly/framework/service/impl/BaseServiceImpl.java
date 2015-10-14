@@ -29,6 +29,7 @@ import org.springframework.util.Assert;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.dao.BaseDao;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
@@ -257,7 +258,7 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
 
   @Override
   public Page<T> chargeRecordSearch(Date beginDate, Date endDate, String realName,
-      String identifier, Pageable pageable) {
+      String identifier,PaymentStatus status, Boolean isPeriod,Pageable pageable) {
     
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
@@ -276,14 +277,28 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery,Occur.MUST);
       }
-      if (beginDate != null) {
-        TermRangeQuery tQuery = new TermRangeQuery ("periodStartDate",DateTimeUtils.convertDateToString (beginDate, null),null, true, false);
-        query.add(tQuery, Occur.MUST);
+      if (status!=null) {
+        String text = QueryParser.escape(status.toString());
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "depositStatus", analyzer);
+        Query filterQuery = filterParser.parse(text);
+        query.add(filterQuery,Occur.MUST);
       }
-      if (endDate != null) {
-        TermRangeQuery tQuery = new TermRangeQuery ("periodEndDate",null, DateTimeUtils.convertDateToString (endDate, null),false, false);
-        query.add(tQuery, Occur.MUST);
+      if (isPeriod) {
+        if (beginDate != null) {
+          TermRangeQuery tQuery = new TermRangeQuery ("periodStartDate",DateTimeUtils.convertDateToString (beginDate, null),null, true, false);
+          query.add(tQuery, Occur.MUST);
+        }
+        if (endDate != null) {
+          TermRangeQuery tQuery = new TermRangeQuery ("periodEndDate",null, DateTimeUtils.convertDateToString (endDate, null),false, false);
+          query.add(tQuery, Occur.MUST);
+        }
+      }else{
+         if (beginDate != null || endDate != null) {
+           TermRangeQuery tQuery = new TermRangeQuery ("payTime",DateTimeUtils.convertDateToString (beginDate, null),DateTimeUtils.convertDateToString (endDate, null), true, true);
+           query.add(tQuery, Occur.MUST);
+        }
       }
+      
       return baseDao.search(query, pageable, analyzer,null);
     } catch (Exception e) {
        e.printStackTrace();

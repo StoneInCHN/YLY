@@ -56,7 +56,7 @@ public class MealChargeRecordController extends BaseController {
             + ",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = mealChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, pageable);
+      page = mealChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,null,true,pageable);
     }
 
     String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel","elderlyInfo.mealType",
