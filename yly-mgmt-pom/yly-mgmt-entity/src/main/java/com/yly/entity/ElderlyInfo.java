@@ -432,7 +432,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
   }
 
-  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   public ElderlyConsigner getElderlyConsigner() {
     return elderlyConsigner;
   }

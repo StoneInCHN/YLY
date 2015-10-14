@@ -87,7 +87,7 @@ $(function(){
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addAdmissionn_form').form('validate');
+							var validate = $('#addAdmission_form').form('validate');
 							if(validate){
 								$.ajax({
 									url:"../admission/add.jhtml",
@@ -165,8 +165,8 @@ $(function(){
 				}
 				var _dialog = $('#editAdmission').dialog({    
 				    title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 500,    
+				    width: 1200,    
+				    height: 700,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../admission/edit.jhtml?id='+_edit_row.id,
@@ -200,7 +200,43 @@ $(function(){
 						handler:function(){
 							 $('#editAdmission').dialog("close");
 						}
-				    }]
+				    }],
+				    onLoad:function(){
+				    	$('#editAdmission_form').show();
+				    	$("#personnelCategoryEditId").combobox({    
+				    		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'PERSONNELCATEGORY';
+						    },
+						    value:$("#personnelCategoryEditId").val()
+						});
+				     	$("#evaluatingResultEditId").combobox({    
+				     		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'EVALUATINGRESULT';
+						    },
+						    value:$("#evaluatingResultEditId").val()
+						});
+				     	$("#nursingLevelEditId").combobox({    
+				     		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'NURSELEVEL';
+						    },
+						    value:$("#nursingLevelEditId").val()
+						});
+				    }
 				});  
 			},
 			remove:function(){

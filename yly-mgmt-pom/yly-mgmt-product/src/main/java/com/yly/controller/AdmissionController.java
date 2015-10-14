@@ -153,6 +153,13 @@ public class AdmissionController extends BaseController{
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(ElderlyInfo elderlyInfo) {
+    Long currnetTenantId = tenantAccountService.getCurrentTenantID();
+    
+    elderlyInfo.setTenantID(currnetTenantId);
+    elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
+    elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);
+    elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
+    
     elderlyInfoService.update(elderlyInfo);
     return SUCCESS_MESSAGE;
   }
