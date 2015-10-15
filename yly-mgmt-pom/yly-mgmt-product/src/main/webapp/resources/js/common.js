@@ -206,4 +206,8 @@ function searchElderlyInfo(id) {
 	});  
 }
 
-
+function formReset(formId,tableId){
+	$('#'+formId)[0].reset();
+	var _queryParams = {}
+	$('#'+tableId).datagrid('options').queryParams = _queryParams;
+}
