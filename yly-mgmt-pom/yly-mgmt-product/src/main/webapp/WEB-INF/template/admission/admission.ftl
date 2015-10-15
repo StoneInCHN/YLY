@@ -28,7 +28,8 @@
 </div> 
 <div id="addAdmission">
 	<form id="addAdmission_form" action="add.jhtml" method="post" class="form-table" enctype="multipart/form-data">   
-	   	  <table class="table table-striped">
+			<input type="hidden" id="addAdmission_form_file_input">
+	   	  <table class="table table-striped table-bordered">
 	   	  	<caption><h5>${message("yly.elderlyInfo.baseinfo")}</h5></caption>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
@@ -42,9 +43,23 @@
 	    			<input type="text" class="Wdate" id="beginDate" name="beHospitalizedDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 	    		</td>
 	    		
-	    		<th>${message("yly.elderlyInfo.photo")}:</th>
+	    		<th>${message("yly.elderlyInfo.position")}:</th>
 	    		<td>
-	    			 <input class="easyui-filebox" name="file" id="photoUpload-filebox" data-options="prompt:'${message("yly.elderlyInfo.choose.photo")}...'" style="width:200px;">
+	    			   <input class="easyui-textbox" type="text" name="position" validtype="length[0,20]"  style="width:80px;"/> 
+	    		</td>
+	    		<td colspan="2" rowspan="4">
+	    			<div title="头像上传" class="easyui-tooltip">
+	    				<div id="admissionUploader-add" class="single-uploader">
+						    <div  class="queueList">
+						        <div  class="placeholder">
+						        	<div id="admissionFilePicker-add" ></div>
+						        </div>
+						    </div>
+						    <div class="btns">
+						        <div class="uploadBtn state-pedding"></div>
+						    </div>
+						</div>
+	    			</div>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -211,41 +226,37 @@
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.originalCompany")}:</th>
-	    		<td>
+	    		<td >
 	    			 <input class="easyui-textbox" type="text" name="originalCompany" validtype="length[0,120]" style="width:230px;"/> 
 	    		</td>
 	    		
-	    		<th>${message("yly.elderlyInfo.position")}:</th>
-	    		<td>
-	    			   <input class="easyui-textbox" type="text" name="position" validtype="length[0,20]"  style="width:80px;"/> 
-	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.registeredResidence")}:</th>
-	    		<td colspan=3>
+	    		<td colspan="3">
 	    			  <input class="easyui-textbox" type="text" name="registeredResidence" validtype="length[0,150]" style="width:400px;"/> 
 	    		</td>
 	    		
 	    		<th>${message("yly.elderlyInfo.residentialAddress")}:</th>
-	    		<td colspan=3>
+	    		<td colspan="3">
 	    			  <input class="easyui-textbox" type="text" name="residentialAddress" validtype="length[0,150]" style="width:400px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.personalHabits")}:</th>
-	    		<td colspan=5>
+	    		<td colspan="6">
 	    			  <input class="easyui-textbox" type="text" name="personalHabits" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.hobbies")}:</th>
-	    		<td colspan=5>
+	    		<td colspan="6">
 	    			  <input class="easyui-textbox" type="text" name="hobbies" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.honors")}:</th>
-	    		<td colspan=5>
+	    		<td colspan="6">
 	    			  <input class="easyui-textbox" type="text" name="honors" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>

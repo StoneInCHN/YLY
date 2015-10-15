@@ -88,6 +88,7 @@ $(function(){
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addAdmission_form').form('validate');
+							$("#admissionUploader-add .uploadBtn").trigger("upload");
 							if(validate){
 								$.ajax({
 									url:"../admission/add.jhtml",
@@ -153,6 +154,31 @@ $(function(){
 						        param.configKey = 'NURSELEVEL';
 						    }
 						});
+				     	//头像上传
+				     	singleUpload("admissionUploader-add","addAdmission_form_file_input",{
+				     		 pick: {
+				                 id: '#admissionFilePicker-add',
+				                 label: '',
+				                 multiple :false
+				             },
+				             dnd: '#admissionUploader-add .queueList',
+				             paste: document.body,
+				             accept: {
+				                 title: 'Images',
+				                 extensions: 'gif,jpg,jpeg,bmp,png',
+				                 mimeTypes: 'image/*'
+				             },
+				             // swf文件路径
+				             swf: BASE_URL + '/js/Uploader.swf',
+				             disableGlobalDnd: true,
+				             server: '../file/uploadHeadPic.jhtml',
+				             fileNumLimit: 1,
+				             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+				             fileSingleSizeLimit: 10 * 1024 * 1024    //单个文件上传大小  10 M
+				     	},function(){
+				     		
+				     	});
+				     	
 				    },
 				});  
 				 $('#addAdmission_form').show();
@@ -266,3 +292,4 @@ $(function(){
 	})
 	 
 })
+

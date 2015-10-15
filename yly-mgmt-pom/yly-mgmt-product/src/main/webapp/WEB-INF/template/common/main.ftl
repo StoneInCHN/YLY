@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="${base}/resources/easyui/themes/icon.css">
  	<link rel="stylesheet" type="text/css" href="${base}/resources/css/common.css">
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/main.css" >
- 
+ 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/webuploader.css" >
+ 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/upload-style.css" >
   </head>
 
   <body class="easyui-layout">   
@@ -169,5 +170,10 @@
 	<script type="text/javascript" src="${base}/resources/js/dropdown.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
+	<script src="${base}/resources/js/webuploader.min.js"></script>
+	<script src="${base}/resources/js/fileUploadCommon.js"></script>
+	<script>
+		var BASE_URL = '${base}/resources' ;
+	</script>
   </body>
 </html>
