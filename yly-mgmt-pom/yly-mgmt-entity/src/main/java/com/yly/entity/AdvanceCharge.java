@@ -11,9 +11,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -78,6 +80,20 @@ public class AdvanceCharge extends BaseEntity {
    * 备注
    */
   private String remark;
+  
+  /**
+   * 账单号
+   */
+  private String billingNo;
+  
+  @Column(length = 30)
+  public String getBillingNo() {
+    return billingNo;
+  }
+
+  public void setBillingNo(String billingNo) {
+    this.billingNo = billingNo;
+  }
 
   @Column(length = 50)
   public String getRemark() {
@@ -105,6 +121,8 @@ public class AdvanceCharge extends BaseEntity {
     this.invoiceNo = invoiceNo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPayTime() {
     return payTime;
   }
