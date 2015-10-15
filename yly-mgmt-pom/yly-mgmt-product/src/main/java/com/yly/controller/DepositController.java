@@ -60,7 +60,7 @@ public class DepositController extends BaseController {
             +",identifier: " + identifier + "" + ",status: " + status + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = depositService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,false,pageable);
+      page = depositService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,null,false,pageable);
     }
 
 

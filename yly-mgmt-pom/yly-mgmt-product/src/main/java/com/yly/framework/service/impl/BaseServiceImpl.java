@@ -29,6 +29,7 @@ import org.springframework.util.Assert;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.dao.BaseDao;
 import com.yly.framework.filter.Filter;
@@ -258,7 +259,7 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
 
   @Override
   public Page<T> chargeRecordSearch(Date beginDate, Date endDate, String realName,
-      String identifier,PaymentStatus status, Boolean isPeriod,Pageable pageable) {
+      String identifier,PaymentStatus status,BudgetType budgetType, Boolean isPeriod,Pageable pageable) {
     
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
@@ -280,6 +281,12 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
       if (status!=null) {
         String text = QueryParser.escape(status.toString());
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "chargeStatus", analyzer);
+        Query filterQuery = filterParser.parse(text);
+        query.add(filterQuery,Occur.MUST);
+      }
+      if (budgetType!=null) {
+        String text = QueryParser.escape(budgetType.toString());
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "budgetType", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery,Occur.MUST);
       }
