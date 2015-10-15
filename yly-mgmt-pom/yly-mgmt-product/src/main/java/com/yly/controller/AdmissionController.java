@@ -152,13 +152,34 @@ public class AdmissionController extends BaseController{
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(ElderlyInfo elderlyInfo) {
+  public @ResponseBody Message update(Long personnelCategoryEditId , Long nursingLevelEditId , Long evaluatingResultEditId , ElderlyInfo elderlyInfo) {
+    
+    SystemConfig personnelCategory = null;
+    SystemConfig nursingLevel = null;
+    SystemConfig evaluatingResult = null;
+    
+    if(personnelCategoryEditId != null){
+      personnelCategory = systemConfigService.find(personnelCategoryEditId);
+    }
+    
+    if(nursingLevelEditId != null){
+      nursingLevel = systemConfigService.find(nursingLevelEditId);
+    }
+    
+    if(evaluatingResultEditId != null){
+      evaluatingResult = systemConfigService.find(evaluatingResultEditId);
+    }
+    
     Long currnetTenantId = tenantAccountService.getCurrentTenantID();
     
     elderlyInfo.setTenantID(currnetTenantId);
     elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
     elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);
     elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
+    
+    elderlyInfo.setPersonnelCategory(personnelCategory);
+    elderlyInfo.setNursingLevel(nursingLevel);
+    elderlyInfo.setEvaluatingResult(evaluatingResult);
     
     elderlyInfoService.update(elderlyInfo);
     return SUCCESS_MESSAGE;

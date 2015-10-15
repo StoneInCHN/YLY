@@ -73,7 +73,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.personnelCategory")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="personnelCategoryEditId"  name="personnelCategory" value="${elderlyInfo.personnelCategory.id}" style="width:90px;" data-options="editable:false" >
+	    			  <input class="easyui-combobox" id="personnelCategoryEditId"  name="personnelCategoryEditId" value="${elderlyInfo.personnelCategory.id}" style="width:90px;" data-options="editable:false" >
 	    		</td>
 	    		
 	    	  	<th>${message("yly.elderlyInfo.educationLevel")}:</th>
@@ -475,7 +475,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="evaluatingResultEditId"  name="evaluatingResultd" value="${elderlyInfo.evaluatingResult.id}" style="width:120px;" data-options="editable:false" > 
+	    			  <input class="easyui-combobox" id="evaluatingResultEditId"  name="evaluatingResultEditId" value="${elderlyInfo.evaluatingResult.id}" style="width:120px;" data-options="editable:false" > 
 	    		</td>
 	    		<th>${message("yly.elderlyInfo.evaluatingScore")}:</th>
 	    		<td>
@@ -484,7 +484,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.nursingLevel")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="nursingLevelEditId"  name="nursingLevel" value="${elderlyInfo.nursingLevel.id}" style="width:120px;" data-options="editable:false" >   
+	    			  <input class="easyui-combobox" id="nursingLevelEditId"  name="nursingLevelEditId" value="${elderlyInfo.nursingLevel.id}" style="width:120px;" data-options="editable:false" >   
 	    		</td>
 	    	</tr>
 	    </table>
