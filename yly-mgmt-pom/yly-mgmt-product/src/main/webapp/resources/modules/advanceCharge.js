@@ -1,3 +1,73 @@
+var advanceCharge_manager_tool = {
+			add:function(){		
+				$('#addAdvanceCharge').dialog({    
+				    title: message("yly.charge.advance.add"),    
+				    width: 450,    
+				    height: 400,
+				    modal: true,
+				    iconCls:'icon-mini-add',
+				    cache: false, 
+				    buttons:[{
+				    	text:message("yly.common.save"),
+				    	iconCls:'icon-save',
+						handler:function(){
+							var validate = $('#addAdvanceCharge_form').form('validate');
+							if(validate){
+								$.ajax({
+									url:"../advanceCharge/add.jhtml",
+									type:"post",
+									data:$("#addAdvanceCharge_form").serialize(),
+									beforeSend:function(){
+										$.messager.progress({
+											text:message("yly.common.saving")
+										});
+									},
+									success:function(result,response,status){
+											$.messager.progress('close');
+											showSuccessMsg(result.content);
+											$('#addAdvanceCharge_form').dialog("close");
+											$("#advanceCharge_table_list").datagrid('reload');
+									},
+									error:function (XMLHttpRequest, textStatus, errorThrown) {
+										$.messager.progress('close');
+										alertErrorMsg();
+									}
+								});
+							};
+						}
+					},{
+						text:message("yly.common.cancel"),
+						iconCls:'icon-cancel',
+						handler:function(){
+							 $('#addAdvanceCharge').dialog("close");
+							 $('#addAdvanceCharge_form').form('reset');
+						}
+				    }],
+				    onOpen:function(){
+				    	$('#addAdvanceCharge_form').show();
+				    	$("#addRoom_form_buildingId").combobox({    
+						    valueField:'id',    
+						    textField:'buildingName',
+						    cache: true,
+						    url:'../building/findAll.jhtml'
+						});
+				    	$("#addRoom_form_roomType").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'ROOMTYPE';// 参数
+						    }
+						});
+				    },
+				    onClose:function(){
+				    	 //$('#addAdvanceCharge_form').form('reset');
+				    }
+				});  
+			}
+	}
+
 $(function(){
 	
 	$("#advanceCharge_table_list").datagrid({

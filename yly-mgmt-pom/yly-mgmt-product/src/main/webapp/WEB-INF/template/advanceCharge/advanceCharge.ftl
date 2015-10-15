@@ -18,7 +18,66 @@
 	    </div>
 	  </fieldset>
 </div>
+<div id="advanceCharge_manager_tool">
+	<div class="tool-button">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="advanceCharge_manager_tool.add();">${message("yly.charge.advance.add")}</a>
+	</div>
+	<div class="tool-filter"></div>
+</div> 
 <table id="advanceCharge_table_list"></table>
+<div id="addAdvanceCharge">
+	<form id="addAdvanceCharge_form" method="post" class="form-table">   
+	    <table class="table table-striped">
+	    	<tr>
+	    		<th>${message("yly.common.elderly")}</th>
+	    		<td>
+	    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="chargeItemId" id="bedType" panelHeight="150px" data-options="required:true,editable:false" />   
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.common.charge.money")}</th>
+	    		<td>
+	    			 <input class="easyui-numberbox" name="advanceAmount" data-options="required:true,min:0,precision:2" /> 
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.common.charge.invoiceNo")}</th>
+	    		<td>
+	    			 <input class="easyui-textbox" name="invoiceNo" data-options="required:true" validtype="length[0,30]"/> 
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.common.charge.paymentType")}</th>
+	    		<td>
+	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="status" panelHeight="100px"
+			   		data-options="required:true,editable:false,
+					valueField: 'value',
+					textField: 'label',
+					data: [{
+						value: 'CASH',
+						label: '${message("yly.common.charge.paymentType.CASH")}'
+					},{
+						value: 'ADVANCE',
+						label: '${message("yly.common.charge.paymentType.ADVANCE")}'
+					},{
+						value: 'CARD',
+						label: '${message("yly.common.charge.paymentType.CARD")}'
+					},{
+						value: 'MIXTURE',
+						label: '${message("yly.common.charge.paymentType.MIXTURE")}'
+					}]" /> 
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.remark")}:</th>
+	    		<td>
+	    			 <textarea  cols=40 rows=5 type="text" name="remark"></textarea> 
+	    		</td>
+	    	</tr>
+	    </table>
+    </form>
+</div>  
+
 
 <div>
 	  <fieldset>

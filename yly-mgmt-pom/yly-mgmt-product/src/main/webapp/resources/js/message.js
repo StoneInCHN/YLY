@@ -86,6 +86,7 @@ var messages = {
 	"yly.charge.record.budgetType" : "收支类型",
 	"yly.charge.record.budgetType.income" : "充值",
 	"yly.charge.record.budgetType.cost" : "消费",
+	"yly.charge.advance.add" : "预缴款",
 	
 	
 	/**

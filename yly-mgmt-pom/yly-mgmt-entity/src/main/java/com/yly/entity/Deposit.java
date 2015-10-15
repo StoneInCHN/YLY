@@ -120,7 +120,7 @@ public class Deposit extends BaseEntity{
     this.paymentType = paymentType;
   }
 
-  @Column(length=50)
+  @Column(length=30)
   public String getInvoiceNo() {
     return invoiceNo;
   }

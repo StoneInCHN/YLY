@@ -135,9 +135,13 @@ public class AdvanceChargeController extends BaseController {
     return "advanceCharge/details";
   }
 
- 
+  /**
+   * 预缴款
+   * @param advanceCharge
+   * @return
+   */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add() {
+  public @ResponseBody Message add(AdvanceCharge advanceCharge) {
     return SUCCESS_MESSAGE;
   }
 
