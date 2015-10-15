@@ -17,6 +17,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
+import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
@@ -103,6 +104,9 @@ public class AdmissionController extends BaseController{
     
     if (elderlyInfo != null) {
       Long currnetTenantId = tenantAccountService.getCurrentTenantID();
+      /**
+       * 设置租户
+       */
       elderlyInfo.setTenantID(currnetTenantId);
       elderlyInfo.setPersonnelCategory(personnelCategory);
       elderlyInfo.setNursingLevel(nursingLevel);
@@ -111,6 +115,11 @@ public class AdmissionController extends BaseController{
       
       elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);      
       elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
+      
+      /**
+       * 设置老人状态
+       */
+      elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
       
       elderlyInfoService.save(elderlyInfo);
     }
@@ -169,7 +178,9 @@ public class AdmissionController extends BaseController{
     if(evaluatingResultEditId != null){
       evaluatingResult = systemConfigService.find(evaluatingResultEditId);
     }
-    
+    /**
+     * 设置租户
+     */
     Long currnetTenantId = tenantAccountService.getCurrentTenantID();
     
     elderlyInfo.setTenantID(currnetTenantId);
@@ -180,6 +191,10 @@ public class AdmissionController extends BaseController{
     elderlyInfo.setPersonnelCategory(personnelCategory);
     elderlyInfo.setNursingLevel(nursingLevel);
     elderlyInfo.setEvaluatingResult(evaluatingResult);
+    /**
+     * 更新入院老人数据的时候老人状态始终未入院办理
+     */
+    elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
     
     elderlyInfoService.update(elderlyInfo);
     return SUCCESS_MESSAGE;

@@ -24,6 +24,7 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 import org.springframework.web.multipart.MultipartFile;
 import org.hibernate.search.annotations.Analyzer;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.EducationLevel;
+import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 import com.yly.entity.commonenum.CommonEnum.HousingInfo;
 import com.yly.entity.commonenum.CommonEnum.LivingState;
@@ -122,6 +124,11 @@ public class ElderlyInfo extends BaseEntity {
    * 删除标记
    */
   private DeleteStatus deleteStatus;
+  
+  /**
+   * 老人状态
+   */
+  private ElderlyStatus elderlyStatus;
 
   /**
    * 评估分数
@@ -294,7 +301,7 @@ public class ElderlyInfo extends BaseEntity {
    * 预存款
    */
   private Set<AdvanceCharge> advanceCharges = new HashSet<AdvanceCharge>();
-
+  
   /**
    * 老人探望记录
    */
@@ -320,6 +327,19 @@ public class ElderlyInfo extends BaseEntity {
    */
   private SystemConfig mealType;
 
+  /**
+   * 预存款金额
+   */
+  private BigDecimal advanceChargeAmount;
+  
+  @Column(precision = 12, scale = 2)
+  public BigDecimal getAdvanceChargeAmount() {
+    return advanceChargeAmount;
+  }
+
+  public void setAdvanceChargeAmount(BigDecimal advanceChargeAmount) {
+    this.advanceChargeAmount = advanceChargeAmount;
+  }
 
   @ManyToOne
   public SystemConfig getMealType() {
@@ -816,5 +836,13 @@ public class ElderlyInfo extends BaseEntity {
 
   public void setDeleteStatus(DeleteStatus deleteStatus) {
     this.deleteStatus = deleteStatus;
+  }
+
+  public ElderlyStatus getElderlyStatus() {
+    return elderlyStatus;
+  }
+
+  public void setElderlyStatus(ElderlyStatus elderlyStatus) {
+    this.elderlyStatus = elderlyStatus;
   }
 }
