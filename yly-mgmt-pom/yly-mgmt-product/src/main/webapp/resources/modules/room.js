@@ -191,11 +191,15 @@ $(function(){
 	});
 	$("#room_search_btn").click(function(){
 	  var _queryParams = {
-			  beginDate:$("#room_search_form #beginDate").val(),
-			  endDate:$("#room_search_form #endDate").val()
+			  buildingId:$("room_search_form_buildingId").val(),
+			  floor:$("#room_search_form #endDate").val()
 	  }
 	  $('#room_table_list').datagrid('options').queryParams = _queryParams;  
 	  $("#room_table_list").datagrid('reload');
+	})
+	
+	$("#room_reset_btn").click(function(){
+		formReset("room_search_form","room_table_list");
 	})
 	
 	

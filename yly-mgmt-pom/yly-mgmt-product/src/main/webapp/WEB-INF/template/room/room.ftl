@@ -14,6 +14,7 @@
 		</form>
 		<div class="search-item">
 	  	  <button id="room_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	   <button id="room_reset_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.reset")}</button>
 	    </div>
 	  </fieldset>
 </div>
