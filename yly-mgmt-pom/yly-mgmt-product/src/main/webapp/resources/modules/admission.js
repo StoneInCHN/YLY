@@ -168,6 +168,23 @@ $(function(){
 				                 extensions: 'gif,jpg,jpeg,bmp,png',
 				                 mimeTypes: 'image/*'
 				             },
+				             thumb:{
+				            	    width: 110,
+				            	    height: 180,
+
+				            	    // 图片质量，只有type为`image/jpeg`的时候才有效。
+				            	    quality: 70,
+
+				            	    // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+				            	    allowMagnify: true,
+
+				            	    // 是否允许裁剪。
+				            	    crop: false,
+
+				            	    // 为空的话则保留原有图片格式。
+				            	    // 否则强制转换成指定的类型。
+				            	    type: 'image/jpeg'
+				            	},
 				             // swf文件路径
 				             swf: BASE_URL + '/js/Uploader.swf',
 				             disableGlobalDnd: true,

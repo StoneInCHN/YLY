@@ -47,7 +47,7 @@
 	    		<td>
 	    			   <input class="easyui-textbox" type="text" name="position" validtype="length[0,20]"  style="width:80px;"/> 
 	    		</td>
-	    		<td colspan="2" rowspan="4">
+	    		<td colspan="2" rowspan="6">
 	    			<div title="头像上传" class="easyui-tooltip">
 	    				<div id="admissionUploader-add" class="single-uploader">
 						    <div  class="queueList">
