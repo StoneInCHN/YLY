@@ -24,6 +24,7 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 import org.springframework.web.multipart.MultipartFile;
 import org.hibernate.search.annotations.Analyzer;
@@ -52,6 +53,7 @@ import com.yly.entity.commonenum.CommonEnum.SourceOfIncome;
 @Entity
 @Table(name = "yly_elderly_info")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_elderly_info_sequence")
+@Indexed(index="elderlyManage/elderlyInfo")
 public class ElderlyInfo extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
@@ -294,7 +296,7 @@ public class ElderlyInfo extends BaseEntity {
    * 预存款
    */
   private Set<AdvanceCharge> advanceCharges = new HashSet<AdvanceCharge>();
-
+  
   /**
    * 老人探望记录
    */
@@ -320,6 +322,19 @@ public class ElderlyInfo extends BaseEntity {
    */
   private SystemConfig mealType;
 
+  /**
+   * 预存款金额
+   */
+  private BigDecimal advanceChargeAmount;
+  
+  @Column(precision = 12, scale = 2)
+  public BigDecimal getAdvanceChargeAmount() {
+    return advanceChargeAmount;
+  }
+
+  public void setAdvanceChargeAmount(BigDecimal advanceChargeAmount) {
+    this.advanceChargeAmount = advanceChargeAmount;
+  }
 
   @ManyToOne
   public SystemConfig getMealType() {

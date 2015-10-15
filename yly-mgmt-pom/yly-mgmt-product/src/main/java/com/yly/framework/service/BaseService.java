@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.Query;
 
+import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.ordering.Ordering;
@@ -203,5 +204,5 @@ public interface BaseService<T, ID extends Serializable> {
    * @return
    */
   Page<T> chargeRecordSearch(Date beginDate, Date endDate,
-      String realName, String identifier,PaymentStatus status, Boolean isPeriod,Pageable pageable);
+      String realName, String identifier,PaymentStatus status,BudgetType budgetType,Boolean isPeriod,Pageable pageable);
 }

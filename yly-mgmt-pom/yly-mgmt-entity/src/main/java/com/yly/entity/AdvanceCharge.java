@@ -10,6 +10,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
@@ -24,6 +30,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Entity
 @Table(name = "yly_advance_charge")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_advance_charge_sequence")
+@Indexed(index="chargeManage/advanceCharge")
 public class AdvanceCharge extends BaseEntity {
 
   private static final long serialVersionUID = -9092276707242009884L;
@@ -53,7 +60,7 @@ public class AdvanceCharge extends BaseEntity {
 
 
   /**
-   * 缴费金额
+   * 金额
    */
   private BigDecimal advanceAmount;
 
@@ -125,6 +132,7 @@ public class AdvanceCharge extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -142,6 +150,7 @@ public class AdvanceCharge extends BaseEntity {
     this.advanceAmount = advanceAmount;
   }
 
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public BudgetType getBudgetType() {
     return budgetType;
   }
