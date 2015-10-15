@@ -130,6 +130,8 @@
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.charge.manage")}" id="chargeManage">
+		    		<li><a href="#" data-url="${base}/console/advanceCharge/advanceCharge.jhtml">${message("yly.charge.advance.manage")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/deposit/deposit.jhtml">${message("yly.charge.deposit.manage")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bedNurseChargeRecord/bedNurseChargeRecord.jhtml">${message("yly.charge.bedNurse.record")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/mealChargeRecord/mealChargeRecord.jhtml">${message("yly.charge.meal.reocrd")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/waterElectricityChargeRecord/waterElectricityChargeRecord.jhtml">${message("yly.charge.water.electricity.reocrd")}</a></li>
@@ -158,6 +160,7 @@
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="${base}/resources/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${base}/resources/js/jquery.serializejson.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/common.js"></script>

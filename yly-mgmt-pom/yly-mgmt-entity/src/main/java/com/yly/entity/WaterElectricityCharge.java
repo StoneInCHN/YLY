@@ -12,6 +12,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -27,6 +35,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Table(name = "yly_water_electricity_charge")
 @SequenceGenerator(name = "sequenceGenerator",
     sequenceName = "yly_water_electricity_charge_sequence")
+@Indexed(index="chargeRecord/waterElectricityCharge")
 public class WaterElectricityCharge extends BaseEntity {
 
 
@@ -182,6 +191,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.operator = operator;
   }
 
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
@@ -200,6 +210,7 @@ public class WaterElectricityCharge extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -208,6 +219,8 @@ public class WaterElectricityCharge extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodStartDate() {
     return periodStartDate;
   }
@@ -216,6 +229,8 @@ public class WaterElectricityCharge extends BaseEntity {
     this.periodStartDate = periodStartDate;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodEndDate() {
     return periodEndDate;
   }
@@ -224,7 +239,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.periodEndDate = periodEndDate;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getWaterCount() {
     return waterCount;
   }
@@ -233,7 +248,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.waterCount = waterCount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getElectricityCount() {
     return electricityCount;
   }
@@ -242,7 +257,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.electricityCount = electricityCount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getWaterAmount() {
     return waterAmount;
   }
@@ -251,7 +266,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.waterAmount = waterAmount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getElectricityAmount() {
     return electricityAmount;
   }

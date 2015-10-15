@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#admissionDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
-			    height: 500, 
+			    width: 1200,    
+			    height: 700, 
 			    cache: false,   
 			    href:'../admission/details.jhtml?id='+rowData.id,
 			    buttons:[{
@@ -26,19 +26,52 @@ $(function(){
 		},
 		columns:[
 		   [
-		      {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:40,align:'center',sortable:true},
-		      {title:message("yly.common.elderlyname"),field:"name",width:40,align:'center',sortable:true},
-		      {title:message("yly.elderlyInfo.birthday"),field:"birthday",width:40,align:'center',sortable:true},
-		      {title:message("yly.common.gender"),field:"gender",width:30,align:'center',sortable:true,formatter: function(value,row,index){
+		      {field:'ck',checkbox:true},
+		      {title:message("yly.elderlyinfo.identifier"),field:"identifier",width:12,align:'center',sortable:true},
+		      {title:message("yly.common.elderlyname"),field:"name",width:20,align:'center',sortable:true},
+		      {title:message("yly.common.age"),field:"age",width:10,align:'center',sortable:true},
+		      {title:message("yly.elderlyInfo.birthday"),field:"birthday",width:25,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  	if(value != null){
+		    	  		return new Date(value).Format("yyyy-MM-dd");
+		      	}
+		      }},
+		      {title:message("yly.elderlyInfo.beHospitalizedDate"),field:"beHospitalizedDate",width:25,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  	if(value != null){
+		    	  		return new Date(value).Format("yyyy-MM-dd");
+		      	}
+		      }},
+		      {title:message("yly.common.gender"),field:"gender",width:10,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "MALE"){
 		    	  		return  message("yly.common.male");
 		    	  	}
 		    	  	if(value == "FEMALE"){
 		    	  		return  message("yly.common.female");
 		    	  	}
-		      	}}
+		      	}},
+		      {title:message("yly.elderlyInfo.elderlyPhoneNumber"),field:"elderlyPhoneNumber",width:15,align:'center',sortable:true},
+		      {title:message("yly.common.idcard"),field:"idcard",width:40,align:'center',sortable:true},
+		      {title:message("yly.elderlyInfo.residentialAddress"),field:"residentialAddress",width:40,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  if(value && value.length >15){
+						var abValue =  value.substring(0,10) +"...";
+						var content = '<span title="' + value + '" class="tips-span">' + abValue + '</span>';
+						return content;
+					}else{
+						return value
+					}
+		      }}
+		      
 		   ]
-		]
+		],
+		onLoadSuccess:function(data){
+	           $(".tips-span").tooltip({
+	        	   position: 'top',
+	               onShow: function(){
+	                   $(this).tooltip('tip').css({ 
+	                       width:'300'
+	                   });
+	               }
+	           });
+	        }
 
 	});
 	
@@ -54,7 +87,7 @@ $(function(){
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addAdmissionn_form').form('validate');
+							var validate = $('#addAdmission_form').form('validate');
 							if(validate){
 								$.ajax({
 									url:"../admission/add.jhtml",
@@ -90,15 +123,18 @@ $(function(){
 				    onOpen:function(){
 				    	$('#addAdmission_form').show();
 				    	$("#personnelCategoryId").combobox({    
+				    		prompt:message("yly.common.please.select"),
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'PERSONNELCATEGORY';
-						    }
+						    },
+				    		
 						});
 				     	$("#evaluatingResultId").combobox({    
+				     		prompt:message("yly.common.please.select"),
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -108,6 +144,7 @@ $(function(){
 						    }
 						});
 				     	$("#nursingLevelId").combobox({    
+				     		prompt:message("yly.common.please.select"),
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -128,8 +165,8 @@ $(function(){
 				}
 				var _dialog = $('#editAdmission').dialog({    
 				    title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 500,    
+				    width: 1200,    
+				    height: 700,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../admission/edit.jhtml?id='+_edit_row.id,
@@ -163,7 +200,43 @@ $(function(){
 						handler:function(){
 							 $('#editAdmission').dialog("close");
 						}
-				    }]
+				    }],
+				    onLoad:function(){
+				    	$('#editAdmission_form').show();
+				    	$("#personnelCategoryEditId").combobox({    
+				    		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'PERSONNELCATEGORY';
+						    },
+						    value:$("#personnelCategoryEditId").val()
+						});
+				     	$("#evaluatingResultEditId").combobox({    
+				     		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'EVALUATINGRESULT';
+						    },
+						    value:$("#evaluatingResultEditId").val()
+						});
+				     	$("#nursingLevelEditId").combobox({    
+				     		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'NURSELEVEL';
+						    },
+						    value:$("#nursingLevelEditId").val()
+						});
+				    }
 				});  
 			},
 			remove:function(){

@@ -11,9 +11,10 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#personalizedChargeRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 500, 
-			    cache: false,   
+			    width: 700,    
+			    height: 630, 
+			    cache: false,
+			    modal: true,
 			    href:'../personalizedChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
@@ -68,14 +69,9 @@ $(function(){
 	});
 	
 	$("#personalizedChargeRecord_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-			  realName:$("#realName").val(),
-			  identifier:$("#identifier").val()
-	  }
-	  $('#personalizedChargeRecord-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#personalizedChargeRecord-table-list").datagrid('reload');
+	  var _queryParams = $("#personalizedChargeRecord_search_form").serializeJSON();
+	  $('#personalizedChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#personalizedChargeRecord_table_list").datagrid('reload');
 	})
 	
 	 

@@ -16,7 +16,7 @@
 	    	<tr>
 	    		<th>${message("yly.bedCharge.bedType")}</th>
 	    		<td>
-	    			 <input class="easyui-textbox"  name="chargeItemId" id="bedType" data-options="required:true,editable:false" />   
+	    			 <input class="easyui-textbox"  value="${message("yly.common.please.select")}" name="chargeItemId" id="bedType" panelHeight="150px" data-options="required:true,editable:false" />   
 	    		</td>
 	    	</tr>
 	    	<tr>

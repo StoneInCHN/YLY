@@ -23,10 +23,15 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
 import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.search.annotations.Analyzer;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.EducationLevel;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 import com.yly.entity.commonenum.CommonEnum.HousingInfo;
@@ -76,7 +81,7 @@ public class ElderlyInfo extends BaseEntity {
   private String photo;
 
   /** 文件 */
-  private MultipartFile file;
+  private MultipartFile photoFile;
 
   /**
    * 籍贯
@@ -112,6 +117,11 @@ public class ElderlyInfo extends BaseEntity {
    * 评估结果
    */
   private SystemConfig evaluatingResult;
+
+  /**
+   * 删除标记
+   */
+  private DeleteStatus deleteStatus;
 
   /**
    * 评估分数
@@ -305,6 +315,21 @@ public class ElderlyInfo extends BaseEntity {
    */
   private String bedLocation;
 
+  /**
+   * 伙食类型
+   */
+  private SystemConfig mealType;
+
+
+  @ManyToOne
+  public SystemConfig getMealType() {
+    return mealType;
+  }
+
+  public void setMealType(SystemConfig mealType) {
+    this.mealType = mealType;
+  }
+
 
   public void setBedLocation(String bedLocation) {
     this.bedLocation = bedLocation;
@@ -407,7 +432,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
   }
 
-  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY , cascade=CascadeType.PERSIST)
+  @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   public ElderlyConsigner getElderlyConsigner() {
     return elderlyConsigner;
   }
@@ -429,6 +454,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getIdentifier() {
     return identifier;
   }
@@ -439,6 +465,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }
@@ -567,6 +594,7 @@ public class ElderlyInfo extends BaseEntity {
     this.registeredResidence = registeredResidence;
   }
 
+  @JsonProperty
   @Column(length = 150)
   public String getResidentialAddress() {
     return residentialAddress;
@@ -678,6 +706,7 @@ public class ElderlyInfo extends BaseEntity {
     this.marriageState = marriageState;
   }
 
+  @JsonProperty
   public Date getBeHospitalizedDate() {
     return beHospitalizedDate;
   }
@@ -728,13 +757,23 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @Transient
-  public MultipartFile getFile() {
-    return file;
+  public MultipartFile getPhotoFile() {
+    return photoFile;
   }
 
-  public void setFile(MultipartFile file) {
-    this.file = file;
+  public void setPhotoFile(MultipartFile photoFile) {
+    this.photoFile = photoFile;
   }
+
+
+  // public MultipartFile getFile() {
+  // return file;
+  // }
+  //
+  //
+  // public void setFile(MultipartFile file) {
+  // this.file = file;
+  // }
 
   @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
   public Set<ElderlyPhotoAlbum> getElderlyPhotoAlbum() {
@@ -769,5 +808,13 @@ public class ElderlyInfo extends BaseEntity {
 
   public void setHousingInfo(HousingInfo housingInfo) {
     this.housingInfo = housingInfo;
+  }
+
+  public DeleteStatus getDeleteStatus() {
+    return deleteStatus;
+  }
+
+  public void setDeleteStatus(DeleteStatus deleteStatus) {
+    this.deleteStatus = deleteStatus;
   }
 }

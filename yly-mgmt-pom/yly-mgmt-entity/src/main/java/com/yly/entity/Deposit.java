@@ -10,9 +10,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
+import com.yly.entity.commonenum.CommonEnum.PaymentType;
 
 /**
  * 押金
@@ -23,6 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 @Entity
 @Table(name = "yly_deposit")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_deposit_sequence")
+@Indexed(index="chargeManage/deposit")
 public class Deposit extends BaseEntity{
   
   private static final long serialVersionUID = -9092276707242009884L;
@@ -38,10 +48,10 @@ public class Deposit extends BaseEntity{
   /**
    * 支付方式
    */
-  private String payType;
+  private PaymentType paymentType;
   
   /**
-   * 发票号
+   * 收据票号
    */
   private String invoiceNo;
   
@@ -57,7 +67,7 @@ public class Deposit extends BaseEntity{
   /**
    * 押金缴纳状态
    */
-  private PaymentStatus depositStatus;
+  private PaymentStatus chargeStatus;
   
   /**
    * 押金金额
@@ -68,6 +78,21 @@ public class Deposit extends BaseEntity{
    * 备注
    */
   private String remark;
+  
+  /**
+   * 账单号
+   */
+  private String billingNo;
+  
+  
+  @Column(length = 30)
+  public String getBillingNo() {
+    return billingNo;
+  }
+
+  public void setBillingNo(String billingNo) {
+    this.billingNo = billingNo;
+  }
   
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getDepositAmount() {
@@ -87,13 +112,12 @@ public class Deposit extends BaseEntity{
     this.remark = remark;
   }
 
-  @Column(length=15)
-  public String getPayType() {
-    return payType;
+  public PaymentType getPaymentType() {
+    return paymentType;
   }
 
-  public void setPayType(String payType) {
-    this.payType = payType;
+  public void setPaymentType(PaymentType paymentType) {
+    this.paymentType = paymentType;
   }
 
   @Column(length=50)
@@ -105,6 +129,8 @@ public class Deposit extends BaseEntity{
     this.invoiceNo = invoiceNo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPayTime() {
     return payTime;
   }
@@ -122,12 +148,13 @@ public class Deposit extends BaseEntity{
     this.operator = operator;
   }
 
-  public PaymentStatus getDepositStatus() {
-    return depositStatus;
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  public PaymentStatus getChargeStatus() {
+    return chargeStatus;
   }
 
-  public void setDepositStatus(PaymentStatus depositStatus) {
-    this.depositStatus = depositStatus;
+  public void setChargeStatus(PaymentStatus chargeStatus) {
+    this.chargeStatus = chargeStatus;
   }
 
   @Index(name="deposit_tenantid")
@@ -140,6 +167,7 @@ public class Deposit extends BaseEntity{
   }
 
   @OneToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }

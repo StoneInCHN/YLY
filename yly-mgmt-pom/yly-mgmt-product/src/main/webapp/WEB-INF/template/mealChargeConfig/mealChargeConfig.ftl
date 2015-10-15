@@ -16,7 +16,7 @@
 	    	<tr>
 	    		<th>${message("yly.mealCharge.mealType")}</th>
 	    		<td>
-	    			 <input class="easyui-textbox"  name="chargeItemId" id="mealType" data-options="required:true,editable:false" />   
+	    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="chargeItemId" id="mealType" panelHeight="150px" data-options="required:true,editable:false" />   
 	    		</td>
 	    	</tr>
 	    	<tr>

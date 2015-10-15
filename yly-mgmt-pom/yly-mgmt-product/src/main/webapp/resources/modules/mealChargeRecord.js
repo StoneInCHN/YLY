@@ -13,7 +13,8 @@ $(function(){
 			    title: message("yly.common.detail"),    
 			    width: 660,    
 			    height: 500, 
-			    cache: false,   
+			    cache: false,  
+			    modal: true,
 			    href:'../mealChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
@@ -41,9 +42,14 @@ $(function(){
 		      }},
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
-		    	  return row.elderlyInfo.nursingLevel.configValue;
-//		    	
+		    	  return row.elderlyInfo.nursingLevel.configValue;		    	
 		      }},
+		      //伙食类型
+		      {title:message("yly.charge.record.meal.type"),field:"mealType",width:25,align:'center',sortable:true,formatter:function(value,row,index){
+		    	    if(row.elderlyInfo && row.elderlyInfo.mealType){
+		    	    	return row.elderlyInfo.mealType.configValue;
+		    	    }
+			      }},
 		      //伙食费
 		      {title:message("yly.charge.record.meal"),field:"mealAmount",width:25,align:'center',sortable:true},
 		      //收款人
@@ -69,14 +75,9 @@ $(function(){
 	});
 	
 	$("#mealChargeRecord_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-			  realName:$("#realName").val(),
-			  identifier:$("#identifier").val()
-	  }
-	  $('#mealChargeRecord-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#mealChargeRecord-table-list").datagrid('reload');
+	  var _queryParams = $("#mealChargeRecord_search_form").serializeJSON();
+	  $('#mealChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#mealChargeRecord_table_list").datagrid('reload');
 	})
 	
 	 

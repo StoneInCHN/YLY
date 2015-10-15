@@ -13,6 +13,7 @@ import org.hibernate.annotations.Index;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
+import com.yly.entity.commonenum.CommonEnum.PaymentType;
 
 /**
  * 预缴费管理
@@ -38,7 +39,7 @@ public class AdvanceCharge extends BaseEntity {
   /**
    * 支付方式
    */
-  private String payType;
+  private PaymentType paymentType;
 
   /**
    * 收据票号
@@ -80,13 +81,12 @@ public class AdvanceCharge extends BaseEntity {
     this.remark = remark;
   }
 
-  @Column(length = 15)
-  public String getPayType() {
-    return payType;
+  public PaymentType getPaymentType() {
+    return paymentType;
   }
 
-  public void setPayType(String payType) {
-    this.payType = payType;
+  public void setPaymentType(PaymentType paymentType) {
+    this.paymentType = paymentType;
   }
 
   @Column(length = 50)

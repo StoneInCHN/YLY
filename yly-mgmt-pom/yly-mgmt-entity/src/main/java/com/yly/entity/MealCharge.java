@@ -11,6 +11,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -25,6 +33,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Entity
 @Table(name = "yly_meal_charge")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_meal_charge_sequence")
+@Indexed(index="chargeRecord/mealCharge")
 public class MealCharge extends BaseEntity {
 
 
@@ -153,6 +162,7 @@ public class MealCharge extends BaseEntity {
     this.operator = operator;
   }
 
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
@@ -171,6 +181,7 @@ public class MealCharge extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -179,6 +190,8 @@ public class MealCharge extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodStartDate() {
     return periodStartDate;
   }
@@ -187,6 +200,8 @@ public class MealCharge extends BaseEntity {
     this.periodStartDate = periodStartDate;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodEndDate() {
     return periodEndDate;
   }

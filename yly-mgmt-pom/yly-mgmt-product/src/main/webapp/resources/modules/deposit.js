@@ -1,26 +1,26 @@
 $(function(){
 	
-	$("#bedNurseChargeRecord_table_list").datagrid({
-		title:message("yly.bedNurse.charge.record"),
+	$("#deposit_table_list").datagrid({
+		title:message("yly.deposit.charge.record"),
 		fitColumns:true,
 		//toolbar:"#consultation_manager_tool",
-		url:'../bedNurseChargeRecord/list.jhtml',  
+		url:'../deposit/list.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
 		onDblClickRow : function (rowIndex, rowData){
-			$('#bedNurseChargeRecordDetail').dialog({    
+			$('#depositDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 660,    
 			    height: 500, 
 			    cache: false,
 			    modal: true,
-			    href:'../bedNurseChargeRecord/details.jhtml?id='+rowData.id,
+			    href:'../deposit/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#bedNurseChargeRecordDetail').dialog("close");
+						 $('#depositDetail').dialog("close");
 					}
 			    }]
 			});   
@@ -43,22 +43,15 @@ $(function(){
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
 		    	  return row.elderlyInfo.nursingLevel.configValue;
-//		    	  if(value!=null && value.nursingLevel!=null){
-//		    		  return value.nursingLevel.configValue;
-//		    	  }
 		      }},
-		      //床位费
-		      {title:message("yly.charge.record.bed"),field:"bedAmount",width:25,align:'center',sortable:true},
-		      //护理费
-		      {title:message("yly.charge.record.nurse"),field:"nurseAmount",width:25,align:'center',sortable:true},
-		      //总金额
-		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:25,align:'center'},
+		      //押金
+		      {title:message("yly.charge.record.depositAmount"),field:"depositAmount",width:25,align:'center',sortable:true},
 		      //收款人
-		      {title:message("yly.charge.record.operator"),field:"operator",width:30,align:'center',sortable:true},
-		      //收款时间段
-		      {title:message("yly.charge.record.period"),field:"periodEndDate",width:25,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.charge.record.operator"),field:"operator",width:25,align:'center',sortable:true},
+		      //缴费时间
+		      {title:message("yly.charge.record.payTime"),field:"payTime",width:35,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
-		    	  		return new Date(value).Format("yyyy-MM");
+		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm:ss");
 		    	  	}
 				}},
 		      //状态
@@ -66,8 +59,8 @@ $(function(){
 		    	  	if(value == "PAID"){
 		    	  		return "<font color=#7CCD7C>"+message("yly.charge.status.paid")+"</font>";
 		    	  	}
-		    	  	if(value == "UNPAID"){
-		    	  		return "<font color=#FF0000>"+message("yly.charge.status.unpaid")+"</font>";
+		    	  	if(value == "REFUNDED"){
+		    	  		return "<font color=#FF0000>"+message("yly.charge.status.refunded")+"</font>";
 		    	  	}
 		      	}}
 		   ]
@@ -75,11 +68,10 @@ $(function(){
 
 	});
 	
-	$("#bedNurseChargeRecord_search_btn").click(function(){
-	  var _queryParams = $("#bedNurseChargeRecord_search_form").serializeJSON();
-	  //console.log($("#bedNurseChargeRecord_search_form").serializeJSON());
-	  $('#bedNurseChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
-	  $("#bedNurseChargeRecord_table_list").datagrid('reload');
+	$("#deposit_search_btn").click(function(){
+	  var _queryParams = $("#deposit_search_form").serializeJSON();
+	  $('#deposit_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#deposit_table_list").datagrid('reload');
 	})
 	
 	 

@@ -17,7 +17,7 @@ import com.yly.service.DepositService;
 @Service("depositServiceImpl")
 public class DepositServiceImpl extends BaseServiceImpl<Deposit, Long> implements DepositService {
 
-  @Resource(name = "billingDaoImpl")
+  @Resource(name = "depositDaoImpl")
   private DepositDao depositDao;
   
   @Resource

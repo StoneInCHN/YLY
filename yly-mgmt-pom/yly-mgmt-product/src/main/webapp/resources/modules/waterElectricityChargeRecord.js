@@ -11,9 +11,10 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#waterElectricityChargeRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 500, 
+			    width: 700,    
+			    height: 600, 
 			    cache: false,   
+			    modal: true,
 			    href:'../waterElectricityChargeRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
@@ -77,14 +78,9 @@ $(function(){
 	});
 	
 	$("#waterElectricityChargeRecord_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-			  realName:$("#realName").val(),
-			  identifier:$("#identifier").val()
-	  }
-	  $('#waterElectricityChargeRecord-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#waterElectricityChargeRecord-table-list").datagrid('reload');
+	  var _queryParams = $("#waterElectricityChargeRecord_search_form").serializeJSON();
+	  $('#waterElectricityChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#waterElectricityChargeRecord_table_list").datagrid('reload');
 	})
 	
 	 

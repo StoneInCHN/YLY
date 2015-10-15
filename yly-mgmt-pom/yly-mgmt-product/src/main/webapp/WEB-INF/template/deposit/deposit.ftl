@@ -1,16 +1,16 @@
-<script src="${base}/resources/modules/mealChargeRecord.js"></script>
+<script src="${base}/resources/modules/deposit.js"></script>
 
 <div>
 	  <fieldset>
 	    <legend>${message("yly.charge.record.search")}</legend>
-	    <form id="mealChargeRecord_search_form" class="search-form">
+	    <form id="deposit_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
-			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.elderlyName")}" name="realName"/>
+			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="realName" id="realName"/>
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
-			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier"/>
+			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier" id="identifier"/>
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.common.charge.status")}:</label>
@@ -22,12 +22,12 @@
 						value: 'PAID',
 						label: '${message("yly.common.charge.status.PAID")}'
 					},{
-						value: 'UNPAID',
-						label: '${message("yly.common.charge.status.UNPAID")}'
+						value: 'REFUNDED',
+						label: '${message("yly.common.charge.status.REFUNDED")}'
 					}]" />
 			</div>
 			<div class="search-item">
-			    <label> ${message("yly.charge.record.date")}:</label>
+			    <label> ${message("yly.common.charge.payTime")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" placeholder="${message("yly.common.prompt.beginDate")}" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -36,13 +36,13 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="mealChargeRecord_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	  <button id="deposit_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
 
-<table id="mealChargeRecord_table_list"></table>
-<div id="mealChargeRecordDetail"></div>
+<table id="deposit_table_list"></table>
+<div id="depositDetail"></div>
 
 
 

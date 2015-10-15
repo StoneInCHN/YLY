@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.MealCharge;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.MealChargeService;
@@ -45,10 +47,20 @@ public class MealChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,Pageable pageable, ModelMap model) {
-    Page<MealCharge> page = mealChargeService.findPage(pageable, true);
+  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,PaymentStatus status,Pageable pageable, ModelMap model) {
+    Page<MealCharge> page = new Page<MealCharge>();
+    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
+      page = mealChargeService.findPage(pageable, true);
+    } else {
+      if (LogUtil.isDebugEnabled(MealChargeRecordController.class)) {
+        LogUtil.debug(MealChargeRecordController.class, "search", "elderlyName: " + realName
+            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
+            + endDate);
+      }
+      page = mealChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,true,pageable);
+    }
 
-    String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
+    String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel","elderlyInfo.mealType",
             "mealAmount","operator","periodEndDate", "chargeStatus" };
     
     List<Map<String, Object>> rows = FieldFilterUtils.filterCollectionMap(properties, page.getRows());

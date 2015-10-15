@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.WaterElectricityCharge;
+import com.yly.entity.WaterElectricityChargeConfig;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.WaterElectricityChargeConfigService;
 import com.yly.service.WaterElectricityChargeService;
 import com.yly.utils.FieldFilterUtils;
 
@@ -26,6 +30,9 @@ public class WaterElectricityChargeRecordController extends BaseController {
 
   @Resource(name = "waterElectricityChargeServiceImpl")
   private WaterElectricityChargeService waterElectricityChargeService;
+  
+  @Resource(name = "waterElectricityChargeConfigServiceImpl")
+  private WaterElectricityChargeConfigService waterElectricityChargeConfigService;
 
 
   /**
@@ -48,8 +55,19 @@ public class WaterElectricityChargeRecordController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier, Pageable pageable, ModelMap model) {
-    Page<WaterElectricityCharge> page = waterElectricityChargeService.findPage(pageable, true);
+      String realName, String identifier,PaymentStatus status, Pageable pageable, ModelMap model) {
+    Page<WaterElectricityCharge> page = new Page<WaterElectricityCharge>();
+    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
+      page = waterElectricityChargeService.findPage(pageable, true);
+    } else {
+      if (LogUtil.isDebugEnabled(WaterElectricityChargeRecordController.class)) {
+        LogUtil.debug(WaterElectricityChargeRecordController.class, "search", "elderlyName: " + realName
+            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
+            + endDate);
+      }
+      page = waterElectricityChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,true,pageable);
+    }
+    
     String[] properties =
         {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
             "elderlyInfo.nursingLevel", "waterAmount", "electricityAmount", "totalAmount", "operator",
@@ -74,6 +92,10 @@ public class WaterElectricityChargeRecordController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
     WaterElectricityCharge record = waterElectricityChargeService.find(id);
+    List<WaterElectricityChargeConfig> configs = waterElectricityChargeConfigService.findAll(true);
+    if (configs!=null && configs.size()==1) {
+      model.addAttribute("waterElectricityChargeConfig", configs.get(0));
+    }
     model.addAttribute("waterElectricityCharge", record);
     return "waterElectricityChargeRecord/details";
   }

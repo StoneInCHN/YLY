@@ -1,11 +1,13 @@
 package com.yly.framework.service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.Query;
 
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.paging.Page;
@@ -184,9 +186,22 @@ public interface BaseService<T, ID extends Serializable> {
   /**
    * 关键字搜索
    */
-  Page<T>  search(Query query, Pageable pageable, Analyzer analyzer);
+  Page<T>  search(Query query, Pageable pageable, Analyzer analyzer,org.apache.lucene.search.Filter filter);
   /**
    * 重建索引
    */
   void refreshIndex();
+  
+  /**
+   * 缴费记录查询
+   * @param beginDate
+   * @param endDate
+   * @param realName
+   * @param identifier
+   * @param status
+   * @param pageable
+   * @return
+   */
+  Page<T> chargeRecordSearch(Date beginDate, Date endDate,
+      String realName, String identifier,PaymentStatus status, Boolean isPeriod,Pageable pageable);
 }

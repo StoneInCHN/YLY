@@ -14,7 +14,6 @@ import javax.validation.groups.Default;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.NumericFields;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 
