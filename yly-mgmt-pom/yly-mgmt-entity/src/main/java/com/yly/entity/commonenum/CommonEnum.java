@@ -1205,6 +1205,14 @@ public class CommonEnum {
      */
     OUT_NURSING_HOME,
     /**
+     * 入院办理
+     */
+    IN_PROGRESS_CHECKIN,
+    /**
+     * 出院办理
+     */
+    IN_PROGRESS_CHECKOUT,
+    /**
      * 过世
      */
     DEAD
