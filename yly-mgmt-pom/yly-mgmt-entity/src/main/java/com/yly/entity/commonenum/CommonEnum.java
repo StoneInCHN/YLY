@@ -1188,4 +1188,25 @@ public class CommonEnum {
      */
     DELETED
   }
+
+  /**
+   * 老人状态
+   * 
+   * @author shijun
+   *
+   */
+  public enum ElderlyStatus {
+    /**
+     * 在院
+     */
+    IN_NURSING_HOME,
+    /**
+     * 出院
+     */
+    OUT_NURSING_HOME,
+    /**
+     * 过世
+     */
+    DEAD
+  }
 }
