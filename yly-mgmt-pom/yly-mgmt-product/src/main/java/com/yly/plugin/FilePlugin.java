@@ -39,10 +39,6 @@ public class FilePlugin extends StoragePlugin implements ServletContextAware {
     return "1.0";
   }
 
-  @Override
-  public String getAuthor() {
-    return "Electronic Store";
-  }
 
   @Override
   public String getSiteUrl() {
