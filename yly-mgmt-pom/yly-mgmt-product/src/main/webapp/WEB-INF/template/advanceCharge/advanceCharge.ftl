@@ -26,12 +26,14 @@
 </div> 
 <table id="advanceCharge_table_list"></table>
 <div id="addAdvanceCharge">
-	<form id="addAdvanceCharge_form" method="post" class="form-table">   
+	<form id="addAdvanceCharge_form" method="post" class="form-table"> 
+	    <input type="hidden" name="elderlyInfoID" id="addAdvanceCharge_elderlyInfoID">  
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}</th>
 	    		<td>
-	    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="chargeItemId" id="bedType" panelHeight="150px" data-options="required:true,editable:false" />   
+	    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="elderlyInfoName" id="addAdvanceCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
+	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addAdvanceCharge_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -43,7 +45,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.invoiceNo")}</th>
 	    		<td>
-	    			 <input class="easyui-textbox" name="invoiceNo" data-options="required:true" validtype="length[0,30]"/> 
+	    			 <input class="easyui-textbox" name="invoiceNo" validtype="length[0,30]"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -71,7 +73,7 @@
 	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td>
-	    			 <textarea  cols=40 rows=5 type="text" name="remark"></textarea> 
+	    			 <textarea  cols=40 rows=5 type="text" name="remark" maxlength="50"></textarea> 
 	    		</td>
 	    	</tr>
 	    </table>
@@ -90,6 +92,20 @@
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
 			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier" id="identifier"/>
+			</div>
+			<div class="search-item">
+			    <label>${message("yly.common.charge.budgetType")}:</label>
+			   	<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="budgetType" id="budgetType" panelHeight="50px"
+			   	data-options="
+					valueField: 'value',
+					textField: 'label',
+					data: [{
+						value: 'INCOME',
+						label: '${message("yly.common.charge.budgetType.INCOME")}'
+					},{
+						value: 'COST',
+						label: '${message("yly.common.charge.budgetType.COST")}'
+					}]" />
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.common.charge.payTime")}:</label>

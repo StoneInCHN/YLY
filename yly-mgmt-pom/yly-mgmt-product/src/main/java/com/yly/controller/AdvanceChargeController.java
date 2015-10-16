@@ -23,7 +23,9 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.AdvanceChargeService;
 import com.yly.service.ElderlyInfoService;
+import com.yly.service.TenantAccountService;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.ToolsUtils;
 
 @Controller("advanceChargeController")
 @RequestMapping("/console/advanceCharge")
@@ -34,6 +36,9 @@ public class AdvanceChargeController extends BaseController {
 
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
+  
+  @Resource(name = "tenantAccountServiceImpl")
+  private TenantAccountService tenantAccountService;
 
 
   /**
@@ -141,7 +146,17 @@ public class AdvanceChargeController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(AdvanceCharge advanceCharge) {
+  public @ResponseBody Message add(Long elderlyInfoID,AdvanceCharge advanceCharge) {
+    if (advanceCharge!=null) {
+      ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+      elderlyInfo.setAdvanceChargeAmount(elderlyInfo.getAdvanceChargeAmount().add(advanceCharge.getAdvanceAmount()));
+      advanceCharge.setElderlyInfo(elderlyInfo);
+      advanceCharge.setBudgetType(BudgetType.INCOME);
+      advanceCharge.setPayTime(new Date());
+      advanceCharge.setOperator(tenantAccountService.getCurrentUsername());
+      advanceCharge.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService.getCurrentTenantOrgCode()));
+      advanceChargeService.save(advanceCharge, true);
+    }
     return SUCCESS_MESSAGE;
   }
 

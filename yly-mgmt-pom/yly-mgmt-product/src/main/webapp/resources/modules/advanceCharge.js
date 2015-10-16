@@ -25,7 +25,7 @@ var advanceCharge_manager_tool = {
 									success:function(result,response,status){
 											$.messager.progress('close');
 											showSuccessMsg(result.content);
-											$('#addAdvanceCharge_form').dialog("close");
+											$('#addAdvanceCharge').dialog("close");
 											$("#advanceCharge_table_list").datagrid('reload');
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -45,21 +45,6 @@ var advanceCharge_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#addAdvanceCharge_form').show();
-				    	$("#addRoom_form_buildingId").combobox({    
-						    valueField:'id',    
-						    textField:'buildingName',
-						    cache: true,
-						    url:'../building/findAll.jhtml'
-						});
-				    	$("#addRoom_form_roomType").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'ROOMTYPE';// 参数
-						    }
-						});
 				    },
 				    onClose:function(){
 				    	 //$('#addAdvanceCharge_form').form('reset');

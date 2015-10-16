@@ -536,6 +536,10 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
         }
       }
     }
+    //未设置排序，默认createDate降序
+    if ((StringUtils.isEmpty(pageable.getSort()) || pageable.getOrder() == null) && pageable.getOrderings() == null) {
+      orderList.add(criteriaBuilder.desc(root.get("createDate")));
+    }
     criteriaQuery.orderBy(orderList);
   }
 

@@ -57,7 +57,7 @@ public class BedNurseChargeRecordController extends BaseController {
     } else {
       if (LogUtil.isDebugEnabled(BedNurseChargeRecordController.class)) {
         LogUtil.debug(BedNurseChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
+            + ",identifier: " + identifier + "" + ",status: " + status + ""+",start date: " + beginDate + ", end date: "
             + endDate);
       }
       page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,null,true,pageable);

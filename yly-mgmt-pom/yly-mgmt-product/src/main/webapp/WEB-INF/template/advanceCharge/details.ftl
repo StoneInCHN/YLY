@@ -25,11 +25,11 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.invoiceNo")}:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="invoiceNo"  readonly=true value="${advanceCharge.invoiceNo}" style="width:130px;"/> 
+	    			<input class="easyui-textbox" type="text" name="invoiceNo"  readonly=true value="${advanceCharge.invoiceNo}" style="width:150px;"/> 
 	    		</td>
 	    		<th>${message("yly.common.charge.billingNo")}:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="billingNo"  readonly=true value="${advanceCharge.billingNo}" style="width:130px;"/> 
+	    			<input class="easyui-textbox" type="text" name="billingNo"  readonly=true value="${advanceCharge.billingNo}" style="width:150px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
