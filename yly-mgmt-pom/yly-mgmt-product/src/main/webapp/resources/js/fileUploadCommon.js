@@ -1,19 +1,20 @@
 /**
  * wrap 包裹在外层的div id createOption
  * inputId 存放返回值路径的input控件ID
+ * identifierId 存放老人编号的Id
  * createOption uploader 初始化参数
  * fun 自定义函数
  * @param wrap
  */
 
-function singleUpload(wrap,inputId, createOption, fun) {
+function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 	var $ = jQuery, // just in case. Make sure it's not an other libaray.
 
 	$wrap = $('#'+wrap),
-
+	
 	// 图片容器
-	$queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList')),
-
+	$queue =$wrap.find("ul.filelist"),
+	
 	// 状态栏，包括进度和控制按钮
 	$statusBar = $wrap.find('.statusBar'),
 
@@ -57,6 +58,15 @@ function singleUpload(wrap,inputId, createOption, fun) {
 
 	// WebUploader实例
 	uploader;
+	
+	console.log($queue.length);
+	console.log($queue.html());
+	console.log($queue.text());
+	if($queue.length > 0){
+		$queue.html();
+	}else{
+		$queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));
+	}
 
 	if (!WebUploader.Uploader.support()) {
 		alert('Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器');
@@ -331,6 +341,15 @@ function singleUpload(wrap,inputId, createOption, fun) {
 		$("#"+inputId).val(response.content);
 	};
 	
+	uploader.on('uploadBeforeSend', function(object, data, headers) {
+		if(identifierId){
+			var identifierVal = $("#"+identifierId).val();
+			if(identifierVal){
+				data.identifier =identifierVal;
+			}
+		}
+	});
+	
 
 	uploader.onFileQueued = function(file) {
 		fileCount++;
@@ -394,6 +413,19 @@ function singleUpload(wrap,inputId, createOption, fun) {
 		} else if (state === 'uploading') {
 			uploader.stop();
 		}
+	});
+	
+	//重置uploader。目前只重置了队列。
+	$upload.on('reset', function() {
+		
+		console.log("reset")
+		uploader.reset();
+	});
+	
+	//销毁 webuploader 实例
+	$upload.on('destroy', function() {
+		console.log("destroy")
+		uploader.destroy();
 	});
 
 	$info.on('click', '.retry', function() {

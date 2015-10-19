@@ -24,6 +24,10 @@ public class FileController extends BaseController{
      // super.upload(file, "/upload/user/", request);
      // response.getWriter().print(super.getFileName());
     //  response.getWriter().print("xxxxxxxx");
+      
+      Thread.sleep(10000);
+      
+      
       return Message.success("xxxxx/xxxxxx/xxxxx");
     } catch (Exception e) {
       e.printStackTrace();

@@ -34,7 +34,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" validtype="length[0,15]" data-options="required:true,editable:false" style="width:60px;"/>  
+	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
 	    			 <a href="#" class="easyui-linkbutton" id="generateIdentifier_btn" plain="true">${message("yly.common.generate.identifier")}</a>
 	    		</td>
 	    		
