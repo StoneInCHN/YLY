@@ -43,10 +43,12 @@
 	    			<input type="text" class="Wdate" id="beginDate" name="beHospitalizedDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 	    		</td>
 	    		
-	    		<th>${message("yly.elderlyInfo.position")}:</th>
+	    		
+	    		<th>${message("yly.elderlyInfo.personnelCategory")}:</th>
 	    		<td>
-	    			   <input class="easyui-textbox" type="text" name="position" validtype="length[0,20]"  style="width:80px;"/> 
+	    			  <input class="easyui-combobox" id="personnelCategoryId"  name="personnelCategoryId" style="width:90px;" data-options="editable:false" > 
 	    		</td>
+	    		
 	    		<td colspan="2" rowspan="6">
 	    			<div title="头像上传" class="easyui-tooltip">
 	    				<div id="admissionUploader-add" class="single-uploader">
@@ -114,12 +116,28 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.elderlyInfo.personnelCategory")}:</th>
+	    		<th>${message("yly.elderlyInfo.marriageState")}:</th>
 	    		<td>
-	    			  <input class="easyui-combobox" id="personnelCategoryId"  name="personnelCategoryId" style="width:90px;" data-options="editable:false" > 
+		    		 <input class="easyui-combobox" data-options="
+						valueField: 'label',
+						textField: 'value',
+						data: [{
+							label: 'MARRIED',
+							value: '${message("yly.common.marriageState.married")}'
+						},{
+							label: 'UNMARRIED',
+							value: '${message("yly.common.marriageState.unmarried")}'
+						},{
+							label: 'WIDOWED',
+							value: '${message("yly.common.marriageState.widowed")}'
+						},{
+							label: 'OTHER',
+							value: '${message("yly.common.other")}'
+						}],
+						prompt:'${message("yly.common.please.select")}'"  name="marriageState" style="width:80px;"/>
 	    		</td>
 	    		
-	    	  	<th>${message("yly.elderlyInfo.educationLevel")}:</th>
+	    		<th>${message("yly.elderlyInfo.educationLevel")}:</th>
 	    		<td>
 	    			<input class="easyui-combobox" data-options="
 					valueField: 'label',
@@ -177,27 +195,6 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.elderlyInfo.marriageState")}:</th>
-	    		<td>
-		    		 <input class="easyui-combobox" data-options="
-						valueField: 'label',
-						textField: 'value',
-						data: [{
-							label: 'MARRIED',
-							value: '${message("yly.common.marriageState.married")}'
-						},{
-							label: 'UNMARRIED',
-							value: '${message("yly.common.marriageState.unmarried")}'
-						},{
-							label: 'WIDOWED',
-							value: '${message("yly.common.marriageState.widowed")}'
-						},{
-							label: 'OTHER',
-							value: '${message("yly.common.other")}'
-						}],
-						prompt:'${message("yly.common.please.select")}'"  name="marriageState" style="width:80px;"/>
-	    		</td>
-	    		
 	    		<th>${message("yly.elderlyInfo.religion")}:</th>
 	    		<td>
 	    			   <input class="easyui-combobox" data-options="
@@ -230,6 +227,10 @@
 	    			 <input class="easyui-textbox" type="text" name="originalCompany" validtype="length[0,120]" style="width:230px;"/> 
 	    		</td>
 	    		
+	    		<th>${message("yly.elderlyInfo.position")}:</th>
+	    		<td>
+	    			   <input class="easyui-textbox" type="text" name="position" validtype="length[0,20]"  style="width:80px;"/> 
+	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.registeredResidence")}:</th>
@@ -261,7 +262,7 @@
 	    		</td>
 	    	</tr>
 	    	</table>
-	    	<table class="table table-striped">
+	    	<table class="table table-striped table-bordered">
 	    	<tr>
 	    		<td colspan=4><h5>${message("yly.elderlyInfo.livingState")}</h5></td>
 	    	</tr>
@@ -303,7 +304,7 @@
 	    		</td>
 	    	</tr>
 	    	</table>
-	    	<table class="table table-striped">
+	    	<table class="table table-striped table-bordered">
 	    	<caption><h5>${message("yly.elderlyInfo.elderlyConsigner")}</h5></caption>
 	     	<tr>
      			<th>${message("yly.elderlyInfo.elderlyConsigner.consignerName")}:</th>
@@ -382,7 +383,7 @@
 					</td>
 				</tr>
 	    	</table>
-	    	<table class="table table-striped">
+	    	<table class="table table-striped table-bordered">
 	    	<caption><h5>${message("yly.elderlyInfo.economicSituation")}</h5></caption>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.monthlyIncome")}:</th>
@@ -460,7 +461,7 @@
 	    		</td>
 	    	</tr>
 	    	</table>
-	    	<table class="table table-striped">
+	    	<table class="table table-striped table-bordered">
 	    	<caption><h5>${message("yly.elderlyInfo.evaluatingResult")}</h5></caption>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>

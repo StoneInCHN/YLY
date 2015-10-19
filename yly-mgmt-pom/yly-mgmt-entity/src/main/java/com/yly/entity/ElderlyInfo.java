@@ -23,11 +23,10 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
-import org.springframework.web.multipart.MultipartFile;
-import org.hibernate.search.annotations.Analyzer;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -81,10 +80,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 照片
    */
-  private String photo;
-
-  /** 文件 */
-  private MultipartFile photoFile;
+  private String profilePhoto;
 
   /**
    * 籍贯
@@ -768,33 +764,14 @@ public class ElderlyInfo extends BaseEntity {
     this.sourceOfIncome = sourceOfIncome;
   }
 
-  @Column(length = 150)
-  public String getPhoto() {
-    return photo;
+  @Column(length = 200)
+  public String getProfilePhoto() {
+    return profilePhoto;
   }
 
-  public void setPhoto(String photo) {
-    this.photo = photo;
+  public void setProfilePhoto(String profilePhoto) {
+    this.profilePhoto = profilePhoto;
   }
-
-  @Transient
-  public MultipartFile getPhotoFile() {
-    return photoFile;
-  }
-
-  public void setPhotoFile(MultipartFile photoFile) {
-    this.photoFile = photoFile;
-  }
-
-
-  // public MultipartFile getFile() {
-  // return file;
-  // }
-  //
-  //
-  // public void setFile(MultipartFile file) {
-  // this.file = file;
-  // }
 
   @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
   public Set<ElderlyPhotoAlbum> getElderlyPhotoAlbum() {

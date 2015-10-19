@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 
 import com.yly.beans.FileInfo;
 import com.yly.entity.PluginConfig;
-import com.yly.service.impl.PluginConfigServiceImpl;
+import com.yly.service.PluginConfigService;
 
 public abstract class StoragePlugin implements Comparable<StoragePlugin>{
 
   @Resource(name = "pluginConfigServiceImpl")
-  private PluginConfigServiceImpl pluginConfigService;
+  private PluginConfigService pluginConfigService;
 
   /**
    * 获取ID
@@ -41,13 +41,6 @@ public abstract class StoragePlugin implements Comparable<StoragePlugin>{
    * @return 版本
    */
   public abstract String getVersion();
-
-  /**
-   * 获取作者
-   * 
-   * @return 作者
-   */
-  public abstract String getAuthor();
 
   /**
    * 获取网址
@@ -77,14 +70,6 @@ public abstract class StoragePlugin implements Comparable<StoragePlugin>{
    */
   public abstract String getSettingUrl();
 
-  /**
-   * 获取是否已安装
-   * 
-   * @return 是否已安装
-   */
-  public boolean getIsInstalled() {
-      return pluginConfigService.pluginIdExists(getId());
-  }
 
   /**
    * 获取插件配置

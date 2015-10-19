@@ -60,7 +60,7 @@ var messages = {
 	"yly.charge.status.unpaid" : "未缴费",
 	"yly.charge.status.refunded" : "已退款",
 	"yly.deposit.charge.record" : "押金",
-	"yly.advance.charge.record" : "床位护理费",
+	"yly.advance.charge.record" : "预存款",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
 	"yly.waterElectricity.charge.record" : "水电费",
@@ -70,6 +70,7 @@ var messages = {
 	"yly.charge.record.bed" : "床位费(元)",
 	"yly.charge.record.nurse" : "护理费(元)",
 	"yly.charge.record.totalAmount" : "总金额(元)",
+	"yly.charge.record.advanceChargeAmount" : "预存款总额(元)",
 	"yly.charge.record.operator" : "收款人",
 	"yly.charge.record.period" : "收款时间段",
 	"yly.charge.record.payTime" : "缴费时间",
@@ -81,6 +82,11 @@ var messages = {
 	"yly.charge.record.electricity" : "电费(元)",
 	"yly.charge.record.water.count" : "水用量(吨)",
 	"yly.charge.record.electricity.count" : "电用量(度)",
+	"yly.charge.record.amount" : "金额(元)",
+	"yly.charge.record.budgetType" : "收支类型",
+	"yly.charge.record.budgetType.income" : "充值",
+	"yly.charge.record.budgetType.cost" : "消费",
+	"yly.charge.advance.add" : "预缴款",
 	
 	
 	/**

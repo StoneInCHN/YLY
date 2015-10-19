@@ -200,9 +200,12 @@ public interface BaseService<T, ID extends Serializable> {
    * @param realName
    * @param identifier
    * @param status
+   * @param budgetType
+   * @param isPeriod
    * @param pageable
    * @return
    */
   Page<T> chargeRecordSearch(Date beginDate, Date endDate,
       String realName, String identifier,PaymentStatus status,BudgetType budgetType,Boolean isPeriod,Pageable pageable);
+  
 }

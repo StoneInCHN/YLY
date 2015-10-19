@@ -185,7 +185,7 @@ $(function(){
 				             // swf文件路径
 				             swf: BASE_URL + '/js/Uploader.swf',
 				             disableGlobalDnd: true,
-				             server: '../file/uploadHeadPic.jhtml',
+				             server: '../file/uploadProfilePhoto.jhtml',
 				             fileNumLimit: 1,
 				             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
 				             fileSingleSizeLimit: 10 * 1024 * 1024    //单个文件上传大小  10 M

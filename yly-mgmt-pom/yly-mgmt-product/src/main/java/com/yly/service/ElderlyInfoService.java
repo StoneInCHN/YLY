@@ -1,6 +1,8 @@
 package com.yly.service;
 
 import com.yly.entity.ElderlyInfo;
+import com.yly.framework.paging.Page;
+import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
 
 /**
@@ -10,5 +12,14 @@ import com.yly.framework.service.BaseService;
  *
  */
 public interface ElderlyInfoService extends BaseService<ElderlyInfo,Long>{
+  
+  /**
+   * 老人信息查询
+   * @param realName
+   * @param identifier
+   * @param pageable
+   * @return
+   */
+  Page<ElderlyInfo> elderlyInfoSearch(String realName, String identifier,Pageable pageable);
 
 }
