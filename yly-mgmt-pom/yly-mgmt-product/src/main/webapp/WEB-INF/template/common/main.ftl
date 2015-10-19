@@ -104,7 +104,7 @@
 		    	<ul title="院内事务" id="affairs">
 		    		<li><a href="#">固定资产</a></li>
 		    		<li><a href="#">库存管理</a></li>
-		    		<li><a href="#">捐赠管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/donateRecord/donateRecord.jhtml">捐赠管理</a></li>
 		    		<li><a href="#">通知公告</a></li>
 		    	</ul>
 		    	<ul title="系统管理" id="system">

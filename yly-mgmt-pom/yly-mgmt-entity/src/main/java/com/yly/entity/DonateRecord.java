@@ -9,9 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 
@@ -93,6 +96,7 @@ public class DonateRecord extends BaseEntity {
     this.donateDescription = donateDescription;
   }
 
+  @JsonProperty
   @Column(length = 15)
   public String getDonatorName() {
     return donatorName;
@@ -111,6 +115,8 @@ public class DonateRecord extends BaseEntity {
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
+  @Temporal(TemporalType.DATE)
   public Date getDonateTime() {
     return donateTime;
   }
@@ -119,6 +125,7 @@ public class DonateRecord extends BaseEntity {
     this.donateTime = donateTime;
   }
 
+  @JsonProperty
   @Column(length = 20)
   public String getDonatorPhone() {
     return donatorPhone;
@@ -128,6 +135,7 @@ public class DonateRecord extends BaseEntity {
     this.donatorPhone = donatorPhone;
   }
 
+  @JsonProperty
   public Gender getDonatorGender() {
     return donatorGender;
   }

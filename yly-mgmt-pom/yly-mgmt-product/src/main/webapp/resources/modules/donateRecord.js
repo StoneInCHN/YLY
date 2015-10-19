@@ -1,43 +1,31 @@
 
 $(function(){
 	
-	$("#drugs-table-list").datagrid({
-		title:"药品列表",
+	$("#donateRecord-table-list").datagrid({
+		title:"捐赠记录",
 		fitColumns:true,
-		toolbar:"#drugs_manager_tool",
-		url:'../drugs/list.jhtml',  
+		toolbar:"#donateRecord_manager_tool",
+		url:'../donateRecord/list.jhtml',  
 		pagination:true,
 		loadMsg:"加载中......",
 		striped:true,
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:"药品名称",field:"name",width:100,sortable:true},
-		      {title:"别名",field:"alias",width:100,sortable:true},
-		      {title:"药品分类",field:"drugCategory",width:100,sortable:true,
-	    	  formatter: function(value,row,index){
-		    	  if(value){
-		    		  return  value.configValue;
-		    	  }else{
-		    		  return  value;
-		    	  }
-					
-		      	}},
-		      {title:"创建时间",field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:"捐赠人姓名",field:"donatorName",width:100,sortable:true},
+		      {title:"捐赠人电话",field:"donatorPhone",width:100,sortable:true},
+		      {title:"捐赠时间",field:"donateTime",width:100,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
 		      },
-		      {title:"修改时间",field:"modifyDate",width:100,sortable:true,formatter: function(value,row,index){
-					return new Date(value).Format("yyyy-MM-dd");
-				}},
 		   ]
 		]
 
 	});
 
-	drugs_manager_tool = {
+	donateRecord_manager_tool = {
 			add:function(){
-				$('#addDrugs').dialog({
+				$('#addDonateRecord').dialog({
 				    title: message("yly.drugsInfo.add"),    
 				    width: 700,    
 				    height: 550,
@@ -47,12 +35,12 @@ $(function(){
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addDrugs_form').form('validate');
+							var validate = $('#addDonateRecord_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../drugs/add.jhtml",
+									url:"../donateRecord/add.jhtml",
 									type:"post",
-									data:$("#addDrugs_form").serialize(),
+									data:$("#addDonateRecord_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -62,8 +50,8 @@ $(function(){
 										$.messager.progress('close');
 										if(response == "success"){
 											showSuccessMsg(result.content);
-											$('#addDrugs').dialog("close").form("reset");
-											$("#drug_table-list").datagrid('reload');
+											$('#addDonateRecord').dialog("close").form("reset");
+											$("#donateRecord-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -75,75 +63,39 @@ $(function(){
 						text:'取消',
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addDrugs').dialog("close").form("reset");
+							 $('#addDonateRecord').dialog("close").form("reset");
 						}
 				    }],
 				    onOpen:function(){
-				    	$('#addDrugs_form').show();
-				    	$("#conventionalUnit").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'UNITS';// 参数
-						    }
-						});
-				    	$("#minUnit").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'UNITS';// 参数
-						    }
-						});
-				    	$("#drugCategory").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'DRUGSCATEGORY';// 参数
-						    }
-						});
-				    	$("#drugUseMethod").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'DRUGSMETHOD';// 参数
-						    }
-						});
+				    	$('#addDonateRecord_form').show();
 				    },
 				
 				});  
-				 $('#addDrugs_form').show();
+				 $('#addDonateRecord_form').show();
 			},
 			edit:function(){
-				var _edit_row = $('#drugs-table-list').datagrid('getSelected');
+				var _edit_row = $('#donateRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert('警告','请选择要编辑的行');  
 					return false;
 				}
-				var _dialog = $('#editDrugs').dialog({    
+				var _dialog = $('#editDonateRecord').dialog({    
 				    title: '药品编辑',     
 				    width: 700,    
 				    height: 550,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
-				    href:'../drugs/edit.jhtml?id='+_edit_row.id,
+				    href:'../donateRecord/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
 				    	text:'保存',
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#editDrugs_form').form('validate');
+							var validate = $('#editDonateRecord_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../drugs/update.jhtml",
+									url:"../donateRecord/update.jhtml",
 									type:"post",
-									data:$("#editDrugs_form").serialize(),
+									data:$("#editDonateRecord_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:"正在保存中......"
@@ -158,8 +110,8 @@ $(function(){
 												timeout:3000,
 												showType:'slide'
 											});
-											$('#editDrugs').dialog("close");
-											$("#drugs_table-list").datagrid('reload');
+											$('#editDonateRecord').dialog("close");
+											$("#donateRecord_table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}
@@ -171,13 +123,13 @@ $(function(){
 						text:'取消',
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editDrugs').dialog("close").form("reset");
+							 $('#editDonateRecord').dialog("close").form("reset");
 						}
 				    }]
 				});  
 			},
 			remove:function(){
-				var _rows = $('#drugs-table-list').datagrid('getSelections');
+				var _rows = $('#donateRecord-table-list').datagrid('getSelections');
 				if(_rows == null){
 					$.messager.alert('警告','请选择要删除的内容');  
 				}else{
@@ -189,7 +141,7 @@ $(function(){
 						$.messager.confirm('确认','您确认想要删除记录吗？',function(r){
 							if(r){
 								$.ajax({
-									url:"../drugs/delete.jhtml",
+									url:"../donateRecord/delete.jhtml",
 									type:"post",
 									traditional: true,
 									data:{"ids":_ids},
@@ -207,7 +159,7 @@ $(function(){
 												timeout:3000,
 												showType:'slide'
 											});
-											$("#drugs-table-list").datagrid('reload');
+											$("#donateRecord-table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}
@@ -226,8 +178,8 @@ $(function(){
 			  beginDate:$("#beginDate").val(),
 			  endDate:$("#endDate").val(),
 	  }
-	  $('#drugs-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#drugs-table-list").datagrid('reload');
+	  $('#donateRecord-table-list').datagrid('options').queryParams = _queryParams;  
+	  $("#donateRecord-table-list").datagrid('reload');
 	})
 	
 	 
