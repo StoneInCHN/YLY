@@ -173,11 +173,7 @@ $(function(){
 			}
 	};
 	$("#search-btn").click(function(){
-	  var _queryParams = {
-			  drugName:$("#drugName").val(),
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+	  var _queryParams = $("#donateRecord-search-form").serializeJSON();
 	  $('#donateRecord-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#donateRecord-table-list").datagrid('reload');
 	})

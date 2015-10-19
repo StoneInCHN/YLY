@@ -4,10 +4,10 @@
 <div>
 	  <fieldset>
 	    <legend>药品查询</legend>
-	    <form id="search-form" class="search-form">
+	    <form id="donateRecord-search-form" class="search-form">
 	    <div class="search-item">
 			    <label> 名称查询:</label>
-			    <input type="text" class="easyui-textbox" id="drugName" name="drugName" />
+			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
 			</div>
 			<div class="search-item">
 			    <label> 查询时间从:</label>

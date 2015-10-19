@@ -13,6 +13,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -25,6 +30,7 @@ import com.yly.entity.commonenum.CommonEnum.Gender;
  * @author sujinxuan
  *
  */
+@Indexed(index="donate/donateRecord")
 @Entity
 @Table(name = "yly_donate_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_donate_record_sequence")
@@ -98,6 +104,7 @@ public class DonateRecord extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getDonatorName() {
     return donatorName;
   }
