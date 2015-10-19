@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Index;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentType;
 
@@ -91,7 +92,21 @@ public class Billing extends BaseEntity {
    * 护理费金额
    */
   private BigDecimal nurseAmount;
-
+  
+  /**
+   * 押金金额
+   */
+  private BigDecimal depositAmount;
+  
+  /**
+   * 总金额
+   */
+  private BigDecimal totalAmount;
+  
+  /**
+   * 押金详情
+   */
+  private Deposit deposit;
   /**
    * 床位护理费详情
    */
@@ -130,8 +145,20 @@ public class Billing extends BaseEntity {
    * 账单调账
    */
   private Set<BillingAdjustment> billingAdjustment = new HashSet<BillingAdjustment>();
+  /**
+   * 账单类型（入住缴费，退住结算，日常缴费会形成bill）
+   */
+  private BillingType billType;
   
   
+  public BillingType getBillType() {
+    return billType;
+  }
+
+  public void setBillType(BillingType billType) {
+    this.billType = billType;
+  }
+
   @OneToMany(mappedBy="billing")
   public Set<BillingAdjustment> getBillingAdjustment() {
     return billingAdjustment;
@@ -280,7 +307,7 @@ public class Billing extends BaseEntity {
     this.periodEndDate = periodEndDate;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getBedAmount() {
     return bedAmount;
   }
@@ -289,7 +316,7 @@ public class Billing extends BaseEntity {
     this.bedAmount = bedAmount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getNurseAmount() {
     return nurseAmount;
   }
@@ -298,7 +325,7 @@ public class Billing extends BaseEntity {
     this.nurseAmount = nurseAmount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getWaterAmount() {
     return waterAmount;
   }
@@ -307,7 +334,7 @@ public class Billing extends BaseEntity {
     this.waterAmount = waterAmount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getElectricityAmount() {
     return electricityAmount;
   }
@@ -316,7 +343,7 @@ public class Billing extends BaseEntity {
     this.electricityAmount = electricityAmount;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getPersonalizedAmount() {
     return personalizedAmount;
   }
@@ -325,5 +352,32 @@ public class Billing extends BaseEntity {
     this.personalizedAmount = personalizedAmount;
   }
 
+  @Column(precision = 12, scale = 2)
+  public BigDecimal getDepositAmount() {
+    return depositAmount;
+  }
 
+  public void setDepositAmount(BigDecimal depositAmount) {
+    this.depositAmount = depositAmount;
+  }
+
+  @OneToOne(mappedBy="billing")
+  public Deposit getDeposit() {
+    return deposit;
+  }
+
+  public void setDeposit(Deposit deposit) {
+    this.deposit = deposit;
+  }
+
+  @Column(precision = 12, scale = 2)
+  public BigDecimal getTotalAmount() {
+    return totalAmount;
+  }
+
+  public void setTotalAmount(BigDecimal totalAmount) {
+    this.totalAmount = totalAmount;
+  }
+
+   
 }

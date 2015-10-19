@@ -131,6 +131,9 @@
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
 		    	</ul>   
 		    	<ul title="${message("yly.charge.manage")}" id="chargeManage">
+		    	    <li><a href="#" data-url="${base}/console/billing/checkinCharge.jhtml">${message("yly.charge.checkin")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/billing/checkoutCharge.jhtml">${message("yly.charge.checkout")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/billing/billing.jhtml">${message("yly.charge.billing")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/advanceCharge/advanceCharge.jhtml">${message("yly.charge.advance.manage")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/deposit/deposit.jhtml">${message("yly.charge.deposit.manage")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bedNurseChargeRecord/bedNurseChargeRecord.jhtml">${message("yly.charge.bedNurse.record")}</a></li>

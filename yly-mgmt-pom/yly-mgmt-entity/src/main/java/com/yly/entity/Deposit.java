@@ -84,6 +84,19 @@ public class Deposit extends BaseEntity{
    */
   private String billingNo;
   
+  /**
+   * 所属账单
+   */
+  private Billing billing;
+  
+  @OneToOne
+  public Billing getBilling() {
+    return billing;
+  }
+
+  public void setBilling(Billing billing) {
+    this.billing = billing;
+  } 
   
   @Column(length = 30)
   public String getBillingNo() {

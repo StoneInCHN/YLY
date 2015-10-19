@@ -252,6 +252,24 @@ public class CommonEnum {
      */
     EVALUATINGRESULT,
   }
+  
+  /**
+   * 缴费类型
+   * @author sujinxuan
+   *
+   */
+  public enum BillingType{
+    /**
+     * 入院缴费
+     */
+    CHECK_IN,
+    /**
+     * 退住结算
+     */
+    CHECK_OUT,
+    DAILY
+    
+  }
 
   /**
    * 缴费状态

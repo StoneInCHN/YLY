@@ -26,13 +26,33 @@ public class BillingController extends BaseController {
   private BillingService billingService;
   
   /**
-   * 列表页面
+   * 入院缴费页面
    * @param model
    * @return
    */
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
-  public String list(ModelMap model) {
-    return "/billing/list";
+  @RequestMapping(value = "/checkinCharge", method = RequestMethod.GET)
+  public String checkinCharge(ModelMap model) {
+    return "/checkinCharge/checkin";
+  }
+  
+  /**
+   * 退住结算页面
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/checkoutCharge", method = RequestMethod.GET)
+  public String checkoutCharge(ModelMap model) {
+    return "/checkoutCharge/checkout";
+  }
+  
+  /**
+   * 日常缴费页面
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/billing", method = RequestMethod.GET)
+  public String dailyCharge(ModelMap model) {
+    return "/billing/billing";
   }
 
   /**
