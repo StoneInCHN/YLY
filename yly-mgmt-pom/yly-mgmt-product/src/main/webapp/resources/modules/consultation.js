@@ -211,10 +211,15 @@ $(function(){
 			}
 	}
 	$("#consultation_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+//	  var _queryParams = {
+//			  vistor:$("#search-vistor").val(),
+//			  elderlyName:$("#search-elderlyName").val(),
+//			  checkinIntention:$("#search-checkinIntention").val(),
+//			  infoChannel:$("#search-infoChannel").val(),
+//			  returnVisitDateBeginDate:$("#returnVisitDateBeginDate").val(),
+//			  returnVisitDateEndDate:$("#returnVisitDateEndDate").val()
+//	  }
+		var _queryParams = $("#consultation_search_form").serializeJSON();
 	  $('#consultation-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#consultation-table-list").datagrid('reload');
 	})

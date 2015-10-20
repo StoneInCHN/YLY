@@ -1,14 +1,11 @@
 package com.yly.framework.service;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.Query;
 
-import com.yly.entity.commonenum.CommonEnum.BudgetType;
-import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.paging.Page;

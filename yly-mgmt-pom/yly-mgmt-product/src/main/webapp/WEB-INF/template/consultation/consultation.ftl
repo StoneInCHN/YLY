@@ -5,11 +5,11 @@
 	    <form id="consultation_search_form" class="search-form">
 	   	 	<div class="search-item">
 			    <label> ${message("yly.consultation.vistor")}:</label>
-			    <input class="easyui-textbox" type="text" name="vistor" validtype="length[0,15]" style="width:85px;"/>
+			    <input class="easyui-textbox" type="text" id="search-vistor" name="vistor" validtype="length[0,15]" style="width:85px;"/>
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
-			    <input class="easyui-textbox" type="text" name="elderlyName" style="width:85px;"/> 
+			    <input class="easyui-textbox" id="search-elderlyName" type="text" name="elderlyName" style="width:85px;"/> 
 			</div>
 			
 			
@@ -31,7 +31,7 @@
 					label: 'WILL_NOT_CHECKIN',
 					value: '${message("yly.consultation.checkinIntention.will_not_checkin")}'
 				}],
-				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="checkinIntention" style="width:110px;"/>
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="search-checkinIntention" name="checkinIntention" style="width:110px;"/>
 			</div>
 			
 			<div class="search-item">
@@ -55,7 +55,7 @@
 					label: 'OTHER',
 					value: '${message("yly.common.other")}'
 				}],
-				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120"  name="infoChannel" style="width:80px;"/>
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120" id="search-infoChannel" name="infoChannel" style="width:80px;"/>
 			</div>
 			
 			<div class="search-item">
