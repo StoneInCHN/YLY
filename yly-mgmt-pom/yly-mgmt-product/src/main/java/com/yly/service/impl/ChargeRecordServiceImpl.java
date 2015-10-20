@@ -15,7 +15,6 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
-import com.yly.framework.dao.BaseDao;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
