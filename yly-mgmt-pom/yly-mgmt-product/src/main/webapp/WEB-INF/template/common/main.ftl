@@ -70,7 +70,7 @@
     <div class="left-content" data-options="region:'west',title:'导航菜单',split:true" >
 		    	<ul title="${message("yly.visitelderly.visitorRegistration")}" id="visitor">
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">${message("yly.consultation.record")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">${message("yly.visitelderly.visitRegistration")}/a></li>
+		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">${message("yly.visitelderly.visitRegistration")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bookingRegistration/bookingRegistration.jhtml">${message("yly.bookingRegistration")}</a></li>
 		    		<li><a href="#">在院老人</a></li>
 		    		<li><a href="#">床位状态</a></li>
@@ -142,7 +142,7 @@
 		    		<li><a href="#" data-url="${base}/console/personalizedChargeRecord/personalizedChargeRecord.jhtml">${message("yly.charge.personalized.service.record")}</a></li>
 		    	</ul>          
 		    	<ul title="${message("yly.blacklist.config")}" id="blacklist">
-		    		<li><a href="#">${message("yly.blacklist.list")}</a></li>
+		    		<li><a href="#"  data-url="${base}/console/blackList/blacklist.jhtml">${message("yly.blacklist.list")}</a></li>
 		    	</ul>
 		    	<ul title="${message("yly.logistics.config")}" id="logistics">
 		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>

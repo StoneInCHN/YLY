@@ -216,19 +216,19 @@
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.personalHabits")}:</th>
-	    		<td colspan=5>
+	    		<td colspan=6>
 	    			  <input class="easyui-textbox" type="text" name="personalHabits" value="${elderlyInfo.personalHabits}" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.hobbies")}:</th>
-	    		<td colspan=5>
+	    		<td colspan=6>
 	    			  <input class="easyui-textbox" type="text" name="hobbies" value="${elderlyInfo.hobbies}" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.honors")}:</th>
-	    		<td colspan=5>
+	    		<td colspan=6>
 	    			  <input class="easyui-textbox" type="text" name="honors" value="${elderlyInfo.honors}" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" />
 	    		</td>
 	    	</tr>
