@@ -7,30 +7,21 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermRangeQuery;
-import org.apache.lucene.util.Version;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
-import com.yly.entity.commonenum.CommonEnum.BudgetType;
-import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.dao.BaseDao;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
@@ -39,7 +30,6 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
 import com.yly.service.TenantAccountService;
-import com.yly.utils.DateTimeUtils;
 import com.yly.utils.FieldFilterUtils;
 
 
@@ -55,8 +45,8 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
   private TenantAccountService tenantAccountService;
 
   /** baseDao */
-  private BaseDao<T, ID> baseDao;
-
+  protected BaseDao<T, ID> baseDao;
+  
   public void setBaseDao(BaseDao<T, ID> baseDao) {
     this.baseDao = baseDao;
   }
@@ -257,59 +247,4 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
    baseDao.refreshIndex ();    
   }
 
-  @Override
-  public Page<T> chargeRecordSearch(Date beginDate, Date endDate, String realName,
-      String identifier,PaymentStatus status,BudgetType budgetType, Boolean isPeriod,Pageable pageable) {
-    
-    IKAnalyzer analyzer = new IKAnalyzer();
-    analyzer.setMaxWordLength(true);
-
-    try {
-      BooleanQuery query = new BooleanQuery();
-      if (realName != null) {
-        String text = QueryParser.escape(realName);
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
-        Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }
-      if (identifier != null) {
-        String text = QueryParser.escape(identifier);
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.identifier", analyzer);
-        Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }
-      if (status!=null) {
-        String text = QueryParser.escape(status.toString());
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "chargeStatus", analyzer);
-        Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }
-      if (budgetType!=null) {
-        String text = QueryParser.escape(budgetType.toString());
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "budgetType", analyzer);
-        Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }
-      if (isPeriod) {
-        if (beginDate != null) {
-          TermRangeQuery tQuery = new TermRangeQuery ("periodStartDate",DateTimeUtils.convertDateToString (beginDate, null),null, true, false);
-          query.add(tQuery, Occur.MUST);
-        }
-        if (endDate != null) {
-          TermRangeQuery tQuery = new TermRangeQuery ("periodEndDate",null, DateTimeUtils.convertDateToString (endDate, null),false, false);
-          query.add(tQuery, Occur.MUST);
-        }
-      }else{
-         if (beginDate != null || endDate != null) {
-           TermRangeQuery tQuery = new TermRangeQuery ("payTime",DateTimeUtils.convertDateToString (beginDate, null),DateTimeUtils.convertDateToString (endDate, null), true, true);
-           query.add(tQuery, Occur.MUST);
-        }
-      }
-      
-      return baseDao.search(query, pageable, analyzer,null);
-    } catch (Exception e) {
-       e.printStackTrace();
-    }
-    return null;
-  }
 }

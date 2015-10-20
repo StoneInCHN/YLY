@@ -141,7 +141,7 @@ public class DrugsInfo extends BaseEntity {
   
   @Column(length = 60)
   @JsonProperty
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }
@@ -152,7 +152,7 @@ public class DrugsInfo extends BaseEntity {
 
   @Column(length = 60)
   @JsonProperty
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getAlias() {
     return alias;
   }

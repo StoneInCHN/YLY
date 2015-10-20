@@ -1,7 +1,6 @@
 package com.yly.service;
 
 import com.yly.entity.Billing;
-import com.yly.framework.service.BaseService;
 
 
 /**
@@ -9,6 +8,6 @@ import com.yly.framework.service.BaseService;
  * @author sujinxuan
  *
  */
-public interface BillingService extends BaseService<Billing, Long> {
+public interface BillingService extends ChargeRecordService<Billing, Long> {
 
 }

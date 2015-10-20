@@ -30,7 +30,7 @@ public class VolunteerController extends BaseController {
 
   @Resource(name = "volunteerServiceImpl")
   private VolunteerService volunteerService;
-  
+
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
 
@@ -55,9 +55,12 @@ public class VolunteerController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Volunteer> list(Date beginDate, Date endDate,
+  public @ResponseBody Page<Volunteer> list(Date beginDate, Date endDate, String volunteerName,
       Pageable pageable, ModelMap model) {
-    return volunteerService.findPage(pageable, true);
+    if (volunteerName != null) {
+      volunteerService.searchList(beginDate, endDate, volunteerName);
+    }
+    return volunteerService.findPage(pageable);
   }
 
   /**
@@ -76,30 +79,32 @@ public class VolunteerController extends BaseController {
 
     return SUCCESS_MESSAGE;
   }
-  
-  
+
+
   /**
    * 获取数据进入编辑页面
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    Volunteer volunteer =  volunteerService.find(id);
+    Volunteer volunteer = volunteerService.find(id);
     model.addAttribute("volunteer", volunteer);
     return "volunteer/edit";
   }
-  
+
   /**
    * 获取数据进入详情页面
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
-    Volunteer volunteer =  volunteerService.find(id);
+    Volunteer volunteer = volunteerService.find(id);
     model.addAttribute("volunteer", volunteer);
     return "volunteer/details";
   }
@@ -118,11 +123,12 @@ public class VolunteerController extends BaseController {
 
   /**
    * 删除
+   * 
    * @param id arrays
    */
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
   public @ResponseBody Message delete(Long[] ids) {
-    if(ids != null){
+    if (ids != null) {
       volunteerService.delete(ids);
     }
     return SUCCESS_MESSAGE;

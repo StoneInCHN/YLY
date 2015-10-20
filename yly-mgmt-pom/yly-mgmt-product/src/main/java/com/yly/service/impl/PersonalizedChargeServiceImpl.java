@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yly.dao.PersonalizedChargeDao;
 import com.yly.entity.PersonalizedCharge;
-import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.PersonalizedChargeService;
 
 /**
@@ -15,7 +14,7 @@ import com.yly.service.PersonalizedChargeService;
  *
  */
 @Service("personalizedChargeServiceImpl")
-public class PersonalizedChargeServiceImpl extends BaseServiceImpl<PersonalizedCharge, Long> implements PersonalizedChargeService {
+public class PersonalizedChargeServiceImpl extends ChargeRecordServiceImpl<PersonalizedCharge, Long> implements PersonalizedChargeService {
 
   @Resource(name = "personalizedChargeDaoImpl")
   private PersonalizedChargeDao personalizedChargeDao;

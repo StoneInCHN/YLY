@@ -76,7 +76,7 @@ $(function(){
 										$('#addvolunteer_form').form('reset');
 										$('#addvolunteer').dialog("close");
 										$("#volunteer-table-list").datagrid('reload');
-										
+								
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
 										$.messager.progress('close');
@@ -155,13 +155,12 @@ $(function(){
 	}
 	$("#volunteer_search_btn").click(function(){
 	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
+			  beginDate:$("#volunteer_search_form #beginDate").val(),
+			  endDate:$("#volunteer_search_form #endDate").val(),
+			  volunteerName:$("#volunteerName").val()
 	  }
 	  $('#volunteer-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#volunteer-table-list").datagrid('reload');
 	})
 	
-	 
-	 
 })

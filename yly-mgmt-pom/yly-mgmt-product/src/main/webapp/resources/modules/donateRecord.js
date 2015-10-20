@@ -9,6 +9,23 @@ $(function(){
 		pagination:true,
 		loadMsg:"加载中......",
 		striped:true,
+		onDblClickRow : function (rowIndex, rowData){
+			$('#donateRecordDetail').dialog({    
+			    title: message("yly.common.detail"),    
+			    width: 660,    
+			    height: 500, 
+			    cache: false,
+			    modal: true,
+			    href:'../donateRecord/details.jhtml?id='+rowData.id,
+			    buttons:[{
+					text:message("yly.common.cancel"),
+					iconCls:'icon-cancel',
+					handler:function(){
+						 $('#donateRecordDetail').dialog("close");
+					}
+			    }]
+			});   
+		},
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},

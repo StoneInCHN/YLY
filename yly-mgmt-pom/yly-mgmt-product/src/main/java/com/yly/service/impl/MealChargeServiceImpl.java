@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yly.dao.MealChargeDao;
 import com.yly.entity.MealCharge;
-import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.MealChargeService;
 
 /**
@@ -15,7 +14,7 @@ import com.yly.service.MealChargeService;
  *
  */
 @Service("mealChargeServiceImpl")
-public class MealChargeServiceImpl extends BaseServiceImpl<MealCharge,Long> implements MealChargeService {
+public class MealChargeServiceImpl extends ChargeRecordServiceImpl<MealCharge,Long> implements MealChargeService {
 
   @Resource(name = "mealChargeDaoImpl")
   private MealChargeDao mealChargeDao;

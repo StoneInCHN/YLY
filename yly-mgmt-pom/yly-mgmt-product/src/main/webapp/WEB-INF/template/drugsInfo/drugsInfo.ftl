@@ -10,7 +10,7 @@
 			    <input type="text" class="easyui-textbox" id="drugName" name="drugName" />
 			</div>
 			<div class="search-item">
-			    <label> 查询时间从:</label>
+			    <label> 录入时间:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -162,6 +162,7 @@
 	</form>
 </div>
 <div id="editDrugs"></div>
+<div id="drugsDetail"></div>
 
 
 

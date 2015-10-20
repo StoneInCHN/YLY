@@ -1,7 +1,6 @@
 package com.yly.service;
 
 import com.yly.entity.Deposit;
-import com.yly.framework.service.BaseService;
 
 
 /**
@@ -9,6 +8,6 @@ import com.yly.framework.service.BaseService;
  * @author sujinxuan
  *
  */
-public interface DepositService extends BaseService<Deposit, Long> {
+public interface DepositService extends ChargeRecordService<Deposit, Long> {
 
 }
