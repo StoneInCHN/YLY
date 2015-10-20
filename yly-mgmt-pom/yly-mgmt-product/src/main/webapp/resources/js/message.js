@@ -228,7 +228,15 @@ var messages = {
 	"yly.bed.bedNumber":"床位号",
 	"yly.bed.status":"床位状态",
 	"yly.bed.description":"描述",
-	"yly.bed.room":"所在房间"
+	"yly.bed.room":"所在房间",
+	
+	//黑名单
+	"yly.blacklist.record":"黑名单",
+	"yly.blacklist.name":"黑名单老人名字",
+	"yly.blacklist.geracomium":"所属养老院",
+	"yly.blacklist.casue":"加入黑名单原因",
+	"yly.blacklist.add":"加入黑名单"		
+	
 	
 };
 //多语言

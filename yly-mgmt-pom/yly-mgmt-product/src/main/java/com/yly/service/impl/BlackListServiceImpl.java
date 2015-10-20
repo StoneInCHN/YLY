@@ -17,38 +17,31 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.common.log.LogUtil;
 import com.yly.controller.DrugsInfoController;
-import com.yly.dao.VolunteerDao;
-import com.yly.entity.Volunteer;
+import com.yly.dao.BlackListDao;
+import com.yly.entity.BlackList;
 import com.yly.framework.paging.Page;
 import com.yly.framework.service.impl.BaseServiceImpl;
-import com.yly.service.VolunteerService;
+import com.yly.service.BlackListService;
 import com.yly.utils.DateTimeUtils;
 
 /**
  * 
- * @author chenyoujun
+ * @author pengyanan
  *
  */
-@Service("volunteerServiceImpl")
-public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> implements VolunteerService {
+@Service("blackListServiceImpl")
+public class BlackListServiceImpl extends BaseServiceImpl<BlackList, Long> implements BlackListService{
 
-  @Resource(name = "volunteerDaoImpl")
-  private VolunteerDao volunteerDao;
+  @Resource(name="blackListDaoImpl")
+  private BlackListDao blackListDao;
   
   @Resource
-  public void setBaseDao(VolunteerDao volunteerDao) {
-    super.setBaseDao(volunteerDao);
+  private void SetBasedDao(BlackListDao blackListDao){
+    super.setBaseDao(blackListDao);
   }
 
-  /**
-   * 对blackList name进行lucene搜索 
-   * @param beginDate
-   * @param endDate
-   * @param blackListName
-   * @return
-   */
   @Override
-  public Page<Volunteer> searchList(Date beginDate, Date endDate, String volunteerName) {
+  public Page<BlackList> searchList(Date beginDate, Date endDate, String blackListName) {
     String beginDateStr = null, endDateStr = null;
     if (beginDate != null) {
       beginDateStr = DateTimeUtils.convertDateToString(beginDate, null);
@@ -61,14 +54,14 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
     analyzer.setMaxWordLength (true);
     BooleanQuery query = new BooleanQuery ();
 
-    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "volunteerName",
+    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "name",
         analyzer);
     Query nameQuery = null;
     Filter filter = null;
 
-    if (volunteerName != null)
+    if (blackListName != null)
     {
-      String text = QueryParser.escape (volunteerName);
+      String text = QueryParser.escape (blackListName);
       try
       {
         nameQuery = nameParser.parse (text);
@@ -95,5 +88,4 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
     }
     return null;
   }
-  
 }

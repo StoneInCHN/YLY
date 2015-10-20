@@ -6,6 +6,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -20,15 +25,16 @@ import com.yly.entity.commonenum.CommonEnum.VolunteerType;
 @Entity
 @Table(name = "yly_volunteer")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_volunteer_sequence")
+@Indexed(index = "volunteer")
 public class Volunteer extends BaseEntity {
 
   private static final long serialVersionUID = 4063994934255971594L;
-  
+
   /**
    * 租户ID
    */
   private Long tenantID;
-  
+
   /**
    * 志愿者类型
    */
@@ -38,11 +44,11 @@ public class Volunteer extends BaseEntity {
    * 志愿者姓名或组织结构名称
    */
   private String volunteerName;
-  
-  /**身份证号码*/
+
+  /** 身份证号码 */
   private String idcard;
-  
-  
+
+
   /** E-mail */
   private String email;
 
@@ -57,12 +63,12 @@ public class Volunteer extends BaseEntity {
 
   /** 手机 */
   private String mobile;
-  
+
   /**
    * 备注
    */
   private String remark;
-  
+
   @JsonProperty
   public VolunteerType getVolunteerType() {
     return volunteerType;
@@ -74,6 +80,7 @@ public class Volunteer extends BaseEntity {
 
   @JsonProperty
   @Column(length = 30)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getVolunteerName() {
     return volunteerName;
   }
@@ -91,9 +98,9 @@ public class Volunteer extends BaseEntity {
   public void setRemark(String remark) {
     this.remark = remark;
   }
-  
+
   @JsonProperty
-  @Column(length=30)
+  @Column(length = 30)
   public String getIdcard() {
     return idcard;
   }
@@ -103,7 +110,7 @@ public class Volunteer extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length=200)
+  @Column(length = 200)
   public String getAddress() {
     return address;
   }
@@ -113,7 +120,7 @@ public class Volunteer extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length=50)
+  @Column(length = 50)
   public String getZipCode() {
     return zipCode;
   }
@@ -123,7 +130,7 @@ public class Volunteer extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length=30)
+  @Column(length = 30)
   public String getTelephone() {
     return telephone;
   }
@@ -133,7 +140,7 @@ public class Volunteer extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length=30)
+  @Column(length = 30)
   public String getMobile() {
     return mobile;
   }
@@ -143,7 +150,7 @@ public class Volunteer extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length=60)
+  @Column(length = 60)
   public String getEmail() {
     return email;
   }
@@ -152,7 +159,7 @@ public class Volunteer extends BaseEntity {
     this.email = email;
   }
 
-  @Index(name="volunteer_tenantid")
+  @Index(name = "volunteer_tenantid")
   public Long getTenantID() {
     return tenantID;
   }
