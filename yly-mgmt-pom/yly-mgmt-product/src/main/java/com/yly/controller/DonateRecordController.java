@@ -4,11 +4,13 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeFilter;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.TermRangeQuery;
@@ -23,6 +25,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.Deposit;
 import com.yly.entity.DonateRecord;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
@@ -76,28 +79,33 @@ public class DonateRecordController extends BaseController
     if (donatorName != null)
     {
       String text = QueryParser.escape (donatorName);
-      try
-      {
-        nameQuery = nameParser.parse (text);
-        query.add (nameQuery, Occur.MUST);
-        
-        if (LogUtil.isDebugEnabled (DrugsInfoController.class))
+        try
         {
-          LogUtil.debug (DrugsInfoController.class, "search", "Search name: "
-              + null + ", start date: " + startDateStr + ", end date: "
-              + endDateStr);
+          nameQuery = nameParser.parse (text);
+          query.add (nameQuery, Occur.MUST);
+          
+          if (LogUtil.isDebugEnabled (DonateRecordController.class))
+          {
+            LogUtil.debug (DonateRecordController.class, "search", "Search donatorName: "
+                + donatorName );
+          }
         }
-       
-      }
-      catch (ParseException e)
-      {
-        e.printStackTrace ();
-      }
+        catch (ParseException e)
+        {
+          e.printStackTrace();
+        }
+        
     }
     if (startDateStr != null || endDateStr != null)
     {
       rangeQuery = new TermRangeQuery ("donateTime", startDateStr, endDateStr, true, true);
       query.add (rangeQuery,Occur.MUST);
+      
+      if (LogUtil.isDebugEnabled (DonateRecordController.class))
+      {
+        LogUtil.debug (DonateRecordController.class, "search", "Search start date: "+startDateStr
+            +" end date: "+endDateStr);
+      }
     }
     if (nameQuery != null || rangeQuery != null)
     {
@@ -151,5 +159,18 @@ public class DonateRecordController extends BaseController
       donateRecordService.delete (ids);
     }
     return SUCCESS_MESSAGE;
+  }
+  /**
+   * 获取数据进入详情页面
+   * 
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public String details(ModelMap model, Long id) {
+    DonateRecord record = donateRecordService.find(id);
+    model.addAttribute("donateRecord", record);
+    return "donateRecord/details";
   }
 }

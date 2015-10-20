@@ -1,4 +1,4 @@
-<form id="editDonateRecord_form" method="post">   
+<form id="donateRecordDetail_form" method="post">   
 		 <input value="${donateRecord.id}" type="hidden" name="id" />
 	  <table class="table table-striped" border="0">
 	    	<tr>

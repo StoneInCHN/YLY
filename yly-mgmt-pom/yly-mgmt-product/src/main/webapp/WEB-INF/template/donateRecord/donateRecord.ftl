@@ -10,7 +10,7 @@
 			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
 			</div>
 			<div class="search-item">
-			    <label> 查询时间从:</label>
+			    <label> 录入时间:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -82,6 +82,7 @@
 	</form>
 </div>
 <div id="editDonateRecord"></div>
+<div id="donateRecordDetail"></div>
 
 
 

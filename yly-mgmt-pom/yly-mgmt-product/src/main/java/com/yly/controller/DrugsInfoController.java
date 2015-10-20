@@ -26,6 +26,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.DonateRecord;
 import com.yly.entity.DrugsInfo;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
@@ -241,5 +242,27 @@ public class DrugsInfoController extends BaseController
       drugsService.delete (ids);
     }
     return SUCCESS_MESSAGE;
+  }
+  /**
+   * 获取数据进入详情页面
+   * 
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public String details(ModelMap model, Long id) {
+    List<Map<String, Object>> drugCategorys = systemConfigService
+        .findByConfigKey (ConfigKey.DRUGSCATEGORY, null);
+    List<Map<String, Object>> units = systemConfigService.findByConfigKey (
+        ConfigKey.UNITS, null);
+    List<Map<String, Object>> drugUseMethods = systemConfigService
+        .findByConfigKey (ConfigKey.DRUGSMETHOD, null);
+
+    model.addAttribute ("drugs", drugsService.find (id));
+    model.addAttribute ("drugCategorys", drugCategorys);
+    model.addAttribute ("units", units);
+    model.addAttribute ("drugUseMethods", drugUseMethods);
+    return "drugsInfo/details";
   }
 }
