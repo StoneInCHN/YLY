@@ -49,8 +49,8 @@
 	    			  <input class="easyui-combobox" id="personnelCategoryId"  name="personnelCategoryId" style="width:90px;" data-options="editable:false" > 
 	    		</td>
 	    		
-	    		<td colspan="2" rowspan="6">
-	    			<div title="头像上传" class="easyui-tooltip">
+	    		<td  rowspan="6">
+	    			<div title="头像上传" class="easyui-tooltip headWarp">
 	    				<div id="admissionUploader-add" class="single-uploader">
 						    <div  class="queueList">
 						        <div  class="placeholder">

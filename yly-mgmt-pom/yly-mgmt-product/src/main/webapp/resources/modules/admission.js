@@ -1,3 +1,215 @@
+var admission_manager_tool = {
+		add:function(){		
+			$('#addAdmission').dialog({    
+			    title: message("yly.admission.add"),    
+			    width: 1200,    
+			    height: 700,
+			    iconCls:'icon-mini-add',
+			    cache: false, 
+			    buttons:[{
+			    	text:message("yly.common.save"),
+			    	iconCls:'icon-save',
+					handler:function(){
+						var validate = $('#addAdmission_form').form('validate');
+						if(validate){
+							$("#admissionUploader-add .uploadBtn").trigger("upload");
+						};
+					}
+				},{
+					text:message("yly.common.cancel"),
+					iconCls:'icon-cancel',
+					handler:function(){
+						 $('#addAdmission').dialog("close");
+					}
+			    }],
+			    onOpen:function(){
+			    	$('#addAdmission_form').show();
+			    	$("#personnelCategoryId").combobox({    
+			    		prompt:message("yly.common.please.select"),
+					    valueField:'id',    
+					    textField:'configValue',
+					    cache: true,
+					    url:'../systemConfig/findByConfigKey.jhtml',
+					    onBeforeLoad : function(param) {
+					        param.configKey = 'PERSONNELCATEGORY';
+					    },
+			    		
+					});
+			     	$("#evaluatingResultId").combobox({    
+			     		prompt:message("yly.common.please.select"),
+					    valueField:'id',    
+					    textField:'configValue',
+					    cache: true,
+					    url:'../systemConfig/findByConfigKey.jhtml',
+					    onBeforeLoad : function(param) {
+					        param.configKey = 'EVALUATINGRESULT';
+					    }
+					});
+			     	$("#nursingLevelId").combobox({    
+			     		prompt:message("yly.common.please.select"),
+					    valueField:'id',    
+					    textField:'configValue',
+					    cache: true,
+					    url:'../systemConfig/findByConfigKey.jhtml',
+					    onBeforeLoad : function(param) {
+					        param.configKey = 'NURSELEVEL';
+					    }
+					});
+			     	//头像上传
+			     	var options ={
+			     			createOption:{
+			     				pick: {
+					                 id: '#admissionFilePicker-add',
+					                 label: '',
+					                 multiple :false
+					             },
+					             dnd: '#admissionUploader-add .queueList',
+					             accept: {
+					                 title: 'Images',
+					                 extensions: 'gif,jpg,jpeg,bmp,png',
+					                 mimeTypes: 'image/*'
+					             },
+					             thumb:{
+					            	    width: 150,
+					            	    height: 150,
+					            	    quality: 90,
+					            	    allowMagnify: false,
+					            	    crop: false,
+					            	    type: 'image/jpeg'
+					            	},
+					             // swf文件路径
+					             swf: BASE_URL + '/js/Uploader.swf',
+					             disableGlobalDnd: true,
+					             server: '../file/uploadProfilePhoto.jhtml',
+					             fileNumLimit: 1,
+					             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+					             fileSingleSizeLimit: 10 * 1024 * 1024    //单个文件上传大小  10 M
+			     			},
+			     			identifierId:"identifier_input",
+			     			warp :"addAdmission_form",
+			     			inputId:"addAdmission_form_file_input",
+			     			successFun:function(){
+			     				$.ajax({
+									url:"../admission/add.jhtml",
+									type:"post",
+									data:$("#addAdmission_form").serialize(),
+									beforeSend:function(){
+										$.messager.progress({
+											text:message("yly.common.saving")
+										});
+									},
+									success:function(result,response,status){
+										$.messager.progress('close');
+										showSuccessMsg(result.content);
+										$('#addAdmission_form').form('reset');
+										$('#addAdmission').dialog("close");
+										$("#admission-table-list").datagrid('reload');
+										
+									},
+									error:function (XMLHttpRequest, textStatus, errorThrown) {
+										$.messager.progress('close');
+										alertErrorMsg();
+									}
+								});
+			     			}
+			     	};
+			     	
+			     	singleUpload(options);
+			     	
+			    },
+			    onClose:function(){
+			    	$("#admissionUploader-add .uploadBtn").trigger("clearFileQuene");
+			    }
+			});  
+			 $('#addAdmission_form').show();
+		},
+		edit:function(){
+			var _edit_row = $('#admission-table-list').datagrid('getSelected');
+			if( _edit_row == null ){
+				$.messager.alert(message("yly.common.select.editRow"));  
+				return false;
+			}
+			var _dialog = $('#editAdmission').dialog({    
+			    title: message("yly.common.edit"),     
+			    width: 1200,    
+			    height: 700,    
+			    modal: true,
+			    iconCls:'icon-mini-edit',
+			    href:'../admission/edit.jhtml?id='+_edit_row.id,
+			    buttons:[{
+			    	text:message("yly.common.save"),
+			    	iconCls:'icon-save',
+					handler:function(){
+						var validate = $('#editAdmission_form').form('validate');
+						if(validate){
+							$.ajax({
+								url:"../admission/update.jhtml",
+								type:"post",
+								data:$("#editAdmission_form").serialize(),
+								beforeSend:function(){
+									$.messager.progress({
+										text:message("yly.common.saving")
+									});
+								},
+								success:function(result,response,status){
+									$.messager.progress('close');
+									showSuccessMsg(result.content);
+									$('#editAdmission').dialog("close");
+									$("#admission-table-list").datagrid('reload');
+								}
+							});
+						};
+					}
+				},{
+					text:message("yly.common.cancel"),
+					iconCls:'icon-cancel',
+					handler:function(){
+						 $('#editAdmission').dialog("close");
+					}
+			    }],
+			    onLoad:function(){
+			    	$('#editAdmission_form').show();
+			    	$("#personnelCategoryEditId").combobox({    
+			    		prompt:message("yly.common.please.select"),
+					    valueField:'id',    
+					    textField:'configValue',
+					    cache: true,
+					    url:'../systemConfig/findByConfigKey.jhtml',
+					    onBeforeLoad : function(param) {
+					        param.configKey = 'PERSONNELCATEGORY';
+					    },
+					    value:$("#personnelCategoryEditId").val()
+					});
+			     	$("#evaluatingResultEditId").combobox({    
+			     		prompt:message("yly.common.please.select"),
+					    valueField:'id',    
+					    textField:'configValue',
+					    cache: true,
+					    url:'../systemConfig/findByConfigKey.jhtml',
+					    onBeforeLoad : function(param) {
+					        param.configKey = 'EVALUATINGRESULT';
+					    },
+					    value:$("#evaluatingResultEditId").val()
+					});
+			     	$("#nursingLevelEditId").combobox({    
+			     		prompt:message("yly.common.please.select"),
+					    valueField:'id',    
+					    textField:'configValue',
+					    cache: true,
+					    url:'../systemConfig/findByConfigKey.jhtml',
+					    onBeforeLoad : function(param) {
+					        param.configKey = 'NURSELEVEL';
+					    },
+					    value:$("#nursingLevelEditId").val()
+					});
+			    }
+			});  
+		},
+		remove:function(){
+			listRemove('admission-table-list','../admission/delete.jhtml');
+		}
+}
+
 
 $(function(){
 	
@@ -76,216 +288,7 @@ $(function(){
 
 	});
 	
-	admission_manager_tool = {
-			add:function(){		
-				$('#addAdmission').dialog({    
-				    title: message("yly.admission.add"),    
-				    width: 1200,    
-				    height: 700,
-				    iconCls:'icon-mini-add',
-				    cache: false, 
-				    buttons:[{
-				    	text:message("yly.common.save"),
-				    	iconCls:'icon-save',
-						handler:function(){
-							var validate = $('#addAdmission_form').form('validate');
-							$("#admissionUploader-add .uploadBtn").trigger("upload");
-							if(validate){
-								$.ajax({
-									url:"../admission/add.jhtml",
-									type:"post",
-									data:$("#addAdmission_form").serialize(),
-									beforeSend:function(){
-										$.messager.progress({
-											text:message("yly.common.saving")
-										});
-									},
-									success:function(result,response,status){
-										$.messager.progress('close');
-										showSuccessMsg(result.content);
-										$('#addAdmission_form').form('reset');
-										$('#addAdmission').dialog("close");
-										$("#admission-table-list").datagrid('reload');
-										
-									},
-									error:function (XMLHttpRequest, textStatus, errorThrown) {
-										$.messager.progress('close');
-										alertErrorMsg();
-									}
-								});
-							};
-						}
-					},{
-						text:message("yly.common.cancel"),
-						iconCls:'icon-cancel',
-						handler:function(){
-							 $('#addAdmission').dialog("close");
-						}
-				    }],
-				    onOpen:function(){
-				    	$('#addAdmission_form').show();
-				    	$("#personnelCategoryId").combobox({    
-				    		prompt:message("yly.common.please.select"),
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'PERSONNELCATEGORY';
-						    },
-				    		
-						});
-				     	$("#evaluatingResultId").combobox({    
-				     		prompt:message("yly.common.please.select"),
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'EVALUATINGRESULT';
-						    }
-						});
-				     	$("#nursingLevelId").combobox({    
-				     		prompt:message("yly.common.please.select"),
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'NURSELEVEL';
-						    }
-						});
-				     	//头像上传
-				     	singleUpload("admissionUploader-add","addAdmission_form_file_input","identifier_input",{
-				     		 pick: {
-				                 id: '#admissionFilePicker-add',
-				                 label: '',
-				                 multiple :false
-				             },
-				             dnd: '#admissionUploader-add .queueList',
-				             paste: document.body,
-				             accept: {
-				                 title: 'Images',
-				                 extensions: 'gif,jpg,jpeg,bmp,png',
-				                 mimeTypes: 'image/*'
-				             },
-				             thumb:{
-				            	    width: 150,
-				            	    height: 150,
-				            	    // 图片质量，只有type为`image/jpeg`的时候才有效。
-				            	    quality: 90,
-				            	    // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
-				            	    allowMagnify: false,
-				            	    // 是否允许裁剪。
-				            	    crop: false,
-				            	    // 为空的话则保留原有图片格式。
-				            	    // 否则强制转换成指定的类型。
-				            	    type: 'image/jpeg'
-				            	},
-				             // swf文件路径
-				             swf: BASE_URL + '/js/Uploader.swf',
-				             disableGlobalDnd: true,
-				             server: '../file/uploadProfilePhoto.jhtml',
-				             fileNumLimit: 1,
-				             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
-				             fileSingleSizeLimit: 10 * 1024 * 1024    //单个文件上传大小  10 M
-				     	},function(){
-				     		
-				     	});
-				     	
-				    },
-				    onClose:function(){
-				    	$("#admissionUploader-add .uploadBtn").trigger("destroy");
-				    }
-				});  
-				 $('#addAdmission_form').show();
-			},
-			edit:function(){
-				var _edit_row = $('#admission-table-list').datagrid('getSelected');
-				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
-					return false;
-				}
-				var _dialog = $('#editAdmission').dialog({    
-				    title: message("yly.common.edit"),     
-				    width: 1200,    
-				    height: 700,    
-				    modal: true,
-				    iconCls:'icon-mini-edit',
-				    href:'../admission/edit.jhtml?id='+_edit_row.id,
-				    buttons:[{
-				    	text:message("yly.common.save"),
-				    	iconCls:'icon-save',
-						handler:function(){
-							var validate = $('#editAdmission_form').form('validate');
-							if(validate){
-								$.ajax({
-									url:"../admission/update.jhtml",
-									type:"post",
-									data:$("#editAdmission_form").serialize(),
-									beforeSend:function(){
-										$.messager.progress({
-											text:message("yly.common.saving")
-										});
-									},
-									success:function(result,response,status){
-										$.messager.progress('close');
-										showSuccessMsg(result.content);
-										$('#editAdmission').dialog("close");
-										$("#admission-table-list").datagrid('reload');
-									}
-								});
-							};
-						}
-					},{
-						text:message("yly.common.cancel"),
-						iconCls:'icon-cancel',
-						handler:function(){
-							 $('#editAdmission').dialog("close");
-						}
-				    }],
-				    onLoad:function(){
-				    	$('#editAdmission_form').show();
-				    	$("#personnelCategoryEditId").combobox({    
-				    		prompt:message("yly.common.please.select"),
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'PERSONNELCATEGORY';
-						    },
-						    value:$("#personnelCategoryEditId").val()
-						});
-				     	$("#evaluatingResultEditId").combobox({    
-				     		prompt:message("yly.common.please.select"),
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'EVALUATINGRESULT';
-						    },
-						    value:$("#evaluatingResultEditId").val()
-						});
-				     	$("#nursingLevelEditId").combobox({    
-				     		prompt:message("yly.common.please.select"),
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'NURSELEVEL';
-						    },
-						    value:$("#nursingLevelEditId").val()
-						});
-				    }
-				});  
-			},
-			remove:function(){
-				listRemove('admission-table-list','../admission/delete.jhtml');
-			}
-	}
+	
 	$("#admission_search_btn").click(function(){
 	  var _queryParams = {
 			  beginDate:$("#beginDate").val(),

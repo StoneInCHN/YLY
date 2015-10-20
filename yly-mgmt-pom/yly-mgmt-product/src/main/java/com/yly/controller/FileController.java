@@ -31,9 +31,12 @@ public class FileController extends BaseController {
   @RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
   public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file) {
     
-    fileService.upload(FileType.PROFILE_PICTURE, file, "1049");
-
-    return Message.success("", "");
+    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, "1049");
+    System.out.println(filePath);
+    if(filePath ==null){
+      filePath ="xxx/xxx/xx";
+    }
+    return Message.success(filePath);
   }
 
 }

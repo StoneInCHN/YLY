@@ -121,9 +121,9 @@ public class AdmissionController extends BaseController{
        */
       elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
       
-     // elderlyInfoService.save(elderlyInfo);
+      elderlyInfoService.save(elderlyInfo);
     }
-
+  
     return SUCCESS_MESSAGE;
   }
   

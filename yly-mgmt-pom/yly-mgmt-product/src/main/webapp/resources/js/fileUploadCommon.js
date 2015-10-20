@@ -1,16 +1,21 @@
-/**
- * wrap 包裹在外层的div id createOption
- * inputId 存放返回值路径的input控件ID
- * identifierId 存放老人编号的Id
- * createOption uploader 初始化参数
- * fun 自定义函数
- * @param wrap
- */
 
-function singleUpload(wrap,inputId,identifierId, createOption, fun) {
+
+/**
+ * 
+ * @param options
+ * warp 外层包裹id
+ * identifierId 存放编号的input框id
+ * successFun 文件返回成功后执行的返回函数
+ * createOption init初始化传值
+ * 
+ * 
+ * 
+ */
+function singleUpload(options) {
+	
 	var $ = jQuery, // just in case. Make sure it's not an other libaray.
 
-	$wrap = $('#'+wrap),
+	$wrap = $('#'+options.warp),
 	
 	// 图片容器
 	$queue =$wrap.find("ul.filelist"),
@@ -58,10 +63,7 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 
 	// WebUploader实例
 	uploader;
-	
-	console.log($queue.length);
-	console.log($queue.html());
-	console.log($queue.text());
+
 	if($queue.length > 0){
 		$queue.html();
 	}else{
@@ -75,7 +77,7 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 	}
 
 	// 实例化
-	uploader = WebUploader.create(createOption);
+	uploader = WebUploader.create(options.createOption);
 
 	// 添加“添加文件”的按钮，
 	/*uploader.addButton({
@@ -86,7 +88,8 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 	// 当有文件添加进来时执行，负责view的创建
 	function addFile(file) {
 		var $li = $('<li id="' + file.id + '">' + '<p class="title">'
-				+ file.name + '</p>' + '<p class="imgWrap"></p>'
+			//	+ file.name + '</p>' + '<p class="imgWrap"></p>'
+				+ '</p>' + '<p class="imgWrap img-thumbnail"></p>'
 				+ '<p class="progress"><span></span></p>' + '</li>'),
 
 		$btns = $(
@@ -246,7 +249,7 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 			if (stats.uploadFailNum) {
 				text = '已成功上传'
 						+ stats.successNum
-						+ '张照片至XX相册，'
+						+ '张照片,'
 						+ stats.uploadFailNum
 						+ '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
 			}
@@ -286,7 +289,7 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 
 		case 'ready':
 			$placeHolder.addClass('element-invisible');
-			$('#filePicker2').removeClass('element-invisible');
+		//	$('#filePicker2').removeClass('element-invisible');
 			$queue.parent().addClass('filled');
 			$queue.show();
 			$statusBar.removeClass('element-invisible');
@@ -294,7 +297,7 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 			break;
 
 		case 'uploading':
-			$('#filePicker2').addClass('element-invisible');
+		//	$('#filePicker2').addClass('element-invisible');
 			$progress.show();
 			//$upload.text('暂停上传');
 			break;
@@ -338,10 +341,12 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 	
 	//上传成功执行的内容
 	uploader.onUploadSuccess = function(file, response ) {
-		$("#"+inputId).val(response.content);
+		$("#"+options.inputId).val(response.content);
+		options.successFun();
 	};
 	
 	uploader.on('uploadBeforeSend', function(object, data, headers) {
+		var  identifierId= options.identifierId;
 		if(identifierId){
 			var identifierVal = $("#"+identifierId).val();
 			if(identifierVal){
@@ -415,26 +420,14 @@ function singleUpload(wrap,inputId,identifierId, createOption, fun) {
 		}
 	});
 	
-	//重置uploader。目前只重置了队列。
-	$upload.on('reset', function() {
+	$upload.on('clearFileQuene',function(){
+		var files =  uploader.getFiles();
+		for(index in files){
+			uploader.removeFile(files[index])
+		}
 		
-		console.log("reset")
-		uploader.reset();
-	});
-	
-	//销毁 webuploader 实例
-	$upload.on('destroy', function() {
-		console.log("destroy")
-		uploader.destroy();
-	});
+	})
 
-	$info.on('click', '.retry', function() {
-		uploader.retry();
-	});
-
-	$info.on('click', '.ignore', function() {
-		alert('todo');
-	});
 	$upload.addClass('state-' + state);
 	updateTotalProgress();
 	

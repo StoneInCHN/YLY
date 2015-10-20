@@ -2,6 +2,8 @@
 .single-uploader .queueList {
     margin: 20px;
     border: 3px dashed #e6e6e6;
+    width: 110px; 
+    height: 110px;  
 }
 .single-uploader .queueList.filled {
     border: 3px dashed transparent;
@@ -19,10 +21,10 @@
 }
 
 .single-uploader .placeholder {
-  /**  width: 110px; 
-    height: 110px;  */
-    min-width: 110px; 
-    min-height: 110px; 
+    width: 110px; 
+    height: 110px;  
+    /** min-width: 110px; 
+    min-height: 110px; */
     text-align: center;
     background: url(../images/image.png) 10px 10px no-repeat;
     color: #cccccc;
@@ -39,10 +41,10 @@
     color: #fff;
     display: inline-block;
     cursor: pointer;
-    /**  width: 110px; 
-    height: 110px;  */
-    min-width: 110px; 
-    min-height: 110px; 
+     width: 110px; 
+    height: 110px;  
+    /** min-width: 110px; 
+    min-height: 110px; */
 }
 
 .single-uploader .placeholder .flashTip {
@@ -77,10 +79,12 @@
 }
 
 .single-uploader .filelist li {
-    /**  width: 110px; 
-    height: 110px;  */
+    width: 110px; 
+    height: 110px; 
+    /**
     min-width: 110px; 
     min-height: 110px; 
+     */
     background: url(../images/bg.png) no-repeat;
     text-align: center;
     position: relative;
@@ -167,15 +171,15 @@
        background-position: 17px 0;
     }
 }
-
+ /**
 .single-uploader .filelist li p.imgWrap {
     position: relative;
     z-index: 2;
     line-height: 110px;
     vertical-align: middle;
     overflow: hidden;
-   /**  width: 110px; 
-    height: 110px;  */
+    width: 110px; 
+    height: 110px;  
     min-width: 110px; 
     min-height: 110px; 
     -webkit-transform-origin: 50% 50%;
@@ -190,7 +194,7 @@
     -ms-transition: 200ms ease-out;
     transition: 200ms ease-out;
 }
-
+*/
 .single-uploader .filelist li img {
     width: 100%;
 }
