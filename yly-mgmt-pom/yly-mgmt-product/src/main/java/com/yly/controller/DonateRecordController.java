@@ -11,6 +11,7 @@ import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeFilter;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,6 +63,7 @@ public class DonateRecordController extends BaseController
     QueryParser nameParser = new QueryParser (Version.LUCENE_35, "donatorName",
         analyzer);
     Query nameQuery = null;
+    TermRangeQuery rangeQuery = null;
     Filter filter = null;
     if (beginDate != null)
     {
@@ -77,7 +79,7 @@ public class DonateRecordController extends BaseController
       try
       {
         nameQuery = nameParser.parse (text);
-        query.add (nameQuery, Occur.SHOULD);
+        query.add (nameQuery, Occur.MUST);
         
         if (LogUtil.isDebugEnabled (DrugsInfoController.class))
         {
@@ -85,20 +87,25 @@ public class DonateRecordController extends BaseController
               + null + ", start date: " + startDateStr + ", end date: "
               + endDateStr);
         }
-        if (startDateStr != null || endDateStr != null)
-        {
-          filter = new TermRangeFilter ("createDate", startDateStr,
-              endDateStr, true, true);
-        }
-
-        return donateRecordService.search (query, pageable, analyzer,filter);
+       
       }
       catch (ParseException e)
       {
         e.printStackTrace ();
       }
     }
-    return donateRecordService.findPage (pageable);
+    if (startDateStr != null || endDateStr != null)
+    {
+      rangeQuery = new TermRangeQuery ("donateTime", startDateStr, endDateStr, true, true);
+      query.add (rangeQuery,Occur.MUST);
+    }
+    if (nameQuery != null || rangeQuery != null)
+    {
+      return donateRecordService.search (query, pageable, analyzer,filter);
+    }else {
+      return donateRecordService.findPage (pageable);
+    }
+    
   }
 
   /**

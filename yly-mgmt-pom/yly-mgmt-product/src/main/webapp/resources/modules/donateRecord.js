@@ -28,7 +28,7 @@ $(function(){
 				$('#addDonateRecord').dialog({
 				    title: message("yly.drugsInfo.add"),    
 				    width: 700,    
-				    height: 550,
+				    height: 400,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -82,7 +82,7 @@ $(function(){
 				var _dialog = $('#editDonateRecord').dialog({    
 				    title: '药品编辑',     
 				    width: 700,    
-				    height: 550,    
+				    height: 400,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../donateRecord/edit.jhtml?id='+_edit_row.id,

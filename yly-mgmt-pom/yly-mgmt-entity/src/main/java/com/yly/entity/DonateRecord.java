@@ -14,8 +14,10 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -124,6 +126,8 @@ public class DonateRecord extends BaseEntity {
 
   @JsonProperty
   @Temporal(TemporalType.DATE)
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getDonateTime() {
     return donateTime;
   }
