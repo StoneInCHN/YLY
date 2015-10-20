@@ -2,6 +2,8 @@ package com.yly.controller;
 
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -11,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yly.beans.Message;
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Billing;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BillingService;
+import com.yly.utils.FieldFilterUtils;
 
 @Controller("billingController")
 @RequestMapping("/console/billing")
@@ -64,35 +67,36 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Billing> list(Date beginDate,Date endDate, Pageable pageable, ModelMap model) {
-    
-  /*  List<Filter> filters = new ArrayList<Filter>();
-    if(beginDate !=null){
-      Filter beginDateFilter = new Filter("createDate", Operator.gt, beginDate);
-      filters.add(beginDateFilter);
+  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
+      String realName, String identifier, Pageable pageable, ModelMap model) {
+    Page<Billing> page = new Page<Billing>();
+    if (realName == null && identifier == null && beginDate == null && endDate == null) {
+      page = billingService.findPage(pageable, true);
+    } else {
+      if (LogUtil.isDebugEnabled(DepositController.class)) {
+        LogUtil.debug(DepositController.class, "search", "elderlyName: " + realName
+            +",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
+            + endDate);
+      }
+      page = billingService.chargeRecordSearch(beginDate, endDate,realName, identifier,null,null,false,pageable);
     }
-    if(endDate!= null){
-      Filter endDateFilter = new Filter("createDate", Operator.lt, endDate);
-      filters.add(endDateFilter);
-    }
-    pageable.setFilters(filters);*/
-    
-    
-    return billingService.findPage(pageable);
+
+
+    String[] properties =
+        {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
+            "elderlyInfo.nursingLevel", "nurseAmount","mealAmount", "depositAmount", "totalAmount", "bedAmount", "payTime","operator"};
+
+    List<Map<String, Object>> rows =
+        FieldFilterUtils.filterCollectionMap(properties, page.getRows());
+
+    Page<Map<String, Object>> filteredPage =
+        new Page<Map<String, Object>>(rows, page.getTotal(), pageable);
+
+    return filteredPage;
   }
 
 
-  /**
-   * 编辑页面
-   * @param model
-   * @param vendorId
-   * @return
-   */
-  @RequestMapping(value = "/edit", method = RequestMethod.GET)
-  public String edit(ModelMap model, Long id) {
-    model.addAttribute("billing", billingService.find(id));
-    return "/billing/edit";
-  }
+  
   
   /**
    *  添加页面
@@ -106,38 +110,17 @@ public class BillingController extends BaseController {
   }
 
   /**
-   * 保存
+   * 获取数据进入详情页面
+   * 
+   * @param model
+   * @param id
    * @return
    */
-  @RequestMapping(value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message save(Billing billing) {
-    billingService.save(billing);
-    return SUCCESS_MESSAGE;
-  }
-  
-  /**
-   * 更新
-   * @return
-   */
-  @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(Billing billing) {
-    billingService.update(billing);
-    return SUCCESS_MESSAGE;
-  }
-  
-  /**
-   * 删除
-   * @param ids
-   * @return
-   */
-  @RequestMapping(value = "/delete", method = RequestMethod.POST)
-  public @ResponseBody Message delete(Long[] ids) {
-    if (ids != null) {
-      // 检查是否能被删除
-      // if()
-      billingService.delete(ids);
-    }
-    return SUCCESS_MESSAGE;
+  @RequestMapping(value = "/details", method = RequestMethod.GET)
+  public String details(ModelMap model, Long id,String path) {
+    Billing record = billingService.find(id);
+    model.addAttribute("billing", record);
+    return path+"/details";
   }
 
 }

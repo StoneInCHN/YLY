@@ -148,7 +148,7 @@ $(function(){
 		      //缴费时间
 		      {title:message("yly.charge.record.payTime"),field:"payTime",width:35,align:'center',sortable:true,formatter: function(value,row,index){
 		    	    if(value != null){
-		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm:ss");
+		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm");
 		    	  	}
 				}},
 		   ]

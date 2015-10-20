@@ -61,6 +61,7 @@ var messages = {
 	"yly.charge.status.refunded" : "已退款",
 	"yly.deposit.charge.record" : "押金",
 	"yly.advance.charge.record" : "预存款",
+	"yly.charge.checkin" : "入院缴费",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
 	"yly.waterElectricity.charge.record" : "水电费",
@@ -87,6 +88,7 @@ var messages = {
 	"yly.charge.record.budgetType.income" : "充值",
 	"yly.charge.record.budgetType.cost" : "消费",
 	"yly.charge.advance.add" : "预缴款",
+	"yly.charge.record.list":"缴费列表",
 	
 	
 	/**

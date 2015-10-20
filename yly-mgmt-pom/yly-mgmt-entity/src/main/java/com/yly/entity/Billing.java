@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
@@ -29,6 +30,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Entity
 @Table(name = "yly_billing")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_billing_sequence")
+@Indexed(index="chargeManage/billingCharge")
 public class Billing extends BaseEntity {
 
   private static final long serialVersionUID = -9092276707242009884L;
@@ -99,6 +101,11 @@ public class Billing extends BaseEntity {
   private BigDecimal depositAmount;
   
   /**
+   * 押金金额
+   */
+  private BigDecimal mealAmount;
+  
+  /**
    * 总金额
    */
   private BigDecimal totalAmount;
@@ -150,7 +157,15 @@ public class Billing extends BaseEntity {
    */
   private BillingType billType;
   
-  
+  @Column(precision = 12, scale = 2)
+  public BigDecimal getMealAmount() {
+    return mealAmount;
+  }
+
+  public void setMealAmount(BigDecimal mealAmount) {
+    this.mealAmount = mealAmount;
+  }
+
   public BillingType getBillType() {
     return billType;
   }
