@@ -2,8 +2,8 @@ var checkinCharge_manager_tool = {
 			add:function(){		
 				$('#addCheckinCharge').dialog({    
 				    title: message("yly.charge.checkin"),    
-				    width: 450,    
-				    height: 400,
+				    width: 650,    
+				    height: 600,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
