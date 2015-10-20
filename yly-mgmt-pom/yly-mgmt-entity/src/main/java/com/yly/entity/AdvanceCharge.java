@@ -168,7 +168,7 @@ public class AdvanceCharge extends BaseEntity {
     this.advanceAmount = advanceAmount;
   }
 
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public BudgetType getBudgetType() {
     return budgetType;
   }

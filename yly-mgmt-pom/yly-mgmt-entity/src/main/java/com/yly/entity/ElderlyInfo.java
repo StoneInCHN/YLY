@@ -471,7 +471,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getIdentifier() {
     return identifier;
   }
@@ -482,7 +482,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }

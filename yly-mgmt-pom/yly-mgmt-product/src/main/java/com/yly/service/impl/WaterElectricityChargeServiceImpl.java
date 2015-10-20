@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yly.dao.WaterElectricityChargeDao;
 import com.yly.entity.WaterElectricityCharge;
-import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.WaterElectricityChargeService;
 
 /**
@@ -15,7 +14,7 @@ import com.yly.service.WaterElectricityChargeService;
  *
  */
 @Service("waterElectricityChargeServiceImpl")
-public class WaterElectricityChargeServiceImpl extends BaseServiceImpl<WaterElectricityCharge, Long> implements WaterElectricityChargeService {
+public class WaterElectricityChargeServiceImpl extends ChargeRecordServiceImpl<WaterElectricityCharge, Long> implements WaterElectricityChargeService {
 
   @Resource(name = "waterElectricityChargeDaoImpl")
   private WaterElectricityChargeDao waterElectricityChargeDao;
