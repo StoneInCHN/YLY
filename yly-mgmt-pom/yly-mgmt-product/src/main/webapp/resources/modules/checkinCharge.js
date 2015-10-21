@@ -3,7 +3,7 @@ var checkinCharge_manager_tool = {
 				$('#addCheckinCharge').dialog({    
 				    title: message("yly.charge.checkin"),    
 				    width: 650,    
-				    height: 600,
+				    height: 750,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
@@ -127,5 +127,19 @@ $(function(){
 	  $('#checkinCharge_table_list').datagrid('options').queryParams = _queryParams;  
 	  $("#checkinCharge_table_list").datagrid('reload');
 	});
+	
+	//是否伙食费包月
+	$("#isMonthlyMeal").click(function(){
+		console.log($("#isMonthlyMeal").is(":checked"));
+		if($("#isMonthlyMeal").is(":checked")==true){
+			$("#monthlyMeal").css('display','block'); 
+		}
+		
+		if($("#isMonthlyMeal").is(":checked")==false){
+			$("#monthlyMeal").css('display','none'); 
+		}
+		
+	});
+	
 	
 })
