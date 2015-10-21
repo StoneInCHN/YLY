@@ -86,8 +86,8 @@
 		    		<li><a href="#">合同附件</a></li>
 		    		<li><a href="#">评估报告</a></li>
 		    		<li><a href="#">老人相册</a></li>
-					<li><a href="#">老人事件</a></li>
-		    		<li><a href="#">物品寄存</a></li>
+					<li><a href="#" data-url="${base}/console/elderlyEventRecord/elderlyEventRecord.jhtml">${message("yly.elderlyInfo.event.record")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/elderlyStuffDeposit/elderlyStuffDeposit.jhtml">${message("yly.elderlyInfo.stuff.deposit")}</a></li>
 		    	</ul>    
 		        <ul class="active" id="residential" title="${message("yly.residential.residential")}">
 		    		<li><a href="#" data-url="${base}/console/building/building.jhtml">${message("yly.residential.building")}</a></li>
