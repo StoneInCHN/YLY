@@ -178,6 +178,7 @@ public class BedNurseCharge extends BaseEntity {
   }
 
   @Index(name = "bed_nurse_charge_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }

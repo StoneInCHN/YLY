@@ -15,6 +15,7 @@ public interface ChargeRecordService<T, ID extends Serializable> extends BaseSer
 
   /**
    * 缴费记录查询
+   * @param isTenant
    * @param beginDate
    * @param endDate
    * @param realName
@@ -25,6 +26,6 @@ public interface ChargeRecordService<T, ID extends Serializable> extends BaseSer
    * @param pageable
    * @return
    */
-  Page<T> chargeRecordSearch(Date beginDate, Date endDate,
+  Page<T> chargeRecordSearch(Boolean isTenant,Date beginDate, Date endDate,
       String realName, String identifier,PaymentStatus status,BudgetType budgetType,Boolean isPeriod,Pageable pageable);
 }

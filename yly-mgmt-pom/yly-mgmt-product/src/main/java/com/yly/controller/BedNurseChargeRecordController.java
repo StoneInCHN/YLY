@@ -60,7 +60,7 @@ public class BedNurseChargeRecordController extends BaseController {
             + ",identifier: " + identifier + "" + ",status: " + status + ""+",start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,null,true,pageable);
+      page = bedNurseChargeService.chargeRecordSearch(true,beginDate, endDate, realName, identifier,status,null,true,pageable);
     }
 
 

@@ -24,10 +24,9 @@ import com.yly.utils.DateTimeUtils;
 
 public class ChargeRecordServiceImpl<T, ID extends Serializable> extends BaseServiceImpl<T, ID>
     implements ChargeRecordService<T, ID> {
-
-
+  
   @Override
-  public Page<T> chargeRecordSearch(Date beginDate, Date endDate, String realName,
+  public Page<T> chargeRecordSearch(Boolean isTenant,Date beginDate, Date endDate, String realName,
       String identifier, PaymentStatus status, BudgetType budgetType, Boolean isPeriod,
       Pageable pageable) {
 
@@ -36,6 +35,11 @@ public class ChargeRecordServiceImpl<T, ID extends Serializable> extends BaseSer
 
     try {
       BooleanQuery query = new BooleanQuery();
+      if (isTenant) {
+        Term term = new Term("tenantID", tenantAccountService.getCurrentTenantID().toString());
+        Query filterQuery = new TermQuery(term);
+        query.add(filterQuery, Occur.MUST);
+      }
       if (realName != null) {
         String text = QueryParser.escape(realName);
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);

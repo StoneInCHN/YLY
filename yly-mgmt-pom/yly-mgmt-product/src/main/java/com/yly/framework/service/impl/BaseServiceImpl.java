@@ -42,7 +42,7 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
       BaseEntity.MODIFY_DATE_PROPERTY_NAME};
 
   @Resource(name = "tenantAccountServiceImpl")
-  private TenantAccountService tenantAccountService;
+  protected TenantAccountService tenantAccountService;
 
   /** baseDao */
   protected BaseDao<T, ID> baseDao;

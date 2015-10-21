@@ -211,6 +211,7 @@ public class PersonalizedCharge extends BaseEntity {
   }
 
   @Index(name = "personalized_charge_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
