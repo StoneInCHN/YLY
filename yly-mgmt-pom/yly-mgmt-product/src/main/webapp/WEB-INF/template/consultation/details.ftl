@@ -3,7 +3,7 @@
 	    	<tr>
 	    		<th>${message("yly.consultation.vistor")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="vistor" readonly=true value="${consultation.vistor}" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="visitor" readonly=true value="${consultation.visitor}" style="width:85px;"/>   
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>

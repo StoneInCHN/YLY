@@ -60,11 +60,11 @@
 			
 			<div class="search-item">
 			    <label> ${message("yly.consultation.returnVisitDate")}:</label>
-			     <input type="text" class="Wdate" id="returnVisitDateBeginDate" name="returnVisitDateBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'returnVisitDateBeginDate\')}'});" />
+			     <input type="text" class="Wdate" id="returnVisitDateBeginDate" name="returnVisitDateBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'returnVisitDateEndDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="returnVisitDateEndDate"  name="returnVisitDateEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'returnVisitDateEndDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="returnVisitDateEndDate"  name="returnVisitDateEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'returnVisitDateBeginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -87,7 +87,7 @@
 	    	<tr>
 	    		<th>${message("yly.consultation.vistor")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="vistor" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="visitor" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>

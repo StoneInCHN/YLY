@@ -27,7 +27,7 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.consultation.vistor"),field:"vistor",width:40,align:'center',sortable:true},
+		      {title:message("yly.consultation.vistor"),field:"visitor",width:40,align:'center',sortable:true},
 		      {title:message("yly.common.phonenumber"),field:"phoneNumber",width:50,align:'center',sortable:true},
 		      {title:message("yly.common.elderlyname"),field:"elderlyName",width:40,align:'center',sortable:true},
 		      {title:message("yly.common.gender"),field:"gender",width:30,align:'center',sortable:true,formatter: function(value,row,index){

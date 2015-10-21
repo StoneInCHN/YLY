@@ -60,7 +60,7 @@ public class ConsultationController extends BaseController {
       Date returnVisitDateEndDate, ConsultationRecord consultationRecord, Pageable pageable,
       ModelMap model) {
 
-    if (consultationRecord.getVistor() != null || consultationRecord.getElderlyName() != null
+    if (consultationRecord.getVisitor() != null || consultationRecord.getElderlyName() != null
         || consultationRecord.getCheckinIntention() != null
         || consultationRecord.getInfoChannel() != null || returnVisitDateBeginDate != null
         || returnVisitDateEndDate != null) {

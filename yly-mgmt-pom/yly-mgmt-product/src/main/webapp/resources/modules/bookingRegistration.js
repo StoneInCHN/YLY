@@ -161,14 +161,20 @@ $(function(){
 			}
 	}
 	$("#bookingRegistration_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+	  var _queryParams = $("#bookingRegistration_search_form").serializeJSON();
 	  $('#bookingRegistration-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#bookingRegistration-table-list").datagrid('reload');
 	})
-	
-	 
-	 
+	/**
+	 * 加载查询项里面的数据
+	 */
+  	$("#bookingRegistrationSearchRoomType").combobox({    
+	    valueField:'id',    
+	    textField:'configValue',
+	    cache: true,
+	    url:'../systemConfig/findByConfigKey.jhtml',
+	    onBeforeLoad : function(param) {
+	        param.configKey = 'ROOMTYPE';
+	    }
+	});
 })

@@ -6,7 +6,7 @@
 	    	<tr>
 	    		<th>${message("yly.consultation.vistor")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="vistor" validtype="length[0,15]" value="${consultation.vistor}" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="visitor" validtype="length[0,15]" value="${consultation.visitor}" style="width:85px;"/>   
 	    		</td>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
