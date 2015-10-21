@@ -31,7 +31,7 @@
 					label: 'WILL_NOT_CHECKIN',
 					value: '${message("yly.consultation.checkinIntention.will_not_checkin")}'
 				}],
-				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="search-checkinIntention" name="checkinIntention" style="width:110px;"/>
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="search-checkinIntention" name="checkinIntention" style="width:130px;"/>
 			</div>
 			
 			<div class="search-item">
@@ -55,7 +55,7 @@
 					label: 'OTHER',
 					value: '${message("yly.common.other")}'
 				}],
-				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120" id="search-infoChannel" name="infoChannel" style="width:80px;"/>
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120" id="search-infoChannel" name="infoChannel" style="width:100px;"/>
 			</div>
 			
 			<div class="search-item">

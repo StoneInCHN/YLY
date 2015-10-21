@@ -23,6 +23,7 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.ConsultationService;
+import com.yly.service.TenantAccountService;
 import com.yly.utils.DateTimeUtils;
 
 /**
@@ -37,26 +38,39 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
 
   @Resource(name = "consultationDaoImpl")
   private ConsultationDao consultationDao;
-  
+
+  @Resource(name = "tenantAccountServiceImpl")
+  private TenantAccountService tenantAccountService;
+
   @Resource
   public void setBaseDao(ConsultationDao consultationDao) {
     super.setBaseDao(consultationDao);
   }
 
-  public Page<ConsultationRecord> consultationSearch(Date returnVisitDateBeginDate , Date returnVisitDateEndDate,ConsultationRecord consultationRecord,Pageable pageable) {
-    
+  public Page<ConsultationRecord> consultationSearch(Date returnVisitDateBeginDate,
+      Date returnVisitDateEndDate, ConsultationRecord consultationRecord, Pageable pageable) {
+
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
     BooleanQuery query = new BooleanQuery();
 
     QueryParser vistorParser = new QueryParser(Version.LUCENE_35, "vistor", analyzer);
     QueryParser elderlyNameParser = new QueryParser(Version.LUCENE_35, "elderlyName", analyzer);
+    QueryParser tenantParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
 
+    Query tenantQuery = null;
     Query vistorQuery = null;
     Query elderlyNameQuery = null;
     Query infoChannelQuery = null;
     Query checkinIntentionQuery = null;
     Filter returnVisitDateFilter = null;
+    
+    try {
+      tenantQuery = tenantParser.parse(tenantAccountService.getCurrentTenantID().toString());
+      query.add(tenantQuery,Occur.MUST);
+    } catch (ParseException e1) {
+      e1.printStackTrace();
+    }
 
     if (consultationRecord.getVistor() != null) {
       String vistorName = QueryParser.escape(consultationRecord.getVistor());
@@ -101,6 +115,4 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     }
     return search(query, pageable, analyzer, returnVisitDateFilter);
   }
-  
-  
 }
