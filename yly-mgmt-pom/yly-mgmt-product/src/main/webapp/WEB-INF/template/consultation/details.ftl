@@ -71,7 +71,7 @@
 	    	<tr>
 	    		<th>${message("yly.consultation.returnVisitDate")}:</th>
 	    		<td>
-	    			  <input id="returnVisitDate" name="returnVisitDate" type="text" value="${consultation.returnVisitDate}" class="easyui-datebox" disabled=true/> 
+	    			  <input id="returnVisitDate" name="returnVisitDate" type="text" value="${consultation.returnVisitDate}" style="width:100px;" class="easyui-datebox" disabled=true/> 
 	    		</td>
 	    		<th>${message("yly.createDate")}:</th>
 	    		<td>

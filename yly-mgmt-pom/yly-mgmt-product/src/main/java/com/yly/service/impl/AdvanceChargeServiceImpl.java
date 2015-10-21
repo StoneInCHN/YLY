@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yly.dao.AdvanceChargeDao;
 import com.yly.entity.AdvanceCharge;
-import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.AdvanceChargeService;
 
 /**
@@ -15,7 +14,7 @@ import com.yly.service.AdvanceChargeService;
  *
  */
 @Service("advanceChargeServiceImpl")
-public class AdvanceChargeServiceImpl extends BaseServiceImpl<AdvanceCharge, Long> implements AdvanceChargeService {
+public class AdvanceChargeServiceImpl extends ChargeRecordServiceImpl<AdvanceCharge, Long> implements AdvanceChargeService {
 
   @Resource(name = "advanceChargeDaoImpl")
   private AdvanceChargeDao advanceChargeDao;

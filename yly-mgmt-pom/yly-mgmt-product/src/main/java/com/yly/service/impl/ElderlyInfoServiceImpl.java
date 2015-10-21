@@ -2,10 +2,12 @@ package com.yly.service.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
@@ -36,11 +38,16 @@ public class ElderlyInfoServiceImpl extends BaseServiceImpl<ElderlyInfo, Long> i
   }
 
   @Override
-  public Page<ElderlyInfo> elderlyInfoSearch(String realName, String identifier, Pageable pageable) {
+  public Page<ElderlyInfo> elderlyInfoSearch(Boolean isTenant,String realName, String identifier, Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
     try {
       BooleanQuery query = new BooleanQuery();
+      if (isTenant) {
+        Term term = new Term("tenantID", tenantAccountService.getCurrentTenantID().toString());
+        Query filterQuery = new TermQuery(term);
+        query.add(filterQuery, Occur.MUST);
+      }
       if (realName != null) {
         String text = QueryParser.escape(realName);
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "name", analyzer);

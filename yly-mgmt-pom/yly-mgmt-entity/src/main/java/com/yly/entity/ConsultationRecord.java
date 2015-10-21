@@ -8,6 +8,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -25,6 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.Relation;
 @Entity
 @Table(name = "yly_consultation_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_consultation_record_sequence")
+@Indexed(index="consultationRecordManage/consultationRecord")
 public class ConsultationRecord extends BaseEntity {
 
 	/**
@@ -112,6 +120,7 @@ public class ConsultationRecord extends BaseEntity {
 
 	@JsonProperty
 	@Column(length = 15)
+	@Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
 	public String getVistor() {
 		return vistor;
 	}
@@ -149,6 +158,7 @@ public class ConsultationRecord extends BaseEntity {
 	}
 
 	@JsonProperty
+	@Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
 	public InfoChannel getInfoChannel() {
 		return infoChannel;
 	}
@@ -158,6 +168,7 @@ public class ConsultationRecord extends BaseEntity {
 	}
 
 	@JsonProperty
+	@Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
 	public CheckinIntention getCheckinIntention() {
 		return checkinIntention;
 	}
@@ -168,6 +179,7 @@ public class ConsultationRecord extends BaseEntity {
 
 	@JsonProperty
 	@Column(length = 15)
+	@Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
 	public String getElderlyName() {
 		return elderlyName;
 	}
@@ -195,6 +207,8 @@ public class ConsultationRecord extends BaseEntity {
 	}
 
 	@JsonProperty
+	@Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+	@DateBridge(resolution = Resolution.DAY)
 	public Date getReturnVisitDate() {
 		return returnVisitDate;
 	}
@@ -258,6 +272,4 @@ public class ConsultationRecord extends BaseEntity {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	
-	
 }

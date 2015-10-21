@@ -1,7 +1,6 @@
 package com.yly.service;
 
 import com.yly.entity.PersonalizedCharge;
-import com.yly.framework.service.BaseService;
 
 
 /**
@@ -9,6 +8,6 @@ import com.yly.framework.service.BaseService;
  * @author sujinxuan
  *
  */
-public interface PersonalizedChargeService extends BaseService<PersonalizedCharge, Long> {
+public interface PersonalizedChargeService extends ChargeRecordService<PersonalizedCharge, Long> {
 
 }

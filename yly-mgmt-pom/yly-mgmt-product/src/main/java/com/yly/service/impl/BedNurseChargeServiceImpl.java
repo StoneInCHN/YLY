@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yly.dao.BedNurseChargeDao;
 import com.yly.entity.BedNurseCharge;
-import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.BedNurseChargeService;
 
 /**
@@ -15,7 +14,7 @@ import com.yly.service.BedNurseChargeService;
  *
  */
 @Service("bedNurseChargeServiceImpl")
-public class BedNurseChargeServiceImpl extends BaseServiceImpl<BedNurseCharge, Long> implements BedNurseChargeService {
+public class BedNurseChargeServiceImpl extends ChargeRecordServiceImpl<BedNurseCharge, Long> implements BedNurseChargeService {
 
   @Resource(name = "bedNurseChargeDaoImpl")
   private BedNurseChargeDao bedNurseChargeDao;

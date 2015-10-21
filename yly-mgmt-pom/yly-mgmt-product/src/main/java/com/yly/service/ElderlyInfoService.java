@@ -15,11 +15,12 @@ public interface ElderlyInfoService extends BaseService<ElderlyInfo,Long>{
   
   /**
    * 老人信息查询
+   * @param isTenant
    * @param realName
    * @param identifier
    * @param pageable
    * @return
    */
-  Page<ElderlyInfo> elderlyInfoSearch(String realName, String identifier,Pageable pageable);
+  Page<ElderlyInfo> elderlyInfoSearch(Boolean isTenant,String realName, String identifier,Pageable pageable);
 
 }

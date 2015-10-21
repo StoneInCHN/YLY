@@ -14,7 +14,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
@@ -101,7 +106,7 @@ public class Billing extends BaseEntity {
   private BigDecimal depositAmount;
   
   /**
-   * 押金金额
+   * 伙食费金额
    */
   private BigDecimal mealAmount;
   
@@ -263,6 +268,8 @@ public class Billing extends BaseEntity {
     this.invoiceNo = invoiceNo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPayTime() {
     return payTime;
   }
@@ -298,6 +305,7 @@ public class Billing extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -306,6 +314,8 @@ public class Billing extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodStartDate() {
     return periodStartDate;
   }
@@ -314,6 +324,8 @@ public class Billing extends BaseEntity {
     this.periodStartDate = periodStartDate;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getPeriodEndDate() {
     return periodEndDate;
   }

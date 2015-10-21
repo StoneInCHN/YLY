@@ -72,7 +72,7 @@ public class AdvanceChargeController extends BaseController {
         LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + realName
             + ",identifier: " + identifier);
       }
-      page = elderlyInfoService.elderlyInfoSearch(realName, identifier, pageable);
+      page = elderlyInfoService.elderlyInfoSearch(true,realName, identifier, pageable);
     }
 
     String[] properties =
@@ -108,7 +108,7 @@ public class AdvanceChargeController extends BaseController {
             + beginDate + ", end date: " + endDate);
       }
       page =
-          advanceChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier, null,
+          advanceChargeService.chargeRecordSearch(true,beginDate, endDate, realName, identifier, null,
               budgetType, false, pageable);
     }
 

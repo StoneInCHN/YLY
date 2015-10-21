@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yly.dao.BillingDao;
 import com.yly.entity.Billing;
-import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.BillingService;
 
 /**
@@ -15,7 +14,7 @@ import com.yly.service.BillingService;
  *
  */
 @Service("billingServiceImpl")
-public class BillingServiceImpl extends BaseServiceImpl<Billing, Long> implements BillingService {
+public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> implements BillingService {
 
   @Resource(name = "billingDaoImpl")
   private BillingDao billingDao;

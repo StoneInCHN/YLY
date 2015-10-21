@@ -61,7 +61,7 @@ public class PersonalizedChargeRecordController extends BaseController {
             + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = personalizedChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,null,true, pageable);
+      page = personalizedChargeService.chargeRecordSearch(true,beginDate, endDate, realName, identifier,status,null,true, pageable);
     }
     
     String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",

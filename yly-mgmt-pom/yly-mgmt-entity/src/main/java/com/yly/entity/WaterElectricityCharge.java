@@ -191,7 +191,7 @@ public class WaterElectricityCharge extends BaseEntity {
     this.operator = operator;
   }
 
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
@@ -201,6 +201,7 @@ public class WaterElectricityCharge extends BaseEntity {
   }
 
   @Index(name = "water_electricity_charge_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }

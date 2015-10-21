@@ -59,9 +59,6 @@
 						value: 'CASH',
 						label: '${message("yly.common.charge.paymentType.CASH")}'
 					},{
-						value: 'ADVANCE',
-						label: '${message("yly.common.charge.paymentType.ADVANCE")}'
-					},{
 						value: 'CARD',
 						label: '${message("yly.common.charge.paymentType.CARD")}'
 					},{

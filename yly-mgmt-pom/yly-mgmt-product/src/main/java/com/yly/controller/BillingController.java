@@ -78,7 +78,7 @@ public class BillingController extends BaseController {
             +",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
             + endDate);
       }
-      page = billingService.chargeRecordSearch(beginDate, endDate,realName, identifier,null,null,false,pageable);
+      page = billingService.chargeRecordSearch(true,beginDate, endDate,realName, identifier,null,null,false,pageable);
     }
 
 

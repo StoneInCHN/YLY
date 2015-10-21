@@ -3,6 +3,10 @@
 	  <fieldset>
 	    <legend>志愿者查询</legend>
 	    <form id="volunteer_search_form" class="search-form">
+	    	<div class="search-item">
+			    <label> 名字查询:</label>
+			    <input type="text" class="easyui-textbox" id="volunteerName" name="volunteerName" style="width:85px;" />
+			</div>
 			<div class="search-item">
 			    <label> 查询时间从:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
@@ -45,7 +49,7 @@
 	    	<tr>
 	    		<th>${message("yly.idCard")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="length[0,18]" data-options="required:true" style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" data-options="required:true" style="width:85px;"/> 
 	    		</td>
 	    		<th>${message("yly.email")}:</th>
 	    		<td>

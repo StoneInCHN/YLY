@@ -7,6 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 
@@ -19,6 +26,7 @@ import com.yly.entity.commonenum.CommonEnum.Gender;
 @Entity
 @Table(name = "yly_blacklist")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_blacklist_sequence")
+@Indexed(index="blackList")
 public class BlackList extends BaseEntity {
 
   
@@ -57,7 +65,7 @@ public class BlackList extends BaseEntity {
   /**
    * 身份证号
    */
-  private String IDCard;
+  private String idCard;
 
   /**
    * 年龄
@@ -108,6 +116,7 @@ public class BlackList extends BaseEntity {
     this.tenantID = tenantID;
   }
   
+  @JsonProperty
   public String getGeracomium() {
     return geracomium;
   }
@@ -116,6 +125,7 @@ public class BlackList extends BaseEntity {
     this.geracomium = geracomium;
   }
 
+  @JsonProperty
   @Column(length = 200)
   public String getCause() {
     return cause;
@@ -134,7 +144,9 @@ public class BlackList extends BaseEntity {
     this.remark = remark;
   }
 
+  @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }
@@ -143,6 +155,7 @@ public class BlackList extends BaseEntity {
     this.name = name;
   }
 
+  @JsonProperty
   public Gender getGender() {
     return gender;
   }
@@ -169,15 +182,17 @@ public class BlackList extends BaseEntity {
     this.nation = nation;
   }
 
+  @JsonProperty
   @Column(length = 25)
-  public String getIDCard() {
-    return IDCard;
+  public String getIdCard() {
+    return idCard;
   }
 
-  public void setIDCard(String iDCard) {
-    IDCard = iDCard;
+  public void setIdCard(String idCard) {
+    this.idCard = idCard;
   }
 
+  @JsonProperty
   public Integer getAge() {
     return age;
   }
@@ -203,6 +218,7 @@ public class BlackList extends BaseEntity {
     this.registeredResidence = registeredResidence;
   }
 
+  @JsonProperty
   @Column(length = 100)
   public String getResidentialAddress() {
     return residentialAddress;
@@ -221,6 +237,7 @@ public class BlackList extends BaseEntity {
     this.photo = photo;
   }
 
+  @JsonProperty
   @Column(length = 30)
   public String getContactPhone() {
     return contactPhone;

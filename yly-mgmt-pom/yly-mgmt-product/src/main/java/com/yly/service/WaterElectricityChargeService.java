@@ -1,7 +1,6 @@
 package com.yly.service;
 
 import com.yly.entity.WaterElectricityCharge;
-import com.yly.framework.service.BaseService;
 
 
 /**
@@ -9,6 +8,6 @@ import com.yly.framework.service.BaseService;
  * @author sujinxuan
  *
  */
-public interface WaterElectricityChargeService extends BaseService<WaterElectricityCharge, Long> {
+public interface WaterElectricityChargeService extends ChargeRecordService<WaterElectricityCharge, Long> {
 
 }
