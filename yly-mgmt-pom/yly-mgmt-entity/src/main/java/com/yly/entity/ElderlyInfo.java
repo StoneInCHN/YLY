@@ -274,6 +274,11 @@ public class ElderlyInfo extends BaseEntity {
   private Deposit deposit;
 
   /**
+   * 账单
+   */
+  private Set<Billing> billings = new HashSet<Billing>();
+  
+  /**
    * 床位护理费
    */
   private Set<BedNurseCharge> bedNurseCharges = new HashSet<BedNurseCharge>();
@@ -329,6 +334,15 @@ public class ElderlyInfo extends BaseEntity {
    */
   private BigDecimal advanceChargeAmount;
   
+  @OneToMany(mappedBy = "elderlyInfo")
+  public Set<Billing> getBillings() {
+    return billings;
+  }
+
+  public void setBillings(Set<Billing> billings) {
+    this.billings = billings;
+  }
+
   @Column(precision = 12, scale = 2)
   public BigDecimal getAdvanceChargeAmount() {
     return advanceChargeAmount;

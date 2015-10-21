@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -388,7 +389,7 @@ public class Billing extends BaseEntity {
     this.depositAmount = depositAmount;
   }
 
-  @OneToOne(mappedBy="billing")
+  @OneToOne(mappedBy="billing",cascade=CascadeType.ALL)
   public Deposit getDeposit() {
     return deposit;
   }

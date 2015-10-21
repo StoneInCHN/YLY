@@ -39,18 +39,18 @@
 	    <input type="hidden" name="elderlyInfoID" id="addCheckinCharge_elderlyInfoID">  
 	    <table class="table table-striped">
 	    	<tr>
-	    		<th>${message("yly.common.elderly")}</th>
+	    		<th>${message("yly.common.elderly")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckinCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
+	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckinCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addCheckinCharge_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
-	    		 <th>${message("yly.common.charge.invoiceNo")}</th>
+	    		 <th>${message("yly.common.charge.invoiceNo")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" name="invoiceNo" validtype="length[0,30]"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.common.charge.paymentType")}</th>
+	    		<th>${message("yly.common.charge.paymentType")}:</th>
 	    		<td colspan=3>
 	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="status" panelHeight="100px"
 			   		data-options="required:true,editable:false,
@@ -72,7 +72,7 @@
 	    	<tr>
 	    		<td colspan=4>
 	    			  <fieldset> 
-	    			  	<legend>${message("yly.charge.record.deposit")}</legend>
+	    			  	<legend>${message("yly.charge.record.deposit")}:</legend>
 	    			  	<table class="table table-striped">
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
@@ -92,14 +92,14 @@
 	    	 <tr>
 	    		<td colspan=4>
 	    			  <fieldset> 
-	    			  	<legend>${message("yly.charge.bedNurse.record")}</legend>
+	    			  	<legend>${message("yly.charge.bedNurse.record")}:</legend>
 	    			  	<table class="table table-striped">
 	    			  		<tr>
-					    		<th>${message("yly.common.charge.period")}</th>
+					    		<th>${message("yly.common.charge.period")}:</th>
 					    		<td>
-					    			<input id="periodStartDate" name="periodStartDate" type="text" class="easyui-datebox" style="width:100px;"/>
+					    			<input id="bedNursePeriodStartDate" name="bedNurseCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;"/>
 					    		    ──
-				    			    <input id="periodEndDate" name="periodEndDate" type="text" class="easyui-datebox" style="width:100px;" disabled=true/>    
+				    			    <input id="bedNursePeriodEndDate" name="bedNurseCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" readonly=true/>    
 					    		</td>
 					    		
 					    	</tr>
@@ -135,35 +135,35 @@
 	    		<td colspan=4>
 	    		     <div><input type="checkbox" id="isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
 	    			  <fieldset id="monthlyMeal" style="display:none"> 
-	    			  	<legend>${message("yly.charge.meal.reocrd")}</legend>
+	    			  	<legend>${message("yly.charge.meal.reocrd")}:</legend>
 	    			  	<table class="table table-striped">
 	    			  		<tr>
-					    		<th>${message("yly.common.charge.period")}</th>
+					    		<th>${message("yly.common.charge.period")}:</th>
 					    		<td>
-					    			<input id="periodStartDate" name="periodStartDate" type="text" class="easyui-datebox" style="width:100px;"/>
+					    			<input id="mealPeriodStartDate" name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;"/>
 					    		    ──
-				    			    <input id="periodEndDate" name="periodEndDate" type="text" class="easyui-datebox" style="width:100px;" disabled=true/>    
+				    			    <input id="periodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" readonly=true/>    
 					    		</td>
 					    		
 					    	</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="chargeItemId" id="mealType" panelHeight="150px" data-options="required:true,editable:false" />   
+					    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="mealTypeId" id="mealType" panelHeight="150px" data-options="required:true,editable:false" />   
 					    		</td>
 					    		
 	    			  		</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" name="deposit.depositAmount" data-options="required:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" name="mealCharge.mealAmount" data-options="required:true,min:0,precision:2" />
 					    		</td>
 					    		
 	    			  		</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.remark")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" name="bedNurseCharge.remark" style="width:400px" validtype="length[0,50]"/> 
+					    			 <input class="easyui-textbox" name="mealCharge.remark" style="width:400px" validtype="length[0,50]"/> 
 					    		</td>
 	    			  		</tr>
 	    			  	</table>
@@ -176,7 +176,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.totalAmount")}:</th>
 	    		<td colspan="3">
-	    			 <input class="easyui-numberbox" name="totalAmount" data-options="required:true,min:0,precision:2" disabled="true"/>
+	    			 <input class="easyui-numberbox" name="totalAmount" data-options="required:true,min:0,precision:2" readonly="true"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

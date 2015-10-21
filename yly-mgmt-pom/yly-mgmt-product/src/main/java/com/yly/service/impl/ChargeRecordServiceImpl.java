@@ -91,7 +91,7 @@ public class ChargeRecordServiceImpl<T, ID extends Serializable> extends BaseSer
         }
       }
 
-      return baseDao.search(query, pageable, analyzer, null);
+      return super.search(query, pageable, analyzer, null);
     } catch (Exception e) {
       e.printStackTrace();
     }

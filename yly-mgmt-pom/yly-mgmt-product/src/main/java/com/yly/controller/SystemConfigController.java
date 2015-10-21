@@ -1,7 +1,6 @@
 package com.yly.controller;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,14 +17,10 @@ import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
-import com.yly.framework.filter.Filter;
-import com.yly.framework.filter.Filter.Operator;
-import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.SystemConfigService;
-import com.yly.utils.FieldFilterUtils;
 
 @Controller("systemConfigController")
 @RequestMapping("/console/systemConfig")
@@ -79,39 +74,17 @@ public class SystemConfigController extends BaseController {
    */
   @RequestMapping(value = "/findByConfigKey", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findByConfigKey(ConfigKey configKey,Direction direction) {
-   
-    if(configKey!=null){
-       List<Filter> filters = new ArrayList<Filter>();
-       List<Ordering> orderings = new ArrayList<Ordering>();
-       Filter keyFilter = new Filter("configKey", Operator.eq, configKey);
-       Filter enableFilter = new Filter("isEnabled",Operator.eq,true);
-       filters.add(enableFilter);
-       filters.add(keyFilter);
-       if (direction!=null) {
-         Ordering ordering = new Ordering();
-         ordering.setProperty("configOrder");
-         ordering.setDirection(direction);
-         orderings.add(ordering);
-      }
-      List<SystemConfig> systemConfigs = systemConfigService.findList(null, filters, orderings,true,null);
-      if (systemConfigs == null || systemConfigs.size() == 0) {
-        filters.clear();
-        filters.add(keyFilter);
-        systemConfigs = systemConfigService.findList(null,filters,null,true,null);
-        if (systemConfigs == null || systemConfigs.size() == 0) {
-          filters.clear();
-          filters.add(keyFilter);
-          systemConfigs = systemConfigService.findList(null, filters, orderings);
-        }else {
-          return null;
-        }
-      }
-      String[] propertys =
-        {"id", "configValue"};
-      return FieldFilterUtils.filterCollectionMap(propertys, systemConfigs);
-    }
-    
-    return null;
+    return systemConfigService.findByConfigKey(configKey, direction);
+  }
+  
+  /**
+   * 根据结算日期获取缴费结束时间
+   * @param currentDay
+   * @return
+   */
+  @RequestMapping(value = "/getBillEndDate", method = RequestMethod.POST)
+  public @ResponseBody String findByConfigKey(Date currentDay) {
+    return systemConfigService.getBillingDate(currentDay);
   }
   /**
    * 编辑页面

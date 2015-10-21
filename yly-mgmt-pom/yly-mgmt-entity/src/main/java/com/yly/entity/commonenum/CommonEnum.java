@@ -251,6 +251,10 @@ public class CommonEnum {
      * 评估结果,9
      */
     EVALUATINGRESULT,
+    /**
+     * 结算日期,10
+     */
+    BILLDAY,
   }
   
   /**

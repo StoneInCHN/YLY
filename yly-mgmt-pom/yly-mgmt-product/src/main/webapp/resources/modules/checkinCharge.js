@@ -14,7 +14,7 @@ var checkinCharge_manager_tool = {
 							var validate = $('#addCheckinCharge_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../checkinCharge/add.jhtml",
+									url:"../billing/checkin.jhtml",
 									type:"post",
 									data:$("#addCheckinCharge_form").serialize(),
 									beforeSend:function(){
@@ -45,6 +45,15 @@ var checkinCharge_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#addCheckinCharge_form').show();
+				    	$("#mealType").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'MEALTYPE';// 参数
+						    }
+						});
 				    },
 				    onClose:function(){
 				    	 //$('#addCheckinCharge_form').form('reset');
@@ -130,16 +139,39 @@ $(function(){
 	
 	//是否伙食费包月
 	$("#isMonthlyMeal").click(function(){
-		console.log($("#isMonthlyMeal").is(":checked"));
+		
 		if($("#isMonthlyMeal").is(":checked")==true){
-			$("#monthlyMeal").css('display','block'); 
+			$("#monthlyMeal").css('display','block');
+			$("#monthlyMeal table input[type=hidden]").each(function(){
+				$(this).prop("disabled",false);
+			});
 		}
 		
 		if($("#isMonthlyMeal").is(":checked")==false){
 			$("#monthlyMeal").css('display','none'); 
+			
+			$("#monthlyMeal table input[type=hidden]").each(function(){
+				$(this).prop("disabled",true);
+			});
 		}
 		
 	});
 	
-	
+	$('#bedNursePeriodStartDate').datebox({
+	    onSelect: function(date){
+            var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+            console.log(dayStr);
+	    	$.ajax({
+				url:"../systemConfig/getBillEndDate.jhtml",
+				type:"post",
+				data:{currentDay:dayStr},
+				success:function(result,response,status){
+					console.log(result);
+					$('#bedNursePeriodEndDate').datebox('setValue',result);
+					
+				}
+			});
+	    }
+	});
+
 })

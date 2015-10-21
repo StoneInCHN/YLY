@@ -45,7 +45,7 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
   protected TenantAccountService tenantAccountService;
 
   /** baseDao */
-  protected BaseDao<T, ID> baseDao;
+  private BaseDao<T, ID> baseDao;
   
   public void setBaseDao(BaseDao<T, ID> baseDao) {
     this.baseDao = baseDao;

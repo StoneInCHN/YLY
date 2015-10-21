@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Billing;
@@ -99,14 +100,21 @@ public class BillingController extends BaseController {
   
   
   /**
-   *  添加页面
+   *  入住缴费页面
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public String add(ModelMap model, Long id) {
+  public String checkinAdd(ModelMap model, Long id) {
     return "/billing/add";
+  }
+  
+  @RequestMapping(value = "/checkin", method = RequestMethod.POST)
+  public @ResponseBody Message add(Billing checkinBill,Long chargeItemId) {
+    
+    //billingService.save(checkinBill,true);
+    return SUCCESS_MESSAGE;
   }
 
   /**
