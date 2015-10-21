@@ -3,7 +3,6 @@ package com.yly.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.beans.QueryParam;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.PersonalizedCharge;
 import com.yly.entity.PersonalizedRecord;
-import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.PersonalizedChargeService;
@@ -51,17 +50,19 @@ public class PersonalizedChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,String realName,String identifier,PaymentStatus status,Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam,Pageable pageable, ModelMap model) {
     Page<PersonalizedCharge> page = new Page<PersonalizedCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null && queryParam.getStatus() == null) {
       page = personalizedChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(PersonalizedChargeRecordController.class)) {
-        LogUtil.debug(PersonalizedChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
-            + endDate);
+    	  LogUtil.debug(PersonalizedChargeRecordController.class, "search", "elderlyName: " + queryParam.getRealName()
+  	            + ",identifier: " + queryParam.getIdentifier() + "" + ",status: " + queryParam.getStatus() + ""+",start date: " + queryParam.getBeginDate() + ", end date: "
+  	            + queryParam.getEndDate());
       }
-      page = personalizedChargeService.chargeRecordSearch(true,beginDate, endDate, realName, identifier,status,null,true, pageable);
+      queryParam.setIsPeriod(true);
+      queryParam.setIsTenant(true);
+      page = personalizedChargeService.chargeRecordSearch(queryParam,pageable);
     }
     
     String[] properties = { "id","elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",

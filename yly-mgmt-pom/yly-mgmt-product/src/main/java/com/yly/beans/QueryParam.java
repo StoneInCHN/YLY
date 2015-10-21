@@ -7,6 +7,11 @@ import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 
+/**
+ * 缴费记录查询条件
+ * @author sujinxuan
+ *
+ */
 public class QueryParam implements Serializable{
 	
 	private static final long serialVersionUID = 5233600129916917541L;
@@ -47,6 +52,7 @@ public class QueryParam implements Serializable{
      * 缴费账单类型
      */
     private BillingType billingType;
+    
 	public Boolean getIsTenant() {
 		return isTenant;
 	}

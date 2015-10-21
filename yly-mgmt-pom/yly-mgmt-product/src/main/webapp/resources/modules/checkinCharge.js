@@ -68,7 +68,7 @@ $(function(){
 		title:message("yly.charge.record.list"),
 		fitColumns:true,
 		toolbar:"#checkinCharge_manager_tool",
-		url:'../billing/list.jhtml',  
+		url:'../billing/list.jhtml?billingType=DAILY', 
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
@@ -189,18 +189,18 @@ $(function(){
 	    }
 	});
 	
-	$("#addCheckinCharge_elderlyInfo").onChange(function(newValue,oldValue){
-		var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
-		$.ajax({
-			url:"../billing/getBedNurseConfig.jhtml",
-			type:"post",
-			data:{elderlyInfoID:elderlyInfoID},
-			success:function(result){
-				console.log(result);
-//				$('#mealPeriodEndDate').datebox('setValue',result[0]);
-				
-			}
-		});
-	});
+//	$("#addCheckinCharge_elderlyInfo").onChange(function(newValue,oldValue){
+//		var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
+//		$.ajax({
+//			url:"../billing/getBedNurseConfig.jhtml",
+//			type:"post",
+//			data:{elderlyInfoID:elderlyInfoID},
+//			success:function(result){
+//				console.log(result);
+////				$('#mealPeriodEndDate').datebox('setValue',result[0]);
+//				
+//			}
+//		});
+//	});
 
 })

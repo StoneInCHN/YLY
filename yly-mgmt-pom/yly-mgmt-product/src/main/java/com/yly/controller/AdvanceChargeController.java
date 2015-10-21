@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
+import com.yly.beans.QueryParam;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.AdvanceCharge;
@@ -95,21 +96,21 @@ public class AdvanceChargeController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/chargeList", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier, BudgetType budgetType, Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam,Pageable pageable, ModelMap model) {
     Page<AdvanceCharge> page = new Page<AdvanceCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null
-        && budgetType == null) {
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null
+        && queryParam.getBudgetType() == null) {
       page = advanceChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
-        LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ", budgetType: " + budgetType + ", start date: "
-            + beginDate + ", end date: " + endDate);
+        LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + queryParam.getRealName()
+            + ",identifier: " + queryParam.getIdentifier() + "" + ", budgetType: " + queryParam.getBudgetType() + ", start date: "
+            + queryParam.getBeginDate() + ", end date: " + queryParam.getEndDate());
       }
+      queryParam.setIsPeriod(false);
+      queryParam.setIsTenant(true);
       page =
-          advanceChargeService.chargeRecordSearch(true,beginDate, endDate, realName, identifier, null,
-              budgetType, false, pageable);
+          advanceChargeService.chargeRecordSearch(queryParam,pageable);
     }
 
 

@@ -1,7 +1,6 @@
 package com.yly.controller;
 
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.beans.QueryParam;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.WaterElectricityCharge;
 import com.yly.entity.WaterElectricityChargeConfig;
-import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.WaterElectricityChargeConfigService;
@@ -54,18 +53,19 @@ public class WaterElectricityChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier,PaymentStatus status, Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam, Pageable pageable, ModelMap model) {
     Page<WaterElectricityCharge> page = new Page<WaterElectricityCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null && queryParam.getStatus() == null) {
       page = waterElectricityChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(WaterElectricityChargeRecordController.class)) {
-        LogUtil.debug(WaterElectricityChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ",status: " + status + ", start date: " + beginDate + ", end date: "
-            + endDate);
+    	  LogUtil.debug(PersonalizedChargeRecordController.class, "search", "elderlyName: " + queryParam.getRealName()
+    	            + ",identifier: " + queryParam.getIdentifier() + "" + ",status: " + queryParam.getStatus() + ""+",start date: " + queryParam.getBeginDate() + ", end date: "
+    	            + queryParam.getEndDate());
       }
-      page = waterElectricityChargeService.chargeRecordSearch(true,beginDate, endDate, realName, identifier,status,null,true,pageable);
+      queryParam.setIsPeriod(true);
+      queryParam.setIsTenant(true);
+      page = waterElectricityChargeService.chargeRecordSearch(queryParam,pageable);
     }
     
     String[] properties =

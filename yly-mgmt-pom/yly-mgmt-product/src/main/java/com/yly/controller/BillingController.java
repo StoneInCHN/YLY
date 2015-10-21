@@ -1,7 +1,7 @@
 package com.yly.controller;
 
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
+import com.yly.beans.QueryParam;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Billing;
 import com.yly.entity.ElderlyInfo;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BillingService;
@@ -74,18 +77,23 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier, Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam,Pageable pageable, ModelMap model) {
     Page<Billing> page = new Page<Billing>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null) {
-      page = billingService.findPage(pageable, true);
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null) {
+    	List<Filter> filters = new ArrayList<Filter>();
+		Filter filter=new Filter("billType",Operator.eq,queryParam.getBillingType());
+		filters.add(filter);
+		pageable.setFilters(filters);
+    	page = billingService.findPage(pageable, true);
     } else {
-      if (LogUtil.isDebugEnabled(DepositController.class)) {
-        LogUtil.debug(DepositController.class, "search", "elderlyName: " + realName
-            +",identifier: " + identifier + "" + ", start date: " + beginDate + ", end date: "
-            + endDate);
+      if (LogUtil.isDebugEnabled(BillingController.class)) {
+        LogUtil.debug(BillingController.class, "search", "elderlyName: " + queryParam.getRealName()
+            +",identifier: " + queryParam.getIdentifier() + "" + ", start date: " + queryParam.getBeginDate() + ", end date: "
+            + queryParam.getEndDate());
       }
-      page = billingService.chargeRecordSearch(true,beginDate, endDate,realName, identifier,null,null,false,pageable);
+      queryParam.setIsPeriod(false);
+      queryParam.setIsTenant(true);
+      page = billingService.chargeRecordSearch(queryParam,pageable);
     }
 
 

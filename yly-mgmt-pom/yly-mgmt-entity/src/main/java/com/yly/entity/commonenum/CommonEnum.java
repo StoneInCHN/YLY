@@ -271,6 +271,9 @@ public class CommonEnum {
      * 退住结算
      */
     CHECK_OUT,
+    /**
+     * 日常缴费
+     */
     DAILY
     
   }
