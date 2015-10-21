@@ -48,7 +48,7 @@ public class ConsultationRecord extends BaseEntity {
 	/**
 	 * 来访咨询人员
 	 */
-	private String vistor;
+	private String visitor;
 
 	/**
 	 * 接待人员
@@ -121,12 +121,12 @@ public class ConsultationRecord extends BaseEntity {
 	@JsonProperty
 	@Column(length = 15)
 	@Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
-	public String getVistor() {
-		return vistor;
+	public String getVisitor() {
+		return visitor;
 	}
 
-	public void setVistor(String vistor) {
-		this.vistor = vistor;
+	public void setVisitor(String visitor) {
+		this.visitor = visitor;
 	}
 
 	@JsonProperty

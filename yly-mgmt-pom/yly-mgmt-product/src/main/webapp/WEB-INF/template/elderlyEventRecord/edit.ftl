@@ -19,7 +19,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.event.eventDate")}:</th>
 	    		<td>
-	    			 <input class="Wdate" value="${(elderlyEventRecord.eventDate?string("yyyy-MM-dd"))!}" type="text" name="eventDate" data-options="required:true,width:150" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});"/>   
+	    			 <input class="Wdate" value="${(elderlyEventRecord.eventDate?string("yyyy-MM-dd"))!}" type="text" name="eventDate" data-options="required:true,width:150" readonly="readonly" onclick="WdatePicker({});"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>

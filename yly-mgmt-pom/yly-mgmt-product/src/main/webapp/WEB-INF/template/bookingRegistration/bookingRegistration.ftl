@@ -4,12 +4,24 @@
 	    <legend>${message("yly.bookingRegistration.search")}</legend>
 	    <form id="bookingRegistration_search_form" class="search-form">
 			<div class="search-item">
-			    <label> ${message("yly.bookingRegistration.bookingdate")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <label> ${message("yly.bookingRegistration.peopleWhoBooked")}:</label>
+			    <input class="easyui-textbox" type="text"  name="peopleWhoBooked" validtype="length[0,15]" style="width:85px;"/>
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.elderly.name")}:</label>
+			    <input class="easyui-textbox" type="text"  name="elderlyName" validtype="length[0,15]" style="width:85px;"/>
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.bookingRegistration.intentRoomType")}:</label>
+			    <input class="easyui-combobox" id="bookingRegistrationSearchRoomType"  name="searchRoomTypeId" style="width:80px;"/>
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.bookingRegistration.bookingCheckInDate")}:</label>
+			     <input type="text" class="Wdate" id="bookingCheckInDateBeginDate" name="bookingCheckInDateBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'bookingCheckInDateDateEndDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="bookingCheckInDateDateEndDate"  name="bookingCheckInDateEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'bookingCheckInDateBeginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -47,7 +59,7 @@
 	    		
 	    		<th>${message("yly.bookingRegistration.bookingCheckInDate")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate" name="bookingCheckInDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    			  <input  name="bookingCheckInDate" type="text" class="easyui-datebox" style="width:100px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -57,7 +69,7 @@
 	    		</td>
 				<th>${message("yly.bookingRegistration.intentRoomType")}:</th>
 	    		<td>
-	    			   <input class="easyui-combobox" id="bookingRegistrationAddRoomType"  name="roomTypeId" style="width:80px;" data-options="editable:false" >     
+	    			   <input class="easyui-combobox" data-options="prompt:'${message("yly.common.please.select")}',panelMaxHeight:100,editable:false" id="bookingRegistrationAddRoomType"  name="roomTypeId" style="width:80px;"/>     
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -40,13 +40,13 @@
 	    	<tr id="editPutInDateTR">
 	    		<th>${message("yly.elderlyInfo.stuffDeposit.inputDate")}:</th>
 	    		<td>
-	    			  <input class="Wdate" value="${(elderlyStuffDeposit.putinDate?string("yyyy-MM-dd"))!}" type="text" name="putinDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'putinDate\')}'});"  /> 
+	    			  <input class="Wdate" value="${(elderlyStuffDeposit.putinDate?string("yyyy-MM-dd"))!}" type="text" name="putinDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({});"  /> 
 	    		</td>
 	    	</tr>
 	    	<tr id="editTakeAlwayDateTR">
 	    		<th>${message("yly.elderlyInfo.stuffDeposit.takeAwayDate")}:</th>
 	    		<td>
-	    			  <input class="Wdate" value="${(elderlyStuffDeposit.takeAlwayDate?string("yyyy-MM-dd"))!}" type="text" name="takeAlwayDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'takeAlwayDate\')}'});"  /> 
+	    			  <input class="Wdate" value="${(elderlyStuffDeposit.takeAlwayDate?string("yyyy-MM-dd"))!}" type="text" name="takeAlwayDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({});"  /> 
 	    		</td>
 	    	</tr>
 	    	<tr>

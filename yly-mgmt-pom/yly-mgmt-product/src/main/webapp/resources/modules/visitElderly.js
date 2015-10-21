@@ -192,11 +192,8 @@ $(function(){
 				listRemove('visitElderly-table-list','../visitElderly/delete.jhtml');
 			}
 	}
-	$("#visitElderly_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+	  $("#visitElderly_search_btn").click(function(){
+	  var _queryParams = $("#visitElderly_search_form").serializeJSON();
 	  $('#visitElderly-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#visitElderly-table-list").datagrid('reload');
 	})

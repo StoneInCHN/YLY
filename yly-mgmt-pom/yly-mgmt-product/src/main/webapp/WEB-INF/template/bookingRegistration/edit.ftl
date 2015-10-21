@@ -20,7 +20,7 @@
 	    		
 	    		<th>${message("yly.bookingRegistration.bookingCheckInDate")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate" name="bookingCheckInDate" value="${bookingRegistration.bookingCheckInDate}" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    			  <input name="bookingCheckInDate" type="text" value="${bookingRegistration.bookingCheckInDate}" class="easyui-datebox"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>

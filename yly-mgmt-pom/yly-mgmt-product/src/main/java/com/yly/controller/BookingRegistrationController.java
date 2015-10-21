@@ -64,9 +64,20 @@ public class BookingRegistrationController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<BookingRegistration> list(Date beginDate, Date endDate,
-      Pageable pageable, ModelMap model) {
-
+  public @ResponseBody Page<BookingRegistration> list(Date bookingCheckInDateBeginDate,
+      Date bookingCheckInDateEndDate, BookingRegistration bookingRegistration,
+      Long searchRoomTypeId, Pageable pageable, ModelMap model) {
+    
+    SystemConfig intentRoomType = systemConfigService.find(searchRoomTypeId);
+    
+    bookingRegistration.setIntentRoomType(intentRoomType);
+    if (bookingCheckInDateBeginDate != null || bookingCheckInDateEndDate != null
+        || bookingRegistration.getPeopleWhoBooked() != null
+        || bookingRegistration.getElderlyName() != null || intentRoomType != null) {
+      
+      return bookingRegistrationService.searchBookingRegistration(bookingCheckInDateBeginDate,
+          bookingCheckInDateEndDate, bookingRegistration, searchRoomTypeId, pageable);
+    }
     return bookingRegistrationService.findPage(pageable, true);
   }
 
@@ -99,7 +110,8 @@ public class BookingRegistrationController extends BaseController {
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
     BookingRegistration bookingRegistration = bookingRegistrationService.find(id);
-    model.addAttribute("systemConfigs", systemConfigService.findByConfigKey(ConfigKey.ROOMTYPE, null));
+    model.addAttribute("systemConfigs",
+        systemConfigService.findByConfigKey(ConfigKey.ROOMTYPE, null));
     model.addAttribute("bookingRegistration", bookingRegistration);
     return "bookingRegistration/edit";
   }

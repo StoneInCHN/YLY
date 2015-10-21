@@ -10,6 +10,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -25,6 +33,7 @@ import com.yly.entity.commonenum.CommonEnum.Relation;
 @Entity
 @Table(name = "yly_visit_elderly_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_visit_elderly_record_sequence")
+@Indexed(index="visitElderlyRecord")
 public class VisitElderlyRecord extends BaseEntity {
 
   /**
@@ -89,6 +98,7 @@ public class VisitElderlyRecord extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getVisitor() {
     return visitor;
   }
@@ -98,6 +108,8 @@ public class VisitElderlyRecord extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getVisitDate() {
     return visitDate;
   }
@@ -166,6 +178,7 @@ public class VisitElderlyRecord extends BaseEntity {
 
   @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -183,6 +196,7 @@ public class VisitElderlyRecord extends BaseEntity {
     this.relation = relation;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @Index(name = "visit_elderly_record_tenantid")
   public Long getTenantID() {
     return tenantID;

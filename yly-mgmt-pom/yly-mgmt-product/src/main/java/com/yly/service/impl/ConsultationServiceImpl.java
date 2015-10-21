@@ -54,12 +54,12 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     analyzer.setMaxWordLength(true);
     BooleanQuery query = new BooleanQuery();
 
-    QueryParser vistorParser = new QueryParser(Version.LUCENE_35, "vistor", analyzer);
+    QueryParser visitorParser = new QueryParser(Version.LUCENE_35, "visitor", analyzer);
     QueryParser elderlyNameParser = new QueryParser(Version.LUCENE_35, "elderlyName", analyzer);
     QueryParser tenantParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
 
     Query tenantQuery = null;
-    Query vistorQuery = null;
+    Query visitorQuery = null;
     Query elderlyNameQuery = null;
     Query infoChannelQuery = null;
     Query checkinIntentionQuery = null;
@@ -72,14 +72,14 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
       e1.printStackTrace();
     }
 
-    if (consultationRecord.getVistor() != null) {
-      String vistorName = QueryParser.escape(consultationRecord.getVistor());
+    if (consultationRecord.getVisitor() != null) {
+      String visitorName = QueryParser.escape(consultationRecord.getVisitor());
       try {
-        vistorQuery = vistorParser.parse(vistorName);
+        visitorQuery = visitorParser.parse(visitorName);
       } catch (ParseException e) {
         e.printStackTrace();
       }
-      query.add(vistorQuery, Occur.MUST);
+      query.add(visitorQuery, Occur.MUST);
     }
 
     if (consultationRecord.getElderlyName() != null) {

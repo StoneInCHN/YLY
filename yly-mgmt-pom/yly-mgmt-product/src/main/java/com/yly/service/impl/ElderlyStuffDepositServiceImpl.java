@@ -1,7 +1,5 @@
 package com.yly.service.impl;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 
 import org.apache.lucene.queryParser.QueryParser;
@@ -12,7 +10,7 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
-
+import com.yly.beans.SearchParameter;
 import com.yly.dao.ElderlyStuffDepositDao;
 import com.yly.entity.ElderlyStuffDeposit;
 import com.yly.framework.paging.Page;
@@ -40,42 +38,48 @@ public class ElderlyStuffDepositServiceImpl extends BaseServiceImpl<ElderlyStuff
   }
 
   @Override
-  public Page<ElderlyStuffDeposit> searchPageByFilter(String keysOfStuffName,
-      String keysOfStuffNumber, String keysOfElderlyName, Date beginDate, Date endDate,
+  public Page<ElderlyStuffDeposit> searchPageByFilter(SearchParameter searchParameter,
       Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
     try {
       BooleanQuery query = new BooleanQuery();
-      if (keysOfElderlyName != null) {
-        String text = QueryParser.escape(keysOfElderlyName);
+      if (searchParameter.getKeysOfElderlyName() != null) {
+        String text = QueryParser.escape((searchParameter.getKeysOfElderlyName()));
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
-      if (keysOfStuffName != null) {
-        String text = QueryParser.escape(keysOfStuffName);
+      if (searchParameter.getKeysOfStuffName() != null) {
+        String text = QueryParser.escape(searchParameter.getKeysOfStuffName());
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "name", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
-      if (keysOfStuffNumber != null) {
-        String text = QueryParser.escape(keysOfStuffNumber);
+      if (searchParameter.getKeysOfStuffNumber() != null) {
+        String text = QueryParser.escape(searchParameter.getKeysOfStuffNumber());
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "stuffNumber", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
-      if (beginDate != null) {
+      if (searchParameter.getBeginPutInDate() != null || searchParameter.getEndPutInDate() != null) {
         TermRangeQuery tQuery =
-            new TermRangeQuery("putinDate", DateTimeUtils.convertDateToString(beginDate, null),
-                null, true, false);
+            new TermRangeQuery("putinDate", DateTimeUtils.convertDateToString(
+                searchParameter.getBeginPutInDate(), null), DateTimeUtils.convertDateToString(
+                searchParameter.getEndPutInDate(), null),
+                searchParameter.getBeginPutInDate() != null,
+                searchParameter.getEndPutInDate() != null);
         query.add(tQuery, Occur.MUST);
       }
-      if (endDate != null) {
+      if (searchParameter.getBeginTakeAwayDate() != null
+          || searchParameter.getEndTakeAwayDate() != null) {
         TermRangeQuery tQuery =
-            new TermRangeQuery("takeAlwayDate", null, DateTimeUtils.convertDateToString(endDate,
-                null), false, true);
+            new TermRangeQuery("takeAlwayDate", DateTimeUtils.convertDateToString(
+                searchParameter.getBeginTakeAwayDate(), null), DateTimeUtils.convertDateToString(
+                searchParameter.getEndTakeAwayDate(), null),
+                searchParameter.getBeginTakeAwayDate() != null,
+                searchParameter.getEndTakeAwayDate() != null);
         query.add(tQuery, Occur.MUST);
       }
       return elderlyStuffDepositDao.search(query, pageable, analyzer, null);

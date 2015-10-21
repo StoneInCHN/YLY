@@ -4,18 +4,19 @@
 	  <fieldset>
 	    <legend>${message("yly.elderlyInfo.event.search")}</legend>
 	    <form id="elderlyEvent_search_form" class="search-form">
+	        <div class="search-item">&nbsp;&nbsp;</div>
+	    	<div class="search-item">
+			   <label>${message("yly.common.elderly.name")}:</label>
+			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
+			</div>
+			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div class="search-item">
-			    <label> ${message("yly.common.search.date.from")}:</label>
+			    <label> ${message("yly.elderlyInfo.event.date.from")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
-			</div>
-			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-			<div class="search-item">
-			   <label>${message("yly.common.elderly.name")}:</label>
-			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -53,7 +54,7 @@
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.event.eventDate")}:</th>
 	    		<td>
-	    			  <input class="Wdate" type="text" name="eventDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});"  /> 
+	    			  <input class="Wdate" type="text" name="eventDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({});"  /> 
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -1,12 +1,12 @@
 package com.yly.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +23,7 @@ import com.yly.service.ElderlyEventRecordService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.ToolsUtils;
 
 /**
  * 老人事件controller
@@ -55,6 +56,7 @@ public class ElderlyEventRecordController extends BaseController {
   }
 
   /**
+   * 查询list
    * 
    * @param pageable
    * @return
@@ -103,6 +105,8 @@ public class ElderlyEventRecordController extends BaseController {
   public @ResponseBody Message save(ElderlyEventRecord elderlyEventRecord, Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (elderlyInfo != null && elderlyEventRecord != null) {
+      elderlyEventRecord.setEventDate(ToolsUtils.addTime(elderlyEventRecord.getEventDate(),
+          Calendar.HOUR, 8));// 加8个小时
       elderlyEventRecord.setElderlyInfo(elderlyInfo);
       elderlyEventRecord.setTenantID(tenantAccountService.getCurrentTenantID());
       if (elderlyEventRecord.getEventContent() != null) {
@@ -113,7 +117,13 @@ public class ElderlyEventRecordController extends BaseController {
     return ERROR_MESSAGE;
   }
 
-
+  /**
+   * 更新
+   * 
+   * @param elderlyEventRecord
+   * @param elderlyInfoID
+   * @return
+   */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(ElderlyEventRecord elderlyEventRecord, Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);

@@ -9,6 +9,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -24,6 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.Gender;
 @Entity
 @Table(name = "yly_booking_registration")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_booking_registration_sequence")
+@Indexed(index="bookingRegistration")
 public class BookingRegistration extends BaseEntity {
 
   /**
@@ -79,6 +88,7 @@ public class BookingRegistration extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getElderlyName() {
     return elderlyName;
   }
@@ -108,6 +118,7 @@ public class BookingRegistration extends BaseEntity {
 
   @JsonProperty
   @ManyToOne
+  @IndexedEmbedded
   public SystemConfig getIntentRoomType() {
     return intentRoomType;
   }
@@ -118,6 +129,7 @@ public class BookingRegistration extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
+  @Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getPeopleWhoBooked() {
     return peopleWhoBooked;
   }
@@ -147,6 +159,7 @@ public class BookingRegistration extends BaseEntity {
 
   @JsonProperty
   @Index(name = "booking_registration_tenantid")
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Long getTenantID() {
     return tenantID;
   }
@@ -156,6 +169,8 @@ public class BookingRegistration extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getBookingCheckInDate() {
     return bookingCheckInDate;
   }

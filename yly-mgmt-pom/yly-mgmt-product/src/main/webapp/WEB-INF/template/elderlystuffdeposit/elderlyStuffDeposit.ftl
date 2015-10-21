@@ -5,14 +5,9 @@
 	    <legend>${message("yly.elderlyInfo.stuffDeposit.search")}</legend>
 	    <form id="elderlyStuff_search_form" class="search-form">
 			<div class="search-item">
-			    <label> ${message("yly.common.search.date.from")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
-			</div>
-			<div class="search-item">
-			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
-			</div>
-			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			   <label>${message("yly.elderlyInfo.stuffDeposit.elderlyName")}:</label>
+			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
+			</div>		    
 			<div class="search-item">
 			   <label>${message("yly.elderlyInfo.stuffDeposit.name")}:</label>
 			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="stuffName" name="keysOfStuffName" validtype="length[0,30]" style="width:110px;"/>
@@ -21,9 +16,23 @@
 			   <label>${message("yly.elderlyInfo.stuffDeposit.stuffNumer")}:</label>
 			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="stuffNumber" name="keysOfStuffNumber" validtype="length[0,15]" style="width:110px;"/>
 			</div>
+			<p/>
 			<div class="search-item">
-			   <label>${message("yly.elderlyInfo.stuffDeposit.elderlyName")}:</label>
-			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
+			    <label> ${message("yly.stuffDeposit.putin.date.from")}:</label>
+			    <input type="text" class="Wdate" id="beginPutInDate" name="beginPutInDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endPutInDate\')}'});" />
+			</div>
+			<div class="search-item">
+			    <label>${message("yly.to")}:</label>
+			   	<input type="text" class="Wdate" id="endPutInDate"  name="endPutInDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginPutInDate\')}'});"/>
+			</div>
+			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div class="search-item">
+			    <label> ${message("yly.stuffDeposit.takeaway.date.from")}:</label>
+			    <input type="text" class="Wdate" id="beginTakeAwayDate" name="beginTakeAwayDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endTakeAwayDate\')}'});" />
+			</div>
+			<div class="search-item">
+			    <label>${message("yly.to")}:</label>
+			   	<input type="text" class="Wdate" id="endTakeAwayDate"  name="endTakeAwayDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginTakeAwayDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -83,13 +92,13 @@
 	    	<tr id="putinDateTR">
 	    		<th>${message("yly.elderlyInfo.stuffDeposit.inputDate")}:</th>
 	    		<td>
-	    			  <input class="Wdate" type="text" id="putinDate" name="putinDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'putinDate\')}'});"  /> 
+	    			  <input class="Wdate" type="text" id="putinDate" name="putinDate" data-options="required:true,editable:true,width:110" readonly="readonly" onclick="WdatePicker({});"  /> 
 	    		</td>
 	    	</tr>
 	    	<tr id="takeAlwayDateTR">
 	    		<th>${message("yly.elderlyInfo.stuffDeposit.takeAwayDate")}:</th>
 	    		<td>
-	    			  <input class="Wdate" type="text" id="takeAlwayDate" name="takeAlwayDate" data-options="editable:true,width:110" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'takeAlwayDate\')}'});"  /> 
+	    			  <input class="Wdate" type="text" id="takeAlwayDate" name="takeAlwayDate" data-options="editable:true,width:110" readonly="readonly" onclick="WdatePicker({});"  /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
