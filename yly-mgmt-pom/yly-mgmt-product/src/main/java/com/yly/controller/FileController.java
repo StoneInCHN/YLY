@@ -29,9 +29,9 @@ public class FileController extends BaseController {
   
 
   @RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
-  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file) {
+  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,String identifier) {
     
-    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, "1049");
+    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
     System.out.println(filePath);
     if(filePath ==null){
       filePath ="xxx/xxx/xx";

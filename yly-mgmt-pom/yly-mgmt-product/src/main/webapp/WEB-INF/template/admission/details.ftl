@@ -17,19 +17,10 @@
 	    			  <input class="easyui-textbox"  name="personnelCategoryId" type="text"  value="${elderlyInfo.personnelCategory.configValue}" readonly=true style="width:90px;"/>
 	    		</td>
 	    		
-	    		<td colspan="2" rowspan="6">
-	    			<div title="头像上传" class="easyui-tooltip">
-	    				<div id="admissionUploader-add" class="single-uploader">
-						    <div  class="queueList">
-						        <div  class="placeholder">
-						        	<div id="admissionFilePicker-add" ></div>
-						        </div>
-						    </div>
-						    <div class="btns">
-						        <div class="uploadBtn state-pedding"></div>
-						    </div>
-						</div>
-	    			</div>
+	    		<td  rowspan="6">
+	    				<p class="imgWrap img-thumbnail">
+						     <img src="${elderlyInfo.profilePhoto}">
+						</p>
 	    		</td>
 	    	</tr>
 	    	<tr>

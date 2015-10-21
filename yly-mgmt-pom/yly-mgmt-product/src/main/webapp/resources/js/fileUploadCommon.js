@@ -3,11 +3,10 @@
 /**
  * 
  * @param options
- * warp 外层包裹id
- * identifierId 存放编号的input框id
- * successFun 文件返回成功后执行的返回函数
- * createOption init初始化传值
- * 
+ * warp 外层包裹id  必填
+ * createOption 初始化传值
+ * uploadBeforeSend 上传前的回调函数
+ * uploadSuccess 上传成功后的回调函数
  * 
  * 
  */
@@ -62,7 +61,7 @@ function singleUpload(options) {
 	})(),
 
 	// WebUploader实例
-	uploader;
+	 uploader;
 
 	if($queue.length > 0){
 		$queue.html();
@@ -77,7 +76,10 @@ function singleUpload(options) {
 	}
 
 	// 实例化
-	uploader = WebUploader.create(options.createOption);
+	if(options.createOption){
+		uploader = WebUploader.create(options.createOption);
+	}
+	
 
 	// 添加“添加文件”的按钮，
 	/*uploader.addButton({
@@ -341,19 +343,18 @@ function singleUpload(options) {
 	
 	//上传成功执行的内容
 	uploader.onUploadSuccess = function(file, response ) {
-		$("#"+options.inputId).val(response.content);
-		options.successFun();
+		if(options.uploadSuccess){
+			options.uploadSuccess(file, response );
+		}
+		
 	};
 	
-	uploader.on('uploadBeforeSend', function(object, data, headers) {
-		var  identifierId= options.identifierId;
-		if(identifierId){
-			var identifierVal = $("#"+identifierId).val();
-			if(identifierVal){
-				data.identifier =identifierVal;
-			}
+	//上传之前执行的内容
+	uploader.onUploadBeforeSend = function(object, data, headers) {
+		if(options.uploadBeforeSend){
+			options.uploadBeforeSend(object, data, headers);
 		}
-	});
+	};
 	
 
 	uploader.onFileQueued = function(file) {
