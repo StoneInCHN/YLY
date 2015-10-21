@@ -32,7 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.Relation;
 @Entity
 @Table(name = "yly_consultation_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_consultation_record_sequence")
-@Indexed(index="consultationRecordManage/consultationRecord")
+@Indexed(index="consultationRecord")
 public class ConsultationRecord extends BaseEntity {
 
 	/**
@@ -256,6 +256,7 @@ public class ConsultationRecord extends BaseEntity {
 		this.staffID = staffID;
 	}
 
+	@Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
 	@Index(name = "consultation_record_tenantid")
 	public Long getTenantID() {
 		return tenantID;
