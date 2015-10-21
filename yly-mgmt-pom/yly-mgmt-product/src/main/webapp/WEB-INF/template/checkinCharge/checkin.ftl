@@ -107,7 +107,7 @@
 	    			  			<th>${message("yly.charge.record.bed")}:</th>
 					    		<td>
 					    			 <input class="easyui-numberbox" name="bedNurseCharge.bedAmount" data-options="required:true,min:0,precision:2" />
-					    			 <span class="margin-left-20">单人间，每天100元，每月1000元</span>
+					    			<span class="margin-left-20" id="bedType" data-value="">${message("yly.checkin.sign","单人间")}</span><span class="margin-left-10" id="" data-value="">${message("yly.checkin.month","1112")}</span><span class="margin-left-10" id="" data-value="">${message("yly.checkin.day","43")}</span>
 					    		</td>
 					    		
 	    			  		</tr>
@@ -115,7 +115,7 @@
 	    			  			<th>${message("yly.charge.record.nurse")}:</th>
 					    		<td>
 					    			 <input class="easyui-numberbox" name="bedNurseCharge.nurseAmount" data-options="required:true,min:0,precision:2" />
-					    		     <span class="margin-left-20" id="" data-value="">${message("yly.checkin.nurseLevel","自理一级")}</span><span class="margin-left-10">${message("yly.checkin.month","1112")}</span><span class="margin-left-10">${message("yly.checkin.day","43")}</span>
+					    		     <span class="margin-left-20" id="nurseLevel" data-value="">${message("yly.checkin.sign","自理一级")}</span><span class="margin-left-10" id="" data-value="">${message("yly.checkin.month","1112")}</span><span class="margin-left-10" id="" data-value="">${message("yly.checkin.day","43")}</span>
 					    		</td>
 					    		
 	    			  		</tr>

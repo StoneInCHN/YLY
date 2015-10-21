@@ -17,9 +17,11 @@ import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Billing;
+import com.yly.entity.ElderlyInfo;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BillingService;
+import com.yly.service.ElderlyInfoService;
 import com.yly.utils.FieldFilterUtils;
 
 @Controller("billingController")
@@ -28,6 +30,10 @@ public class BillingController extends BaseController {
 
   @Resource(name = "billingServiceImpl")
   private BillingService billingService;
+  
+  @Resource(name = "elderlyInfoServiceImpl")
+  private ElderlyInfoService elderlyInfoService;
+  
   
   /**
    * 入院缴费页面
@@ -100,14 +106,18 @@ public class BillingController extends BaseController {
   
   
   /**
-   *  入住缴费页面
+   *  入住缴费页面获取床位护理费配置
    * @param model
    * @param id
    * @return
    */
-  @RequestMapping(value = "/add", method = RequestMethod.GET)
-  public String checkinAdd(ModelMap model, Long id) {
-    return "/billing/add";
+  @RequestMapping(value = "/getBedNurseConfig", method = RequestMethod.GET)
+  public @ResponseBody List<Map<String,Object>> getBedNurseConfig(ModelMap model, Long elderlyInfoID) {
+	ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+	 String[] properties =
+	        { "chargeItem.configValue", "amountPerDay", "amountPerMonth"};
+	
+    return billingService.getBedNurseConfigByElderly(properties, elderlyInfo);
   }
   
   @RequestMapping(value = "/checkin", method = RequestMethod.POST)

@@ -181,12 +181,26 @@ $(function(){
 				url:"../systemConfig/getBillEndDate.jhtml",
 				type:"post",
 				data:{currentDay:dayStr},
-				success:function(result,response,status){
+				success:function(result){
 					$('#mealPeriodEndDate').datebox('setValue',result[0]);
 					
 				}
 			});
 	    }
+	});
+	
+	$("#addCheckinCharge_elderlyInfo").onChange(function(newValue,oldValue){
+		var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
+		$.ajax({
+			url:"../billing/getBedNurseConfig.jhtml",
+			type:"post",
+			data:{elderlyInfoID:elderlyInfoID},
+			success:function(result){
+				console.log(result);
+//				$('#mealPeriodEndDate').datebox('setValue',result[0]);
+				
+			}
+		});
 	});
 
 })
