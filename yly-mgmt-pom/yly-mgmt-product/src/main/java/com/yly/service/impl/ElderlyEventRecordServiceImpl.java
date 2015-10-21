@@ -53,18 +53,13 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
-      if (beginDate != null) {
+      if (beginDate != null || endDate != null) {
         TermRangeQuery tQuery =
             new TermRangeQuery("eventDate", DateTimeUtils.convertDateToString(beginDate, null),
-                null, true, false);
+                DateTimeUtils.convertDateToString(endDate, null), beginDate != null, endDate != null);
         query.add(tQuery, Occur.MUST);
       }
-      if (endDate != null) {
-        TermRangeQuery tQuery =
-            new TermRangeQuery("eventDate", null, DateTimeUtils.convertDateToString(endDate, null),
-                false, true);
-        query.add(tQuery, Occur.MUST);
-      }
+
       return elderlyEventRecordDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {
       e.printStackTrace();

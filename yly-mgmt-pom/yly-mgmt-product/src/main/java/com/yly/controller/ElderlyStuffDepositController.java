@@ -1,5 +1,6 @@
 package com.yly.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
+import com.yly.beans.SearchParameter;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyStuffDeposit;
 import com.yly.entity.ElderlyInfo;
@@ -21,6 +23,7 @@ import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyStuffDepositService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.ToolsUtils;
 
 /**
  * 物品寄存controller
@@ -55,15 +58,15 @@ public class ElderlyStuffDepositController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<ElderlyStuffDeposit> list(String keysOfStuffName,
-      String keysOfStuffNumber, String keysOfElderlyName, Date beginDate, Date endDate,
+  public @ResponseBody Page<ElderlyStuffDeposit> list(SearchParameter searchParameter,
       Pageable pageable) {
-    if (keysOfStuffName == null && keysOfStuffNumber == null && keysOfElderlyName == null
-        && beginDate == null && endDate == null) {
+    if (searchParameter == null) {
+      searchParameter = new SearchParameter();
+    }
+    if (ToolsUtils.checkObjAllFieldNull(searchParameter)) {
       return elderlyStuffDepositService.findPage(pageable, false);
     } else {
-      return elderlyStuffDepositService.searchPageByFilter(keysOfStuffName, keysOfStuffNumber,
-          keysOfElderlyName, beginDate, endDate, pageable);
+      return elderlyStuffDepositService.searchPageByFilter(searchParameter, pageable);
     }
   }
 
@@ -101,6 +104,14 @@ public class ElderlyStuffDepositController extends BaseController {
   public @ResponseBody Message save(ElderlyStuffDeposit elderlyStuffDeposit, Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (elderlyInfo != null && elderlyStuffDeposit != null) {
+      Date putinDate = elderlyStuffDeposit.getPutinDate();
+      if (putinDate != null) {
+        elderlyStuffDeposit.setPutinDate(ToolsUtils.addTime(putinDate, Calendar.HOUR, 8));// 加8个小时
+      }
+      Date takeAwayDate = elderlyStuffDeposit.getTakeAlwayDate();
+      if (takeAwayDate != null) {
+        elderlyStuffDeposit.setTakeAlwayDate(ToolsUtils.addTime(takeAwayDate, Calendar.HOUR, 8));// 加8个小时
+      }
       elderlyStuffDeposit.setElderlyInfo(elderlyInfo);
       if (elderlyStuffDeposit.getName() != null) {
         elderlyStuffDepositService.save(elderlyStuffDeposit);
@@ -110,7 +121,13 @@ public class ElderlyStuffDepositController extends BaseController {
     return ERROR_MESSAGE;
   }
 
-
+  /**
+   * 更新
+   * 
+   * @param elderlyStuffDeposit
+   * @param elderlyInfoID
+   * @return
+   */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(ElderlyStuffDeposit elderlyStuffDeposit, Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
@@ -142,4 +159,6 @@ public class ElderlyStuffDepositController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
+
+
 }
