@@ -28,13 +28,13 @@
 </div> 
 <div id="addAdmission">
 	<form id="addAdmission_form" action="add.jhtml" method="post" class="form-table" enctype="multipart/form-data">   
-			<input type="hidden" id="addAdmission_form_file_input">
+		<input type="hidden" id="addAdmission_form_file_input" name="profilePhoto">
 	   	  <table class="table table-striped table-bordered">
 	   	  	<caption><h5>${message("yly.elderlyInfo.baseinfo")}</h5></caption>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
+	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" readonly="readonly" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
 	    			 <a href="#" class="easyui-linkbutton" id="generateIdentifier_btn" plain="true">${message("yly.common.generate.identifier")}</a>
 	    		</td>
 	    		

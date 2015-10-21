@@ -21,7 +21,7 @@
 	    		
 	    		<td colspan="2" rowspan="6">
 	    			<div title="头像上传" class="easyui-tooltip">
-	    				<div id="admissionUploader-add" class="single-uploader">
+	    				<div id="admissionUploader-edit" class="single-uploader">
 						    <div  class="queueList">
 						        <div  class="placeholder">
 						        	<div id="admissionFilePicker-add" ></div>

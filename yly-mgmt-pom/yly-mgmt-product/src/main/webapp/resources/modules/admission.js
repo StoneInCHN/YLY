@@ -69,26 +69,50 @@ var admission_manager_tool = {
 					                 extensions: 'gif,jpg,jpeg,bmp,png',
 					                 mimeTypes: 'image/*'
 					             },
+					             //缩略图
 					             thumb:{
-					            	    width: 150,
-					            	    height: 150,
+					            	    width: 110,
+					            	    height: 110,
 					            	    quality: 90,
 					            	    allowMagnify: false,
 					            	    crop: false,
 					            	    type: 'image/jpeg'
-					            	},
+					              },
 					             // swf文件路径
 					             swf: BASE_URL + '/js/Uploader.swf',
 					             disableGlobalDnd: true,
 					             server: '../file/uploadProfilePhoto.jhtml',
 					             fileNumLimit: 1,
 					             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
-					             fileSingleSizeLimit: 10 * 1024 * 1024    //单个文件上传大小  10 M
+					             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
+					             //图片裁剪
+					             compress:{
+					            	 width: 110,
+					            	 height: 110,
+					            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
+					            	 quality: 90,
+					            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+					            	 allowMagnify: false,
+					            	 // 是否允许裁剪。
+					            	 crop: false,
+					            	 // 是否保留头部meta信息。
+					            	 preserveHeaders: true,
+					            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
+					            	 // 此属性可能会影响图片自动纠正功能
+					            	 noCompressIfLarger: false,
+					            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
+					            	 compressSize: 0
+					             }
 			     			},
-			     			identifierId:"identifier_input",
+			     			//包裹上传组件的div id
 			     			warp :"addAdmission_form",
-			     			inputId:"addAdmission_form_file_input",
-			     			successFun:function(){
+			     			uploadBeforeSend:function(object, data, headers){
+			     				 //在参数中增加一个老人编号字段 identifier
+			     				 data.identifier =$("#identifier_input").val();
+			     			},
+			     			uploadSuccess:function(file, response){
+			     				//将返回的图片路径放到隐藏的input中，用于表单保存
+			     				$("#addAdmission_form_file_input").val(response.content);
 			     				$.ajax({
 									url:"../admission/add.jhtml",
 									type:"post",
@@ -202,6 +226,61 @@ var admission_manager_tool = {
 					    },
 					    value:$("#nursingLevelEditId").val()
 					});
+			     	
+			     	
+			     	var editOptions ={
+			     			createOption:{
+			     				pick: {
+					                 id: '#admissionFilePicker-edit',
+					                 label: '',
+					                 multiple :false
+					             },
+					             dnd: '#admissionUploader-add .queueList',
+					             accept: {
+					                 title: 'Images',
+					                 extensions: 'gif,jpg,jpeg,bmp,png',
+					                 mimeTypes: 'image/*'
+					             },
+					             thumb:{
+					            	    width: 150,
+					            	    height: 150,
+					            	    quality: 90,
+					            	    allowMagnify: false,
+					            	    crop: false,
+					            	    type: 'image/jpeg'
+					            	},
+					             // swf文件路径
+					             swf: BASE_URL + '/js/Uploader.swf',
+					             disableGlobalDnd: true,
+					             server: '../file/uploadProfilePhoto.jhtml',
+					             fileNumLimit: 1,
+					             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+					             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
+					             compress:{
+					            	 width: 110,
+					            	    height: 110,
+					            	    // 图片质量，只有type为`image/jpeg`的时候才有效。
+					            	    quality: 90,
+					            	    // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+					            	    allowMagnify: false,
+					            	    // 是否允许裁剪。
+					            	    crop: false,
+					            	    // 是否保留头部meta信息。
+					            	    preserveHeaders: true,
+					            	    // 如果发现压缩后文件大小比原来还大，则使用原来图片
+					            	    // 此属性可能会影响图片自动纠正功能
+					            	    noCompressIfLarger: false,
+					            	    // 单位字节，如果图片大小小于此值，不会采用压缩。
+					            	    compressSize: 0
+					             }
+			     			},
+			     			identifierId:"identifier_input",
+			     			warp :"addAdmission_form",
+			     			inputId:"addAdmission_form_file_input"
+			     	};
+			     	
+			     	singleUpload(editOptions);
+			     	
 			    }
 			});  
 		},
