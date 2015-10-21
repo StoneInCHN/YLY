@@ -88,7 +88,7 @@ public class ElderlyStuffDeposit extends BaseEntity {
   @JsonProperty
   @Column(length = 30)
   @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED,
-  analyzer = @Analyzer(impl = IKAnalyzer.class))
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }

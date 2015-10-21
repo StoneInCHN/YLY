@@ -31,7 +31,7 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_elderly_event_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_elderly_event_record_sequence")
-@Indexed(index="elderlyEventRecord/elderlyEventRecord")
+@Indexed(index = "elderlyEventRecord/elderlyEventRecord")
 public class ElderlyEventRecord extends BaseEntity {
 
   /**
@@ -39,12 +39,12 @@ public class ElderlyEventRecord extends BaseEntity {
    */
   private static final long serialVersionUID = 4369912329850780267L;
 
-  
+
   /**
    * 租户ID
    */
   private Long tenantID;
-  
+
   /**
    * 事件发生时间
    */
@@ -59,12 +59,12 @@ public class ElderlyEventRecord extends BaseEntity {
    * 事件老人
    */
   private ElderlyInfo elderlyInfo;
-  
+
   /**
    * 记录人
    */
   private String operator;
-  
+
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @DateBridge(resolution = Resolution.DAY)
@@ -75,7 +75,7 @@ public class ElderlyEventRecord extends BaseEntity {
   public void setEventDate(Date eventDate) {
     this.eventDate = eventDate;
   }
-  
+
   @JsonProperty
   @NotEmpty
   @Length(max = 300)
@@ -87,7 +87,7 @@ public class ElderlyEventRecord extends BaseEntity {
   public void setEventContent(String eventContent) {
     this.eventContent = eventContent;
   }
-  
+
   @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   @IndexedEmbedded
@@ -98,7 +98,7 @@ public class ElderlyEventRecord extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-  
+
   @JsonProperty
   @NotEmpty
   @Length(max = 15)
@@ -112,13 +112,13 @@ public class ElderlyEventRecord extends BaseEntity {
   }
 
   @Index(name = "elderly_event_record_tenantid")
-public Long getTenantID() {
-	return tenantID;
-}
+  public Long getTenantID() {
+    return tenantID;
+  }
 
-public void setTenantID(Long tenantID) {
-	this.tenantID = tenantID;
-}
-  
-  
+  public void setTenantID(Long tenantID) {
+    this.tenantID = tenantID;
+  }
+
+
 }

@@ -8,10 +8,12 @@ import com.yly.framework.dao.impl.BaseDaoImpl;
 
 /**
  * 老人事件 Dao Implement
+ * 
  * @author luzhang
  *
  */
 @Repository("elderlyEventRecordDaoImpl")
-public class ElderlyEventRecordDaoImpl extends BaseDaoImpl<ElderlyEventRecord, Long> implements ElderlyEventRecordDao {
+public class ElderlyEventRecordDaoImpl extends BaseDaoImpl<ElderlyEventRecord, Long> implements
+    ElderlyEventRecordDao {
 
 }
