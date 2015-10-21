@@ -60,11 +60,13 @@ public class ElderlyEventRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<ElderlyEventRecord> list(String keysOfElderlyName,Date beginDate, Date endDate,Pageable pageable) {
+  public @ResponseBody Page<ElderlyEventRecord> list(String keysOfElderlyName, Date beginDate,
+      Date endDate, Pageable pageable) {
     if (keysOfElderlyName == null && beginDate == null && endDate == null) {
-          return elderlyEventRecordService.findPage(pageable, true);
-    }else {
-         return elderlyEventRecordService.SearchPageByFilter(keysOfElderlyName,beginDate, endDate, pageable);
+      return elderlyEventRecordService.findPage(pageable, true);
+    } else {
+      return elderlyEventRecordService.SearchPageByFilter(keysOfElderlyName, beginDate, endDate,
+          pageable);
     }
   }
 
@@ -87,7 +89,7 @@ public class ElderlyEventRecordController extends BaseController {
     if (id != null && handle != null) {
       model.addAttribute("elderlyEventRecord", elderlyEventRecordService.find(id));
       return "elderlyEventRecord/" + handle;
-    }   
+    }
     return "";
   }
 
@@ -100,7 +102,7 @@ public class ElderlyEventRecordController extends BaseController {
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public @ResponseBody Message save(ElderlyEventRecord elderlyEventRecord, Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-    if (elderlyInfo != null && elderlyEventRecord != null ) {
+    if (elderlyInfo != null && elderlyEventRecord != null) {
       elderlyEventRecord.setElderlyInfo(elderlyInfo);
       elderlyEventRecord.setTenantID(tenantAccountService.getCurrentTenantID());
       if (elderlyEventRecord.getEventContent() != null) {
@@ -114,7 +116,7 @@ public class ElderlyEventRecordController extends BaseController {
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(ElderlyEventRecord elderlyEventRecord, Long elderlyInfoID) {
-    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);   
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (elderlyInfo != null) {
       elderlyEventRecord.setElderlyInfo(elderlyInfo);
       elderlyEventRecord.setTenantID(tenantAccountService.getCurrentTenantID());

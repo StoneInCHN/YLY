@@ -28,20 +28,21 @@ import com.yly.utils.DateTimeUtils;
  *
  */
 @Service("elderlyStuffDepositServiceImpl")
-public class ElderlyStuffDepositServiceImpl extends BaseServiceImpl<ElderlyStuffDeposit, Long> implements
-ElderlyStuffDepositService {
-  
+public class ElderlyStuffDepositServiceImpl extends BaseServiceImpl<ElderlyStuffDeposit, Long>
+    implements ElderlyStuffDepositService {
+
   @Resource(name = "elderlyStuffDepositDaoImpl")
   private ElderlyStuffDepositDao elderlyStuffDepositDao;
-  
+
   @Resource
   public void setBaseDao(ElderlyStuffDepositDao elderlyStuffDepositDao) {
     super.setBaseDao(elderlyStuffDepositDao);
   }
 
   @Override
-  public Page<ElderlyStuffDeposit> searchPageByFilter(String keysOfStuffName,String keysOfStuffNumber, String keysOfElderlyName, Date beginDate,
-      Date endDate, Pageable pageable) {
+  public Page<ElderlyStuffDeposit> searchPageByFilter(String keysOfStuffName,
+      String keysOfStuffNumber, String keysOfElderlyName, Date beginDate, Date endDate,
+      Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
@@ -51,31 +52,35 @@ ElderlyStuffDepositService {
         String text = QueryParser.escape(keysOfElderlyName);
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
         Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }  
+        query.add(filterQuery, Occur.MUST);
+      }
       if (keysOfStuffName != null) {
         String text = QueryParser.escape(keysOfStuffName);
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "name", analyzer);
         Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }     
+        query.add(filterQuery, Occur.MUST);
+      }
       if (keysOfStuffNumber != null) {
         String text = QueryParser.escape(keysOfStuffNumber);
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "stuffNumber", analyzer);
         Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      } 
+        query.add(filterQuery, Occur.MUST);
+      }
       if (beginDate != null) {
-        TermRangeQuery tQuery = new TermRangeQuery ("putinDate",DateTimeUtils.convertDateToString (beginDate, null),null, true, false);
+        TermRangeQuery tQuery =
+            new TermRangeQuery("putinDate", DateTimeUtils.convertDateToString(beginDate, null),
+                null, true, false);
         query.add(tQuery, Occur.MUST);
       }
       if (endDate != null) {
-        TermRangeQuery tQuery = new TermRangeQuery ("takeAlwayDate",null, DateTimeUtils.convertDateToString (endDate, null),false, true);
+        TermRangeQuery tQuery =
+            new TermRangeQuery("takeAlwayDate", null, DateTimeUtils.convertDateToString(endDate,
+                null), false, true);
         query.add(tQuery, Occur.MUST);
       }
-      return elderlyStuffDepositDao.search(query, pageable, analyzer,null);
+      return elderlyStuffDepositDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {
-       e.printStackTrace();
+      e.printStackTrace();
     }
     return null;
   }

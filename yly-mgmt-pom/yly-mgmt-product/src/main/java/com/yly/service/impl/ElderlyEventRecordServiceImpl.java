@@ -28,12 +28,12 @@ import com.yly.utils.DateTimeUtils;
  *
  */
 @Service("elderlyEventRecordServiceImpl")
-public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventRecord, Long> implements
-    ElderlyEventRecordService {
-  
+public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventRecord, Long>
+    implements ElderlyEventRecordService {
+
   @Resource(name = "elderlyEventRecordDaoImpl")
   private ElderlyEventRecordDao elderlyEventRecordDao;
-  
+
   @Resource
   public void setBaseDao(ElderlyEventRecordDao elderlyEventRecordDao) {
     super.setBaseDao(elderlyEventRecordDao);
@@ -51,19 +51,23 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
         String text = QueryParser.escape(keysOfElderlyName);
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
         Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery,Occur.MUST);
-      }     
+        query.add(filterQuery, Occur.MUST);
+      }
       if (beginDate != null) {
-        TermRangeQuery tQuery = new TermRangeQuery ("eventDate",DateTimeUtils.convertDateToString (beginDate, null),null, true, false);
+        TermRangeQuery tQuery =
+            new TermRangeQuery("eventDate", DateTimeUtils.convertDateToString(beginDate, null),
+                null, true, false);
         query.add(tQuery, Occur.MUST);
       }
       if (endDate != null) {
-        TermRangeQuery tQuery = new TermRangeQuery ("eventDate",null, DateTimeUtils.convertDateToString (endDate, null),false, true);
+        TermRangeQuery tQuery =
+            new TermRangeQuery("eventDate", null, DateTimeUtils.convertDateToString(endDate, null),
+                false, true);
         query.add(tQuery, Occur.MUST);
       }
-      return elderlyEventRecordDao.search(query, pageable, analyzer,null);
+      return elderlyEventRecordDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {
-       e.printStackTrace();
+      e.printStackTrace();
     }
     return null;
   }

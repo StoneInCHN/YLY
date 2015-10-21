@@ -9,9 +9,11 @@ import com.yly.framework.service.BaseService;
 
 /**
  * 物品寄存Service
+ * 
  * @author luzhang
  *
  */
 public interface ElderlyStuffDepositService extends BaseService<ElderlyStuffDeposit, Long> {
-    Page<ElderlyStuffDeposit> searchPageByFilter(String keysOfStuffName,String keysOfStuffNumber,String keysOfElderlyName,Date beginDate, Date endDate,Pageable pageable);
+  Page<ElderlyStuffDeposit> searchPageByFilter(String keysOfStuffName, String keysOfStuffNumber,
+      String keysOfElderlyName, Date beginDate, Date endDate, Pageable pageable);
 }
