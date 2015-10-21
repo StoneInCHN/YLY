@@ -160,14 +160,29 @@ $(function(){
 	$('#bedNursePeriodStartDate').datebox({
 	    onSelect: function(date){
             var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-            console.log(dayStr);
+//            console.log(dayStr);
 	    	$.ajax({
 				url:"../systemConfig/getBillEndDate.jhtml",
 				type:"post",
 				data:{currentDay:dayStr},
 				success:function(result,response,status){
-					console.log(result);
-					$('#bedNursePeriodEndDate').datebox('setValue',result);
+//					console.log(result);
+					$('#bedNursePeriodEndDate').datebox('setValue',result[0]);
+					
+				}
+			});
+	    }
+	});
+	
+	$('#mealPeriodStartDate').datebox({
+	    onSelect: function(date){
+            var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+	    	$.ajax({
+				url:"../systemConfig/getBillEndDate.jhtml",
+				type:"post",
+				data:{currentDay:dayStr},
+				success:function(result,response,status){
+					$('#mealPeriodEndDate').datebox('setValue',result[0]);
 					
 				}
 			});

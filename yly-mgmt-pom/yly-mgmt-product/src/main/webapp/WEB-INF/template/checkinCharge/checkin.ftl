@@ -115,7 +115,7 @@
 	    			  			<th>${message("yly.charge.record.nurse")}:</th>
 					    		<td>
 					    			 <input class="easyui-numberbox" name="bedNurseCharge.nurseAmount" data-options="required:true,min:0,precision:2" />
-					    		     <span class="margin-left-20">自理二级，每天100元，每月1000元</span>
+					    		     <span class="margin-left-20" id="" data-value="">${message("yly.checkin.nurseLevel","自理一级")}</span><span class="margin-left-10">${message("yly.checkin.month","1112")}</span><span class="margin-left-10">${message("yly.checkin.day","43")}</span>
 					    		</td>
 					    		
 	    			  		</tr>
@@ -142,7 +142,7 @@
 					    		<td>
 					    			<input id="mealPeriodStartDate" name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;"/>
 					    		    ──
-				    			    <input id="periodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" readonly=true/>    
+				    			    <input id="mealPeriodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" readonly=true/>    
 					    		</td>
 					    		
 					    	</tr>
