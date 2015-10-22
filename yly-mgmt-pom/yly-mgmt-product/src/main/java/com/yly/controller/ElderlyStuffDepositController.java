@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
-import com.yly.beans.SearchParameter;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyStuffDeposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.StuffDepositSearchRequest;
 import com.yly.service.ElderlyStuffDepositService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.utils.FieldFilterUtils;
@@ -58,10 +58,10 @@ public class ElderlyStuffDepositController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<ElderlyStuffDeposit> list(SearchParameter searchParameter,
+  public @ResponseBody Page<ElderlyStuffDeposit> list(StuffDepositSearchRequest searchParameter,
       Pageable pageable) {
     if (searchParameter == null) {
-      searchParameter = new SearchParameter();
+      searchParameter = new StuffDepositSearchRequest();
     }
     if (ToolsUtils.checkObjAllFieldNull(searchParameter)) {
       return elderlyStuffDepositService.findPage(pageable, false);
