@@ -2,10 +2,10 @@ package com.yly.service;
 
 import java.io.Serializable;
 
-import com.yly.beans.QueryParam;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
+import com.yly.json.request.QueryParam;
 
 
 

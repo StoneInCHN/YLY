@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.yly.beans.QueryParam;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.MealCharge;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.QueryParam;
 import com.yly.service.MealChargeService;
 import com.yly.utils.FieldFilterUtils;
 

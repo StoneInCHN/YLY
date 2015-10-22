@@ -12,10 +12,10 @@ import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-import com.yly.beans.QueryParam;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
+import com.yly.json.request.QueryParam;
 import com.yly.service.ChargeRecordService;
 import com.yly.utils.DateTimeUtils;
 

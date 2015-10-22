@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
-import com.yly.beans.QueryParam;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.AdvanceCharge;
@@ -22,6 +21,7 @@ import com.yly.entity.ElderlyInfo;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.QueryParam;
 import com.yly.service.AdvanceChargeService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;

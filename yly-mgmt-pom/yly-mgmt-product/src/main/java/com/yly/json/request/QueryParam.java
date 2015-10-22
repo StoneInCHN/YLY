@@ -1,4 +1,4 @@
-package com.yly.beans;
+package com.yly.json.request;
 
 import java.io.Serializable;
 import java.util.Date;
