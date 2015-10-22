@@ -275,9 +275,10 @@ var admission_manager_tool = {
 					             }
 			     			},
 			     			warp :"editAdmission_form",
+			     			uploadImageType:"edit",
 			     			addButton:{
-			     				FilePickerId: '#admissionFilePicker-edit2',
-			     				saveClass: 'savePhoto'
+			     				id: '#admissionFilePicker-edit2',
+			     				innerHTML: '替换头像'
 			     			},
 			     			uploadBeforeSend:function(object, data, headers){
 			     				 //在参数中增加一个老人编号字段 identifier
