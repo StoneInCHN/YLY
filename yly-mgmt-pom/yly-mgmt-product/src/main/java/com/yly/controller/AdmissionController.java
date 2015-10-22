@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yly.beans.Message;
+import com.yly.beans.FileInfo.FileType;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.SystemConfig;
@@ -23,6 +26,7 @@ import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
+import com.yly.service.FileService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 
@@ -44,6 +48,9 @@ public class AdmissionController extends BaseController{
   
   @Resource(name = "systemConfigServiceImpl")
   private SystemConfigService systemConfigService;
+  
+  @Resource(name = "fileServiceImpl")
+  private FileService fileService;
 
   /**
    * 列表页面
@@ -215,4 +222,20 @@ public class AdmissionController extends BaseController{
     }
     return SUCCESS_MESSAGE;
   }
+  
+  @RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
+  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,String identifier ,Long elderlyInfoId) {
+    
+    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
+    if(filePath !=null && elderlyInfoId!=null){
+      ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoId);
+      elderlyInfo.setProfilePhoto(filePath);
+      elderlyInfoService.update(elderlyInfo);
+      return Message.success(filePath);
+    }else{
+      return ERROR_MESSAGE;
+    }
+    
+  }
+  
 }

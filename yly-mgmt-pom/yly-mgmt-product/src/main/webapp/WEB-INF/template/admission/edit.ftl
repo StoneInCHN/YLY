@@ -22,13 +22,20 @@
 	    		<td colspan="2" rowspan="6">
 	    			<div title="头像上传" class="easyui-tooltip">
 	    				<div id="admissionUploader-edit" class="single-uploader">
-						    <div  class="queueList">
-						        <div  class="placeholder">
-						        	<div id="admissionFilePicker-add" ></div>
+						  	<div  class="queueList filled">
+						        <div  class="placeholder element-invisible">
+						        	<div id="admissionFilePicker-edit" ></div>
+						        </div>
+						        <div class="show-img">
+						        	<p class="imgWrap img-thumbnail">
+										     <img src="${elderlyInfo.profilePhoto}">
+									 </p>
 						        </div>
 						    </div>
 						    <div class="btns">
 						        <div class="uploadBtn state-pedding"></div>
+						        <div id="admissionFilePicker-edit2" class="margin-left-40">选择文件</div>
+						        <div class="btn btn-info savePhoto margin-left-40">保存头像</div>
 						    </div>
 						</div>
 	    			</div>

@@ -75,3 +75,10 @@ fieldset .search-item button{
 .green-color{
 	color:green;
 }
+
+.margin-left-40{
+	margin-left:40px;
+}
+.border-none{
+	border:none !important;
+}

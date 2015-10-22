@@ -62,9 +62,9 @@ function singleUpload(options) {
 
 	// WebUploader实例
 	 uploader;
-
+	
 	if($queue.length > 0){
-		$queue.html();
+		$queue.empty();
 	}else{
 		$queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));
 	}
@@ -82,10 +82,20 @@ function singleUpload(options) {
 	
 
 	// 添加“添加文件”的按钮，
-	/*uploader.addButton({
-		id : '#filePicker2',
-		label : '继续添加'
-	});*/
+	if(options.addButton){
+		//uploader.addButton(options.addButton);
+		
+		//FilePickerId = options.addButton.FilePickerId
+		//saveClass = options.addButton.saveClass
+		
+		$("#options.addButton.FilePickerId").on("click",function(){
+			var $_this =$(this);
+			$_this.hide();
+			$wrap.find("."+options.addButton.saveClass).show();
+			$wrap.find(".show-img").hide();
+		})
+	}
+	
 
 	// 当有文件添加进来时执行，负责view的创建
 	function addFile(file) {
@@ -212,7 +222,9 @@ function singleUpload(options) {
 							}
 
 						});
-
+		
+		$queue.empty();
+		$wrap.find(".webuploader-container").hide();
 		$li.appendTo($queue);
 	}
 
@@ -243,7 +255,7 @@ function singleUpload(options) {
 	function updateStatus() {
 		var text = '', stats;
 
-		if (state === 'ready') {
+		/*if (state === 'ready') {
 			text = '选中' + fileCount + '张图片，共'
 					+ WebUploader.formatSize(fileSize) + '。';
 		} else if (state === 'confirm') {
@@ -264,9 +276,10 @@ function singleUpload(options) {
 			if (stats.uploadFailNum) {
 				text += '，失败' + stats.uploadFailNum + '张';
 			}
-		}
+		}*/
 
-		$info.html(text);
+		stats = uploader.getStats();
+		//$info.html(text);
 	}
 
 	function setState(val) {

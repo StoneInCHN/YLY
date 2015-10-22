@@ -232,10 +232,10 @@ var admission_manager_tool = {
 			     			createOption:{
 			     				pick: {
 					                 id: '#admissionFilePicker-edit',
-					                 label: '',
-					                 multiple :false
+					                 innerHTML :'',
+					                 multiple :true
 					             },
-					             dnd: '#admissionUploader-add .queueList',
+					             dnd: '#admissionUploader-edit .queueList',
 					             accept: {
 					                 title: 'Images',
 					                 extensions: 'gif,jpg,jpeg,bmp,png',
@@ -252,8 +252,8 @@ var admission_manager_tool = {
 					             // swf文件路径
 					             swf: BASE_URL + '/js/Uploader.swf',
 					             disableGlobalDnd: true,
-					             server: '../file/uploadProfilePhoto.jhtml',
-					             fileNumLimit: 1,
+					             server: '../admission/uploadProfilePhoto.jhtml',
+					             fileNumLimit: 100,
 					             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
 					             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
 					             compress:{
@@ -274,13 +274,27 @@ var admission_manager_tool = {
 					            	    compressSize: 0
 					             }
 			     			},
-			     			identifierId:"identifier_input",
-			     			warp :"addAdmission_form",
-			     			inputId:"addAdmission_form_file_input"
+			     			warp :"editAdmission_form",
+			     			addButton:{
+			     				FilePickerId: '#admissionFilePicker-edit2',
+			     				saveClass: 'savePhoto'
+			     			},
+			     			uploadBeforeSend:function(object, data, headers){
+			     				 //在参数中增加一个老人编号字段 identifier
+			     				 data.identifier =$("#editAdmission_form").find("input[name='identifier']").val();
+			     				 data.elderlyInfoId=$("#editAdmission_form").find("input[name='id']").val();
+			     			}
 			     	};
 			     	
 			     	singleUpload(editOptions);
-			     	
+			     	$("#editAdmission_form").find(".savePhoto").on("click",function(){
+			     		$.messager.confirm('确认','头像保存后将直接修改当前用户的头像，确认要上传吗？',function(res){    
+			     		    if (res){    
+			     		    	$("#admissionUploader-edit .uploadBtn").trigger("upload");   
+			     		    }    
+			     		}); 
+			     		//alert("保存头像");
+			     	})
 			    }
 			});  
 		},
