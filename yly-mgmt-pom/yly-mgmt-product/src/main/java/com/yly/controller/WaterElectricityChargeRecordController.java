@@ -18,7 +18,7 @@ import com.yly.entity.WaterElectricityCharge;
 import com.yly.entity.WaterElectricityChargeConfig;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.json.request.QueryParam;
+import com.yly.json.request.ChargeSearchRequest;
 import com.yly.service.WaterElectricityChargeConfigService;
 import com.yly.service.WaterElectricityChargeService;
 import com.yly.utils.FieldFilterUtils;
@@ -53,15 +53,16 @@ public class WaterElectricityChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam, Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(ChargeSearchRequest queryParam, Pageable pageable, ModelMap model) {
     Page<WaterElectricityCharge> page = new Page<WaterElectricityCharge>();
     if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null && queryParam.getStatus() == null) {
       page = waterElectricityChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(WaterElectricityChargeRecordController.class)) {
-    	  LogUtil.debug(PersonalizedChargeRecordController.class, "search", "elderlyName: " + queryParam.getRealName()
-    	            + ",identifier: " + queryParam.getIdentifier() + "" + ",status: " + queryParam.getStatus() + ""+",start date: " + queryParam.getBeginDate() + ", end date: "
-    	            + queryParam.getEndDate());
+        LogUtil.debug(WaterElectricityChargeRecordController.class, "Searching water and electricity records with params",
+            "elderlyName=%s,identifier=%s,chargeStatus=%s,beginDate=%s,endDate=%s", queryParam
+                .getRealName(), queryParam.getIdentifier(), queryParam.getStatus().toString(),
+            queryParam.getBeginDate().toString(), queryParam.getEndDate().toString());
       }
       queryParam.setIsPeriod(true);
       queryParam.setIsTenant(true);

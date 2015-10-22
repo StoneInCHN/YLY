@@ -17,7 +17,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.MealCharge;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.json.request.QueryParam;
+import com.yly.json.request.ChargeSearchRequest;
 import com.yly.service.MealChargeService;
 import com.yly.utils.FieldFilterUtils;
 
@@ -46,15 +46,16 @@ public class MealChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam,Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(ChargeSearchRequest queryParam,Pageable pageable, ModelMap model) {
     Page<MealCharge> page = new Page<MealCharge>();
     if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null && queryParam.getStatus() == null) {
       page = mealChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(MealChargeRecordController.class)) {
-    	  LogUtil.debug(MealChargeRecordController.class, "search", "elderlyName: " + queryParam.getRealName()
-    	            + ",identifier: " + queryParam.getIdentifier() + "" + ",status: " + queryParam.getStatus() + ""+",start date: " + queryParam.getBeginDate() + ", end date: "
-    	            + queryParam.getEndDate());
+        LogUtil.debug(MealChargeRecordController.class, "Searching mealCharge records with params",
+            "elderlyName=%s,identifier=%s,budgetType=%s,beginDate=%s,endDate=%s", queryParam
+                .getRealName(), queryParam.getIdentifier(), queryParam.getStatus().toString(),
+            queryParam.getBeginDate().toString(), queryParam.getEndDate().toString());
       }
       queryParam.setIsPeriod(true);
       queryParam.setIsTenant(true);
