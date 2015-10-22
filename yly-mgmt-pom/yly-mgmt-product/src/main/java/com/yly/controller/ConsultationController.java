@@ -48,8 +48,9 @@ public class ConsultationController extends BaseController {
   /**
    * 查询咨询记录
    * 
-   * @param beginDate
-   * @param endDate
+   * @param returnVisitDateBeginDate
+   * @param returnVisitDateEndDate
+   * @param consultationRecord
    * @param pageable
    * @param model
    * @return
@@ -59,7 +60,7 @@ public class ConsultationController extends BaseController {
       Date returnVisitDateEndDate, ConsultationRecord consultationRecord, Pageable pageable,
       ModelMap model) {
 
-    if (consultationRecord.getVistor() != null || consultationRecord.getElderlyName() != null
+    if (consultationRecord.getVisitor() != null || consultationRecord.getElderlyName() != null
         || consultationRecord.getCheckinIntention() != null
         || consultationRecord.getInfoChannel() != null || returnVisitDateBeginDate != null
         || returnVisitDateEndDate != null) {

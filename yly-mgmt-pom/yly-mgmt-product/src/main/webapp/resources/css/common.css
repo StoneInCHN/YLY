@@ -76,9 +76,16 @@ fieldset .search-item button{
 	color:green;
 }
 
-.margin-left-40{
-	margin-left:40px;
-}
+
 .border-none{
 	border:none !important;
+}
+.margin-left-10{
+	margin-left:10px;
+}
+.margin-left-20{
+	margin-left:20px;
+}
+.margin-left-40{
+	margin-left:40px;
 }

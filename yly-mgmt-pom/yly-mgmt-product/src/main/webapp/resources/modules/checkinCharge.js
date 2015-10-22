@@ -3,7 +3,7 @@ var checkinCharge_manager_tool = {
 				$('#addCheckinCharge').dialog({    
 				    title: message("yly.charge.checkin"),    
 				    width: 650,    
-				    height: 600,
+				    height: 750,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
@@ -14,7 +14,7 @@ var checkinCharge_manager_tool = {
 							var validate = $('#addCheckinCharge_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../checkinCharge/add.jhtml",
+									url:"../billing/checkin.jhtml",
 									type:"post",
 									data:$("#addCheckinCharge_form").serialize(),
 									beforeSend:function(){
@@ -45,6 +45,15 @@ var checkinCharge_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#addCheckinCharge_form').show();
+				    	$("#mealType").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'MEALTYPE';// 参数
+						    }
+						});
 				    },
 				    onClose:function(){
 				    	 //$('#addCheckinCharge_form').form('reset');
@@ -59,7 +68,7 @@ $(function(){
 		title:message("yly.charge.record.list"),
 		fitColumns:true,
 		toolbar:"#checkinCharge_manager_tool",
-		url:'../billing/list.jhtml',  
+		url:'../billing/list.jhtml?billingType=CHECK_IN', 
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
@@ -128,4 +137,87 @@ $(function(){
 	  $("#checkinCharge_table_list").datagrid('reload');
 	});
 	
+	//是否伙食费包月
+	$("#isMonthlyMeal").click(function(){
+		
+		if($("#isMonthlyMeal").is(":checked")==true){
+			$("#monthlyMeal").css('display','block');
+			$("#monthlyMeal table input[type=hidden]").each(function(){
+				$(this).prop("disabled",false);
+			});
+		}
+		
+		if($("#isMonthlyMeal").is(":checked")==false){
+			$("#monthlyMeal").css('display','none'); 
+			
+			$("#monthlyMeal table input[type=hidden]").each(function(){
+				$(this).prop("disabled",true);
+			});
+		}
+		
+	});
+	
+	$('#bedNursePeriodStartDate').datebox({
+	    onSelect: function(date){
+            var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+//            console.log(dayStr);
+	    	$.ajax({
+				url:"../systemConfig/getBillEndDate.jhtml",
+				type:"post",
+				data:{currentDay:dayStr},
+				success:function(result,response,status){
+//					console.log(result);
+					$('#bedNursePeriodEndDate').datebox('setValue',result[0]);
+					
+				}
+			});
+	    }
+	});
+	
+	$('#mealPeriodStartDate').datebox({
+	    onSelect: function(date){
+            var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+	    	$.ajax({
+				url:"../systemConfig/getBillEndDate.jhtml",
+				type:"post",
+				data:{currentDay:dayStr},
+				success:function(result){
+					$('#mealPeriodEndDate').datebox('setValue',result[0]);
+					
+				}
+			});
+	    }
+	});
+	
+	
+	$('#addCheckinCharge_elderlyInfo').textbox({  
+		  onChange: function(value){  
+			  var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
+			  console.log(elderlyInfoID);
+				$.ajax({
+					url:"../billing/getBedNurseConfig.jhtml",
+					type:"post",
+					data:{elderlyInfoID:elderlyInfoID},
+					success:function(result){
+						
+					$('#bedType').html("["+result[0].chargeItem.configValue+"]");
+					$('#bedType').attr("data-value",result[0].chargeItem.configValue);
+					$('#bedPerMonth').html(message("yly.charge.record.perMonth")+result[0].amountPerMonth);
+					$('#bedPerMonth').attr("data-value",result[0].amountPerDay);
+					$('#bedPerDay').html(message("yly.charge.record.perDay")+result[0].amountPerDay);
+					$('#bedPerDay').attr("data-value",result[0].amountPerMonthe);
+					
+					$('#nurseLevel').html("["+result[1].chargeItem.configValue+"]");
+					$('#nurseLevel').attr("data-value",result[1].chargeItem.configValue);
+					$('#nurseLevelPerMonth').html(message("yly.charge.record.perMonth")+result[1].amountPerMonth);
+					$('#nurseLevelPerMonth').attr("data-value",result[1].amountPerDay);
+					$('#nurseLevelPerDay').html(message("yly.charge.record.perDay")+result[1].amountPerDay);
+					$('#nurseLevelPerDay').attr("data-value",result[1].amountPerMonthe);
+						
+					}
+				});
+		  }  
+		});
+	
+
 })

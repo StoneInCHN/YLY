@@ -18,6 +18,34 @@ public class DateTimeUtils implements Serializable {
   // public static void main(String args[]){
   // System.out.println(getLastWeek()+"--"+getLastMonth());
   // }
+  
+  /**
+   * 获取账单结算日期
+   * @param currentDate
+   * @return
+   */
+  public static Date getBillDay(Date currentDate,int billDay){
+    Calendar calendar = Calendar.getInstance();
+    if (currentDate == null) {
+      return null;
+    }
+    calendar.setTime(currentDate);
+    calendar.add(Calendar.DATE,-1);//日期，整数往后推,负数往前移动 
+    if (calendar.get(Calendar.DATE) == billDay) {
+      calendar.add(Calendar.MONTH,1);//月份
+      
+    }else if(calendar.get(Calendar.DATE) > billDay){
+      calendar.add(Calendar.MONTH,2);
+      calendar.set(Calendar.DATE, billDay);
+    }else {
+      calendar.add(Calendar.MONTH,1);
+      calendar.set(Calendar.DATE, billDay);
+    }
+      
+    return new Date(calendar.getTimeInMillis());
+    
+  }
+  
   /**
    * 取当天(短日期类型)
    */

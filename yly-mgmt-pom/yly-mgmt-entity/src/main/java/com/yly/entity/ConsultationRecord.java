@@ -32,7 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.Relation;
 @Entity
 @Table(name = "yly_consultation_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_consultation_record_sequence")
-@Indexed(index="consultationRecordManage/consultationRecord")
+@Indexed(index="consultationRecord")
 public class ConsultationRecord extends BaseEntity {
 
 	/**
@@ -48,7 +48,7 @@ public class ConsultationRecord extends BaseEntity {
 	/**
 	 * 来访咨询人员
 	 */
-	private String vistor;
+	private String visitor;
 
 	/**
 	 * 接待人员
@@ -121,12 +121,12 @@ public class ConsultationRecord extends BaseEntity {
 	@JsonProperty
 	@Column(length = 15)
 	@Field(index = org.hibernate.search.annotations.Index.TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
-	public String getVistor() {
-		return vistor;
+	public String getVisitor() {
+		return visitor;
 	}
 
-	public void setVistor(String vistor) {
-		this.vistor = vistor;
+	public void setVisitor(String visitor) {
+		this.visitor = visitor;
 	}
 
 	@JsonProperty
@@ -256,6 +256,7 @@ public class ConsultationRecord extends BaseEntity {
 		this.staffID = staffID;
 	}
 
+	@Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
 	@Index(name = "consultation_record_tenantid")
 	public Long getTenantID() {
 		return tenantID;
