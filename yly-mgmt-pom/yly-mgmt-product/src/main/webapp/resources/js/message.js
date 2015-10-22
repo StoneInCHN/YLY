@@ -92,6 +92,9 @@ var messages = {
 	"yly.charge.record.list":"缴费列表",
 	"yly.charge.record.perMonth":"月收费: ￥",	
 	"yly.charge.record.perDay":"日收费: ￥",
+	"yly.charge.billing.day.prefix":"每月",
+	"yly.charge.billing.day.suffix":"号为账单结算日期",
+	
 	
 	
 	

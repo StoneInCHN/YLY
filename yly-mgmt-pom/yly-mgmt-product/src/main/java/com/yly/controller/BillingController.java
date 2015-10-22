@@ -115,7 +115,7 @@ public class BillingController extends BaseController {
   
   
   /**
-   *  入住缴费页面获取床位护理费配置
+   * 根据老人获取床位护理费配置
    * @param model
    * @param id
    * @return
@@ -128,6 +128,7 @@ public class BillingController extends BaseController {
 	
     return billingService.getBedNurseConfigByElderly(properties, elderlyInfo);
   }
+  
   
   @RequestMapping(value = "/checkin", method = RequestMethod.POST)
   public @ResponseBody Message add(Billing checkinBill,Long chargeItemId) {
