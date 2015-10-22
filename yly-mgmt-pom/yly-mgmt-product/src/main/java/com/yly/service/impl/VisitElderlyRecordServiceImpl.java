@@ -99,8 +99,8 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
       LogUtil
           .debug(
               VisitElderlyRecordServiceImpl.class,
-              "search",
-              "Searching visiting records with params,visitor=%s,elderly=%s,start visitdate=%s,end visitdate=%s",
+              "searchElderlyRecord",
+              "Searching visiting records with params,tenant ID=%s,visitor=%s,elderly=%s,start visitdate=%s,end visitdate=%s",tenantAccountService.getCurrentTenantID(),
               visitElderlyRecord.getVisitor(), visitElderlyRecord.getElderlyInfo().getName(),
               visitDateBeginDate, visitDateEndDate);
     }

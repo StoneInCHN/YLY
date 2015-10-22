@@ -5,7 +5,7 @@
 	    <form id="consultation_search_form" class="search-form">
 	   	 	<div class="search-item">
 			    <label> ${message("yly.consultation.vistor")}:</label>
-			    <input class="easyui-textbox" type="text" id="search-vistor" name="vistor" validtype="length[0,15]" style="width:85px;"/>
+			    <input class="easyui-textbox" type="text" id="search-vistor" name="visitor" validtype="length[0,15]" style="width:85px;"/>
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>

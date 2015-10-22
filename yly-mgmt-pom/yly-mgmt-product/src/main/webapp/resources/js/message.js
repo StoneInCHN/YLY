@@ -174,6 +174,12 @@ var messages = {
 	//elderlyinfo
 	"yly.admission.add":"办理入院",
 	"yly.elderlyinfo":"老人信息",
+	"yly.elderly.status":"老人状态",
+	"yly.elderly.status.in_nursing_home":"在院",
+	"yly.elderly.status.out_nursing_home":"出院",
+	"yly.elderly.status.in_progress_checkin":"入院办理",
+	"yly.elderly.status.in_progress_checkout":"出院办理",
+	"yly.elderly.status.dead":"过世",
 	"yly.elderlyinfo.identifier":"编号",
 	"yly.elderlyinfo.bed":"床位",
 	"yly.elderlyinfo.record":"老人信息",
@@ -208,7 +214,9 @@ var messages = {
 	"yly.elderlyInfo.monthlyIncome":"月收入",
 	"yly.elderlyInfo.sourceOfIncome":"收入来源",
 	"yly.elderlyInfo.elderlyConsigner":"委托人",
+	"yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber":"委托人电话",
 	"yly.elderlyInfo.elderlyFamilyMembers":"家庭成员",
+
 		
 	//床位管理
 	"yly.bulding.add":"添加楼宇",

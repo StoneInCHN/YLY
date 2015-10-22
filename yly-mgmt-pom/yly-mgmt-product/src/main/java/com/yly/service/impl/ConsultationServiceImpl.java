@@ -17,6 +17,7 @@ import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.yly.common.log.LogUtil;
 import com.yly.dao.ConsultationDao;
 import com.yly.entity.ConsultationRecord;
 import com.yly.framework.paging.Page;
@@ -64,10 +65,10 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     Query infoChannelQuery = null;
     Query checkinIntentionQuery = null;
     Filter returnVisitDateFilter = null;
-    
+
     try {
       tenantQuery = tenantParser.parse(tenantAccountService.getCurrentTenantID().toString());
-      query.add(tenantQuery,Occur.MUST);
+      query.add(tenantQuery, Occur.MUST);
     } catch (ParseException e1) {
       e1.printStackTrace();
     }
@@ -112,6 +113,18 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
           new TermRangeFilter("returnVisitDate", DateTimeUtils.convertDateToString(
               returnVisitDateBeginDate, null), DateTimeUtils.convertDateToString(
               returnVisitDateEndDate, null), true, true);
+    }
+
+    if (LogUtil.isDebugEnabled(ConsultationServiceImpl.class)) {
+      LogUtil
+          .debug(
+              ConsultationServiceImpl.class,
+              "consultationSearch",
+              "Searching consultation records with params,tenant ID=%s,visitor=%s,elderly name=%s,infoChannel=%s,checkinIntention=%s,start returnVisitDate=%s,end returnVisitDate=%s",
+              tenantAccountService.getCurrentTenantID(), consultationRecord.getVisitor(),
+              consultationRecord.getElderlyName(), consultationRecord.getInfoChannel(),
+              consultationRecord.getCheckinIntention(), returnVisitDateBeginDate,
+              returnVisitDateEndDate);
     }
     return search(query, pageable, analyzer, returnVisitDateFilter);
   }

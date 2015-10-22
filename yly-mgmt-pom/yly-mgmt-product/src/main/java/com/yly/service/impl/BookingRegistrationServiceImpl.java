@@ -15,6 +15,7 @@ import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.yly.common.log.LogUtil;
 import com.yly.dao.BookingRegistrationDao;
 import com.yly.entity.BookingRegistration;
 import com.yly.framework.paging.Page;
@@ -43,16 +44,18 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
   public Page<BookingRegistration> searchBookingRegistration(Date bookingCheckInDateBeginDate,
       Date bookingCheckInDateEndDate, BookingRegistration bookingRegistration,
       Long searchRoomTypeId, Pageable pageable) {
-    
+
 
 
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
     BooleanQuery query = new BooleanQuery();
 
-    QueryParser peopleWhoBookedParser = new QueryParser(Version.LUCENE_35, "peopleWhoBooked", analyzer);
+    QueryParser peopleWhoBookedParser =
+        new QueryParser(Version.LUCENE_35, "peopleWhoBooked", analyzer);
     QueryParser elderlyNameParser = new QueryParser(Version.LUCENE_35, "elderlyName", analyzer);
-    QueryParser intentRoomTypeParser = new QueryParser(Version.LUCENE_35, "intentRoomType.configValue", analyzer);
+    QueryParser intentRoomTypeParser =
+        new QueryParser(Version.LUCENE_35, "intentRoomType.configValue", analyzer);
     QueryParser tenantParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
 
     Query tenantQuery = null;
@@ -60,10 +63,10 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
     Query elderlyNameQuery = null;
     Query intentRoomTypeQuery = null;
     Filter bookingCheckInDateFilter = null;
-    
+
     try {
       tenantQuery = tenantParser.parse(tenantAccountService.getCurrentTenantID().toString());
-      query.add(tenantQuery,Occur.MUST);
+      query.add(tenantQuery, Occur.MUST);
     } catch (ParseException e1) {
       e1.printStackTrace();
     }
@@ -89,7 +92,8 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
     }
 
     if (bookingRegistration.getIntentRoomType() != null) {
-      String intentRoomTypeValue = QueryParser.escape(bookingRegistration.getIntentRoomType().getConfigValue());
+      String intentRoomTypeValue =
+          QueryParser.escape(bookingRegistration.getIntentRoomType().getConfigValue());
       try {
         intentRoomTypeQuery = intentRoomTypeParser.parse(intentRoomTypeValue);
       } catch (ParseException e) {
@@ -103,9 +107,20 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
       bookingCheckInDateFilter =
           new TermRangeFilter("bookingCheckInDate", DateTimeUtils.convertDateToString(
               bookingCheckInDateBeginDate, null), DateTimeUtils.convertDateToString(
-                  bookingCheckInDateEndDate, null), true, true);
+              bookingCheckInDateEndDate, null), true, true);
     }
+    if (LogUtil.isDebugEnabled(BookingRegistrationServiceImpl.class)) {
+      LogUtil
+          .debug(
+              BookingRegistrationServiceImpl.class,
+              "searchBookingRegistration",
+              "Searching booking and registration records with params,peopleWhoBooked=%s,elderlyName=%s,intentRoomType=%s,start bookingCheckInDate=%s,end bookingCheckInDate=%s",
+              bookingRegistration.getPeopleWhoBooked(), bookingRegistration.getElderlyName(),
+              bookingRegistration.getIntentRoomType(), bookingCheckInDateBeginDate,
+              bookingCheckInDateEndDate);
+    }
+
     return search(query, pageable, analyzer, bookingCheckInDateFilter);
   }
-  
+
 }

@@ -831,6 +831,7 @@ public class ElderlyInfo extends BaseEntity {
     this.deleteStatus = deleteStatus;
   }
 
+  @JsonProperty
   public ElderlyStatus getElderlyStatus() {
     return elderlyStatus;
   }
