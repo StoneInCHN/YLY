@@ -12,7 +12,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
  * @author sujinxuan
  *
  */
-public class QueryParam implements Serializable{
+public class ChargeSearchRequest implements Serializable{
 	
 	private static final long serialVersionUID = 5233600129916917541L;
 	/**

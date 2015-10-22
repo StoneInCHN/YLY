@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
-import com.yly.json.request.QueryParam;
+import com.yly.json.request.ChargeSearchRequest;
 
 
 
@@ -33,5 +33,5 @@ public interface ChargeRecordService<T, ID extends Serializable> extends BaseSer
    * @param pageable
    * @return
    */
-  Page<T> chargeRecordSearch(QueryParam queryParam,Pageable pageable);
+  Page<T> chargeRecordSearch(ChargeSearchRequest queryParam,Pageable pageable);
 }

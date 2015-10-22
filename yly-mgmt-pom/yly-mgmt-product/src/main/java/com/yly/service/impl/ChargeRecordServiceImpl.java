@@ -15,7 +15,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
-import com.yly.json.request.QueryParam;
+import com.yly.json.request.ChargeSearchRequest;
 import com.yly.service.ChargeRecordService;
 import com.yly.utils.DateTimeUtils;
 
@@ -97,7 +97,7 @@ public class ChargeRecordServiceImpl<T, ID extends Serializable> extends BaseSer
 //  }
 
 @Override
-public Page<T> chargeRecordSearch(QueryParam queryParam, Pageable pageable) {
+public Page<T> chargeRecordSearch(ChargeSearchRequest queryParam, Pageable pageable) {
 	IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 

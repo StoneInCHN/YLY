@@ -7,7 +7,7 @@
  * createOption 初始化传值
  * uploadBeforeSend 上传前的回调函数
  * uploadSuccess 上传成功后的回调函数
- * 
+ * uploadImageType 上传使用类型 add 用于第一次上传头像 edit 用于修改头像
  * 
  */
 function singleUpload(options) {
@@ -83,17 +83,17 @@ function singleUpload(options) {
 
 	// 添加“添加文件”的按钮，
 	if(options.addButton){
-		//uploader.addButton(options.addButton);
+		uploader.addButton(options.addButton);
 		
 		//FilePickerId = options.addButton.FilePickerId
 		//saveClass = options.addButton.saveClass
 		
-		$("#options.addButton.FilePickerId").on("click",function(){
+	/*	$("#"+options.addButton.FilePickerId).on("click",function(){
 			var $_this =$(this);
 			$_this.hide();
 			$wrap.find("."+options.addButton.saveClass).show();
 			$wrap.find(".show-img").hide();
-		})
+		})*/
 	}
 	
 
@@ -371,17 +371,29 @@ function singleUpload(options) {
 	
 
 	uploader.onFileQueued = function(file) {
-		fileCount++;
-		fileSize += file.size;
+		
+		
+		
+			fileCount++;
+			fileSize += file.size;
 
-		if (fileCount === 1) {
-			$placeHolder.addClass('element-invisible');
-			$statusBar.show();
-		}
+			if (fileCount === 1) {
+				$placeHolder.addClass('element-invisible');
+				$statusBar.show();
+			}
 
-		addFile(file);
-		setState('ready');
-		updateTotalProgress();
+			if(options.uploadImageType){
+				$wrap.find(options.addButton.id).hide();
+				$wrap.find(options.addButton.id).next().show();
+				$wrap.find(".show-img").hide();
+			}
+			
+			addFile(file);
+			setState('ready');
+			updateTotalProgress();
+		
+		
+		
 	};
 
 	uploader.onFileDequeued = function(file) {

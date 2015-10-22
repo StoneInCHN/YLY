@@ -100,6 +100,7 @@
 					    			<input id="bedNursePeriodStartDate" name="bedNurseCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;"/>
 					    		    ──
 				    			    <input id="bedNursePeriodEndDate" name="bedNurseCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" readonly=true/>    
+					    			<span class="margin-left-20" id="billDay"></span>
 					    		</td>
 					    		
 					    	</tr>
@@ -150,6 +151,7 @@
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
 					    		<td>
 					    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="mealTypeId" id="mealType" panelHeight="150px" data-options="required:true,editable:false" />   
+					    		     <span class="margin-left-20" id="mealTypeVal"></span><span class="margin-left-10" id="mealPerMonth"></span><span class="margin-left-10" id="mealPerDay"></span>
 					    		</td>
 					    		
 	    			  		</tr>

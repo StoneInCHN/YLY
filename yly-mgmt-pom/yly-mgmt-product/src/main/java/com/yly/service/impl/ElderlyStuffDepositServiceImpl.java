@@ -10,12 +10,13 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
-import com.yly.beans.SearchParameter;
+
 import com.yly.dao.ElderlyStuffDepositDao;
 import com.yly.entity.ElderlyStuffDeposit;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
+import com.yly.json.request.StuffDepositSearchRequest;
 import com.yly.service.ElderlyStuffDepositService;
 import com.yly.utils.DateTimeUtils;
 
@@ -38,7 +39,7 @@ public class ElderlyStuffDepositServiceImpl extends BaseServiceImpl<ElderlyStuff
   }
 
   @Override
-  public Page<ElderlyStuffDeposit> searchPageByFilter(SearchParameter searchParameter,
+  public Page<ElderlyStuffDeposit> searchPageByFilter(StuffDepositSearchRequest searchParameter,
       Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);

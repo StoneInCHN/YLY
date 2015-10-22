@@ -45,6 +45,17 @@ var checkinCharge_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#addCheckinCharge_form').show();
+				    	$.ajax({
+							url:"../systemConfig/findByConfigKey.jhtml",
+							type:"post",
+							data:{configKey:"BILLDAY"},
+							success:function(result){
+//								console.log(result);
+								$('#billDay').html(message("yly.charge.billing.day.prefix")+result[0].configValue+message("yly.charge.billing.day.suffix"));
+								
+							}
+				    	});
+				    	
 				    	$("#mealType").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',
@@ -52,6 +63,22 @@ var checkinCharge_manager_tool = {
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'MEALTYPE';// 参数
+						    },
+						    onChange:function(value){
+						    	$.ajax({
+									url:"../mealChargeConfig/detail.jhtml",
+									type:"post",
+									data:{configId:value},
+									success:function(result,response,status){
+										$('#mealTypeVal').html("["+result.chargeItem.configValue+"]");
+										$('#mealTypeVal').attr("data-value",result.chargeItem.configValue);
+										$('#mealPerMonth').html(message("yly.charge.record.perMonth")+result.amountPerMonth);
+										$('#mealPerMonth').attr("data-value",result.amountPerDay);
+										$('#mealPerDay').html(message("yly.charge.record.perDay")+result.amountPerDay);
+										$('#mealPerDay').attr("data-value",result.amountPerMonthe);
+										
+									}
+								});
 						    }
 						});
 				    },
@@ -183,7 +210,7 @@ $(function(){
 				data:{currentDay:dayStr},
 				success:function(result){
 					$('#mealPeriodEndDate').datebox('setValue',result[0]);
-					
+					$('#mealType').textbox("reset");
 				}
 			});
 	    }
@@ -193,7 +220,10 @@ $(function(){
 	$('#addCheckinCharge_elderlyInfo').textbox({  
 		  onChange: function(value){  
 			  var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
-			  console.log(elderlyInfoID);
+			  $("#addCheckinCharge_form input[class*='easyui'][textboxname!=elderlyInfoName]").each(function(){
+				  $(this).textbox('reset');
+			  });
+			 
 				$.ajax({
 					url:"../billing/getBedNurseConfig.jhtml",
 					type:"post",

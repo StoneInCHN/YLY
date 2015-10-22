@@ -21,7 +21,7 @@ import com.yly.entity.ElderlyInfo;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.json.request.QueryParam;
+import com.yly.json.request.ChargeSearchRequest;
 import com.yly.service.AdvanceChargeService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
@@ -37,7 +37,7 @@ public class AdvanceChargeController extends BaseController {
 
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
-  
+
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
 
@@ -70,10 +70,10 @@ public class AdvanceChargeController extends BaseController {
       page = elderlyInfoService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
-        LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier);
+        LogUtil.debug(AdvanceChargeController.class, "Searching elderly advanceCharge with params",
+            "elderlyName=%s,identifier=%s",realName,identifier);
       }
-      page = elderlyInfoService.elderlyInfoSearch(true,realName, identifier, pageable);
+      page = elderlyInfoService.elderlyInfoSearch(true, realName, identifier, pageable);
     }
 
     String[] properties =
@@ -96,21 +96,23 @@ public class AdvanceChargeController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/chargeList", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(QueryParam queryParam,Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(ChargeSearchRequest queryParam,
+      Pageable pageable, ModelMap model) {
     Page<AdvanceCharge> page = new Page<AdvanceCharge>();
-    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null
+        && queryParam.getBeginDate() == null && queryParam.getEndDate() == null
         && queryParam.getBudgetType() == null) {
       page = advanceChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
-        LogUtil.debug(AdvanceChargeController.class, "search", "elderlyName: " + queryParam.getRealName()
-            + ",identifier: " + queryParam.getIdentifier() + "" + ", budgetType: " + queryParam.getBudgetType() + ", start date: "
-            + queryParam.getBeginDate() + ", end date: " + queryParam.getEndDate());
+        LogUtil.debug(AdvanceChargeController.class, "Searching advanceChargeRecord records with params",
+            "elderlyName=%s,identifier=%s,budgetType=%s,beginDate=%s,endDate=%s", queryParam
+                .getRealName(), queryParam.getIdentifier(), queryParam.getBudgetType().toString(),
+            queryParam.getBeginDate().toString(), queryParam.getEndDate().toString());
       }
       queryParam.setIsPeriod(false);
       queryParam.setIsTenant(true);
-      page =
-          advanceChargeService.chargeRecordSearch(queryParam,pageable);
+      page = advanceChargeService.chargeRecordSearch(queryParam, pageable);
     }
 
 
@@ -143,19 +145,22 @@ public class AdvanceChargeController extends BaseController {
 
   /**
    * 预缴款
+   * 
    * @param advanceCharge
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(Long elderlyInfoID,AdvanceCharge advanceCharge) {
-    if (advanceCharge!=null) {
+  public @ResponseBody Message add(Long elderlyInfoID, AdvanceCharge advanceCharge) {
+    if (advanceCharge != null) {
       ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-      elderlyInfo.setAdvanceChargeAmount(elderlyInfo.getAdvanceChargeAmount().add(advanceCharge.getAdvanceAmount()));
+      elderlyInfo.setAdvanceChargeAmount(elderlyInfo.getAdvanceChargeAmount().add(
+          advanceCharge.getAdvanceAmount()));
       advanceCharge.setElderlyInfo(elderlyInfo);
       advanceCharge.setBudgetType(BudgetType.INCOME);
       advanceCharge.setPayTime(new Date());
       advanceCharge.setOperator(tenantAccountService.getCurrentUsername());
-      advanceCharge.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService.getCurrentTenantOrgCode()));
+      advanceCharge.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService
+          .getCurrentTenantOrgCode()));
       advanceChargeService.save(advanceCharge, true);
     }
     return SUCCESS_MESSAGE;

@@ -35,7 +35,7 @@
 						    <div class="btns">
 						        <div class="uploadBtn state-pedding"></div>
 						        <div id="admissionFilePicker-edit2" class="margin-left-40">选择文件</div>
-						        <div class="btn btn-info savePhoto margin-left-40">保存头像</div>
+						        <div class="btn btn-info savePhoto margin-left-40" style="display:none">保存头像</div>
 						    </div>
 						</div>
 	    			</div>

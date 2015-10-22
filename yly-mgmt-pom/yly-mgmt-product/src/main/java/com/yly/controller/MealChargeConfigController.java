@@ -3,6 +3,7 @@ package com.yly.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -22,6 +23,7 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.MealChargeConfigService;
 import com.yly.service.SystemConfigService;
+import com.yly.utils.FieldFilterUtils;
 
 @Controller("mealChargeConfigController")
 @RequestMapping("/console/mealChargeConfig")
@@ -29,12 +31,13 @@ public class MealChargeConfigController extends BaseController {
 
   @Resource(name = "mealChargeConfigServiceImpl")
   private MealChargeConfigService mealChargeConfigService;
-  
+
   @Resource(name = "systemConfigServiceImpl")
   private SystemConfigService systemConfigService;
-  
+
   /**
    * 列表页面
+   * 
    * @param model
    * @return
    */
@@ -45,19 +48,21 @@ public class MealChargeConfigController extends BaseController {
 
   /**
    * 列表数据
+   * 
    * @param pageable
    * @param model
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<MealChargeConfig> list(Pageable pageable, ModelMap model) {
-    
-    return mealChargeConfigService.findPage(pageable,true);
+
+    return mealChargeConfigService.findPage(pageable, true);
   }
 
 
   /**
    * 编辑页面
+   * 
    * @param model
    * @param vendorId
    * @return
@@ -67,39 +72,66 @@ public class MealChargeConfigController extends BaseController {
     model.addAttribute("mealChargeConfig", mealChargeConfigService.find(id));
     return "/mealChargeConfig/edit";
   }
-  
+
+  /**
+   * 根据ID获取详情
+   * 
+   * @param model
+   * @param vendorId
+   * @return
+   */
+  @RequestMapping(value = "/detail", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Object> detail(ModelMap model, Long configId) {
+    SystemConfig mealTypeConfig = systemConfigService.find(configId);
+    List<Filter> filters = new ArrayList<Filter>();
+    Filter filter = new Filter("chargeItem", Operator.eq, mealTypeConfig);
+    filters.add(filter);
+    List<MealChargeConfig> mealChargeConfigs =
+        mealChargeConfigService.findList(null, filters, null, true, null);
+    if (mealChargeConfigs != null && mealChargeConfigs.size() == 1) {
+      String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
+      return FieldFilterUtils.filterEntityMap(properties, mealChargeConfigs.get(0));
+    }
+    return null;
+  }
+
+
 
   /**
    * 添加
+   * 
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(MealChargeConfig mealChargeConfig,Long chargeItemId) {
+  public @ResponseBody Message add(MealChargeConfig mealChargeConfig, Long chargeItemId) {
     SystemConfig chargeItem = systemConfigService.find(chargeItemId);
     List<Filter> filters = new ArrayList<Filter>();
-    Filter itemFilter = new Filter("chargeItem",Operator.eq,chargeItem);
+    Filter itemFilter = new Filter("chargeItem", Operator.eq, chargeItem);
     filters.add(itemFilter);
-    List<MealChargeConfig> mealChargeConfigs = mealChargeConfigService.findList(null,filters,null,true,null);
-    if (mealChargeConfigs!=null && mealChargeConfigs.size()>0) {
-       return Message.error("yly.mealCharge.config.duplicate");
+    List<MealChargeConfig> mealChargeConfigs =
+        mealChargeConfigService.findList(null, filters, null, true, null);
+    if (mealChargeConfigs != null && mealChargeConfigs.size() > 0) {
+      return Message.error("yly.mealCharge.config.duplicate");
     }
-    mealChargeConfig.setChargeItem(chargeItem); 
-    mealChargeConfigService.save(mealChargeConfig,true);
+    mealChargeConfig.setChargeItem(chargeItem);
+    mealChargeConfigService.save(mealChargeConfig, true);
     return SUCCESS_MESSAGE;
   }
-  
+
   /**
    * 更新
+   * 
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(MealChargeConfig mealChargeConfig) {
-    mealChargeConfigService.update(mealChargeConfig,"chargeItem","tenantID");
+    mealChargeConfigService.update(mealChargeConfig, "chargeItem", "tenantID");
     return SUCCESS_MESSAGE;
   }
-  
+
   /**
    * 删除
+   * 
    * @param ids
    * @return
    */
