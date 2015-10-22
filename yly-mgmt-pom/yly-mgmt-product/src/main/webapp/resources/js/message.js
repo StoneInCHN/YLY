@@ -90,6 +90,9 @@ var messages = {
 	"yly.charge.record.budgetType.cost" : "消费",
 	"yly.charge.advance.add" : "预缴款",
 	"yly.charge.record.list":"缴费列表",
+	"yly.charge.record.perMonth":"月收费: ￥",	
+	"yly.charge.record.perDay":"日收费: ￥",
+	
 	
 	
 	/**

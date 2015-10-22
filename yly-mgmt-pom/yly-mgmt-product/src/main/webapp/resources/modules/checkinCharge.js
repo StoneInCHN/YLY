@@ -68,7 +68,7 @@ $(function(){
 		title:message("yly.charge.record.list"),
 		fitColumns:true,
 		toolbar:"#checkinCharge_manager_tool",
-		url:'../billing/list.jhtml?billingType=DAILY', 
+		url:'../billing/list.jhtml?billingType=CHECK_IN', 
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
@@ -189,18 +189,35 @@ $(function(){
 	    }
 	});
 	
-//	$("#addCheckinCharge_elderlyInfo").onChange(function(newValue,oldValue){
-//		var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
-//		$.ajax({
-//			url:"../billing/getBedNurseConfig.jhtml",
-//			type:"post",
-//			data:{elderlyInfoID:elderlyInfoID},
-//			success:function(result){
-//				console.log(result);
-////				$('#mealPeriodEndDate').datebox('setValue',result[0]);
-//				
-//			}
-//		});
-//	});
+	
+	$('#addCheckinCharge_elderlyInfo').textbox({  
+		  onChange: function(value){  
+			  var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
+			  console.log(elderlyInfoID);
+				$.ajax({
+					url:"../billing/getBedNurseConfig.jhtml",
+					type:"post",
+					data:{elderlyInfoID:elderlyInfoID},
+					success:function(result){
+						
+					$('#bedType').html("["+result[0].chargeItem.configValue+"]");
+					$('#bedType').attr("data-value",result[0].chargeItem.configValue);
+					$('#bedPerMonth').html(message("yly.charge.record.perMonth")+result[0].amountPerMonth);
+					$('#bedPerMonth').attr("data-value",result[0].amountPerDay);
+					$('#bedPerDay').html(message("yly.charge.record.perDay")+result[0].amountPerDay);
+					$('#bedPerDay').attr("data-value",result[0].amountPerMonthe);
+					
+					$('#nurseLevel').html("["+result[1].chargeItem.configValue+"]");
+					$('#nurseLevel').attr("data-value",result[1].chargeItem.configValue);
+					$('#nurseLevelPerMonth').html(message("yly.charge.record.perMonth")+result[1].amountPerMonth);
+					$('#nurseLevelPerMonth').attr("data-value",result[1].amountPerDay);
+					$('#nurseLevelPerDay').html(message("yly.charge.record.perDay")+result[1].amountPerDay);
+					$('#nurseLevelPerDay').attr("data-value",result[1].amountPerMonthe);
+						
+					}
+				});
+		  }  
+		});
+	
 
 })

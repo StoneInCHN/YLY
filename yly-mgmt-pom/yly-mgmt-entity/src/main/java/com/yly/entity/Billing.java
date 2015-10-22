@@ -300,6 +300,7 @@ public class Billing extends BaseEntity {
   }
 
   @Index(name = "billing_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }

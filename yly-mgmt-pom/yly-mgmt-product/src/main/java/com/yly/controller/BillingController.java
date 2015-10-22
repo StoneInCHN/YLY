@@ -119,7 +119,7 @@ public class BillingController extends BaseController {
    * @param id
    * @return
    */
-  @RequestMapping(value = "/getBedNurseConfig", method = RequestMethod.GET)
+  @RequestMapping(value = "/getBedNurseConfig", method = RequestMethod.POST)
   public @ResponseBody List<Map<String,Object>> getBedNurseConfig(ModelMap model, Long elderlyInfoID) {
 	ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
 	 String[] properties =
