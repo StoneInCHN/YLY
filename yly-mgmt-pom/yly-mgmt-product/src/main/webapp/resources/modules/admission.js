@@ -392,10 +392,7 @@ $(function(){
 	
 	
 	$("#admission_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+	 var _queryParams = $("#admission_search_form").serializeJSON();
 	  $('#admission-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#admission-table-list").datagrid('reload');
 	})

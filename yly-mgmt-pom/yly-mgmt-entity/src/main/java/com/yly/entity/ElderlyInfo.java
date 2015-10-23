@@ -828,6 +828,7 @@ public class ElderlyInfo extends BaseEntity {
     this.housingInfo = housingInfo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public DeleteStatus getDeleteStatus() {
     return deleteStatus;
   }
