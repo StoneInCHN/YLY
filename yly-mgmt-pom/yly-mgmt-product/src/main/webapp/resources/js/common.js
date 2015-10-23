@@ -176,8 +176,8 @@ function searchElderlyInfo(id) {
 	    	 loadMsg:message("yly.common.loading"),
 	    	 striped:true,
 	    	 onDblClickRow : function (rowIndex, rowData){
-	    		 $("#"+id).textbox('setValue',rowData.name);
 	    		 $("#"+id+"ID").val(rowData.id);
+	    		 $("#"+id).textbox('setValue',rowData.name);
 	    		 $('#searchElderlyInfo').dialog("close");
 	    	 },
 	    	 columns:[

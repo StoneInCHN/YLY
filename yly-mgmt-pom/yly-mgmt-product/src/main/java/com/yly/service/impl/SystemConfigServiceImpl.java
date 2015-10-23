@@ -1,6 +1,7 @@
 package com.yly.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.SystemConfigService;
+import com.yly.utils.DateTimeUtils;
 import com.yly.utils.FieldFilterUtils;
 
 /**
@@ -40,6 +42,8 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig, Long>
       List<Filter> filters = new ArrayList<Filter>();
       List<Ordering> orderings = new ArrayList<Ordering>();
       Filter keyFilter = new Filter("configKey", Operator.eq, configKey);
+      Filter enableFilter = new Filter("isEnabled",Operator.eq,true);
+      filters.add(enableFilter);
       filters.add(keyFilter);
       if (direction!=null) {
         Ordering ordering = new Ordering();
@@ -48,11 +52,35 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig, Long>
         orderings.add(ordering);
      }
      List<SystemConfig> systemConfigs = super.findList(null, filters, orderings,true,null);
+     if (systemConfigs == null || systemConfigs.size() == 0) {
+       filters.clear();
+       filters.add(keyFilter);
+       systemConfigs = super.findList(null,filters,null,true,null);
+       if (systemConfigs == null || systemConfigs.size() == 0) {
+         filters.clear();
+         filters.add(keyFilter);
+         systemConfigs = super.findList(null, filters, orderings);
+       }else {
+         return null;
+       }
+     }
      String[] propertys =
        {"id", "configValue"};
      return FieldFilterUtils.filterCollectionMap(propertys, systemConfigs);
    }
    return null;
+  }
+  
+  @Override
+  public String getBillingDate(Date currentDate) {
+    List<Map<String, Object>> dayList = findByConfigKey(ConfigKey.BILLDAY, null);
+    int billDay=0;
+    if(dayList!= null && dayList.size() ==1){
+      billDay = Integer.parseInt(dayList.get(0).get("configValue").toString());
+      Date billDate = DateTimeUtils.getBillDay(currentDate, billDay);
+      return DateTimeUtils.convertDateToString(billDate, "yyyy-MM-dd");
+    }
+    return null;
   }
 
 }

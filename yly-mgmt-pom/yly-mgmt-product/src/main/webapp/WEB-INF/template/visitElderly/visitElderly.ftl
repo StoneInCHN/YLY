@@ -3,13 +3,21 @@
 	  <fieldset>
 	    <legend>${message("yly.visitelderly.search")}</legend>
 	    <form id="visitElderly_search_form" class="search-form">
+	    	<div class="search-item">
+			    <label> ${message("yly.visitelderly.elderlyInfo")}:</label>
+			    <input class="easyui-textbox"  type="text"  name="elderlyInfo.name" style="width:85px;"/>
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.visitelderly.visitor")}:</label>
+			    <input class="easyui-textbox" type="text" name="visitor" validtype="length[0,15]" style="width:85px;"/>
+			</div>
 			<div class="search-item">
 			    <label> ${message("yly.visitelderly.visitDate")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="text" class="Wdate" id="visitDateBeginDate" name="visitDateBeginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'visitDateEndDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="visitDateEndDate"  name="visitDateEndDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'visitDateBeginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">

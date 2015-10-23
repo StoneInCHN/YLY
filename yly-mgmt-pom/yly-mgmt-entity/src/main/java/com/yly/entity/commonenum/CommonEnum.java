@@ -251,6 +251,10 @@ public class CommonEnum {
      * 评估结果,9
      */
     EVALUATINGRESULT,
+    /**
+     * 结算日期,10
+     */
+    BILLDAY,
   }
   
   /**
@@ -267,6 +271,9 @@ public class CommonEnum {
      * 退住结算
      */
     CHECK_OUT,
+    /**
+     * 日常缴费
+     */
     DAILY
     
   }

@@ -9,6 +9,7 @@ var messages = {
 	"yly.common.saving" : "保存中...",
 	"yly.common.edit" : "编辑",
 	"yly.common.cancel" : "取消",
+    "yly.common.close" : "关闭",
 	"yly.common.progress" : "正在处理中...",
 	"yly.common.prompt" : "操作提示",
 	"yly.common.success" : "操作成功",
@@ -89,6 +90,12 @@ var messages = {
 	"yly.charge.record.budgetType.cost" : "消费",
 	"yly.charge.advance.add" : "预缴款",
 	"yly.charge.record.list":"缴费列表",
+	"yly.charge.record.perMonth":"月收费: ￥",	
+	"yly.charge.record.perDay":"日收费: ￥",
+	"yly.charge.billing.day.prefix":"每月",
+	"yly.charge.billing.day.suffix":"号为账单结算日期",
+	
+	
 	
 	
 	/**
@@ -170,6 +177,12 @@ var messages = {
 	//elderlyinfo
 	"yly.admission.add":"办理入院",
 	"yly.elderlyinfo":"老人信息",
+	"yly.elderly.status":"老人状态",
+	"yly.elderly.status.in_nursing_home":"在院",
+	"yly.elderly.status.out_nursing_home":"出院",
+	"yly.elderly.status.in_progress_checkin":"入院办理",
+	"yly.elderly.status.in_progress_checkout":"出院办理",
+	"yly.elderly.status.dead":"过世",
 	"yly.elderlyinfo.identifier":"编号",
 	"yly.elderlyinfo.bed":"床位",
 	"yly.elderlyinfo.record":"老人信息",
@@ -204,7 +217,9 @@ var messages = {
 	"yly.elderlyInfo.monthlyIncome":"月收入",
 	"yly.elderlyInfo.sourceOfIncome":"收入来源",
 	"yly.elderlyInfo.elderlyConsigner":"委托人",
+	"yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber":"委托人电话",
 	"yly.elderlyInfo.elderlyFamilyMembers":"家庭成员",
+
 		
 	//床位管理
 	"yly.bulding.add":"添加楼宇",
@@ -228,8 +243,36 @@ var messages = {
 	"yly.bed.bedNumber":"床位号",
 	"yly.bed.status":"床位状态",
 	"yly.bed.description":"描述",
-	"yly.bed.room":"所在房间"
+	"yly.bed.room":"所在房间",
 	
+	//黑名单
+	"yly.blacklist.record":"黑名单",
+	"yly.blacklist.name":"黑名单老人名字",
+	"yly.blacklist.geracomium":"所属养老院",
+	"yly.blacklist.casue":"加入黑名单原因",
+	"yly.blacklist.add":"加入黑名单",		
+		
+	//老人管理
+	"yly.elderlyInfo.common.operator":"记录人",
+	"yly.elderlyInfo.event.eventDate":"事件发生时间",
+	"yly.elderlyInfo.event.content":"事件内容",
+	"yly.elderlyInfo.event.list":"事件列表",
+    "yly.elderly.event.add":"添加事件",
+    "yly.elderly.event.edit":"编辑事件",
+    "yly.elderlyInfo.stuffDeposit.list":"物品寄存列表",
+    "yly.elderly.stuffDeposit.add":"添加物品寄存",
+    "yly.elderly.stuffDeposit.edit":"编辑物品寄存",
+	//物品寄存
+    "yly.elderlyInfo.stuffDeposit.name":"物品名称",	
+    "yly.elderlyInfo.stuffDeposit.count":"数量",
+    "yly.elderlyInfo.stuffDeposit.remark":"物品备注",
+    "yly.elderlyInfo.stuffDeposit.stuffNumer":"物品编号",
+    "yly.elderlyInfo.stuffDeposit.status":"寄存状态",
+    "yly.elderlyInfo.stuffDeposit.inputDate":"寄存时间",
+    "yly.elderlyInfo.stuffDeposit.takeAwayDate":"取出时间",	
+    "yly.elderlyInfo.stuffDeposit.elderlyName":"所属老人",
+    "yly.elderlyInfo.stuffDeposit.putin":"存入",
+    "yly.elderlyInfo.stuffDeposit.takeaway":"取走"
 };
 //多语言
 function message(code) {

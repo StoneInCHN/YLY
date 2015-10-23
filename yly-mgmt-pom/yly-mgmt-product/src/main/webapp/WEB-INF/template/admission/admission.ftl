@@ -2,18 +2,52 @@
 <div>
 	  <fieldset>
 	    <legend>${message("yly.elderlyInfo.search")}</legend>
-	    <form id="elderlyInfo_search_form" class="search-form">
+	    <form id="admission_search_form" class="search-form">
+	    	<div class="search-item">
+			    <label> ${message("yly.elderlyInfo.identifier")}:</label>
+			    <input class="easyui-textbox" type="text" name="identifier" validtype="length[0,15]"  style="width:60px;"/>
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.elderly.name")}:</label>
+			    <input class="easyui-textbox" type="text" name="name" validtype="length[0,15]" style="width:75px;"/> 
+			</div>
+	    	
+	    	<div class="search-item">
+				<label> ${message("yly.elderlyInfo.elderlyStatus")}:</label>
+	    		<input class="easyui-combobox" data-options="
+				valueField: 'label',
+				textField: 'value',
+				data: [{
+					label: 'IN_NURSING_HOME',
+					value: '${message("yly.elderlyInfo.elderlyStatus.in_nursing_home")}'
+				},{
+					label: 'OUT_NURSING_HOME',
+					value: '${message("yly.elderlyInfo.elderlyStatus.out_nursing_home")}'
+				},{
+					label: 'IN_PROGRESS_CHECKIN',
+					value: '${message("yly.elderlyInfo.elderlyStatus.in_progress_checkin")}'
+				},{
+					label: 'IN_PROGRESS_CHECKOUT',
+					value: '${message("yly.elderlyInfo.elderlyStatus.in_progress_checkout")}'
+				},{
+					label: 'DEAD',
+					value: '${message("yly.elderlyInfo.elderlyStatus.dead")}'
+				}],
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120"  name="elderlyStatus" style="width:100px;"/>
+			</div>
+	    
+	    
 			<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.checkinDate")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="text" class="Wdate" id="beHospitalizedBeginDate" name="beHospitalizedBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'beHospitalizedEndDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="beHospitalizedEndDate"  name="beHospitalizedEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beHospitalizedBeginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="elderlyInfo_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	  <button id="admission_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
@@ -28,13 +62,13 @@
 </div> 
 <div id="addAdmission">
 	<form id="addAdmission_form" action="add.jhtml" method="post" class="form-table" enctype="multipart/form-data">   
-			<input type="hidden" id="addAdmission_form_file_input">
+		<input type="hidden" id="addAdmission_form_file_input" name="profilePhoto">
 	   	  <table class="table table-striped table-bordered">
 	   	  	<caption><h5>${message("yly.elderlyInfo.baseinfo")}</h5></caption>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.identifier")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
+	    			 <input class="easyui-textbox" type="text" id="identifier_input" name="identifier" readonly="readonly" validtype="length[0,15]" data-options="required:true" style="width:60px;"/>  
 	    			 <a href="#" class="easyui-linkbutton" id="generateIdentifier_btn" plain="true">${message("yly.common.generate.identifier")}</a>
 	    		</td>
 	    		

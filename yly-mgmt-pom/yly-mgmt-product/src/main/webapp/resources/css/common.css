@@ -35,6 +35,7 @@ fieldset div{
 
 fieldset label{
 	font-weight: 500;
+	display: inline;
 }
 
 fieldset .combo{
@@ -63,10 +64,28 @@ fieldset .search-item button{
     margin-top: 30px;
 }
 
+#admissionDetail_form .imgWrap{
+	margin-left: 70px;
+    margin-top: 40px;
+}
 
 .red-color{
 	color:red;
 }
 .green-color{
 	color:green;
+}
+
+
+.border-none{
+	border:none !important;
+}
+.margin-left-10{
+	margin-left:10px;
+}
+.margin-left-20{
+	margin-left:20px;
+}
+.margin-left-40{
+	margin-left:40px;
 }

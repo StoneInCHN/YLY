@@ -21,14 +21,21 @@
 	    		
 	    		<td colspan="2" rowspan="6">
 	    			<div title="头像上传" class="easyui-tooltip">
-	    				<div id="admissionUploader-add" class="single-uploader">
-						    <div  class="queueList">
-						        <div  class="placeholder">
-						        	<div id="admissionFilePicker-add" ></div>
+	    				<div id="admissionUploader-edit" class="single-uploader">
+						  	<div  class="queueList filled">
+						        <div  class="placeholder element-invisible">
+						        	<div id="admissionFilePicker-edit" ></div>
+						        </div>
+						        <div class="show-img">
+						        	<p class="imgWrap img-thumbnail">
+										     <img src="${elderlyInfo.profilePhoto}">
+									 </p>
 						        </div>
 						    </div>
 						    <div class="btns">
 						        <div class="uploadBtn state-pedding"></div>
+						        <div id="admissionFilePicker-edit2" class="margin-left-40">选择文件</div>
+						        <div class="btn btn-info savePhoto margin-left-40" style="display:none">保存头像</div>
 						    </div>
 						</div>
 	    			</div>
@@ -216,19 +223,19 @@
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.personalHabits")}:</th>
-	    		<td colspan=5>
+	    		<td colspan=6>
 	    			  <input class="easyui-textbox" type="text" name="personalHabits" value="${elderlyInfo.personalHabits}" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.hobbies")}:</th>
-	    		<td colspan=5>
+	    		<td colspan=6>
 	    			  <input class="easyui-textbox" type="text" name="hobbies" value="${elderlyInfo.hobbies}" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.honors")}:</th>
-	    		<td colspan=5>
+	    		<td colspan=6>
 	    			  <input class="easyui-textbox" type="text" name="honors" value="${elderlyInfo.honors}" validtype="length[0,150]" data-options="multiline:true,height:90,width:420" />
 	    		</td>
 	    	</tr>

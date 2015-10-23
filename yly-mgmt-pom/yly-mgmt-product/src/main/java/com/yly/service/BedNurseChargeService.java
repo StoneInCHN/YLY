@@ -1,7 +1,6 @@
 package com.yly.service;
 
 import com.yly.entity.BedNurseCharge;
-import com.yly.framework.service.BaseService;
 
 
 /**
@@ -9,6 +8,6 @@ import com.yly.framework.service.BaseService;
  * @author sujinxuan
  *
  */
-public interface BedNurseChargeService extends BaseService<BedNurseCharge, Long> {
+public interface BedNurseChargeService extends ChargeRecordService<BedNurseCharge, Long> {
 
 }

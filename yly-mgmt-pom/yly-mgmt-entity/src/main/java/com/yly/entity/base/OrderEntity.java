@@ -32,7 +32,6 @@ public abstract class OrderEntity extends BaseEntity implements Comparable<Order
 	 * @return 排序
 	 */
 	@JsonProperty
-	@Field(store = Store.YES, index = Index.UN_TOKENIZED)
 	@Min(0)
 	@Column(name = "orders")
 	public Integer getOrder() {

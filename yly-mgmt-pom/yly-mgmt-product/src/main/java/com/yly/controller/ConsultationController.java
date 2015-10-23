@@ -30,7 +30,7 @@ public class ConsultationController extends BaseController {
 
   @Resource(name = "consultationServiceImpl")
   private ConsultationService consultationService;
-  
+
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
 
@@ -48,15 +48,26 @@ public class ConsultationController extends BaseController {
   /**
    * 查询咨询记录
    * 
-   * @param beginDate
-   * @param endDate
+   * @param returnVisitDateBeginDate
+   * @param returnVisitDateEndDate
+   * @param consultationRecord
    * @param pageable
    * @param model
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<ConsultationRecord> list(Date beginDate, Date endDate,
-      Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<ConsultationRecord> list(Date returnVisitDateBeginDate,
+      Date returnVisitDateEndDate, ConsultationRecord consultationRecord, Pageable pageable,
+      ModelMap model) {
+
+    if (consultationRecord.getVisitor() != null || consultationRecord.getElderlyName() != null
+        || consultationRecord.getCheckinIntention() != null
+        || consultationRecord.getInfoChannel() != null || returnVisitDateBeginDate != null
+        || returnVisitDateEndDate != null) {
+
+      return consultationService.consultationSearch(returnVisitDateBeginDate,
+          returnVisitDateEndDate, consultationRecord, pageable);
+    }
     return consultationService.findPage(pageable, true);
   }
 
@@ -76,30 +87,32 @@ public class ConsultationController extends BaseController {
 
     return SUCCESS_MESSAGE;
   }
-  
-  
+
+
   /**
    * 获取数据进入编辑页面
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    ConsultationRecord record =  consultationService.find(id);
+    ConsultationRecord record = consultationService.find(id);
     model.addAttribute("consultation", record);
     return "consultation/edit";
   }
-  
+
   /**
    * 获取数据进入详情页面
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
-    ConsultationRecord record =  consultationService.find(id);
+    ConsultationRecord record = consultationService.find(id);
     model.addAttribute("consultation", record);
     return "consultation/details";
   }
@@ -121,7 +134,7 @@ public class ConsultationController extends BaseController {
    */
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
   public @ResponseBody Message delete(Long[] ids) {
-    if(ids != null){
+    if (ids != null) {
       consultationService.delete(ids);
     }
     return SUCCESS_MESSAGE;

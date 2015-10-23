@@ -3,12 +3,11 @@
 /**
  * 
  * @param options
- * warp 外层包裹id
- * identifierId 存放编号的input框id
- * successFun 文件返回成功后执行的返回函数
- * createOption init初始化传值
- * 
- * 
+ * warp 外层包裹id  必填
+ * createOption 初始化传值
+ * uploadBeforeSend 上传前的回调函数
+ * uploadSuccess 上传成功后的回调函数
+ * uploadImageType 上传使用类型 add 用于第一次上传头像 edit 用于修改头像
  * 
  */
 function singleUpload(options) {
@@ -62,10 +61,10 @@ function singleUpload(options) {
 	})(),
 
 	// WebUploader实例
-	uploader;
-
+	 uploader;
+	
 	if($queue.length > 0){
-		$queue.html();
+		$queue.empty();
 	}else{
 		$queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));
 	}
@@ -77,13 +76,26 @@ function singleUpload(options) {
 	}
 
 	// 实例化
-	uploader = WebUploader.create(options.createOption);
+	if(options.createOption){
+		uploader = WebUploader.create(options.createOption);
+	}
+	
 
 	// 添加“添加文件”的按钮，
-	/*uploader.addButton({
-		id : '#filePicker2',
-		label : '继续添加'
-	});*/
+	if(options.addButton){
+		uploader.addButton(options.addButton);
+		
+		//FilePickerId = options.addButton.FilePickerId
+		//saveClass = options.addButton.saveClass
+		
+	/*	$("#"+options.addButton.FilePickerId).on("click",function(){
+			var $_this =$(this);
+			$_this.hide();
+			$wrap.find("."+options.addButton.saveClass).show();
+			$wrap.find(".show-img").hide();
+		})*/
+	}
+	
 
 	// 当有文件添加进来时执行，负责view的创建
 	function addFile(file) {
@@ -210,7 +222,9 @@ function singleUpload(options) {
 							}
 
 						});
-
+		
+		$queue.empty();
+		$wrap.find(".webuploader-container").hide();
 		$li.appendTo($queue);
 	}
 
@@ -241,7 +255,7 @@ function singleUpload(options) {
 	function updateStatus() {
 		var text = '', stats;
 
-		if (state === 'ready') {
+		/*if (state === 'ready') {
 			text = '选中' + fileCount + '张图片，共'
 					+ WebUploader.formatSize(fileSize) + '。';
 		} else if (state === 'confirm') {
@@ -262,9 +276,10 @@ function singleUpload(options) {
 			if (stats.uploadFailNum) {
 				text += '，失败' + stats.uploadFailNum + '张';
 			}
-		}
+		}*/
 
-		$info.html(text);
+		stats = uploader.getStats();
+		//$info.html(text);
 	}
 
 	function setState(val) {
@@ -341,33 +356,44 @@ function singleUpload(options) {
 	
 	//上传成功执行的内容
 	uploader.onUploadSuccess = function(file, response ) {
-		$("#"+options.inputId).val(response.content);
-		options.successFun();
+		if(options.uploadSuccess){
+			options.uploadSuccess(file, response );
+		}
+		
 	};
 	
-	uploader.on('uploadBeforeSend', function(object, data, headers) {
-		var  identifierId= options.identifierId;
-		if(identifierId){
-			var identifierVal = $("#"+identifierId).val();
-			if(identifierVal){
-				data.identifier =identifierVal;
-			}
+	//上传之前执行的内容
+	uploader.onUploadBeforeSend = function(object, data, headers) {
+		if(options.uploadBeforeSend){
+			options.uploadBeforeSend(object, data, headers);
 		}
-	});
+	};
 	
 
 	uploader.onFileQueued = function(file) {
-		fileCount++;
-		fileSize += file.size;
+		
+		
+		
+			fileCount++;
+			fileSize += file.size;
 
-		if (fileCount === 1) {
-			$placeHolder.addClass('element-invisible');
-			$statusBar.show();
-		}
+			if (fileCount === 1) {
+				$placeHolder.addClass('element-invisible');
+				$statusBar.show();
+			}
 
-		addFile(file);
-		setState('ready');
-		updateTotalProgress();
+			if(options.uploadImageType){
+				$wrap.find(options.addButton.id).hide();
+				$wrap.find(options.addButton.id).next().show();
+				$wrap.find(".show-img").hide();
+			}
+			
+			addFile(file);
+			setState('ready');
+			updateTotalProgress();
+		
+		
+		
 	};
 
 	uploader.onFileDequeued = function(file) {

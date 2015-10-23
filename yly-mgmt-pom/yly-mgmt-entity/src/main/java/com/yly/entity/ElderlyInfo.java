@@ -24,8 +24,10 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -53,7 +55,7 @@ import com.yly.entity.commonenum.CommonEnum.SourceOfIncome;
 @Entity
 @Table(name = "yly_elderly_info")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_elderly_info_sequence")
-@Indexed(index="elderlyManage/elderlyInfo")
+@Indexed(index="elderlyInfo")
 public class ElderlyInfo extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
@@ -274,6 +276,11 @@ public class ElderlyInfo extends BaseEntity {
   private Deposit deposit;
 
   /**
+   * 账单
+   */
+  private Set<Billing> billings = new HashSet<Billing>();
+  
+  /**
    * 床位护理费
    */
   private Set<BedNurseCharge> bedNurseCharges = new HashSet<BedNurseCharge>();
@@ -329,6 +336,15 @@ public class ElderlyInfo extends BaseEntity {
    */
   private BigDecimal advanceChargeAmount;
   
+  @OneToMany(mappedBy = "elderlyInfo")
+  public Set<Billing> getBillings() {
+    return billings;
+  }
+
+  public void setBillings(Set<Billing> billings) {
+    this.billings = billings;
+  }
+
   @Column(precision = 12, scale = 2)
   public BigDecimal getAdvanceChargeAmount() {
     return advanceChargeAmount;
@@ -432,6 +448,7 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @Index(name = "elderly_info_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -449,6 +466,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
   }
 
+  @JsonProperty
   @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   public ElderlyConsigner getElderlyConsigner() {
     return elderlyConsigner;
@@ -471,7 +489,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getIdentifier() {
     return identifier;
   }
@@ -482,7 +500,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.YES, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }
@@ -724,6 +742,8 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getBeHospitalizedDate() {
     return beHospitalizedDate;
   }
@@ -808,6 +828,7 @@ public class ElderlyInfo extends BaseEntity {
     this.housingInfo = housingInfo;
   }
 
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public DeleteStatus getDeleteStatus() {
     return deleteStatus;
   }
@@ -816,6 +837,8 @@ public class ElderlyInfo extends BaseEntity {
     this.deleteStatus = deleteStatus;
   }
 
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public ElderlyStatus getElderlyStatus() {
     return elderlyStatus;
   }

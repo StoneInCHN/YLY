@@ -6,7 +6,7 @@
 	    <form id="advanceCharge_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
-			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="realName" id="realName"/>
+			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="name" id="realName"/>
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
@@ -32,7 +32,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}</th>
 	    		<td>
-	    			 <input class="easyui-textbox" value="${message("yly.common.please.select")}" name="elderlyInfoName" id="addAdvanceCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
+	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addAdvanceCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addAdvanceCharge_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    	</tr>
@@ -58,9 +58,6 @@
 					data: [{
 						value: 'CASH',
 						label: '${message("yly.common.charge.paymentType.CASH")}'
-					},{
-						value: 'ADVANCE',
-						label: '${message("yly.common.charge.paymentType.ADVANCE")}'
 					},{
 						value: 'CARD',
 						label: '${message("yly.common.charge.paymentType.CARD")}'

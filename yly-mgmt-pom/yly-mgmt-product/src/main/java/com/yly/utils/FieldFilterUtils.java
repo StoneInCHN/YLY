@@ -1,12 +1,10 @@
 package com.yly.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.cglib.beans.BeanMap;
 
@@ -59,11 +57,11 @@ public class FieldFilterUtils<T> {
    * @param entity 实体对象
    * @return
    */
-  public static Map<String, Object> filterEntityMap(String[] propertys, Object entity) {
+  public static Map<String, Object> filterEntityMap(String[] properties, Object entity) {
     Map<String, Object> map = new HashMap<String, Object>();
     Map<String, Object> childMap = new HashMap<String, Object>();
     BeanMap beanMap = BeanMap.create(entity);
-    for (String key : propertys) {
+    for (String key : properties) {
       String[] pros = key.split("\\.");
       if (pros != null && pros.length > 1) {// 目前只支持取2级对象
         String[] str = {pros[1]};

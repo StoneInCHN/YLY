@@ -1,7 +1,6 @@
 package com.yly.controller;
 
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.BedNurseCharge;
-import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.ChargeSearchRequest;
 import com.yly.service.BedNurseChargeService;
 import com.yly.utils.FieldFilterUtils;
 
@@ -49,18 +48,19 @@ public class BedNurseChargeRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(Date beginDate, Date endDate,
-      String realName, String identifier,PaymentStatus status, Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(ChargeSearchRequest queryParam, Pageable pageable, ModelMap model) {
     Page<BedNurseCharge> page = new Page<BedNurseCharge>();
-    if (realName == null && identifier == null && beginDate == null && endDate == null && status == null) {
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null && queryParam.getStatus() == null) {
       page = bedNurseChargeService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(BedNurseChargeRecordController.class)) {
-        LogUtil.debug(BedNurseChargeRecordController.class, "search", "elderlyName: " + realName
-            + ",identifier: " + identifier + "" + ",status: " + status + ""+",start date: " + beginDate + ", end date: "
-            + endDate);
+        LogUtil.debug(BedNurseChargeRecordController.class, "Searching BedNurseCharge records with params",
+            "elderlyName=%s,identifier=%s,chargeStatus=%s,beginDate=%s,endDate=%s", queryParam.getRealName(), queryParam.getIdentifier(),queryParam.getStatus()!=null?queryParam.getStatus().toString():null,
+             queryParam.getBeginDate()!=null?queryParam.getBeginDate().toString():null, queryParam.getEndDate()!=null?queryParam.getEndDate().toString():null);
       }
-      page = bedNurseChargeService.chargeRecordSearch(beginDate, endDate, realName, identifier,status,null,true,pageable);
+      queryParam.setIsPeriod(true);
+      queryParam.setIsTenant(true);
+      page = bedNurseChargeService.chargeRecordSearch(queryParam,pageable);
     }
 
 

@@ -1,5 +1,7 @@
 package com.yly.service;
 
+import java.util.Date;
+
 import com.yly.entity.ElderlyInfo;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
@@ -11,15 +13,18 @@ import com.yly.framework.service.BaseService;
  * @author shijun
  *
  */
-public interface ElderlyInfoService extends BaseService<ElderlyInfo,Long>{
-  
+public interface ElderlyInfoService extends BaseService<ElderlyInfo, Long> {
+
   /**
-   * 老人信息查询
-   * @param realName
-   * @param identifier
+   * 老人查询
+   * 
+   * @param beHospitalizedBeginDate
+   * @param beHospitalizedEndDate
+   * @param elderlyInfo
    * @param pageable
    * @return
    */
-  Page<ElderlyInfo> elderlyInfoSearch(String realName, String identifier,Pageable pageable);
+  Page<ElderlyInfo> searchElderlyInfo(Date beHospitalizedBeginDate, Date beHospitalizedEndDate,
+      ElderlyInfo elderlyInfo, Pageable pageable);
 
 }

@@ -1,6 +1,5 @@
 package com.yly.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Relation;
 
@@ -77,6 +77,7 @@ public class ElderlyConsigner extends BaseEntity {
     this.consignerName = consignerName;
   }
   
+  @JsonProperty
   @Column(length = 15)
   public String getConsignerPhoneNumber() {
     return consignerPhoneNumber;

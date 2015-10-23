@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -14,12 +15,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
@@ -35,7 +38,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 @Entity
 @Table(name = "yly_billing")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_billing_sequence")
-@Indexed(index="chargeManage/billingCharge")
+@Indexed(index = "chargeManage/billingCharge")
 public class Billing extends BaseEntity {
 
   private static final long serialVersionUID = -9092276707242009884L;
@@ -99,22 +102,22 @@ public class Billing extends BaseEntity {
    * 护理费金额
    */
   private BigDecimal nurseAmount;
-  
+
   /**
    * 押金金额
    */
   private BigDecimal depositAmount;
-  
+
   /**
    * 伙食费金额
    */
   private BigDecimal mealAmount;
-  
+
   /**
    * 总金额
    */
   private BigDecimal totalAmount;
-  
+
   /**
    * 押金详情
    */
@@ -147,12 +150,12 @@ public class Billing extends BaseEntity {
    * 备注
    */
   private String remark;
-  
+
   /**
    * 支付记录
    */
   private Set<PaymentRecord> paymentRecords = new HashSet<PaymentRecord>();
-  
+
   /**
    * 账单调账
    */
@@ -161,7 +164,7 @@ public class Billing extends BaseEntity {
    * 账单类型（入住缴费，退住结算，日常缴费会形成bill）
    */
   private BillingType billType;
-  
+
   @Column(precision = 12, scale = 2)
   public BigDecimal getMealAmount() {
     return mealAmount;
@@ -171,6 +174,8 @@ public class Billing extends BaseEntity {
     this.mealAmount = mealAmount;
   }
 
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public BillingType getBillType() {
     return billType;
   }
@@ -179,7 +184,7 @@ public class Billing extends BaseEntity {
     this.billType = billType;
   }
 
-  @OneToMany(mappedBy="billing")
+  @OneToMany(mappedBy = "billing")
   public Set<BillingAdjustment> getBillingAdjustment() {
     return billingAdjustment;
   }
@@ -188,7 +193,7 @@ public class Billing extends BaseEntity {
     this.billingAdjustment = billingAdjustment;
   }
 
-  @OneToMany(mappedBy="billing")
+  @OneToMany(mappedBy = "billing")
   public Set<PaymentRecord> getPaymentRecords() {
     return paymentRecords;
   }
@@ -205,7 +210,7 @@ public class Billing extends BaseEntity {
     this.paymentType = paymentType;
   }
 
-  @OneToOne(mappedBy="billing")
+  @OneToOne(mappedBy = "billing")
   public BedNurseCharge getBedNurseCharge() {
     return bedNurseCharge;
   }
@@ -214,7 +219,7 @@ public class Billing extends BaseEntity {
     this.bedNurseCharge = bedNurseCharge;
   }
 
-  @OneToOne(mappedBy="billing")
+  @OneToOne(mappedBy = "billing")
   public MealCharge getMealCharge() {
     return mealCharge;
   }
@@ -223,7 +228,7 @@ public class Billing extends BaseEntity {
     this.mealCharge = mealCharge;
   }
 
-  @OneToOne(mappedBy="billing")
+  @OneToOne(mappedBy = "billing")
   public WaterElectricityCharge getWaterElectricityCharge() {
     return waterElectricityCharge;
   }
@@ -232,7 +237,7 @@ public class Billing extends BaseEntity {
     this.waterElectricityCharge = waterElectricityCharge;
   }
 
-  @OneToOne(mappedBy="billing")
+  @OneToOne(mappedBy = "billing")
   public PersonalizedCharge getPersonalizedCharge() {
     return personalizedCharge;
   }
@@ -296,6 +301,8 @@ public class Billing extends BaseEntity {
   }
 
   @Index(name = "billing_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -388,7 +395,7 @@ public class Billing extends BaseEntity {
     this.depositAmount = depositAmount;
   }
 
-  @OneToOne(mappedBy="billing")
+  @OneToOne(mappedBy = "billing", cascade = CascadeType.ALL)
   public Deposit getDeposit() {
     return deposit;
   }
@@ -406,5 +413,5 @@ public class Billing extends BaseEntity {
     this.totalAmount = totalAmount;
   }
 
-   
+
 }
