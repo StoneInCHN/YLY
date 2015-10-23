@@ -34,16 +34,15 @@ public class ElderlyInfoController extends BaseController {
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
 
-  @Resource(name = "tenantAccountServiceImpl")
   /**
    * 列表页面
    * 
    * @param model
    * @return
    */
-  @RequestMapping(value = "/elderlyInfo", method = RequestMethod.GET)
+  @RequestMapping(value = "/checkedInElderly", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/elderlyInfo/elderlyInfo";
+    return "/checkedInElderly/checkedInElderly";
   }
 
   /**
@@ -87,6 +86,6 @@ public class ElderlyInfoController extends BaseController {
   public String details(ModelMap model, Long id) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(id);
     model.addAttribute("elderlyInfo", elderlyInfo);
-    return "admission/details";
+    return "checkedInElderly/details";
   }
 }

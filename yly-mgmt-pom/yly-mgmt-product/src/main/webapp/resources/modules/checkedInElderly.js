@@ -18,7 +18,7 @@ $(function(){
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#checkedInElderDetail').dialog("close");
+						 $('#checkedInElderlyDetail').dialog("close");
 					}
 			    }]
 			});   

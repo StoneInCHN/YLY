@@ -72,7 +72,7 @@
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">${message("yly.consultation.record")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">${message("yly.visitelderly.visitRegistration")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bookingRegistration/bookingRegistration.jhtml">${message("yly.bookingRegistration")}</a></li>
-		    		<li><a href="#">在院老人</a></li>
+		    		<li><a href="#" data-url="${base}/console/elderlyInfo/checkedInElderly.jhtml">${message("yly.elderlyInfo.checkedInElderly")}</a></li>
 		    		<li><a href="#">床位状态</a></li>
 		    		<li><a href="#">科室信息</a></li>
 		    	</ul>

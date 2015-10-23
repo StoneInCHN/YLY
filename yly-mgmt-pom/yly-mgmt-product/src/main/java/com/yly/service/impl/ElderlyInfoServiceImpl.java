@@ -114,8 +114,8 @@ public class ElderlyInfoServiceImpl extends BaseServiceImpl<ElderlyInfo, Long> i
       LogUtil
           .debug(
               ConsultationServiceImpl.class,
-              "consultationSearch",
-              "Searching consultation records with params,tenant ID=%s,identifier=%s,elderly name=%s,elderlyStatus=%s,start beHospitalizedDate=%s,end beHospitalizedDate=%s",
+              "searchElderlyInfo",
+              "Searching Elderly records with params,tenant ID=%s,identifier=%s,elderly name=%s,elderlyStatus=%s,start beHospitalizedDate=%s,end beHospitalizedDate=%s",
               tenantAccountService.getCurrentTenantID(), elderlyInfo.getIdentifier(),
               elderlyInfo.getName(), elderlyInfo.getElderlyStatus(), beHospitalizedBeginDate,
               beHospitalizedEndDate);
