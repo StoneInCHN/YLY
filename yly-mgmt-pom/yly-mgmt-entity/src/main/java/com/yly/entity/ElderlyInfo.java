@@ -24,8 +24,10 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -464,6 +466,7 @@ public class ElderlyInfo extends BaseEntity {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
   }
 
+  @JsonProperty
   @OneToOne(mappedBy = "elderlyInfo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   public ElderlyConsigner getElderlyConsigner() {
     return elderlyConsigner;
@@ -486,7 +489,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getIdentifier() {
     return identifier;
   }
@@ -739,6 +742,8 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getBeHospitalizedDate() {
     return beHospitalizedDate;
   }
@@ -832,6 +837,7 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public ElderlyStatus getElderlyStatus() {
     return elderlyStatus;
   }

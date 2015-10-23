@@ -352,7 +352,12 @@ $(function(){
 		    	  	}
 		      	}},
 		      {title:message("yly.common.idcard"),field:"idcard",width:40,align:'center',sortable:true},
-		      {title:message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber"),field:"elderlyConsigner.consignerPhoneNumber",width:20,align:'center',sortable:true},
+		      {title:message("yly.common.bedRoom"),field:"bedLocation",width:30,align:'center',sortable:true},
+		      {title:message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber"),field:"consignerPhoneNumber",width:20,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  if(row !=  null){
+		    		  return row.elderlyConsigner.consignerPhoneNumber;  
+		    	  }
+		      	}},
 		      {title:message("yly.elderly.status"),field:"elderlyStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "IN_NURSING_HOME"){
 		    	  		return  message("yly.elderly.status.in_nursing_home");

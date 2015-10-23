@@ -6,7 +6,7 @@
 	    <form id="advanceCharge_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
-			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="realName" id="realName"/>
+			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="name" id="realName"/>
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>

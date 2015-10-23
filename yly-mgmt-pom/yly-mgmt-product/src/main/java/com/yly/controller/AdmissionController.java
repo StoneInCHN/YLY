@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yly.beans.Message;
 import com.yly.beans.FileInfo.FileType;
+import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.SystemConfig;
@@ -38,17 +38,17 @@ import com.yly.service.TenantAccountService;
  */
 @Controller("admissionController")
 @RequestMapping("console/admission")
-public class AdmissionController extends BaseController{
-  
+public class AdmissionController extends BaseController {
+
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
-  
+
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
-  
+
   @Resource(name = "systemConfigServiceImpl")
   private SystemConfigService systemConfigService;
-  
+
   @Resource(name = "fileServiceImpl")
   private FileService fileService;
 
@@ -73,14 +73,20 @@ public class AdmissionController extends BaseController{
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<ElderlyInfo> list(Date beginDate, Date endDate,
-      Pageable pageable, ModelMap model) {
-    
+  public @ResponseBody Page<ElderlyInfo> list(Date beHospitalizedBeginDate,
+      Date beHospitalizedEndDate, ElderlyInfo elderlyInfo, Pageable pageable, ModelMap model) {
+
+    if (elderlyInfo.getIdentifier() != null || elderlyInfo.getName() != null
+        || elderlyInfo.getElderlyStatus() != null || beHospitalizedBeginDate != null
+        || beHospitalizedEndDate != null) {
+      return elderlyInfoService.searchElderlyInfo(beHospitalizedBeginDate, beHospitalizedEndDate, elderlyInfo, pageable);
+    }
+
     List<Filter> filters = new ArrayList<Filter>();
-    Filter delFilter = new Filter("deleteStatus", Operator.eq ,DeleteStatus.NOT_DELETED);
+    Filter delFilter = new Filter("deleteStatus", Operator.eq, DeleteStatus.NOT_DELETED);
     filters.add(delFilter);
     pageable.setFilters(filters);
-    
+
     return elderlyInfoService.findPage(pageable, true);
   }
 
@@ -91,24 +97,25 @@ public class AdmissionController extends BaseController{
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(Long personnelCategoryId , Long nursingLevelId , Long evaluatingResultId , ElderlyInfo elderlyInfo) {
+  public @ResponseBody Message add(Long personnelCategoryId, Long nursingLevelId,
+      Long evaluatingResultId, ElderlyInfo elderlyInfo) {
 
     SystemConfig personnelCategory = null;
     SystemConfig nursingLevel = null;
     SystemConfig evaluatingResult = null;
-    
-    if(personnelCategoryId != null){
+
+    if (personnelCategoryId != null) {
       personnelCategory = systemConfigService.find(personnelCategoryId);
     }
-    
-    if(nursingLevelId != null){
+
+    if (nursingLevelId != null) {
       nursingLevel = systemConfigService.find(nursingLevelId);
     }
-    
-    if(evaluatingResultId != null){
+
+    if (evaluatingResultId != null) {
       evaluatingResult = systemConfigService.find(evaluatingResultId);
     }
-    
+
     if (elderlyInfo != null) {
       Long currnetTenantId = tenantAccountService.getCurrentTenantID();
       /**
@@ -119,44 +126,46 @@ public class AdmissionController extends BaseController{
       elderlyInfo.setNursingLevel(nursingLevel);
       elderlyInfo.setEvaluatingResult(evaluatingResult);
       elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
-      
-      elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);      
+
+      elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);
       elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
-      
+
       /**
        * 设置老人状态
        */
       elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
-      
+
       elderlyInfoService.save(elderlyInfo);
     }
-  
+
     return SUCCESS_MESSAGE;
   }
-  
-  
+
+
   /**
    * 获取数据进入编辑页面
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    ElderlyInfo elderlyInfo =  elderlyInfoService.find(id);
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(id);
     model.addAttribute("elderlyInfo", elderlyInfo);
     return "admission/edit";
   }
-  
+
   /**
    * 获取数据进入详情页面
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
-    ElderlyInfo elderlyInfo =  elderlyInfoService.find(id);
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(id);
     model.addAttribute("elderlyInfo", elderlyInfo);
     return "admission/details";
   }
@@ -168,41 +177,42 @@ public class AdmissionController extends BaseController{
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(Long personnelCategoryEditId , Long nursingLevelEditId , Long evaluatingResultEditId , ElderlyInfo elderlyInfo) {
-    
+  public @ResponseBody Message update(Long personnelCategoryEditId, Long nursingLevelEditId,
+      Long evaluatingResultEditId, ElderlyInfo elderlyInfo) {
+
     SystemConfig personnelCategory = null;
     SystemConfig nursingLevel = null;
     SystemConfig evaluatingResult = null;
-    
-    if(personnelCategoryEditId != null){
+
+    if (personnelCategoryEditId != null) {
       personnelCategory = systemConfigService.find(personnelCategoryEditId);
     }
-    
-    if(nursingLevelEditId != null){
+
+    if (nursingLevelEditId != null) {
       nursingLevel = systemConfigService.find(nursingLevelEditId);
     }
-    
-    if(evaluatingResultEditId != null){
+
+    if (evaluatingResultEditId != null) {
       evaluatingResult = systemConfigService.find(evaluatingResultEditId);
     }
     /**
      * 设置租户
      */
     Long currnetTenantId = tenantAccountService.getCurrentTenantID();
-    
+
     elderlyInfo.setTenantID(currnetTenantId);
     elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
     elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);
     elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);
-    
+
     elderlyInfo.setPersonnelCategory(personnelCategory);
     elderlyInfo.setNursingLevel(nursingLevel);
     elderlyInfo.setEvaluatingResult(evaluatingResult);
     /**
-     * 更新入院老人数据的时候老人状态始终未入院办理
+     * 更新入院老人数据的时候老人状态始终为入院办理
      */
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
-    
+
     elderlyInfoService.update(elderlyInfo);
     return SUCCESS_MESSAGE;
   }
@@ -212,30 +222,31 @@ public class AdmissionController extends BaseController{
    */
   @RequestMapping(value = "/delete", method = RequestMethod.POST)
   public @ResponseBody Message delete(Long[] ids) {
-    if(ids != null){
+    if (ids != null) {
       List<ElderlyInfo> elderlyInfoList = elderlyInfoService.findList(ids);
-      
-      for(ElderlyInfo elderlyInfo : elderlyInfoList){
+
+      for (ElderlyInfo elderlyInfo : elderlyInfoList) {
         elderlyInfo.setDeleteStatus(DeleteStatus.DELETED);
         elderlyInfoService.update(elderlyInfo);
       }
     }
     return SUCCESS_MESSAGE;
   }
-  
+
   @RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
-  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,String identifier ,Long elderlyInfoId) {
-    
+  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,
+      String identifier, Long elderlyInfoId) {
+
     String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
-    if(filePath !=null && elderlyInfoId!=null){
+    if (filePath != null && elderlyInfoId != null) {
       ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoId);
       elderlyInfo.setProfilePhoto(filePath);
       elderlyInfoService.update(elderlyInfo);
       return Message.success(filePath);
-    }else{
+    } else {
       return ERROR_MESSAGE;
     }
-    
+
   }
-  
+
 }

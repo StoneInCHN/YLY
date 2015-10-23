@@ -19,6 +19,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.AdvanceCharge;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
+import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.request.ChargeSearchRequest;
@@ -63,17 +64,18 @@ public class AdvanceChargeController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/chargeAccounts", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> accountList(String realName, String identifier,
+  public @ResponseBody Page<Map<String, Object>> accountList(ElderlyInfo elderlyInfo,
       Pageable pageable, ModelMap model) {
     Page<ElderlyInfo> page = new Page<ElderlyInfo>();
-    if (realName == null && identifier == null) {
+    if (elderlyInfo.getName() == null && elderlyInfo.getIdentifier() == null) {
       page = elderlyInfoService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
         LogUtil.debug(AdvanceChargeController.class, "Searching elderly advanceCharge with params",
-            "elderlyName=%s,identifier=%s",realName,identifier);
+            "elderlyName=%s,identifier=%s",elderlyInfo.getName(),elderlyInfo.getIdentifier());
       }
-      page = elderlyInfoService.elderlyInfoSearch(true, realName, identifier, pageable);
+      elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
+      page = elderlyInfoService.searchElderlyInfo(null, null,elderlyInfo, pageable);
     }
 
     String[] properties =
