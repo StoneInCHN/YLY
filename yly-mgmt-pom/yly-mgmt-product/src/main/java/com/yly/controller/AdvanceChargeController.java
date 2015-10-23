@@ -20,6 +20,7 @@ import com.yly.entity.AdvanceCharge;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
+import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.request.ChargeSearchRequest;
@@ -75,6 +76,7 @@ public class AdvanceChargeController extends BaseController {
             "elderlyName=%s,identifier=%s",elderlyInfo.getName(),elderlyInfo.getIdentifier());
       }
       elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
+      elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
       page = elderlyInfoService.searchElderlyInfo(null, null,elderlyInfo, pageable);
     }
 
@@ -109,8 +111,8 @@ public class AdvanceChargeController extends BaseController {
       if (LogUtil.isDebugEnabled(AdvanceChargeController.class)) {
         LogUtil.debug(AdvanceChargeController.class, "Searching advanceChargeRecord records with params",
             "elderlyName=%s,identifier=%s,budgetType=%s,beginDate=%s,endDate=%s", queryParam
-                .getRealName(), queryParam.getIdentifier(), queryParam.getBudgetType().toString(),
-            queryParam.getBeginDate().toString(), queryParam.getEndDate().toString());
+                .getRealName(), queryParam.getIdentifier(), queryParam.getBudgetType()!=null?queryParam.getBudgetType().toString():null,
+             queryParam.getBeginDate()!=null?queryParam.getBeginDate().toString():null, queryParam.getEndDate()!=null?queryParam.getEndDate().toString():null);
       }
       queryParam.setIsPeriod(false);
       queryParam.setIsTenant(true);

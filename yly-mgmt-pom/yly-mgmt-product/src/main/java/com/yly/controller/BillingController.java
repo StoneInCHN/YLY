@@ -33,13 +33,14 @@ public class BillingController extends BaseController {
 
   @Resource(name = "billingServiceImpl")
   private BillingService billingService;
-  
+
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
-  
-  
+
+
   /**
    * 入院缴费页面
+   * 
    * @param model
    * @return
    */
@@ -47,9 +48,10 @@ public class BillingController extends BaseController {
   public String checkinCharge(ModelMap model) {
     return "/checkinCharge/checkin";
   }
-  
+
   /**
    * 退住结算页面
+   * 
    * @param model
    * @return
    */
@@ -57,9 +59,10 @@ public class BillingController extends BaseController {
   public String checkoutCharge(ModelMap model) {
     return "/checkoutCharge/checkout";
   }
-  
+
   /**
    * 日常缴费页面
+   * 
    * @param model
    * @return
    */
@@ -70,6 +73,7 @@ public class BillingController extends BaseController {
 
   /**
    * 列表数据
+   * 
    * @param beginDate
    * @param endDate
    * @param pageable
@@ -77,30 +81,35 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Map<String, Object>> list(ChargeSearchRequest queryParam,Pageable pageable, ModelMap model) {
+  public @ResponseBody Page<Map<String, Object>> list(ChargeSearchRequest queryParam,
+      Pageable pageable, ModelMap model) {
     Page<Billing> page = new Page<Billing>();
-    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null && queryParam.getBeginDate() == null && queryParam.getEndDate() == null) {
-    	List<Filter> filters = new ArrayList<Filter>();
-		Filter filter=new Filter("billType",Operator.eq,queryParam.getBillingType());
-		filters.add(filter);
-		pageable.setFilters(filters);
-    	page = billingService.findPage(pageable, true);
+    if (queryParam.getRealName() == null && queryParam.getIdentifier() == null
+        && queryParam.getBeginDate() == null && queryParam.getEndDate() == null) {
+      List<Filter> filters = new ArrayList<Filter>();
+      Filter filter = new Filter("billType", Operator.eq, queryParam.getBillingType());
+      filters.add(filter);
+      pageable.setFilters(filters);
+      page = billingService.findPage(pageable, true);
     } else {
       if (LogUtil.isDebugEnabled(BillingController.class)) {
         LogUtil.debug(BillingController.class, "Searching billing records with params",
-            "elderlyName=%s,identifier=%s,billType=%s,beginDate=%s,endDate=%s", queryParam
-                .getRealName(), queryParam.getIdentifier(), queryParam.getBillingType().toString(),
-            queryParam.getBeginDate().toString(), queryParam.getEndDate().toString());
+            "elderlyName=%s,identifier=%s,billType=%s,beginDate=%s,endDate=%s",
+            queryParam.getRealName(), queryParam.getIdentifier(),
+            queryParam.getBillingType() != null ? queryParam.getBillingType().toString() : null,
+            queryParam.getBeginDate() != null ? queryParam.getBeginDate().toString() : null,
+            queryParam.getEndDate() != null ? queryParam.getEndDate().toString() : null);
       }
       queryParam.setIsPeriod(false);
       queryParam.setIsTenant(true);
-      page = billingService.chargeRecordSearch(queryParam,pageable);
+      page = billingService.chargeRecordSearch(queryParam, pageable);
     }
 
 
     String[] properties =
         {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
-            "elderlyInfo.nursingLevel", "nurseAmount","mealAmount", "depositAmount", "totalAmount", "bedAmount", "payTime","operator"};
+            "elderlyInfo.nursingLevel", "nurseAmount", "mealAmount", "depositAmount",
+            "totalAmount", "bedAmount", "payTime", "operator"};
 
     List<Map<String, Object>> rows =
         FieldFilterUtils.filterCollectionMap(properties, page.getRows());
@@ -112,28 +121,28 @@ public class BillingController extends BaseController {
   }
 
 
-  
-  
+
   /**
    * 根据老人获取床位护理费配置
+   * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/getBedNurseConfig", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String,Object>> getBedNurseConfig(ModelMap model, Long elderlyInfoID) {
-	ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-	 String[] properties =
-	        { "chargeItem.configValue", "amountPerDay", "amountPerMonth"};
-	
+  public @ResponseBody List<Map<String, Object>> getBedNurseConfig(ModelMap model,
+      Long elderlyInfoID) {
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+    String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
+
     return billingService.getBedNurseConfigByElderly(properties, elderlyInfo);
   }
-  
-  
+
+
   @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-  public @ResponseBody Message add(Billing checkinBill,Long chargeItemId) {
-    
-    //billingService.save(checkinBill,true);
+  public @ResponseBody Message add(Billing checkinBill, Long chargeItemId) {
+
+    // billingService.save(checkinBill,true);
     return SUCCESS_MESSAGE;
   }
 
@@ -145,10 +154,10 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
-  public String details(ModelMap model, Long id,String path) {
+  public String details(ModelMap model, Long id, String path) {
     Billing record = billingService.find(id);
     model.addAttribute("billing", record);
-    return path+"/details";
+    return path + "/details";
   }
 
 }

@@ -57,8 +57,8 @@ public class DepositController extends BaseController {
       if (LogUtil.isDebugEnabled(DepositController.class)) {
         LogUtil.debug(DepositController.class, "Searching deposit records with params",
             "elderlyName=%s,identifier=%s,chargeStatus=%s,beginDate=%s,endDate=%s", queryParam
-                .getRealName(), queryParam.getIdentifier(), queryParam.getStatus().toString(),
-            queryParam.getBeginDate().toString(), queryParam.getEndDate().toString());
+                .getRealName(), queryParam.getIdentifier(),queryParam.getStatus()!=null?queryParam.getStatus().toString():null,
+                    queryParam.getBeginDate()!=null?queryParam.getBeginDate().toString():null, queryParam.getEndDate()!=null?queryParam.getEndDate().toString():null);
       }
       queryParam.setIsPeriod(false);
       queryParam.setIsTenant(true);
