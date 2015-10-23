@@ -55,7 +55,7 @@ import com.yly.entity.commonenum.CommonEnum.SourceOfIncome;
 @Entity
 @Table(name = "yly_elderly_info")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_elderly_info_sequence")
-@Indexed(index="elderlyManage/elderlyInfo")
+@Indexed(index="elderlyInfo")
 public class ElderlyInfo extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
