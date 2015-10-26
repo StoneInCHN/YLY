@@ -1,5 +1,9 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -11,10 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Bed;
+import com.yly.entity.Building;
 import com.yly.entity.Room;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BedService;
+import com.yly.service.BuildingService;
 import com.yly.service.RoomService;
 
 @Controller("bedController")
@@ -26,6 +34,9 @@ public class BedController extends BaseController {
   
   @Resource(name="roomServiceImpl")
   private RoomService roomService;
+  
+  @Resource(name="buildingServiceImpl")
+  private BuildingService buildingService;
 
   @RequestMapping(value = "/bed", method = RequestMethod.GET)
   public String bed(ModelMap model) {
@@ -33,8 +44,16 @@ public class BedController extends BaseController {
   }
 
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Bed> list(Pageable pageable) {
-    return bedService.findPage(pageable, true);
+  public @ResponseBody Page<Bed> list(Long buildingId,Long roomId ,Pageable pageable) {
+    Building building =null;
+    Room room =null;
+    if (buildingId !=null) {
+      building = buildingService.find(buildingId);
+    }
+    if (roomId !=null) {
+      room = roomService.find(roomId);
+    }
+    return bedService.findPage(building, room, pageable);
   }
 
   /**

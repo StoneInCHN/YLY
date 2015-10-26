@@ -48,12 +48,14 @@ var room_manager_tool = {
 						    valueField:'id',    
 						    textField:'buildingName',
 						    cache: true,
+						    prompt:message("yly.common.please.select"),
 						    url:'../building/findAll.jhtml'
 						});
 				    	$("#addRoom_form_roomType").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
+						    prompt:message("yly.common.please.select"),
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'ROOMTYPE';// 参数
@@ -121,6 +123,7 @@ $(function(){
 	$("#room_table_list").datagrid({
 		title:message("yly.room.list"),
 		fitColumns:true,
+		fit:true,
 		toolbar:"#room_manager_tool",
 		url:'../room/list.jhtml',  
 		pagination:true,
@@ -189,23 +192,33 @@ $(function(){
         }
 
 	});
-	$("#room_search_btn").click(function(){
-	  var _queryParams = {
-			  buildingId:$("room_search_form_buildingId").val(),
-			  floor:$("#room_search_form #endDate").val()
-	  }
-	  $('#room_table_list').datagrid('options').queryParams = _queryParams;  
-	  $("#room_table_list").datagrid('reload');
-	})
+
+	$('#roomTreeForRoom').tree({    
+	    url:'../room/findAll.jhtml', 
+	    queryParams:{
+	    	isSelect:false
+		},
+	    animate:true,
+	    lines:true,
+	    //选择树节点触发事件  
+	    onBeforeSelect : function(node) {  
+	        //返回树对象  
+	        var tree = $(this).tree;  
+	        //选中的节点是否为叶子节点,如果不是叶子节点,清除选中  
+	        var isLeaf = tree('isLeaf', node.target); 
+	        //禁用子节点
+	        if (node.attributes && node.attributes.isBuilding) {  
+				if(node.id){
+	        		$('#room_table_list').datagrid('load',{buildingId:node.id});
+	        	}else{
+	        		$('#room_table_list').datagrid('reload',{});
+	        	}
+	        }else if(node.attributes && node.attributes.rootNode){
+	        	$('#room_table_list').datagrid('reload',{});
+	        }else{
+	        	return false;
+	        }
+	    } 
+	}); 
 	
-	$("#room_reset_btn").click(function(){
-		formReset("room_search_form","room_table_list");
-	})
-	
-	
-	$("#room_search_form_buildingId").combobox({    
-	    url:'../building/findAll.jhtml',    
-	    valueField:'id',    
-	    textField:'buildingName'
-	});  
 })

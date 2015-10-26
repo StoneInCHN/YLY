@@ -1,7 +1,7 @@
 package com.yly.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +21,8 @@ import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.TreeNodeState;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.response.TreeNodeResponse;
@@ -28,7 +30,6 @@ import com.yly.service.BuildingService;
 import com.yly.service.RoomService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
-import com.yly.utils.FieldFilterUtils;
 
 /**
  * 房间
@@ -70,59 +71,100 @@ public class RoomController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Room> list(Date beginDate, Date endDate, Pageable pageable,
+  public @ResponseBody Page<Room> list(Long buildingId, Pageable pageable,
       ModelMap model) {
+    if (buildingId !=null) {
+      Building building = buildingService.find(buildingId);
+      List<Filter> filters = new ArrayList<Filter>();
+      Filter delFilter = new Filter("building", Operator.eq ,building);
+      filters.add(delFilter);
+      pageable.setFilters(filters);
+    }
     return roomService.findPage(pageable,true);
   }
-
- /* *
-  @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String, Object>> findAll() {
-    String[] properties = {"id","roomNumber"};
-    return FieldFilterUtils.filterCollectionMap(properties,  roomService.findAll(true));
-  }*/
   
   /**
    * 查询该租户下所有的房间
+   * roomId 被选中的房间id
+   * isSelect 是否用于下拉标签
    * @return
    */
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-  public @ResponseBody List<TreeNodeResponse> findAll(Long roomId) {
-   List<TreeNodeResponse> treeNodeResponses =null;
-   List<Building> buildings =  buildingService.findAll(true);
-   if(buildings !=null && buildings.size() >0){
-    treeNodeResponses = new ArrayList<TreeNodeResponse>();
-     for (Building building : buildings) {
-       Boolean isExpand = false;//是否展开
-       TreeNodeResponse treeNodeResponse = new TreeNodeResponse();
-       treeNodeResponse.setChecked(false);
-       treeNodeResponse.setText(building.getBuildingName());
-       Set<Room> rooms = building.getRooms();
-      if (rooms !=null && rooms.size() >0) {
+  public @ResponseBody List<TreeNodeResponse> findAll(Long roomId, Boolean isSelect) {
+    List<TreeNodeResponse> treeNodeResponses = null;
+    List<Building> buildings = buildingService.findAll(true);
+    if (buildings != null && buildings.size() > 0) {
+      treeNodeResponses = new ArrayList<TreeNodeResponse>();
+      for (Building building : buildings) {
+        Boolean isExpand = false;// 是否展开
+        TreeNodeResponse treeNodeResponse = new TreeNodeResponse();
+        Map<String, Object> attributes = new HashMap<String, Object>();
+        attributes.put("isBuilding", true);
+        treeNodeResponse.setAttributes(attributes);
+        treeNodeResponse.setChecked(false);
+        treeNodeResponse.setId(building.getId());
+        treeNodeResponse.setText(building.getBuildingName());
+        Set<Room> rooms = building.getRooms();
         List<TreeNodeResponse> children = new ArrayList<TreeNodeResponse>();
-        for (Room room : rooms) {
-          TreeNodeResponse child = new TreeNodeResponse();
-          child.setId(room.getId());
-          child.setChecked(false);
-          child.setText(room.getRoomNumber());
-          //child.setState(TreeNodeState.closed);
-          if(roomId !=null && roomId.equals(room.getId())){
-            isExpand =true;
+        if (isSelect) {
+          if (rooms != null && rooms.size() > 0) {
+            for (Room room : rooms) {
+              TreeNodeResponse child = new TreeNodeResponse();
+              child.setId(room.getId());
+              child.setChecked(false);
+              child.setText(room.getRoomNumber());
+              if (roomId != null && roomId.equals(room.getId())) {
+                isExpand = true;
+              }
+              children.add(child);
+            }
+            treeNodeResponse.setChildren(children);
+            if (isExpand) {
+              treeNodeResponse.setState(TreeNodeState.open);
+            } else {
+              treeNodeResponse.setState(TreeNodeState.closed);
+            }
+            treeNodeResponses.add(treeNodeResponse);
           }
-          
-          children.add(child);
-        }
-        treeNodeResponse.setChildren(children);
-        if(isExpand){
+        } else {
+          if (rooms.size()>0) {
+            for (Room room : rooms) {
+              TreeNodeResponse child = new TreeNodeResponse();
+              child.setId(room.getId());
+              child.setChecked(false);
+              child.setText(room.getRoomNumber());
+              Map<String, Object> nodeAttributes = new HashMap<String, Object>();
+              nodeAttributes.put("roomNode", true);
+              child.setAttributes(nodeAttributes);
+              children.add(child);
+            }
+          }else{
+            //设定树节点上显示的图标
+            treeNodeResponse.setIconCls("icon-folder");
+          }
+          treeNodeResponse.setChildren(children);
           treeNodeResponse.setState(TreeNodeState.open);
-        }else{
-          treeNodeResponse.setState(TreeNodeState.closed);
+          treeNodeResponses.add(treeNodeResponse);
         }
-        treeNodeResponses.add(treeNodeResponse);
+
       }
     }
-   }
-    return treeNodeResponses;
+    if (!isSelect) {
+      List<TreeNodeResponse> roots = new ArrayList<TreeNodeResponse>();
+      TreeNodeResponse rootNodeResponse = new TreeNodeResponse();
+      Map<String, Object> attributes = new HashMap<String, Object>();
+      attributes.put("rootNode", true);
+      rootNodeResponse.setAttributes(attributes);
+      rootNodeResponse.setChildren(treeNodeResponses);
+      rootNodeResponse.setText("全部");
+      rootNodeResponse.setChecked(true);
+      rootNodeResponse.setState(TreeNodeState.open);
+      roots.add(rootNodeResponse);
+      return roots;
+    } else {
+      return treeNodeResponses;
+    }
+
   }
   
   /**
