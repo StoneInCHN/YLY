@@ -149,30 +149,4 @@ public class VisitElderlyRecordController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
-
-  /**
-   * 老人信息页面
-   * 
-   * @param model
-   * @return
-   */
-  @RequestMapping(value = "/elderlyInfoSearch", method = RequestMethod.GET)
-  public String elderlyInfoSearch(ModelMap model) {
-    return "/visitElderly/elderlyInfoList";
-  }
-
-  /**
-   * 查询老人记录
-   * 
-   * @param beginDate
-   * @param endDate
-   * @param pageable
-   * @param model
-   * @return
-   */
-  @RequestMapping(value = "/elderlyInfoList", method = RequestMethod.POST)
-  public @ResponseBody Page<ElderlyInfo> elderlyinfolist(Date beginDate, Date endDate,
-      Pageable pageable, ModelMap model) {
-    return elderlyInfoService.findPage(pageable, true);
-  }
 }

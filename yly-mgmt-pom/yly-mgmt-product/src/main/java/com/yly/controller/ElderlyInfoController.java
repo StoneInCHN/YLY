@@ -44,6 +44,18 @@ public class ElderlyInfoController extends BaseController {
   public String list(ModelMap model) {
     return "/checkedInElderly/checkedInElderly";
   }
+  
+
+  /**
+   * 老人信息公共搜索页面
+   * 
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/commonElderlySearch", method = RequestMethod.GET)
+  public String elderlyInfoSearch(ModelMap model) {
+    return "/common/commonElderlySearch";
+  }
 
   /**
    * 查询咨询记录
