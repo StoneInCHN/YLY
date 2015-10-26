@@ -2,6 +2,7 @@ package com.yly.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,13 +73,17 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig, Long>
   }
   
   @Override
-  public String getBillingDate(Date currentDate) {
+  public Map<String,Object> getBillingDate(Date currentDate) {
+	  Map<String,Object> map = new HashMap<String, Object>();
     List<Map<String, Object>> dayList = findByConfigKey(ConfigKey.BILLDAY, null);
     int billDay=0;
     if(dayList!= null && dayList.size() ==1){
       billDay = Integer.parseInt(dayList.get(0).get("configValue").toString());
-      Date billDate = DateTimeUtils.getBillDay(currentDate, billDay);
-      return DateTimeUtils.convertDateToString(billDate, "yyyy-MM-dd");
+      Date billDate = DateTimeUtils.getBillDate(currentDate, billDay);
+      map.put("billDate",DateTimeUtils.convertDateToString(billDate, "yyyy-MM-dd"));//账单结算日期
+      map.put("periodMonth",1);//最少缴费时间段为1个月
+      map.put("periodDay",DateTimeUtils.getBillDays(currentDate, billDay));//结算时需单独计算的天数
+      return map;
     }
     return null;
   }
