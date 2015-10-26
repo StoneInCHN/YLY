@@ -74,7 +74,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.beHospitalizedDate")}:</th>
 	    		<td width="230px">
-	    			<input type="text" class="Wdate" id="beginDate" name="beHospitalizedDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    			<input id="beHospitalizedDate" name="beHospitalizedDate" data-options="required:true" type="text" class="easyui-datebox" style="width:100px;"/>
 	    		</td>
 	    		
 	    		
@@ -130,7 +130,7 @@
 	    		
 	    		<th>${message("yly.elderlyInfo.birthday")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate"  name="birthday" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>  
+	    			  <input id="birthday" name="birthday" type="text" class="easyui-datebox" style="width:100px;"/>  
 	    		</td>
 	    	</tr>
 	    	<tr>
