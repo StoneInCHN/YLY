@@ -102,7 +102,7 @@
 		    		<li><a href="#" data-url="${base}/console/drugs/drugsInfo.jhtml">药品管理</a></li>
 		    	</ul>
 		    	<ul title="院内事务" id="affairs">
-		    		<li><a href="#">固定资产</a></li>
+		    		<li><a href="#" data-url="${base}/console/fixedAssets/fixedAssets.jhtml">固定资产</a></li>
 		    		<li><a href="#">库存管理</a></li>
 		    		<li><a href="#" data-url="${base}/console/donateRecord/donateRecord.jhtml">捐赠管理</a></li>
 		    		<li><a href="#">通知公告</a></li>
