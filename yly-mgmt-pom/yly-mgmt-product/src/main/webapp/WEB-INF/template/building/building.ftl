@@ -1,22 +1,4 @@
 <script type="text/javascript"  src="${base}/resources/modules/building.js"></script>
-<div>
-	  <fieldset>
-	    <legend>楼宇查询</legend>
-	    <form id="building_search_form" class="search-form">
-			<div class="search-item">
-			    <label> 查询时间从:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
-			</div>
-			<div class="search-item">
-			    <label>到:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
-			</div>
-		</form>
-		<div class="search-item">
-	  	  <button id="building_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
-	    </div>
-	  </fieldset>
-</div>
 <table id="building-table-list"></table>
 <div id="building_manager_tool">
 	<div class="tool-button">

@@ -67,6 +67,9 @@
 .icon-more{
 	background:url('icons/more.png') no-repeat center center;
 }
+.icon-folder{
+	  background: url('icons/tree_icons.png') no-repeat -208px 0;
+}
 
 
 .icon-mini-add{

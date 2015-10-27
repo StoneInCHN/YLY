@@ -30,6 +30,7 @@ public interface SystemConfigService extends BaseService<SystemConfig, Long> {
    * @param currentDate
    * @return
    */
-  String getBillingDate(Date currentDate);
+  Map<String,Object> getBillingDate(Date currentDate);
+  
   
 }

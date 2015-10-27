@@ -11,8 +11,36 @@ var admission_manager_tool = {
 			    	iconCls:'icon-save',
 					handler:function(){
 						var validate = $('#addAdmission_form').form('validate');
+						var $photoLi = $("#admissionUploader-add ul.filelist li");
 						if(validate){
-							$("#admissionUploader-add .uploadBtn").trigger("upload");
+							if($photoLi.length >0){
+								$("#admissionUploader-add .uploadBtn").trigger("upload");
+							}else{
+								$.ajax({
+									url:"../admission/add.jhtml",
+									type:"post",
+									data:$("#addAdmission_form").serialize(),
+									beforeSend:function(){
+										$.messager.progress({
+											text:message("yly.common.saving")
+										});
+									},
+									success:function(result,response,status){
+										$.messager.progress('close');
+										showSuccessMsg(result.content);
+										$('#addAdmission_form').form('reset');
+										$('#addAdmission').dialog("close");
+										$("#admission-table-list").datagrid('reload');
+										
+									},
+									error:function (XMLHttpRequest, textStatus, errorThrown) {
+										$.messager.progress('close');
+										alertErrorMsg();
+									}
+								});
+							}
+							
+							
 						};
 					}
 				},{

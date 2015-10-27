@@ -49,6 +49,7 @@ var bed_manager_tool = {
 				    	    animate:true,
 				    	    lines:true,
 				    	    url:'../room/findAll.jhtml',
+				    	    prompt:message("yly.common.please.select"),
 				    	    //选择树节点触发事件  
 				    	    onBeforeSelect : function(node) {  
 				    	        //返回树对象  
@@ -113,7 +114,35 @@ var bed_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#editBed_form').show();
+				    },
+				    onLoad:function(){
+				    	$("#editBed_form_roomId").combotree({    
+							animate:true,
+							lines:true,
+							url:'../room/findAll.jhtml',
+							 prompt:message("yly.common.please.select"),
+							onLoadSuccess:function(){
+								$('#editBed_form_roomId').combotree("setValue",$("#editBed_form_roomId").attr("data-value"));
+							},
+							queryParams:{
+								roomId:$("#editBed_form_roomId").attr("data-value"),
+								isSelect:true
+							},
+							//选择树节点触发事件  
+							onBeforeSelect : function(node) {  
+							//返回树对象  
+							var tree = $(this).tree;  
+							//选中的节点是否为叶子节点,如果不是叶子节点,清除选中  
+							var isLeaf = tree('isLeaf', node.target);  
+							if (!isLeaf) {  
+								$.messager.alert("警告","请选择子节点","warning");
+								// 返回false表示取消本次选择操作
+								return false;
+						   }  
+					   } 
+					})
 				    }
+				
 				});  
 			},
 			remove:function(){
@@ -124,6 +153,7 @@ $(function(){
 	$("#bed_table_list").datagrid({
 		title:message("yly.bed.list"),
 		fitColumns:true,
+		fit:true,
 		toolbar:"#bed_manager_tool",
 		url:'../bed/list.jhtml',  
 		pagination:true,
@@ -179,14 +209,36 @@ $(function(){
         }
 
 	});
-	/*$("#bed_search_btn").click(function(){
-	  var _queryParams = {
-			  beginDate:$("#bed_search_form #beginDate").val(),
-			  endDate:$("#bed_search_form #endDate").val()
-	  }
-	  $('#bed_table_list').datagrid('options').queryParams = _queryParams;  
-	  $("#bed_table_list").datagrid('reload');
-	})*/
+	
+	$('#roomTreeForBed').tree({    
+	    url:'../room/findAll.jhtml', 
+	    queryParams:{
+	    	isSelect:false
+		},
+	    animate:true,
+	    lines:true,
+	    onBeforeSelect : function(node) {  
+	        var tree = $(this).tree;  
+	        var isLeaf = tree('isLeaf', node.target); 
+	        if (node.attributes && node.attributes.isBuilding) {  
+				if(node.id){
+	        		$('#bed_table_list').datagrid('load',{buildingId:node.id});
+	        	}else{
+	        		$('#bed_table_list').datagrid('reload',{});
+	        	}
+	        }else if(node.attributes && node.attributes.rootNode){
+	        	$('#bed_table_list').datagrid('reload',{});
+	        }else if(node.attributes && node.attributes.roomNode){
+	        	if(node.id){
+	        		$('#bed_table_list').datagrid('load',{roomId:node.id});
+	        	}else{
+	        		$('#bed_table_list').datagrid('reload',{});
+	        	}
+	        }else{
+	        	return false;
+	        }
+	    } 
+	}); 
 
 	
 })
