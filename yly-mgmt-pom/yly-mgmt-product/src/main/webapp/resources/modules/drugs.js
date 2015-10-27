@@ -105,7 +105,7 @@ $(function(){
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'UNITS';// 参数
 						    }
-						});
+						});	
 				    	$("#minUnit").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',

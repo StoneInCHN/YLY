@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.AssetsType;
 import com.yly.entity.commonenum.CommonEnum.AssetsUsage;
@@ -99,7 +100,7 @@ public class FixedAssets extends BaseEntity {
    */
   private Date assetTime;
   
-  
+  @JsonProperty
   public Integer getAssetCount() {
     return assetCount;
   }
@@ -169,6 +170,7 @@ public class FixedAssets extends BaseEntity {
     this.assetsType = assetsType;
   }
 
+  @JsonProperty
   public Date getAssetTime() {
     return assetTime;
   }
@@ -187,6 +189,7 @@ public class FixedAssets extends BaseEntity {
   }
 
   @Column(length=60)
+  @JsonProperty
   public String getAssetName() {
     return assetName;
   }
@@ -196,6 +199,7 @@ public class FixedAssets extends BaseEntity {
   }
 
   @ManyToOne
+  @JsonProperty
   public Department getDepartment() {
     return department;
   }
@@ -205,6 +209,7 @@ public class FixedAssets extends BaseEntity {
   }
 
   @Column(length=40)
+  @JsonProperty
   public String getAssetNo() {
     return assetNo;
   }

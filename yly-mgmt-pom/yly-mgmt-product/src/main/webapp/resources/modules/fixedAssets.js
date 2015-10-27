@@ -2,7 +2,7 @@
 $(function(){
 	
 	$("#fixedAssets-table-list").datagrid({
-		title:"药品列表",
+		title:"固定资产列表",
 		fitColumns:true,
 		toolbar:"#fixedAssets_manager_tool",
 		url:'../fixedAssets/list.jhtml',  
@@ -31,9 +31,16 @@ $(function(){
 		      {field:'ck',checkbox:true},
 		      {title:"资产编号",field:"assetNo",width:100,sortable:true},
 		      {title:"资产名称",field:"assetName",width:100,sortable:true},
-		      {title:"存放部门",field:"department",width:100,sortable:true},
+		      {title:"存放部门",field:"department",width:100,sortable:true,
+	    	  formatter: function(value,row,index){
+		    	  if(value){
+		    		  return  value.name;
+		    	  }else{
+		    		  return  value;
+		    	  }
+	      	  }},
 		      {title:"资产数量",field:"assetCount",width:100,sortable:true},
-	    	  
+		      
 		      {title:"录入时间",field:"assetTime",width:100,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
@@ -88,6 +95,12 @@ $(function(){
 				    }],
 				    onOpen:function(){
 				    	$('#addFixedAssets_form').show();
+				    	$("#department").combobox({    
+						    valueField:'id',    
+						    textField:'name',
+						    cache: true,
+						    url:'../department/findAllDepartments.jhtml'
+						});
 				    },
 				
 				});  

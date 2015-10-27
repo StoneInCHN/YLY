@@ -50,7 +50,7 @@
 	    	<tr>
 	    		<th>存放地点（部门）:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="department" />   
+	    			 <input class="easyui-textbox" type="text" id="department" name="departmentId" />   
 	    		</td>
 	    	
 	    		<th>数量:</th>
