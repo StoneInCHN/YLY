@@ -20,7 +20,7 @@ import com.yly.service.TenantUserService;
  * @author huyong
  *
  */
-@Controller ("FixedAssetsController")
+@Controller ("tenantUserController")
 @RequestMapping ("console/tenantUser")
 public class TenantUserController extends BaseController
 {

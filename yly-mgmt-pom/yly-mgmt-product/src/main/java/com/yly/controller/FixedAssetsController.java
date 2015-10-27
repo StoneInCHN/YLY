@@ -39,7 +39,7 @@ import com.yly.utils.DateTimeUtils;
  * @author huyong
  *
  */
-@Controller ("FixedAssetsController")
+@Controller ("fixedAssetsController")
 @RequestMapping ("console/fixedAssets")
 public class FixedAssetsController extends BaseController
 {
