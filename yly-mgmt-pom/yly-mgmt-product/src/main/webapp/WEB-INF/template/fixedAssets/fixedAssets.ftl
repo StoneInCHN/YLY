@@ -4,7 +4,7 @@
 <div>
 	  <fieldset>
 	    <legend>药品查询</legend>
-	    <form id="donateRecord-search-form" class="search-form">
+	    <form id="fixedAssets-search-form" class="search-form">
 	    <div class="search-item">
 			    <label> 名称查询:</label>
 			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
@@ -50,7 +50,7 @@
 	    	<tr>
 	    		<th>存放地点（部门）:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="department" name="departmentId" />   
+	    			 <input class="easyui-combobox" id="department" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetUsage" style="width:110px;"" />   
 	    		</td>
 	    	
 	    		<th>数量:</th>
@@ -131,7 +131,7 @@
 				      label: 'other',
 				      value: '其他'
 				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetType" style="width:110px;"/>
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetsType" style="width:110px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -148,8 +148,8 @@
 	    </table>
 	</form>
 </div>
-<div id="editDonateRecord"></div>
-<div id="donateRecordDetail"></div>
+<div id="editFixedAssets"></div>
+<div id="fixedAssetsDetail"></div>
 
 
 

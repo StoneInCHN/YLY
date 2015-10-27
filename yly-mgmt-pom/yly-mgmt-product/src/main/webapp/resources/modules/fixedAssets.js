@@ -113,7 +113,7 @@ $(function(){
 					return false;
 				}
 				var _dialog = $('#editFixedAssets').dialog({    
-				    title: '药品编辑',     
+				    title: '固定资产编辑',     
 				    width: 700,    
 				    height: 550,    
 				    modal: true,
