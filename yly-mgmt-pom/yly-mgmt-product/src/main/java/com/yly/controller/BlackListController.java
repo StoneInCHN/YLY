@@ -53,9 +53,9 @@ public class BlackListController extends BaseController {
   public @ResponseBody Page<BlackList> list(Date beginDate, Date endDate, Pageable pageable,
       String blackListName, ModelMap modelMap) {
 
-    if(blackListName!=null){
+    /*if(blackListName!=null){
       return blackListService.searchList(beginDate, endDate, blackListName);
-    }
+    }*/
     
       return blackListService.findPage (pageable);
   }

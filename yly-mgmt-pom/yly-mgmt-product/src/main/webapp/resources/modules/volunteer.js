@@ -39,7 +39,12 @@ $(function(){
 		      {title:message("yly.volunteer.idCard"),field:"idcard",width:100,sortable:true},
 		      {title:message("yly.volunteer.email"),field:"email",width:100,sortable:true},
 		      {title:message("yly.volunteer.address"),field:"address",width:100,sortable:true},
-		      {title:message("yly.volunteer.mobile"),field:"mobile",width:100,sortable:true}
+		      {title:message("yly.volunteer.mobile"),field:"mobile",width:100,sortable:true},
+		      {title:message("yly.volunteer.activityTime"),field:"activityTime",width:100,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  	if(value != null){
+		    	  		return new Date(value).Format("yyyy-MM-dd");
+		      	}
+		      }}
 		   ]
 		]
 
@@ -157,7 +162,8 @@ $(function(){
 	  var _queryParams = {
 			  beginDate:$("#volunteer_search_form #beginDate").val(),
 			  endDate:$("#volunteer_search_form #endDate").val(),
-			  volunteerName:$("#volunteerName").val()
+			  volunteerName:$("#volunteer_search_form #volunteerName").val(),
+			  volunteerType:$("volunteer_search_form #volunteerType").val()
 	  }
 	  $('#volunteer-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#volunteer-table-list").datagrid('reload');

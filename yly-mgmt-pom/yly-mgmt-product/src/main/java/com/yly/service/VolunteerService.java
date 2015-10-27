@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.yly.entity.Volunteer;
 import com.yly.framework.paging.Page;
+import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
 
 /**
@@ -21,6 +22,6 @@ public interface VolunteerService extends BaseService<Volunteer, Long>{
    * @param blackListName
    * @return
    */
-  public Page<Volunteer> searchList(Date beginDate, Date endDate, String volunteerName);
+  public Page<Volunteer> searchList(Date beginDate, Date endDate, String volunteerName, String volunteerType, Pageable pageable);
   
 }

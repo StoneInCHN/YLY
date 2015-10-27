@@ -6,6 +6,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
 
 import com.yly.entity.base.BaseEntity;
 
@@ -18,6 +19,7 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_repair_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_repair_record_sequence")
+@Indexed(index="repairRecord")
 public class RepairRecord extends BaseEntity {
 
   private static final long serialVersionUID = 8257363153365363828L;
