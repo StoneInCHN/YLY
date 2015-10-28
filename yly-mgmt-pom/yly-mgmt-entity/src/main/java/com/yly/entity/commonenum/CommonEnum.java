@@ -1041,6 +1041,25 @@ public class CommonEnum {
     DISABLE
 
   }
+  
+  /**
+   * 房间使用状态
+   * 
+   * @author tanbiao
+   *
+   */
+  public enum BedStatus {
+
+    /**
+     * 启用
+     */
+    ENABLE,
+    /**
+     * 禁用
+     */
+    DISABLE
+
+  }
 
   /**
    * 信息渠道

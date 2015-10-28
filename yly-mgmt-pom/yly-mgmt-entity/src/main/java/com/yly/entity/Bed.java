@@ -12,6 +12,7 @@ import org.hibernate.annotations.Index;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.BedStatus;
 
 /**
  * 
@@ -45,7 +46,7 @@ public class Bed extends BaseEntity{
   /**
    * 床位状态
    */
-  private String status;
+  private BedStatus status;
   
   /**
    * 描述
@@ -71,11 +72,11 @@ public class Bed extends BaseEntity{
 
   @JsonProperty
   @Column(length=4)
-  public String getStatus() {
+  public BedStatus getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(BedStatus status) {
     this.status = status;
   }
 

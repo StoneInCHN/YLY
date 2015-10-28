@@ -1,9 +1,5 @@
 package com.yly.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -17,8 +13,6 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.Bed;
 import com.yly.entity.Building;
 import com.yly.entity.Room;
-import com.yly.framework.filter.Filter;
-import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BedService;

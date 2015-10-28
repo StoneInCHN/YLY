@@ -48,6 +48,9 @@ var bed_manager_tool = {
 				    	$("#addBed_form_roomId").combotree({    
 				    	    animate:true,
 				    	    lines:true,
+				    	    queryParams:{
+								isSelect:true
+							},
 				    	    url:'../room/findAll.jhtml',
 				    	    prompt:message("yly.common.please.select"),
 				    	    //选择树节点触发事件  
@@ -170,10 +173,10 @@ $(function(){
 		      	}
 		      },
 		      {title:message("yly.bed.status"),field:"status",width:50,sortable:true,formatter: function(value,row,index){
-		    	  	if(value == "ENABLE"){
+		    	  	if(value == "1"){
 		    	  		return  message("yly.common.enable");
 		    	  	}
-		    	  	if(value == "DISABLE"){
+		    	  	if(value == "0"){
 		    	  		return  message("yly.common.disable");
 		    	  	}
 		      	}
