@@ -107,7 +107,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.bed")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" name="bedNurseCharge.bedAmount" data-options="required:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="chargein_bedAmount" name="bedNurseCharge.bedAmount" data-options="required:true,min:0,precision:2,editable:false" />
 					    			<span class="margin-left-20" id="bedType"></span><span class="margin-left-10" id="bedPerMonth"></span><span class="margin-left-10" id="bedPerDay"></span>
 					    		</td>
 					    		
@@ -115,7 +115,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.nurse")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" name="bedNurseCharge.nurseAmount" data-options="required:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="chargein_nurseAmount" name="bedNurseCharge.nurseAmount" data-options="required:true,min:0,precision:2,editable:false" />
 					    		     <span class="margin-left-20" id="nurseLevel"></span><span class="margin-left-10" id="nurseLevelPerMonth"></span><span class="margin-left-10" id="nurseLevelPerDay"></span>
 					    		</td>
 					    		
@@ -145,7 +145,8 @@
 					    		    ──
 				    			    <input id="mealPeriodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" readonly=true/>    
 					    		</td>
-					    		
+					    		<input type="hidden" id="periodMonMeal">
+					    		<input type="hidden" id="periodDayMeal">
 					    	</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
@@ -153,12 +154,11 @@
 					    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="mealTypeId" id="mealType" panelHeight="150px" data-options="required:true,editable:false" />   
 					    		     <span class="margin-left-20" id="mealTypeVal"></span><span class="margin-left-10" id="mealPerMonth"></span><span class="margin-left-10" id="mealPerDay"></span>
 					    		</td>
-					    		
 	    			  		</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" name="mealCharge.mealAmount" data-options="required:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="chargein_mealAmount" name="mealCharge.mealAmount" data-options="required:true,min:0,precision:2,editable:false" />
 					    		</td>
 					    		
 	    			  		</tr>
@@ -178,7 +178,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.totalAmount")}:</th>
 	    		<td colspan="3">
-	    			 <input class="easyui-numberbox" name="totalAmount" data-options="required:true,min:0,precision:2" readonly="true"/>
+	    			 <input class="easyui-numberbox" id="chargein_totalAmount" name="totalAmount" data-options="required:true,min:0,precision:2,editable:false"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
