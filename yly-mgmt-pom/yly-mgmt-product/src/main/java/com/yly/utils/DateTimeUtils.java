@@ -20,11 +20,35 @@ public class DateTimeUtils implements Serializable {
   // }
   
   /**
+   * 获取账单结算日期距起始日期的天数（不满一个月）
+   * @param currentDate
+   * @return
+   */
+  public static Integer getBillDays(Date currentDate,int billDay){
+	  Calendar calendar = Calendar.getInstance();
+	    if (currentDate == null) {
+	      return null;
+	    }
+	    calendar.setTime(currentDate);
+	    calendar.add(Calendar.DATE,-1);//日期，整数往后推,负数往前移动 
+	    if (calendar.get(Calendar.DATE) > billDay) {
+	    	 //获取当前月最后一天
+	    	 Calendar ca = Calendar.getInstance();    
+	         ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));
+	    	return ca.get(Calendar.DATE)-calendar.get(Calendar.DATE)+billDay;
+	    }else if(calendar.get(Calendar.DATE) < billDay) {
+			return billDay-calendar.get(Calendar.DATE);
+		}
+	  
+	return 0;
+	  
+  }
+  /**
    * 获取账单结算日期
    * @param currentDate
    * @return
    */
-  public static Date getBillDay(Date currentDate,int billDay){
+  public static Date getBillDate(Date currentDate,int billDay){
     Calendar calendar = Calendar.getInstance();
     if (currentDate == null) {
       return null;

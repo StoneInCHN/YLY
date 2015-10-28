@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -92,6 +93,7 @@ public class Department extends BaseEntity {
   }
 
   @Column(length = 20, nullable = false)
+  @JsonProperty
   public String getName() {
     return name;
   }

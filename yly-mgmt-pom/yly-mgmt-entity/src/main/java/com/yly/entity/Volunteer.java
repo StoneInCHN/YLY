@@ -1,5 +1,7 @@
 package com.yly.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
@@ -7,8 +9,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -63,13 +67,15 @@ public class Volunteer extends BaseEntity {
 
   /** 手机 */
   private String mobile;
+  
+  /** 活动时间 */
+  private Date activityTime;
 
-  /**
-   * 备注
-   */
+  /** 备注 */
   private String remark;
 
   @JsonProperty
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public VolunteerType getVolunteerType() {
     return volunteerType;
   }
@@ -167,5 +173,18 @@ public class Volunteer extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
+
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
+  public Date getActivityTime() {
+    return activityTime;
+  }
+
+  public void setActivityTime(Date activityTime) {
+    this.activityTime = activityTime;
+  }
+  
+  
 
 }

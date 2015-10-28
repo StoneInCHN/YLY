@@ -8,7 +8,21 @@
 			    <input type="text" class="easyui-textbox" id="volunteerName" name="volunteerName" style="width:85px;" />
 			</div>
 			<div class="search-item">
-			    <label> 查询时间从:</label>
+				<label> 机构查询:</label>
+	    		<input class="easyui-combobox" data-options="
+				valueField: 'label',
+				textField: 'value',
+				data: [{
+					label: 'PERSONAL',
+					value: '${message("yly.volunteer.personal")}'
+				},{
+					label: 'ORGANIZATION',
+					value: '${message("yly.volunteer.organization")}'
+				}],
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="search-volunteerType" name="volunteerType" style="width:130px;"/>
+			</div>
+			<div class="search-item">
+			    <label> 活动发生时间从:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -32,58 +46,71 @@
 </div> 
 <div id="addvolunteer">
 	<form id="addvolunteer_form" method="post" class="form-table">   
-	   	  <table class="table table-striped">
+	   	  <table class="table table-striped table-bordered">
+	   	  	<table class="table table-striped table-bordered">
 	    	<tr>
 	    		<th>${message("yly.volunteer.name")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="volunteerName" value="${volunteer.volunteerName}" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="volunteerName" validtype="length[0,15]" data-options="required:true" style="width:100px;"/>   
 	    		</td>
+	    		<th>${message("yly.idCard")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" data-options="required:true" style="width:150px;"/> 
+	    		</td>
+	    		
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.type")}:</th>
 	    		<td>
-	    		  <select id="gender" class="easyui-combobox" name="volunteerType" style="width:85px;">   
+	    		  <select class="easyui-combobox" name="volunteerType" style="width:85px;">   
     			  	<option value="PERSONAL">${message("yly.volunteer.personal")}</option>
 					<option value="ORGANIZATION">${message("yly.volunteer.organization")}</option>  
 				  </select>  
 	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.idCard")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" data-options="required:true" style="width:85px;"/> 
-	    		</td>
 	    		<th>${message("yly.email")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="email" value="${volunteer.email}" validtype="email" style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="email" value="${volunteer.email}" validtype="email" style="width:150px;"/> 
+	    		</td>
+	    	</tr>
+	    	</table>
+	    	<table class="table table-striped table-bordered">
+	    	<tr>
+	    		<th>${message("yly.volunteer.activityTime")}:</th>
+	    		<td>
+	    			  <input type="text" class="Wdate"  name="activityTime" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.address")}:</th>
+	    		<th>${message("yly.mobile")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="address" value="${volunteer.address}" validtype="length[0,100]" style="width:85px;"/> 
-	    		</td>
-	    		
-	    		<th>${message("yly.zipCode")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="zipCode" value="${volunteer.zipCode}" validtype="length[0,50]" style="width:85px;"/>  
+	    			  <input class="easyui-textbox" type="text" name="mobile" value="${volunteer.mobile}" validtype="mobile" data-options="required:true"  style="width:150px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="telephone" value="${volunteer.telephone}" validtype="length[0,30]" style="width:85px;"/>    
+	    			  <input class="easyui-textbox" type="text" name="telephone" value="${volunteer.telephone}" validtype="length[0,30]" style="width:150px;"/>    
 	    		</td>
-	    		
-	    		<th>${message("yly.mobile")}:</th>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.zipCode")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="mobile" value="${volunteer.mobile}" validtype="mobile" data-options="required:true"  style="width:85px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="zipCode" value="${volunteer.zipCode}" validtype="length[0,50]" style="width:100px;"/>  
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.address")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="address" value="${volunteer.address}" validtype="length[0,100]" style="width:280px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td>
-	    			  <input type="text" class="easyui-textbox" name="remark" validtype="length[0,150]" data-options="multiline:true,height:90,width:320" />
+	    			  <input type="text" class="easyui-textbox" name="remark" validtype="length[0,150]" data-options="multiline:true,height:90,width:280" />
 	    		</td>
 	    	</tr>
+	    	</table>
 	    </table>
 	</form>
 	</div>

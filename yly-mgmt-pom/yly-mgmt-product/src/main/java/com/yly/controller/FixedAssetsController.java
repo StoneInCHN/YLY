@@ -25,11 +25,13 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.Department;
 import com.yly.entity.Deposit;
 import com.yly.entity.DonateRecord;
 import com.yly.entity.FixedAssets;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.DepartmentService;
 import com.yly.service.DonateRecordService;
 import com.yly.service.FixedAssetsService;
 import com.yly.utils.DateTimeUtils;
@@ -39,13 +41,16 @@ import com.yly.utils.DateTimeUtils;
  * @author huyong
  *
  */
-@Controller ("FixedAssetsController")
+@Controller ("fixedAssetsController")
 @RequestMapping ("console/fixedAssets")
 public class FixedAssetsController extends BaseController
 {
 
   @Resource (name = "fixedAssetsServiceImpl")
   private FixedAssetsService fixedAssetsService;
+  
+  @Resource(name = "departmentServiceImpl")
+  private DepartmentService departmentService;
 
 
   @RequestMapping (value = "/fixedAssets", method = RequestMethod.GET)
@@ -112,10 +117,9 @@ public class FixedAssetsController extends BaseController
     if (nameQuery != null || rangeQuery != null)
     {
       return fixedAssetsService.search (query, pageable, analyzer,filter);
-    }else {
-      return fixedAssetsService.findPage (pageable);
     }
-    
+    Page<FixedAssets> fixedAssetsPage=fixedAssetsService.findPage (pageable);
+    return fixedAssetsPage;
   }
 
   /**
@@ -133,8 +137,10 @@ public class FixedAssetsController extends BaseController
   }
 
   @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add (FixedAssets fixedAssets)
+  public @ResponseBody Message add (FixedAssets fixedAssets,Long departmentId)
   {
+    Department department = departmentService.find (departmentId);
+    fixedAssets.setDepartment (department);
     fixedAssetsService.save (fixedAssets,true);
     return SUCCESS_MESSAGE;
   }

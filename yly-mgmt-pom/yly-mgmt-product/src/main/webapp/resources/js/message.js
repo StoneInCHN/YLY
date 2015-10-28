@@ -173,6 +173,7 @@ var messages = {
 	"yly.volunteer.add":"添加志愿者",
 	"yly.volunteer.personal":"个人",
 	"yly.volunteer.organization":"组织机构",
+	"yly.volunteer.activityTime":"活动时间",
 	
 	//elderlyinfo
 	"yly.admission.add":"办理入院",
@@ -272,7 +273,13 @@ var messages = {
     "yly.elderlyInfo.stuffDeposit.takeAwayDate":"取出时间",	
     "yly.elderlyInfo.stuffDeposit.elderlyName":"所属老人",
     "yly.elderlyInfo.stuffDeposit.putin":"存入",
-    "yly.elderlyInfo.stuffDeposit.takeaway":"取走"
+    "yly.elderlyInfo.stuffDeposit.takeaway":"取走",
+    //维修人员
+	"yly.repairRecord.record":"维修记录",
+	"yly.repairRecord.repairContent":"维修内容",
+	"yly.repairRecord.repairPlace":"维修地点",
+	"yly.repairRecord.reportOperator":"报修人",
+	"yly.repairRecord.repairOperator":"维修人员"
 };
 //多语言
 function message(code) {

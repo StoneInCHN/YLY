@@ -1,7 +1,6 @@
 package com.yly.controller;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +83,9 @@ public class SystemConfigController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/getBillEndDate", method = RequestMethod.POST)
-  public @ResponseBody List<String> findByConfigKey(Date currentDay) {
-    List<String> list = new ArrayList<String>();
-    list.add(systemConfigService.getBillingDate(currentDay));
-    return list;
+  public @ResponseBody Map<String,Object> findByConfigKey(Date currentDay) {
+   
+    return systemConfigService.getBillingDate(currentDay);
   }
   /**
    * 编辑页面

@@ -1,25 +1,25 @@
 $(function(){
 	
-	$("#blacklist-table-list").datagrid({
-		title:message("yly.blacklist.record"),
+	$("#repairRecord-table-list").datagrid({
+		title:message("yly.repairRecord.record"),
 		fitColumns:true,
-		toolbar:"#blacklist_manager_tool",
-		url:'../blackList/list.jhtml',  
+		toolbar:"#repairRecord_manager_tool",
+		url:'../repairRecord/list.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
 		onDblClickRow : function (rowIndex, rowData){
-			$('#blacklistDetail').dialog({    
+			$('#repairRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 700,    
 			    height: 500, 
 			    cache: false,   
-			    href:'../blackList/details.jhtml?id='+rowData.id,
+			    href:'../repairRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#blacklistDetail').dialog("close");
+						 $('#repairRecordDetail').dialog("close");
 					}
 			    }]
 			});   
@@ -27,19 +27,11 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.common.elderlyname"),field:"name",width:40,sortable:true},
+		      {title:message("yly.repairRecord.repairContent"),field:"repairContent",width:40,sortable:true},
+		      {title:message("yly.repairRecord.repairPlace"),field:"repairRecord",width:80,align:'center',sortable:true},
 		      {title:message("yly.common.phonenumber"),field:"contactPhone",width:70,align:'center',sortable:true},
-		      {title:message("yly.common.age"),field:"age",width:20,align:'center',sortable:true},
-		      {title:message("yly.blacklist.geracomium"),field:"geracomium",width:80,sortable:true},
-		      {title:message("yly.common.gender"),field:"gender",width:20,align:'center',sortable:true,formatter: function(value,row,index){
-		    	  	if(value == "MALE"){
-		    	  		return  message("yly.common.male");
-		    	  	}
-		    	  	if(value == "FEMALE"){
-		    	  		return  message("yly.common.female");
-		    	  	}
-		      	}},
-		      {title:message("yly.blacklist.casue"),field:"cause",width:40,align:'center',sortable:true}
+		      {title:message("yly.repairRecord.reportOperator"),field:"reportOperator",width:20,align:'center',sortable:true},
+		      {title:message("yly.repairRecord.repairOperator"),field:"repairOperator",width:80,sortable:true}
 		   ]
 		]
 
@@ -47,10 +39,10 @@ $(function(){
 	 
 	 
 
-	blacklist_manager_tool = {
+	repairRecord_manager_tool = {
 			add:function(){		
-				$('#addBlacklist').dialog({    
-				    title: message("yly.blacklist.add"),    
+				$('#addRepairRecord').dialog({    
+				    title: message("yly.repairRecord.add"),    
 				    width: 700,    
 				    height: 500,
 				    iconCls:'icon-mini-add',
@@ -59,12 +51,12 @@ $(function(){
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addBlacklist_form').form('validate');
+							var validate = $('#addRepairRecord_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../blackList/add.jhtml",
+									url:"../repairRecord/add.jhtml",
 									type:"post",
-									data:$("#addBlacklist_form").serialize(),
+									data:$("#addRepairRecord_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -73,9 +65,9 @@ $(function(){
 									success:function(result,response,status){
 										$.messager.progress('close');
 										showSuccessMsg(result.content);
-										$('#addBlacklist_form').form('reset');
-										$('#addBlacklist').dialog("close");
-										$("#blacklist-table-list").datagrid('reload');
+										$('#addRepairRecord_form').form('reset');
+										$('#addRepairRecord').dialog("close");
+										$("#repairRecord-table-list").datagrid('reload');
 										
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -92,35 +84,35 @@ $(function(){
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addBlacklist').dialog("close");
+							 $('#addRepairRecord').dialog("close");
 						}
 				    }]
 				});  
-				 $('#addBlacklist_form').show();
+				 $('#addRepairRecord_form').show();
 			},
 			edit:function(){
-				var _edit_row = $('#blacklist-table-list').datagrid('getSelected');
+				var _edit_row = $('#repairRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert(message("yly.common.select.editRow"));  
 					return false;
 				}
-				var _dialog = $('#editBlacklist').dialog({    
+				var _dialog = $('#editrepairRecord').dialog({    
 				    title: message("yly.common.edit"),     
 				    width: 700,    
 				    height: 500,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
-				    href:'../blackList/edit.jhtml?id='+_edit_row.id,
+				    href:'../repairRecord/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#editBlacklist_form').form('validate');
+							var validate = $('#editrepairRecord_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../blackList/update.jhtml",
+									url:"../repairRecord/update.jhtml",
 									type:"post",
-									data:$("#editBlacklist_form").serialize(),
+									data:$("#editrepairRecord_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -129,8 +121,8 @@ $(function(){
 									success:function(result,response,status){
 										$.messager.progress('close');
 										showSuccessMsg(result.content);
-										$('#editBlacklist').dialog("close");
-										$("#blacklist-table-list").datagrid('reload');
+										$('#editrepairRecord').dialog("close");
+										$("#repairRecord-table-list").datagrid('reload');
 									}
 								});
 							};
@@ -139,28 +131,28 @@ $(function(){
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editBlacklist').dialog("close");
+							 $('#editrepairRecord').dialog("close");
 						}
 				    }]
 				});  
 			},
 			remove:function(){
-				var _edit_row = $('#blacklist-table-list').datagrid('getSelected');
+				var _edit_row = $('#repairRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert(message("yly.common.select.editRow"));  
 					return false;
 				}
-				listRemove('blacklist-table-list','../blackList/delete.jhtml');
+				listRemove('repairRecord-table-list','../repairRecord/delete.jhtml');
 			}
 	}
-	$("#blacklist_search_btn").click(function(){
+	$("#repairRecord_search_btn").click(function(){
 	  var _queryParams = {
-			  //blackListName:$("#blackListName").val(),
-			  beginDate:$("#blacklist_search_btn #beginDate").val(),
-			  endDate:$("#blacklist_search_btn #endDate").val()
+			  repairRecordName:$("#repairRecordName").val(),
+			  beginDate:$("#repairRecord_search_btn #beginDate").val(),
+			  endDate:$("#repairRecord_search_btn #endDate").val()
 	  }
-	  $('#blacklist-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#blacklist-table-list").datagrid('reload');
+	  $('#repairRecord-table-list').datagrid('options').queryParams = _queryParams;  
+	  $("#repairRecord-table-list").datagrid('reload');
 	})
 	
 	$.extend($.fn.validatebox.defaults.rules, {
