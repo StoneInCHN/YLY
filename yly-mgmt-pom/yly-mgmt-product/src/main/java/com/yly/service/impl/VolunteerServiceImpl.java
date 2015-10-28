@@ -4,11 +4,13 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
@@ -45,26 +47,26 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
   }
 
   @Override
-  public Page<Volunteer> searchList(Date beginDate, Date endDate, String volunteerName,
-      String volunteerType, Pageable pageable) {
+  public Page<Volunteer> searchList(Date beginDate, Date endDate, Volunteer volunteer, Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
     BooleanQuery query = new BooleanQuery();
     Query nameQuery = null;
+    Query typeQuery = null;
 
     try {
-      if (volunteerName != null) {
-        String text = QueryParser.escape(volunteerName);
+      if (volunteer.getVolunteerName() != null) {
+        String text = QueryParser.escape(volunteer.getVolunteerName());
         QueryParser nameParser = new QueryParser(Version.LUCENE_35, "volunteerName", analyzer);
         nameQuery = nameParser.parse(text);
         query.add(nameQuery, Occur.MUST);
       }
       
-      if(volunteerType != null){
-        String text = QueryParser.escape(volunteerType);
-        QueryParser nameParser = new QueryParser(Version.LUCENE_35, "volunteerType", analyzer);
-        nameQuery = nameParser.parse(text);
-        query.add(nameQuery, Occur.MUST);
+      if(volunteer.getVolunteerType() != null){
+        Term typeTerm =
+            new Term("volunteerType", volunteer.getVolunteerType().name());
+        typeQuery = new TermQuery(typeTerm);
+        query.add(typeQuery, Occur.MUST);
       }
 
       if (beginDate != null || endDate != null) {
@@ -72,7 +74,7 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
             new TermRangeQuery("activityTime", DateTimeUtils.convertDateToString(beginDate, null),
                 DateTimeUtils.convertDateToString(endDate, null), beginDate != null,
                 endDate != null);
-        query.add(tQuery, Occur.SHOULD);
+        query.add(tQuery, Occur.MUST);
       }
 
       if (LogUtil.isDebugEnabled(VolunteerServiceImpl.class)) {
@@ -81,7 +83,7 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
                 VolunteerServiceImpl.class,
                 "VolunteerSearch",
                 "Search volunteer with params, tenant ID=%s, volunteerName=%s, volunteerType=%s, startTime=%s, endTime=%s",
-                tenantAccountService.getCurrentTenantID(), volunteerName, volunteerType, beginDate, endDate);
+                tenantAccountService.getCurrentTenantID(), volunteer.getVolunteerName(), volunteer.getVolunteerType().name(), beginDate, endDate);
       }
       return super.search(query, pageable, analyzer, null);
 

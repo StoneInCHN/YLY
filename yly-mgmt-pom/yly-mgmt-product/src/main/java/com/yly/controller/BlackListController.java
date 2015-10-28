@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.BlackList;
+import com.yly.entity.ElderlyInfo;
+import com.yly.entity.TenantInfo;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BlackListService;
+import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
+import com.yly.service.TenantInfoService;
 
 /**
  * Controller - 黑名单
@@ -34,6 +38,12 @@ public class BlackListController extends BaseController {
 
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
+  
+  @Resource(name = "elderlyInfoServiceImpl")
+  private ElderlyInfoService elderlyInfoService;
+  
+  @Resource(name = "tenantInfoServiceImpl")
+  private TenantInfoService tenantInfoService;
 
   @RequestMapping(value = "/blacklist", method = RequestMethod.GET)
   public String list(ModelMap model) {
@@ -51,13 +61,12 @@ public class BlackListController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<BlackList> list(Date beginDate, Date endDate, Pageable pageable,
-      String blackListName, ModelMap modelMap) {
-
-    /*if(blackListName!=null){
-      return blackListService.searchList(beginDate, endDate, blackListName);
-    }*/
-    
-      return blackListService.findPage (pageable);
+      BlackList blackList, ModelMap modelMap) {
+    if(blackList.getElderlyInfo() != null && 
+        blackList.getElderlyInfo().getName()!=null || beginDate!=null || endDate!=null){
+      return blackListService.searchList(beginDate, endDate, pageable, blackList);
+    }
+    return blackListService.findPage (pageable);
   }
 
 
@@ -68,9 +77,11 @@ public class BlackListController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(BlackList blackList) {
-    if (blackList != null) {
+  public @ResponseBody Message add(Long elderlyInfoID,BlackList blackList) {
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+    if (elderlyInfo!=null && blackList != null) {
       blackList.setTenantID(tenantAccountService.getCurrentTenantID());
+      blackList.setElderlyInfo(elderlyInfo);
       blackListService.save(blackList);
     }
 
@@ -101,7 +112,12 @@ public class BlackListController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
     BlackList blackList = blackListService.find(id);
+    TenantInfo tenantInfo =null;
+    if(tenantAccountService.getCurrentTenantOrgCode()!=null){
+      tenantInfo = tenantInfoService.findTenantWithOrgCode(tenantAccountService.getCurrentTenantOrgCode());
+    }
     model.addAttribute("blackList", blackList);
+    model.addAttribute("tenantInfo", tenantInfo);
     return "blackList/details";
   }
 
@@ -126,7 +142,9 @@ public class BlackListController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(BlackList blackList) {
+  public @ResponseBody Message update(BlackList blackList, Long elderlyInfoID) {
+    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+    blackList.setElderlyInfo(elderlyInfo);
     blackListService.update(blackList);
     return SUCCESS_MESSAGE;
   }

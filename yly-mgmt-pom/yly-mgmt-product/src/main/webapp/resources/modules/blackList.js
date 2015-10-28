@@ -27,19 +27,21 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.common.elderlyname"),field:"name",width:40,sortable:true},
-		      {title:message("yly.common.phonenumber"),field:"contactPhone",width:70,align:'center',sortable:true},
-		      {title:message("yly.common.age"),field:"age",width:20,align:'center',sortable:true},
-		      {title:message("yly.blacklist.geracomium"),field:"geracomium",width:80,sortable:true},
-		      {title:message("yly.common.gender"),field:"gender",width:20,align:'center',sortable:true,formatter: function(value,row,index){
-		    	  	if(value == "MALE"){
-		    	  		return  message("yly.common.male");
-		    	  	}
-		    	  	if(value == "FEMALE"){
-		    	  		return  message("yly.common.female");
-		    	  	}
-		      	}},
-		      {title:message("yly.blacklist.casue"),field:"cause",width:40,align:'center',sortable:true}
+		      {title:message("yly.blacklist.name"),field:"name",width:20,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.name;
+		      }},
+		      {title:message("yly.common.createDate"),field:"createDate",width:20,align:'center',formatter:function(value,row,index){
+		    	  return new Date(value).Format("yyyy-MM-dd");
+		      }},
+		      {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:20,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.elderlyPhoneNumber;
+		      }},
+		      {title:message("yly.common.age"),field:"elderlyInfoAge",width:8,align:'center',formatter:function(value,row,index){
+		    	  return row.elderlyInfo.age;
+		      }},
+		      {title:message("yly.blacklist.casue"),field:"cause",width:80,align:'center',formatter:function(value,row,index){
+		    	  return row.cause;
+		      }}
 		   ]
 		]
 
@@ -154,11 +156,12 @@ $(function(){
 			}
 	}
 	$("#blacklist_search_btn").click(function(){
-	  var _queryParams = {
-			  //blackListName:$("#blackListName").val(),
-			  beginDate:$("#blacklist_search_btn #beginDate").val(),
-			  endDate:$("#blacklist_search_btn #endDate").val()
-	  }
+	  /*var _queryParams = {
+			  beginDate:$("#beginDate").val(),
+			  endDate:$("#endDate").val(),
+			  blackListName:$("#blackListName").val()
+	  }*/
+	  var _queryParams = $("#blacklist_search_form").serializeJSON();
 	  $('#blacklist-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#blacklist-table-list").datagrid('reload');
 	})

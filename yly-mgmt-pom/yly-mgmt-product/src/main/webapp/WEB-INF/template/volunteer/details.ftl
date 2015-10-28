@@ -28,6 +28,12 @@
 		    	</table>
 		    	<table class="table table-striped table-bordered">
 		    	<tr>
+		    		<th>${message("yly.volunteer.activityTime")}:</th>
+		    		<td>
+		    			  <input type="text" class="easyui-datebox"  name="activityTime" value="${volunteer.activityTime}" validtype="length[0,30]" style="width:150px;" /> 
+		    		</td>
+	    		</tr>
+		    	<tr>
 		    		<th>${message("yly.mobile")}:</th>
 		    		<td>
 		    			  <input class="easyui-textbox" type="text" name="mobile" value="${volunteer.mobile}" validtype="mobile" data-options="required:true"  style="width:150px;"/> 
