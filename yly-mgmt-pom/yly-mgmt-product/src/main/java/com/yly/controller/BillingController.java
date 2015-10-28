@@ -2,6 +2,7 @@ package com.yly.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Billing;
 import com.yly.entity.ElderlyInfo;
+import com.yly.entity.commonenum.CommonEnum.BillingType;
+import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
@@ -100,7 +103,12 @@ public class BillingController extends BaseController {
             queryParam.getBeginDate() != null ? queryParam.getBeginDate().toString() : null,
             queryParam.getEndDate() != null ? queryParam.getEndDate().toString() : null);
       }
-      queryParam.setIsPeriod(false);
+      if (queryParam.getBillingType()!=BillingType.DAILY) {
+    	  queryParam.setIsPeriod(false);
+	  }else {
+		  queryParam.setIsPeriod(true);
+	  }
+     
       queryParam.setIsTenant(true);
       page = billingService.chargeRecordSearch(queryParam, pageable);
     }
@@ -133,6 +141,13 @@ public class BillingController extends BaseController {
   public @ResponseBody List<Map<String, Object>> getBedNurseConfig(ModelMap model,
       Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+    if (!ElderlyStatus.IN_PROGRESS_CHECKIN.equals(elderlyInfo.getElderlyStatus())) {
+    	List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("errMsg", Message.error("yly.checkin.elderlyStatus.invalid").getContent());
+    	list.add(map);
+		return list;
+	}
     String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
 
     return billingService.getBedNurseConfigByElderly(properties, elderlyInfo);
@@ -140,7 +155,7 @@ public class BillingController extends BaseController {
 
 
   @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-  public @ResponseBody Message add(Billing checkinBill, Long chargeItemId) {
+  public @ResponseBody Message add(Billing checkinBill, Long mealTypeId,Long elderlyInfoID) {
 
     // billingService.save(checkinBill,true);
     return SUCCESS_MESSAGE;

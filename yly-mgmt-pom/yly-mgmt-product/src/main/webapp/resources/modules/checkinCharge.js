@@ -246,13 +246,21 @@ $(function(){
 			  $("#addCheckinCharge_form input[class*='easyui'][textboxname!=elderlyInfoName]").each(function(){
 				  $(this).textbox('reset');
 			  });
-			 
+			  $("#addCheckinCharge_form span[class*='margin-left'][id!=billDay]").each(function(){
+				  $(this).html("");
+				  $(this).attr("data-value","");
+			  });
+			  			 
 				$.ajax({
 					url:"../billing/getBedNurseConfig.jhtml",
 					type:"post",
 					data:{elderlyInfoID:elderlyInfoID},
 					success:function(result){
-						
+						if(result[0].errMsg!=null){
+							$('#addCheckinCharge_elderlyInfo').textbox('reset');
+							showSuccessMsg(result[0].errMsg);
+							return;
+						}
 					$('#bedType').html("["+result[0].chargeItem.configValue+"]");
 					$('#bedType').attr("data-value",result[0].chargeItem.configValue);
 					$('#bedPerMonth').html(message("yly.charge.record.perMonth")+result[0].amountPerMonth);
