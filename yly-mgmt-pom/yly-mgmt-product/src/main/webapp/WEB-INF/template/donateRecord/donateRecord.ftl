@@ -1,5 +1,6 @@
 <script src="${base}/resources/js/common.js"></script>
 <script src="${base}/resources/modules/donateRecord.js"></script>
+<script src="${base}/resources/modules/donateDetail.js"></script>
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
@@ -83,7 +84,19 @@
 </div>
 <div id="editDonateRecord"></div>
 <div id="donateRecordDetail"></div>
+<div id="donateDetail_manager_tool" style ="display:none">
 
+	<div class="tool-button">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="donateDetail_manager_tool.add();">添加</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="donateDetail_manager_tool.edit();">修改</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="donateDetail_manager_tool.remove();">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
+	</div>
+	<div class="tool-filter"></div>
+	<table id="donateDetail_table_list"></table>
+</div>
 
+<div id="donateDetail"></div>
+<div id="addDonateDetail"></div>
 
 

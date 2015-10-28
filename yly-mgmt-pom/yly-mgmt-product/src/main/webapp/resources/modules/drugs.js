@@ -26,6 +26,9 @@ $(function(){
 			    }]
 			});   
 		},
+		onClickRow : function (rowIndex, rowData){
+			alert('test');
+		},
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},

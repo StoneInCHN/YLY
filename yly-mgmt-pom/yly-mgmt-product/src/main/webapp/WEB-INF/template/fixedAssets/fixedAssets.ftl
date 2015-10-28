@@ -128,7 +128,7 @@
 				      label: 'ELECTRONIC',
 				      value: '电子设备'
 				     },{
-				      label: 'other',
+				      label: 'OTHERS',
 				      value: '其他'
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetsType" style="width:110px;"/>
