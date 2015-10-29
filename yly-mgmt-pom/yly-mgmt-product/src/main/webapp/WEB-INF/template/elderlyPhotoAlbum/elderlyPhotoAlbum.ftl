@@ -1,12 +1,13 @@
 <script src="${base}/resources/modules/elderlyPhotoAlbum.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	loadAlbum();
+	//alert('../elderlyPhotoAlbum/loadAlbum.jhtml?keysOfElderlyName='+$("#keysOfElderlyName").val()+'&keysOfPhotoAlbumName='+$("#keysOfPhotoAlbumName").val());
+	loadAlbum();//动态加载相册
 });
 function loadAlbum(){
 			$.ajax({
-			url: '../elderlyPhotoAlbum/loadAlbum.jhtml',
-			type: 'GET',
+			url: '../elderlyPhotoAlbum/loadAlbum.jhtml?keysOfElderlyName='+$("#keysOfElderlyName").val()+'&keysOfPhotoAlbumName='+$("#keysOfPhotoAlbumName").val(),
+			type: 'GET',			
 			dataType: "json",
 			success:function(jsonObj, textStatus){
 				if(jsonObj.length>0){
@@ -59,11 +60,11 @@ function loadAlbum(){
 	        <div class="search-item">&nbsp;&nbsp;</div>
 	    	<div class="search-item">
 			   <label>${message("yly.common.elderly.name")}:</label>
-			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
+			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="keysOfElderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
 			</div>
 			<div class="search-item">
 			   <label>相册名称:</label>
-			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="photoAlbumName" name="keysOfPhotoAlbumName" validtype="length[0,15]" style="width:110px;"/>
+			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="keysOfPhotoAlbumName" name="keysOfPhotoAlbumName" validtype="length[0,15]" style="width:110px;"/>
 			</div>			
 		</form>
 		<div class="search-item">

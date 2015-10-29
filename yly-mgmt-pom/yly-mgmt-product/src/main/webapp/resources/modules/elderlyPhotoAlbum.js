@@ -44,7 +44,7 @@ var photoAlbum_manager_tool = {
 								var resultMsg = result.content;
 								if (response == "success") {
 									showSuccessMsg(resultMsg);
-									loadAlbum();
+									loadAlbum();//重新加载相册
 								} else {
 									alertErrorMsg();
 								}
@@ -222,23 +222,20 @@ var photoAlbum_manager_tool = {
 				    },
 				    onClose:function(){
 				    	$("#uploader .uploadBtn").trigger("clearFiles");						
-						loadAlbum();
+				    	loadAlbum();//重新加载相册
 				    }
 				});
 				$('#addElderlyPhotoAlbum_form').show();
 		    },
 		    edit:function(photoAlbumID){
 		    	alert(photoAlbumID);
-		    }
-		    
+		    }		    
 	}
 	
 $(function(){
 	$("#photoAlbum_search_btn").click(function(){
-		  var _queryParams = $("#photoAlbum_search_form").serializeJSON();
-		  $('#photoAlbum-table-list').datagrid('options').queryParams = _queryParams;  
-		  $("#photoAlbum-table-list").datagrid('reload');
-		})
+		loadAlbum();//重新加载相册
+	});
 })
 function formatLongString(str,len){
 	if(str.length > len){

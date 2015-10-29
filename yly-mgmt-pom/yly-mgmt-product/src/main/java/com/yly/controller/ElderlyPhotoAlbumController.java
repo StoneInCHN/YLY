@@ -74,27 +74,46 @@ public class ElderlyPhotoAlbumController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/loadAlbum", method = RequestMethod.GET)
-  public @ResponseBody List<ElderlyPhotoAlbum> loadAlbum(ModelMap model) {
-    List<ElderlyPhotoAlbum> elderlyPhotoAlbumList = elderlyPhotoAlbumService.findAll(true);
+  public @ResponseBody List<ElderlyPhotoAlbum> loadAlbum(ModelMap model,String keysOfElderlyName, String keysOfPhotoAlbumName) {
+    List<ElderlyPhotoAlbum> elderlyPhotoAlbumList = null;   
+    if (keysOfPhotoAlbumName != null) {//搜索照片名字关键字不为空
+      elderlyPhotoAlbumList = elderlyPhotoAlbumService.searchByFilter(keysOfPhotoAlbumName, true);
+    }else {
+      elderlyPhotoAlbumList = elderlyPhotoAlbumService.findAll(true); 
+    }
+    
+    if (keysOfElderlyName != null) {//搜索老人名字关键字不为空
+      int count = 1;
+      while (count <= elderlyPhotoAlbumList.size()) {
+        ElderlyPhotoAlbum elderlyPhotoAlbum = elderlyPhotoAlbumList.get(count - 1);
+        if (elderlyPhotoAlbum.getElderlyInfo() != null && StringUtils.isNotBlank(elderlyPhotoAlbum.getElderlyInfo().getName())){
+           if (!elderlyPhotoAlbum.getElderlyInfo().getName().contains(keysOfElderlyName)) {//老人姓名不包含搜索关键字，从List中移除
+             elderlyPhotoAlbumList.remove(count - 1);              
+           }else{
+             count ++;
+           }  
+        }
+      }
+    }
     return elderlyPhotoAlbumList;
   }
 
-  /**
-   * 查询list
-   * 
-   * @param pageable
-   * @return
-   */
-  @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<ElderlyPhotoAlbum> list(ModelMap model, String keysOfElderlyName,
-      String keysOfPhotoAlbumName, Pageable pageable) {
-    if (keysOfElderlyName == null && keysOfPhotoAlbumName == null) {
-      return elderlyPhotoAlbumService.findPage(pageable, true);
-    } else {
-      return elderlyPhotoAlbumService.SearchPageByFilter(keysOfElderlyName, keysOfPhotoAlbumName,
-          pageable);
-    }
-  }
+//  /**
+//   * 查询list
+//   * 
+//   * @param pageable
+//   * @return
+//   */
+//  @RequestMapping(value = "/list", method = RequestMethod.POST)
+//  public @ResponseBody Page<ElderlyPhotoAlbum> list(ModelMap model, String keysOfElderlyName,
+//      String keysOfPhotoAlbumName, Pageable pageable) {
+//    if (keysOfElderlyName == null && keysOfPhotoAlbumName == null) {
+//      return elderlyPhotoAlbumService.findPage(pageable, true);
+//    } else {
+//      return elderlyPhotoAlbumService.SearchPageByFilter(keysOfElderlyName, keysOfPhotoAlbumName,
+//          pageable);
+//    }
+//  }
 
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findAll() {
