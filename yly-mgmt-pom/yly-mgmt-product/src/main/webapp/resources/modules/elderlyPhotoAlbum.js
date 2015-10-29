@@ -10,10 +10,11 @@ var photoAlbum_manager_tool = {
 				    href:'../elderlyPhotoAlbum/viewPhotos.jhtml?photoAlbumID='+photoAlbumID,
 				    cache: false, 	
 				    buttons:[{
-				    	text:message("yly.common.save"),
+				    	text:"编辑相册",
 				    	iconCls:'icon-save',
 						handler:function(){
-							alert("save");	
+							$('#showPhotoAlbum').dialog("close");
+							photoAlbum_manager_tool.edit();
 						}
 					},{
 						text:message("yly.common.close"),
@@ -228,7 +229,51 @@ var photoAlbum_manager_tool = {
 				$('#addElderlyPhotoAlbum_form').show();
 		    },
 		    edit:function(photoAlbumID){
-		    	alert(photoAlbumID);
+				var _dialog = $('#editElderlyPhotoAlbum').dialog({  
+				    title: "编辑相册相片",    
+				    width: 700,    
+				    height: 700,
+				    iconCls:'icon-mini-edit',
+				    modal:true,
+				    href:'../elderlyPhotoAlbum/detail.jhtml?id='+photoAlbumID+'&handle=edit',
+				    buttons:[{
+				    	text:message("yly.common.save"),
+				    	iconCls:'icon-save',
+						handler:function(){
+							var validate = $('#editAlbumPhoto_form').form('validate');
+							if(validate){
+								$.ajax({
+									url:"../elderlyPhotoAlbum/update.jhtml",
+									type:"post",
+									data:$("#editAlbumPhoto_form").serialize(),
+									beforeSend:function(){
+										$.messager.progress({
+											text:message("yly.common.saving")
+										});
+									},
+									success:function(result,response,status){
+										$.messager.progress('close');
+										showSuccessMsg(result.content);
+										$('#editElderlyPhotoAlbum').dialog("close");
+										loadAlbum();//重新加载相册
+									},
+									error:function (XMLHttpRequest, textStatus, errorThrown) {
+										$.messager.progress('close');
+										alertErrorMsg();
+									}
+								});
+							};
+							
+						}
+					},{
+						text:message("yly.common.cancel"),
+						iconCls:'icon-cancel',
+						handler:function(){
+							 $('#editElderlyPhotoAlbum').dialog("close");
+						}
+				    }]
+				});
+		    
 		    }		    
 	}
 	

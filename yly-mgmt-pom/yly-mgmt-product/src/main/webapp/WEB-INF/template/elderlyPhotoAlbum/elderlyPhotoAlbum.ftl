@@ -13,18 +13,18 @@ function loadAlbum(){
 				if(jsonObj.length>0){
 					var divAlbumHtml = '<div class="row" style="background:#D2D2D2;margin:10px;padding-top:10px">';
 					for(var i=0; i< jsonObj.length; i++){
-						var shortName = jsonObj[i].name;
-						if(shortName.length>5){
-							shortName= "<"+shortName.substring(0,5)+"...>";
+						var shortName = "《"+jsonObj[i].name+"》";
+						if(shortName && jsonObj[i].name.length>5){
+							shortName= "《"+jsonObj[i].name.substring(0,5)+"...》";
 						}
 						var shortRemark= jsonObj[i].remark;
-						if(shortRemark.length>9){
+						if(shortRemark && shortRemark.length>9){
 							shortRemark= shortRemark.substring(0,9)+"...";
-						}					
+						}				
 						[@compress single_line = true]
 						divAlbumHtml += '<div class="col-sm-2 col-md-2" onmouseenter="deepColor()">
 											<div class="thumbnail">
-												<a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><img src="'+jsonObj[i].albumCover+'" style="width:140px;height:100px;"></a>
+												<a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><img src="'+jsonObj[i].albumCover+'"  style="width:140px;height:100px;"></a>
 												<div classheng="caption">
 													<h6><a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><span title="'+jsonObj[i].name+'">'+shortName+'</span></a></h6> 
 													<p><span title="'+jsonObj[i].remark+'">'+shortRemark+'</span></p>
@@ -38,6 +38,7 @@ function loadAlbum(){
 						[/@compress]
 					}
 					divAlbumHtml += '</div>';
+					
 					$("#photoAlbum_show_form").html(divAlbumHtml);	
 				}else{
 				    $("#photoAlbum_show_form").html("");	
@@ -58,14 +59,14 @@ function loadAlbum(){
 	    <legend>相册查询</legend>
 	    <form id="photoAlbum_search_form" class="search-form">
 	        <div class="search-item">&nbsp;&nbsp;</div>
+			<div class="search-item">
+			   <label>相册名称:</label>
+			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="keysOfPhotoAlbumName" name="keysOfPhotoAlbumName" validtype="length[0,15]" style="width:110px;"/>
+			</div>			        
 	    	<div class="search-item">
 			   <label>${message("yly.common.elderly.name")}:</label>
 			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="keysOfElderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
 			</div>
-			<div class="search-item">
-			   <label>相册名称:</label>
-			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="keysOfPhotoAlbumName" name="keysOfPhotoAlbumName" validtype="length[0,15]" style="width:110px;"/>
-			</div>			
 		</form>
 		<div class="search-item">
 	  	  <button id="photoAlbum_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
@@ -74,9 +75,7 @@ function loadAlbum(){
 </div>
 <div id="photoAlbum_manager_tool">
 	<div class="tool-button">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="photoAlbum_manager_tool.add();">${message("yly.button.add")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="photoAlbum_manager_tool.edit();">${message("yly.button.update")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="photoAlbum_tool.remove();">${message("yly.button.delete")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="photoAlbum_manager_tool.add();">添加相册</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
@@ -153,7 +152,8 @@ function loadAlbum(){
 
 	</form>
 </div>
-<div id="editPhotoAlbum"></div>  
+
+<div id="editElderlyPhotoAlbum"></div>  
 <div id="showPhotoAlbum"></div> 
 
 
