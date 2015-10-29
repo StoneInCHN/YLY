@@ -1,6 +1,5 @@
 
 $(function(){
-	
 	$("#donateRecord-table-list").datagrid({
 		title:"捐赠记录",
 		fitColumns:true,
@@ -38,6 +37,7 @@ $(function(){
 		   ]
 		],
 		onClickRow : function (rowIndex, rowData){
+			recordId =rowData.id;
 			$("#donateDetail_manager_tool").show();
 			$("#donateDetail_table_list").datagrid({
 				fitColumns:true,

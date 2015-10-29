@@ -98,5 +98,6 @@
 
 <div id="donateDetail"></div>
 <div id="addDonateDetail"></div>
+<div id="editDonateDetail"></div>
 
 

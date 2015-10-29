@@ -31,7 +31,7 @@ import com.yly.service.DonateItemTypeService;
 public class DonateItemTypeController extends BaseController
 {
 
-  @Resource (name = "donateDetailServiceImpl")
+  @Resource (name = "donateItemTypeServiceImpl")
   private DonateItemTypeService donateItemTypeService;
 
 
@@ -113,7 +113,7 @@ public class DonateItemTypeController extends BaseController
    * @param id
    * @return
    */
-  @RequestMapping(value = "/findAllDonateItemTypes", method = RequestMethod.GET)
+  @RequestMapping(value = "/findAllDonateItemTypes", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>>  findAllDonateItemTypes(ModelMap model,Direction direction) {
     return donateItemTypeService.findAllDonateItemTypes (direction);
   }
