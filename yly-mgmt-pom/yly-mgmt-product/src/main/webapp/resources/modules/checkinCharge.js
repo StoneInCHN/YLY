@@ -23,10 +23,17 @@ var checkinCharge_manager_tool = {
 										});
 									},
 									success:function(result,response,status){
-											$.messager.progress('close');
-											showSuccessMsg(result.content);
-											$('#addCheckinCharge').dialog("close");
-											$("#checkinCharge_table_list").datagrid('reload');
+										    showSuccessMsg(result.content);
+										    console.log(result);
+										    if(result.type == "success"){
+										    	$.messager.progress('close');
+												$('#addCheckinCharge').dialog("close");
+												$("#checkinCharge_table_list").datagrid('reload');
+												$('#addCheckinCharge_form').form('reset');
+												$("#isMonthlyMeal").attr("checked","");
+												$('#isMonthlyMeal').trigger('click');
+										    }
+											
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
 										$.messager.progress('close');
@@ -41,6 +48,8 @@ var checkinCharge_manager_tool = {
 						handler:function(){
 							 $('#addCheckinCharge').dialog("close");
 							 $('#addCheckinCharge_form').form('reset');
+							 $("#isMonthlyMeal").attr("checked","");
+							 $('#isMonthlyMeal').trigger('click');
 						}
 				    }],
 				    onOpen:function(){
@@ -60,6 +69,7 @@ var checkinCharge_manager_tool = {
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
+						    panelHeight:100,
 						    url:'../systemConfig/findByConfigKey.jhtml',
 						    onBeforeLoad : function(param) {
 						        param.configKey = 'MEALTYPE';// 参数
@@ -80,8 +90,11 @@ var checkinCharge_manager_tool = {
 										var mealPerDay = $('#mealPerDay').attr("data-value");
 										var periodMonMeal=$('#periodMonMeal').val();
 										var periodDayMeal=$('#periodDayMeal').val();
-										var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
-										$('#chargein_mealAmount').numberbox('setValue',mealAmount);
+										if(periodMonMeal!="" && periodDayMeal!=""){
+											var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
+											$('#chargein_mealAmount').numberbox('setValue',mealAmount);
+										}
+										
 										
 									}
 								});
@@ -175,16 +188,57 @@ $(function(){
 		
 		if($("#isMonthlyMeal").is(":checked")==true){
 			$("#monthlyMeal").css('display','block');
+			$("#mealRemark").textbox({
+				disabled:false
+				
+			});
+			$("#mealPeriodStartDate").textbox({
+				disabled:false
+				
+			});
+			$("#mealPeriodEndDate").textbox({
+				disabled:false
+				
+			});
+			$("#mealType").textbox({
+				required:true,
+				disabled:false
+				
+			});
+			$("#chargein_mealAmount").numberbox({
+				required:true,
+				disabled:false
+			});
 			$("#monthlyMeal table input[type=hidden]").each(function(){
-				$(this).prop("disabled",false);
+				$(this).attr("disabled",false);
 			});
 		}
 		
 		if($("#isMonthlyMeal").is(":checked")==false){
 			$("#monthlyMeal").css('display','none'); 
-			
+			$("#mealRemark").textbox({
+				disabled:true
+				
+			});
+			$("#mealPeriodStartDate").textbox({
+				disabled:true
+				
+			});
+			$("#mealPeriodEndDate").textbox({
+				disabled:true
+				
+			});
+			$("#mealType").textbox({
+				required:false,
+				disabled:true
+				
+			});
+			$("#chargein_mealAmount").numberbox({
+				required:false,
+				disabled:true
+			});
 			$("#monthlyMeal table input[type=hidden]").each(function(){
-				$(this).prop("disabled",true);
+				$(this).attr("disabled",true);
 			});
 		}
 		
@@ -199,7 +253,7 @@ $(function(){
 				data:{currentDay:dayStr},
 				success:function(result,response,status){
 					$('#bedNursePeriodEndDate').datebox('setValue',result.billDate);
-					console.log(result.periodMonth+"个月"+result.periodDay+"天");
+					//console.log(result.periodMonth+"个月"+result.periodDay+"天");
 					var bedPerMonth = $('#bedPerMonth').attr("data-value");
 					var bedPerDay = $('#bedPerDay').attr("data-value");
 					var nurseLevelPerMonth = $('#nurseLevelPerMonth').attr("data-value");
@@ -222,7 +276,7 @@ $(function(){
 				data:{currentDay:dayStr},
 				success:function(result){
 					$('#mealPeriodEndDate').datebox('setValue',result.billDate);
-					console.log(result.periodMonth+"个月"+result.periodDay+"天");
+					//console.log(result.periodMonth+"个月"+result.periodDay+"天");
 					$('#periodMonMeal').val(result.periodMonth);
 					$('#periodDayMeal').val(result.periodDay);
 					
@@ -302,7 +356,7 @@ $(function(){
 		var bedAmount = $('#chargein_bedAmount').numberbox('getValue');
 		var nurseAmount = $('#chargein_nurseAmount').numberbox('getValue');
 		var mealAmount = $('#chargein_mealAmount').numberbox('getValue');
-		console.log(bedAmount+"-"+nurseAmount+"-"+mealAmount);
+		//console.log(bedAmount+"-"+nurseAmount+"-"+mealAmount);
 		if(bedAmount == null && nurseAmount == null && mealAmount == null){
 			$('#chargein_totalAmount').numberbox("reset");
 		}else{

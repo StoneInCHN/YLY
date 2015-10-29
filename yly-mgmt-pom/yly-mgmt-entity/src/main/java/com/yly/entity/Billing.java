@@ -16,11 +16,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -28,6 +27,7 @@ import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentType;
+import com.yly.lucene.DateBridgeImpl;
 
 /**
  * 日常缴费账单
@@ -210,7 +210,7 @@ public class Billing extends BaseEntity {
     this.paymentType = paymentType;
   }
 
-  @OneToOne(mappedBy = "billing")
+  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public BedNurseCharge getBedNurseCharge() {
     return bedNurseCharge;
   }
@@ -219,7 +219,7 @@ public class Billing extends BaseEntity {
     this.bedNurseCharge = bedNurseCharge;
   }
 
-  @OneToOne(mappedBy = "billing")
+  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public MealCharge getMealCharge() {
     return mealCharge;
   }
@@ -274,7 +274,7 @@ public class Billing extends BaseEntity {
   }
 
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPayTime() {
     return payTime;
   }
@@ -322,7 +322,7 @@ public class Billing extends BaseEntity {
   }
 
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPeriodStartDate() {
     return periodStartDate;
   }
@@ -332,7 +332,7 @@ public class Billing extends BaseEntity {
   }
 
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPeriodEndDate() {
     return periodEndDate;
   }

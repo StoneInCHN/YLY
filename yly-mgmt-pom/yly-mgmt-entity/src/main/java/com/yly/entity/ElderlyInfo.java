@@ -24,10 +24,9 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -45,6 +44,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentWay;
 import com.yly.entity.commonenum.CommonEnum.PoliticalOutlook;
 import com.yly.entity.commonenum.CommonEnum.Religion;
 import com.yly.entity.commonenum.CommonEnum.SourceOfIncome;
+import com.yly.lucene.DateBridgeImpl;
 
 /**
  * 老年人信息
@@ -197,7 +197,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 是否伙食费包月
    */
-  private Boolean mealFeeMonthlyPayment;
+  private Boolean mealFeeMonthlyPayment = false;
 
   /**
    * 文化程度
@@ -743,7 +743,7 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getBeHospitalizedDate() {
     return beHospitalizedDate;
   }

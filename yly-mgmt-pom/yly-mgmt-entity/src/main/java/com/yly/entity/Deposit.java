@@ -11,17 +11,17 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentType;
+import com.yly.lucene.DateBridgeImpl;
 
 /**
  * 押金
@@ -143,7 +143,7 @@ public class Deposit extends BaseEntity{
   }
 
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPayTime() {
     return payTime;
   }
