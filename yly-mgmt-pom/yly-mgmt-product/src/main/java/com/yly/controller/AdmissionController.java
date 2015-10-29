@@ -2,7 +2,9 @@ package com.yly.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -236,8 +238,10 @@ public class AdmissionController extends BaseController {
   @RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
   public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,
       String identifier, Long elderlyInfoId) {
-
-    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
+    Map<String, String> paramMap = new HashMap<String, String>();
+    paramMap.put("identifier", identifier);
+//    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
+    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, paramMap);
     if (filePath != null && elderlyInfoId != null) {
       ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoId);
       elderlyInfo.setProfilePhoto(filePath);

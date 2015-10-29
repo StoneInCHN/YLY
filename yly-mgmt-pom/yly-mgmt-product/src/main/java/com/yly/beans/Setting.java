@@ -83,6 +83,31 @@ public class Setting implements Serializable {
     
     /** 图片上传路径 */
     private String profilePictureUploadPath;
+    
+    /** 相册上传路径 */
+    private String albumUploadPath;
+    /**
+     * 获取相册上传路径
+     * 
+     * @return
+     */
+    @NotEmpty
+    @Length(max = 200)
+    public String getAlbumUploadPath() {
+      return albumUploadPath;
+    }
+
+    public void setAlbumUploadPath(String albumUploadPath) {
+      if (albumUploadPath != null) {
+        if (!albumUploadPath.startsWith("/")) {
+          albumUploadPath = "/" + albumUploadPath;
+        }
+        if (!albumUploadPath.endsWith("/")) {
+          albumUploadPath += "/";
+        }
+    }
+      this.albumUploadPath = albumUploadPath;
+    }
 
     /** Flash上传路径 */
     private String flashUploadPath;

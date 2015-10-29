@@ -178,6 +178,9 @@ function searchElderlyInfo(id) {
 	    	 onDblClickRow : function (rowIndex, rowData){
 	    		 $("#"+id+"ID").val(rowData.id);
 	    		 $("#"+id).textbox('setValue',rowData.name);
+	    		 if($("#identifier")){
+	    			 $("#identifier").val(rowData.identifier);
+	    		 }
 	    		 $('#searchElderlyInfo').dialog("close");
 	    	 },
 	    	 columns:[

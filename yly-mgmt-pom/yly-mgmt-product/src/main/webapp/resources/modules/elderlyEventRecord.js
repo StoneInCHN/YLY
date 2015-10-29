@@ -98,7 +98,7 @@ var elderlyevent_manager_tool = {
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editBuild').dialog("close");
+							 $('#editEvent').dialog("close");
 						}
 				    }]
 				});  
@@ -161,6 +161,5 @@ function formatLongString(str,len){
 		return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
 	}else{
 		return str;
-	}
-	
+	}	
 }

@@ -263,6 +263,9 @@ var messages = {
     "yly.elderlyInfo.stuffDeposit.list":"物品寄存列表",
     "yly.elderly.stuffDeposit.add":"添加物品寄存",
     "yly.elderly.stuffDeposit.edit":"编辑物品寄存",
+    "yly.elderly.Photo.Album":"相册名称",
+    "yly.elderly.Photo.Album.view":"浏览图片",
+    "yly.elderly.Photo.Album.add":"添加相册照片",
 	//物品寄存
     "yly.elderlyInfo.stuffDeposit.name":"物品名称",	
     "yly.elderlyInfo.stuffDeposit.count":"数量",

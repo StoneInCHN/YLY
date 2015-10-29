@@ -17,6 +17,9 @@
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/main.css" >
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/webuploader.css" >
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/upload-style.css" >
+ 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/multiple/style.css" >
+ 	<link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/_shared/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/connected-carousels/jcarousel.connected-carousels.css">
   </head>
 
   <body class="easyui-layout">   
@@ -85,7 +88,7 @@
 		    		<li><a href="#">老人档案</a></li>
 		    		<li><a href="#">合同附件</a></li>
 		    		<li><a href="#">评估报告</a></li>
-		    		<li><a href="#">老人相册</a></li>
+		    		<li><a href="#" data-url="${base}/console/elderlyPhotoAlbum/elderlyPhotoAlbum.jhtml">${message("yly.elderlyInfo.photoAlbum")}</a></li>
 					<li><a href="#" data-url="${base}/console/elderlyEventRecord/elderlyEventRecord.jhtml">${message("yly.elderlyInfo.event.record")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/elderlyStuffDeposit/elderlyStuffDeposit.jhtml">${message("yly.elderlyInfo.stuff.deposit")}</a></li>
 		    	</ul>    
@@ -175,6 +178,7 @@
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 	<script src="${base}/resources/js/webuploader.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
+    <script src="${base}/resources/js/multiplefileUpload.js"></script>
 	<script>
 		var BASE_URL = '${base}/resources' ;
 	</script>

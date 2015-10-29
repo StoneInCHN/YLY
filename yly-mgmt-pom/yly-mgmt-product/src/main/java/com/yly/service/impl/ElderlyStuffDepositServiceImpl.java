@@ -43,7 +43,6 @@ public class ElderlyStuffDepositServiceImpl extends BaseServiceImpl<ElderlyStuff
       Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
-
     try {
       BooleanQuery query = new BooleanQuery();
       if (searchParameter.getKeysOfElderlyName() != null) {
