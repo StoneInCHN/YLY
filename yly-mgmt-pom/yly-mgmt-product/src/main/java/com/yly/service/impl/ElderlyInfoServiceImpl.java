@@ -1,9 +1,12 @@
 package com.yly.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -15,11 +18,13 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeFilter;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.common.log.LogUtil;
 import com.yly.dao.ElderlyInfoDao;
 import com.yly.entity.ElderlyInfo;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
@@ -122,6 +127,17 @@ public class ElderlyInfoServiceImpl extends BaseServiceImpl<ElderlyInfo, Long> i
     }
     return search(query, pageable, analyzer, beHospitalizedDateFilter);
 
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<ElderlyInfo> findByElderlyName(String nameKeys) {
+    List<com.yly.framework.filter.Filter> filters = new ArrayList<com.yly.framework.filter.Filter>();
+    if (StringUtils.isNotBlank(nameKeys)) {
+      com.yly.framework.filter.Filter nameFilter =  new com.yly.framework.filter.Filter("name", com.yly.framework.filter.Filter.Operator.like, "%"+nameKeys+"%");
+      filters.add(nameFilter);
+    }
+    return findList(null, null, filters, null);
   }
 
 
