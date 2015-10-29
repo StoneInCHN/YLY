@@ -49,11 +49,11 @@ $(function(){
 				    onLoad:function(){
 				    	$('#addDonateDetail_form').show();
 				    	$('#recordId').val(recordId);
-						console.log($('#recordId').val());
 				    	$("#donateItemType").combobox({    
 						    valueField:'id',    
 						    textField:'itemName',
 						    cache: true,
+						    readyonly:true,
 						    url:'../donateItemType/findAllDonateItemTypes.jhtml'
 						});
 				    },

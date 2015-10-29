@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.OperationLog;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
+import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.OperationLogService;
 
@@ -31,8 +33,13 @@ public class OperationLogController extends BaseController {
   /**
    * 列表
    */
-  @RequestMapping(value = "/list", method = RequestMethod.GET)
-  public String list(Pageable pageable, Date beginDate, Date endDate,ModelMap model) {
+  @RequestMapping (value = "/operationLog", method = RequestMethod.GET)
+  public String list (ModelMap model)
+  {
+    return "operationLog/operationLog";
+  }
+  @RequestMapping(value = "/list", method = RequestMethod.POST)
+  public @ResponseBody Page<OperationLog> list(Pageable pageable, Date beginDate, Date endDate,ModelMap model) {
     
     List<Filter> filters = new ArrayList<Filter>();
     
@@ -46,10 +53,8 @@ public class OperationLogController extends BaseController {
     }
     pageable.setFilters(filters);
     
-    model.addAttribute("page", operationLogService.findPage(pageable));
-    model.addAttribute("beginDate",beginDate);
-    model.addAttribute("endDate",endDate);
-    return "/operationLog/list";
+    return operationLogService.findPage(pageable);
+   
   }
 
   /**

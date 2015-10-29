@@ -111,7 +111,7 @@
 		    		<li><a href="#">通知公告</a></li>
 		    	</ul>
 		    	<ul title="系统管理" id="system">
-		    		<li><a href="#">用户管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">用户管理</a></li>
 		    		<li><a href="#">权限角色管理</a></li>
 		    		<li><a href="#">数据字典</a></li>
 		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
