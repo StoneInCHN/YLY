@@ -69,7 +69,7 @@ public class BlackList extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length = 200)
+  @Column(length = 200, nullable =false)
   public String getCause() {
     return cause;
   }

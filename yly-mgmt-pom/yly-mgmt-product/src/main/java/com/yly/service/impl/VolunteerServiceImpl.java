@@ -55,6 +55,7 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
     Query typeQuery = null;
 
     try {
+      //关键字-自愿者名字
       if (volunteer.getVolunteerName() != null) {
         String text = QueryParser.escape(volunteer.getVolunteerName());
         QueryParser nameParser = new QueryParser(Version.LUCENE_35, "volunteerName", analyzer);
@@ -62,6 +63,7 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
         query.add(nameQuery, Occur.MUST);
       }
       
+      //关键字-自愿者类型
       if(volunteer.getVolunteerType() != null){
         Term typeTerm =
             new Term("volunteerType", volunteer.getVolunteerType().name());
@@ -69,6 +71,7 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
         query.add(typeQuery, Occur.MUST);
       }
 
+      //关键字-活动时间范围
       if (beginDate != null || endDate != null) {
         TermRangeQuery tQuery =
             new TermRangeQuery("activityTime", DateTimeUtils.convertDateToString(beginDate, null),
@@ -83,7 +86,9 @@ public class VolunteerServiceImpl extends BaseServiceImpl<Volunteer, Long> imple
                 VolunteerServiceImpl.class,
                 "VolunteerSearch",
                 "Search volunteer with params, tenant ID=%s, volunteerName=%s, volunteerType=%s, startTime=%s, endTime=%s",
-                tenantAccountService.getCurrentTenantID(), volunteer.getVolunteerName(), volunteer.getVolunteerType().name(), beginDate, endDate);
+                tenantAccountService.getCurrentTenantID(), volunteer.getVolunteerName(), volunteer.getVolunteerType().name(), DateTimeUtils.convertDateToString(
+                    beginDate, null), DateTimeUtils.convertDateToString(
+                        endDate, null));
       }
       return super.search(query, pageable, analyzer, null);
 

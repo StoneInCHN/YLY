@@ -278,11 +278,19 @@ var messages = {
     "yly.elderlyInfo.stuffDeposit.putin":"存入",
     "yly.elderlyInfo.stuffDeposit.takeaway":"取走",
     //维修人员
+    "yly.repairRecord.add":"添加维修记录",
 	"yly.repairRecord.record":"维修记录",
 	"yly.repairRecord.repairContent":"维修内容",
 	"yly.repairRecord.repairPlace":"维修地点",
 	"yly.repairRecord.reportOperator":"报修人",
-	"yly.repairRecord.repairOperator":"维修人员"
+	"yly.repairRecord.repairOperator":"维修人员",
+	
+	//水电用量记录
+	"yly.waterElectricityRecord.add":"水电用量记录添加",
+	"yly.waterElectricityRecord.record":"水电用量列表",
+	"yly.waterElectricityRecord.waterActual":"用水计费吨数",
+	"yly.waterElectricityRecord.electricityActual":"用电计费度数",
+	"yly.waterElectricityRecord.operator":"抄表人"
 };
 //多语言
 function message(code) {

@@ -148,9 +148,8 @@
 		    		<li><a href="#"  data-url="${base}/console/blackList/blacklist.jhtml">${message("yly.blacklist.list")}</a></li>
 		    	</ul>
 		    	<ul title="${message("yly.logistics.config")}" id="logistics">
-		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>
-		    		<li><a href="#">${message("yly.logistics.waterfeeRecord")}</a></li>
-		    		<li><a href="#">${message("yly.logistics.energyChargeRecord")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/repairRecord/repairRecord.jhtml">${message("yly.logistics.maintainRecord")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/waterElectricityRecord/waterElectricityRecord.jhtml">${message("yly.logistics.waterfeeRecord")}</a></li>
 		    	</ul>   
     </div>   
     <div class="main-content" data-options="region:'center'">

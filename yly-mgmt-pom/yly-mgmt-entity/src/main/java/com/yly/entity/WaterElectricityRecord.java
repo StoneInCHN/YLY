@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -48,7 +49,7 @@ public class WaterElectricityRecord extends BaseEntity{
   private Date recordEndDate;
   
   /**
-   * 周期内用水的吨数
+   * 周期内用水的总吨数
    */
   private BigDecimal waterCount;
   /**
@@ -61,7 +62,7 @@ public class WaterElectricityRecord extends BaseEntity{
   private BigDecimal waterActual;
   
   /**
-   * 周期内用电的度数
+   * 周期内用电的总度数
    */
   private BigDecimal electricityCount;
   /**
@@ -83,6 +84,7 @@ public class WaterElectricityRecord extends BaseEntity{
    */
   private String remark;
   
+  @JsonProperty
   @ManyToOne
   public Room getRoom() {
     return room;
@@ -101,6 +103,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.remark = remark;
   }
 
+  @JsonProperty
   @Column(length=15)
   public String getOperator() {
     return operator;
@@ -110,6 +113,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.operator = operator;
   }
 
+  @JsonProperty
   @Index(name="water_electricity_record_tenantid")
   public Long getTenantID() {
     return tenantID;
@@ -119,6 +123,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public Date getRecordStartDate() {
     return recordStartDate;
   }
@@ -127,6 +132,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.recordStartDate = recordStartDate;
   }
 
+  @JsonProperty
   public Date getRecordEndDate() {
     return recordEndDate;
   }
@@ -135,6 +141,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.recordEndDate = recordEndDate;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getWaterCount() {
     return waterCount;
@@ -144,6 +151,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.waterCount = waterCount;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getElectricityCount() {
     return electricityCount;
@@ -153,6 +161,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.electricityCount = electricityCount;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getWaterDerate() {
     return waterDerate;
@@ -162,6 +171,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.waterDerate = waterDerate;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getWaterActual() {
     return waterActual;
@@ -171,6 +181,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.waterActual = waterActual;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getElectricityDerate() {
     return electricityDerate;
@@ -180,6 +191,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.electricityDerate = electricityDerate;
   }
 
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getElectricityActual() {
     return electricityActual;
