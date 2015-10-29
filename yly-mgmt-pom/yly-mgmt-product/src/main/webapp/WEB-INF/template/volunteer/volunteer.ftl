@@ -19,7 +19,7 @@
 					label: 'ORGANIZATION',
 					value: '${message("yly.volunteer.organization")}'
 				}],
-				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="search-volunteerType" name="volunteerType" style="width:130px;"/>
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="volunteerType" name="volunteerType" style="width:130px;"/>
 			</div>
 			<div class="search-item">
 			    <label> 活动发生时间从:</label>

@@ -55,10 +55,11 @@ public class VolunteerController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Volunteer> list(Date beginDate, Date endDate, String volunteerName,
-      String volunteerType, Pageable pageable, ModelMap model) {
-    if (volunteerName != null || volunteerType!=null || beginDate != null || endDate != null) {
-      return volunteerService.searchList(beginDate, endDate, volunteerName, volunteerType, pageable);
+  public @ResponseBody Page<Volunteer> list(Date beginDate, Date endDate, Volunteer volunteer,
+      Pageable pageable, ModelMap model) {
+    if (volunteer.getVolunteerName() != null || volunteer.getVolunteerType()!= null
+        || beginDate != null || endDate != null) {
+      return volunteerService.searchList(beginDate, endDate, volunteer, pageable);
     }
     return volunteerService.findPage(pageable);
   }

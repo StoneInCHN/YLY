@@ -159,12 +159,13 @@ $(function(){
 			}
 	}
 	$("#volunteer_search_btn").click(function(){
-	  var _queryParams = {
+	  /*var _queryParams = {
 			  beginDate:$("#volunteer_search_form #beginDate").val(),
 			  endDate:$("#volunteer_search_form #endDate").val(),
 			  volunteerName:$("#volunteer_search_form #volunteerName").val(),
-			  volunteerType:$("volunteer_search_form #volunteerType").val()
-	  }
+			  volunteerType:$("#volunteerType").val()
+	  }*/
+	  var _queryParams = $("#volunteer_search_form").serializeJSON();
 	  $('#volunteer-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#volunteer-table-list").datagrid('reload');
 	})

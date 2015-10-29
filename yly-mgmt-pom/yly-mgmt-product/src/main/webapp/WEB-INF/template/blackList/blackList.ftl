@@ -5,7 +5,7 @@
 	    <form id="blacklist_search_form" class="search-form">
 	    	<div class="search-item">
 			    <label> 名字查询:</label>
-			    <!--<input type="text" class="easyui-textbox" id="blackListName" name="blackListName" style="width:85px;" />-->
+			    <input type="text" class="easyui-textbox" id="name" name="elderlyInfo.name" style="width:85px;" />
 			</div>
 			<div class="search-item">
 			    <label> 查询时间从:</label>
@@ -31,7 +31,8 @@
 	<div class="tool-filter"></div>
 </div> 
 <div id="addBlacklist">
-	<form id="addBlacklist_form" method="post" class="form-table">   
+	<form id="addBlacklist_form" method="post" class="form-table">  
+		<input type="hidden" name="elderlyInfoID" id="elderlynameID"> 
 	   	  <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.common.elderly.name")}:</th>
@@ -43,11 +44,13 @@
 	    	<tr>
 	    		<th>${message("yly.blacklist.casue")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="casue" validtype="length[0,150]" style="width:100px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="cause" validtype="length[0,150]" data-options="required:true,multiline:true,height:90,width:260"/> 
 	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td>
-	    			  <input type="text" class="easyui-textbox" name="remark" validtype="length[0,150]" data-options="multiline:true,height:90,width:120" />
+	    			  <input type="text" class="easyui-textbox" name="remark" validtype="length[0,150]" data-options="multiline:true,height:90,width:260" />
 	    		</td>
 	    	</tr>
 	    </table>

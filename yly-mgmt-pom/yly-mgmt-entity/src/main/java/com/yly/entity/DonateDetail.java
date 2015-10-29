@@ -5,11 +5,13 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.DonateType;
 
@@ -40,8 +42,8 @@ public class DonateDetail extends BaseEntity{
   /**
    * 捐赠物品类型
    */
-  private DonateItemType donateItemType;
   
+  private DonateItemType donateItemType;
   /**
    * 物品计量单位
    */
@@ -71,6 +73,8 @@ public class DonateDetail extends BaseEntity{
     this.donateRecord = donateRecord;
   }
 
+  @JsonProperty
+  @OneToOne
   public DonateItemType getDonateItemType() {
     return donateItemType;
   }
@@ -80,6 +84,7 @@ public class DonateDetail extends BaseEntity{
   }
 
   @Column(length = 5)
+  @JsonProperty
   public String getUnits() {
     return units;
   }
@@ -97,7 +102,7 @@ public class DonateDetail extends BaseEntity{
     this.tenantID = tenantID;
   }
   
-  
+  @JsonProperty
 	public DonateType getDonateType() {
 		return donateType;
 	}
@@ -107,6 +112,7 @@ public class DonateDetail extends BaseEntity{
 	}
 
   @Column(precision = 12, scale = 2)
+  @JsonProperty
   public BigDecimal getDonateAmount() {
     return donateAmount;
   }

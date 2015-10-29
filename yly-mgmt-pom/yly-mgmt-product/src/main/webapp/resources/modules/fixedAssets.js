@@ -23,7 +23,16 @@ $(function(){
 					handler:function(){
 						 $('#fixedAssetsDetail').dialog("close");
 					}
-			    }]
+			    }],onOpen:function(){
+			    	$('#editFixedAssets_form').show();
+			    	$("#department").combobox({    
+					    valueField:'id',    
+					    textField:'name',
+					    cache: true,
+					    readonly: true,
+					    url:'../department/findAllDepartments.jhtml'
+					});
+			    },
 			});   
 		},
 		columns:[
@@ -158,8 +167,17 @@ $(function(){
 						handler:function(){
 							 $('#editFixedAssets').dialog("close").form("reset");
 						}
-				    }]
-				});  
+				    }],onOpen:function(){
+				    	$('#editFixedAssets_form').show();
+				    	$("#department").combobox({    
+						    valueField:'id',    
+						    textField:'name',
+						    cache: true,
+						    url:'../department/findAllDepartments.jhtml'
+						});
+				    },
+				});
+				$('#editFixedAssets_form').show();
 			},
 			remove:function(){
 				var _rows = $('#fixedAssets-table-list').datagrid('getSelections');

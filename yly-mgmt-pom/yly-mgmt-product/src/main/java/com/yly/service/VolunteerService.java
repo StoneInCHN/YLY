@@ -22,6 +22,6 @@ public interface VolunteerService extends BaseService<Volunteer, Long>{
    * @param blackListName
    * @return
    */
-  public Page<Volunteer> searchList(Date beginDate, Date endDate, String volunteerName, String volunteerType, Pageable pageable);
+  public Page<Volunteer> searchList(Date beginDate, Date endDate, Volunteer volunteer, Pageable pageable);
   
 }

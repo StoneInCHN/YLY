@@ -1,98 +1,24 @@
 
 $(function(){
-	
-	$("#donateRecord-table-list").datagrid({
-		title:"捐赠记录",
-		fitColumns:true,
-		toolbar:"#donateRecord_manager_tool",
-		url:'../donateRecord/list.jhtml',  
-		pagination:true,
-		loadMsg:"加载中......",
-		striped:true,
-		onDblClickRow : function (rowIndex, rowData){
-			$('#donateRecordDetail').dialog({    
-			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 500, 
-			    cache: false,
-			    modal: true,
-			    href:'../donateRecord/details.jhtml?id='+rowData.id,
-			    buttons:[{
-					text:message("yly.common.cancel"),
-					iconCls:'icon-cancel',
-					handler:function(){
-						 $('#donateRecordDetail').dialog("close");
-					}
-			    }]
-			});   
-		},
-		columns:[
-		   [
-		      {field:'ck',checkbox:true},
-		      {title:"捐赠人姓名",field:"donatorName",width:100,sortable:true},
-		      {title:"捐赠人电话",field:"donatorPhone",width:100,sortable:true},
-		      {title:"捐赠时间",field:"donateTime",width:100,sortable:true,formatter: function(value,row,index){
-					return new Date(value).Format("yyyy-MM-dd");
-				}
-		      },
-		   ]
-		],
-		onClickRow : function (rowIndex, rowData){
-			$("#donateDetail_manager_tool").show();
-			$("#donateDetail_table_list").datagrid({
-				fitColumns:true,
-				pagination:true,
-				loadMsg:message("yly.common.loading"),
-				striped:true,
-				url:'../donateDetail/donateDetails.jhtml',
-				onBeforeLoad : function(param) {
-			        param.id = rowData.id;// 参数
-			    },
-				columns:[
-				   [
-				      {field:'ck',checkbox:true},
-				      {title:"捐赠数",field:"donateAmount",width:10},
-				      {title:"捐赠类型",field:"donateType",width:10,formatter: function(value,row,index){
-				    	  if(value == "MONEY"){
-				    	  		return "钱";
-				    	  	}
-				    	  if(value == "ITEM"){
-				    	  		return "物";
-				    	  	}
-				      	}},
-			      	 {title:"捐赠物品类型",field:"donateItemType",width:10,formatter: function(value,row,index){
-			      		if(value){
-				    		  return  value.itemName;
-				    	  }else{
-				    		  return  value;
-				    	  }
-				    	 
-				      	}},
-				   ]
-				]
-
-			});
-		},
-	});
-	
-	donateRecord_manager_tool = {
+	donateDetail_manager_tool = {
 			add:function(){
-				$('#addDonateRecord').dialog({
-				    title: message("yly.drugsInfo.add"),    
+				$('#addDonateDetail').dialog({
+				    title: "添加捐赠详情",    
 				    width: 700,    
 				    height: 400,
+				    href:'../donateDetail/add.jhtml',
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addDonateRecord_form').form('validate');
+							var validate = $('#addDonateDetail_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../donateRecord/add.jhtml",
+									url:"../donateDetail/add.jhtml",
 									type:"post",
-									data:$("#addDonateRecord_form").serialize(),
+									data:$("#addDonateDetail_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -102,8 +28,8 @@ $(function(){
 										$.messager.progress('close');
 										if(response == "success"){
 											showSuccessMsg(result.content);
-											$('#addDonateRecord').dialog("close").form("reset");
-											$("#donateRecord-table-list").datagrid('reload');
+											$('#addDonateDetail').dialog("close").form("reset");
+											$("#donateDetail_table_list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -115,18 +41,18 @@ $(function(){
 						text:'取消',
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addDonateRecord').dialog("close").form("reset");
+							 $('#addDonateDetail').dialog("close").form("reset");
 						}
 				    }],
-				    onOpen:function(){
-				    	$('#addDonateRecord_form').show();
+				    onLoad:function(){
+				    	$('#addDonateDetail_form').show();
 				    },
 				
 				});  
-				 $('#addDonateRecord_form').show();
+				 
 			},
 			edit:function(){
-				var _edit_row = $('#donateRecord-table-list').datagrid('getSelected');
+				var _edit_row = $('#donateDetail_table_list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert('警告','请选择要编辑的行');  
 					return false;
@@ -224,11 +150,7 @@ $(function(){
 				}
 			}
 	};
-	$("#search-btn").click(function(){
-	  var _queryParams = $("#donateRecord-search-form").serializeJSON();
-	  $('#donateRecord-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#donateRecord-table-list").datagrid('reload');
-	})
+
 	
 	 
 	 

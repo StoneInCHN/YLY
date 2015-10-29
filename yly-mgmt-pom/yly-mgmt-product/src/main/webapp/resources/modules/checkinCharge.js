@@ -73,9 +73,15 @@ var checkinCharge_manager_tool = {
 										$('#mealTypeVal').html("["+result.chargeItem.configValue+"]");
 										$('#mealTypeVal').attr("data-value",result.chargeItem.configValue);
 										$('#mealPerMonth').html(message("yly.charge.record.perMonth")+result.amountPerMonth);
-										$('#mealPerMonth').attr("data-value",result.amountPerDay);
+										$('#mealPerMonth').attr("data-value",result.amountPerMonth);
 										$('#mealPerDay').html(message("yly.charge.record.perDay")+result.amountPerDay);
-										$('#mealPerDay').attr("data-value",result.amountPerMonthe);
+										$('#mealPerDay').attr("data-value",result.amountPerDay);
+										var mealPerMonth = $('#mealPerMonth').attr("data-value");
+										var mealPerDay = $('#mealPerDay').attr("data-value");
+										var periodMonMeal=$('#periodMonMeal').val();
+										var periodDayMeal=$('#periodDayMeal').val();
+										var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
+										$('#chargein_mealAmount').numberbox('setValue',mealAmount);
 										
 									}
 								});
@@ -194,7 +200,14 @@ $(function(){
 				success:function(result,response,status){
 					$('#bedNursePeriodEndDate').datebox('setValue',result.billDate);
 					console.log(result.periodMonth+"个月"+result.periodDay+"天");
-					
+					var bedPerMonth = $('#bedPerMonth').attr("data-value");
+					var bedPerDay = $('#bedPerDay').attr("data-value");
+					var nurseLevelPerMonth = $('#nurseLevelPerMonth').attr("data-value");
+					var nurseLevelPerDay = $('#nurseLevelPerDay').attr("data-value");
+					var bedAmount = result.periodMonth*bedPerMonth+result.periodDay*bedPerDay;
+					var nurseAmount = result.periodMonth*nurseLevelPerMonth+result.periodDay*nurseLevelPerDay;
+					$('#chargein_bedAmount').numberbox('setValue',bedAmount);
+					$('#chargein_nurseAmount').numberbox('setValue',nurseAmount);
 				}
 			});
 	    }
@@ -209,7 +222,18 @@ $(function(){
 				data:{currentDay:dayStr},
 				success:function(result){
 					$('#mealPeriodEndDate').datebox('setValue',result.billDate);
+					console.log(result.periodMonth+"个月"+result.periodDay+"天");
+					$('#periodMonMeal').val(result.periodMonth);
+					$('#periodDayMeal').val(result.periodDay);
+					
 					$('#mealType').textbox("reset");
+					$('#chargein_mealAmount').textbox("reset");
+					$('#mealTypeVal').html("");
+					$('#mealTypeVal').attr("data-value","");
+					$('#mealPerMonth').html("");
+					$('#mealPerMonth').attr("data-value","");
+					$('#mealPerDay').html("");
+					$('#mealPerDay').attr("data-value","");
 				}
 			});
 	    }
@@ -222,31 +246,70 @@ $(function(){
 			  $("#addCheckinCharge_form input[class*='easyui'][textboxname!=elderlyInfoName]").each(function(){
 				  $(this).textbox('reset');
 			  });
-			 
+			  $("#addCheckinCharge_form span[class*='margin-left'][id!=billDay]").each(function(){
+				  $(this).html("");
+				  $(this).attr("data-value","");
+			  });
+			  			 
 				$.ajax({
 					url:"../billing/getBedNurseConfig.jhtml",
 					type:"post",
 					data:{elderlyInfoID:elderlyInfoID},
 					success:function(result){
-						
+						if(result[0].errMsg!=null){
+							$('#addCheckinCharge_elderlyInfo').textbox('reset');
+							showSuccessMsg(result[0].errMsg);
+							return;
+						}
 					$('#bedType').html("["+result[0].chargeItem.configValue+"]");
 					$('#bedType').attr("data-value",result[0].chargeItem.configValue);
 					$('#bedPerMonth').html(message("yly.charge.record.perMonth")+result[0].amountPerMonth);
-					$('#bedPerMonth').attr("data-value",result[0].amountPerDay);
+					$('#bedPerMonth').attr("data-value",result[0].amountPerMonth);
 					$('#bedPerDay').html(message("yly.charge.record.perDay")+result[0].amountPerDay);
-					$('#bedPerDay').attr("data-value",result[0].amountPerMonthe);
+					$('#bedPerDay').attr("data-value",result[0].amountPerDay);
 					
 					$('#nurseLevel').html("["+result[1].chargeItem.configValue+"]");
 					$('#nurseLevel').attr("data-value",result[1].chargeItem.configValue);
 					$('#nurseLevelPerMonth').html(message("yly.charge.record.perMonth")+result[1].amountPerMonth);
-					$('#nurseLevelPerMonth').attr("data-value",result[1].amountPerDay);
+					$('#nurseLevelPerMonth').attr("data-value",result[1].amountPerMonth);
 					$('#nurseLevelPerDay').html(message("yly.charge.record.perDay")+result[1].amountPerDay);
-					$('#nurseLevelPerDay').attr("data-value",result[1].amountPerMonthe);
+					$('#nurseLevelPerDay').attr("data-value",result[1].amountPerDay);
 						
 					}
 				});
 		  }  
 		});
 	
+	$('#chargein_bedAmount').numberbox({
+		onChange:function(value){
+			calculChargeInAmount();
+		}
+	});
+	
+	$('#chargein_nurseAmount').numberbox({
+		onChange:function(value){
+			calculChargeInAmount();
+		}
+	});
+	
+	$('#chargein_mealAmount').numberbox({
+		onChange:function(value){
+			calculChargeInAmount();
+		}
+	});
+	
+	function calculChargeInAmount(){
+		var bedAmount = $('#chargein_bedAmount').numberbox('getValue');
+		var nurseAmount = $('#chargein_nurseAmount').numberbox('getValue');
+		var mealAmount = $('#chargein_mealAmount').numberbox('getValue');
+		console.log(bedAmount+"-"+nurseAmount+"-"+mealAmount);
+		if(bedAmount == null && nurseAmount == null && mealAmount == null){
+			$('#chargein_totalAmount').numberbox("reset");
+		}else{
+			var totalAmount = Number(bedAmount)+Number(nurseAmount)+Number(mealAmount);
+			$('#chargein_totalAmount').numberbox("setValue",totalAmount);
+		}
+		
+	}
 
 })

@@ -15,7 +15,8 @@
 	    	<tr>
 	    		<th>存放地点（部门）:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" id="department" name="departmentId" value ="${fixedAssets.department.name}"/>   
+	    			 <input class="easyui-combobox" id="department" name="departmentId" value ="${fixedAssets.department.name}"/>
+	    			 
 	    		</td>
 	    	
 	    		<th>数量:</th>
@@ -30,27 +31,14 @@
 	    		</td>
 	    	
 	    		<th>使用状态:</th>
-	    		<!--<td>
-	    			<input class="easyui-combobox" data-options="
-				     valueField: 'label',
-				     textField: 'value',
-				     data: [{
-				      label: 'INSERVICE',
-				      value: '使用中'
-				     },{
-				      label: 'OUTSERVICE',
-				      value: '未使用'
-				     },{
-				      label: 'NONEED',
-				      value: '不需用'
-				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetUsage" style="width:110px;"/>
-	    		</td>-->
 	    		<td>
-    			  	<select id="assetUsage" class="easyui-combobox" name="assetUsage" disabled="disabled" style="width:120px;">   
-						<option value="${fixedAssets.assetUsage}" selected="selected">${fixedAssets.assetUsage}</option>
-				    </select>
+				     <select id="assetUsage" class="easyui-combobox" name="dosageUnit" style="width:80px;">   
+						<option value="INSERVICE" [#if fixedAssets.assetUsage == 'INSERVICE'] selected = "selected"[/#if]>使用中</option>
+						<option value="OUTSERVICE" [#if fixedAssets.assetUsage == 'OUTSERVICE'] selected = "selected"[/#if]>未使用</option>
+						<option value="NONEED" [#if fixedAssets.assetUsage == 'NONEED'] selected = "selected"[/#if]>不需用</option> 
+				  	</select>   
 	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
 	    		<th>规格型号:</th>
@@ -81,32 +69,14 @@
 	    		</td>
 	    	
 	    		<th>资产类型:</th>
-	    		<!--<td>
-	    			 <input class="easyui-combobox" data-options="
-				     valueField: 'label',
-				     textField: 'value',
-				     data: [{
-				      label: 'BUILDING',
-				      value: '房屋建筑物'
-				     },{
-				      label: 'PRODUCTION',
-				      value: '生产经营'
-				     },{
-				      label: 'VEHICLE',
-				      value: '交通工具'
-				     },{
-				      label: 'ELECTRONIC',
-				      value: '电子设备'
-				     },{
-				      label: 'other',
-				      value: '其他'
-				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetType" style="width:110px;"/>
-	    		</td>-->
 	    		<td>
-    			  	<select id="assetsType" class="easyui-combobox" name="assetUsage" disabled="disabled" style="width:120px;">   
-						<option value="${fixedAssets.assetsType}" selected="selected">${fixedAssets.assetsType}</option>
-				    </select>
+				      <select id="assetsType" class="easyui-combobox" name="dosageUnit" style="width:100px;">   
+						<option value="BUILDING" [#if fixedAssets.assetsType == 'BUILDING'] selected = "selected"[/#if]>房屋建筑物</option>
+						<option value="PRODUCTION" [#if fixedAssets.assetsType == 'PRODUCTION'] selected = "selected"[/#if]>生产经营</option>
+						<option value="VEHICLE" [#if fixedAssets.assetsType == 'VEHICLE'] selected = "selected"[/#if]>交通工具</option> 
+						<option value="ELECTRONIC" [#if fixedAssets.assetsType == 'ELECTRONIC'] selected = "selected"[/#if]>电子设备</option>
+						<option value="OTHERS" [#if fixedAssets.assetsType == 'OTHERS'] selected = "selected"[/#if]>其他</option>
+				  	</select> 
 	    		</td>
 	    	</tr>
 	    	<tr>
