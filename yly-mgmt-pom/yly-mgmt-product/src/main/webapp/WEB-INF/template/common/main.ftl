@@ -114,7 +114,7 @@
 		    		<li><a href="#">用户管理</a></li>
 		    		<li><a href="#">权限角色管理</a></li>
 		    		<li><a href="#">数据字典</a></li>
-		    		<li><a href="#">系统日志</a></li>
+		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		<li><a href="#" data-url="${base}/console/bedChargeConfig/bedChargeConfig.jhtml">${message("yly.charge.bed")}</a></li>
