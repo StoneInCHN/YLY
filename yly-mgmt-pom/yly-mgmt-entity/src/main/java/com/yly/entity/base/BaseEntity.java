@@ -11,15 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.groups.Default;
 
-import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yly.lucene.DateBridgeImpl;
 
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE,
@@ -91,7 +91,7 @@ public class BaseEntity implements Serializable {
   @JsonProperty
   @Column(nullable = false, updatable = false)
   @Field(index = Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getCreateDate() {
     return createDate;
   }
