@@ -2,6 +2,7 @@ package com.yly.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,8 @@ import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.TreeNodeState;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
+import com.yly.framework.ordering.Ordering;
+import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.response.TreeNodeResponse;
@@ -243,5 +246,26 @@ public class RoomController extends BaseController {
     return "changeRoom/changeRoom";
   }
 
+  @RequestMapping(value = "/bedImgShow", method = RequestMethod.GET)
+  public String bedImgShow(Long roomId ,Long buildingId ,ModelMap model){
+    List<Building> buildings = new ArrayList<Building>();
+    if (buildingId !=null) {
+      Building building = buildingService.find(buildingId);
+      buildings.add(building);
+    }
+    else if(roomId !=null){
+      Room room = roomService.find(roomId);
+      Set<Room> rooms = new HashSet<Room>();
+      rooms.add(room);
+      Building building = room.getBuilding();
+      building.setRooms(rooms);
+      buildings.add(building);
+    }else{
+      buildings = buildingService.findAll(true);
+    }
+    model.addAttribute("buildings", buildings);
+    
+    return "changeRoom/bedImgShow";
+  }
 
 }

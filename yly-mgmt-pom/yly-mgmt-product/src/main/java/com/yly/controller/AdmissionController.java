@@ -215,7 +215,7 @@ public class AdmissionController extends BaseController {
      */
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
 
-    elderlyInfoService.update(elderlyInfo);
+    elderlyInfoService.update(elderlyInfo,"profilePhoto");
     return SUCCESS_MESSAGE;
   }
 

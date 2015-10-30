@@ -41,7 +41,7 @@ $(function() {
 		  fit:true,
 		  border:false,
 		  title: '床位图展示',
-		  href:'../bed/bedImgShow.jhtml',
+		  href:'../room/bedImgShow.jhtml',
 		  loadingMessage:message("yly.common.loading"),
 		  onLoad:function(){    
 			  $('.wminimize').click(
