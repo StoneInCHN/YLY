@@ -39,7 +39,7 @@ $(function(){
 		onClickRow : function (rowIndex, rowData){
 			recordId =rowData.id;
 			$("#donateDetail_manager_tool").show();
-			$("#donateDetail_table_list").datagrid({
+			$("#donateDetail-table-list").datagrid({
 				fitColumns:true,
 				pagination:true,
 				loadMsg:message("yly.common.loading"),
@@ -163,7 +163,7 @@ $(function(){
 												showType:'slide'
 											});
 											$('#editDonateRecord').dialog("close");
-											$("#donateRecord_table-list").datagrid('reload');
+											$("#donateRecord-table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}

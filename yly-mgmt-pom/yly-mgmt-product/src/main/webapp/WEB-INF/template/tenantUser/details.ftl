@@ -70,12 +70,12 @@
 	    	<tr>
 	    		<th>所在部门:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" disabled="disabled" id="tenantUserDepartment" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.department.name}"/>   
+	    			 <input class="easyui-combobox" disabled="disabled" id="tenantUserDepartment-detail" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.department.name}"/>   
 	    		</td>
 	    	
 	    		<th>担任职务:</th>
 	    		<td>
-	    			 <input class="easyui-combobox"  disabled="disabled" type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.position.name}"/>
+	    			 <input class="easyui-combobox"  disabled="disabled" type="text" id="tenantUserPosition-detail" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.position.name}"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

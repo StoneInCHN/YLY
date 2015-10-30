@@ -50,7 +50,7 @@
 	    	<tr>
 	    		<th>存放地点（部门）:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" id="department" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
+	    			 <input class="easyui-combobox" id="assetsDepartment-add" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
 	    		</td>
 	    	
 	    		<th>数量:</th>

@@ -15,7 +15,7 @@
 	    	<tr>
 	    		<th>存放地点（部门）:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" id="department" name="departmentId" value ="${fixedAssets.department.name}"/>   
+	    			 <input class="easyui-combobox" id="assetsDepartment-detail" name="departmentId" value ="${fixedAssets.department.name}"/>   
 	    		</td>
 	    	
 	    		<th>数量:</th>

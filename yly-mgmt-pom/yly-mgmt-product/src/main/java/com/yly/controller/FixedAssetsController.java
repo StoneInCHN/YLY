@@ -146,8 +146,10 @@ public class FixedAssetsController extends BaseController
   }
 
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (FixedAssets fixedAssets)
+  public @ResponseBody Message update (FixedAssets fixedAssets,Long departmentId)
   {
+    Department department =departmentService.find (departmentId);
+    fixedAssets.setDepartment (department);
     fixedAssetsService.update (fixedAssets);
     return SUCCESS_MESSAGE;
   }

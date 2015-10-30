@@ -83,7 +83,7 @@ $(function(){
 										if(response == "success"){
 											showSuccessMsg(result.content);
 											$('#addDrugs').dialog("close").form("reset");
-											$("#drug_table-list").datagrid('reload');
+											$("#drugs-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -179,7 +179,7 @@ $(function(){
 												showType:'slide'
 											});
 											$('#editDrugs').dialog("close");
-											$("#drugs_table-list").datagrid('reload');
+											$("#drugs-table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}

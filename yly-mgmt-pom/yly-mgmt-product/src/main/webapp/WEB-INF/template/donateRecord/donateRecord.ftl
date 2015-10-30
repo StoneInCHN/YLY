@@ -93,7 +93,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
 	</div>
 	<div class="tool-filter"></div>
-	<table id="donateDetail_table_list"></table>
+	<table id="donateDetail-table-list"></table>
 </div>
 
 <div id="donateDetail"></div>

@@ -31,7 +31,7 @@ $(function(){
 										if(response == "success"){
 											showSuccessMsg(result.content);
 											$('#addDonateDetail').dialog("close").form("reset");
-											$("#donateDetail_table_list").datagrid('reload');
+											$("#donateDetail-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -61,7 +61,7 @@ $(function(){
 				 
 			},
 			edit:function(){
-				var _edit_row = $('#donateDetail_table_list').datagrid('getSelected');
+				var _edit_row = $('#donateDetail-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert('警告','请选择要编辑的行');  
 					return false;

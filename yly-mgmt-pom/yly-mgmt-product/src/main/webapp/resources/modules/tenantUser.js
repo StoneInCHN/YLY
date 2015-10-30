@@ -124,14 +124,14 @@ $(function(){
 				    }],
 				    onOpen:function(){
 				    	$('#addTenantUser_form').show();
-				    	$("#tenantUserDepartment").combobox({    
+				    	$("#tenantUserDepartment-add").combobox({    
 						    valueField:'id',    
 						    textField:'name',
 						    cache: true,
 						    editable : false,
 						    url:'../department/findAllDepartments.jhtml'
 						});
-				    	$("#tenantUserPosition").combobox({    
+				    	$("#tenantUserPosition-add").combobox({    
 						    valueField:'id',    
 						    textField:'name',
 						    cache: true,
@@ -280,18 +280,24 @@ $(function(){
 						}
 				    }],
 				    onLoad:function(){
-				    	$("#tenantUserDepartment").combobox({    
+				    	$("#tenantUserDepartment-edit").combobox({    
 						    valueField:'id',    
 						    textField:'name',
 						    cache: true,
-						    url:'../department/findAllDepartments.jhtml'
+						    url:'../department/findAllDepartments.jhtml',
+						    	onLoadSuccess:function(){
+							    	$("#tenantUserDepartment-edit").combobox("setValue",$("#tenantUserDepartment-edit").attr("data-value"))
+							    }
 						});
-				    	$("#tenantUserPosition").combobox({    
+				    	$("#tenantUserPosition-edit").combobox({    
 						    valueField:'id',    
 						    textField:'name',
 						    cache: true,
 						    editable : false,
-						    url:'../position/findAllPositions.jhtml'
+						    url:'../position/findAllPositions.jhtml',
+						    onLoadSuccess:function(){
+						    	$("#tenantUserPosition-edit").combobox("setValue",$("#tenantUserPosition-edit").attr("data-value"))
+						    }
 						});
 				    	var editOptions ={
 				     			createOption:{
@@ -347,7 +353,6 @@ $(function(){
 				     			},
 				     			uploadBeforeSend:function(object, data, headers){
 				     				 //
-				     				alert("test");
 				     				 data.staffID =$("#editTenantUser_form").find("input[name='staffID']").val();
 				     				 data.tenantUserId=$("#editTenantUser_form").find("input[name='id']").val();;
 				     			}
@@ -356,8 +361,8 @@ $(function(){
 				     	singleUpload(editOptions);
 				     	$("#editTenantUser_form").find(".savePhoto").on("click",function(){
 				     		$.messager.confirm('确认','头像保存后将直接修改当前用户的头像，确认要上传吗？',function(res){    
-				     		    if (res){    
-				     		    	$("#tenantUserUploader-edit .uploadBtn").trigger("upload");   
+				     		    if (res){
+				     		    	$("#tenantUserUploader-edit .uploadBtn").trigger("upload");
 				     		    }    
 				     		}); 
 				     		//alert("保存头像");

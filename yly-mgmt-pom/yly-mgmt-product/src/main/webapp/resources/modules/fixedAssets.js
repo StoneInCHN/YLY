@@ -87,7 +87,7 @@ $(function(){
 										if(response == "success"){
 											showSuccessMsg(result.content);
 											$('#addFixedAssets').dialog("close").form("reset");
-											$("#fixedAssets_table-list").datagrid('reload');
+											$("#fixedAssets-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -104,7 +104,7 @@ $(function(){
 				    }],
 				    onOpen:function(){
 				    	$('#addFixedAssets_form').show();
-				    	$("#department").combobox({    
+				    	$("#assetsDepartment-add").combobox({    
 						    valueField:'id',    
 						    textField:'name',
 						    cache: true,
@@ -153,7 +153,7 @@ $(function(){
 												showType:'slide'
 											});
 											$('#editFixedAssets').dialog("close");
-											$("#fixedAssets_table-list").datagrid('reload');
+											$("#fixedAssets-table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}
@@ -167,13 +167,16 @@ $(function(){
 						handler:function(){
 							 $('#editFixedAssets').dialog("close").form("reset");
 						}
-				    }],onOpen:function(){
+				    }],onLoad:function(){
 				    	$('#editFixedAssets_form').show();
-				    	$("#department").combobox({    
+				    	$("#assetsDepartment-edit").combobox({    
 						    valueField:'id',    
 						    textField:'name',
 						    cache: true,
-						    url:'../department/findAllDepartments.jhtml'
+						    url:'../department/findAllDepartments.jhtml',
+						    	onLoadSuccess:function(){
+							    	$("#assetsDepartment-edit").combobox("setValue",$("#assetsDepartment-edit").attr("data-value"))
+							    }
 						});
 				    },
 				});

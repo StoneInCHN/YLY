@@ -1,6 +1,5 @@
 <form id="editTenantUser_form" method="post">   
 	<input type="hidden" name="id" value= "${tenantUser.id}">
-		<input type="hidden" id="editTenantUser_form_file_input" name="photo"> 
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>姓名 :</th>
@@ -17,7 +16,7 @@
 						        </div>
 						        <div class="show-img">
 						        	<p class="imgWrap img-thumbnail">
-										     <img src="${tenantUser.photo}" style ="width:110px;hight:110 px">
+										    <img id ="tenantUserPhoto-edit" src="${tenantUser.photo}" style ="width:110px;hight:110 px">
 									 </p>
 						        </div>
 						    </div>
@@ -86,12 +85,12 @@
 	    	<tr>
 	    		<th>所在部门:</th>
 	    		<td>
-	    			 <input class="easyui-combobox"  id="tenantUserDepartment" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.department.id}">${tenantUser.department.name}</input>   
+	    			 <input class="easyui-combobox"  id="tenantUserDepartment-edit" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" data-value="${tenantUser.department.id}"/>   
 	    		</td>
 	    	
 	    		<th>担任职务:</th>
 	    		<td>
-	    			 <input class="easyui-combobox"   type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.position.id}">${tenantUser.position.name}</input>
+	    			 <input class="easyui-combobox"   type="text" id="tenantUserPosition-edit" name="positionId" data-options="prompt:'${message("yly.common.please.select")}'" data-value="${tenantUser.position.id}"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

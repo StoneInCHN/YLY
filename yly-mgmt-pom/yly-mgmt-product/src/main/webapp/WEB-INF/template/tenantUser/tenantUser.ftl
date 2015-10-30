@@ -132,12 +132,12 @@
 	    	<tr>
 	    		<th>所在部门:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" id="tenantUserDepartment" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
+	    			 <input class="easyui-combobox" id="tenantUserDepartment-add" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
 	    		</td>
 	    	
 	    		<th>担任职务:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" />
+	    			 <input class="easyui-combobox" type="text" id="tenantUserPosition-add" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" />
 	    		</td>
 	    	</tr>
 	    	<tr>
