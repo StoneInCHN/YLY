@@ -13,6 +13,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.Bed;
 import com.yly.entity.Building;
 import com.yly.entity.Room;
+import com.yly.entity.commonenum.CommonEnum.UsageState;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.BedService;
@@ -78,6 +79,7 @@ public class BedController extends BaseController {
     }
     if (bed != null && room!=null) {
       bed.setRoom(room);
+      bed.setUsageState(UsageState.UNAPPROPRIATED);
       bedService.save(bed, true);
       return SUCCESS_MESSAGE;
     } else {
@@ -118,5 +120,10 @@ public class BedController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
-
+  
+  @RequestMapping(value = "/bedImgShow", method = RequestMethod.GET)
+  public String bedImgShow(){
+    return "changeRoom/bedImgShow";
+  }
+  
 }

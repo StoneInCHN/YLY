@@ -1060,6 +1060,24 @@ public class CommonEnum {
     DISABLE
 
   }
+  
+  /**
+   * 床位使用状态
+   * @author tanbiao
+   *  
+   */
+  public enum UsageState{
+    
+    /**
+     * 未被占用
+     */
+    UNAPPROPRIATED,
+    /**
+     *已占用 
+     */
+    OCCUPIED
+  }
+  
 
   /**
    * 信息渠道

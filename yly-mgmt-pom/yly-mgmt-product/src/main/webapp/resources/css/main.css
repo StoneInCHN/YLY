@@ -223,3 +223,47 @@
 	margin-button:5px;
 }
 
+/**
+*床位图样式
+*/
+.panel-group .panel {
+	margin-bottom: 20px !important;
+}
+
+ul.room-item {
+	list-style-type: none;
+}
+
+ul.room-item>li {
+	float: left;
+	height: 150px;
+	border: 1px solid #D4D4D4;
+	margin: 10px;
+	border-radius: 4px;
+}
+
+ul.room-item>li>h4, ul.room-item>li>div>h7 {
+	text-align: center;
+}
+
+ul.room-item>li>div {
+	width: 68px;
+	display: inline-block;
+	margin: 0 10px;
+	padding: 10px 10px 2px 10px;
+}
+
+ul.room-item>li>div:hover {
+	border: 2px dashed #D4D4D4;
+	border-radius: 4px;
+	padding: 8px 8px 0 8px;
+}
+
+ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
+	text-decoration: none;
+	color: #333;
+}
+
+.wminimize {
+	cursor: pointer
+}

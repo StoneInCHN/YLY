@@ -21,6 +21,13 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
+	    		<th>${message("yly.bed.usageState")}:</th>
+	    		<td>
+	    			 <input type="radio" name="usageState" value="UNAPPROPRIATED" [#if bed.status == "UNAPPROPRIATED"]checked = "checked"[/#if]><span>${message("yly.common.unappropriated")}</span>
+       				 <input type="radio" name="usageState" value="OCCUPIED" [#if bed.status == "OCCUPIED"]checked = "checked"[/#if]><span>${message("yly.common.occupied")}</span>
+	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.bed.description")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" value="${bed.description}" name="description" validtype="length[0,100]" data-options="required:true,multiline:true,height:100,width:200" /> 

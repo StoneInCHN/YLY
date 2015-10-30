@@ -173,11 +173,20 @@ $(function(){
 		      	}
 		      },
 		      {title:message("yly.bed.status"),field:"status",width:50,sortable:true,formatter: function(value,row,index){
-		    	  	if(value == "1"){
+		    	  	if(value == "ENABLE"){
 		    	  		return  message("yly.common.enable");
 		    	  	}
-		    	  	if(value == "0"){
+		    	  	if(value == "DISABLE"){
 		    	  		return  message("yly.common.disable");
+		    	  	}
+		      	}
+		      },
+		      {title:message("yly.bed.usageState"),field:"usageState",width:50,sortable:true,formatter: function(value,row,index){
+		    	  	if(value == "UNAPPROPRIATED"){
+		    	  		return  message("yly.common.unappropriated");
+		    	  	}
+		    	  	if(value == "OCCUPIED"){
+		    	  		return  message("yly.common.occupied");
 		    	  	}
 		      	}
 		      },

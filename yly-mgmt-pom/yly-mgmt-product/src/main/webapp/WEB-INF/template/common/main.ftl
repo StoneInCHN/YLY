@@ -96,7 +96,7 @@
 		    		<li><a href="#" data-url="${base}/console/building/building.jhtml">${message("yly.residential.building")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/room/room.jhtml">${message("yly.residential.room")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bed/bed.jhtml">${message("yly.residential.bed")}</a></li>
-		    		<li><a href="#">${message("yly.residential.changeRoom")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/room/changeRoom.jhtml">${message("yly.residential.changeRoom")}</a></li>
 		    	</ul>
 		    	 <ul title="健康管理" id="health">
 		    		<li><a href="#">病历档案</a></li>
@@ -175,7 +175,7 @@
 	<script type="text/javascript" src="${base}/resources/js/dropdown.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
-	<script src="${base}/resources/js/webuploader.min.js"></script>
+	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
 	<script>

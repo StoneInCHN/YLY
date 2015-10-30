@@ -13,6 +13,7 @@ import org.hibernate.annotations.Index;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BedStatus;
+import com.yly.entity.commonenum.CommonEnum.UsageState;
 
 /**
  * 
@@ -47,6 +48,11 @@ public class Bed extends BaseEntity{
    * 床位状态
    */
   private BedStatus status;
+  
+  /**
+   * 床位使用状态
+   */
+  private  UsageState  usageState;
   
   /**
    * 描述
@@ -118,5 +124,15 @@ public class Bed extends BaseEntity{
    public void setTenantID(Long tenantID) {
       this.tenantID = tenantID;
    }
+
+   @JsonProperty
+   @Column(length=4)
+  public UsageState getUsageState() {
+    return usageState;
+  }
+
+  public void setUsageState(UsageState usageState) {
+    this.usageState = usageState;
+  }
    
 }
