@@ -11,13 +11,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-
-
-
-
-
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.Bed;
@@ -39,6 +38,7 @@ import com.yly.entity.commonenum.CommonEnum.RoomStatus;
 @Entity
 @Table(name = "yly_room")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_room_sequence")
+@Indexed(index="room")
 public class Room extends BaseEntity {
 
   /**
@@ -110,6 +110,7 @@ public class Room extends BaseEntity {
 
   @JsonProperty
   @Column(length = 20)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getRoomName() {
     return roomName;
   }
@@ -120,6 +121,7 @@ public class Room extends BaseEntity {
 
   @JsonProperty
   @Column(length = 20)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getRoomNumber() {
     return roomNumber;
   }
@@ -168,7 +170,6 @@ public class Room extends BaseEntity {
     this.description = description;
   }
 
-  @JsonProperty
   @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
   public Set<Bed> getBeds() {
     return beds;
