@@ -12,11 +12,19 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 import com.yly.entity.commonenum.CommonEnum.StaffStatus;
+import com.yly.lucene.DateBridgeImpl;
 
 /**
  * 租户用户
@@ -27,6 +35,7 @@ import com.yly.entity.commonenum.CommonEnum.StaffStatus;
 @Entity
 @Table(name = "yly_tenant_user")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_tenant_user_sequence")
+@Indexed(index= "tenantUser")
 public class TenantUser extends BaseEntity {
 
   private static final long serialVersionUID = -665961639617388534L;
@@ -169,6 +178,7 @@ public class TenantUser extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public StaffStatus getStaffStatus() {
     return staffStatus;
   }
@@ -223,6 +233,7 @@ public class TenantUser extends BaseEntity {
 
   @ManyToOne
   @JsonProperty
+  @IndexedEmbedded
   public Department getDepartment() {
     return department;
   }
@@ -233,6 +244,7 @@ public class TenantUser extends BaseEntity {
 
   @ManyToOne
   @JsonProperty
+  @IndexedEmbedded
   public Position getPosition() {
     return position;
   }
@@ -242,6 +254,8 @@ public class TenantUser extends BaseEntity {
   }
 
   @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getHireDate() {
     return hireDate;
   }
@@ -261,6 +275,7 @@ public class TenantUser extends BaseEntity {
 
   @Column(length=20)
   @JsonProperty
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getRealName() {
     return realName;
   }
