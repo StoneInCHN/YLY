@@ -11,10 +11,19 @@
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('elderlyNameForAlbumEdit')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    		<td rowspan="3">
-					<div style="width:170;height:140;margin:15px;padding:15px;background:#D2D2D2"><div style="width:150;height:120;padding:5px;background:#ffffff;text-align:center">
-					<img src="${elderlyPhotoAlbum.albumCover}" width="150" height="120"/>
-					</div></div>
-				</td>
+	    		    <div title="设置相册封面" class="easyui-tooltip headWarp">
+	    				<div id="albumUploader-add" class="single-uploader">
+						    <div class="queueList">
+						        <div class="placeholder">
+						        	<div id="albumFilePicker-add"></div>
+						        </div>
+						    </div>
+						    <div class="btns">
+						        <div class="uploadBtn state-pedding"></div>
+						    </div>
+						</div>
+				    </div>
+	    		</td>
 	    	    </tr>
 	    	<tr>
 	    		<th>相册名称:</th>

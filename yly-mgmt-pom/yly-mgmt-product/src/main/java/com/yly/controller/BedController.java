@@ -121,9 +121,5 @@ public class BedController extends BaseController {
     return SUCCESS_MESSAGE;
   }
   
-  @RequestMapping(value = "/bedImgShow", method = RequestMethod.GET)
-  public String bedImgShow(){
-    return "changeRoom/bedImgShow";
-  }
   
 }

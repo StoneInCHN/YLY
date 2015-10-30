@@ -168,6 +168,7 @@ public class Room extends BaseEntity {
     this.description = description;
   }
 
+  @JsonProperty
   @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
   public Set<Bed> getBeds() {
     return beds;

@@ -23,5 +23,21 @@
 	    	</tr>	  		    	
 	    </table>	
 	    </fieldset>
-	    	
+	    		<div id="uploader_Photos" class="wu-example">
+		    <div class="queueList">
+		        <div id="dndArea" class="placeholder" style="background:#F0F0F0">
+		            <div id="filePicker"></div>
+		            <p>或将照片拖到这里，单次最多可选300张</p>
+		        </div>
+		    </div>
+		    <div class="statusBar" style="display:none;">
+		        <div class="progress">
+		            <span class="text">0%</span>
+		            <span class="percentage"></span>
+		        </div><div class="info"></div>
+		        <div class="btns">
+		            <div id="filePicker2"></div><div class="uploadBtn"></div>
+		        </div>
+		    </div>
+		</div>	
 	</form>

@@ -200,7 +200,7 @@ public class ElderlyPhotoAlbumController extends BaseController {
     String[] photos = null;
     if (StringUtils.isNotBlank(photoList)) {
       photos = photoList.split(",");
-      elderlyPhotoAlbum.setAlbumCover(photos[0]);// 设置封面 默认第一张
+      //elderlyPhotoAlbum.setAlbumCover(photos[0]);// 设置封面 默认第一张
     }
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (elderlyInfo != null && elderlyPhotoAlbum != null) {
@@ -247,8 +247,7 @@ public class ElderlyPhotoAlbumController extends BaseController {
             //删除照片(数据库)
             elderlyPhotoesService.delete(new Long(deletePhotoID[i]));
             //删除应用服务器上的照片(disk)
-            String relativepath =  elderlyPhotoes.getUrl().substring(elderlyPhotoes.getUrl().indexOf("/upload"),
-                    elderlyPhotoes.getUrl().lastIndexOf("/"));
+            String relativepath =  elderlyPhotoes.getUrl().substring(elderlyPhotoes.getUrl().indexOf("/upload"));
             try {
               fileService.deletefile(fileService.getRealPath(relativepath));
             } catch (Exception e) {

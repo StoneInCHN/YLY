@@ -14,7 +14,7 @@ var photoAlbum_manager_tool = {
 				    	iconCls:'icon-save',
 						handler:function(){
 							$('#showPhotoAlbum').dialog("close");
-							photoAlbum_manager_tool.edit();
+							photoAlbum_manager_tool.edit(photoAlbumID);
 						}
 					},{
 						text:message("yly.common.close"),
@@ -68,7 +68,7 @@ var photoAlbum_manager_tool = {
 						handler:function(){
 							var validate = $('#addElderlyPhotoAlbum_form').form('validate');
 							if(validate){	
-								$("#albumUploader-add .uploadBtn").trigger("upload");//封面
+								//$("#albumUploader-add .uploadBtn").trigger("upload");//封面
 								$("#uploader .uploadBtn").trigger("upload");//照片集
 							};
 						}
@@ -81,92 +81,6 @@ var photoAlbum_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#addElderlyPhotoAlbum_form').show();
-				    	//照片上传
-				     	var options ={
-				     			createOption:{
-				     				pick: {
-						                 id: '#albumFilePicker-add',
-						                 label: '',
-						                 multiple :false
-						             },
-						             dnd: '#albumUploader-add .queueList',
-						             accept: {
-						                 title: 'Images',
-						                 extensions: 'gif,jpg,jpeg,bmp,png',
-						                 mimeTypes: 'image/*'
-						             },
-						             //缩略图
-						             thumb:{
-						            	    width: 110,
-						            	    height: 110,
-						            	    quality: 90,
-						            	    allowMagnify: false,
-						            	    crop: false,
-						            	    type: 'image/jpeg'
-						              },
-						             // swf文件路径
-						             swf: BASE_URL + '/js/Uploader.swf',
-						             disableGlobalDnd: true,
-						             server: '../elderlyPhotoAlbum/uploadAlbum.jhtml',
-						             fileNumLimit: 1,
-						             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
-						             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
-						             //图片裁剪
-						             compress:{
-						            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
-						            	 quality: 90,
-						            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
-						            	 allowMagnify: false,
-						            	 // 是否允许裁剪。
-						            	 crop: false,
-						            	 // 是否保留头部meta信息。
-						            	 preserveHeaders: true,
-						            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
-						            	 // 此属性可能会影响图片自动纠正功能
-						            	 noCompressIfLarger: false,
-						            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
-						            	 compressSize: 0
-						             }
-				     			},
-				     			//包裹上传组件的div id
-				     			//warp :"addElderlyPhotoAlbum_form",
-				     			warp :"albumUploader-add",
-				     			uploadBeforeSend:function(object, data, headers){
-				     				 //在参数中增加一个老人编号字段 identifier
-				     				 data.identifier = $("#identifier").val();
-				     				 data.albumName = $("#albumName").val();
-				     			},
-				     			uploadSuccess:function(file, response){
-				     				//将返回的图片路径放到隐藏的input中，用于表单保存
-				     				$("#addAlbum_form_file_input").val(response.content);
-				     				//albumCover
-				     				alert($("#addAlbum_form_file_input").val());
-				     				$.ajax({
-										url:"../elderlyPhotoAlbum/add.jhtml",
-										type:"post",
-										data:$("#addElderlyPhotoAlbum_form").serialize(),
-										beforeSend:function(){
-											$.messager.progress({
-												text:message("yly.common.saving")
-											});
-										},
-										success:function(result,response,status){
-											$.messager.progress('close');
-											showSuccessMsg(result.content);
-											$('#addElderlyPhotoAlbum_form').form('reset');
-											$('#addElderlyPhotoAlbum').dialog("close");
-											
-										},
-										error:function (XMLHttpRequest, textStatus, errorThrown) {
-											$.messager.progress('close');
-											alertErrorMsg();
-										}
-									});
-				     			}
-				     	};
-				     	
-				     	singleUpload(options);
-				     	
 				    	var options1 = {	
 				    			createOption:{
 				    			
@@ -273,8 +187,68 @@ var photoAlbum_manager_tool = {
 						handler:function(){
 							 $('#editElderlyPhotoAlbum').dialog("close");
 						}
-				    }]
+				    }],
+				    onOpen:function(){
+				    	//封面上传
+				     	var options ={
+				     			createOption:{
+				     				pick: {
+						                 id: '#albumFilePicker-add',
+						                 label: '',
+						                 multiple :false
+						             },
+						             dnd: '#albumUploader-add .queueList',
+						             accept: {
+						                 title: 'Images',
+						                 extensions: 'gif,jpg,jpeg,bmp,png',
+						                 mimeTypes: 'image/*'
+						             },
+						             //缩略图
+						             thumb:{
+						            	    width: 110,
+						            	    height: 110,
+						            	    quality: 90,
+						            	    allowMagnify: false,
+						            	    crop: false,
+						            	    type: 'image/jpeg'
+						              },
+						             // swf文件路径
+						             swf: BASE_URL + '/js/Uploader.swf',
+						             disableGlobalDnd: true,
+						             server: '../elderlyPhotoAlbum/uploadAlbum.jhtml',
+						             fileNumLimit: 1,
+						             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+						             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
+						             //图片裁剪
+						             compress:{
+						            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
+						            	 quality: 90,
+						            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+						            	 allowMagnify: false,
+						            	 // 是否允许裁剪。
+						            	 crop: false,
+						            	 // 是否保留头部meta信息。
+						            	 preserveHeaders: true,
+						            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
+						            	 // 此属性可能会影响图片自动纠正功能
+						            	 noCompressIfLarger: false,
+						            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
+						            	 compressSize: 0
+						             }
+				     			},
+				     			//包裹上传组件的div id
+				     			//warp :"addElderlyPhotoAlbum_form",
+				     			warp :"albumUploader-add",
+				     			uploadBeforeSend:function(object, data, headers){
+				     				 //在参数中增加一个老人编号字段 identifier
+
+				     			},
+				     			uploadSuccess:function(file, response){}
+				     	};
+				     	//singleUpload(options);
+				    }
 				});
+				//$('#editAlbumPhoto_form').show();
 		    
 		    },
 		    uploadPhotos:function(){
