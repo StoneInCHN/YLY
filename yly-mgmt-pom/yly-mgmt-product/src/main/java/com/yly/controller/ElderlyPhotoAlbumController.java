@@ -176,7 +176,7 @@ public class ElderlyPhotoAlbumController extends BaseController {
    */
   @RequestMapping(value = "/uploadAlbum", method = RequestMethod.POST)
   public @ResponseBody Message uploadAlbum(@RequestParam("file") MultipartFile file,
-      String identifier, String albumName) {
+      String identifier, String albumName,String imgID) {
     Map<String, String> paramMap = new HashMap<String, String>();
     paramMap.put("identifier", identifier);
     paramMap.put("albumName", albumName);
@@ -187,7 +187,53 @@ public class ElderlyPhotoAlbumController extends BaseController {
       return ERROR_MESSAGE;
     }
   }
-
+  /**
+   * 上传封面
+   * 
+   * @param file
+   * @param identifier
+   * @return
+   */
+  @RequestMapping(value = "/setAlbumCover", method = RequestMethod.POST)
+  public @ResponseBody Message setAlbumCover(@RequestParam("file") MultipartFile file,Long coverID) {
+    Map<String, String> paramMap = new HashMap<String, String>();
+    if (coverID!=null) {
+      ElderlyPhotoAlbum elderlyPhotoAlbum = elderlyPhotoAlbumService.find(coverID);
+      if (elderlyPhotoAlbum != null && elderlyPhotoAlbum.getElderlyInfo() != null) {
+        paramMap.put("identifier", elderlyPhotoAlbum.getElderlyInfo().getIdentifier());
+        paramMap.put("albumName", elderlyPhotoAlbum.getName());
+      }
+    }
+    String filePath = fileService.upload(FileType.ALBUM, file, paramMap);
+    if (filePath != null) {
+      return Message.success(filePath);
+    } else {
+      return ERROR_MESSAGE;
+    }
+  }
+  /**
+   * 保存封面
+   * 
+   * @param file
+   * @param identifier
+   * @return
+   */
+  @RequestMapping(value = "/saveAlbumCover", method = RequestMethod.POST)
+  public @ResponseBody Message saveAlbumCover(String coverUrl,Long coverID) {
+    if (coverUrl != null && coverID != null) {
+      ElderlyPhotoAlbum elderlyPhotoAlbum = elderlyPhotoAlbumService.find(coverID);
+      //改封面照片
+      elderlyPhotoAlbum.setAlbumCover(coverUrl);
+      //保存封面照片
+      ElderlyPhotoes elderlyPhotoes = new ElderlyPhotoes();
+      elderlyPhotoes.setUrl(coverUrl);
+      elderlyPhotoes.setElderlyPhotoAlbum(elderlyPhotoAlbum);     
+      elderlyPhotoes.setName(coverUrl.substring(coverUrl.lastIndexOf("/") + 1));
+      elderlyPhotoesService.save(elderlyPhotoes);
+      return SUCCESS_MESSAGE;
+    }
+      return ERROR_MESSAGE;      
+  }
   /**
    * 添加
    * 
@@ -234,16 +280,16 @@ public class ElderlyPhotoAlbumController extends BaseController {
   public @ResponseBody Message update(ElderlyPhotoAlbum elderlyPhotoAlbum, Long elderlyInfoID, String deletePhotoIDs) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (elderlyInfo != null) {
-      elderlyPhotoAlbum.setElderlyInfo(elderlyInfo);
-      elderlyPhotoAlbum.setTenantID(tenantAccountService.getCurrentTenantID());
-      //更新相册
-      elderlyPhotoAlbumService.update(elderlyPhotoAlbum, "createDate");
       if (StringUtils.isNotBlank(deletePhotoIDs) && deletePhotoIDs.length() > 0) {
         deletePhotoIDs = deletePhotoIDs.substring(0, deletePhotoIDs.length()-1);//去掉最后的逗号
         String deletePhotoID[] = deletePhotoIDs.split(",");
         for (int i = 0; i < deletePhotoID.length; i++) {
           ElderlyPhotoes elderlyPhotoes = elderlyPhotoesService.find(new Long(deletePhotoID[i]));
           if (elderlyPhotoes != null) {
+            if (StringUtils.equals(elderlyPhotoAlbum.getAlbumCover(), elderlyPhotoes.getUrl())) {//如果删除的照片巧合是封面照片
+                //清空封面
+                elderlyPhotoAlbum.setAlbumCover(null);
+            }
             //删除照片(数据库)
             elderlyPhotoesService.delete(new Long(deletePhotoID[i]));
             //删除应用服务器上的照片(disk)
@@ -256,6 +302,10 @@ public class ElderlyPhotoAlbumController extends BaseController {
           }
         } 
       }
+      //更新相册
+      elderlyPhotoAlbum.setElderlyInfo(elderlyInfo);
+      elderlyPhotoAlbum.setTenantID(tenantAccountService.getCurrentTenantID());      
+      elderlyPhotoAlbumService.update(elderlyPhotoAlbum, "createDate");
       return SUCCESS_MESSAGE;
     }
     return ERROR_MESSAGE;

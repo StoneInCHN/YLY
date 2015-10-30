@@ -3,6 +3,7 @@
 		<input type="hidden" name="elderlyInfoID" value="${elderlyPhotoAlbum.elderlyInfo.id}" id="elderlyNameForAlbumEditID"/>
 		<input type="hidden" value="${elderlyPhotoAlbum.albumCover}"  name="albumCover" />
 		<input type="hidden" id="deletePhotoIDs"  name="deletePhotoIDs" />
+		
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th  style="width:110px;">${message("yly.common.elderly.name")}:</th>
@@ -11,18 +12,21 @@
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('elderlyNameForAlbumEdit')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    		<td rowspan="3">
-	    		    <div title="设置相册封面" class="easyui-tooltip headWarp">
-	    				<div id="albumUploader-add" class="single-uploader">
-						    <div class="queueList">
-						        <div class="placeholder">
-						        	<div id="albumFilePicker-add"></div>
-						        </div>
-						    </div>
-						    <div class="btns">
-						        <div class="uploadBtn state-pedding"></div>
-						    </div>
-						</div>
-				    </div>
+	    		<div style="background:#D2D2D2;margin:5px;padding:5px;text-align:center;">
+	    		<div style="background:#ffffff;margin:5px;padding:5px">
+	    		
+	    		<a href="javascript:void(0);" class="easyui-linkbutton" onclick="setAlbumCover()">
+	    		<span title="重置封面照片">
+	    		[#if elderlyPhotoAlbum.albumCover == null]
+	    		     <img src="${base}/resources/images/album_defaultCover.png" width="150" height="100">
+	    		[#else]
+	    			 <img src="${elderlyPhotoAlbum.albumCover}" width="150" height="100">
+	    		[/#if]
+	    		</span>	
+	    		</a>
+	    		
+	    		</div> 
+	    		</div> 
 	    		</td>
 	    	    </tr>
 	    	<tr>
@@ -55,6 +59,8 @@
 											</div>
 		</div>
 		[/#list]
+		<div class="col-sm-2 col-md-3">
+		</div>
 	    </div>
 </form>
 <script type="text/javascript">

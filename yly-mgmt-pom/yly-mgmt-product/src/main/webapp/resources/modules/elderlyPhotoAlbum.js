@@ -68,7 +68,6 @@ var photoAlbum_manager_tool = {
 						handler:function(){
 							var validate = $('#addElderlyPhotoAlbum_form').form('validate');
 							if(validate){	
-								//$("#albumUploader-add .uploadBtn").trigger("upload");//封面
 								$("#uploader .uploadBtn").trigger("upload");//照片集
 							};
 						}
@@ -172,6 +171,7 @@ var photoAlbum_manager_tool = {
 										showSuccessMsg(result.content);
 										$('#editElderlyPhotoAlbum').dialog("close");
 										loadAlbum();//重新加载相册
+										$.messager.alert('提示','相册编辑成功','info');
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
 										$.messager.progress('close');
@@ -189,6 +189,9 @@ var photoAlbum_manager_tool = {
 						}
 				    }],
 				    onOpen:function(){
+
+				    	$('#coverID').val(photoAlbumID);
+
 				    	//封面上传
 				     	var options ={
 				     			createOption:{
@@ -318,4 +321,118 @@ function showImg(id,url){
 		$("#deletePhotoIDs").val($("#deletePhotoIDs").val().replace(id+",",""));
 	}
 }
+function setAlbumCover(){
+	$('#editElderlyPhotoAlbum').dialog("close");
+	$('#setAlbumCover').dialog({  
+		 title: "设置封面",    
+		    width: 300,    
+		    height: 300,
+		    iconCls:'icon-mini-edit',
+		    modal:true,		    
+		    buttons:[{
+		    	text:message("yly.common.save"),
+		    	iconCls:'icon-save',
+				handler:function(){
+					var validate = $('#setAlbumCover_form').form('validate');
+					if(validate){	
+						$("#albumUploader-add .uploadBtn").trigger("upload");//封面
+					};
+				}
+			},{
+				text:message("yly.common.cancel"),
+				iconCls:'icon-cancel',
+				handler:function(){
+					 $('#setAlbumCover').dialog("close");
+					 photoAlbum_manager_tool.edit($('#coverID').val());
+				}
+		    }],
+		    onOpen:function(){
+		    	$('#setAlbumCover_form').show();
+		    	var options ={
+		     			createOption:{
+		     				pick: {
+				                 id: '#albumFilePicker-add',
+				                 label: '',
+				                 multiple :false
+				             },
+				             dnd: '#albumUploader-add .queueList',
+				             accept: {
+				                 title: 'Images',
+				                 extensions: 'gif,jpg,jpeg,bmp,png',
+				                 mimeTypes: 'image/*'
+				             },
+				             //缩略图
+				             thumb:{
+				            	    width: 110,
+				            	    height: 110,
+				            	    quality: 90,
+				            	    allowMagnify: false,
+				            	    crop: false,
+				            	    type: 'image/jpeg'
+				              },
+				             // swf文件路径
+				             swf: BASE_URL + '/js/Uploader.swf',
+				             disableGlobalDnd: true,
+				             server: '../elderlyPhotoAlbum/setAlbumCover.jhtml',
+				             fileNumLimit: 1,
+				             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+				             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
+				             //图片裁剪
+				             compress:{
+				            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
+				            	 quality: 90,
+				            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+				            	 allowMagnify: false,
+				            	 // 是否允许裁剪。
+				            	 crop: false,
+				            	 // 是否保留头部meta信息。
+				            	 preserveHeaders: true,
+				            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
+				            	 // 此属性可能会影响图片自动纠正功能
+				            	 noCompressIfLarger: false,
+				            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
+				            	 compressSize: 0
+				             }
+		     			},
+		     			//包裹上传组件的div id
+		     			warp :"albumUploader-add",
+		     			uploadBeforeSend:function(object, data, headers){
+		     				 //在参数中增加一个老人编号字段 identifier
+		     				 data.coverID = $('#coverID').val();
+		     			},
+		     			uploadSuccess:function(file, response){
+		     				//将返回的图片路径放到隐藏的input中，用于表单保存
+		     				$("#coverUrl").val(response.content);
+		     				$.ajax({
+								url:"../elderlyPhotoAlbum/saveAlbumCover.jhtml",
+								type:"post",
+								data:$("#setAlbumCover_form").serialize(),
+								beforeSend:function(){
+									$.messager.progress({
+										text:message("yly.common.saving")
+									});
+								},
+								success:function(result,response,status){
+									$.messager.progress('close');
+									showSuccessMsg(result.content);
+									$('#setAlbumCover_form').form('reset');
+									$('#setAlbumCover').dialog("close");
 
+								},
+								error:function (XMLHttpRequest, textStatus, errorThrown) {
+									$.messager.progress('close');
+									alertErrorMsg();
+								}
+							});
+		     			}
+		     	};
+		     	
+		     	singleUpload(options);
+		    },
+		    onClose:function(){
+		    	photoAlbum_manager_tool.edit($('#coverID').val());
+		    }
+		
+	});
+	
+}

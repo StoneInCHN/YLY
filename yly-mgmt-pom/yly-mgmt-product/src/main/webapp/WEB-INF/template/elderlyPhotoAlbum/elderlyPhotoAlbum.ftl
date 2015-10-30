@@ -34,8 +34,8 @@ function loadAlbum(){
 													<h6><a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><span title="'+jsonObj[i].name+'">'+shortName+'</span></a></h6> 
 													<p><span title="'+jsonObj[i].remark+'">'+shortRemark+'</span></p>
 													<p>
-													   <a href="javascript:void(0);" onclick="photoAlbum_manager_tool.edit('+jsonObj[i].id+')";>编辑</a> 
-													   <a href="javascript:void(0);"  onclick="photoAlbum_manager_tool.remove('+jsonObj[i].id+')";>删除</a>
+													   <a href="javascript:void(0);" class="easyui-linkbutton"  onclick="photoAlbum_manager_tool.edit('+jsonObj[i].id+')";>编辑</a> 
+													   <a href="javascript:void(0);" class="easyui-linkbutton"  onclick="photoAlbum_manager_tool.remove('+jsonObj[i].id+')";>删除</a>
 													</p>
 												</div>
 											</div>
@@ -140,11 +140,30 @@ function loadAlbum(){
 
 	</form>
 </div>
-<div id="addElderlyPhotos">
 
-</div>
+<div id="addElderlyPhotos"></div>
 <div id="editElderlyPhotoAlbum"></div>  
 <div id="showPhotoAlbum"></div> 
+<div id="setAlbumCover">
+<form id="setAlbumCover_form" method="post" class="form-table">
+<input type="hidden" name="coverUrl" id="coverUrl">
+<input type="hidden" name="coverID" id="coverID">
+	    		<td rowspan="3">
+	    		    <div title="设置相册封面" class="easyui-tooltip headWarp">
+	    				<div id="albumUploader-add" class="single-uploader">
+						    <div class="queueList">
+						        <div class="placeholder">
+						        	<div id="albumFilePicker-add"></div>
+						        </div>
+						    </div>
+						    <div class="btns">
+						        <div class="uploadBtn state-pedding"></div>
+						    </div>
+						</div>
+				    </div>
+	    		</td>
+</form>   
+</div>
 
 
 
