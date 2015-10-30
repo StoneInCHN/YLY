@@ -211,6 +211,7 @@ var photoAlbum_manager_tool = {
 						            	 compressSize: 0
 						             }
 				    		    },
+				    		    //warp :"uploader",
 				     			uploadBeforeSend:function(object, data, headers){
 				     				 //在参数中增加一个老人编号字段 identifier
 				     				 data.identifier = $("#identifier").val();
@@ -222,6 +223,7 @@ var photoAlbum_manager_tool = {
 				    	multipleUpload(options1);
 				    },
 				    onClose:function(){
+				    	$("#albumUploader-add .uploadBtn").trigger("clearFileQuene");	
 				    	$("#uploader .uploadBtn").trigger("clearFiles");						
 				    	loadAlbum();//重新加载相册
 				    }
@@ -231,8 +233,8 @@ var photoAlbum_manager_tool = {
 		    edit:function(photoAlbumID){
 				var _dialog = $('#editElderlyPhotoAlbum').dialog({  
 				    title: "编辑相册相片",    
-				    width: 700,    
-				    height: 700,
+				    width: 750,    
+				    height: 750,
 				    iconCls:'icon-mini-edit',
 				    modal:true,
 				    href:'../elderlyPhotoAlbum/detail.jhtml?id='+photoAlbumID+'&handle=edit',
@@ -274,7 +276,36 @@ var photoAlbum_manager_tool = {
 				    }]
 				});
 		    
-		    }		    
+		    },
+		    uploadPhotos:function(){
+		    	var _dialog = $('#addElderlyPhotos').dialog({  
+				    title: '上传照片',    
+				    width: 700,    
+				    height: 700,
+				    iconCls:'icon-mini-add',
+				    modal:true,
+				    href:'../elderlyPhotoAlbum/uploadPhotos.jhtml',
+				    buttons:[{
+				    	text:message("yly.common.save"),
+				    	iconCls:'icon-save',
+						handler:function(){
+
+							
+						}
+					},{
+						text:message("yly.common.cancel"),
+						iconCls:'icon-cancel',
+						handler:function(){
+							 $('#addElderlyPhotos').dialog("close");
+						}
+				    }],
+				    onClose:function(){
+				    	//$("#uploader .uploadBtn").trigger("clearFiles");						
+				    	loadAlbum();//重新加载相册
+				    }
+				});
+		    
+		    }
 	}
 	
 $(function(){
@@ -295,5 +326,22 @@ function deepColor(){
 		background:'#AAAAAA'
 	});
 	
+}
+
+function hiddenImg(id,url){
+	if($("#"+id)){
+		//$("#"+id).css("opacity": "0.5");
+		$("#"+id).attr("src",url);
+		if($("#deletePhotoIDs").val().indexOf(id+",") == -1){
+			$("#deletePhotoIDs").val($("#deletePhotoIDs").val() + id+",");
+		}
+	}
+}
+function showImg(id,url){
+		if($("#"+id)){
+		//$("#"+id).css("opacity": "1");
+		$("#"+id).attr("src",url);
+		$("#deletePhotoIDs").val($("#deletePhotoIDs").val().replace(id+",",""));
+	}
 }
 

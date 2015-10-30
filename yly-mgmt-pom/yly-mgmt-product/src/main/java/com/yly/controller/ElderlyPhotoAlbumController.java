@@ -137,7 +137,20 @@ public class ElderlyPhotoAlbumController extends BaseController {
     }
     return "";
   }
-
+  @RequestMapping(value = "/uploadPhotos", method = RequestMethod.GET)
+  public String uploadPhotos(ModelMap model) {
+    List<ElderlyPhotoAlbum> elderlyPhotoAlbumList = elderlyPhotoAlbumService.findAll(true);
+    if (elderlyPhotoAlbumList != null) {
+//      Map<String,String> mapAlbumList = new HashMap<String,String>();  
+//      for (ElderlyPhotoAlbum elderlyPhotoAlbum : elderlyPhotoAlbumList) {
+//        mapAlbumList.put(elderlyPhotoAlbum.getId()+"", elderlyPhotoAlbum.getName());
+//      }
+      model.addAttribute("elderlyPhotoAlbumList", elderlyPhotoAlbumList);
+      return "elderlyPhotoAlbum/uploadPhotos";
+    }
+    return "";
+  }  
+  
   /**
    * 查看照片
    * 
@@ -218,12 +231,32 @@ public class ElderlyPhotoAlbumController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(ElderlyPhotoAlbum elderlyPhotoAlbum, Long elderlyInfoID) {
+  public @ResponseBody Message update(ElderlyPhotoAlbum elderlyPhotoAlbum, Long elderlyInfoID, String deletePhotoIDs) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (elderlyInfo != null) {
       elderlyPhotoAlbum.setElderlyInfo(elderlyInfo);
       elderlyPhotoAlbum.setTenantID(tenantAccountService.getCurrentTenantID());
+      //更新相册
       elderlyPhotoAlbumService.update(elderlyPhotoAlbum, "createDate");
+      if (StringUtils.isNotBlank(deletePhotoIDs) && deletePhotoIDs.length() > 0) {
+        deletePhotoIDs = deletePhotoIDs.substring(0, deletePhotoIDs.length()-1);//去掉最后的逗号
+        String deletePhotoID[] = deletePhotoIDs.split(",");
+        for (int i = 0; i < deletePhotoID.length; i++) {
+          ElderlyPhotoes elderlyPhotoes = elderlyPhotoesService.find(new Long(deletePhotoID[i]));
+          if (elderlyPhotoes != null) {
+            //删除照片(数据库)
+            elderlyPhotoesService.delete(new Long(deletePhotoID[i]));
+            //删除应用服务器上的照片(disk)
+            String relativepath =  elderlyPhotoes.getUrl().substring(elderlyPhotoes.getUrl().indexOf("/upload"),
+                    elderlyPhotoes.getUrl().lastIndexOf("/"));
+            try {
+              fileService.deletefile(fileService.getRealPath(relativepath));
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+          }
+        } 
+      }
       return SUCCESS_MESSAGE;
     }
     return ERROR_MESSAGE;

@@ -24,7 +24,7 @@ function loadAlbum(){
 						[@compress single_line = true]
 						divAlbumHtml += '<div class="col-sm-2 col-md-2" onmouseenter="deepColor()">
 											<div class="thumbnail">
-												<a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><img src="'+jsonObj[i].albumCover+'"  style="width:140px;height:100px;"></a>
+												<a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><img src="'+jsonObj[i].albumCover+'" title="相册主人:'+jsonObj[i].elderlyInfo.name+'" style="width:140px;height:100px;"></a>
 												<div classheng="caption">
 													<h6><a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><span title="'+jsonObj[i].name+'">'+shortName+'</span></a></h6> 
 													<p><span title="'+jsonObj[i].remark+'">'+shortRemark+'</span></p>
@@ -76,6 +76,7 @@ function loadAlbum(){
 <div id="photoAlbum_manager_tool">
 	<div class="tool-button">
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="photoAlbum_manager_tool.add();">添加相册</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',plain:true" onclick="photoAlbum_manager_tool.uploadPhotos();">上传照片</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
@@ -147,12 +148,11 @@ function loadAlbum(){
 		</div>
 
 
-</div>
-</div>
-
 	</form>
 </div>
+<div id="addElderlyPhotos">
 
+</div>
 <div id="editElderlyPhotoAlbum"></div>  
 <div id="showPhotoAlbum"></div> 
 
