@@ -237,6 +237,11 @@ public class RoomController extends BaseController {
     return SUCCESS_MESSAGE;
   }
 
+  @RequestMapping(value = "/changeRoom", method = RequestMethod.GET)
+  public String changeRoom(){
+    
+    return "changeRoom/changeRoom";
+  }
 
 
 }

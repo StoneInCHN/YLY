@@ -245,7 +245,9 @@ var messages = {
 	"yly.bed.status":"床位状态",
 	"yly.bed.description":"描述",
 	"yly.bed.room":"所在房间",
-	
+	"yly.common.unappropriated":"未占用",
+	"yly.common.occupied":"已占用",
+	"yly.bed.usageState":"是否被占用",
 	//黑名单
 	"yly.blacklist.record":"黑名单",
 	"yly.blacklist.name":"黑名单老人名字",
