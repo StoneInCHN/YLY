@@ -1,6 +1,7 @@
 package com.yly.controller;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,10 +24,12 @@ import com.yly.entity.Billing;
 import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
+import com.yly.entity.PaymentRecord;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
+import com.yly.entity.commonenum.CommonEnum.PaymentType;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
@@ -179,7 +182,7 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-  public @ResponseBody Message add(Billing checkinBill, Long mealTypeId,Long elderlyInfoID,Boolean isMonthlyMeal) {
+  public @ResponseBody Message add(Billing checkinBill, Long mealTypeId,Long elderlyInfoID,Boolean isMonthlyMeal,BigDecimal cashAmount,BigDecimal cardAmount) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (!ElderlyStatus.IN_PROGRESS_CHECKIN.equals(elderlyInfo.getElderlyStatus())) {
       return Message.error("yly.checkin.elderlyStatus.invalid");
@@ -239,7 +242,26 @@ public class BillingController extends BaseController {
       
     }
     
-    //形成支付记录
+    //支付记录
+    if (checkinBill.getPaymentType().equals(PaymentType.MIXTURE)) {//混合支付 现金+卡
+      PaymentRecord paymentRecordCard = new PaymentRecord();
+      paymentRecordCard.setBilling(checkinBill);
+      paymentRecordCard.setPaymentType(PaymentType.CARD);
+      paymentRecordCard.setPayAmount(cardAmount);
+      checkinBill.getPaymentRecords().add(paymentRecordCard);
+      
+      PaymentRecord paymentRecordCash= new PaymentRecord();
+      paymentRecordCash.setBilling(checkinBill);
+      paymentRecordCash.setPaymentType(PaymentType.CASH);
+      paymentRecordCash.setPayAmount(cashAmount);
+      checkinBill.getPaymentRecords().add(paymentRecordCash);
+    }else {
+      PaymentRecord paymentRecord = new PaymentRecord();
+      paymentRecord.setBilling(checkinBill);
+      paymentRecord.setPaymentType(checkinBill.getPaymentType());
+      paymentRecord.setPayAmount(checkinBill.getTotalAmount());
+      checkinBill.getPaymentRecords().add(paymentRecord);
+    }
     
     billingService.save(checkinBill);
     return SUCCESS_MESSAGE;

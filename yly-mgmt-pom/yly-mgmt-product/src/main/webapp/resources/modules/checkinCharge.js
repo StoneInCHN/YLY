@@ -244,6 +244,59 @@ $(function(){
 		
 	});
 	
+	//支付方式
+	$('#paymentType').combobox({
+		onChange:function(value){
+			console.log("111"+value);
+			if(value == "MIXTURE"){
+				$('#mixturePay').css("display","table-row");
+				$("#totalAmount_cash").numberbox({
+					required:true,
+				});
+				$("#totalAmount_card").numberbox({
+					required:true,
+				});
+			}else{
+				$('#mixturePay').css("display","none");
+				$("#totalAmount_cash").numberbox('reset');
+				$("#totalAmount_cash").numberbox({
+					required:false,
+				});
+				$("#totalAmount_card").numberbox('reset');
+				$("#totalAmount_card").numberbox({
+					required:false,
+				});
+				
+			}
+		}
+	});
+	
+	$('#chargein_totalAmount').numberbox({
+		onChange:function(value){
+			$("#totalAmount_card").numberbox('reset');
+			$("#totalAmount_cash").numberbox('reset');
+		}
+	});
+	//混合支付计算
+	$('#totalAmount_cash').numberbox({
+		onChange:function(value){
+			if($('#paymentType').combobox('getValue')=="MIXTURE"){
+				var totalAmount=$('#chargein_totalAmount').numberbox('getValue');
+				$('#totalAmount_card').numberbox('setValue',totalAmount-value);
+			}
+			
+		}
+	});
+	
+	$('#totalAmount_card').numberbox({
+		onChange:function(value){
+			if($('#paymentType').combobox('getValue')=="MIXTURE"){
+				var totalAmount=$('#chargein_totalAmount').numberbox('getValue');
+				$('#totalAmount_cash').numberbox('setValue',totalAmount-value);
+			}
+		}
+	});
+	
 	$('#bedNursePeriodStartDate').datebox({
 	    onSelect: function(date){
             var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -296,6 +349,9 @@ $(function(){
 	
 	$('#addCheckinCharge_elderlyInfo').textbox({  
 		  onChange: function(value){  
+			  if(value==null||value=='') {
+				  return;
+			  }
 			  var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
 			  $("#addCheckinCharge_form input[class*='easyui'][textboxname!=elderlyInfoName]").each(function(){
 				  $(this).textbox('reset');
@@ -304,7 +360,11 @@ $(function(){
 				  $(this).html("");
 				  $(this).attr("data-value","");
 			  });
-			  			 
+			  
+			  $('#mixturePay').css("display","none");
+			  $("#totalAmount_cash").numberbox('reset');
+			  $("#totalAmount_card").numberbox('reset');
+			  
 				$.ajax({
 					url:"../billing/getBedNurseConfig.jhtml",
 					type:"post",
@@ -334,6 +394,12 @@ $(function(){
 		  }  
 		});
 	
+	$('#checkin_deposit').numberbox({
+		onChange:function(value){
+			calculChargeInAmount();
+		}
+	});
+	
 	$('#chargein_bedAmount').numberbox({
 		onChange:function(value){
 			calculChargeInAmount();
@@ -353,14 +419,15 @@ $(function(){
 	});
 	
 	function calculChargeInAmount(){
+		var depositAmount = $('#checkin_deposit').numberbox('getValue');
 		var bedAmount = $('#chargein_bedAmount').numberbox('getValue');
 		var nurseAmount = $('#chargein_nurseAmount').numberbox('getValue');
 		var mealAmount = $('#chargein_mealAmount').numberbox('getValue');
 		//console.log(bedAmount+"-"+nurseAmount+"-"+mealAmount);
-		if(bedAmount == null && nurseAmount == null && mealAmount == null){
+		if(bedAmount == null && nurseAmount == null && mealAmount == null && deposit == null){
 			$('#chargein_totalAmount').numberbox("reset");
 		}else{
-			var totalAmount = Number(bedAmount)+Number(nurseAmount)+Number(mealAmount);
+			var totalAmount = Number(bedAmount)+Number(nurseAmount)+Number(mealAmount)+Number(depositAmount);
 			$('#chargein_totalAmount').numberbox("setValue",totalAmount);
 		}
 		

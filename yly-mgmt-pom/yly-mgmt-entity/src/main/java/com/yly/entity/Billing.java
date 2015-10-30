@@ -193,7 +193,7 @@ public class Billing extends BaseEntity {
     this.billingAdjustment = billingAdjustment;
   }
 
-  @OneToMany(mappedBy = "billing")
+  @OneToMany(mappedBy = "billing",cascade=CascadeType.ALL)
   public Set<PaymentRecord> getPaymentRecords() {
     return paymentRecords;
   }
