@@ -1,6 +1,17 @@
 
 $(function(){
-	
+	$("#tenantUserDepartment-search").combobox({    
+	    valueField:'id',    
+	    textField:'name',
+	    cache: true,
+	    url:'../department/findAllDepartments.jhtml'
+	});
+	$("#tenantUserPosition-search").combobox({    
+	    valueField:'id',    
+	    textField:'name',
+	    cache: true,
+	    url:'../position/findAllPositions.jhtml'
+	});
 	$("#tenantUser-table-list").datagrid({
 		title:"药品列表",
 		fitColumns:true,
@@ -414,12 +425,8 @@ $(function(){
 				}
 			}
 	};
-	$("#search-btn").click(function(){
-	  var _queryParams = {
-			  drugName:$("#drugName").val(),
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+	$("#tenantUser-search-btn").click(function(){
+	  var _queryParams = $("#tenantUser-search-form").serializeJSON();
 	  $('#tenantUser-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#tenantUser-table-list").datagrid('reload');
 	})

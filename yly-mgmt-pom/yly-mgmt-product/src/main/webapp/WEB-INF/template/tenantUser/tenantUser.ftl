@@ -5,12 +5,36 @@
 	  <fieldset>
 	    <legend>药品查询</legend>
 	    <form id="tenantUser-search-form" class="search-form">
-	    <div class="search-item">
+	    	<div class="search-item">
 			    <label> 名称查询:</label>
-			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
+			    <input type="text" class="easyui-textbox" id="realName" name="realNameSearch" />
 			</div>
 			<div class="search-item">
-			    <label> 录入时间:</label>
+			    <label> 部门:</label>
+			    <input type="text" class="easyui-combobox" id="tenantUserDepartment-search" name="departmentSearchId"/>
+			</div>
+			<div class="search-item">
+			    <label> 职位:</label>
+			    <input type="text" class="easyui-combobox" id="tenantUserPosition-search" name="positionSearchId"/>
+			</div>
+			<div class="search-item">
+			    <label> 状态:</label>
+			    
+			    <input class="easyui-combobox" data-options="
+				     valueField: 'label',
+				     textField: 'value',
+				     data: [{
+				      label: 'INSERVICE',
+				      value: '在职'
+				     },{
+				      label: 'OUTSERVICE',
+				      value: '离职'
+				     }],
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="staffStatusSearch" style="width:110px;"/>
+			    
+			</div>
+			<div class="search-item">
+			    <label> 入职时间:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -19,7 +43,7 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="tenantUser-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
 	    </div>
 	  </fieldset>
 </div>
