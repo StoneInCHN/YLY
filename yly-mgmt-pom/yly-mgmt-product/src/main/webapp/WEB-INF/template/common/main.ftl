@@ -156,6 +156,9 @@
     	<div id="manager-tabs">   
 		    <div title="起始页" style="padding:20px;">   
 		        <p>欢迎来到管理系统</p>
+		        
+		        <button id="selectRoom">选房</button>
+		        
 		    </div>    
 		</div> 
     </div>   
