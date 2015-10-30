@@ -124,7 +124,8 @@ var photoAlbum_manager_tool = {
 						            	 compressSize: 0
 						             }
 				    		    },
-				    		    //warp :"uploader",
+				    		    warp :"uploader",
+				    		    filePicker2 :"filePicker2",
 				     			uploadBeforeSend:function(object, data, headers){
 				     				 //在参数中增加一个老人编号字段 identifier
 				     				 data.identifier = $("#identifier").val();
@@ -186,6 +187,7 @@ var photoAlbum_manager_tool = {
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editElderlyPhotoAlbum').dialog("close");
+							 loadAlbum();//重新加载相册
 						}
 				    }],
 				    onOpen:function(){
@@ -261,13 +263,15 @@ var photoAlbum_manager_tool = {
 				    height: 700,
 				    iconCls:'icon-mini-add',
 				    modal:true,
-				    href:'../elderlyPhotoAlbum/uploadPhotos.jhtml',
+				    //href:'../elderlyPhotoAlbum/uploadPhotos.jhtml',
 				    buttons:[{
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-
-							
+							var validate = $('#addElderlyPhotos_form').form('validate');
+							if(validate){	
+								$("#uploader_Photos .uploadBtn").trigger("upload");//照片集
+							};
 						}
 					},{
 						text:message("yly.common.cancel"),
@@ -276,12 +280,71 @@ var photoAlbum_manager_tool = {
 							 $('#addElderlyPhotos').dialog("close");
 						}
 				    }],
+				    onOpen:function(){
+				    	$('#addElderlyPhotos_form').show();
+				    	
+				    	var options2 = {	
+				    			createOption:{
+				    			
+				    		        pick: {
+				    		            id: '#filePicker_Photos',
+				    		            label: '点击选择图片'
+				    		        },
+				    		        dnd: '#uploader .queueList',
+				    		        paste: document.body,
+
+				    		        accept: {
+				    		            title: 'Images',
+				    		            extensions: 'gif,jpg,jpeg,bmp,png',
+				    		            mimeTypes: 'image/*'
+				    		        },
+
+				    		        // swf文件路径
+				    		        swf: BASE_URL + '/js/Uploader.swf',
+
+				    		        disableGlobalDnd: true,
+				    		        chunked: true,
+				    		        server: '../elderlyPhotoAlbum/uploadAlbum.jhtml',
+				    		        fileNumLimit: 300,
+				    		        fileSizeLimit: 5 * 1024 * 1024,    // 200 M
+				    		        fileSingleSizeLimit: 1 * 1024 * 1024,    // 50 M
+						             //图片裁剪
+						             compress:{
+						            	 width: 1000,
+						            	 height: 1000,
+						            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
+						            	 quality: 90,
+						            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+						            	 allowMagnify: false,
+						            	 // 是否允许裁剪。
+						            	 crop: false,
+						            	 // 是否保留头部meta信息。
+						            	 preserveHeaders: true,
+						            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
+						            	 // 此属性可能会影响图片自动纠正功能
+						            	 noCompressIfLarger: false,
+						            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
+						            	 compressSize: 0
+						             }
+				    		    },
+				    		    warp :"uploader_Photos",
+				    		    filePicker2 :"filePicker2_Photos",
+				     			uploadBeforeSend:function(object, data, headers){
+				     				 //在参数中增加一个老人编号字段 identifier
+				     				 data.identifier = $("#identifier").val();
+				     				 data.albumName = $("#albumName").val();
+				     			},
+				     			uploadSuccess:function(file, response){
+				     				photoUrlList.push(response.content);				     				
+				     			}};
+				    	multipleUpload(options2);
+				    },
 				    onClose:function(){
 				    	//$("#uploader .uploadBtn").trigger("clearFiles");						
 				    	loadAlbum();//重新加载相册
 				    }
 				});
-		    
+		    	$('#addElderlyPhotos_form').show();
 		    }
 	}
 	

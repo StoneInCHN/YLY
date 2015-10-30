@@ -26,7 +26,7 @@
 	    		<div id="uploader_Photos" class="wu-example">
 		    <div class="queueList">
 		        <div id="dndArea" class="placeholder" style="background:#F0F0F0">
-		            <div id="filePicker"></div>
+		            <div id="filePicker_Photos"></div>
 		            <p>或将照片拖到这里，单次最多可选300张</p>
 		        </div>
 		    </div>
@@ -36,7 +36,7 @@
 		            <span class="percentage"></span>
 		        </div><div class="info"></div>
 		        <div class="btns">
-		            <div id="filePicker2"></div><div class="uploadBtn"></div>
+		            <div id="filePicker2_Photos"></div><div class="uploadBtn"></div>
 		        </div>
 		    </div>
 		</div>	

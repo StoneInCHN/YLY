@@ -12,21 +12,21 @@
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('elderlyNameForAlbumEdit')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    		<td rowspan="3">
-	    		<div style="background:#D2D2D2;margin:5px;padding:5px;text-align:center;">
-	    		<div style="background:#ffffff;margin:5px;padding:5px">
+	    		
 	    		
 	    		<a href="javascript:void(0);" class="easyui-linkbutton" onclick="setAlbumCover()">
-	    		<span title="重置封面照片">
+	    		<div style="margin:5px;padding:5px">
+	    		<span title="重置封面照片" >
 	    		[#if elderlyPhotoAlbum.albumCover == null]
 	    		     <img src="${base}/resources/images/album_defaultCover.png" width="150" height="100">
 	    		[#else]
 	    			 <img src="${elderlyPhotoAlbum.albumCover}" width="150" height="100">
 	    		[/#if]
 	    		</span>	
+	    		</div>
 	    		</a>
 	    		
-	    		</div> 
-	    		</div> 
+	    		
 	    		</td>
 	    	    </tr>
 	    	<tr>

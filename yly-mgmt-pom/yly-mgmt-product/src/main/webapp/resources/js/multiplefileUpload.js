@@ -2,8 +2,10 @@ var photoUrlList = new Array();
 function multipleUpload(options) {
     var $ = jQuery,    // just in case. Make sure it's not an other libaray.
 
-        $wrap = $('#uploader'),
-
+        //$wrap = $('#uploader'),
+        $wrap = $('#'+options.warp),
+        
+        $filePicker2=$('#'+options.filePicker2),
         // 图片容器
         $queue = $('<ul class="filelist"></ul>')
             .appendTo( $wrap.find('.queueList') ),
@@ -68,7 +70,7 @@ function multipleUpload(options) {
 
     // 添加“添加文件”的按钮，
     uploader.addButton({
-        id: '#filePicker2',
+        id: '#'+options.filePicker2,
         label: '继续添加'
     });
 
@@ -288,7 +290,7 @@ function multipleUpload(options) {
 
             case 'ready':
                 $placeHolder.addClass( 'element-invisible' );
-                $( '#filePicker2' ).removeClass( 'element-invisible');
+                $filePicker2.removeClass( 'element-invisible');
                 $queue.parent().addClass('filled');
                 $queue.show();
                 $statusBar.removeClass('element-invisible');
@@ -296,7 +298,7 @@ function multipleUpload(options) {
                 break;
 
             case 'uploading':
-                $( '#filePicker2' ).addClass( 'element-invisible' );
+            	$filePicker2.addClass( 'element-invisible' );
                 $progress.show();
                 $upload.text( '暂停上传' );
                 break;
