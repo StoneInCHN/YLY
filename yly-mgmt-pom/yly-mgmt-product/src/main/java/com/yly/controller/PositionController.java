@@ -29,6 +29,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.Department;
 import com.yly.entity.DonateRecord;
 import com.yly.entity.DrugsInfo;
+import com.yly.entity.Position;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.framework.paging.Page;
@@ -36,6 +37,7 @@ import com.yly.framework.paging.Pageable;
 import com.yly.json.request.DrugsInfoSearchRequest;
 import com.yly.service.DepartmentService;
 import com.yly.service.DrugsInfoService;
+import com.yly.service.PositionService;
 import com.yly.service.SystemConfigService;
 import com.yly.utils.DateTimeUtils;
 
@@ -44,26 +46,26 @@ import com.yly.utils.DateTimeUtils;
  * @author huyong
  *
  */
-@Controller ("departmentController")
-@RequestMapping ("console/department")
-public class DepartmentController extends BaseController
+@Controller ("PositionController")
+@RequestMapping ("console/position")
+public class PositionController extends BaseController
 {
 
-  @Resource (name = "departmentServiceImpl")
-  private DepartmentService departmentService;
+  @Resource (name = "positionServiceImpl")
+  private PositionService positionService;
 
-  @RequestMapping (value = "/department", method = RequestMethod.GET)
+  @RequestMapping (value = "/position", method = RequestMethod.GET)
   public String list (ModelMap model)
   {
-    return "department/department";
+    return "position/position";
   }
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Department> list (Date beginDate, Date endDate,
+  public @ResponseBody Page<Position> list (Date beginDate, Date endDate,
       String drugName, Pageable pageable, ModelMap model)
   {
     
-      return departmentService.findPage (pageable);
+      return positionService.findPage (pageable);
   }
 
   /**
@@ -78,27 +80,25 @@ public class DepartmentController extends BaseController
   {
     
 
-    model.addAttribute ("department", departmentService.find (id));
+    model.addAttribute ("position", positionService.find (id));
 
-    return "department/edit";
+    return "position/edit";
   }
 
   @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add (Department department)
+  public @ResponseBody Message add (Position position)
   {
 
 
-    departmentService.save (department);
+    positionService.save (position);
     return SUCCESS_MESSAGE;
   }
 
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (Department department,
-      Long drugCategoryId, Long conventionalUnitId, Long minUnitId,
-      Long drugUseMethodId)
+  public @ResponseBody Message update (Position position )
   {
 
-    departmentService.update (department, "createDate");
+    positionService.update (position, "createDate");
     return SUCCESS_MESSAGE;
   }
 
@@ -113,7 +113,7 @@ public class DepartmentController extends BaseController
     {
       // 检查是否能被删除
       // if()
-      departmentService.delete (ids);
+      positionService.delete (ids);
     }
     return SUCCESS_MESSAGE;
   }
@@ -127,12 +127,12 @@ public class DepartmentController extends BaseController
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
 
-    model.addAttribute ("department", departmentService.find (id));
-    return "department/details";
+    model.addAttribute ("position", positionService.find (id));
+    return "position/details";
   }
   
-  @RequestMapping(value = "/findAllDepartments", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String, Object>> findAllDepartments() {
-    return departmentService.findAllDepartments ();
+  @RequestMapping(value = "/findAllPositions", method = RequestMethod.POST)
+  public @ResponseBody List<Map<String, Object>> findAllPositions() {
+    return positionService.findAllPositions ();
   }
 }

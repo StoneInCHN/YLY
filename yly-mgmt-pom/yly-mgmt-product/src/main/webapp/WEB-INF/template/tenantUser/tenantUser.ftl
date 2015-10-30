@@ -34,18 +34,30 @@
 	<div class="tool-filter"></div>
 </div>
 <div id="addTenantUser"> 
-	<form id="addTenantUser_form" method="post" class="form-table">   
+	<form id="addTenantUser_form" method="post" class="form-table">  
+	<input type="hidden" id="addTenantUser_form_file_input" name="photo"> 
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>姓名 :</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="realName" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" id = "realName" name="realName" data-options="required:true" />   
 	    		</td>
-	    	
-	    		<th>邮箱:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="email" data-options="required:true" />
+	    		<th>相片:</th>
+	    		<td  rowspan="6">
+	    			<div title="头像上传" class="easyui-tooltip headWarp">
+	    				<div id="tenantUserUploader-add" class="single-uploader">
+						    <div  class="queueList">
+						        <div  class="placeholder">
+						        	<div id="tenantUserFilePicker-add" ></div>
+						        </div>
+						    </div>
+						    <div class="btns">
+						        <div class="uploadBtn state-pedding"></div>
+						    </div>
+						</div>
+	    			</div>
 	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
 	    		<th>性别:</th>
@@ -61,23 +73,17 @@
 				      label: 'FEMALE',
 				      value: '女'
 				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="donatorGender" style="width:110px;"/>
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="gender" style="width:110px;"/>
 	    		</td>
 	    	
-	    		<th>年龄:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="age" data-options="required:true" />
-	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
-	    		<th>相片:</th>
+	    		<th>邮箱:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="photo" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="email" data-options="required:true" />
 	    		</td>
-	    		<th>身份证:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" />
-	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
 	    		<th>员工编号:</th>
@@ -85,10 +91,7 @@
 	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" />   
 	    		</td>
 	    	
-	    		<th>工作年限:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="workingYear" data-options="required:true" />
-	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
 	    		<th>员工状态:</th>
@@ -105,10 +108,7 @@
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="staffStatus" style="width:110px;"/>
 	    		</td>
-	    		<th>出生日期:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="birthDay" data-options="required:true" />
-	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
 	    		<th>地址:</th>
@@ -116,10 +116,7 @@
 	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" />   
 	    		</td>
 	    	
-	    		<th>邮编:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" />
-	    		</td>
+	    		
 	    	</tr>
 	    	<tr>
 	    		<th>电话:</th>
@@ -140,15 +137,38 @@
 	    	
 	    		<th>担任职务:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="position" id="position" data-options="required:true" />
+	    			 <input class="easyui-combobox" type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" />
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>入职时间:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="donateTime" name="hireDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
+	    			 <input type="text" class="Wdate" name="hireDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>
-	    	
+	    		<th>年龄:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="age" data-options="required:true" />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>身份证:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" />
+	    		</td>
+	    		<th>工作年限:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="workingYear" data-options="required:true" />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>出生日期:</th>
+	    		<td>
+	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    		</td>
+	    		<th>邮编:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" />
+	    		</td>
 	    	</tr>
 	    </table>
 	</form>

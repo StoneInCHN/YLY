@@ -32,7 +32,7 @@ public class PositionServiceImpl extends BaseServiceImpl<Position, Long> impleme
   }
 
   @Override
-  public List<Map<String, Object>> findAllDepartments ()
+  public List<Map<String, Object>> findAllPositions ()
   {
     List<Filter> filters = new ArrayList<Filter>();
     

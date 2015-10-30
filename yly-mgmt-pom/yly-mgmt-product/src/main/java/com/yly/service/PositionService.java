@@ -17,5 +17,5 @@ public interface PositionService extends BaseService<Position, Long> {
    * 获取所有部门，用于下拉菜单
    * @return
    */
-  List<Map<String, Object>> findAllDepartments();
+  List<Map<String, Object>> findAllPositions();
 }

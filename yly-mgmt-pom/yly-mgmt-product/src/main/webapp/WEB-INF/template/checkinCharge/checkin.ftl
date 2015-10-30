@@ -49,25 +49,6 @@
 	    			 <input class="easyui-textbox" name="invoiceNo" validtype="length[0,30]"/> 
 	    		</td>
 	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.common.charge.paymentType")}:</th>
-	    		<td colspan=3>
-	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="status" panelHeight="100px"
-			   		data-options="required:true,editable:false,
-					valueField: 'value',
-					textField: 'label',
-					data: [{
-						value: 'CASH',
-						label: '${message("yly.common.charge.paymentType.CASH")}'
-					},{
-						value: 'CARD',
-						label: '${message("yly.common.charge.paymentType.CARD")}'
-					},{
-						value: 'MIXTURE',
-						label: '${message("yly.common.charge.paymentType.MIXTURE")}'
-					}]" /> 
-	    		</td>
-	    	</tr>
 	    	
 	    	<tr>
 	    		<td colspan=4>
@@ -77,7 +58,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" name="deposit.depositAmount" data-options="required:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="checkin_deposit" name="deposit.depositAmount" data-options="required:true,min:0,precision:2" />
 					    		</td>
 					    		<th>${message("yly.remark")}:</th>
 					    		<td width="250px">
@@ -179,6 +160,35 @@
 	    		<th>${message("yly.common.charge.totalAmount")}:</th>
 	    		<td colspan="3">
 	    			 <input class="easyui-numberbox" id="chargein_totalAmount" name="totalAmount" data-options="required:true,min:0,precision:2,editable:false"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.common.charge.paymentType")}:</th>
+	    		<td colspan=3>
+	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="paymentType" panelHeight="100px"
+			   		data-options="required:true,editable:false,
+					valueField: 'value',
+					textField: 'label',
+					data: [{
+						value: 'CASH',
+						label: '${message("yly.common.charge.paymentType.CASH")}'
+					},{
+						value: 'CARD',
+						label: '${message("yly.common.charge.paymentType.CARD")}'
+					},{
+						value: 'MIXTURE',
+						label: '${message("yly.common.charge.paymentType.MIXTURE")}'
+					}]" /> 
+	    		</td>
+	    	</tr>
+	    	<tr id="mixturePay" style="display:none">
+	    		<th>${message("yly.common.charge.paymentType.CASH")}:</th>
+	    		<td>
+	    			 <input class="easyui-numberbox" id="totalAmount_cash" name="cashAmount" data-options="min:0,precision:2"/>    
+	    		</td>
+	    		 <th>${message("yly.common.charge.paymentType.CARD")}:</th>
+	    		<td>
+	    			 <input class="easyui-numberbox" id="totalAmount_card" name="cardAmount" data-options="min:0,precision:2"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -1,45 +1,127 @@
-<form id="fixedAssetsDetail_form" method="post">   
-		 <input value="${donateRecord.id}" type="hidden" name="id" />
-	  <table class="table table-striped" border="0">
+<form id="editTenantUser_form" method="post">   
+	<input type="hidden" name="id" value= "${tenantUser.id}">
+		<input type="hidden" id="editTenantUser_form_file_input" name="photo"> 
+	    <table class="table table-striped"  border="0">
 	    	<tr>
-	    		<th>捐赠人姓名:</th>
+	    		<th>姓名 :</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="donatorName" value="${donateRecord.donatorName}" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" id = "realName" name="realName" data-options="required:true" value="${tenantUser.realName}" />   
 	    		</td>
-	    	
+	    		<th>相片:</th>
+	    		<td rowspan="6">
+	    			<div title="头像上传" class="easyui-tooltip">
+	    				<div id="tenantUserUploader-edit" class="single-uploader">
+						  	<div  class="queueList filled">
+						        <div  class="placeholder element-invisible">
+						        	<div id="tenantUserFilePicker-edit" ></div>
+						        </div>
+						        <div class="show-img">
+						        	<p class="imgWrap img-thumbnail">
+										     <img src="${tenantUser.photo}" style ="width:110px;hight:110 px">
+									 </p>
+						        </div>
+						    </div>
+						    <div class="btns">
+						        <div class="uploadBtn state-pedding"></div>
+						        <div id="tenantUserFilePicker-edit2" class="margin-left-40">选择文件</div>
+						        <div class="btn btn-info savePhoto margin-left-40" style="display:none">保存头像</div>
+						    </div>
+						</div>
+	    			</div>
+	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>性别:</th>
-	    		<td>
-	    			<select id="donatorGender" class="easyui-combobox"  name="donatorGender" style="width:60px;">   
-						<option value="MALE" [#if donateRecord.donatorGender == 'MALE'] selected = "selected"[/#if]>男</option>
-						<option value="FEMALE" [#if donateRecord.donatorGender == 'FEMALE'] selected = "selected"[/#if]>女</option> 
-				  </select>     
-	    		</td>
-	    	    <th>捐赠人电话:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="donatorPhone"  value="${donateRecord.donatorPhone}"/>   
+				  <td>
+	    	 	<select id="gender" class="easyui-combobox" name="gender" style="width:50px;">   
+    			  	<option value="MALE" [#if tenantUser.gender =="MALE"] selected="selected" [/#if]>${message("yly.gender.male")}</option>
+					<option value="FEMALE" [#if tenantUser.gender =="FEMALE"] selected="selected" [/#if]>${message("yly.gender.female")}</option>
+				  </select>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>时间:</th>
+	    		<th>邮箱:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="donateTime" name="donateTime" value="${donateRecord.donateTime}" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
+	    			 <input class="easyui-textbox" type="text" name="email" data-options="required:true" value="${tenantUser.email}"/>
+	    		</td>
+	    		
+	    	</tr>
+	    	<tr>
+	    		<th>员工编号:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" value="${tenantUser.staffID}"/>   
 	    		</td>
 	    	
-	    		<th>捐赠人地址:</th>
-	    		<td colspan="3">
-	    			 <input class="easyui-textbox" type="text" name="donatorAddress"  value="${donateRecord.donatorAddress}" style="width:100%"/>   
+	    		
+	    	</tr>
+	    	<tr>
+	    		<th>员工状态:</th>
+	    		<td>
+	    			<select id="gender" class="easyui-combobox" name="staffStatus"  style="width:80px;">   
+    			  		<option value="INSERVICE" [#if tenantUser.staffStatus =="INSERVICE"] selected="selected" [/#if]>在职</option>
+						<option value="OUTSERVICE" [#if tenantUser.staffStatus =="OUTSERVICE"] selected="selected" [/#if]>离职</option>
+				  </select>
+	    		</td>
+	    		
+	    	</tr>
+	    	<tr>
+	    		<th>地址:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" value="${tenantUser.address}"/>   
+	    		</td>
+	    	
+	    		
+	    	</tr>
+	    	<tr>
+	    		<th>电话:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="telephone" data-options="required:true" value="${tenantUser.telephone}"/>   
+	    		</td>
+	    	
+	    		<th>手机:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" value="${tenantUser.mobile}"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
-    			<th>捐赠描述:</th>
-	    		<td colspan="6">
-	    			  <input class="easyui-textbox" type="text" name="donateDescription" value="${donateRecord.donateDescription}" data-options="multiline:true,height:90,width:550" /> 
+	    		<th>所在部门:</th>
+	    		<td>
+	    			 <input class="easyui-combobox"  id="tenantUserDepartment" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.department.id}">${tenantUser.department.name}</input>   
+	    		</td>
+	    	
+	    		<th>担任职务:</th>
+	    		<td>
+	    			 <input class="easyui-combobox"   type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" value="${tenantUser.position.id}">${tenantUser.position.name}</input>
 	    		</td>
 	    	</tr>
 	    	<tr>
-    			<th>备注:</th>
-	    		<td colspan="6">
-	    			  <input class="easyui-textbox" type="text" name="remark" value="${donateRecord.remark}" data-options="multiline:true,height:90,width:550" /> 
+	    		<th>入职时间:</th>
+	    		<td>
+	    			 <input type="text" class="Wdate" name="hireDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" value="${tenantUser.hireDate}"/>   
+	    		</td>
+	    		<th>年龄:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="age" data-options="required:true" value="${tenantUser.age}"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>身份证:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" value="${tenantUser.IDCard}"/>
+	    		</td>
+	    		<th>工作年限:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="workingYear" data-options="required:true" value="${tenantUser.workingYear}"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>出生日期:</th>
+	    		<td>
+	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" value="${tenantUser.birthDay}"/>
+	    		</td>
+	    		<th>邮编:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" value="${tenantUser.zipCode}"/>
 	    		</td>
 	    	</tr>
 	    </table>
