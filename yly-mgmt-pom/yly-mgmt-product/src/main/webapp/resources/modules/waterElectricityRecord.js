@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#waterElectricityRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
-			    height: 500, 
+			    width: 500,    
+			    height: 750, 
 			    cache: false,   
 			    href:'../waterElectricityRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
@@ -27,16 +27,13 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.room.roomName"),field:"roomName",width:40,sortable:true,formatter: function(value,row,index){
-		    	  return row.room.roomName;
-		      }},
 		      {title:message("yly.room.roomNumber"),field:"roomNumber",width:20,sortable:true,formatter: function(value,row,index){
 		    	  return row.room.roomNumber;
 		      }},
 		      {title:message("yly.waterElectricityRecord.waterActual"),field:"waterActual",width:20,align:'center',sortable:true},
 		      {title:message("yly.waterElectricityRecord.electricityActual"),field:"electricityActual",width:20,align:'center',sortable:true},
 		      {title:message("yly.waterElectricityRecord.operator"),field:"operator",width:40,align:'center',sortable:true},
-		      {title:message("yly.common.createDate"),field:"createDate",width:40,sortable:true, formatter: function(value,row,index){
+		      {title:message("yly.common.insertDate"),field:"createDate",width:40,sortable:true, formatter: function(value,row,index){
 		    	  return new Date(value).Format("yyyy-MM-dd");
 		      }}
 		   ]
@@ -50,8 +47,8 @@ $(function(){
 			add:function(){		
 				$('#addWaterElectricityRecord').dialog({    
 				    title: message("yly.waterElectricityRecord.add"),    
-				    width: 700,    
-				    height: 500,
+				    width: 500,    
+				    height: 700,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -125,13 +122,13 @@ $(function(){
 			edit:function(){
 				var _edit_row = $('#waterElectricityRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.editRow"));  
 					return false;
 				}
 				var _dialog = $('#editwaterElectricityRecord').dialog({    
 				    title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 500,    
+				    width: 500,    
+				    height: 700,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../waterElectricityRecord/edit.jhtml?id='+_edit_row.id,
@@ -171,7 +168,7 @@ $(function(){
 			remove:function(){
 				var _edit_row = $('#waterElectricityRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.deleteRow"));  
 					return false;
 				}
 				listRemove('waterElectricityRecord-table-list','../waterElectricityRecord/delete.jhtml');

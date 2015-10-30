@@ -4,24 +4,24 @@
 	    <legend>水电抄表记录查询</legend>
 	    <form id="waterElectricityRecord_search_form" class="search-form">
 	    	<div class="search-item">
-			    <label> 房间编号查询:</label>
-			    <input type="text" class="easyui-textbox" id="room_roomNumber" name="room.roomNumber" style="width:85px;" />
+			    <label> 房间编号</label>
+			    <input type="text" class="easyui-numberbox" id="room_roomNumber" name="room.roomNumber" validtype="length[0,10]" style="width:85px;" />
+			</div>
+			<!--<div class="search-item">
+				<label> 房间名:</label>
+	    		<input type="text" class="easyui-textbox" id="room_roomName" name="room.roomName" validtype="length[0,20]" style="width:85px;" />
+			</div>-->
+			<div class="search-item">
+				<label> 抄表人:</label>
+	    		<input type="text" class="easyui-textbox" id="operator" name="operator" validtype="length[0,6]" style="width:85px;" />
 			</div>
 			<div class="search-item">
-				<label> 房间名称查询:</label>
-	    		<input type="text" class="easyui-textbox" id="room_roomName" name="room.roomName" style="width:85px;" />
-			</div>
-			<div class="search-item">
-				<label> 抄表人查询:</label>
-	    		<input type="text" class="easyui-textbox" id="operator" name="operator" style="width:85px;" />
-			</div>
-			<div class="search-item">
-			    <label> 活动发生时间从:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <label> 录入时间:</label>
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>到:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -51,19 +51,19 @@
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.operator")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="operator" validtype="length[0,15]" data-options="required:true" style="width:100px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="operator" validtype="length[0,6]" data-options="required:true" style="width:100px;"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.recordStartDate")}:</th>
 	    		<td>
-	    			<input type="text" class="easyui-datebox"  name="recordStartDate" validtype="length[0,30]" style="width:150px;" />
+	    			<input type="text" class="easyui-datebox"  name="recordStartDate" editable="false" required= "required" style="width:150px;" />
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.recordEndDate")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-datebox"  name="recordEndDate" validtype="length[0,30]" style="width:150px;" /> 
+	    			 <input type="text" class="easyui-datebox"  name="recordEndDate" editable="false" required= "required" style="width:150px;" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -79,13 +79,13 @@
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.waterCount")}:</th>
 	    		<td>
-	    			  <input type="text" class="easyui-numberbox"  name="waterCount" validtype="length[0,30]" data-options="required:true" style="width:150px;" /> 
+	    			  <input type="text" class="easyui-numberbox"  name="waterCount" validtype="length[0,10]" data-options="required:true" style="width:150px;" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.waterDerate")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="waterDerate" data-options="required:true"  style="width:150px;"/> 
+	    			  <input class="easyui-numberbox" type="text" name="waterDerate" validtype="length[0,10]" data-options="required:true"  style="width:150px;"/> 
 	    		</td>
 	    	</tr>
 	    	</table>
@@ -96,13 +96,13 @@
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.electricityCount")}:</th>
 	    		<td>
-	    			  <input type="text" class="easyui-numberbox"  name="electricityCount" validtype="length[0,30]" data-options="required:true" style="width:150px;" /> 
+	    			  <input type="text" class="easyui-numberbox"  name="electricityCount" validtype="length[0,10]" data-options="required:true" style="width:150px;" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.waterElectricityRecord.electricityDerate")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="electricityDerate" data-options="required:true"  style="width:150px;"/> 
+	    			  <input class="easyui-numberbox" type="text" name="electricityDerate" validtype="length[0,10]" data-options="required:true"  style="width:150px;"/> 
 	    		</td>
 	    	</tr>
 	    	</table>

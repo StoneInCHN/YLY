@@ -4,16 +4,16 @@
 	    <legend>黑名单查询</legend>
 	    <form id="blacklist_search_form" class="search-form">
 	    	<div class="search-item">
-			    <label> 名字查询:</label>
-			    <input type="text" class="easyui-textbox" id="name" name="elderlyInfo.name" style="width:85px;" />
+			    <label> 黑名单:</label>
+			    <input type="text" class="easyui-textbox" id="name" name="elderlyInfo.name" validtype="length[0,20]" style="width:85px;" />
 			</div>
 			<div class="search-item">
-			    <label> 查询时间从:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <label> 录入时间:</label>
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>到:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">

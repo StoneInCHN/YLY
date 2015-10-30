@@ -50,11 +50,6 @@ public class RepairRecord extends BaseEntity {
   private String repairOperator;
 
   /**
-   * 联系电话
-   */
-  private String contactPhone;
-  
-  /**
    * 备注
    */
   private String remark;
@@ -126,14 +121,4 @@ public class RepairRecord extends BaseEntity {
     this.remark = remark;
   }
 
-  @JsonProperty
-  @Column(length = 30)
-  public String getContactPhone() {
-    return contactPhone;
-  }
-
-  public void setContactPhone(String contactPhone) {
-    this.contactPhone = contactPhone;
-  }
-  
 }

@@ -3,21 +3,25 @@
 	  <fieldset>
 	    <legend>维修查询</legend>
 	    <form id="repairRecord_search_form" class="search-form">
-	    	<div class="search-item">
+	    	<!--<div class="search-item">
 			    <label> 维修内容:</label>
-			    <input type="text" class="easyui-textbox" id="repairContent" name="repairContent" style="width:85px;" />
+			    <input type="text" class="easyui-textbox" id="repairContent" name="repairContent" validtype="length[0,20]" style="width:85px;" />
 			</div>
 			<div class="search-item">
 			    <label> 维修地点:</label>
-			    <input type="text" class="easyui-textbox" id="repairPlace" name="repairPlace" style="width:85px;" />
+			    <input type="text" class="easyui-textbox" id="repairPlace" name="repairPlace" validtype="length[0,40]" style="width:85px;" />
+			</div>-->
+			<div class="search-item">
+			    <label> 维修人员:</label>
+			    <input type="text" class="easyui-textbox" id="reportOperator" name="reportOperator" validtype="length[0,20]" style="width:85px;" />
 			</div>
 			<div class="search-item">
-			    <label> 查询时间从:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <label> 录入时间:</label>
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>到:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -40,31 +44,25 @@
 	    	<tr>
 	    		<th>${message("yly.repairRecord.repairContent")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="repairContent" validtype="length[0,15]" data-options="required:true" style="width:200px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="repairContent" validtype="length[0,20]" data-options="required:true" style="width:200px;"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.repairRecord.reportOperator")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="reportOperator" validtype="length[0,15]" data-options="required:true" style="width:120px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="reportOperator" validtype="length[0,6]" data-options="required:true" style="width:120px;"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.repairRecord.repairPlace")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="repairPlace" validtype="length[0,15]" data-options="required:true" style="width:200px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="repairPlace" validtype="length[0,40]" data-options="required:true" style="width:200px;"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.repairRecord.repairOperator")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="repairOperator" validtype="length[0,15]" data-options="required:true" style="width:120px;"/>
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.phoneNumber")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="contactPhone" validtype="mobile" style="width:120px;"/>    
+	    			 <input class="easyui-textbox" type="text" name="repairOperator" validtype="length[0,6]" data-options="required:true" style="width:120px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

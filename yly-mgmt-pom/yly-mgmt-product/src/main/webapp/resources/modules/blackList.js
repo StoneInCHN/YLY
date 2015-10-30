@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#blacklistDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
-			    height: 500, 
+			    width: 500,    
+			    height: 510, 
 			    cache: false,   
 			    href:'../blackList/details.jhtml?id='+rowData.id,
 			    buttons:[{
@@ -30,7 +30,7 @@ $(function(){
 		      {title:message("yly.blacklist.name"),field:"name",width:20,align:'center',formatter:function(value,row,index){
 		    	  return row.elderlyInfo.name;
 		      }},
-		      {title:message("yly.common.createDate"),field:"createDate",width:20,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.common.insertDate"),field:"createDate",width:20,align:'center',formatter:function(value,row,index){
 		    	  return new Date(value).Format("yyyy-MM-dd");
 		      }},
 		      {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:20,align:'center',formatter:function(value,row,index){
@@ -53,8 +53,8 @@ $(function(){
 			add:function(){		
 				$('#addBlacklist').dialog({    
 				    title: message("yly.blacklist.add"),    
-				    width: 700,    
-				    height: 500,
+				    width: 370,    
+				    height: 370,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -103,13 +103,13 @@ $(function(){
 			edit:function(){
 				var _edit_row = $('#blacklist-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.editRow"));  
 					return false;
 				}
 				var _dialog = $('#editBlacklist').dialog({    
 				    title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 500,    
+				    width: 370,    
+				    height: 370,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../blackList/edit.jhtml?id='+_edit_row.id,
@@ -149,18 +149,13 @@ $(function(){
 			remove:function(){
 				var _edit_row = $('#blacklist-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.deleteRow"));  
 					return false;
 				}
 				listRemove('blacklist-table-list','../blackList/delete.jhtml');
 			}
 	}
 	$("#blacklist_search_btn").click(function(){
-	  /*var _queryParams = {
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-			  blackListName:$("#blackListName").val()
-	  }*/
 	  var _queryParams = $("#blacklist_search_form").serializeJSON();
 	  $('#blacklist-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#blacklist-table-list").datagrid('reload');

@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#repairRecordDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
-			    height: 500, 
+			    width: 400,    
+			    height: 380, 
 			    cache: false,   
 			    href:'../repairRecord/details.jhtml?id='+rowData.id,
 			    buttons:[{
@@ -28,11 +28,10 @@ $(function(){
 		   [
 		      {field:'ck',checkbox:true},
 		      {title:message("yly.repairRecord.repairContent"),field:"repairContent",width:40,sortable:true},
-		      {title:message("yly.common.createDate"),field:"createDate",width:40,sortable:true, formatter: function(value,row,index){
+		      {title:message("yly.common.insertDate"),field:"createDate",width:40,sortable:true, formatter: function(value,row,index){
 		    	  return new Date(value).Format("yyyy-MM-dd");
 		      }},
 		      {title:message("yly.repairRecord.repairPlace"),field:"repairPlace",width:80,align:'center',sortable:true},
-		      {title:message("yly.common.phonenumber"),field:"contactPhone",width:70,align:'center',sortable:true},
 		      {title:message("yly.repairRecord.reportOperator"),field:"reportOperator",width:20,align:'center',sortable:true},
 		      {title:message("yly.repairRecord.repairOperator"),field:"repairOperator",width:80,sortable:true}
 		   ]
@@ -46,8 +45,8 @@ $(function(){
 			add:function(){		
 				$('#addRepairRecord').dialog({    
 				    title: message("yly.repairRecord.add"),    
-				    width: 700,    
-				    height: 500,
+				    width: 400,    
+				    height: 380,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -96,13 +95,13 @@ $(function(){
 			edit:function(){
 				var _edit_row = $('#repairRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.editRow"));  
 					return false;
 				}
 				var _dialog = $('#editRepairRecord').dialog({    
 				    title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 500,    
+				    width: 400,    
+				    height: 380,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../repairRecord/edit.jhtml?id='+_edit_row.id,
@@ -134,7 +133,7 @@ $(function(){
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editrepairRecord').dialog("close");
+							 $('#editRepairRecord').dialog("close");
 						}
 				    }]
 				});  
@@ -142,7 +141,7 @@ $(function(){
 			remove:function(){
 				var _edit_row = $('#repairRecord-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.deleteRow"));  
 					return false;
 				}
 				listRemove('repairRecord-table-list','../repairRecord/delete.jhtml');

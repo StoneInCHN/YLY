@@ -52,6 +52,8 @@ var messages = {
 	"yly.common.bedRoom":"房间",
 	"yly.common.nurseLevel":"护理等级",
 	"yly.common.please.select":"请选择...",
+	"yly.common.insertDate": "录入时间",
+	"yly.common.notice":"注意",
 	
 	
 	/**

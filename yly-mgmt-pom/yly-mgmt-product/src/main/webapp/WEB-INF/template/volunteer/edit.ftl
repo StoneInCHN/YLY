@@ -7,18 +7,18 @@
 		    	<tr>
 		    		<th>${message("yly.volunteer.name")}:</th>
 		    		<td>
-		    			 <input class="easyui-textbox" type="text" name="volunteerName" value="${volunteer.volunteerName}" validtype="length[0,15]" data-options="required:true" style="width:100px;"/>   
+		    			 <input class="easyui-textbox" type="text" name="volunteerName" value="${volunteer.volunteerName}" validtype="length[0,6]" data-options="required:true" style="width:100px;"/>   
 		    		</td>
 		    		<th>${message("yly.idCard")}:</th>
 		    		<td>
-		    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" data-options="required:true" style="width:150px;"/> 
+		    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" style="width:150px;"/> 
 		    		</td>
 		    		
 		    	</tr>
 		    	<tr>
 		    		<th>${message("yly.type")}:</th>
 		    		<td>
-		    		  <select id="gender" class="easyui-combobox" name="volunteerType" style="width:85px;">   
+		    		  <select id="gender" class="easyui-combobox" name="volunteerType" editable="false" data-options="required:true" style="width:85px;">   
 	    			  	<option value="PERSONAL" [#if volunteer.volunteerType =="PERSONAL"] selected="selected" [/#if]>${message("yly.volunteer.personal")}</option>
 						<option value="ORGANIZATION" [#if volunteer.volunteerType =="ORGANIZATION"] selected="selected" [/#if]>${message("yly.volunteer.organization")}</option>  
 					  </select>  
@@ -33,7 +33,7 @@
 		    	<tr>
 		    		<th>${message("yly.volunteer.activityTime")}:</th>
 		    		<td>
-		    			  <input type="text" class="easyui-datebox"  name="activityTime" value="${volunteer.activityTime}" validtype="length[0,30]" style="width:150px;" /> 
+		    			  <input type="text" class="easyui-datebox" name="activityTime" editable="false" value="${volunteer.activityTime}" required="required" /> 
 		    		</td>
 	    		</tr>
 		    	<tr>

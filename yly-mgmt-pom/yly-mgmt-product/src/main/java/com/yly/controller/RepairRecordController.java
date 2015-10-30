@@ -55,7 +55,7 @@ public class RepairRecordController extends BaseController {
   public @ResponseBody Page<RepairRecord> list(RepairRecord repairRecord, Date begainDate,
       Date endDate, Pageable pageable) {
     if (repairRecord.getRepairContent() != null || repairRecord.getRepairPlace() != null
-        || begainDate != null || endDate != null) {
+        || repairRecord.getRepairOperator() != null || begainDate != null || endDate != null) {
       return repairRecordService.searchListByFilter(pageable, begainDate, endDate, repairRecord);
     }
     return repairRecordService.findPage(pageable);

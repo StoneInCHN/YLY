@@ -11,8 +11,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#volunteerDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 700,    
-			    height: 500, 
+			    width: 600,    
+			    height: 550, 
 			    cache: false,   
 			    href:'../volunteer/details.jhtml?id='+rowData.id,
 			    buttons:[{
@@ -56,8 +56,8 @@ $(function(){
 			add:function(){		
 				$('#addvolunteer').dialog({    
 				    title: message("yly.volunteer.add"),    
-				    width: 700,    
-				    height: 500,
+				    width: 600,    
+				    height: 550,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -106,13 +106,13 @@ $(function(){
 			edit:function(){
 				var _edit_row = $('#volunteer-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.editRow"));  
 					return false;
 				}
 				var _dialog = $('#editvolunteer').dialog({    
 				    title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 500,    
+				    width: 600,    
+				    height: 550,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../volunteer/edit.jhtml?id='+_edit_row.id,
@@ -152,19 +152,13 @@ $(function(){
 			remove:function(){
 				var _edit_row = $('#volunteer-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert(message("yly.common.select.editRow"));  
+					$.messager.alert(message("yly.common.notice"),message("yly.common.select.deleteRow"));  
 					return false;
 				}
 				listRemove('volunteer-table-list','../volunteer/delete.jhtml');
 			}
 	}
 	$("#volunteer_search_btn").click(function(){
-	  /*var _queryParams = {
-			  beginDate:$("#volunteer_search_form #beginDate").val(),
-			  endDate:$("#volunteer_search_form #endDate").val(),
-			  volunteerName:$("#volunteer_search_form #volunteerName").val(),
-			  volunteerType:$("#volunteerType").val()
-	  }*/
 	  var _queryParams = $("#volunteer_search_form").serializeJSON();
 	  $('#volunteer-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#volunteer-table-list").datagrid('reload');

@@ -25,6 +25,7 @@ import com.yly.utils.DateTimeUtils;
 
 /**
  * ServiceImpl - 水电抄表记录
+ * 
  * @author pengyanan
  *
  */
@@ -34,13 +35,13 @@ public class WaterElectricityRecordServiceImpl extends
 
   @Resource(name = "waterElectricityRecordDaoImpl")
   private WaterElectricityRecordDao waterElectricityRecordDao;
-  
+
   @Resource
-  private void setBaseDao(WaterElectricityRecordDao waterElectricityRecordDao){
+  private void setBaseDao(WaterElectricityRecordDao waterElectricityRecordDao) {
     super.setBaseDao(waterElectricityRecordDao);
   }
 
-  
+
   @Override
   public Page<WaterElectricityRecord> searchListByFilter(Pageable pageable, Date beginDate,
       Date endDate, WaterElectricityRecord waterEletricityRecord) {
@@ -48,22 +49,58 @@ public class WaterElectricityRecordServiceImpl extends
     analyzer.setMaxWordLength(true);
     BooleanQuery query = new BooleanQuery();
     Query keywordQuery = null;
+    Query roomNumberQuery = null;
+    Query roomNameQuery = null;
 
-    // 关键字搜索
+
     try {
+      // 关键字搜索
       for (Field field : waterEletricityRecord.getClass().getDeclaredFields()) {
         field.setAccessible(true);
-        if (!field.getName().equals("serialVersionUID") && field.get(waterEletricityRecord) != null) {
+        if (!field.getName().equals("serialVersionUID") && !field.getName().equals("room")
+            && field.get(waterEletricityRecord) != null) {
           String text = QueryParser.escape(field.get(waterEletricityRecord).toString());
           QueryParser keywordParser = new QueryParser(Version.LUCENE_35, field.getName(), analyzer);
           keywordQuery = keywordParser.parse(text);
           query.add(keywordQuery, Occur.MUST);
           if (LogUtil.isDebugEnabled(WaterElectricityRecordServiceImpl.class)) {
-            LogUtil.debug(WaterElectricityRecordServiceImpl.class, "waterEletricityRecordSearch",
-                "Search waterEletricityRecord with params, tenant ID=%s, key attribute=%s, value=%s",
-                tenantAccountService.getCurrentTenantID(), field.getName(), field.get(waterEletricityRecord)
-                    .toString());
+            LogUtil
+                .debug(
+                    WaterElectricityRecordServiceImpl.class,
+                    "waterEletricityRecordSearch",
+                    "Search waterEletricityRecord with params, tenant ID=%s, key attribute=%s, value=%s",
+                    tenantAccountService.getCurrentTenantID(), field.getName(),
+                    field.get(waterEletricityRecord).toString());
           }
+        }
+      }
+      // 关键字 - 房间号
+      if (waterEletricityRecord.getRoom() != null
+          && waterEletricityRecord.getRoom().getRoomNumber() != null) {
+        String text = QueryParser.escape(waterEletricityRecord.getRoom().getRoomNumber());
+        QueryParser roomNumberParser =
+            new QueryParser(Version.LUCENE_35, "room.roomNumber", analyzer);
+        roomNumberQuery = roomNumberParser.parse(text);
+        query.add(roomNumberQuery, Occur.MUST);
+        if (LogUtil.isDebugEnabled(WaterElectricityRecordServiceImpl.class)) {
+          LogUtil.debug(WaterElectricityRecordServiceImpl.class, "waterEletricityRecordSearch",
+              "Search waterEletricityRecord with params, tenant ID=%s, room。roomNumber=%s",
+              tenantAccountService.getCurrentTenantID(), waterEletricityRecord.getRoom()
+                  .getRoomNumber());
+        }
+      }
+      // 关键字 - 房间名字
+      if (waterEletricityRecord.getRoom() != null
+          && waterEletricityRecord.getRoom().getRoomName() != null) {
+        String text = QueryParser.escape(waterEletricityRecord.getRoom().getRoomName());
+        QueryParser roomNameParser = new QueryParser(Version.LUCENE_35, "room.roomName", analyzer);
+        roomNameQuery = roomNameParser.parse(text);
+        query.add(roomNameQuery, Occur.MUST);
+        if (LogUtil.isDebugEnabled(WaterElectricityRecordServiceImpl.class)) {
+          LogUtil.debug(WaterElectricityRecordServiceImpl.class, "waterEletricityRecordSearch",
+              "Search waterEletricityRecord with params, tenant ID=%s, room.roomName=%s",
+              tenantAccountService.getCurrentTenantID(), waterEletricityRecord.getRoom()
+                  .getRoomName());
         }
       }
       // 关键字-时间范围

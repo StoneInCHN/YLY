@@ -5,11 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -22,9 +28,11 @@ import com.yly.entity.base.BaseEntity;
  */
 @Entity
 @Table(name = "yly_water_electricity_record")
-@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_water_electricity_record_sequence")
-public class WaterElectricityRecord extends BaseEntity{
-  
+@SequenceGenerator(name = "sequenceGenerator",
+    sequenceName = "yly_water_electricity_record_sequence")
+@Indexed(index = "waterElectricityRecord")
+public class WaterElectricityRecord extends BaseEntity {
+
 
   private static final long serialVersionUID = 261299867492190060L;
 
@@ -32,22 +40,22 @@ public class WaterElectricityRecord extends BaseEntity{
    * 租户ID
    */
   private Long tenantID;
-  
+
   /**
    * 抄表地点
    */
   private Room room;
-  
+
   /***
    * 抄表开始时间
    */
   private Date recordStartDate;
-  
+
   /**
    * 抄表结束时间
    */
   private Date recordEndDate;
-  
+
   /**
    * 周期内用水的总吨数
    */
@@ -60,7 +68,7 @@ public class WaterElectricityRecord extends BaseEntity{
    * 实际用水吨数
    */
   private BigDecimal waterActual;
-  
+
   /**
    * 周期内用电的总度数
    */
@@ -73,7 +81,7 @@ public class WaterElectricityRecord extends BaseEntity{
    * 实际用电度数
    */
   private BigDecimal electricityActual;
-  
+
   /**
    * 抄表人
    */
@@ -83,9 +91,10 @@ public class WaterElectricityRecord extends BaseEntity{
    * 备注
    */
   private String remark;
-  
+
   @JsonProperty
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
+  @IndexedEmbedded
   public Room getRoom() {
     return room;
   }
@@ -94,7 +103,7 @@ public class WaterElectricityRecord extends BaseEntity{
     this.room = room;
   }
 
-  @Column(length=50)
+  @Column(length = 50)
   public String getRemark() {
     return remark;
   }
@@ -104,7 +113,8 @@ public class WaterElectricityRecord extends BaseEntity{
   }
 
   @JsonProperty
-  @Column(length=15)
+  @Column(length = 15)
+  @Field(analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getOperator() {
     return operator;
   }
@@ -114,7 +124,7 @@ public class WaterElectricityRecord extends BaseEntity{
   }
 
   @JsonProperty
-  @Index(name="water_electricity_record_tenantid")
+  @Index(name = "water_electricity_record_tenantid")
   public Long getTenantID() {
     return tenantID;
   }
@@ -146,7 +156,7 @@ public class WaterElectricityRecord extends BaseEntity{
   public BigDecimal getWaterCount() {
     return waterCount;
   }
-  
+
   public void setWaterCount(BigDecimal waterCount) {
     this.waterCount = waterCount;
   }

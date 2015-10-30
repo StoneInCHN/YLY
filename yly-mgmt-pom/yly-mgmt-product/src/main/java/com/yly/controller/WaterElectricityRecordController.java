@@ -58,11 +58,13 @@ public class WaterElectricityRecordController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<WaterElectricityRecord> list(Pageable pageable, Date beginDate,
       Date endDate, WaterElectricityRecord waterElectricityRecord) {
-    if ((waterElectricityRecord != null && waterElectricityRecord.getRoom() != null)
-        || waterElectricityRecord.getRoom().getRoomName() != null
-        || waterElectricityRecord.getRoom().getRoomNumber() != null || beginDate != null
-        || endDate != null) {
-
+    if (waterElectricityRecord != null
+        && waterElectricityRecord.getRoom() != null
+        && (waterElectricityRecord.getRoom().getRoomName() != null
+            || waterElectricityRecord.getRoom().getRoomNumber() != null
+            || waterElectricityRecord.getOperator() != null || beginDate != null || endDate != null)) {
+      return waterElectricityRecordService.searchListByFilter(pageable, beginDate, endDate,
+          waterElectricityRecord);
     }
     return waterElectricityRecordService.findPage(pageable);
   }
@@ -76,7 +78,7 @@ public class WaterElectricityRecordController extends BaseController {
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public @ResponseBody Message add(WaterElectricityRecord waterElectricityRecord, Long roomId) {
     if (waterElectricityRecord != null && roomId != null) {
-      // 计算计费用水量，用电量
+      // 计算计费用水量，用电量 -START
       BigDecimal waterAcutal =
           waterElectricityRecord.getWaterCount().subtract(waterElectricityRecord.getWaterDerate());
       BigDecimal electricityActual =
@@ -85,6 +87,7 @@ public class WaterElectricityRecordController extends BaseController {
       waterAcutal = waterAcutal.compareTo(BigDecimal.ZERO) > 0 ? waterAcutal : BigDecimal.ZERO;
       electricityActual =
           electricityActual.compareTo(BigDecimal.ZERO) > 0 ? electricityActual : BigDecimal.ZERO;
+      // 计算计费用水量，用电量 -END
       waterElectricityRecord.setWaterActual(waterAcutal);
       waterElectricityRecord.setElectricityActual(electricityActual);
       waterElectricityRecord.setTenantID(tenantAccountService.getCurrentTenantID());
@@ -126,10 +129,17 @@ public class WaterElectricityRecordController extends BaseController {
     return "/waterElectricityRecord/edit";
   }
 
+  /**
+   * 更新
+   * 
+   * @param waterElectricityRecord
+   * @param roomId
+   * @return
+   */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(WaterElectricityRecord waterElectricityRecord, Long roomId) {
     if (waterElectricityRecord != null && roomId != null) {
-      // 计算计费用水量，用电量
+      // 计算计费用水量，用电量 -START
       BigDecimal waterAcutal =
           waterElectricityRecord.getWaterCount().subtract(waterElectricityRecord.getWaterDerate());
       BigDecimal electricityActual =
@@ -138,6 +148,7 @@ public class WaterElectricityRecordController extends BaseController {
       waterAcutal = waterAcutal.compareTo(BigDecimal.ZERO) > 0 ? waterAcutal : BigDecimal.ZERO;
       electricityActual =
           electricityActual.compareTo(BigDecimal.ZERO) > 0 ? electricityActual : BigDecimal.ZERO;
+      // 计算计费用水量，用电量 -END
       waterElectricityRecord.setWaterActual(waterAcutal);
       waterElectricityRecord.setElectricityActual(electricityActual);
       waterElectricityRecord.setRoom(roomService.find(roomId));
@@ -146,5 +157,22 @@ public class WaterElectricityRecordController extends BaseController {
     } else {
       return ERROR_MESSAGE;
     }
+  }
+
+  /**
+   * 删除
+   * 
+   * @param ids
+   * @return
+   */
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  public @ResponseBody Message delete(Long[] ids) {
+    if (ids != null) {
+      waterElectricityRecordService.delete(ids);
+      return SUCCESS_MESSAGE;
+    } else {
+      return ERROR_MESSAGE;
+    }
+
   }
 }

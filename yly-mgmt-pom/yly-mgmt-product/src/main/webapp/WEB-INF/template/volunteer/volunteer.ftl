@@ -4,11 +4,11 @@
 	    <legend>志愿者查询</legend>
 	    <form id="volunteer_search_form" class="search-form">
 	    	<div class="search-item">
-			    <label> 名字查询:</label>
-			    <input type="text" class="easyui-textbox" id="volunteerName" name="volunteerName" style="width:85px;" />
+			    <label> 志愿者:</label>
+			    <input type="text" class="easyui-textbox" id="volunteerName" validtype="length[0,20]" name="volunteerName" style="width:85px;" />
 			</div>
 			<div class="search-item">
-				<label> 机构查询:</label>
+				<label> 机构类型:</label>
 	    		<input class="easyui-combobox" data-options="
 				valueField: 'label',
 				textField: 'value',
@@ -22,12 +22,12 @@
 				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="volunteerType" name="volunteerType" style="width:130px;"/>
 			</div>
 			<div class="search-item">
-			    <label> 活动发生时间从:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <label> 活动时间:</label>
+			    <input type="text" class="Wdate" id="beginDate" name="beginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
 			    <label>到:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -55,14 +55,14 @@
 	    		</td>
 	    		<th>${message("yly.idCard")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" data-options="required:true" style="width:150px;"/> 
+	    			  <input class="easyui-textbox" type="text" name="idcard" value="${volunteer.idcard}" validtype="idcard" style="width:150px;"/> 
 	    		</td>
 	    		
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.type")}:</th>
 	    		<td>
-	    		  <select class="easyui-combobox" name="volunteerType" style="width:85px;">   
+	    		  <select class="easyui-combobox" name="volunteerType" editable="false" required="required" style="width:85px;">   
     			  	<option value="PERSONAL">${message("yly.volunteer.personal")}</option>
 					<option value="ORGANIZATION">${message("yly.volunteer.organization")}</option>  
 				  </select>  
@@ -77,7 +77,7 @@
 	    	<tr>
 	    		<th>${message("yly.volunteer.activityTime")}:</th>
 	    		<td>
-	    			  <input type="text" class="Wdate"  name="activityTime" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/> 
+	    			  <input type="text" class="easyui-datebox"  editable="false" name="activityTime" required="required" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
