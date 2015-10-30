@@ -75,6 +75,7 @@ var checkinCharge_manager_tool = {
 						        param.configKey = 'MEALTYPE';// 参数
 						    },
 						    onChange:function(value){
+						    	if(value==null || value=='') return;
 						    	$.ajax({
 									url:"../mealChargeConfig/detail.jhtml",
 									type:"post",
@@ -228,11 +229,12 @@ $(function(){
 				disabled:true
 				
 			});
+			$("#mealType").textbox('reset');
 			$("#mealType").textbox({
 				required:false,
 				disabled:true
-				
 			});
+			$("#chargein_mealAmount").numberbox('reset');
 			$("#chargein_mealAmount").numberbox({
 				required:false,
 				disabled:true
