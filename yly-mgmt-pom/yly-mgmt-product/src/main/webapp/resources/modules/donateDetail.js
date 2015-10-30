@@ -1,6 +1,8 @@
 
 $(function(){
+	
 	donateDetail_manager_tool = {
+			
 			add:function(){
 				$('#addDonateDetail').dialog({
 				    title: "添加捐赠详情",    
@@ -46,8 +48,15 @@ $(function(){
 				    }],
 				    onLoad:function(){
 				    	$('#addDonateDetail_form').show();
+				    	$('#recordId').val(recordId);
+				    	$("#donateItemType").combobox({    
+						    valueField:'id',    
+						    textField:'itemName',
+						    cache: true,
+						    readyonly:true,
+						    url:'../donateItemType/findAllDonateItemTypes.jhtml'
+						});
 				    },
-				
 				});  
 				 
 			},
@@ -57,23 +66,23 @@ $(function(){
 					$.messager.alert('警告','请选择要编辑的行');  
 					return false;
 				}
-				var _dialog = $('#editDonateRecord').dialog({    
+				var _dialog = $('#editDonateDetail').dialog({    
 				    title: '药品编辑',     
 				    width: 700,    
 				    height: 400,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
-				    href:'../donateRecord/edit.jhtml?id='+_edit_row.id,
+				    href:'../donateDetail/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
 				    	text:'保存',
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#editDonateRecord_form').form('validate');
+							var validate = $('#editDonateDetail_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../donateRecord/update.jhtml",
+									url:"../donateDetail/update.jhtml",
 									type:"post",
-									data:$("#editDonateRecord_form").serialize(),
+									data:$("#editDonateDetail_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:"正在保存中......"
@@ -88,8 +97,8 @@ $(function(){
 												timeout:3000,
 												showType:'slide'
 											});
-											$('#editDonateRecord').dialog("close");
-											$("#donateRecord_table-list").datagrid('reload');
+											$('#editDonateDetail').dialog("close");
+											$("#donateDetail_table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}
@@ -101,13 +110,24 @@ $(function(){
 						text:'取消',
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editDonateRecord').dialog("close").form("reset");
+							 $('#editDonateDetail').dialog("close").form("reset");
 						}
-				    }]
+				    }],
+				    onLoad:function(){
+				    	$('#addDonateDetail_form').show();
+				    	$('#recordId').val(recordId);
+						console.log($('#recordId').val());
+				    	$("#donateItemType").combobox({    
+						    valueField:'id',    
+						    textField:'itemName',
+						    cache: true,
+						    url:'../donateItemType/findAllDonateItemTypes.jhtml'
+						});
+				    },
 				});  
 			},
 			remove:function(){
-				var _rows = $('#donateRecord-table-list').datagrid('getSelections');
+				var _rows = $('#donateDetail-table-list').datagrid('getSelections');
 				if(_rows == null){
 					$.messager.alert('警告','请选择要删除的内容');  
 				}else{
@@ -119,7 +139,7 @@ $(function(){
 						$.messager.confirm('确认','您确认想要删除记录吗？',function(r){
 							if(r){
 								$.ajax({
-									url:"../donateRecord/delete.jhtml",
+									url:"../donateDetail/delete.jhtml",
 									type:"post",
 									traditional: true,
 									data:{"ids":_ids},
@@ -137,7 +157,7 @@ $(function(){
 												timeout:3000,
 												showType:'slide'
 											});
-											$("#donateRecord-table-list").datagrid('reload');
+											$("#donateDetail-table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}

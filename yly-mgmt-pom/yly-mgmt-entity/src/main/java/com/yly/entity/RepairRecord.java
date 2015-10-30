@@ -6,8 +6,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -58,8 +63,9 @@ public class RepairRecord extends BaseEntity {
    */
   private Long tenantID;
   
-  
+  @JsonProperty
   @Column(length = 50)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getRepairContent() {
     return repairContent;
   }
@@ -68,7 +74,9 @@ public class RepairRecord extends BaseEntity {
     this.repairContent = repairContent;
   }
 
+  @JsonProperty
   @Column(length = 50)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getRepairPlace() {
     return repairPlace;
   }
@@ -77,7 +85,9 @@ public class RepairRecord extends BaseEntity {
     this.repairPlace = repairPlace;
   }
 
+  @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getRepairOperator() {
     return repairOperator;
   }
@@ -86,7 +96,9 @@ public class RepairRecord extends BaseEntity {
     this.repairOperator = repairOperator;
   }
   
+  @JsonProperty
   @Column(length = 15)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getReportOperator() {
     return reportOperator;
   }
@@ -104,6 +116,7 @@ public class RepairRecord extends BaseEntity {
     this.tenantID = tenantID;
   }
   
+  @JsonProperty
   @Column(length = 50)
   public String getRemark() {
     return remark;
@@ -113,6 +126,7 @@ public class RepairRecord extends BaseEntity {
     this.remark = remark;
   }
 
+  @JsonProperty
   @Column(length = 30)
   public String getContactPhone() {
     return contactPhone;

@@ -4,7 +4,7 @@
 <div>
 	  <fieldset>
 	    <legend>药品查询</legend>
-	    <form id="donateRecord-search-form" class="search-form">
+	    <form id="tenantUser-search-form" class="search-form">
 	    <div class="search-item">
 			    <label> 名称查询:</label>
 			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
@@ -23,133 +23,138 @@
 	    </div>
 	  </fieldset>
 </div>
-<table id="fixedAssets-table-list"></table>
-<div id="fixedAssets_manager_tool">
+<table id="tenantUser-table-list"></table>
+<div id="tenantUser_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="fixedAssets_manager_tool.add();">添加</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="fixedAssets_manager_tool.edit();">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="fixedAssets_manager_tool.remove();">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="tenantUser_manager_tool.add();">添加</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="tenantUser_manager_tool.edit();">修改</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="tenantUser_manager_tool.remove();">删除</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div>
-<div id="addFixedAssets"> 
-	<form id="addFixedAssets_form" method="post" class="form-table">   
+<div id="addTenantUser"> 
+	<form id="addTenantUser_form" method="post" class="form-table">   
 	    <table class="table table-striped"  border="0">
 	    	<tr>
-	    		<th>资产编号:</th>
+	    		<th>姓名 :</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetNo" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="realName" data-options="required:true" />   
 	    		</td>
 	    	
-	    		<th>资产名称:</th>
+	    		<th>邮箱:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetName" data-options="required:true" />
+	    			 <input class="easyui-textbox" type="text" name="email" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>存放地点（部门）:</th>
+	    		<th>性别:</th>
+				  
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="department" />   
+	    			<input class="easyui-combobox" data-options="
+				     valueField: 'label',
+				     textField: 'value',
+				     data: [{
+				      label: 'MALE',
+				      value: '男'
+				     },{
+				      label: 'FEMALE',
+				      value: '女'
+				     }],
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="donatorGender" style="width:110px;"/>
 	    		</td>
 	    	
-	    		<th>数量:</th>
+	    		<th>年龄:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetCount" data-options="required:true" />
+	    			 <input class="easyui-textbox" type="text" name="age" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>计量单位:</th>
+	    		<th>相片:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetUnit" />   
+	    			 <input class="easyui-textbox" type="text" name="photo" data-options="required:true" />   
+	    		</td>
+	    		<th>身份证:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>员工编号:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" />   
 	    		</td>
 	    	
-	    		<th>使用状态:</th>
+	    		<th>工作年限:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="workingYear" data-options="required:true" />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>员工状态:</th>
 	    		<td>
 	    			<input class="easyui-combobox" data-options="
 				     valueField: 'label',
 				     textField: 'value',
 				     data: [{
 				      label: 'INSERVICE',
-				      value: '使用中'
+				      value: '在职'
 				     },{
 				      label: 'OUTSERVICE',
-				      value: '未使用'
-				     },{
-				      label: 'NONEED',
-				      value: '不需用'
+				      value: '离职'
 				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetUsage" style="width:110px;"/>
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="staffStatus" style="width:110px;"/>
+	    		</td>
+	    		<th>出生日期:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" type="text" name="birthDay" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>规格型号:</th>
+	    		<th>地址:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetSpecification"/>   
+	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" />   
 	    		</td>
 	    	
-	    		<th>产地:</th>
+	    		<th>邮编:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetOrigin"  />
+	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>制造商:</th>
+	    		<th>电话:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetManufacturer"  />   
+	    			 <input class="easyui-textbox" type="text" name="telephone" data-options="required:true" />   
 	    		</td>
 	    	
-	    		<th>供应商:</th>
+	    		<th>手机:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetProvider"  />
+	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>资产价值（RMB）:</th>
+	    		<th>所在部门:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetValue" />   
+	    			 <input class="easyui-combobox" id="tenantUserDepartment" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
 	    		</td>
 	    	
-	    		<th>资产类型:</th>
+	    		<th>担任职务:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" data-options="
-				     valueField: 'label',
-				     textField: 'value',
-				     data: [{
-				      label: 'BUILDING',
-				      value: '房屋建筑物'
-				     },{
-				      label: 'PRODUCTION',
-				      value: '生产经营'
-				     },{
-				      label: 'VEHICLE',
-				      value: '交通工具'
-				     },{
-				      label: 'ELECTRONIC',
-				      value: '电子设备'
-				     },{
-				      label: 'other',
-				      value: '其他'
-				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetType" style="width:110px;"/>
+	    			 <input class="easyui-textbox" type="text" name="position" id="position" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>录入日期:</th>
+	    		<th>入职时间:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="assetTime" name="assetTime" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
+	    			 <input type="text" class="Wdate" id="donateTime" name="hireDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>
 	    	
-	    		<th>备注:</th>
-	    		<td>
-	    			<input class="easyui-textbox" type="text" name="remark" />
-	    		</td>
 	    	</tr>
 	    </table>
 	</form>
 </div>
-<div id="editDonateRecord"></div>
-<div id="donateRecordDetail"></div>
+<div id="editTenantUser"></div>
+<div id="tenantUserDetail"></div>
 
 
 

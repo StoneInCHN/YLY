@@ -6,6 +6,7 @@ import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 
@@ -44,6 +45,7 @@ public class OperationLog extends BaseEntity{
    * @return 操作
    */
   @Column(nullable = false, updatable = false)
+  @JsonProperty
   public String getOperation() {
     return operation;
   }
@@ -63,6 +65,7 @@ public class OperationLog extends BaseEntity{
    * @return 操作员
    */
   @Column(updatable = false)
+  @JsonProperty
   public String getOperator() {
     return operator;
   }
@@ -82,6 +85,7 @@ public class OperationLog extends BaseEntity{
    * @return 内容
    */
   @Column(length = 3000, updatable = false)
+  @JsonProperty
   public String getContent() {
     return content;
   }
@@ -121,6 +125,7 @@ public class OperationLog extends BaseEntity{
    * @return IP
    */
   @Column(nullable = false, updatable = false)
+  @JsonProperty
   public String getIp() {
     return ip;
   }

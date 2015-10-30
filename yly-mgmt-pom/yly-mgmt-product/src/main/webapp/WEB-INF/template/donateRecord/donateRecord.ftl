@@ -46,8 +46,8 @@
 	    		<th>性别:</th>
 	    		<td>
 	    			<select id="donatorGender" class="easyui-combobox"  name="donatorGender" style="width:60px;">   
-						<option value="MALE" [#if donatorRecord.donatorGender == 'MALE'] selected = "selected"[/#if]>男</option>
-						<option value="FEMALE" [#if donatorRecord.donatorGender == 'FEMALE'] selected = "selected"[/#if]>女</option> 
+						<option value="MALE">男</option>
+						<option value="FEMALE">女</option> 
 				  </select>     
 	    		</td>
 	    	    <th>捐赠人电话:</th>
@@ -98,5 +98,6 @@
 
 <div id="donateDetail"></div>
 <div id="addDonateDetail"></div>
+<div id="editDonateDetail"></div>
 
 

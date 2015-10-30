@@ -68,7 +68,9 @@ public class BlackListServiceImpl extends BaseServiceImpl<BlackList, Long> imple
                 BlackListServiceImpl.class,
                 "BlackListSearch",
                 "Search volunteer with params, tenant ID=%s, blackListName=%s, startTime=%s, endTime=%s",
-                tenantAccountService.getCurrentTenantID(), blackList.getElderlyInfo().getName(), beginDate, endDate);
+                tenantAccountService.getCurrentTenantID(), blackList.getElderlyInfo().getName(), DateTimeUtils.convertDateToString(
+                    beginDate, null), DateTimeUtils.convertDateToString(
+                        endDate, null));
       }
       return super.search(query, pageable, analyzer, null);
     } catch (ParseException e) {

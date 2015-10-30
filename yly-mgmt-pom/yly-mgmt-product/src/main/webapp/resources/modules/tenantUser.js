@@ -4,19 +4,19 @@ $(function(){
 	$("#tenantUser-table-list").datagrid({
 		title:"药品列表",
 		fitColumns:true,
-		toolbar:"#fixedAssets_manager_tool",
-		url:'../fixedAssets/list.jhtml',  
+		toolbar:"#tenantUser_manager_tool",
+		url:'../tenantUser/list.jhtml',  
 		pagination:true,
 		loadMsg:"加载中......",
 		striped:true,
 		onDblClickRow : function (rowIndex, rowData){
-			$('#fixedAssetsDetail').dialog({    
+			$('#tenantUserDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 660,    
 			    height: 500, 
 			    cache: false,
 			    modal: true,
-			    href:'../fixedAssets/details.jhtml?id='+rowData.id,
+			    href:'../tenantUser/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
@@ -29,12 +29,27 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:"资产编号",field:"assetNo",width:100,sortable:true},
-		      {title:"资产名称",field:"assetName",width:100,sortable:true},
-		      {title:"存放部门",field:"department",width:100,sortable:true},
-		      {title:"资产数量",field:"assetCount",width:100,sortable:true},
+		      {title:"姓名",field:"realName",width:100,sortable:true},
+		      {title:"性别",field:"gender",width:100,sortable:true},
+		      {title:"年龄",field:"age",width:100,sortable:true},
+		      {title:"员工编号",field:"staffID",width:100,sortable:true},
+		      {title:"员工状态",field:"staffStatus",width:100,sortable:true},
 	    	  
-		      {title:"录入时间",field:"assetTime",width:100,sortable:true,formatter: function(value,row,index){
+		      {title:"所在部门",field:"department",width:100,sortable:true,formatter: function(value,row,index){
+		    	  if(value){
+		    		  return  value.name;
+		    	  }else{
+		    		  return  value;
+		    	  }
+	      	  }},
+		      {title:"担任职务",field:"position",width:100,sortable:true,formatter: function(value,row,index){
+		    	  if(value){
+		    		  return  value.name;
+		    	  }else{
+		    		  return  value;
+		    	  }
+	      	  }},
+		      {title:"入职时间",field:"hireDate",width:100,sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}
 		      },
@@ -43,9 +58,9 @@ $(function(){
 
 	});
 
-	fixedAssets_manager_tool = {
+	tenantUser_manager_tool = {
 			add:function(){
-				$('#addFixedAssets').dialog({
+				$('#addTenantUser').dialog({
 				    title: message("yly.drugsInfo.add"),    
 				    width: 700,    
 				    height: 550,
@@ -55,12 +70,12 @@ $(function(){
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addFixedAssets_form').form('validate');
+							var validate = $('#addTenantUser_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../fixedAssets/add.jhtml",
+									url:"../tenantUser/add.jhtml",
 									type:"post",
-									data:$("#addFixedAssets_form").serialize(),
+									data:$("#addTenantUser_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -70,8 +85,8 @@ $(function(){
 										$.messager.progress('close');
 										if(response == "success"){
 											showSuccessMsg(result.content);
-											$('#addFixedAssets').dialog("close").form("reset");
-											$("#fixedAssets_table-list").datagrid('reload');
+											$('#addTenantUser').dialog("close").form("reset");
+											$("#tenantUser_table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -83,39 +98,45 @@ $(function(){
 						text:'取消',
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addFixedAssets').dialog("close").form("reset");
+							 $('#addTenantUser').dialog("close").form("reset");
 						}
 				    }],
 				    onOpen:function(){
-				    	$('#addFixedAssets_form').show();
+				    	$('#addTenantUser_form').show();
+				    	$("#tenantUserDepartment").combobox({    
+						    valueField:'id',    
+						    textField:'name',
+						    cache: true,
+						    editable : false,
+						    url:'../department/findAllDepartments.jhtml'
+						});
 				    },
 				
 				});  
-				 $('#addFixedAssets_form').show();
 			},
 			edit:function(){
-				var _edit_row = $('#fixedAssets-table-list').datagrid('getSelected');
+				var _edit_row = $('#tenantUser-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert('警告','请选择要编辑的行');  
 					return false;
 				}
-				var _dialog = $('#editFixedAssets').dialog({    
+				var _dialog = $('#editTenantUser').dialog({    
 				    title: '药品编辑',     
 				    width: 700,    
 				    height: 550,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
-				    href:'../fixedAssets/edit.jhtml?id='+_edit_row.id,
+				    href:'../tenantUser/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
 				    	text:'保存',
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#editFixedAssets_form').form('validate');
+							var validate = $('#editTenantUser_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../fixedAssets/update.jhtml",
+									url:"../tenantUser/update.jhtml",
 									type:"post",
-									data:$("#editFixedAssets_form").serialize(),
+									data:$("#editTenantUser_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:"正在保存中......"
@@ -130,8 +151,8 @@ $(function(){
 												timeout:3000,
 												showType:'slide'
 											});
-											$('#editFixedAssets').dialog("close");
-											$("#fixedAssets_table-list").datagrid('reload');
+											$('#editTenantUser').dialog("close");
+											$("#tenantUser_table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}
@@ -143,13 +164,13 @@ $(function(){
 						text:'取消',
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editFixedAssets').dialog("close").form("reset");
+							 $('#editTenantUser').dialog("close").form("reset");
 						}
 				    }]
 				});  
 			},
 			remove:function(){
-				var _rows = $('#fixedAssets-table-list').datagrid('getSelections');
+				var _rows = $('#tenantUser-table-list').datagrid('getSelections');
 				if(_rows == null){
 					$.messager.alert('警告','请选择要删除的内容');  
 				}else{
@@ -161,7 +182,7 @@ $(function(){
 						$.messager.confirm('确认','您确认想要删除记录吗？',function(r){
 							if(r){
 								$.ajax({
-									url:"../fixedAssets/delete.jhtml",
+									url:"../tenantUser/delete.jhtml",
 									type:"post",
 									traditional: true,
 									data:{"ids":_ids},
@@ -179,7 +200,7 @@ $(function(){
 												timeout:3000,
 												showType:'slide'
 											});
-											$("#fixedAssets-table-list").datagrid('reload');
+											$("#tenantUser-table-list").datagrid('reload');
 										}else{
 											$.messager.alert('保存失败','未知错误','warning');
 										}
@@ -198,8 +219,8 @@ $(function(){
 			  beginDate:$("#beginDate").val(),
 			  endDate:$("#endDate").val(),
 	  }
-	  $('#fixedAssets-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#fixedAssets-table-list").datagrid('reload');
+	  $('#tenantUser-table-list').datagrid('options').queryParams = _queryParams;  
+	  $("#tenantUser-table-list").datagrid('reload');
 	})
 	
 	 

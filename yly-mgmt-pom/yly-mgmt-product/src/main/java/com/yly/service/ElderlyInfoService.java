@@ -1,6 +1,7 @@
 package com.yly.service;
 
 import java.util.Date;
+import java.util.List;
 
 import com.yly.entity.ElderlyInfo;
 import com.yly.framework.paging.Page;
@@ -26,5 +27,7 @@ public interface ElderlyInfoService extends BaseService<ElderlyInfo, Long> {
    */
   Page<ElderlyInfo> searchElderlyInfo(Date beHospitalizedBeginDate, Date beHospitalizedEndDate,
       ElderlyInfo elderlyInfo, Pageable pageable);
+  
+  List<ElderlyInfo> findByElderlyName(String nameKeys);
 
 }

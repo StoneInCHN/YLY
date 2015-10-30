@@ -11,6 +11,9 @@ public class FileInfo {
 
       /** 图片 */
       PROFILE_PICTURE,
+      
+      /** 相册 */
+      ALBUM,      
 
       /** Flash */
       FLASH,

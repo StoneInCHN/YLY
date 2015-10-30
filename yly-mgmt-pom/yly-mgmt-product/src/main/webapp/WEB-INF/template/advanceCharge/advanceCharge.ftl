@@ -51,7 +51,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.paymentType")}</th>
 	    		<td>
-	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="status" panelHeight="100px"
+	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="status" panelHeight="70px"
 			   		data-options="required:true,editable:false,
 					valueField: 'value',
 					textField: 'label',
@@ -61,9 +61,6 @@
 					},{
 						value: 'CARD',
 						label: '${message("yly.common.charge.paymentType.CARD")}'
-					},{
-						value: 'MIXTURE',
-						label: '${message("yly.common.charge.paymentType.MIXTURE")}'
 					}]" /> 
 	    		</td>
 	    	</tr>

@@ -28,7 +28,10 @@ $(function(){
 		   [
 		      {field:'ck',checkbox:true},
 		      {title:message("yly.repairRecord.repairContent"),field:"repairContent",width:40,sortable:true},
-		      {title:message("yly.repairRecord.repairPlace"),field:"repairRecord",width:80,align:'center',sortable:true},
+		      {title:message("yly.common.createDate"),field:"createDate",width:40,sortable:true, formatter: function(value,row,index){
+		    	  return new Date(value).Format("yyyy-MM-dd");
+		      }},
+		      {title:message("yly.repairRecord.repairPlace"),field:"repairPlace",width:80,align:'center',sortable:true},
 		      {title:message("yly.common.phonenumber"),field:"contactPhone",width:70,align:'center',sortable:true},
 		      {title:message("yly.repairRecord.reportOperator"),field:"reportOperator",width:20,align:'center',sortable:true},
 		      {title:message("yly.repairRecord.repairOperator"),field:"repairOperator",width:80,sortable:true}
@@ -96,7 +99,7 @@ $(function(){
 					$.messager.alert(message("yly.common.select.editRow"));  
 					return false;
 				}
-				var _dialog = $('#editrepairRecord').dialog({    
+				var _dialog = $('#editRepairRecord').dialog({    
 				    title: message("yly.common.edit"),     
 				    width: 700,    
 				    height: 500,    
@@ -107,12 +110,12 @@ $(function(){
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#editrepairRecord_form').form('validate');
+							var validate = $('#editRepairRecord_form').form('validate');
 							if(validate){
 								$.ajax({
 									url:"../repairRecord/update.jhtml",
 									type:"post",
-									data:$("#editrepairRecord_form").serialize(),
+									data:$("#editRepairRecord_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -121,7 +124,7 @@ $(function(){
 									success:function(result,response,status){
 										$.messager.progress('close');
 										showSuccessMsg(result.content);
-										$('#editrepairRecord').dialog("close");
+										$('#editRepairRecord').dialog("close");
 										$("#repairRecord-table-list").datagrid('reload');
 									}
 								});
@@ -146,11 +149,7 @@ $(function(){
 			}
 	}
 	$("#repairRecord_search_btn").click(function(){
-	  var _queryParams = {
-			  repairRecordName:$("#repairRecordName").val(),
-			  beginDate:$("#repairRecord_search_btn #beginDate").val(),
-			  endDate:$("#repairRecord_search_btn #endDate").val()
-	  }
+	  var _queryParams = $("#repairRecord_search_form").serializeJSON();
 	  $('#repairRecord-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#repairRecord-table-list").datagrid('reload');
 	})

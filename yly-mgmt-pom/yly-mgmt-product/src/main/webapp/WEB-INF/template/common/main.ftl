@@ -17,6 +17,9 @@
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/main.css" >
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/webuploader.css" >
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/upload-style.css" >
+ 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/multiple/style.css" >
+ 	<link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/_shared/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/connected-carousels/jcarousel.connected-carousels.css">
   </head>
 
   <body class="easyui-layout">   
@@ -85,7 +88,7 @@
 		    		<li><a href="#">老人档案</a></li>
 		    		<li><a href="#">合同附件</a></li>
 		    		<li><a href="#">评估报告</a></li>
-		    		<li><a href="#">老人相册</a></li>
+		    		<li><a href="#" data-url="${base}/console/elderlyPhotoAlbum/elderlyPhotoAlbum.jhtml">${message("yly.elderlyInfo.photoAlbum")}</a></li>
 					<li><a href="#" data-url="${base}/console/elderlyEventRecord/elderlyEventRecord.jhtml">${message("yly.elderlyInfo.event.record")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/elderlyStuffDeposit/elderlyStuffDeposit.jhtml">${message("yly.elderlyInfo.stuff.deposit")}</a></li>
 		    	</ul>    
@@ -108,10 +111,10 @@
 		    		<li><a href="#">通知公告</a></li>
 		    	</ul>
 		    	<ul title="系统管理" id="system">
-		    		<li><a href="#">用户管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">用户管理</a></li>
 		    		<li><a href="#">权限角色管理</a></li>
 		    		<li><a href="#">数据字典</a></li>
-		    		<li><a href="#">系统日志</a></li>
+		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		<li><a href="#" data-url="${base}/console/bedChargeConfig/bedChargeConfig.jhtml">${message("yly.charge.bed")}</a></li>
@@ -145,9 +148,8 @@
 		    		<li><a href="#"  data-url="${base}/console/blackList/blacklist.jhtml">${message("yly.blacklist.list")}</a></li>
 		    	</ul>
 		    	<ul title="${message("yly.logistics.config")}" id="logistics">
-		    		<li><a href="#">${message("yly.logistics.maintainRecord")}</a></li>
-		    		<li><a href="#">${message("yly.logistics.waterfeeRecord")}</a></li>
-		    		<li><a href="#">${message("yly.logistics.energyChargeRecord")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/repairRecord/repairRecord.jhtml">${message("yly.logistics.maintainRecord")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/waterElectricityRecord/waterElectricityRecord.jhtml">${message("yly.logistics.waterfeeRecord")}</a></li>
 		    	</ul>   
     </div>   
     <div class="main-content" data-options="region:'center'">
@@ -174,8 +176,8 @@
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
-	<script type="text/javascript" src="${base}/resources/js/fileUploadCommon.js"></script>
-	<script type="text/javascript" src="${base}/resources/js/collapse.js"></script>
+	<script src="${base}/resources/js/fileUploadCommon.js"></script>
+    <script src="${base}/resources/js/multiplefileUpload.js"></script>
 	<script>
 		var BASE_URL = '${base}/resources' ;
 	</script>

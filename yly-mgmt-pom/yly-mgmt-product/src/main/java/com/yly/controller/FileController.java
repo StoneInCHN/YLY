@@ -1,5 +1,7 @@
 package com.yly.controller;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -29,13 +31,15 @@ public class FileController extends BaseController {
   
 
   @RequestMapping(value = "/uploadProfilePhoto", method = RequestMethod.POST)
-  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,String identifier) {
-    
-    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
+//  public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,String identifier) {
+   public @ResponseBody Message uploadProfilePhoto(@RequestParam("file") MultipartFile file,Map<String, String> paramMap) { 
+//    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, identifier);
+    String filePath = fileService.upload(FileType.PROFILE_PICTURE, file, paramMap);
     if(filePath ==null){
       filePath ="";
     }
     return Message.success(filePath);
   }
+  
 
 }

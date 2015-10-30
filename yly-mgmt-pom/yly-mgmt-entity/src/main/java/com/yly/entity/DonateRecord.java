@@ -16,6 +16,7 @@ import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
@@ -24,6 +25,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Gender;
+import com.yly.lucene.DateBridgeImpl;
 
 
 /**
@@ -127,7 +129,7 @@ public class DonateRecord extends BaseEntity {
   @JsonProperty
   @Temporal(TemporalType.DATE)
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getDonateTime() {
     return donateTime;
   }

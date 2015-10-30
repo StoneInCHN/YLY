@@ -4,8 +4,12 @@
 	    <legend>维修查询</legend>
 	    <form id="repairRecord_search_form" class="search-form">
 	    	<div class="search-item">
-			    <label> 维修内容查询:</label>
+			    <label> 维修内容:</label>
 			    <input type="text" class="easyui-textbox" id="repairContent" name="repairContent" style="width:85px;" />
+			</div>
+			<div class="search-item">
+			    <label> 维修地点:</label>
+			    <input type="text" class="easyui-textbox" id="repairPlace" name="repairPlace" style="width:85px;" />
 			</div>
 			<div class="search-item">
 			    <label> 查询时间从:</label>
@@ -36,31 +40,37 @@
 	    	<tr>
 	    		<th>${message("yly.repairRecord.repairContent")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="repairContent" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="repairContent" validtype="length[0,15]" data-options="required:true" style="width:200px;"/>   
 	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.repairRecord.reportOperator")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="reportOperator" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="reportOperator" validtype="length[0,15]" data-options="required:true" style="width:120px;"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.repairRecord.repairPlace")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="repairPlace" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>   
+	    			 <input class="easyui-textbox" type="text" name="repairPlace" validtype="length[0,15]" data-options="required:true" style="width:200px;"/>   
 	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.repairRecord.repairOperator")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="repairOperator" validtype="length[0,15]" data-options="required:true" style="width:85px;"/>
+	    			 <input class="easyui-textbox" type="text" name="repairOperator" validtype="length[0,15]" data-options="required:true" style="width:120px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="contactPhone" validtype="mobile" style="width:85px;"/>    
+	    			  <input class="easyui-textbox" type="text" name="contactPhone" validtype="mobile" style="width:120px;"/>    
 	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td>
-	    			  <input type="text" class="easyui-textbox" name="remark" validtype="length[0,150]" data-options="multiline:true,height:90,width:120" />
+	    			  <input type="text" class="easyui-textbox" name="remark" validtype="length[0,150]" data-options="multiline:true,height:90,width:220" />
 	    		</td>
 	    	</tr>
 	    </table>

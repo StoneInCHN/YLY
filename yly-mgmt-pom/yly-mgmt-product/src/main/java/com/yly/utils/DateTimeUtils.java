@@ -109,7 +109,23 @@ public class DateTimeUtils implements Serializable {
     return shortDateFormat.format(date) + " 00:00:00";
   }
 
-
+ /**
+  * 取特定日期的特定时间
+  * @return
+  */
+  public static Date getSpecifyTimeForDate(Date date,int h,int m,int s) {
+    if (date == null) {
+      return null;
+    } 
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.set(Calendar.HOUR_OF_DAY, h);
+    calendar.set(Calendar.MINUTE, m);
+    calendar.set(Calendar.SECOND, s);
+    calendar.set(Calendar.MILLISECOND, 0);
+    return new Date(calendar.getTimeInMillis());
+  }
+  
   /**
    * 取当天零点零分零秒
    */

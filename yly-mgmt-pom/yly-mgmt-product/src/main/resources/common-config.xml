@@ -22,6 +22,7 @@
 		<setting name="mediaUploadPath" value="/upload/media/${.now?string('yyyyMM')}/" />
 		<setting name="fileUploadPath" value="/upload/file/${.now?string('yyyyMM')}/" />
 		<setting name="profilePictureUploadPath" value="/upload/image/${orgCode}/${identifier}/profile picture/" />
+		<setting name="albumUploadPath" value="/upload/image/${orgCode}/${identifier}/album/${albumName}/" />
 		<!-- cookie相关配置 -->
 		<setting name="cookiePath" value="/" />
 		<setting name="cookieDomain" value="" />

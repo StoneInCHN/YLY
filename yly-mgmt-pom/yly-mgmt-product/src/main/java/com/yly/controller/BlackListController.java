@@ -38,10 +38,10 @@ public class BlackListController extends BaseController {
 
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
-  
+
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
-  
+
   @Resource(name = "tenantInfoServiceImpl")
   private TenantInfoService tenantInfoService;
 
@@ -62,11 +62,11 @@ public class BlackListController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<BlackList> list(Date beginDate, Date endDate, Pageable pageable,
       BlackList blackList, ModelMap modelMap) {
-    if(blackList.getElderlyInfo() != null && 
-        blackList.getElderlyInfo().getName()!=null || beginDate!=null || endDate!=null){
+    if (blackList.getElderlyInfo() != null && blackList.getElderlyInfo().getName() != null
+        || beginDate != null || endDate != null) {
       return blackListService.searchList(beginDate, endDate, pageable, blackList);
     }
-    return blackListService.findPage (pageable);
+    return blackListService.findPage(pageable);
   }
 
 
@@ -77,9 +77,9 @@ public class BlackListController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(Long elderlyInfoID,BlackList blackList) {
+  public @ResponseBody Message add(Long elderlyInfoID, BlackList blackList) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-    if (elderlyInfo!=null && blackList != null) {
+    if (elderlyInfo != null && blackList != null) {
       blackList.setTenantID(tenantAccountService.getCurrentTenantID());
       blackList.setElderlyInfo(elderlyInfo);
       blackListService.save(blackList);
@@ -112,9 +112,10 @@ public class BlackListController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
     BlackList blackList = blackListService.find(id);
-    TenantInfo tenantInfo =null;
-    if(tenantAccountService.getCurrentTenantOrgCode()!=null){
-      tenantInfo = tenantInfoService.findTenantWithOrgCode(tenantAccountService.getCurrentTenantOrgCode());
+    TenantInfo tenantInfo = null;
+    if (tenantAccountService.getCurrentTenantOrgCode() != null) {
+      tenantInfo =
+          tenantInfoService.findTenantWithOrgCode(tenantAccountService.getCurrentTenantOrgCode());
     }
     model.addAttribute("blackList", blackList);
     model.addAttribute("tenantInfo", tenantInfo);

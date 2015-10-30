@@ -1,6 +1,7 @@
 package com.yly.service.impl;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -102,7 +103,8 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
     return false;
   }
 
-  public String upload(FileType fileType, MultipartFile multipartFile, String identifier, boolean async) {
+ // public String upload(FileType fileType, MultipartFile multipartFile, String identifier, boolean async) {
+  public String upload(FileType fileType, MultipartFile multipartFile, Map<String, String> paramMap, boolean async){
     if (multipartFile == null) {
       return null;
     }
@@ -116,12 +118,16 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
       uploadPath = setting.getFileUploadPath();
     } else if(fileType == FileType.PROFILE_PICTURE){
       uploadPath = setting.getProfilePictureUploadPath();
+    } else if(fileType == FileType.ALBUM){
+      uploadPath = setting.getAlbumUploadPath();
     }
     try {
       Map<String, Object> model = new HashMap<String, Object>();
 //      model.put("uuid", UUID.randomUUID().toString());
       model.put("orgCode", tenantAccountService.getCurrentTenantOrgCode());
-      model.put("identifier", identifier);
+      //model.put("identifier", identifier);
+      model.put("identifier", paramMap.get("identifier"));
+      model.put("albumName", paramMap.get("albumName"));      
       String path = FreemarkerUtils.process(uploadPath, model);
       String destPath =
           path + UUID.randomUUID() + "."
@@ -151,10 +157,10 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
     return null;
   }
 
-  public String upload(FileType fileType, MultipartFile multipartFile , String identifier) {
-    return upload(fileType, multipartFile, identifier, false);
+  //public String upload(FileType fileType, MultipartFile multipartFile , String identifier) {
+  public String upload(FileType fileType, MultipartFile multipartFile , Map<String, String> paramMap) { 
+    return upload(fileType, multipartFile, paramMap, false);
   }
-
   public String uploadLocal(FileType fileType, MultipartFile multipartFile , String identifier) {
     if (multipartFile == null) {
       return null;
@@ -169,6 +175,8 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
       uploadPath = setting.getFileUploadPath();
     } else if(fileType == FileType.PROFILE_PICTURE){
       uploadPath = setting.getProfilePictureUploadPath();
+    } else if(fileType == FileType.ALBUM){
+      uploadPath = setting.getAlbumUploadPath();
     }
     try {
       Map<String, Object> model = new HashMap<String, Object>();
@@ -256,5 +264,49 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
               FilenameUtils.getExtension(fileInfos2.getName())).toComparison();
     }
   }
-
+  /** 
+   * 删除某个文件夹下的所有子文件夹和子文件 
+   * 
+   * @param realPath 绝对路径
+   * @return boolean 
+   */  
+  public boolean deletefile(String realPath) throws Exception {
+    if (StringUtils.isBlank(realPath)) return false;
+    boolean isDeleted = false;
+   try {       
+    File file = new File(realPath);  
+    if (!file.isDirectory()) {  
+      isDeleted = file.delete();  
+    } else if (file.isDirectory()) {  
+     String[] filelist = file.list();  
+     for (int i = 0; i < filelist.length; i++) {  
+      File delfile = new File(realPath + "\\" + filelist[i]);  
+      if (!delfile.isDirectory()) {  
+          delfile.delete();  
+      } else if (delfile.isDirectory()) {  
+         deletefile(realPath + "\\" + filelist[i]);  
+      }  
+     }  
+     isDeleted = file.delete();  
+    }     
+   } catch (FileNotFoundException e) {  
+       e.printStackTrace();
+       return isDeleted;
+   }  
+   return isDeleted;  
+  }
+  
+  /**
+   * 根据相对路径获取 应用服务器上的绝对路径
+   * @param relativepath 相对路径
+   * @return
+   */
+  @Override
+  public String getRealPath(String relativepath) {  
+    if (StringUtils.isBlank(relativepath)){
+      return "";
+    }
+    return servletContext.getRealPath(relativepath);
+  }  
+  
 }
