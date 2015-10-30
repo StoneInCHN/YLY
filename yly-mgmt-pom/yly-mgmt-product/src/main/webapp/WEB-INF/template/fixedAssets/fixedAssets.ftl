@@ -3,11 +3,15 @@
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
-	    <legend>药品查询</legend>
+	    <legend>资产查询</legend>
 	    <form id="fixedAssets-search-form" class="search-form">
-	    <div class="search-item">
+	    	<div class="search-item">
 			    <label> 名称查询:</label>
-			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
+			    <input type="text" class="easyui-textbox" id="assetName" name="assetName" />
+			</div>
+			<div class="search-item">
+			    <label> 部门:</label>
+			    <input type="text" class="easyui-combobox" id="assetsDepartment-search" name="departmentSearchId"/>
 			</div>
 			<div class="search-item">
 			    <label> 录入时间:</label>
@@ -19,7 +23,7 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="fixedAssets-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
 	    </div>
 	  </fieldset>
 </div>
@@ -29,7 +33,6 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="fixedAssets_manager_tool.add();">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="fixedAssets_manager_tool.edit();">修改</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="fixedAssets_manager_tool.remove();">删除</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div>

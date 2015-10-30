@@ -1,6 +1,11 @@
 
 $(function(){
-	
+	$("#assetsDepartment-search").combobox({    
+	    valueField:'id',    
+	    textField:'name',
+	    cache: true,
+	    url:'../department/findAllDepartments.jhtml'
+	});
 	$("#fixedAssets-table-list").datagrid({
 		title:"固定资产列表",
 		fitColumns:true,
@@ -226,12 +231,8 @@ $(function(){
 				}
 			}
 	};
-	$("#search-btn").click(function(){
-	  var _queryParams = {
-			  drugName:$("#drugName").val(),
-			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
-	  }
+	$("#fixedAssets-search-btn").click(function(){
+	  var _queryParams = $("#fixedAssets-search-form").serializeJSON();
 	  $('#fixedAssets-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#fixedAssets-table-list").datagrid('reload');
 	})

@@ -60,8 +60,8 @@ public class FixedAssetsController extends BaseController
   }
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<FixedAssets> list (String donatorName,Date beginDate, Date endDate,
-      Pageable pageable, ModelMap model)
+  public @ResponseBody Page<FixedAssets> list (String assetName,Date beginDate, Date endDate,
+     String departmentSearchId, Pageable pageable, ModelMap model)
   {
     String startDateStr = null;
     String endDateStr = null;
@@ -70,7 +70,7 @@ public class FixedAssetsController extends BaseController
     analyzer.setMaxWordLength (true);
     BooleanQuery query = new BooleanQuery ();
 
-    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "donatorName",
+    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "assetName",
         analyzer);
     Query nameQuery = null;
     TermRangeQuery rangeQuery = null;
@@ -83,9 +83,9 @@ public class FixedAssetsController extends BaseController
     {
       endDateStr = DateTimeUtils.convertDateToString (endDate, null);
     }
-    if (donatorName != null)
+    if (assetName != null)
     {
-      String text = QueryParser.escape (donatorName);
+      String text = QueryParser.escape (assetName);
         try
         {
           nameQuery = nameParser.parse (text);
@@ -93,8 +93,8 @@ public class FixedAssetsController extends BaseController
           
           if (LogUtil.isDebugEnabled (FixedAssetsController.class))
           {
-            LogUtil.debug (FixedAssetsController.class, "search", "Search donatorName: "
-                + donatorName );
+            LogUtil.debug (FixedAssetsController.class, "search", "Search assetName: "
+                + assetName );
           }
         }
         catch (ParseException e)
@@ -103,9 +103,16 @@ public class FixedAssetsController extends BaseController
         }
         
     }
+    //过滤部门
+    if (departmentSearchId != null)
+    {
+      TermQuery departmentQuery = new TermQuery(new Term("department.id", departmentSearchId));  
+      query.add (departmentQuery,Occur.MUST);
+    }
+    
     if (startDateStr != null || endDateStr != null)
     {
-      rangeQuery = new TermRangeQuery ("donateTime", startDateStr, endDateStr, true, true);
+      rangeQuery = new TermRangeQuery ("assetTime", startDateStr, endDateStr, true, true);
       query.add (rangeQuery,Occur.MUST);
       
       if (LogUtil.isDebugEnabled (FixedAssetsController.class))
@@ -114,7 +121,7 @@ public class FixedAssetsController extends BaseController
             +" end date: "+endDateStr);
       }
     }
-    if (nameQuery != null || rangeQuery != null)
+    if (nameQuery != null || rangeQuery != null || departmentSearchId != null)
     {
       return fixedAssetsService.search (query, pageable, analyzer,filter);
     }
