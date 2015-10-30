@@ -96,7 +96,6 @@ public class Bed extends BaseEntity{
     this.description = description;
   }
 
-  @JsonProperty
   @ManyToOne(fetch = FetchType.EAGER)
   public Room getRoom() {
     return room;

@@ -46,5 +46,21 @@ $(function(){
 		}
 	})
 	
+	$("#selectRoom").click(function(){
+		$("#searchElderlyInfo").dialog({    
+		    title: '选床',    
+		    width: 1000,    
+		    height: 500,    
+		    closed: false,    
+		    cache: true,    
+		    href: '../room/changeRoom.jhtml',    
+		    modal: true,
+		    onClose:function(){
+		    	$('#searchElderlyInfo').empty;  
+		    }
+		}); 
+		
+	});
+	
 	
 })
