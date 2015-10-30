@@ -33,7 +33,15 @@ $(function(){
 		      {title:"性别",field:"gender",width:100,sortable:true},
 		      {title:"年龄",field:"age",width:100,sortable:true},
 		      {title:"员工编号",field:"staffID",width:100,sortable:true},
-		      {title:"员工状态",field:"staffStatus",width:100,sortable:true},
+		      {title:"员工状态",field:"staffStatus",width:100,sortable:true,
+		    	  formatter: function(value,row,index){
+			    	  if(value == "INSERVICE"){
+			    		  return  "在职";
+			    	  }else if (value = "OUTSERVICE"){
+			    		  return  "离职";
+			    	  }
+		      	  }  
+		      },
 	    	  
 		      {title:"所在部门",field:"department",width:100,sortable:true,formatter: function(value,row,index){
 		    	  if(value){
@@ -71,27 +79,34 @@ $(function(){
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addTenantUser_form').form('validate');
+							var $photoLi = $("#tenantUserUploader-add ul.filelist li");
+							
 							if(validate){
-								$.ajax({
-									url:"../tenantUser/add.jhtml",
-									type:"post",
-									data:$("#addTenantUser_form").serialize(),
-									beforeSend:function(){
-										$.messager.progress({
-											text:message("yly.common.saving")
-										});
-									},
-									success:function(result,response,status){
-										$.messager.progress('close');
-										if(response == "success"){
-											showSuccessMsg(result.content);
-											$('#addTenantUser').dialog("close").form("reset");
-											$("#tenantUser_table-list").datagrid('reload');
-										}else{
-											alertErrorMsg();
+								if($photoLi.length >0){
+									$("#tenantUserUploader-add .uploadBtn").trigger("upload");
+								}else{
+									$.ajax({
+										url:"../tenantUser/add.jhtml",
+										type:"post",
+										data:$("#addTenantUser_form").serialize(),
+										beforeSend:function(){
+											$.messager.progress({
+												text:message("yly.common.saving")
+											});
+										},
+										success:function(result,response,status){
+											$.messager.progress('close');
+											if(response == "success"){
+												showSuccessMsg(result.content);
+												$('#addTenantUser').dialog("close").form("reset");
+												$("#tenantUser_table-list").datagrid('reload');
+												$("#tenantUser_table-list").datagrid('reload');
+											}else{
+												alertErrorMsg();
+											}
 										}
-									}
-								});
+									});
+								}
 							};
 						}
 					},{
@@ -110,6 +125,97 @@ $(function(){
 						    editable : false,
 						    url:'../department/findAllDepartments.jhtml'
 						});
+				    	$("#tenantUserPosition").combobox({    
+						    valueField:'id',    
+						    textField:'name',
+						    cache: true,
+						    editable : false,
+						    url:'../position/findAllPositions.jhtml'
+						});
+				    	//头像上传
+				     	var options ={
+				     			createOption:{
+				     				pick: {
+						                 id: '#tenantUserFilePicker-add',
+						                 label: '',
+						                 multiple :false
+						             },
+						             dnd: '#tenantUserUploader-add .queueList',
+						             accept: {
+						                 title: 'Images',
+						                 extensions: 'gif,jpg,jpeg,bmp,png',
+						                 mimeTypes: 'image/*'
+						             },
+						             //缩略图
+						             thumb:{
+						            	    width: 110,
+						            	    height: 110,
+						            	    quality: 90,
+						            	    allowMagnify: false,
+						            	    crop: false,
+						            	    type: 'image/jpeg'
+						              },
+						             // swf文件路径
+						             swf: BASE_URL + '/js/Uploader.swf',
+						             disableGlobalDnd: true,
+						             server: '../file/uploadProfilePhoto.jhtml',
+						             fileNumLimit: 1,
+						             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+						             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
+						             //图片裁剪
+						             compress:{
+						            	 width: 110,
+						            	 height: 110,
+						            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
+						            	 quality: 90,
+						            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+						            	 allowMagnify: false,
+						            	 // 是否允许裁剪。
+						            	 crop: false,
+						            	 // 是否保留头部meta信息。
+						            	 preserveHeaders: true,
+						            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
+						            	 // 此属性可能会影响图片自动纠正功能
+						            	 noCompressIfLarger: false,
+						            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
+						            	 compressSize: 0
+						             }
+				     			},
+				     			//包裹上传组件的div id
+				     			warp :"addTenantUser_form",
+				     			uploadBeforeSend:function(object, data, headers){
+				     				 //在参数中增加一个老人编号字段 identifier
+				     				 data.tenantUserName =$("#realName").val();
+				     			},
+				     			uploadSuccess:function(file, response){
+				     				//将返回的图片路径放到隐藏的input中，用于表单保存
+				     				$("#addTenantUser_form_file_input").val(response.content);
+				     				$.ajax({
+										url:"../tenantUser/add.jhtml",
+										type:"post",
+										data:$("#addTenantUser_form").serialize(),
+										beforeSend:function(){
+											$.messager.progress({
+												text:message("yly.common.saving")
+											});
+										},
+										success:function(result,response,status){
+											$.messager.progress('close');
+											showSuccessMsg(result.content);
+											$('#addTenantUser_form').form('reset');
+											$('#addTenantUser').dialog("close");
+											$("#tenantUser_table-list").datagrid('reload');
+											
+										},
+										error:function (XMLHttpRequest, textStatus, errorThrown) {
+											$.messager.progress('close');
+											alertErrorMsg();
+										}
+									});
+				     			}
+				     	};
+				     	
+				     	singleUpload(options);
 				    },
 				
 				});  

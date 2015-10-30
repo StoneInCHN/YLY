@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.Gender;
 import com.yly.entity.commonenum.CommonEnum.StaffStatus;
@@ -112,7 +113,8 @@ public class TenantUser extends BaseEntity {
   public void setFormInstances(Set<FormInstance> formInstances) {
     this.formInstances = formInstances;
   }
-
+  
+  @JsonProperty
   public Gender getGender() {
     return gender;
   }
@@ -121,6 +123,7 @@ public class TenantUser extends BaseEntity {
     this.gender = gender;
   }
 
+  @JsonProperty
   public Integer getAge() {
     return age;
   }
@@ -148,6 +151,7 @@ public class TenantUser extends BaseEntity {
   }
 
   @Column(length=30)
+  @JsonProperty
   public String getStaffID() {
     return staffID;
   }
@@ -164,6 +168,7 @@ public class TenantUser extends BaseEntity {
     this.workingYear = workingYear;
   }
 
+  @JsonProperty
   public StaffStatus getStaffStatus() {
     return staffStatus;
   }
@@ -217,6 +222,7 @@ public class TenantUser extends BaseEntity {
   }
 
   @ManyToOne
+  @JsonProperty
   public Department getDepartment() {
     return department;
   }
@@ -226,6 +232,7 @@ public class TenantUser extends BaseEntity {
   }
 
   @ManyToOne
+  @JsonProperty
   public Position getPosition() {
     return position;
   }
@@ -234,6 +241,7 @@ public class TenantUser extends BaseEntity {
     this.position = position;
   }
 
+  @JsonProperty
   public Date getHireDate() {
     return hireDate;
   }
@@ -252,6 +260,7 @@ public class TenantUser extends BaseEntity {
   }
 
   @Column(length=20)
+  @JsonProperty
   public String getRealName() {
     return realName;
   }

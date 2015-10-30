@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.Department;
+import com.yly.entity.Position;
 import com.yly.entity.TenantUser;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.DepartmentService;
+import com.yly.service.PositionService;
 import com.yly.service.TenantUserService;
 
 /**
@@ -27,8 +31,11 @@ public class TenantUserController extends BaseController
 
   @Resource (name = "tenantUserServiceImpl")
   private TenantUserService tenantUserService;
-
-
+  @Resource(name = "departmentServiceImpl")
+  private DepartmentService departmentService;
+  @Resource(name = "positionServiceImpl")
+  private PositionService positionService;
+  
   @RequestMapping (value = "/tenantUser", method = RequestMethod.GET)
   public String list (ModelMap model)
   {
@@ -57,8 +64,12 @@ public class TenantUserController extends BaseController
   }
 
   @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add (TenantUser tenantUser)
+  public @ResponseBody Message add (TenantUser tenantUser,Long departmentId, Long positionId)
   {
+    Department department = departmentService.find (departmentId);
+    Position position = positionService.find (positionId);
+    tenantUser.setDepartment (department);
+    tenantUser.setPosition (position);
     tenantUserService.save (tenantUser,true);
     return SUCCESS_MESSAGE;
   }
