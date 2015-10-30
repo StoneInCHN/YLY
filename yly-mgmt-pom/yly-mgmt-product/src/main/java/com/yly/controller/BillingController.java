@@ -137,7 +137,7 @@ public class BillingController extends BaseController {
     String[] properties =
         {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
             "elderlyInfo.nursingLevel", "nurseAmount", "mealAmount", "depositAmount",
-            "totalAmount", "bedAmount","waterAmount","electricityAmount","personalizedAmount", "payTime", "operator"};
+            "totalAmount", "bedAmount","waterAmount","electricityAmount","personalizedAmount","advanceChargeAmount","payTime", "operator"};
 
     List<Map<String, Object>> rows =
         FieldFilterUtils.filterCollectionMap(properties, page.getRows());

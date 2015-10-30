@@ -112,6 +112,11 @@ public class Billing extends BaseEntity {
    * 伙食费金额
    */
   private BigDecimal mealAmount;
+  
+  /**
+   * 预存款金额
+   */
+  private BigDecimal advanceChargeAmount;
 
   /**
    * 总金额
@@ -413,5 +418,13 @@ public class Billing extends BaseEntity {
     this.totalAmount = totalAmount;
   }
 
+  @Column(precision = 12, scale = 2)
+  public BigDecimal getAdvanceChargeAmount() {
+    return advanceChargeAmount;
+  }
+
+  public void setAdvanceChargeAmount(BigDecimal advanceChargeAmount) {
+    this.advanceChargeAmount = advanceChargeAmount;
+  }
 
 }
