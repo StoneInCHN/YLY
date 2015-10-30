@@ -334,7 +334,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 预存款金额
    */
-  private BigDecimal advanceChargeAmount;
+  private BigDecimal advanceChargeAmount = new BigDecimal(0);
   
   @OneToMany(mappedBy = "elderlyInfo")
   public Set<Billing> getBillings() {

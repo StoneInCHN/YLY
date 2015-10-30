@@ -20,7 +20,7 @@ public class ToolsUtils implements Serializable {
    * 格式 yyMMddHHmmss-组织机构代码-(1-1000累加)
    * @return
    */
-  public static String generateBillNo (String orgCode)
+  public synchronized static String generateBillNo (String orgCode)
   {
     StringBuffer strBuffer = new StringBuffer();
     SimpleDateFormat sdf = new SimpleDateFormat (billDateFormat);
