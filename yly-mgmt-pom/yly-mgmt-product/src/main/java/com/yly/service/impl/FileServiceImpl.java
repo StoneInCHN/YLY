@@ -127,7 +127,8 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
       model.put("orgCode", tenantAccountService.getCurrentTenantOrgCode());
       //model.put("identifier", identifier);
       model.put("identifier", paramMap.get("identifier"));
-      model.put("albumName", paramMap.get("albumName"));      
+      model.put("albumName", paramMap.get("albumName"));
+      model.put("tenantUserName", paramMap.get("tenantUserName")); 
       String path = FreemarkerUtils.process(uploadPath, model);
       String destPath =
           path + UUID.randomUUID() + "."

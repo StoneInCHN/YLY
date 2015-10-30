@@ -132,7 +132,7 @@ public class DepartmentController extends BaseController
   }
   
   @RequestMapping(value = "/findAllDepartments", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String, Object>> findAddDepartments() {
+  public @ResponseBody List<Map<String, Object>> findAllDepartments() {
     return departmentService.findAllDepartments ();
   }
 }

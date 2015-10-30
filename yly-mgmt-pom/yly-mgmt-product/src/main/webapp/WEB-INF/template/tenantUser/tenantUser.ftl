@@ -35,7 +35,7 @@
 </div>
 <div id="addTenantUser"> 
 	<form id="addTenantUser_form" method="post" class="form-table">  
-	<input type="hidden" id="addTenantUser_form_file_input" name="profilePhoto"> 
+	<input type="hidden" id="addTenantUser_form_file_input" name="photo"> 
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>姓名 :</th>
@@ -73,7 +73,7 @@
 				      label: 'FEMALE',
 				      value: '女'
 				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="donatorGender" style="width:110px;"/>
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="gender" style="width:110px;"/>
 	    		</td>
 	    	
 	    		
@@ -137,7 +137,7 @@
 	    	
 	    		<th>担任职务:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" />
+	    			 <input class="easyui-combobox" type="text" id="tenantUserPosition" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" />
 	    		</td>
 	    	</tr>
 	    	<tr>

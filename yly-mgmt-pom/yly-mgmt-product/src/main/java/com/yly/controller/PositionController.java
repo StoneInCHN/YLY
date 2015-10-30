@@ -132,7 +132,7 @@ public class PositionController extends BaseController
   }
   
   @RequestMapping(value = "/findAllPositions", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String, Object>> findAddPositions() {
+  public @ResponseBody List<Map<String, Object>> findAllPositions() {
     return positionService.findAllPositions ();
   }
 }
