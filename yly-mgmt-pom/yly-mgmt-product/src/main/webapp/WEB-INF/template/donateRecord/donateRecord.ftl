@@ -30,7 +30,6 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="donateRecord_manager_tool.add();">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="donateRecord_manager_tool.edit();">修改</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="donateRecord_manager_tool.remove();">删除</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div>
@@ -40,31 +39,30 @@
 	    	<tr>
 	    		<th>捐赠人姓名:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="donatorName" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="donatorName" data-options="required:true" validtype="length[0,15]"/>   
 	    		</td>
 	    	
 	    		<th>性别:</th>
 	    		<td>
-	    			<select id="donatorGender" class="easyui-combobox"  name="donatorGender" style="width:60px;">   
+	    			<select id="donatorGender" class="easyui-combobox"  name="donatorGender" style="width:60px;" >   
 						<option value="MALE">男</option>
 						<option value="FEMALE">女</option> 
 				  </select>     
 	    		</td>
 	    	    <th>捐赠人电话:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="donatorPhone"  />   
+	    			 <input class="easyui-textbox" type="text" name="donatorPhone"  validtype="mobile"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>时间:</th>
 	    		<td>
-	    			 <!--<input class="easyui-textbox" type="text" name="donatorTime" />-->
 	    			 <input type="text" class="Wdate" id="donateTime" name="donateTime" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>
 	    	
 	    		<th>捐赠人地址:</th>
 	    		<td colspan="3">
-	    			 <input class="easyui-textbox" type="text" name="donatorAddress"  style="width:100%"/>   
+	    			 <input class="easyui-textbox" type="text" name="donatorAddress"  style="width:100%" validtype="length[0,50]"/>   
 	    		</td>
 	    	</tr>
 	    	<tr >
@@ -76,7 +74,7 @@
 	    	<tr>
     			<th>备注:</th>
 	    		<td colspan="6">
-	    			  <input class="easyui-textbox" type="text" name="remark" data-options="multiline:true,height:90,width:550" /> 
+	    			  <input class="easyui-textbox" type="text" name="remark" data-options="multiline:true,height:90,width:550" validtype="length[0,50]"/> 
 	    		</td>
 	    	</tr>
 	    </table>
@@ -90,7 +88,6 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="donateDetail_manager_tool.add();">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="donateDetail_manager_tool.edit();">修改</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="donateDetail_manager_tool.remove();">删除</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
 	</div>
 	<div class="tool-filter"></div>
 	<table id="donateDetail-table-list"></table>

@@ -4,12 +4,12 @@
 	    	<tr>
 	    		<th>资产编号:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetNo" data-options="required:true" value ="${fixedAssets.assetNo}"/>   
+	    			 <input class="easyui-textbox" type="text" name="assetNo" data-options="required:true" value ="${fixedAssets.assetNo}" validtype="length[0,40]"/>   
 	    		</td>
 	    	
 	    		<th>资产名称:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetName" data-options="required:true" value ="${fixedAssets.assetName}"/>
+	    			 <input class="easyui-textbox" type="text" name="assetName" data-options="required:true" value ="${fixedAssets.assetName}" validtype="length[0,60]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -27,7 +27,7 @@
 	    	<tr>
 	    		<th>计量单位:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetUnit" value ="${fixedAssets.assetUnit}"/>   
+	    			 <input class="easyui-textbox" type="text" name="assetUnit" value ="${fixedAssets.assetUnit}" validtype="length[0,10]"/>   
 	    		</td>
 	    	
 	    		<th>使用状态:</th>
@@ -43,23 +43,23 @@
 	    	<tr>
 	    		<th>规格型号:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetSpecification" value ="${fixedAssets.assetSpecification}"/>   
+	    			 <input class="easyui-textbox" type="text" name="assetSpecification" value ="${fixedAssets.assetSpecification}" validtype="length[0,30]"/>   
 	    		</td>
 	    	
 	    		<th>产地:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetOrigin"  value ="${fixedAssets.assetOrigin}"/>
+	    			<input class="easyui-textbox" type="text" name="assetOrigin"  value ="${fixedAssets.assetOrigin}" validtype="length[0,20]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>制造商:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetManufacturer"  value ="${fixedAssets.assetManufacturer}"/>   
+	    			 <input class="easyui-textbox" type="text" name="assetManufacturer"  value ="${fixedAssets.assetManufacturer}" validtype="length[0,50]"/>   
 	    		</td>
 	    	
 	    		<th>供应商:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetProvider"  value ="${fixedAssets.assetProvider}"/>
+	    			<input class="easyui-textbox" type="text" name="assetProvider"  value ="${fixedAssets.assetProvider}" validtype="length[0,50]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -87,7 +87,7 @@
 	    	
 	    		<th>备注:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="remark" value ="${fixedAssets.remark}"/>
+	    			<input class="easyui-textbox" type="text" name="remark" value ="${fixedAssets.remark}" validtype="length[0,50]"/>
 	    		</td>
 	    	</tr>
 	    </table>

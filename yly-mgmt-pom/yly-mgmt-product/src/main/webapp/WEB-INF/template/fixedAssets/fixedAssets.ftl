@@ -42,12 +42,12 @@
 	    	<tr>
 	    		<th>资产编号:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetNo" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="assetNo" data-options="required:true" validtype="length[0,40]"/>   
 	    		</td>
 	    	
 	    		<th>资产名称:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetName" data-options="required:true" />
+	    			 <input class="easyui-textbox" type="text" name="assetName" data-options="required:true" validtype="length[0,60]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -64,7 +64,7 @@
 	    	<tr>
 	    		<th>计量单位:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetUnit" />   
+	    			 <input class="easyui-textbox" type="text" name="assetUnit" validtype="length[0,10]"/>   
 	    		</td>
 	    	
 	    		<th>使用状态:</th>
@@ -88,23 +88,23 @@
 	    	<tr>
 	    		<th>规格型号:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetSpecification"/>   
+	    			 <input class="easyui-textbox" type="text" name="assetSpecification" validtype="length[0,30]"/>   
 	    		</td>
 	    	
 	    		<th>产地:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetOrigin"  />
+	    			<input class="easyui-textbox" type="text" name="assetOrigin" validtype="length[0,20]" />
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>制造商:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="assetManufacturer"  />   
+	    			 <input class="easyui-textbox" type="text" name="assetManufacturer" validtype="length[0,50]" />   
 	    		</td>
 	    	
 	    		<th>供应商:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="assetProvider"  />
+	    			<input class="easyui-textbox" type="text" name="assetProvider"  validtype="length[0,50]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -145,7 +145,7 @@
 	    	
 	    		<th>备注:</th>
 	    		<td>
-	    			<input class="easyui-textbox" type="text" name="remark" />
+	    			<input class="easyui-textbox" type="text" name="remark" validtype="length[0,50]"/>
 	    		</td>
 	    	</tr>
 	    </table>

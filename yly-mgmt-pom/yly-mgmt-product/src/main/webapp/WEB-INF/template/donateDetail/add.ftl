@@ -30,13 +30,13 @@
 	    		</td>
 	    		<th>物品计量单位:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="units" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="units" data-options="required:true" validtype="length[0,5]"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>备注:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="remark" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="remark" data-options="required:true" validtype="length[0,30]"/>   
 	    		</td>
 	    	</tr>
 	    </table>

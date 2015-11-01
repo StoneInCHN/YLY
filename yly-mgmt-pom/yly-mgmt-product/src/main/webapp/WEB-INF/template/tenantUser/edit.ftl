@@ -4,7 +4,7 @@
 	    	<tr>
 	    		<th>姓名 :</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" id = "realName" name="realName" data-options="required:true" value="${tenantUser.realName}" />   
+	    			 <input class="easyui-textbox" type="text" id = "realName" name="realName" data-options="required:true" value="${tenantUser.realName}" validtype="length[0,20]"/>   
 	    		</td>
 	    		<th>相片:</th>
 	    		<td rowspan="6">
@@ -48,7 +48,7 @@
 	    	<tr>
 	    		<th>员工编号:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" value="${tenantUser.staffID}"/>   
+	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" value="${tenantUser.staffID}" validtype="length[0,30]"/>   
 	    		</td>
 	    	
 	    		
@@ -66,7 +66,7 @@
 	    	<tr>
 	    		<th>地址:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" value="${tenantUser.address}"/>   
+	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" value="${tenantUser.address}" validtype="length[0,200]"/>   
 	    		</td>
 	    	
 	    		
@@ -74,12 +74,12 @@
 	    	<tr>
 	    		<th>电话:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="telephone" data-options="required:true" value="${tenantUser.telephone}"/>   
+	    			 <input class="easyui-textbox" type="text" name="telephone" data-options="required:true" value="${tenantUser.telephone}" />   
 	    		</td>
 	    	
 	    		<th>手机:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" value="${tenantUser.mobile}"/>
+	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" value="${tenantUser.mobile}" validtype="mobile"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -106,7 +106,7 @@
 	    	<tr>
 	    		<th>身份证:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" value="${tenantUser.IDCard}"/>
+	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" value="${tenantUser.IDCard}" validtype="length[0,30]"/>
 	    		</td>
 	    		<th>工作年限:</th>
 	    		<td>
@@ -120,7 +120,7 @@
 	    		</td>
 	    		<th>邮编:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" value="${tenantUser.zipCode}"/>
+	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" value="${tenantUser.zipCode}" validtype="length[0,20]"/>
 	    		</td>
 	    	</tr>
 	    </table>

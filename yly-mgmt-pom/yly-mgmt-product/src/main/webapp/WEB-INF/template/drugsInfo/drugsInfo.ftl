@@ -39,18 +39,18 @@
 	    	<tr>
 	    		<th>药品名称:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="name" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="name" data-options="required:true" validtype="length[0,60]"/>   
 	    		</td>
 	    	
 	    		<th>别名:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="alias"  />   
+	    			 <input class="easyui-textbox" type="text" name="alias"  validtype="length[0,60]"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>拼音简码:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="phoneticCode"  />   
+	    			 <input class="easyui-textbox" type="text" name="phoneticCode"  validtype="length[0,20]"/>   
 	    		</td>
 	    		<th>药品分类:</th>
 	    		<td>
@@ -99,7 +99,7 @@
 	    	<tr>
 	    		<th>药品规格:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="drugSpecifications"  />   
+	    			 <input class="easyui-textbox" type="text" name="drugSpecifications"  validtype="length[0,30]"/>   
 	    		</td>
 	    		<th>频度:</th>
 	    		<td>
@@ -121,7 +121,7 @@
 	    		</td>
 	    		<th>生产厂家:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="manufacturer"  />   
+	    			 <input class="easyui-textbox" type="text" name="manufacturer"  validtype="length[0,150]"/>   
 	    		</td>
 	    	</tr>
 	    	

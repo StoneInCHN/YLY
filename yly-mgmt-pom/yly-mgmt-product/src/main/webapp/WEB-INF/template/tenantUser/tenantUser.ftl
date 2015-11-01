@@ -7,7 +7,7 @@
 	    <form id="tenantUser-search-form" class="search-form">
 	    	<div class="search-item">
 			    <label> 名称查询:</label>
-			    <input type="text" class="easyui-textbox" id="realName" name="realNameSearch" />
+			    <input type="text" class="easyui-textbox" id="realName" name="realNameSearch" validtype="length[0,20]"/>
 			</div>
 			<div class="search-item">
 			    <label> 部门:</label>
@@ -112,7 +112,7 @@
 	    	<tr>
 	    		<th>员工编号:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" validtype="length[0,30]"/>   
 	    		</td>
 	    	
 	    		
@@ -137,7 +137,7 @@
 	    	<tr>
 	    		<th>地址:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" validtype="length[0,200]" />   
 	    		</td>
 	    	
 	    		
@@ -150,7 +150,7 @@
 	    	
 	    		<th>手机:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" />
+	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" validtype="mobile"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -177,7 +177,7 @@
 	    	<tr>
 	    		<th>身份证:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" />
+	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" validtype="length[0,30]"/>
 	    		</td>
 	    		<th>工作年限:</th>
 	    		<td>
@@ -191,7 +191,7 @@
 	    		</td>
 	    		<th>邮编:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" />
+	    			 <input class="easyui-textbox" type="text" name="zipCode" data-options="required:true" validtype="length[0,20]"/>
 	    		</td>
 	    	</tr>
 	    </table>
