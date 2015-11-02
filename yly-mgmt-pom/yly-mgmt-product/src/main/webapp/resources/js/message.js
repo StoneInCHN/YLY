@@ -301,6 +301,7 @@ var messages = {
 	
 	//药品管理
 	"yly.drugsInfo.list":"药品列表",
+	"yly.drugsInfo.add":"药品添加",
 	"yly.drugsInfo.name":"药品名称",
 	"yly.drugsInfo.alias":"别名",
 	"yly.drugsInfo.drugCategory":"药品分类",
@@ -317,6 +318,26 @@ var messages = {
 	"yly.donateDetail.donateType.item":"物",
 	"yly.donateDetail.donateItemType":"捐赠物品类型",
 	"yly.donateDetail.add":"添加捐赠详情",
+	//固定资产
+	"yly.fixedAssets.list":"固定资产列表",
+	"yly.fixedAssets.assetNo":"资产编号",
+	"yly.fixedAssets.assetName":"资产名称",
+	"yly.fixedAssets.department":"存放部门",
+	"yly.fixedAssets.assetCount":"资产数量",
+	"yly.fixedAssets.assetTime":"录入时间",
+	//租户用户
+	"yly.tenantUser.list":"用户列表",
+	"yly.tenantUser.realName":"姓名",
+	"yly.tenantUser.gender":"性别",
+	"yly.tenantUser.age":"年龄",
+	"yly.tenantUser.staffID":"员工编号",
+	"yly.tenantUser.staffStatus":"员工状态",
+	"yly.tenantUser.staffStatus.inService":"在职",
+	"yly.tenantUser.staffStatus.outService":"离职",
+	"yly.tenantUser.department":"所在部门",
+	"yly.tenantUser.position":"担任职务",
+	"yly.tenantUser.hireDate":"入职时间"
+	
 };
 //多语言
 function message(code) {
