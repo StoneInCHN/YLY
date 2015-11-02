@@ -19,17 +19,16 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
 <table id="drugs-table-list"></table>
 <div id="drugs_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="drugs_manager_tool.add();">添加</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="drugs_manager_tool.edit();">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="drugs_manager_tool.remove();">删除</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="drugs_manager_tool.add();">${message("yly.button.add")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="drugs_manager_tool.edit();">${message("yly.button.update")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="drugs_manager_tool.remove();">${message("yly.button.delete")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div>

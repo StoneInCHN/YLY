@@ -299,10 +299,24 @@ var messages = {
 	"yly.waterElectricityRecord.electricityActual":"用电计费度数",
 	"yly.waterElectricityRecord.operator":"抄表人",
 	
+	//药品管理
 	"yly.drugsInfo.list":"药品列表",
 	"yly.drugsInfo.name":"药品名称",
 	"yly.drugsInfo.alias":"别名",
 	"yly.drugsInfo.drugCategory":"药品分类",
+	
+	//捐赠管理
+	"yly.donateRecord.list":"捐赠记录",
+	"yly.donateRecord.add":"添加捐赠记录",
+	"yly.donateRecord.donatorName":"捐赠记录",
+	"yly.donateRecord.donatorPhone":"捐赠人电话",
+	"yly.donateRecord.donateTime":"捐赠时间",
+	"yly.donateDetail.donateAmount":"捐赠数",
+	"yly.donateDetail.donateType":"捐赠类型",
+	"yly.donateDetail.donateType.money":"钱",
+	"yly.donateDetail.donateType.item":"物",
+	"yly.donateDetail.donateItemType":"捐赠物品类型",
+	"yly.donateDetail.add":"添加捐赠详情",
 };
 //多语言
 function message(code) {
