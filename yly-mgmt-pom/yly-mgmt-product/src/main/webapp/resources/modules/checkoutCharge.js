@@ -168,6 +168,8 @@ $(function(){
 		      {title:message("yly.charge.record.electricity"),field:"electricityAmount",width:20,align:'center',sortable:true},
 		      //服务费(元)
 		      {title:message("yly.charge.record.service"),field:"personalizedAmount",width:20,align:'center',sortable:true},
+		      //预存款(元)
+		      {title:message("yly.charge.advance"),field:"advanceChargeAmount",width:20,align:'center',sortable:true},
 		      //总额(元)
 		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:20,align:'center',sortable:true},
 		      //缴费时间
