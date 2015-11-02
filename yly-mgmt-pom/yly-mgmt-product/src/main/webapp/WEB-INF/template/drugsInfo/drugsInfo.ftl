@@ -91,7 +91,7 @@
 	    		</td>
 	    		<th>${message("yly.drugsInfo.dosage")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="dosage"  />   
+	    			 <input class="easyui-numberbox" type="text" name="dosage"  min="0.00"/>   
 	    		</td>
 	    	</tr>
 	    	
@@ -116,7 +116,7 @@
 	    	<tr>
 	    		<th>${message("yly.drugsInfo.singleDose")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="singleDose"  />   
+	    			 <input class="easyui-numberbox" type="text" name="singleDose" min="0.00" />   
 	    		</td>
 	    		<th>${message("yly.drugsInfo.manufacturer")}:</th>
 	    		<td>
@@ -138,11 +138,11 @@
     		<tr>
 	    		<th>${message("yly.drugsInfo.prescriptionPrice")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="prescriptionPrice"  />   
+	    			 <input class="easyui-numberbox" type="text" name="prescriptionPrice"  min="0.00"/>   
 	    		</td>
 	    		<th>${message("yly.drugsInfo.purchasePrice")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="purchasePrice"  />   
+	    			 <input class="easyui-numberbox" type="text" name="purchasePrice" min="0.00" />   
 	    		</td>
 	    	</tr>
     		<tr>
