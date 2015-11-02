@@ -64,6 +64,7 @@ var messages = {
 	"yly.charge.status.refunded" : "已退款",
 	"yly.deposit.charge.record" : "押金",
 	"yly.advance.charge.record" : "预存款",
+	"yly.charge.advance" : "预存款(元)",
 	"yly.charge.checkin" : "入院缴费",
 	"yly.charge.checkout" : "退住结算",
 	"yly.bedNurse.charge.record" : "床位护理费",
