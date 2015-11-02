@@ -49,11 +49,31 @@
 	    		</td>
 	    		<th>${message("yly.charge.record.meal")}:</th>
 	    		<td>
-	    			[#if billing.mealCharge??]
+	    			[#if billing.mealCharge?? && billing.mealCharge!=0]
 	    				<input class="easyui-textbox" type="text" name="mealAmount"  readonly=true [#if billing.mealAmount<0]value="${message("yly.checkout.refund",-billing.mealAmount)}"[#else]value="${message("yly.checkout.additional",billing.mealAmount)}"[/#if] style="width:100px;"/>
 	    			[#else]
 	    				${message("yly.charge.meal.not.monthly")}
 	    			[/#if]
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.charge.record.water")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="waterAmount"  readonly=true [#if billing.waterAmount<0]value="${message("yly.checkout.refund",-billing.waterAmount)}"[#else]value="${message("yly.checkout.additional",billing.waterAmount)}"[/#if] style="width:100px;"/> 
+	    		</td>
+	    		<th>${message("yly.charge.record.electricity")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="electricityAmount"  readonly=true [#if billing.electricityAmount<0]value="${message("yly.checkout.refund",-billing.electricityAmount)}"[#else]value="${message("yly.checkout.additional",billing.electricityAmount)}"[/#if] style="width:100px;"/> 
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.charge.record.service.money")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="personalizedAmount"  readonly=true [#if billing.personalizedAmount<0]value="${message("yly.checkout.refund",-billing.personalizedAmount)}"[#else]value="${message("yly.checkout.additional",billing.personalizedAmount)}"[/#if] style="width:100px;"/> 
+	    		</td>
+	    		<th>${message("yly.charge.record.advanceCharge.money")}:</th>
+	    		<td>
+	    			  <input class="easyui-textbox" type="text" name="advanceChargeAmount"  readonly=true [#if billing.advanceChargeAmount<0]value="${message("yly.checkout.refund",-billing.advanceChargeAmount)}"[#else]value="${message("yly.checkout.additional",billing.advanceChargeAmount)}"[/#if] style="width:100px;"/> 
 	    		</td>
 	    	</tr>
 	    	<tr>

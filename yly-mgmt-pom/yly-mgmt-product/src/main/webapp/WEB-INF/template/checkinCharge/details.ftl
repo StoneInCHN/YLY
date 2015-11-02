@@ -49,7 +49,7 @@
 	    		</td>
 	    		<th>${message("yly.charge.record.meal")}:</th>
 	    		<td>
-	    			[#if billing.mealCharge??]
+	    			[#if billing.mealCharge?? && billing.mealCharge!=0]
 	    				<input class="easyui-textbox" type="text" name="mealAmount"  readonly=true value="${billing.mealAmount}" style="width:75px;"/>
 	    			[#else]
 	    				${message("yly.charge.meal.not.monthly")}

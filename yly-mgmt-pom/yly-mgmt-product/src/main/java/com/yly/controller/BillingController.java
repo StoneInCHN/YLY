@@ -263,6 +263,10 @@ public class BillingController extends BaseController {
       checkinBill.getPaymentRecords().add(paymentRecord);
     }
     
+    if (LogUtil.isDebugEnabled(BillingController.class)) {
+      LogUtil.debug(BillingController.class, "Check In Charge",
+          "Bill Entity=%s",ToolsUtils.entityToString(checkinBill));
+    }
     billingService.save(checkinBill);
     return SUCCESS_MESSAGE;
   }
