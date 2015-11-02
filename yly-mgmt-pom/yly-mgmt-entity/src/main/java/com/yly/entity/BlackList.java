@@ -3,6 +3,7 @@ package com.yly.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,36 +23,37 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_blacklist")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_blacklist_sequence")
-@Indexed(index="blackList")
+@Indexed(index = "blackList")
 public class BlackList extends BaseEntity {
 
-  
+
   private static final long serialVersionUID = 3525183712762376969L;
 
   /**
    * 老人信息
    */
   private ElderlyInfo elderlyInfo;
-  
+
   /**
    * 加入黑名单原因
    */
   private String cause;
-  
+
   /**
    * 备注
    */
   private String remark;
-  
-  
+
+
   /**
    * 租户ID
    */
   private Long tenantID;
-  
+
   @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   @IndexedEmbedded
+  @JoinColumn(unique = true, nullable = false)
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -69,7 +71,7 @@ public class BlackList extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length = 200, nullable =false)
+  @Column(length = 200, nullable = false)
   public String getCause() {
     return cause;
   }
