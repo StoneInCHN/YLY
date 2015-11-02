@@ -24,7 +24,6 @@ var checkoutCharge_manager_tool = {
 									},
 									success:function(result,response,status){
 										    showSuccessMsg(result.content);
-										    console.log(result);
 										    if(result.type == "success"){
 										    	$.messager.progress('close');
 												$('#addCheckoutCharge').dialog("close");
@@ -64,42 +63,6 @@ var checkoutCharge_manager_tool = {
 								
 							}
 				    	});
-				    	
-				    	$("#mealType").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    panelHeight:100,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'MEALTYPE';// 参数
-						    },
-						    onChange:function(value){
-						    	$.ajax({
-									url:"../mealChargeConfig/detail.jhtml",
-									type:"post",
-									data:{configId:value},
-									success:function(result,response,status){
-										$('#mealTypeVal').html("["+result.chargeItem.configValue+"]");
-										$('#mealTypeVal').attr("data-value",result.chargeItem.configValue);
-										$('#mealPerMonth').html(message("yly.charge.record.perMonth")+result.amountPerMonth);
-										$('#mealPerMonth').attr("data-value",result.amountPerMonth);
-										$('#mealPerDay').html(message("yly.charge.record.perDay")+result.amountPerDay);
-										$('#mealPerDay').attr("data-value",result.amountPerDay);
-										var mealPerMonth = $('#mealPerMonth').attr("data-value");
-										var mealPerDay = $('#mealPerDay').attr("data-value");
-										var periodMonMeal=$('#periodMonMeal').val();
-										var periodDayMeal=$('#periodDayMeal').val();
-										if(periodMonMeal!="" && periodDayMeal!=""){
-											var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
-											$('#chargein_mealAmount').numberbox('setValue',mealAmount);
-										}
-										
-										
-									}
-								});
-						    }
-						});
 				    },
 				    onClose:function(){
 				    	 //$('#addCheckoutCharge_form').form('reset');

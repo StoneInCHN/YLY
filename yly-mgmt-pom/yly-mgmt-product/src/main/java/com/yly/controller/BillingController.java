@@ -188,7 +188,7 @@ public class BillingController extends BaseController {
       return Message.error("yly.checkin.elderlyStatus.invalid");
     }
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
-    
+    checkinBill.setChargeStatus(PaymentStatus.PAID);
     checkinBill.setBillType(BillingType.CHECK_IN);
     checkinBill.setElderlyInfo(elderlyInfo);
     checkinBill.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService.getCurrentTenantOrgCode()));
