@@ -297,7 +297,12 @@ var messages = {
 	"yly.waterElectricityRecord.record":"水电用量列表",
 	"yly.waterElectricityRecord.waterActual":"用水计费吨数",
 	"yly.waterElectricityRecord.electricityActual":"用电计费度数",
-	"yly.waterElectricityRecord.operator":"抄表人"
+	"yly.waterElectricityRecord.operator":"抄表人",
+	
+	"yly.drugsInfo.list":"药品列表",
+	"yly.drugsInfo.name":"药品名称",
+	"yly.drugsInfo.alias":"别名",
+	"yly.drugsInfo.drugCategory":"药品分类",
 };
 //多语言
 function message(code) {

@@ -3,18 +3,18 @@
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
-	    <legend>药品查询</legend>
+	    <legend>${message("yly.drugsInfo.search")}</legend>
 	    <form id="search-form" class="search-form">
 	    <div class="search-item">
-			    <label> 名称查询:</label>
+			    <label> ${message("yly.drugsInfo.search.name")}:</label>
 			    <input type="text" class="easyui-textbox" id="drugName" name="drugName" />
 			</div>
 			<div class="search-item">
-			    <label> 录入时间:</label>
+			    <label> ${message("yly.drugsInfo.search.time")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
-			    <label>到:</label>
+			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
@@ -37,123 +37,123 @@
 	<form id="addDrugs_form" method="post" class="form-table">   
 	    <table class="table table-striped">
 	    	<tr>
-	    		<th>药品名称:</th>
+	    		<th>${message("yly.drugsInfo.name")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="name" data-options="required:true" validtype="length[0,60]"/>   
 	    		</td>
 	    	
-	    		<th>别名:</th>
+	    		<th>${message("yly.drugsInfo.alias")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="alias"  validtype="length[0,60]"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>拼音简码:</th>
+	    		<th>${message("yly.drugsInfo.phoneticCode")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="phoneticCode"  validtype="length[0,20]"/>   
 	    		</td>
-	    		<th>药品分类:</th>
+	    		<th>${message("yly.drugsInfo.drugCategory")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="drugCategoryId" id="drugCategory"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>药品常用单位:</th>
+	    		<th>${message("yly.drugsInfo.conventionalUnit")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" id = "conventionalUnit" name="conventionalUnitId"  />   
 	    		</td>
-	    		<th>最小单位:</th>
+	    		<th>${message("yly.drugsInfo.minUnit")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" id="minUnit" name="minUnitId"  />   
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr>
-	    		<th>换算单位:</th>
+	    		<th>${message("yly.drugsInfo.conversionUnit")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="conversionUnit"  />   
 	    		</td>
-	    		<th>剂量单位:</th>
+	    		<th>${message("yly.drugsInfo.dosageUnit")}:</th>
 	    		<td>
 	    			 <select id="dosageUnit" class="easyui-combobox" name="dosageUnit" style="width:60px;">   
-						<option value="G">克</option>
-						<option value="KG">千克</option>
-						<option value="MG">毫克</option> 
-						<option value="ML">毫升</option> 
-						<option value="L">升</option>
+						<option value="G">${message("yly.common.G")}</option>
+						<option value="KG">${message("yly.common.KG")}</option>
+						<option value="MG">${message("yly.common.MG")}</option> 
+						<option value="ML">${message("yly.common.ML")}</option> 
+						<option value="L">${message("yly.common.L")}</option>
 				  	</select>   
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr>
-	    		<th>药品用法:</th>
+	    		<th>${message("yly.drugsInfo.drugUseMethod")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="drugUseMethodId" id="drugUseMethod" />   
 	    		</td>
-	    		<th>剂量:</th>
+	    		<th>${message("yly.drugsInfo.dosage")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="dosage"  />   
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr>
-	    		<th>药品规格:</th>
+	    		<th>${message("yly.drugsInfo.drugSpecifications")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="drugSpecifications"  validtype="length[0,30]"/>   
 	    		</td>
-	    		<th>频度:</th>
+	    		<th>${message("yly.drugsInfo.doseFrequency")}:</th>
 	    		<td>
 	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:140px;">   
-						<option value="Qd">一天一次(Qd)</option>
-						<option value="Bid">一天两次(Bid)</option>
-						<option value="Tid">一天三次(Tid)</option> 
-						<option value="Qid">一天四次(Qid)</option> 
-						<option value="Q2h">两小时一次(Q2h)</option> 
-						<option value="Q4h">四小时一次(Q4h)</option>						 
+						<option value="Qd">${message("yly.drugsInfo.doseFrequency.Qd")}</option>
+						<option value="Bid">${message("yly.drugsInfo.doseFrequency.Bid")}</option>
+						<option value="Tid">${message("yly.drugsInfo.doseFrequency.Tid")}</option> 
+						<option value="Qid">${message("yly.drugsInfo.doseFrequency.Qid")}</option> 
+						<option value="Q2h">${message("yly.drugsInfo.doseFrequency.Q2h")}</option> 
+						<option value="Q4h">${message("yly.drugsInfo.doseFrequency.Q4h")}</option>						 
 				  	</select>    
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr>
-	    		<th>单次用量:</th>
+	    		<th>${message("yly.drugsInfo.singleDose")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="singleDose"  />   
 	    		</td>
-	    		<th>生产厂家:</th>
+	    		<th>${message("yly.drugsInfo.manufacturer")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="manufacturer"  validtype="length[0,150]"/>   
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr>
-	    		<th>药品状态:</th>
+	    		<th>${message("yly.drugsInfo.drugStatus")}:</th>
 	    		<td>
 	    			<select id="drugStatus" class="easyui-combobox" name="drugStatus" style="width:60px;">   
-						<option value="ENABLE">启用</option>
-						<option value="DISABLE">禁用</option> 
+						<option value="ENABLE">${message("yly.common.enable")}</option>
+						<option value="DISABLE">${message("yly.common.disable")}</option> 
 				  </select>     
 	    		</td>
 	    		
     		</tr>
     		
     		<tr>
-	    		<th>处方价格:</th>
+	    		<th>${message("yly.drugsInfo.prescriptionPrice")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="prescriptionPrice"  />   
 	    		</td>
-	    		<th>采购价格:</th>
+	    		<th>${message("yly.drugsInfo.purchasePrice")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="purchasePrice"  />   
 	    		</td>
 	    	</tr>
     		<tr>
-    			<th>描述 :</th>
+    			<th>${message("yly.drugsInfo.description")} :</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="description" data-options="multiline:true,height:90,width:300" /> 
 	    		</td>
 	    	</tr>
 	    	<tr>
-    			<th>备注:</th>
+    			<th>${message("yly.remark")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="remark" data-options="multiline:true,height:90,width:300" /> 
 	    		</td>
