@@ -58,6 +58,13 @@ $(function() {
 							}
 							$wcontent.toggle(500);
 				});
+			  $(".bed-item-somebody").on("click",function(){
+				 // alert("somebody");
+			  })
+			   $(".bed-item-nobody").on("click",function(){
+				//  alert("nobody");
+			  })
+			  
 		 }  
 	});  
 })

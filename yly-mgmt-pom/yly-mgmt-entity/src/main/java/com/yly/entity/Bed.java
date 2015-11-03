@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
 
@@ -63,6 +64,12 @@ public class Bed extends BaseEntity{
    * 床位所在房间
    */
   private Room room;
+  
+  /**
+   * 房间编号
+   */
+  private String roomNumber;
+  
   
   private ElderlyInfo elderlyInfo;
   
@@ -133,5 +140,12 @@ public class Bed extends BaseEntity{
   public void setUsageState(UsageState usageState) {
     this.usageState = usageState;
   }
+
+  @JsonProperty
+  @Transient
+  public String getRoomNumber() {
+    return this.room.getRoomNumber();
+  }
+
    
 }

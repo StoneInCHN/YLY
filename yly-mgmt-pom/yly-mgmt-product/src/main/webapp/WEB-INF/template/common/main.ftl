@@ -76,7 +76,7 @@
 		    		<li><a href="#" data-url="${base}/console/visitElderly/visitElderly.jhtml">${message("yly.visitelderly.visitRegistration")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bookingRegistration/bookingRegistration.jhtml">${message("yly.bookingRegistration")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/elderlyInfo/checkedInElderly.jhtml">${message("yly.elderlyInfo.checkedInElderly")}</a></li>
-		    		<li><a href="#">床位状态</a></li>
+		    		<li><a href="#" data-url="${base}/console/room/changeRoom.jhtml">床位状态</a></li>
 		    		<li><a href="#">科室信息</a></li>
 		    	</ul>
 		        <ul title="${message("yly.elderlyInfo.AdmissionAndLeave")}" id="admissionAndLeave">
@@ -96,7 +96,7 @@
 		    		<li><a href="#" data-url="${base}/console/building/building.jhtml">${message("yly.residential.building")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/room/room.jhtml">${message("yly.residential.room")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/bed/bed.jhtml">${message("yly.residential.bed")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/room/changeRoom.jhtml">${message("yly.residential.changeRoom")}</a></li>
+		    		<li><a href="#">${message("yly.residential.changeRoom")}</a></li>
 		    	</ul>
 		    	 <ul title="健康管理" id="health">
 		    		<li><a href="#">病历档案</a></li>

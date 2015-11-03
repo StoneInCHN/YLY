@@ -55,6 +55,9 @@ $(function(){
 		    cache: true,    
 		    href: '../room/changeRoom.jhtml',    
 		    modal: true,
+		    onLoad:function(){
+		    	 
+		    },
 		    onClose:function(){
 		    	$('#searchElderlyInfo').empty;  
 		    }

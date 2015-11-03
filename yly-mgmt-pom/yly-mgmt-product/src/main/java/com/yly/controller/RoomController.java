@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.Bed;
 import com.yly.entity.Building;
 import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;

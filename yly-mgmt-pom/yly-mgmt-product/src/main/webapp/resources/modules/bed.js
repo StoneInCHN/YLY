@@ -166,12 +166,7 @@ $(function(){
 		   [
 		      {field:'ck',checkbox:true},
 		      {title:message("yly.bed.bedNumber"),field:"bedNumber",width:50,sortable:true},
-		      {title:message("yly.bed.room"),field:"room",width:100,formatter: function(value,row,index){
-		    	  	if(value){
-		    	  		return value.roomNumber;
-		    	  	}
-		      	}
-		      },
+		      {title:message("yly.bed.room"),field:"roomNumber",width:100},
 		      {title:message("yly.bed.status"),field:"status",width:50,sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "ENABLE"){
 		    	  		return  message("yly.common.enable");
