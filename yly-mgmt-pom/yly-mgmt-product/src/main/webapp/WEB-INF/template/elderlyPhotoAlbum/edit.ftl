@@ -8,12 +8,11 @@
 	    	<tr>
 	    		<th  style="width:110px;">${message("yly.common.elderly.name")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" value="${elderlyPhotoAlbum.elderlyInfo.name}" type="text" id="elderlyNameForAlbumEdit" name="elderlyname" data-options="required:true,width:85"/>
+	    			 <input class="easyui-textbox" value="${elderlyPhotoAlbum.elderlyInfo.name}" type="text" id="elderlyNameForAlbumEdit" name="elderlyname" data-options="required:true,editable:false,width:85"/>
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('elderlyNameForAlbumEdit')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    		<td rowspan="3">
-	    		
-	    		
+
 	    		<a href="javascript:void(0);" class="easyui-linkbutton" onclick="setAlbumCover()">
 	    		<div style="margin:5px;padding:5px">
 	    		<span title="重置封面照片" >
@@ -22,10 +21,11 @@
 	    		[#else]
 	    			 <img src="${elderlyPhotoAlbum.albumCover}" width="150" height="100">
 	    		[/#if]
+	    		
 	    		</span>	
 	    		</div>
 	    		</a>
-	    		
+	    		<p style="text-align:center"> <h5>该相册目前包含了${elderlyPhotoAlbum.elderlyPhotoes?size}张照片</h5></p>
 	    		
 	    		</td>
 	    	    </tr>
@@ -40,7 +40,7 @@
 	    	<tr>
 	    		<th>相册描述:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" value="${elderlyPhotoAlbum.remark}" name="remark" validtype="length[0,300]" data-options="required:true,multiline:true,height:60,width:320" /> 
+	    			  <input class="easyui-textbox" type="text" value="${elderlyPhotoAlbum.remark}" name="remark" validtype="length[0,300]" data-options="required:true,multiline:true,height:60,width:420" /> 
 	    		</td>
 	    		<td></td>
 	    	</tr>

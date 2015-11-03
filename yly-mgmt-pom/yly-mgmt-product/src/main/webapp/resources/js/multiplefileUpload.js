@@ -310,7 +310,7 @@ function multipleUpload(options) {
 
             case 'confirm':
                 $progress.hide();
-                $upload.text( '开始上传' ).addClass( 'disabled' );
+                //$upload.text( '开始上传' ).addClass( 'disabled' );
 
                 stats = uploader.getStats();
                 if ( stats.successNum && !stats.uploadFailNum ) {
@@ -320,31 +320,8 @@ function multipleUpload(options) {
                 break;
             case 'finish':
                 stats = uploader.getStats();
-                if (stats.successNum ) {                  	
-                	$("#addAlbum_photos").val(photoUrlList.join(","));
-     				$.ajax({
-						url:"../elderlyPhotoAlbum/add.jhtml",
-						type:"post",
-						data:$("#addElderlyPhotoAlbum_form").serialize(),
-						beforeSend:function(){
-							$.messager.progress({
-								text:message("yly.common.saving")
-							});
-						},
-						success:function(result,response,status){
-							$.messager.progress('close');
-							showSuccessMsg(result.content);
-							$('#addElderlyPhotoAlbum_form').form('reset');
-							showSuccessMsg('操作成功');  
-							$.messager.alert('提示','照片上传成功','info');
-							$('#addElderlyPhotoAlbum').dialog("close");
-						},
-						error:function (XMLHttpRequest, textStatus, errorThrown) {
-							$.messager.progress('close');
-							alertErrorMsg();
-						}
-					});
-     				
+                if (stats.successNum ) {
+                	saveAlbumAndPhotos();
                 } else {
                     // 没有成功的图片，重设
                     state = 'done';

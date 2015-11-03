@@ -97,23 +97,25 @@ public class ElderlyPhotoAlbumController extends BaseController {
     }
     return elderlyPhotoAlbumList;
   }
+  
+  
 
-//  /**
-//   * 查询list
-//   * 
-//   * @param pageable
-//   * @return
-//   */
-//  @RequestMapping(value = "/list", method = RequestMethod.POST)
-//  public @ResponseBody Page<ElderlyPhotoAlbum> list(ModelMap model, String keysOfElderlyName,
-//      String keysOfPhotoAlbumName, Pageable pageable) {
-//    if (keysOfElderlyName == null && keysOfPhotoAlbumName == null) {
-//      return elderlyPhotoAlbumService.findPage(pageable, true);
-//    } else {
-//      return elderlyPhotoAlbumService.SearchPageByFilter(keysOfElderlyName, keysOfPhotoAlbumName,
-//          pageable);
-//    }
-//  }
+  /**
+   * 查询list
+   * 
+   * @param pageable
+   * @return
+   */
+  @RequestMapping(value = "/list", method = RequestMethod.POST)
+  public @ResponseBody Page<ElderlyPhotoAlbum> list(ModelMap model, String keysOfElderlyName,
+      String keysOfPhotoAlbumName, Pageable pageable) {
+    if (keysOfElderlyName == null && keysOfPhotoAlbumName == null) {
+      return elderlyPhotoAlbumService.findPage(pageable, true);
+    } else {
+      return elderlyPhotoAlbumService.searchPageByFilter(keysOfElderlyName, keysOfPhotoAlbumName,
+          pageable);
+    }
+  }
 
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findAll() {
@@ -150,7 +152,16 @@ public class ElderlyPhotoAlbumController extends BaseController {
     }
     return "";
   }  
-  
+  /**
+   * 老人信息公共搜索页面
+   * 
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/albumSearch", method = RequestMethod.GET)
+  public String albumSearch(ModelMap model) {
+    return "/elderlyPhotoAlbum/albumSearch";
+  }
   /**
    * 查看照片
    * 
@@ -168,7 +179,7 @@ public class ElderlyPhotoAlbumController extends BaseController {
   }
 
   /**
-   * 上传相册照片
+   * 上传照片(disk)
    * 
    * @param file
    * @param identifier
@@ -176,10 +187,15 @@ public class ElderlyPhotoAlbumController extends BaseController {
    */
   @RequestMapping(value = "/uploadAlbum", method = RequestMethod.POST)
   public @ResponseBody Message uploadAlbum(@RequestParam("file") MultipartFile file,
-      String identifier, String albumName,String imgID) {
+      String identifier, String albumName, String selectIdentifier, String selectAlbumName,String imgID) {
     Map<String, String> paramMap = new HashMap<String, String>();
-    paramMap.put("identifier", identifier);
-    paramMap.put("albumName", albumName);
+    if (StringUtils.isNotBlank(identifier) && StringUtils.isNotBlank(albumName)) {//新建相册上传照片
+      paramMap.put("identifier", identifier);
+      paramMap.put("albumName", albumName);
+    }else if(StringUtils.isNotBlank(selectIdentifier) && StringUtils.isNotBlank(selectAlbumName)) {//选择已经存在的相册上传照片
+      paramMap.put("identifier", selectIdentifier);
+      paramMap.put("albumName", selectAlbumName);
+    }
     String filePath = fileService.upload(FileType.ALBUM, file, paramMap);
     if (filePath != null) {
       return Message.success(filePath);
@@ -235,26 +251,43 @@ public class ElderlyPhotoAlbumController extends BaseController {
       return ERROR_MESSAGE;      
   }
   /**
-   * 添加
-   * 
+   * 添加相册及照片
    * @param elderlyPhotoAlbum
+   * @param photoList 照片URL字符串集合，逗号区分
+   * @param elderlyInfoID
+   * @param selectAlbumID
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public @ResponseBody Message save(ElderlyPhotoAlbum elderlyPhotoAlbum, String photoList,
-      Long elderlyInfoID) {
+      Long elderlyInfoID, Long selectAlbumID) {
     String[] photos = null;
     if (StringUtils.isNotBlank(photoList)) {
       photos = photoList.split(",");
-      //elderlyPhotoAlbum.setAlbumCover(photos[0]);// 设置封面 默认第一张
     }
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-    if (elderlyInfo != null && elderlyPhotoAlbum != null) {
+    /*新增相册并且添加照片*/
+    if (elderlyInfo != null && elderlyPhotoAlbum != null && elderlyPhotoAlbum.getName() != null) {
       elderlyPhotoAlbum.setElderlyInfo(elderlyInfo);// 所属老人
       elderlyPhotoAlbum.setTenantID(tenantAccountService.getCurrentTenantID());// 所属老人院
       // 保存相册
       elderlyPhotoAlbumService.save(elderlyPhotoAlbum);
       if (photos != null) {
+        // 依次保存相片
+        for (int i = 0; i < photos.length; i++) {
+          ElderlyPhotoes elderlyPhotoe = new ElderlyPhotoes();
+          elderlyPhotoe.setUrl(photos[i]);
+          elderlyPhotoe.setName(photos[i].substring(photos[i].lastIndexOf("/") + 1));
+          elderlyPhotoe.setElderlyPhotoAlbum(elderlyPhotoAlbum);
+          elderlyPhotoesService.save(elderlyPhotoe);
+        }
+      }
+      return SUCCESS_MESSAGE;
+    }
+    /*选择已经存在的相册添加照片*/
+    if ((elderlyPhotoAlbum != null && elderlyPhotoAlbum.getName() == null) && selectAlbumID !=null) {
+      elderlyPhotoAlbum = elderlyPhotoAlbumService.find(selectAlbumID);
+      if (elderlyPhotoAlbum != null) {
         // 依次保存相片
         for (int i = 0; i < photos.length; i++) {
           ElderlyPhotoes elderlyPhotoe = new ElderlyPhotoes();
@@ -325,10 +358,12 @@ public class ElderlyPhotoAlbumController extends BaseController {
       ElderlyPhotoAlbum elderlyPhotoAlbum = elderlyPhotoAlbumService.find(id);
       if (elderlyPhotoAlbum != null) {
         Set<ElderlyPhotoes> elderlyPhotoesSet = elderlyPhotoAlbum.getElderlyPhotoes();
+        String photoUrl = null; 
         if (elderlyPhotoesSet != null && elderlyPhotoesSet.size() > 0) {
           // 1.删相册下面的照片(数据库)
           for (ElderlyPhotoes elderlyPhotoes : elderlyPhotoesSet) {
             elderlyPhotoesService.remove(elderlyPhotoes);
+            if(photoUrl == null) photoUrl = elderlyPhotoes.getUrl();
           }
         }
         // 2.删相册(数据库)
@@ -341,10 +376,13 @@ public class ElderlyPhotoAlbumController extends BaseController {
                   .getIdentifier() : "";
           if (StringUtils.isNotBlank(tenantOrgCode) && StringUtils.isNotBlank(elderlyIdentifier)) {
             String albumPathFromDB = elderlyPhotoAlbum.getAlbumCover();
-            String relativepath =
+            if (albumPathFromDB == null && photoUrl != null) albumPathFromDB = photoUrl; //如果封面还没有自定义，则取照片的URL
+            if (albumPathFromDB != null){      
+                String relativepath =
                 albumPathFromDB.substring(albumPathFromDB.indexOf("/upload"),
                     albumPathFromDB.lastIndexOf("/"));
-            fileService.deletefile(fileService.getRealPath(relativepath));
+                fileService.deletefile(fileService.getRealPath(relativepath));
+            }
           }
         } catch (Exception e) {
           e.printStackTrace();

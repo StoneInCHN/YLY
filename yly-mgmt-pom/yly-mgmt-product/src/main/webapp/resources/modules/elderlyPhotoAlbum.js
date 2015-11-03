@@ -26,7 +26,7 @@ var photoAlbum_manager_tool = {
 				});
 		    },
 		    remove:function(photoAlbumID){
-				$.messager.confirm(message("yly.common.confirm"),"确定删除相册以及相册下的所有照片么？", function(r) {
+				$.messager.confirm(message("yly.common.confirm"),"确定删除相册以及相册下的所有照片吗？", function(r) {
 					if(r){
 						$.ajax({
 							url : '../elderlyPhotoAlbum/delete.jhtml',
@@ -130,6 +130,7 @@ var photoAlbum_manager_tool = {
 				     				 //在参数中增加一个老人编号字段 identifier
 				     				 data.identifier = $("#identifier").val();
 				     				 data.albumName = $("#albumName").val();
+				     				 //data.elderlyInfoID = $("#elderlynameForAlbumID").val();
 				     			},
 				     			uploadSuccess:function(file, response){
 				     				photoUrlList.push(response.content);				     				
@@ -137,8 +138,10 @@ var photoAlbum_manager_tool = {
 				    	multipleUpload(options1);
 				    },
 				    onClose:function(){
-				    	$("#albumUploader-add .uploadBtn").trigger("clearFileQuene");	
-				    	$("#uploader .uploadBtn").trigger("clearFiles");						
+				    	$("#uploader .uploadBtn").trigger("clearFiles");//清空上次所选图片文件
+	     				$("#identifier").val("");//清空隐藏字段 identifier
+	     				$("#albumName").val("");//清空隐藏字段 albumName
+	     				//$("#elderlynameForAlbumID").val("");
 				    	loadAlbum();//重新加载相册
 				    }
 				});
@@ -331,8 +334,8 @@ var photoAlbum_manager_tool = {
 				    		    filePicker2 :"filePicker2_Photos",
 				     			uploadBeforeSend:function(object, data, headers){
 				     				 //在参数中增加一个老人编号字段 identifier
-				     				 data.identifier = $("#identifier").val();
-				     				 data.albumName = $("#albumName").val();
+				     				 data.selectIdentifier = $("#selectIdentifier").val();
+				     				 data.selectAlbumName = $("#selectAlbum").val();
 				     			},
 				     			uploadSuccess:function(file, response){
 				     				photoUrlList.push(response.content);				     				
@@ -340,7 +343,9 @@ var photoAlbum_manager_tool = {
 				    	multipleUpload(options2);
 				    },
 				    onClose:function(){
-				    	//$("#uploader .uploadBtn").trigger("clearFiles");						
+				    	$("#uploader_Photos .uploadBtn").trigger("clearFiles");//清空上次所选图片文件
+				    	$("#selectIdentifier").val("");//清空隐藏字段 selectIdentifier
+				    	$("#selectAlbumName").val("");//清空隐藏字段 selectAlbumName
 				    	loadAlbum();//重新加载相册
 				    }
 				});
@@ -498,4 +503,117 @@ function setAlbumCover(){
 		
 	});
 	
+}
+/**
+ * 相册查询功能
+ */
+function searchAlbum(id,defaultImg){
+	$('#searchAlbum').dialog({
+	    title: "选择相册",    
+	    width: 850,
+	    height: 600,
+	    modal:true,
+	    cache: false,   
+	    href:'../elderlyPhotoAlbum/albumSearch.jhtml',
+	    buttons:[{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#searchAlbum').dialog("close");
+			}
+	    }],
+	    onLoad:function(){
+	    	$("#albumSearch-table-list").datagrid({
+	    		title:'相册查询',
+		    	 fitColumns:true,
+		    	 url:'../elderlyPhotoAlbum/list.jhtml',  
+		    	 pagination:true,
+		    	 loadMsg:message("yly.common.loading"),
+		    	 striped:true,
+		    	 onDblClickRow : function (rowIndex, rowData){
+		    		 $("#"+id+"ID").val(rowData.id);
+		    		 $("#"+id).textbox('setValue',rowData.name);
+		    		 if($("#selectIdentifier")){
+		    			 $("#selectIdentifier").val(rowData.elderlyInfo.identifier);
+		    		 }
+		    		 $('#searchAlbum').dialog("close");
+		    	 },
+		    	 columns:[
+		  	    	    [
+		  	    	        {field:'ck',checkbox:true,width:8,align:'center'},
+		  		      {title:'封面',field:"albumCover",width:10,align:'center',formatter: function(value,row,index){
+							if(value==null || value==""){
+								return  '<div style="margin:3px;padding:3px">'+
+					    		        '<span title="默认封面" >'+
+					    		        '<img src="'+defaultImg+'" width="50" height="40"></img></span></div>';;
+							}else{
+								return  '<div style="margin:3px;padding:3px">'+
+			    		        		'<span title="自定义封面" >'+'<img src="'+value+'" width="50" height="40"></img></span></div>';
+							}
+					  }},
+		  		    {title:'相册名',field:"name",width:10,align:'center',sortable:true},
+		  		  {title:'所属老人',field:"elderlyInfoName",width:10,align:'center',formatter: function(value,row,index){
+		  			 return row.elderlyInfo.name;
+				  }},
+		  		{title:'备注',field:"remark",width:20,align:'center',sortable:true},
+		  		      ]]
+	    	});
+	    }
+	});
+	
+}
+function saveAlbumAndPhotos(){
+
+	    if($("#selectAlbumID").val() == null || $("#selectAlbumID").val() == ""){
+	    	$("#addAlbum_photos").val(photoUrlList.join(","));
+			$.ajax({
+				url:"../elderlyPhotoAlbum/add.jhtml",
+				type:"post",
+				data:$("#addElderlyPhotoAlbum_form").serialize(),
+				beforeSend:function(){
+					$.messager.progress({
+						text:message("yly.common.saving")
+					});
+				},
+				success:function(result,response,status){
+					$.messager.progress('close');
+					showSuccessMsg(result.content);
+					$('#addElderlyPhotoAlbum_form').form('reset');
+					showSuccessMsg('操作成功');  
+					$.messager.alert('提示','照片上传成功','info');
+					$('#addElderlyPhotoAlbum').dialog("close");
+				},
+				error:function (XMLHttpRequest, textStatus, errorThrown) {
+					$.messager.progress('close');
+					alertErrorMsg();
+				}
+			});
+	    }else{
+	    	$("#selectAlbum_photos").val(photoUrlList.join(","));
+	    	$.ajax({
+				url:"../elderlyPhotoAlbum/add.jhtml",
+				type:"post",
+				data:$("#addElderlyPhotos_form").serialize(),
+				beforeSend:function(){
+					$.messager.progress({
+						text:message("yly.common.saving")
+					});
+				},
+				success:function(result,response,status){
+					$.messager.progress('close');
+					showSuccessMsg(result.content);
+					$('#addElderlyPhotos_form').form('reset');
+					showSuccessMsg('操作成功');  
+					$.messager.alert('提示','照片上传成功','info');
+					$('#addElderlyPhotos').dialog("close");
+				},
+				error:function (XMLHttpRequest, textStatus, errorThrown) {
+					$.messager.progress('close');
+					alertErrorMsg();
+				}
+			});
+	    	$("#selectAlbumID").val("");
+	    }
+
+		
 }
