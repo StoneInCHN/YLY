@@ -12,6 +12,7 @@ function loadAlbum(){
 			success:function(jsonObj, textStatus){
 				if(jsonObj.length>0){
 					var divAlbumHtml = '<div class="row" style="background:#D2D2D2;margin:10px;padding-top:10px">';
+					//var options1 = '[{"text": "--", "value": -1}';
 					for(var i=0; i< jsonObj.length; i++){
 						var shortName = "《"+jsonObj[i].name+"》";
 						if(shortName && jsonObj[i].name.length>5){
@@ -41,10 +42,15 @@ function loadAlbum(){
 											</div>
 										 </div>';
 						[/@compress]
+						
+						//options1 += ',{"text":' + jsonObj[i].name + ',"value":' + jsonObj[i].id + '};';
 					}
 					divAlbumHtml += '</div>';
-					
-					$("#photoAlbum_show_form").html(divAlbumHtml);	
+					$("#photoAlbum_show_form").html(divAlbumHtml);
+					//options1 += ']';
+					//options = [{"text": "AA", "value": 1},{"text": "BB", "value": 2}];		
+					//var obj = option1.parseJSON();												
+					//$("#selectAlbum").combobox("loadData",options);
 				}else{
 				    $("#photoAlbum_show_form").html("");	
 				}			
@@ -89,11 +95,13 @@ function loadAlbum(){
 <form id="photoAlbum_show_form">
 
 </form>
+
+
 <div id="addElderlyPhotoAlbum">
 	<form id="addElderlyPhotoAlbum_form" method="post" class="form-table">   
 		<input type="hidden" name="identifier" id="identifier">
-		<input type="hidden" name="elderlyInfoID" id="elderlynameForAlbumID">
 		<input type="hidden" id="addAlbum_form_file_input" name="albumCover">
+		<input type="hidden" name="elderlyInfoID" id="elderlynameForAlbumID">
 		<input type="hidden" id="addAlbum_photos" name="photoList">
 	    <table class="table table-striped">
 	    	<tr>
@@ -143,25 +151,17 @@ function loadAlbum(){
 
 <div id="addElderlyPhotos">
 	<form id="addElderlyPhotos_form" method="post" class="form-table">  
+	    <input type="hidden" name="selectAlbumID" id="selectAlbumID">
+	    <input type="hidden" name="selectIdentifier" id="selectIdentifier">
+	    <input type="hidden" id="selectAlbum_photos" name="photoList">
 		<fieldset>
 	    <legend>上传照片到相册</legend> 
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>相册名称:</th>
 	    		<td>
-	    			     					
-	    		<input class="easyui-combobox" data-options="
-	    			valueField: 'label',
-					textField: 'value',
-						data: [
-	    		 [#list elderlyPhotoAlbumList as elderlyPhotoAlbum]
-	    		       {
-							label: '${elderlyPhotoAlbum.id}',
-							value: '${elderlyPhotoAlbum.name}'
-						},
-	    		 [/#list]
-	    		 ],
-	    		 prompt:'${message("yly.common.please.select")}'" panelHeight="300"  id="selectAlbumName" name="name" data-options="required:true" style="width:85px;" />
+	    		<input class="easyui-textbox" type="text" id="selectAlbum" name="selectAlbumName" data-options="required:true,editable:false,width:85" />   
+	    			 <a href="#" id="album_search_btn" class="easyui-linkbutton" onclick="searchAlbum('selectAlbum','${base}/resources/images/album_defaultCover.png')" iconCls="icon-search" plain=true"></a>
 	    		</td>
 	    	</tr>	  		    	
 	    </table>	

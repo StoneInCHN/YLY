@@ -19,17 +19,16 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
 <table id="drugs-table-list"></table>
 <div id="drugs_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="drugs_manager_tool.add();">添加</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="drugs_manager_tool.edit();">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="drugs_manager_tool.remove();">删除</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-redo" plain=true >导出</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="drugs_manager_tool.add();">${message("yly.button.add")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="drugs_manager_tool.edit();">${message("yly.button.update")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="drugs_manager_tool.remove();">${message("yly.button.delete")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div>
@@ -92,7 +91,7 @@
 	    		</td>
 	    		<th>${message("yly.drugsInfo.dosage")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="dosage"  />   
+	    			 <input class="easyui-numberbox" type="text" name="dosage"  min="0.00"/>   
 	    		</td>
 	    	</tr>
 	    	
@@ -117,7 +116,7 @@
 	    	<tr>
 	    		<th>${message("yly.drugsInfo.singleDose")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="singleDose"  />   
+	    			 <input class="easyui-numberbox" type="text" name="singleDose" min="0.00" />   
 	    		</td>
 	    		<th>${message("yly.drugsInfo.manufacturer")}:</th>
 	    		<td>
@@ -139,11 +138,11 @@
     		<tr>
 	    		<th>${message("yly.drugsInfo.prescriptionPrice")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="prescriptionPrice"  />   
+	    			 <input class="easyui-numberbox" type="text" name="prescriptionPrice"  min="0.00"/>   
 	    		</td>
 	    		<th>${message("yly.drugsInfo.purchasePrice")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="purchasePrice"  />   
+	    			 <input class="easyui-numberbox" type="text" name="purchasePrice" min="0.00" />   
 	    		</td>
 	    	</tr>
     		<tr>

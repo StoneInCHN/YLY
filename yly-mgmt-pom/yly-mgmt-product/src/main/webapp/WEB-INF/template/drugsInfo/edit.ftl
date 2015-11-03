@@ -73,7 +73,7 @@
 	    		</td>
 	    		<th>${message("yly.drugsInfo.dosage")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" value="${drugs.dosage}" name="dosage"  />   
+	    			 <input class="easyui-numberbox" type="text" value="${drugs.dosage}" name="dosage"  min="0.00"/>   
 	    		</td>
 	    	</tr>
 	    	
@@ -98,7 +98,7 @@
 	    	<tr>
 	    		<th>${message("yly.drugsInfo.singleDose")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" value="${drugs.singleDose}" name="singleDose"  />   
+	    			 <input class="easyui-numberbox" type="text" value="${drugs.singleDose}" name="singleDose"  min="0"/>   
 	    		</td>
 	    		<th>${message("yly.drugsInfo.manufacturer")}:</th>
 	    		<td>
@@ -120,15 +120,15 @@
     		<tr>
 	    		<th>${message("yly.drugsInfo.prescriptionPrice")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" value="${drugs.prescriptionPrice}" name="prescriptionPrice"  />   
+	    			 <input class="easyui-numberbox" type="text" value="${drugs.prescriptionPrice}" name="prescriptionPrice" min="0"/>   
 	    		</td>
 	    		<th>${message("yly.drugsInfo.purchasePrice")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" value="${drugs.purchasePrice}" name="purchasePrice"  />   
+	    			 <input class="easyui-numberbox" type="text" value="${drugs.purchasePrice}" name="purchasePrice"  min="0"/>   
 	    		</td>
 	    	</tr>
     		<tr>
-    			<th>>${message("yly.drugsInfo.description")} :</th>
+    			<th>${message("yly.drugsInfo.description")} :</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" value="${drugs.description}" name="description" data-options="multiline:true,height:90,width:300" /> 
 	    		</td>

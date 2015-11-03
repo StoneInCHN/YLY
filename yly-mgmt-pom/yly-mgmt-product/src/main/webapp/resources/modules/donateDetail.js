@@ -5,7 +5,7 @@ $(function(){
 			
 			add:function(){
 				$('#addDonateDetail').dialog({
-				    title: "添加捐赠详情",    
+				    title: message("yly.donateDetail.add"),    
 				    width: 700,    
 				    height: 400,
 				    href:'../donateDetail/add.jhtml',
@@ -40,7 +40,7 @@ $(function(){
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#addDonateDetail').dialog("close").form("reset");
@@ -63,18 +63,18 @@ $(function(){
 			edit:function(){
 				var _edit_row = $('#donateDetail-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
-					$.messager.alert('警告','请选择要编辑的行');  
+					$.messager.alert(message("yly.common.select.editRow"));
 					return false;
 				}
 				var _dialog = $('#editDonateDetail').dialog({    
-				    title: '药品编辑',     
+				    title: message("yly.common.edit"), 
 				    width: 700,    
 				    height: 400,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../donateDetail/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
-				    	text:'保存',
+				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#editDonateDetail_form').form('validate');
@@ -85,29 +85,20 @@ $(function(){
 									data:$("#editDonateDetail_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
-											text:"正在保存中......"
+											text:message("yly.common.saving")
 										});
 									},
 									success:function(result,response,status){
 										$.messager.progress('close');
-										if(response == "success"){
-											$.messager.show({
-												title:'提示',
-												msg:'保存成功',
-												timeout:3000,
-												showType:'slide'
-											});
+											showSuccessMsg(result.content);
 											$('#editDonateDetail').dialog("close");
 											$("#donateDetail_table-list").datagrid('reload');
-										}else{
-											$.messager.alert('保存失败','未知错误','warning');
-										}
 									}
 								});
 							};
 						}
 					},{
-						text:'取消',
+						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editDonateDetail').dialog("close").form("reset");
@@ -127,47 +118,7 @@ $(function(){
 				});  
 			},
 			remove:function(){
-				var _rows = $('#donateDetail-table-list').datagrid('getSelections');
-				if(_rows == null){
-					$.messager.alert('警告','请选择要删除的内容');  
-				}else{
-					var _ids =[];
-					for(var i=0; i<_rows.length; i++){
-							_ids.push(_rows[i].id);
-						}
-					if(_ids.length >0){
-						$.messager.confirm('确认','您确认想要删除记录吗？',function(r){
-							if(r){
-								$.ajax({
-									url:"../donateDetail/delete.jhtml",
-									type:"post",
-									traditional: true,
-									data:{"ids":_ids},
-									beforeSend:function(){
-										$.messager.progress({
-											text:"正在删除中......"
-										});
-									},
-									success:function(result,response,status){
-										$.messager.progress('close');
-										if(response == "success"){
-											$.messager.show({
-												title:'提示',
-												msg:'操作成功',
-												timeout:3000,
-												showType:'slide'
-											});
-											$("#donateDetail-table-list").datagrid('reload');
-										}else{
-											$.messager.alert('保存失败','未知错误','warning');
-										}
-									}
-								});
-							}
-						})
-					}
-					
-				}
+				listRemove('donateDetail-table-list','../donateDetail/delete.jhtml');
 			}
 	};
 

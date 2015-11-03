@@ -3,32 +3,32 @@
 		<input type="hidden" id="id" name="id" value="${donateDetail.id}"/>  
 	    <table class="table table-striped"  border="0">
 	    	<tr>
-	    		<th>捐赠类型（钱或物）:</th>
+	    		<th>${message("yly.donateDetail.donateType")}:</th>
 	    		<td>
 	    		
 	    			<select id="donatorGender" class="easyui-combobox"  name="donateType" style="width:60px;">   
-						<option value="MONEY" [#if donateDetail.donateType == 'MALE'] selected = "selected"[/#if]>钱</option>
-						<option value="ITEM" [#if donateDetail.donateType == 'FEMALE'] selected = "selected"[/#if]>物</option> 
+						<option value="MONEY" [#if donateDetail.donateType == 'MALE'] selected = "selected"[/#if]>${message("yly.donateDetail.donateType.money")}</option>
+						<option value="ITEM" [#if donateDetail.donateType == 'FEMALE'] selected = "selected"[/#if]>${message("yly.donateDetail.donateType.item")}</option> 
 				  </select>
 				</td>     
-	    		<th>捐赠数额:</th>
+	    		<th>${message("yly.donateDetail.donateAmount")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="donateAmount" data-options="required:true" value="${donateDetail.donateAmount}"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>捐赠物品类型:</th>
+	    		<th>${message("yly.donateDetail.donateItemType")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="donateItemTypeId" id="donateItemType" value="${donateDetail.donateItemType.itemName}" data-options="required:true" />
 	    			    
 	    		</td>
-	    		<th>物品计量单位:</th>
+	    		<th>${message("yly.donateDetail.units")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="units" data-options="required:true" value="${donateDetail.units}" validtype="length[0,5]"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>备注:</th>
+	    		<th>${message("yly.remark")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="remark" data-options="required:true" value="${donateDetail.remark}" validtype="length[0,30]"/>   
 	    		</td>

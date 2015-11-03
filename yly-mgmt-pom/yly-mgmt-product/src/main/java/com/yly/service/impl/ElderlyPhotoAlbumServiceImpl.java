@@ -46,32 +46,32 @@ public class ElderlyPhotoAlbumServiceImpl extends BaseServiceImpl<ElderlyPhotoAl
     super.setBaseDao(elderlyPhotoAlbumDao);
   }
 
-//  @Override
-//  public Page<ElderlyPhotoAlbum> SearchPageByFilter(String keysOfElderlyName, String keysOfPhotoAlbumName, Pageable pageable) {
-//    IKAnalyzer analyzer = new IKAnalyzer();
-//    analyzer.setMaxWordLength(true);
-//
-//    try {
-//      BooleanQuery query = new BooleanQuery();
-//      if (keysOfElderlyName != null) {
-//        String text = QueryParser.escape(keysOfElderlyName);
-//        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
-//        Query filterQuery = filterParser.parse(text);
-//        query.add(filterQuery, Occur.MUST);
-//      }
-//      if (keysOfPhotoAlbumName != null) {
-//        String text = QueryParser.escape(keysOfPhotoAlbumName);
-//        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "name", analyzer);
-//        Query filterQuery = filterParser.parse(text);
-//        query.add(filterQuery, Occur.MUST);
-//      }      
-//
-//      return elderlyPhotoAlbumDao.search(query, pageable, analyzer, null);
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-//    return null;
-//  }
+  @Override
+  public Page<ElderlyPhotoAlbum> searchPageByFilter(String keysOfElderlyName, String keysOfPhotoAlbumName, Pageable pageable) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+
+    try {
+      BooleanQuery query = new BooleanQuery();
+      if (keysOfElderlyName != null) {
+        String text = QueryParser.escape(keysOfElderlyName);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+        Query filterQuery = filterParser.parse(text);
+        query.add(filterQuery, Occur.MUST);
+      }
+      if (keysOfPhotoAlbumName != null) {
+        String text = QueryParser.escape(keysOfPhotoAlbumName);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "name", analyzer);
+        Query filterQuery = filterParser.parse(text);
+        query.add(filterQuery, Occur.MUST);
+      }      
+
+      return elderlyPhotoAlbumDao.search(query, pageable, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
   @Override
   @Transactional(readOnly = true)
   public List<ElderlyPhotoAlbum> searchByFilter(String keysOfPhotoAlbumName, Boolean isTenant) {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.BlackList;
 import com.yly.entity.ElderlyInfo;
@@ -82,7 +83,19 @@ public class BlackListController extends BaseController {
     if (elderlyInfo != null && blackList != null) {
       blackList.setTenantID(tenantAccountService.getCurrentTenantID());
       blackList.setElderlyInfo(elderlyInfo);
-      blackListService.save(blackList);
+      try {
+        blackListService.save(blackList);
+      } catch (Exception e) {
+        // 老人唯一性 验证
+        LogUtil
+            .debug(
+                BlackListController.class,
+                "BlackListController",
+                "elderlyInfo.id=%s already existed in yly_blacklist table, can't add again, current tenant ID=%s",
+                elderlyInfo.getId().toString(), tenantAccountService.getCurrentTenantID());
+        return Message.error("yly.blacklist.exception.unique");
+      }
+
     }
 
     return SUCCESS_MESSAGE;

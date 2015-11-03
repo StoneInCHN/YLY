@@ -15,7 +15,7 @@ import com.yly.framework.service.BaseService;
  *
  */
 public interface ElderlyPhotoAlbumService extends BaseService<ElderlyPhotoAlbum, Long> {
-  //Page<ElderlyPhotoAlbum> SearchPageByFilter(String keysOfElderlyName, String keysOfPhotoAlbumName, Pageable pageable);
+  Page<ElderlyPhotoAlbum> searchPageByFilter(String keysOfElderlyName, String keysOfPhotoAlbumName, Pageable pageable);
   
   List<ElderlyPhotoAlbum> searchByFilter(String keysOfPhotoAlbumName, Boolean isTenant);
 }

@@ -17,7 +17,8 @@
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/main.css" >
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/webuploader.css" >
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/upload-style.css" >
- 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/multiple/style.css" >
+ 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/uploadPhotos_style.css" >
+ 	<link rel="stylesheet" type="text/css"href="${base}/resources/css/newAlbum_style.css" >
  	<link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/_shared/css/style.css">
     <link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/connected-carousels/jcarousel.connected-carousels.css">
   </head>
@@ -164,7 +165,7 @@
     </div>   
     
     <div id="searchElderlyInfo"></div>
-    
+    <div id="searchAlbum"></div>
     
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->

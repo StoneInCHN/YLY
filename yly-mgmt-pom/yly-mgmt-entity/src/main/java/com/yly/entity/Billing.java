@@ -84,44 +84,44 @@ public class Billing extends BaseEntity {
   /**
    * 床位费金额
    */
-  private BigDecimal bedAmount;
+  private BigDecimal bedAmount = new BigDecimal(0);
   /**
    * 水费金额
    */
-  private BigDecimal waterAmount;
+  private BigDecimal waterAmount = new BigDecimal(0);
   /**
    * 电费费金额
    */
-  private BigDecimal electricityAmount;
+  private BigDecimal electricityAmount = new BigDecimal(0);
   /**
    * 个性化服务费金额
    */
-  private BigDecimal personalizedAmount;
+  private BigDecimal personalizedAmount = new BigDecimal(0);
 
   /**
    * 护理费金额
    */
-  private BigDecimal nurseAmount;
+  private BigDecimal nurseAmount = new BigDecimal(0);
 
   /**
    * 押金金额
    */
-  private BigDecimal depositAmount;
+  private BigDecimal depositAmount = new BigDecimal(0);
 
   /**
    * 伙食费金额
    */
-  private BigDecimal mealAmount;
+  private BigDecimal mealAmount = new BigDecimal(0);
   
   /**
    * 预存款金额
    */
-  private BigDecimal advanceChargeAmount;
+  private BigDecimal advanceChargeAmount = new BigDecimal(0);
 
   /**
    * 总金额
    */
-  private BigDecimal totalAmount;
+  private BigDecimal totalAmount = new BigDecimal(0);
 
   /**
    * 押金详情
@@ -426,5 +426,7 @@ public class Billing extends BaseEntity {
   public void setAdvanceChargeAmount(BigDecimal advanceChargeAmount) {
     this.advanceChargeAmount = advanceChargeAmount;
   }
+
+ 
 
 }

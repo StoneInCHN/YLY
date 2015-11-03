@@ -3,22 +3,22 @@
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
-	    <legend>资产查询</legend>
+	    <legend>${message("yly.fixedAssets.search")}</legend>
 	    <form id="fixedAssets-search-form" class="search-form">
 	    	<div class="search-item">
-			    <label> 名称查询:</label>
+			    <label> ${message("yly.fixedAssets.search.name")}:</label>
 			    <input type="text" class="easyui-textbox" id="assetName" name="assetName" />
 			</div>
 			<div class="search-item">
-			    <label> 部门:</label>
+			    <label> ${message("yly.fixedAssets.search.assetsDepartment")}:</label>
 			    <input type="text" class="easyui-combobox" id="assetsDepartment-search" name="departmentSearchId"/>
 			</div>
 			<div class="search-item">
-			    <label> 录入时间:</label>
+			    <label> ${message("yly.fixedAssets.search.time")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
-			    <label>到:</label>
+			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
@@ -40,110 +40,110 @@
 	<form id="addFixedAssets_form" method="post" class="form-table">   
 	    <table class="table table-striped"  border="0">
 	    	<tr>
-	    		<th>资产编号:</th>
+	    		<th>${message("yly.fixedAssets.assetNo")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="assetNo" data-options="required:true" validtype="length[0,40]"/>   
 	    		</td>
 	    	
-	    		<th>资产名称:</th>
+	    		<th>${message("yly.fixedAssets.assetName")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="assetName" data-options="required:true" validtype="length[0,60]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>存放地点（部门）:</th>
+	    		<th>${message("yly.fixedAssets.assetsDepartment")}:</th>
 	    		<td>
 	    			 <input class="easyui-combobox" id="assetsDepartment-add" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
 	    		</td>
 	    	
-	    		<th>数量:</th>
+	    		<th>${message("yly.fixedAssets.assetCount")}:</th>
 	    		<td>
 	    			<input class="easyui-textbox" type="text" name="assetCount" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>计量单位:</th>
+	    		<th>${message("yly.fixedAssets.assetUnit")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="assetUnit" validtype="length[0,10]"/>   
 	    		</td>
 	    	
-	    		<th>使用状态:</th>
+	    		<th>${message("yly.fixedAssets.assetUsage")}:</th>
 	    		<td>
 	    			<input class="easyui-combobox" data-options="
 				     valueField: 'label',
 				     textField: 'value',
 				     data: [{
 				      label: 'INSERVICE',
-				      value: '使用中'
+				      value: '${message("yly.fixedAssets.assetUsage.inService")}'
 				     },{
 				      label: 'OUTSERVICE',
-				      value: '未使用'
+				      value: '${message("yly.fixedAssets.assetUsage.outService")}'
 				     },{
 				      label: 'NONEED',
-				      value: '不需用'
+				      value: '${message("yly.fixedAssets.assetUsage.noNeed")}'
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetUsage" style="width:110px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>规格型号:</th>
+	    		<th>${message("yly.fixedAssets.assetSpecification")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="assetSpecification" validtype="length[0,30]"/>   
 	    		</td>
 	    	
-	    		<th>产地:</th>
+	    		<th>${message("yly.fixedAssets.assetOrigin")}:</th>
 	    		<td>
 	    			<input class="easyui-textbox" type="text" name="assetOrigin" validtype="length[0,20]" />
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>制造商:</th>
+	    		<th>${message("yly.fixedAssets.assetManufacturer")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="assetManufacturer" validtype="length[0,50]" />   
 	    		</td>
 	    	
-	    		<th>供应商:</th>
+	    		<th>${message("yly.fixedAssets.assetProvider")}:</th>
 	    		<td>
 	    			<input class="easyui-textbox" type="text" name="assetProvider"  validtype="length[0,50]"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>资产价值（RMB）:</th>
+	    		<th>${message("yly.fixedAssets.assetValue")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="assetValue" />   
 	    		</td>
 	    	
-	    		<th>资产类型:</th>
+	    		<th>${message("yly.fixedAssets.assetsType")}:</th>
 	    		<td>
 	    			 <input class="easyui-combobox" data-options="
 				     valueField: 'label',
 				     textField: 'value',
 				     data: [{
 				      label: 'BUILDING',
-				      value: '房屋建筑物'
+				      value: '${message("yly.fixedAssets.buiding")}'
 				     },{
 				      label: 'PRODUCTION',
-				      value: '生产经营'
+				      value: '${message("yly.fixedAssets.production")}'
 				     },{
 				      label: 'VEHICLE',
-				      value: '交通工具'
+				      value: '${message("yly.fixedAssets.vehicle")}'
 				     },{
 				      label: 'ELECTRONIC',
-				      value: '电子设备'
+				      value: '${message("yly.fixedAssets.electronic")}'
 				     },{
 				      label: 'OTHERS',
-				      value: '其他'
+				      value: '${message("yly.fixedAssets.other")}'
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetsType" style="width:110px;"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>录入日期:</th>
+	    		<th>${message("yly.fixedAssets.assetTime")}:</th>
 	    		<td>
 	    			 <input type="text" class="Wdate" id="assetTime" name="assetTime" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>
 	    	
-	    		<th>备注:</th>
+	    		<th>${message("yly.remark")}:</th>
 	    		<td>
 	    			<input class="easyui-textbox" type="text" name="remark" validtype="length[0,50]"/>
 	    		</td>
