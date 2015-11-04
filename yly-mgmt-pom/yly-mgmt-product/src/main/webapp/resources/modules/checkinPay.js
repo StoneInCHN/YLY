@@ -1,6 +1,6 @@
-var checkinCharge_manager_tool = {
+var checkinPay_manager_tool = {
 			add:function(){		
-				$('#addCheckinCharge').dialog({    
+				$('#addCheckinPay').dialog({    
 				    title: message("yly.charge.checkin"),    
 				    width: 650,    
 				    height: 750,
@@ -11,12 +11,12 @@ var checkinCharge_manager_tool = {
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addCheckinCharge_form').form('validate');
+							var validate = $('#addCheckinPay_form').form('validate');
 							if(validate){
 								$.ajax({
 									url:"../billing/checkin.jhtml",
 									type:"post",
-									data:$("#addCheckinCharge_form").serialize(),
+									data:$("#addCheckinPay_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -27,9 +27,9 @@ var checkinCharge_manager_tool = {
 										    console.log(result);
 										    if(result.type == "success"){
 										    	$.messager.progress('close');
-												$('#addCheckinCharge').dialog("close");
-												$("#checkinCharge_table_list").datagrid('reload');
-												$('#addCheckinCharge_form').form('reset');
+												$('#addCheckinPay').dialog("close");
+												$("#checkinPay_table_list").datagrid('reload');
+												$('#addCheckinPay_form').form('reset');
 												$("#isMonthlyMeal").attr("checked","");
 												$('#isMonthlyMeal').trigger('click');
 										    }
@@ -46,14 +46,14 @@ var checkinCharge_manager_tool = {
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addCheckinCharge').dialog("close");
-							 $('#addCheckinCharge_form').form('reset');
+							 $('#addCheckinPay').dialog("close");
+							 $('#addCheckinPay_form').form('reset');
 							 $("#isMonthlyMeal").attr("checked","");
 							 $('#isMonthlyMeal').trigger('click');
 						}
 				    }],
 				    onOpen:function(){
-				    	$('#addCheckinCharge_form').show();
+				    	$('#addCheckinPay_form').show();
 				    	$.ajax({
 							url:"../systemConfig/findByConfigKey.jhtml",
 							type:"post",
@@ -103,7 +103,7 @@ var checkinCharge_manager_tool = {
 						});
 				    },
 				    onClose:function(){
-				    	 //$('#addCheckinCharge_form').form('reset');
+				    	 //$('#addCheckinPay_form').form('reset');
 				    }
 				});  
 			}
@@ -111,10 +111,10 @@ var checkinCharge_manager_tool = {
 
 $(function(){
 	
-	$("#checkinCharge_table_list").datagrid({
+	$("#checkinPay_table_list").datagrid({
 		title:message("yly.charge.record.list"),
 		fitColumns:true,
-		toolbar:"#checkinCharge_manager_tool",
+		toolbar:"#checkinPay_manager_tool",
 		url:'../billing/list.jhtml?billingType=CHECK_IN', 
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
@@ -126,7 +126,7 @@ $(function(){
 			    height: 550, 
 			    cache: false,
 			    modal: true,
-			    href:'../billing/details.jhtml?id='+rowData.id+'&path=checkinCharge',
+			    href:'../billing/details.jhtml?id='+rowData.id+'&path=checkinPay',
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
@@ -177,8 +177,10 @@ $(function(){
 		    	  		return "<font color=#FF0000>"+message("yly.charge.status.unpaid_adjustment")+"</font>";
 		    	  	}
 		      	}},
-		      //办理时间
-		      {title:message("yly.charge.record.oprTime"),field:"payTime",width:35,align:'center',sortable:true,formatter: function(value,row,index){
+		      //收款人
+		      {title:message("yly.charge.record.payStaff"),field:"payStaff",width:25,align:'center',sortable:true},
+		      //缴费时间
+		      {title:message("yly.charge.record.payTime"),field:"payTime",width:35,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
 		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm");
 		    	  	}
@@ -188,10 +190,10 @@ $(function(){
 
 	});
 	
-	$("#checkinCharge_search_btn").click(function(){
-	  var _queryParams = $("#checkinCharge_search_form").serializeJSON();
-	  $('#checkinCharge_table_list').datagrid('options').queryParams = _queryParams;  
-	  $("#checkinCharge_table_list").datagrid('reload');
+	$("#checkinPay_search_btn").click(function(){
+	  var _queryParams = $("#checkinPay_search_form").serializeJSON();
+	  $('#checkinPay_table_list').datagrid('options').queryParams = _queryParams;  
+	  $("#checkinPay_table_list").datagrid('reload');
 	});
 	
 	//是否伙食费包月
@@ -256,6 +258,59 @@ $(function(){
 		
 	});
 	
+	//支付方式
+	$('#paymentType').combobox({
+		onChange:function(value){
+			console.log("111"+value);
+			if(value == "MIXTURE"){
+				$('#mixturePay').css("display","table-row");
+				$("#totalAmount_cash").numberbox({
+					required:true,
+				});
+				$("#totalAmount_card").numberbox({
+					required:true,
+				});
+			}else{
+				$('#mixturePay').css("display","none");
+				$("#totalAmount_cash").numberbox('reset');
+				$("#totalAmount_cash").numberbox({
+					required:false,
+				});
+				$("#totalAmount_card").numberbox('reset');
+				$("#totalAmount_card").numberbox({
+					required:false,
+				});
+				
+			}
+		}
+	});
+	
+	$('#chargein_totalAmount').numberbox({
+		onChange:function(value){
+			$("#totalAmount_card").numberbox('reset');
+			$("#totalAmount_cash").numberbox('reset');
+		}
+	});
+	//混合支付计算
+	$('#totalAmount_cash').numberbox({
+		onChange:function(value){
+			if($('#paymentType').combobox('getValue')=="MIXTURE"){
+				var totalAmount=$('#chargein_totalAmount').numberbox('getValue');
+				$('#totalAmount_card').numberbox('setValue',totalAmount-value);
+			}
+			
+		}
+	});
+	
+	$('#totalAmount_card').numberbox({
+		onChange:function(value){
+			if($('#paymentType').combobox('getValue')=="MIXTURE"){
+				var totalAmount=$('#chargein_totalAmount').numberbox('getValue');
+				$('#totalAmount_cash').numberbox('setValue',totalAmount-value);
+			}
+		}
+	});
+	
 	$('#bedNursePeriodStartDate').datebox({
 	    onSelect: function(date){
             var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -306,19 +361,23 @@ $(function(){
 	});
 	
 	
-	$('#addCheckinCharge_elderlyInfo').textbox({  
+	$('#addCheckinPay_elderlyInfo').textbox({  
 		  onChange: function(value){  
 			  if(value==null||value=='') {
 				  return;
 			  }
-			  var elderlyInfoID = $("#addCheckinCharge_elderlyInfoID").val();
-			  $("#addCheckinCharge_form input[class*='easyui'][textboxname!=elderlyInfoName]").each(function(){
+			  var elderlyInfoID = $("#addCheckinPay_elderlyInfoID").val();
+			  $("#addCheckinPay_form input[class*='easyui'][textboxname!=elderlyInfoName]").each(function(){
 				  $(this).textbox('reset');
 			  });
-			  $("#addCheckinCharge_form span[class*='margin-left'][id!=billDay]").each(function(){
+			  $("#addCheckinPay_form span[class*='margin-left'][id!=billDay]").each(function(){
 				  $(this).html("");
 				  $(this).attr("data-value","");
 			  });
+			  
+			  $('#mixturePay').css("display","none");
+			  $("#totalAmount_cash").numberbox('reset');
+			  $("#totalAmount_card").numberbox('reset');
 			  
 				$.ajax({
 					url:"../billing/getBedNurseConfig.jhtml",
@@ -326,7 +385,7 @@ $(function(){
 					data:{elderlyInfoID:elderlyInfoID},
 					success:function(result){
 						if(result[0].errMsg!=null){
-							$('#addCheckinCharge_elderlyInfo').textbox('reset');
+							$('#addCheckinPay_elderlyInfo').textbox('reset');
 							showSuccessMsg(result[0].errMsg);
 							return;
 						}

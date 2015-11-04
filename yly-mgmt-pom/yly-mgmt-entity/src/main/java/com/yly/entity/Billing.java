@@ -70,6 +70,10 @@ public class Billing extends BaseEntity {
    * 缴费时间
    */
   private Date payTime;
+  /**
+   * 收款人
+   */
+  private String payStaff;
 
   /***
    * 收费开始时间
@@ -289,6 +293,15 @@ public class Billing extends BaseEntity {
   }
 
   @Column(length = 15)
+  public String getPayStaff() {
+    return payStaff;
+  }
+
+  public void setPayStaff(String payStaff) {
+    this.payStaff = payStaff;
+  }
+
+  @Column(length = 15)
   public String getOperator() {
     return operator;
   }
@@ -297,6 +310,7 @@ public class Billing extends BaseEntity {
     this.operator = operator;
   }
 
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }

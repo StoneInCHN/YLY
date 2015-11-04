@@ -61,7 +61,7 @@ public class DepositController extends BaseController {
                     queryParam.getBeginDate()!=null?queryParam.getBeginDate().toString():null, queryParam.getEndDate()!=null?queryParam.getEndDate().toString():null);
       }
       queryParam.setIsPeriod(false);
-      queryParam.setIsTenant(true);
+//      queryParam.setIsTenant(true);
       page = depositService.chargeRecordSearch(queryParam,pageable);
     }
 

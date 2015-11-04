@@ -53,7 +53,7 @@ $(function(){
 		      {title:message("yly.charge.record.nurse"),field:"nurseAmount",width:25,align:'center',sortable:true},
 		      //总金额
 		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:25,align:'center'},
-		      //收款人
+		      //经办人
 		      {title:message("yly.charge.record.operator"),field:"operator",width:30,align:'center',sortable:true},
 		      //收款时间段
 		      {title:message("yly.charge.record.period"),field:"periodEndDate",width:25,align:'center',sortable:true,formatter: function(value,row,index){

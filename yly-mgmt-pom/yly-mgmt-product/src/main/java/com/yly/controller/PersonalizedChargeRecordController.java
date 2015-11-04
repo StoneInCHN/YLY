@@ -61,8 +61,8 @@ public class PersonalizedChargeRecordController extends BaseController {
                 .getRealName(), queryParam.getIdentifier(),queryParam.getStatus()!=null?queryParam.getStatus().toString():null,
                     queryParam.getBeginDate()!=null?queryParam.getBeginDate().toString():null, queryParam.getEndDate()!=null?queryParam.getEndDate().toString():null);
       }
-      queryParam.setIsPeriod(true);
-      queryParam.setIsTenant(true);
+//      queryParam.setIsPeriod(true);
+//      queryParam.setIsTenant(true);
       page = personalizedChargeService.chargeRecordSearch(queryParam,pageable);
     }
     

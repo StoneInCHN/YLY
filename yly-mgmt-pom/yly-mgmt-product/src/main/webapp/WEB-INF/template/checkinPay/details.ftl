@@ -61,21 +61,30 @@
 	    		<td>
     			   <input class="easyui-textbox" type="text" name="totalAmount"  readonly=true value="${billing.totalAmount}" style="width:75px;"/>
 	    		</td>
-	    		<th>${message("yly.common.charge.status")}:</th>
+	    		<th>${message("yly.common.charge.paymentType")}:</th>
 	    		<td>
-	    			<select id="chargeStatus" class="easyui-combobox" name="chargeStatus" disabled="disabled" style="width:120px;">   
-						<option value="${billing.chargeStatus}" selected="selected">${message("yly.common.charge.status.${billing.chargeStatus}")}</option>
+    			  	<select id="paymentType" class="easyui-combobox" name="paymentType" disabled="disabled" style="width:120px;">   
+						<option value="${billing.paymentType}" selected="selected">${message("yly.common.charge.paymentType.${billing.paymentType}")}</option>
 				    </select>
 	    		</td>
 	    	</tr>
+	    	
 	    	<tr>
+	    		<th>${message("yly.common.charge.status")}:</th>
+	    		<td>
+	    			<select id="chargeStatus" class="easyui-combobox" name="chargeStatus" disabled="disabled" style="width:85px;">   
+						<option value="${billing.chargeStatus}" selected="selected">${message("yly.common.charge.status.${billing.chargeStatus}")}</option>
+				    </select>
+	    		</td>
 	    		<th>${message("yly.common.charge.operator")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="operator"  readonly=true value="${billing.operator}" style="width:85px;"/> 
 	    		</td>
-	    		<th>${message("yly.common.charge.oprTime")}:</th>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.common.charge.payTime")}:</th>
 	    		<td>
-	    			<input id="payTime" name="oprTime" type="text" value="${billing.createDate}" class="easyui-datetimebox" style="width:150px;" disabled=true /> 
+	    			<input id="payTime" name="payTime" type="text" value="${billing.payTime}" class="easyui-datetimebox" style="width:150px;" disabled=true /> 
 	    		</td>
 	    	</tr>
 	    	<tr>

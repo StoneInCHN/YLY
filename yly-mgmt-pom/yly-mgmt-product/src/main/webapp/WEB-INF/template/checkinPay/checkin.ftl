@@ -1,9 +1,9 @@
-<script src="${base}/resources/modules/checkoutCharge.js"></script>
+<script src="${base}/resources/modules/checkinPay.js"></script>
 
 <div>
 	  <fieldset>
 	    <legend>${message("yly.charge.record.search")}</legend>
-	    <form id="checkoutCharge_search_form" class="search-form">
+	    <form id="checkinPay_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
 			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="realName" id="realName"/>
@@ -11,6 +11,20 @@
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
 			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier" id="identifier"/>
+			</div>
+			<div class="search-item">
+			    <label>${message("yly.common.charge.status")}:</label>
+			   	<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="status" id="status" panelHeight="50px"
+			   	data-options="
+					valueField: 'value',
+					textField: 'label',
+					data: [{
+						value: 'PAID',
+						label: '${message("yly.common.charge.status.PAID")}'
+					},{
+						value: 'UNPAID',
+						label: '${message("yly.common.charge.status.UNPAID")}'
+					}]" />
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.common.charge.payTime")}:</label>
@@ -22,27 +36,27 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="checkoutCharge_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	  <button id="checkinPay_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
-<div id="checkoutCharge_manager_tool">
+<div id="checkinPay_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="checkoutCharge_manager_tool.add();">${message("yly.charge.checkout")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="checkinPay_manager_tool.add();">${message("yly.pay.checkin")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
-<table id="checkoutCharge_table_list"></table>
-<div id="checkoutDetail"></div>
-<div id="addCheckoutCharge">
-	<form id="addCheckoutCharge_form" method="post" class="form-table"> 
-	    <input type="hidden" name="elderlyInfoID" id="addCheckoutCharge_elderlyInfoID">  
+<table id="checkinPay_table_list"></table>
+<div id="checkinDetail"></div>
+<div id="addCheckinPay">
+	<form id="addCheckinPay_form" method="post" class="form-table"> 
+	    <input type="hidden" name="elderlyInfoID" id="addCheckinPay_elderlyInfoID">  
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckoutCharge_elderlyInfo" data-options="required:true,editable:false" />
-	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addCheckoutCharge_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
+	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckinPay_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
+	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addCheckinPay_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    		 <th>${message("yly.common.charge.invoiceNo")}:</th>
 	    		<td>
@@ -58,7 +72,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" id="checkout_deposit" name="deposit.depositAmount" data-options="required:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="checkin_deposit" name="deposit.depositAmount" data-options="required:true,min:0,precision:2" />
 					    		</td>
 					    		<th>${message("yly.remark")}:</th>
 					    		<td width="250px">

@@ -18,7 +18,7 @@ public class ChargeSearchRequest implements Serializable{
 	/**
 	 * 是否按租户查询
 	 */
-	private Boolean isTenant;
+	private Boolean isTenant=true;
     /**
      * 开始时间
      */
@@ -47,13 +47,23 @@ public class ChargeSearchRequest implements Serializable{
     /**
      * 是否查询时间段
      */
-    private Boolean isPeriod;
+    private Boolean isPeriod=true;
+    /**
+     * 是否按查询创建时间
+     */
+    private Boolean isCreateTime=false;
     /**
      * 缴费账单类型
      */
     private BillingType billingType;
     
-	public Boolean getIsTenant() {
+	public Boolean getIsCreateTime() {
+      return isCreateTime;
+    }
+    public void setIsCreateTime(Boolean isCreateTime) {
+      this.isCreateTime = isCreateTime;
+    }
+  public Boolean getIsTenant() {
 		return isTenant;
 	}
 	public void setIsTenant(Boolean isTenant) {
