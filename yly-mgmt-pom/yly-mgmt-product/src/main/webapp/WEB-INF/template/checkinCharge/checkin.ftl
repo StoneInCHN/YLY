@@ -4,6 +4,7 @@
 	  <fieldset>
 	    <legend>${message("yly.charge.record.search")}</legend>
 	    <form id="checkinCharge_search_form" class="search-form">
+	    	<input type="hidden" name="isCreateTime" value="true">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
 			   	<input class="easyui-textbox" prompt="${message("yly.common.prompt.input.elderlyName")}" type="text" name="realName" id="realName"/>
@@ -13,7 +14,21 @@
 			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier" id="identifier"/>
 			</div>
 			<div class="search-item">
-			    <label> ${message("yly.common.charge.payTime")}:</label>
+			    <label>${message("yly.common.charge.status")}:</label>
+			   	<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="status" id="status" panelHeight="50px"
+			   	data-options="
+					valueField: 'value',
+					textField: 'label',
+					data: [{
+						value: 'PAID',
+						label: '${message("yly.common.charge.status.PAID")}'
+					},{
+						value: 'UNPAID',
+						label: '${message("yly.common.charge.status.UNPAID")}'
+					}]" />
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.common.charge.oprTime")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" placeholder="${message("yly.common.prompt.beginDate")}" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -40,18 +55,14 @@
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckinCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
+	    		<td colspan="3">
+	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckinCharge_elderlyInfo" style="width:180px;" data-options="required:true,editable:false" />
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addCheckinCharge_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
-	    		</td>
-	    		 <th>${message("yly.common.charge.invoiceNo")}:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" name="invoiceNo" validtype="length[0,30]"/> 
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr>
-	    		<td colspan=4>
+	    		<td colspan="4">
 	    			  <fieldset> 
 	    			  	<legend>${message("yly.charge.record.deposit")}:</legend>
 	    			  	<table class="table table-striped">
@@ -160,35 +171,6 @@
 	    		<th>${message("yly.common.charge.totalAmount")}:</th>
 	    		<td colspan="3">
 	    			 <input class="easyui-numberbox" id="chargein_totalAmount" name="totalAmount" data-options="required:true,min:0,precision:2,editable:false"/>
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.common.charge.paymentType")}:</th>
-	    		<td colspan=3>
-	    			<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="paymentType" id="paymentType" panelHeight="100px"
-			   		data-options="required:true,editable:false,
-					valueField: 'value',
-					textField: 'label',
-					data: [{
-						value: 'CASH',
-						label: '${message("yly.common.charge.paymentType.CASH")}'
-					},{
-						value: 'CARD',
-						label: '${message("yly.common.charge.paymentType.CARD")}'
-					},{
-						value: 'MIXTURE',
-						label: '${message("yly.common.charge.paymentType.MIXTURE")}'
-					}]" /> 
-	    		</td>
-	    	</tr>
-	    	<tr id="mixturePay" style="display:none">
-	    		<th>${message("yly.common.charge.paymentType.CASH")}:</th>
-	    		<td>
-	    			 <input class="easyui-numberbox" id="totalAmount_cash" name="cashAmount" data-options="min:0,precision:2"/>    
-	    		</td>
-	    		 <th>${message("yly.common.charge.paymentType.CARD")}:</th>
-	    		<td>
-	    			 <input class="easyui-numberbox" id="totalAmount_card" name="cardAmount" data-options="min:0,precision:2"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

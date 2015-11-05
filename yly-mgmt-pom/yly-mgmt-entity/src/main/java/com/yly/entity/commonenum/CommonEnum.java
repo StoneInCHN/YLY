@@ -294,6 +294,10 @@ public class CommonEnum {
      */
     UNPAID,
     /**
+     * 未缴费(调账)
+     */
+    UNPAID_ADJUSTMENT,
+    /**
      * 已退款
      */
     REFUNDED
@@ -1277,6 +1281,10 @@ public class CommonEnum {
     /**
      * 过世
      */
-    DEAD
+    DEAD,
+    /**
+     * 入院办理(已出账单未交费)
+     */
+    IN_PROGRESS_CHECKIN_BILL,
   }
 }

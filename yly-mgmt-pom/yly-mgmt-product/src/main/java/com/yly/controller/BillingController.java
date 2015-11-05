@@ -59,10 +59,19 @@ public class BillingController extends BaseController {
   private TenantAccountService tenantAccountService;
   
   
-
+  /**
+   * 入院缴费(交钱)
+   * 
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/checkinPay", method = RequestMethod.GET)
+  public String checkinPay(ModelMap model) {
+    return "/checkinPay/checkin";
+  }
 
   /**
-   * 入院缴费页面
+   * 入院收费（形成账单）
    * 
    * @param model
    * @return
@@ -108,7 +117,7 @@ public class BillingController extends BaseController {
       Pageable pageable, ModelMap model) {
     Page<Billing> page = new Page<Billing>();
     if (queryParam.getRealName() == null && queryParam.getIdentifier() == null
-        && queryParam.getBeginDate() == null && queryParam.getEndDate() == null) {
+        && queryParam.getBeginDate() == null && queryParam.getEndDate() == null && queryParam.getStatus() == null) {
       List<Filter> filters = new ArrayList<Filter>();
       Filter filter = new Filter("billType", Operator.eq, queryParam.getBillingType());
       filters.add(filter);
@@ -117,27 +126,24 @@ public class BillingController extends BaseController {
     } else {
       if (LogUtil.isDebugEnabled(BillingController.class)) {
         LogUtil.debug(BillingController.class, "Searching billing records with params",
-            "elderlyName=%s,identifier=%s,billType=%s,beginDate=%s,endDate=%s",
-            queryParam.getRealName(), queryParam.getIdentifier(),
+            "elderlyName=%s,identifier=%s,chargeStatus=%s,billType=%s,beginDate=%s,endDate=%s,isCreateTime=%s",
+            queryParam.getRealName(), queryParam.getIdentifier(),queryParam.getStatus()!=null?queryParam.getStatus():null,
             queryParam.getBillingType() != null ? queryParam.getBillingType().toString() : null,
             queryParam.getBeginDate() != null ? queryParam.getBeginDate().toString() : null,
-            queryParam.getEndDate() != null ? queryParam.getEndDate().toString() : null);
+            queryParam.getEndDate() != null ? queryParam.getEndDate().toString() : null,queryParam.getIsCreateTime());
       }
       if (queryParam.getBillingType()!=BillingType.DAILY) {
     	  queryParam.setIsPeriod(false);
-	  }else {
-		  queryParam.setIsPeriod(true);
 	  }
      
-      queryParam.setIsTenant(true);
       page = billingService.chargeRecordSearch(queryParam, pageable);
     }
 
 
     String[] properties =
-        {"id", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
+        {"id","createDate", "elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation",
             "elderlyInfo.nursingLevel", "nurseAmount", "mealAmount", "depositAmount",
-            "totalAmount", "bedAmount","waterAmount","electricityAmount","personalizedAmount","advanceChargeAmount","payTime", "operator"};
+            "totalAmount", "bedAmount","waterAmount","electricityAmount","personalizedAmount","advanceChargeAmount","payTime","chargeStatus","payStaff","operator"};
 
     List<Map<String, Object>> rows =
         FieldFilterUtils.filterCollectionMap(properties, page.getRows());
@@ -174,21 +180,21 @@ public class BillingController extends BaseController {
   }
 
   /**
-   * 入院缴费
+   * 入院缴费账单
    * @param checkinBill
    * @param mealTypeId
    * @param elderlyInfoID
    * @param isMonthlyMeal
    * @return
    */
-  @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-  public @ResponseBody Message add(Billing checkinBill, Long mealTypeId,Long elderlyInfoID,Boolean isMonthlyMeal,BigDecimal cashAmount,BigDecimal cardAmount) {
+  @RequestMapping(value = "/checkinBill", method = RequestMethod.POST)
+  public @ResponseBody Message chekcinBill(Billing checkinBill, Long mealTypeId,Long elderlyInfoID,Boolean isMonthlyMeal) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     if (!ElderlyStatus.IN_PROGRESS_CHECKIN.equals(elderlyInfo.getElderlyStatus())) {
       return Message.error("yly.checkin.elderlyStatus.invalid");
     }
-    elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
-    checkinBill.setChargeStatus(PaymentStatus.PAID);
+    elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN_BILL);
+    checkinBill.setChargeStatus(PaymentStatus.UNPAID);
     checkinBill.setBillType(BillingType.CHECK_IN);
     checkinBill.setElderlyInfo(elderlyInfo);
     checkinBill.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService.getCurrentTenantOrgCode()));
@@ -200,7 +206,7 @@ public class BillingController extends BaseController {
     deposit.setBilling(checkinBill);
     deposit.setBillingNo(checkinBill.getBillingNo());
     deposit.setElderlyInfo(elderlyInfo);
-    deposit.setChargeStatus(PaymentStatus.PAID);
+    deposit.setChargeStatus(checkinBill.getChargeStatus());
     deposit.setInvoiceNo(checkinBill.getInvoiceNo());
     deposit.setPayTime(checkinBill.getPayTime());
     deposit.setPaymentType(checkinBill.getPaymentType());
@@ -213,7 +219,7 @@ public class BillingController extends BaseController {
     bedNurseCharge.setBilling(checkinBill);
     bedNurseCharge.setBillingNo(checkinBill.getBillingNo());
     bedNurseCharge.setElderlyInfo(elderlyInfo);
-    bedNurseCharge.setChargeStatus(PaymentStatus.PAID);
+    bedNurseCharge.setChargeStatus(checkinBill.getChargeStatus());
     bedNurseCharge.setInvoiceNo(checkinBill.getInvoiceNo());
     bedNurseCharge.setPayTime(checkinBill.getPayTime());
     bedNurseCharge.setPaymentType(checkinBill.getPaymentType());
@@ -232,7 +238,7 @@ public class BillingController extends BaseController {
       mealCharge.setBilling(checkinBill);
       mealCharge.setBillingNo(checkinBill.getBillingNo());
       mealCharge.setElderlyInfo(elderlyInfo);
-      mealCharge.setChargeStatus(PaymentStatus.PAID);
+      mealCharge.setChargeStatus(checkinBill.getChargeStatus());
       mealCharge.setInvoiceNo(checkinBill.getInvoiceNo());
       mealCharge.setPayTime(checkinBill.getPayTime());
       mealCharge.setPaymentType(checkinBill.getPaymentType());
@@ -241,6 +247,44 @@ public class BillingController extends BaseController {
       checkinBill.setMealAmount(mealCharge.getMealAmount());
       
     }
+    
+    if (LogUtil.isDebugEnabled(BillingController.class)) {
+      LogUtil.debug(BillingController.class, "Check In Charge",
+          "Bill Entity=%s",ToolsUtils.entityToString(checkinBill));
+    }
+    billingService.save(checkinBill);
+    return SUCCESS_MESSAGE;
+  }
+  
+  
+  /**
+   * 账单支付
+   * @param checkinBill
+   * @param elderlyInfoID
+   * @param cardAmount
+   * @param cashAmount
+   * @return
+   */
+  @RequestMapping(value = "/billPay", method = RequestMethod.POST)
+  public @ResponseBody Message billPay(Long billingId,String remark,PaymentType paymentType,BigDecimal cardAmount,BigDecimal cashAmount) {
+    Billing checkinBill = billingService.find(billingId);
+    checkinBill.setPaymentType(paymentType);
+    checkinBill.setRemark(remark);
+    
+    ElderlyInfo elderlyInfo = checkinBill.getElderlyInfo();
+  
+    elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
+    checkinBill.setChargeStatus(PaymentStatus.PAID);
+    if (checkinBill.getDeposit()!=null) {
+      checkinBill.getDeposit().setChargeStatus(PaymentStatus.PAID);
+    }
+    if (checkinBill.getBedNurseCharge()!=null) {
+      checkinBill.getBedNurseCharge().setChargeStatus(PaymentStatus.PAID);
+    }
+    if (checkinBill.getMealCharge()!=null) {
+      checkinBill.getMealCharge().setChargeStatus(PaymentStatus.PAID);
+    }
+    
     
     //支付记录
     if (checkinBill.getPaymentType().equals(PaymentType.MIXTURE)) {//混合支付 现金+卡
@@ -267,7 +311,7 @@ public class BillingController extends BaseController {
       LogUtil.debug(BillingController.class, "Check In Charge",
           "Bill Entity=%s",ToolsUtils.entityToString(checkinBill));
     }
-    billingService.save(checkinBill);
+    billingService.update(checkinBill);
     return SUCCESS_MESSAGE;
   }
 
@@ -283,6 +327,19 @@ public class BillingController extends BaseController {
     Billing record = billingService.find(id);
     model.addAttribute("billing", record);
     return path + "/details";
+  }
+  
+  /**
+   * 支付页面详情
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/payPage", method = RequestMethod.GET)
+  public String payPage(ModelMap model, Long id,String path) {
+    Billing record = billingService.find(id);
+    model.addAttribute("billing", record);
+    return path+"/pay";
   }
 
 }

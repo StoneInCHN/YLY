@@ -68,7 +68,7 @@ var photoAlbum_manager_tool = {
 						handler:function(){
 							var validate = $('#addElderlyPhotoAlbum_form').form('validate');
 							if(validate){	
-								$("#uploader .uploadBtn").trigger("upload");//照片集
+								$("#uploader .uploadBtnDisable").trigger("upload");//照片集
 							};
 						}
 					},{
@@ -138,7 +138,7 @@ var photoAlbum_manager_tool = {
 				    	multipleUpload(options1);
 				    },
 				    onClose:function(){
-				    	$("#uploader .uploadBtn").trigger("clearFiles");//清空上次所选图片文件
+				    	$("#uploader .uploadBtnDisable").trigger("clearFiles");//清空上次所选图片文件
 	     				$("#identifier").val("");//清空隐藏字段 identifier
 	     				$("#albumName").val("");//清空隐藏字段 albumName
 	     				//$("#elderlynameForAlbumID").val("");
@@ -273,7 +273,7 @@ var photoAlbum_manager_tool = {
 						handler:function(){
 							var validate = $('#addElderlyPhotos_form').form('validate');
 							if(validate){	
-								$("#uploader_Photos .uploadBtn").trigger("upload");//照片集
+								$("#uploader_Photos .uploadBtnDisable").trigger("upload");//照片集
 							};
 						}
 					},{
@@ -343,7 +343,7 @@ var photoAlbum_manager_tool = {
 				    	multipleUpload(options2);
 				    },
 				    onClose:function(){
-				    	$("#uploader_Photos .uploadBtn").trigger("clearFiles");//清空上次所选图片文件
+				    	$("#uploader_Photos .uploadBtnDisable").trigger("clearFiles");//清空上次所选图片文件
 				    	$("#selectIdentifier").val("");//清空隐藏字段 selectIdentifier
 				    	$("#selectAlbumName").val("");//清空隐藏字段 selectAlbumName
 				    	loadAlbum();//重新加载相册
@@ -499,6 +499,9 @@ function setAlbumCover(){
 		    },
 		    onClose:function(){
 		    	photoAlbum_manager_tool.edit($('#coverID').val());
+		    	$("#albumUploader-add").find(".webuploader-container").show();
+		    	$("#albumUploader-add .uploadBtn").removeClass('disabled');
+		    	$("#albumUploader-add .uploadBtn").trigger("clearFileQuene");//清空上次所选图片文件
 		    }
 		
 	});

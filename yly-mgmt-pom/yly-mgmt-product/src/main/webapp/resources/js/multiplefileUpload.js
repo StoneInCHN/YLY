@@ -17,7 +17,7 @@ function multipleUpload(options) {
         $info = $statusBar.find('.info'),
 
         // 上传按钮
-        $upload = $wrap.find('.uploadBtn'),
+        $upload = $wrap.find('.uploadBtnDisable'),
 
         // 没选择文件之前的内容。
         $placeHolder = $wrap.find('.placeholder'),
@@ -275,8 +275,8 @@ function multipleUpload(options) {
             return;
         }
 
-        $upload.removeClass( 'state-' + state );
-        $upload.addClass( 'state-' + val );
+        //$upload.removeClass( 'state-' + state );
+        //$upload.addClass( 'state-' + val );
         state = val;
 
         switch ( state ) {
@@ -300,18 +300,18 @@ function multipleUpload(options) {
             case 'uploading':
             	$filePicker2.addClass( 'element-invisible' );
                 $progress.show();
-                $upload.text( '暂停上传' );
+                //$upload.text( '暂停上传' );
                 break;
 
             case 'paused':
                 $progress.show();
-                $upload.text( '继续上传' );
+                //$upload.text( '继续上传' );
                 break;
 
             case 'confirm':
                 $progress.hide();
                 //$upload.text( '开始上传' ).addClass( 'disabled' );
-
+                $upload.hide();
                 stats = uploader.getStats();
                 if ( stats.successNum && !stats.uploadFailNum ) {
                     setState( 'finish' );
@@ -432,8 +432,8 @@ function multipleUpload(options) {
 			uploader.removeFile(files[index]);
 		}
 		photoUrlList = new Array();
-		$upload.removeClass( 'disabled' );
+		//$upload.removeClass( 'disabled' );
 	});
-    $upload.addClass( 'state-' + state );
+    //$upload.addClass( 'state-' + state );
     updateTotalProgress();
 }

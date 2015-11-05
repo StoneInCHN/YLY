@@ -12,7 +12,6 @@ function loadAlbum(){
 			success:function(jsonObj, textStatus){
 				if(jsonObj.length>0){
 					var divAlbumHtml = '<div class="row" style="background:#D2D2D2;margin:10px;padding-top:10px">';
-					//var options1 = '[{"text": "--", "value": -1}';
 					for(var i=0; i< jsonObj.length; i++){
 						var shortName = "《"+jsonObj[i].name+"》";
 						if(shortName && jsonObj[i].name.length>5){
@@ -39,18 +38,14 @@ function loadAlbum(){
 													   <a href="javascript:void(0);" class="easyui-linkbutton"  onclick="photoAlbum_manager_tool.remove('+jsonObj[i].id+')";>删除</a>
 													</p>
 												</div>
+
 											</div>
 										 </div>';
 						[/@compress]
 						
-						//options1 += ',{"text":' + jsonObj[i].name + ',"value":' + jsonObj[i].id + '};';
 					}
 					divAlbumHtml += '</div>';
 					$("#photoAlbum_show_form").html(divAlbumHtml);
-					//options1 += ']';
-					//options = [{"text": "AA", "value": 1},{"text": "BB", "value": 2}];		
-					//var obj = option1.parseJSON();												
-					//$("#selectAlbum").combobox("loadData",options);
 				}else{
 				    $("#photoAlbum_show_form").html("");	
 				}			
@@ -140,7 +135,7 @@ function loadAlbum(){
 		            <span class="percentage"></span>
 		        </div><div class="info"></div>
 		        <div class="btns">
-		            <div id="filePicker2"></div><div class="uploadBtn"></div>
+		            <div id="filePicker2"></div><div class="uploadBtnDisable"></div>
 		        </div>
 		    </div>
 		</div>
@@ -179,7 +174,7 @@ function loadAlbum(){
 		            <span class="percentage"></span>
 		        </div><div class="info"></div>
 		        <div class="btns">
-		            <div id="filePicker2_Photos"></div><div class="uploadBtn"></div>
+		            <div id="filePicker2_Photos"></div><div class="uploadBtnDisable"></div>
 		        </div>
 		    </div>
 		</div>	

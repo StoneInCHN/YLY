@@ -14,7 +14,7 @@ var checkinCharge_manager_tool = {
 							var validate = $('#addCheckinCharge_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../billing/checkin.jhtml",
+									url:"../billing/checkinBill.jhtml",
 									type:"post",
 									data:$("#addCheckinCharge_form").serialize(),
 									beforeSend:function(){
@@ -123,7 +123,7 @@ $(function(){
 			$('#checkinDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 660,    
-			    height: 500, 
+			    height: 550, 
 			    cache: false,
 			    modal: true,
 			    href:'../billing/details.jhtml?id='+rowData.id+'&path=checkinCharge',
@@ -165,10 +165,20 @@ $(function(){
 		      {title:message("yly.charge.record.meal"),field:"mealAmount",width:20,align:'center',sortable:true},
 		      //总额(元)
 		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:20,align:'center',sortable:true},
-		      //收款人
-		      {title:message("yly.charge.record.operator"),field:"operator",width:25,align:'center',sortable:true},
-		      //缴费时间
-		      {title:message("yly.charge.record.payTime"),field:"payTime",width:35,align:'center',sortable:true,formatter: function(value,row,index){
+		      //状态
+		      {title:message("yly.charge.record.status"),field:"chargeStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
+		    	  	if(value == "PAID"){
+		    	  		return "<font color=#7CCD7C>"+message("yly.charge.status.paid")+"</font>";
+		    	  	}
+		    	  	if(value == "UNPAID"){
+		    	  		return "<font color=#FF0000>"+message("yly.charge.status.unpaid")+"</font>";
+		    	  	}
+		    	  	if(value == "UNPAID_ADJUSTMENT"){
+		    	  		return "<font color=#FF0000>"+message("yly.charge.status.unpaid_adjustment")+"</font>";
+		    	  	}
+		      	}},
+		      //办理时间
+		      {title:message("yly.charge.record.oprTime"),field:"createDate",width:35,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
 		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm");
 		    	  	}
@@ -186,7 +196,6 @@ $(function(){
 	
 	//是否伙食费包月
 	$("#isMonthlyMeal").click(function(){
-		
 		if($("#isMonthlyMeal").is(":checked")==true){
 			$("#monthlyMeal").css('display','block');
 			$("#mealRemark").textbox({
@@ -246,59 +255,6 @@ $(function(){
 		
 	});
 	
-	//支付方式
-	$('#paymentType').combobox({
-		onChange:function(value){
-			console.log("111"+value);
-			if(value == "MIXTURE"){
-				$('#mixturePay').css("display","table-row");
-				$("#totalAmount_cash").numberbox({
-					required:true,
-				});
-				$("#totalAmount_card").numberbox({
-					required:true,
-				});
-			}else{
-				$('#mixturePay').css("display","none");
-				$("#totalAmount_cash").numberbox('reset');
-				$("#totalAmount_cash").numberbox({
-					required:false,
-				});
-				$("#totalAmount_card").numberbox('reset');
-				$("#totalAmount_card").numberbox({
-					required:false,
-				});
-				
-			}
-		}
-	});
-	
-	$('#chargein_totalAmount').numberbox({
-		onChange:function(value){
-			$("#totalAmount_card").numberbox('reset');
-			$("#totalAmount_cash").numberbox('reset');
-		}
-	});
-	//混合支付计算
-	$('#totalAmount_cash').numberbox({
-		onChange:function(value){
-			if($('#paymentType').combobox('getValue')=="MIXTURE"){
-				var totalAmount=$('#chargein_totalAmount').numberbox('getValue');
-				$('#totalAmount_card').numberbox('setValue',totalAmount-value);
-			}
-			
-		}
-	});
-	
-	$('#totalAmount_card').numberbox({
-		onChange:function(value){
-			if($('#paymentType').combobox('getValue')=="MIXTURE"){
-				var totalAmount=$('#chargein_totalAmount').numberbox('getValue');
-				$('#totalAmount_cash').numberbox('setValue',totalAmount-value);
-			}
-		}
-	});
-	
 	$('#bedNursePeriodStartDate').datebox({
 	    onSelect: function(date){
             var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -330,6 +286,7 @@ $(function(){
 				type:"post",
 				data:{currentDay:dayStr},
 				success:function(result){
+					$('#mealPeriodEndDate').datebox({disabled:false});
 					$('#mealPeriodEndDate').datebox('setValue',result.billDate);
 					//console.log(result.periodMonth+"个月"+result.periodDay+"天");
 					$('#periodMonMeal').val(result.periodMonth);
@@ -362,10 +319,6 @@ $(function(){
 				  $(this).html("");
 				  $(this).attr("data-value","");
 			  });
-			  
-			  $('#mixturePay').css("display","none");
-			  $("#totalAmount_cash").numberbox('reset');
-			  $("#totalAmount_card").numberbox('reset');
 			  
 				$.ajax({
 					url:"../billing/getBedNurseConfig.jhtml",

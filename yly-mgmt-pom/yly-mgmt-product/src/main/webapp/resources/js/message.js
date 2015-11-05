@@ -61,11 +61,13 @@ var messages = {
 	 */
 	"yly.charge.status.paid" : "已缴费",
 	"yly.charge.status.unpaid" : "未缴费",
+	"yly.charge.status.unpaid_adjustment" : "未缴费(调账)",
 	"yly.charge.status.refunded" : "已退款",
 	"yly.deposit.charge.record" : "押金",
 	"yly.advance.charge.record" : "预存款",
 	"yly.charge.advance" : "预存款(元)",
-	"yly.charge.checkin" : "入院缴费",
+	"yly.charge.checkin" : "入院收费",
+	"yly.pay.checkin" : "入院缴费",
 	"yly.charge.checkout" : "退住结算",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
@@ -77,9 +79,11 @@ var messages = {
 	"yly.charge.record.nurse" : "护理费(元)",
 	"yly.charge.record.totalAmount" : "总金额(元)",
 	"yly.charge.record.advanceChargeAmount" : "预存款总额(元)",
-	"yly.charge.record.operator" : "收款人",
+	"yly.charge.record.operator" : "经办人",
+	"yly.charge.record.payStaff" : "收款人",
 	"yly.charge.record.period" : "收款时间段",
 	"yly.charge.record.payTime" : "缴费时间",
+	"yly.charge.record.oprTime" : "办理时间",
 	"yly.charge.record.calTime" : "结算时间",
 	"yly.charge.record.status" : "状态",
 	"yly.charge.record.meal" : "伙食费(元)",
@@ -100,6 +104,7 @@ var messages = {
 	"yly.charge.record.perDay":"日收费: ￥",
 	"yly.charge.billing.day.prefix":"每月",
 	"yly.charge.billing.day.suffix":"号为账单结算日期",
+	"yly.charge.billing.prompt.already.paid":"该老人已经缴费！",
 	
 	
 	

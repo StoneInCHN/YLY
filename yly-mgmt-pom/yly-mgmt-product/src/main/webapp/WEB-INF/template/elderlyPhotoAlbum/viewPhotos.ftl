@@ -2,9 +2,9 @@
         <script type="text/javascript" src="${base}/resources/jcarousel/connected-carousels/jcarousel.connected-carousels.js"></script>
   
         <div class="wrapper">
-            <h1>${albumName}</h1>
+            <h3>《${albumName}》</h3>
             
-            <p>${albumRemark}</p>
+            <p style="text-algin:center;font-size: 15px;color: #0388A6;">${albumRemark}</p>
             
             <div class="connected-carousels">
                 <div class="stage">
@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                     <p class="photo-credits">
-                        Photos by <a href="http://www.baidu.com">YLY</a>
+                        Photos by YLY (Total ${elderlyPhotoes?size})
                     </p>
                     <a href="#" class="prev prev-stage"><span>&lsaquo;</span></a>
                     <a href="#" class="next next-stage"><span>&rsaquo;</span></a>

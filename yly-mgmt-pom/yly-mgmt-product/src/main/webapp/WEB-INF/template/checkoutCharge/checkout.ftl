@@ -41,7 +41,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckoutCharge_elderlyInfo" panelHeight="150px" data-options="required:true,editable:false" />
+	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="elderlyInfoName" id="addCheckoutCharge_elderlyInfo" data-options="required:true,editable:false" />
 	    			 <a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="searchElderlyInfo('addCheckoutCharge_elderlyInfo')" iconCls="icon-search" plain=true"></a>    
 	    		</td>
 	    		 <th>${message("yly.common.charge.invoiceNo")}:</th>
@@ -122,9 +122,9 @@
 	    			  		<tr>
 					    		<th>${message("yly.common.charge.period")}:</th>
 					    		<td>
-					    			<input id="mealPeriodStartDate" name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true"/>
+					    			<input name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true"/>
 					    		    ──
-				    			    <input id="mealPeriodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true" readonly=true/>    
+				    			    <input name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true" readonly=true/>    
 					    		</td>
 					    		<input type="hidden" id="periodMonMeal">
 					    		<input type="hidden" id="periodDayMeal">
