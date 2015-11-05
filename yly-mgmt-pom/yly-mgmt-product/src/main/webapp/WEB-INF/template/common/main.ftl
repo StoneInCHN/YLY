@@ -42,7 +42,7 @@
 				<li><a href="#health"><i class="fa fa-users fa-1x"></i>健康管理</a></li>
 				<li><a href="#affairs"><i class="fa fa-users fa-1x"></i>院内事务</a></li>
 				<li><a href="#system"><i class="fa fa-users fa-1x"></i>系统管理</a></li>
-				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
+				<li><a href="#personnel"><i class="fa fa-users fa-1x"></i>${message("yly.personnel.config")}</a></li>
 				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
 				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
 				<li><a href="#"><i class="fa fa-users fa-1x"></i>在院老人</a></li>
@@ -151,7 +151,14 @@
 		    	<ul title="${message("yly.logistics.config")}" id="logistics">
 		    		<li><a href="#" data-url="${base}/console/repairRecord/repairRecord.jhtml">${message("yly.logistics.maintainRecord")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/waterElectricityRecord/waterElectricityRecord.jhtml">${message("yly.logistics.waterfeeRecord")}</a></li>
-		    	</ul>   
+		    	</ul>
+		    	<ul title="${message("yly.personnel.config")}" id="personnel">
+		    		<li><a href="#" data-url="${base}/console/department/department.jhtml">${message("yly.personnel.department")}</a></li>
+		    		<li><a href="#" >${message("yly.personnel.position")}</a></li>
+		    		<li><a href="#" >${message("yly.personnel.tenantuser")}</a></li>
+		    		<li><a href="#" >${message("yly.personnel.vacate")}</a></li>
+		    	</ul>    
+
     </div>   
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   

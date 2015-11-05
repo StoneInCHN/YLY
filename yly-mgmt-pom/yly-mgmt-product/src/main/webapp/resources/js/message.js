@@ -337,7 +337,13 @@ var messages = {
 	"yly.tenantUser.staffStatus.outService":"离职",
 	"yly.tenantUser.department":"所在部门",
 	"yly.tenantUser.position":"担任职务",
-	"yly.tenantUser.hireDate":"入职时间"
+	"yly.tenantUser.hireDate":"入职时间",
+	
+	//department
+	"yly.department.name":"部门名称",
+	"yly.department.grade":"部门层级",
+	"yly.department.parent":"上级部门",
+	"yly.department.add":"添加部门"
 	
 };
 //多语言

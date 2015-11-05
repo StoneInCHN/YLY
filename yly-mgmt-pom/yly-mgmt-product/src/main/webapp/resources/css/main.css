@@ -59,7 +59,7 @@
     -webkit-transition: color linear .15s;
     -o-transition: color linear .15s;
     transition: color linear .15s;
-    text-align:center;
+  /**  text-align:center; */
     width:110px;
 }
 .header ul>li>a>i{

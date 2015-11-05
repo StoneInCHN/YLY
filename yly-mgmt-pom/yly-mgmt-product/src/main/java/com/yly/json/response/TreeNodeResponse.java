@@ -7,6 +7,8 @@ import com.yly.entity.commonenum.CommonEnum.TreeNodeState;
 
 /**
  * 
+ * 用easyui自带的树加载
+ * 
  * @author tanbiao
  * 
  * id：节点ID，对加载远程数据很重要。 

@@ -65,8 +65,14 @@ public class FieldFilterUtils<T> {
       String[] pros = key.split("\\.");
       if (pros != null && pros.length > 1) {// 目前只支持取2级对象
         String[] str = {pros[1]};
-        childMap.putAll(filterEntityMap(str, beanMap.get(pros[0])));
-        map.put(pros[0], childMap);
+        
+        Object object = beanMap.get(pros[0]);
+        if(object != null){
+          childMap.putAll(filterEntityMap(str, object));
+          map.put(pros[0], childMap);
+        }else{
+          map.put(pros[0], null);
+        }
       } else {
         map.put(key, beanMap.get(key));
       }
