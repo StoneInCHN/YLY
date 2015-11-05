@@ -49,7 +49,7 @@
 	    		</td>
 	    		<th>${message("yly.charge.record.meal")}:</th>
 	    		<td>
-	    			[#if billing.mealCharge?? && billing.mealCharge!=0]
+	    			[#if billing.elderlyInfo.mealFeeMonthlyPayment?? && billing.elderlyInfo.mealFeeMonthlyPayment=="true"]
 	    				<input class="easyui-textbox" type="text" name="mealAmount"  readonly=true value="${billing.mealAmount} [${billing.elderlyInfo.mealType.configValue}]" style="width:120px;"/>
 	    			[#else]
 	    				${message("yly.charge.meal.not.monthly")}
