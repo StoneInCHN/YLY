@@ -67,6 +67,7 @@ var messages = {
 	"yly.advance.charge.record" : "预存款",
 	"yly.charge.advance" : "预存款(元)",
 	"yly.charge.checkin" : "入院收费",
+	"yly.pay.checkin" : "入院缴费",
 	"yly.charge.checkout" : "退住结算",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
@@ -103,6 +104,7 @@ var messages = {
 	"yly.charge.record.perDay":"日收费: ￥",
 	"yly.charge.billing.day.prefix":"每月",
 	"yly.charge.billing.day.suffix":"号为账单结算日期",
+	"yly.charge.billing.prompt.already.paid":"该老人已经缴费！",
 	
 	
 	

@@ -14,7 +14,7 @@ var checkinCharge_manager_tool = {
 							var validate = $('#addCheckinCharge_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../billing/checkin.jhtml",
+									url:"../billing/checkinBill.jhtml",
 									type:"post",
 									data:$("#addCheckinCharge_form").serialize(),
 									beforeSend:function(){
@@ -178,7 +178,7 @@ $(function(){
 		    	  	}
 		      	}},
 		      //办理时间
-		      {title:message("yly.charge.record.oprTime"),field:"payTime",width:35,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.charge.record.oprTime"),field:"createDate",width:35,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value != null){
 		    	  		return new Date(value).Format("yyyy-MM-dd hh:mm");
 		    	  	}
@@ -196,7 +196,6 @@ $(function(){
 	
 	//是否伙食费包月
 	$("#isMonthlyMeal").click(function(){
-		
 		if($("#isMonthlyMeal").is(":checked")==true){
 			$("#monthlyMeal").css('display','block');
 			$("#mealRemark").textbox({
@@ -287,6 +286,7 @@ $(function(){
 				type:"post",
 				data:{currentDay:dayStr},
 				success:function(result){
+					$('#mealPeriodEndDate').datebox({disabled:false});
 					$('#mealPeriodEndDate').datebox('setValue',result.billDate);
 					//console.log(result.periodMonth+"个月"+result.periodDay+"天");
 					$('#periodMonMeal').val(result.periodMonth);

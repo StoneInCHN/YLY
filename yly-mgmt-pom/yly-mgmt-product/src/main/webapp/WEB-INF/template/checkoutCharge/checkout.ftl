@@ -122,9 +122,9 @@
 	    			  		<tr>
 					    		<th>${message("yly.common.charge.period")}:</th>
 					    		<td>
-					    			<input id="mealPeriodStartDate" name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true"/>
+					    			<input name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true"/>
 					    		    ──
-				    			    <input id="mealPeriodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true" readonly=true/>    
+				    			    <input name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true" readonly=true/>    
 					    		</td>
 					    		<input type="hidden" id="periodMonMeal">
 					    		<input type="hidden" id="periodDayMeal">

@@ -50,7 +50,7 @@
 	    		<th>${message("yly.charge.record.meal")}:</th>
 	    		<td>
 	    			[#if billing.mealCharge?? && billing.mealCharge!=0]
-	    				<input class="easyui-textbox" type="text" name="mealAmount"  readonly=true value="${billing.mealAmount}" style="width:75px;"/>
+	    				<input class="easyui-textbox" type="text" name="mealAmount"  readonly=true value="${billing.mealAmount} [${billing.elderlyInfo.mealType.configValue}]" style="width:120px;"/>
 	    			[#else]
 	    				${message("yly.charge.meal.not.monthly")}
 	    			[/#if]
@@ -72,7 +72,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.status")}:</th>
 	    		<td>
-	    			<select id="chargeStatus" class="easyui-combobox" name="chargeStatus" disabled="disabled" style="width:85px;">   
+	    			<select id="chargeStatus" class="easyui-combobox" name="chargeStatus" disabled="disabled" style="width:120px;">   
 						<option value="${billing.chargeStatus}" selected="selected">${message("yly.common.charge.status.${billing.chargeStatus}")}</option>
 				    </select>
 	    		</td>
