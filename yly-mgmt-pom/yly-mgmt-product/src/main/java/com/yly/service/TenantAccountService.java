@@ -2,6 +2,7 @@ package com.yly.service;
 
 import java.util.List;
 
+import com.yly.entity.AuthorityResource;
 import com.yly.entity.TenantAccount;
 import com.yly.framework.service.BaseService;
 
@@ -69,7 +70,7 @@ public interface TenantAccountService extends BaseService<TenantAccount, Long> {
 	 *            ID
 	 * @return 权限,若不存在则返回null
 	 */
-	List<String> findAuthorities(Long id);
+	List<AuthorityResource> findAuthorities(Long id);
 
 	/**
 	 * 判断是否登录
