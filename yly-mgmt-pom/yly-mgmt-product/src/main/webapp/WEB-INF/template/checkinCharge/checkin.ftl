@@ -44,6 +44,8 @@
 <div id="checkinCharge_manager_tool">
 	<div class="tool-button">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="checkinCharge_manager_tool.add();">${message("yly.charge.checkin")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.edit();">${message("yly.bill.editBill")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.edit();">${message("yly.bill.adjustment")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
