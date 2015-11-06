@@ -355,7 +355,17 @@ var messages = {
 	//position
 	"yly.position.add":"添加职位",
 	"yly.position.name":"职位名称",
-	"yly.position.department":"隶属部门"
+	"yly.position.department":"隶属部门",
+
+	//权限管理
+	"yly.role.record":"角色管理",
+	"yly.role.name":"角色名称",
+	"yly.role.description":"描述",
+	"yly.role.add":"添加角色",
+	"yly.role.auth":"授权",
+	"yly.role.auth.manange":"权限分配",
+	"yly.role.auth.name":"菜单名称",
+	"yly.role.auth.status":"权限状态"
 	
 	
 };

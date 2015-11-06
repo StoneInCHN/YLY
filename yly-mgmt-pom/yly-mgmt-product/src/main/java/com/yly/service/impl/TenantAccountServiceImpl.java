@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yly.beans.Principal;
 import com.yly.dao.TenantAccountDao;
+import com.yly.entity.AuthorityResource;
 import com.yly.entity.Role;
 import com.yly.entity.TenantAccount;
 import com.yly.framework.service.impl.BaseServiceImpl;
@@ -69,15 +70,15 @@ public class TenantAccountServiceImpl extends BaseServiceImpl<TenantAccount, Lon
 
 
   @Transactional(readOnly = true)
-  public List<String> findAuthorities(Long id) {
-    List<String> authorities = new ArrayList<String>();
+  public List<AuthorityResource> findAuthorities(Long id) {
+    List<AuthorityResource> authorityResources = new ArrayList<AuthorityResource>();
     TenantAccount tenantUser = tenantAccountDao.find(id);
     if (tenantUser != null) {
       for (Role role : tenantUser.getRoles()) {
-        authorities.addAll(role.getAuthorities());
+        authorityResources.addAll(role.getAuthorityResources());
       }
     }
-    return authorities;
+    return authorityResources;
   }
 
   @Transactional(readOnly = true)

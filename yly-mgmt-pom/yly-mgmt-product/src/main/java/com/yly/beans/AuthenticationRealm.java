@@ -1,5 +1,6 @@
 package com.yly.beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.yly.beans.Setting.CaptchaType;
+import com.yly.entity.AuthorityResource;
 import com.yly.entity.TenantAccount;
 import com.yly.entity.TenantInfo;
 import com.yly.entity.commonenum.CommonEnum.AccountStatus;
@@ -100,10 +102,14 @@ public class AuthenticationRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Principal principal = (Principal) principals.fromRealm(getName()).iterator().next();
 		if (principal != null) {
-			List<String> authorities = tenantAccountService.findAuthorities(principal.getId());
-			if (authorities != null) {
+			List<AuthorityResource> authorityResources = tenantAccountService.findAuthorities(principal.getId());
+			List<String> strAuthorities = new ArrayList<String>();
+			for(AuthorityResource auth:authorityResources){
+			  strAuthorities.add(auth.getAuthEnName());
+			}
+			if (authorityResources != null) {
 				SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-				authorizationInfo.addStringPermissions(authorities);
+				authorizationInfo.addStringPermissions(strAuthorities);
 				return authorizationInfo;
 			}
 		}
