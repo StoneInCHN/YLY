@@ -18,7 +18,7 @@
 			    <input type="text" class="easyui-combobox" id="tenantUserPosition-search" name="positionSearchId"/>
 			</div>
 			<div class="search-item">
-			    <label> ${message("yly.tenantUser.search.staffStatus")}:</label>
+			    <label> ${message("yly.tenantUser.staffStatus")}:</label>
 			    
 			    <input class="easyui-combobox" data-options="
 				     valueField: 'label',
@@ -134,7 +134,7 @@
 	    		
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.tenantUser.address")}:</th>
+	    		<th>${message("yly.address")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" validtype="length[0,200]" />   
 	    		</td>
@@ -144,12 +144,12 @@
 	    	<tr>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="telephone" data-options="required:true" />   
+	    			 <input class="easyui-numberbox" type="text" name="telephone" data-options="required:true" />   
 	    		</td>
 	    	
 	    		<th>${message("yly.mobile")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" validtype="mobile"/>
+	    			 <input class="easyui-numberbox" type="text" name="mobile" data-options="required:true" validtype="mobile"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -170,7 +170,7 @@
 	    		</td>
 	    		<th>${message("yly.tenantUser.age")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="age" data-options="required:true" />
+	    			 <input class="easyui-numberbox" type="text" name="age" data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -186,7 +186,7 @@
 	    	<tr>
 	    		<th>${message("yly.tenantUser.birthDay")}:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}',dateFmt:'yyyy-MM-dd'});" />
 	    		</td>
 	    		<th>${message("yly.tenantUser.zipCode")}:</th>
 	    		<td>

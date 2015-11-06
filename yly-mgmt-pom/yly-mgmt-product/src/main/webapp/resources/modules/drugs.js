@@ -12,8 +12,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#drugsDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 500, 
+			    width: 700,    
+			    height: 680, 
 			    cache: false,
 			    modal: true,
 			    href:'../drugs/details.jhtml?id='+rowData.id,
@@ -57,7 +57,7 @@ $(function(){
 				$('#addDrugs').dialog({
 				    title: message("yly.drugsInfo.add"),    
 				    width: 700,    
-				    height: 550,
+				    height: 680,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -147,7 +147,7 @@ $(function(){
 				var _dialog = $('#editDrugs').dialog({    
 					title: message("yly.common.edit"),     
 				    width: 700,    
-				    height: 550,    
+				    height: 680,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../drugs/edit.jhtml?id='+_edit_row.id,

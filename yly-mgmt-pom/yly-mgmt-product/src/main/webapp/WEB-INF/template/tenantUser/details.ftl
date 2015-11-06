@@ -49,7 +49,7 @@
 	    		
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.tenantUser.address")}:</th>
+	    		<th>${message("yly.address")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" disabled="disabled" type="text" name="address" data-options="required:true" value="${tenantUser.address}"/>   
 	    		</td>

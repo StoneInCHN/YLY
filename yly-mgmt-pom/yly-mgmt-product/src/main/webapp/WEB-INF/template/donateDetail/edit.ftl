@@ -20,7 +20,6 @@
 	    		<th>${message("yly.donateDetail.donateItemType")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="donateItemTypeId" id="donateItemType" value="${donateDetail.donateItemType.itemName}" data-options="required:true" />
-	    			    
 	    		</td>
 	    		<th>${message("yly.donateDetail.units")}:</th>
 	    		<td>

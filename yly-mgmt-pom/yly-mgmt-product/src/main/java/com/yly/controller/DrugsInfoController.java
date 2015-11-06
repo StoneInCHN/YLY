@@ -181,67 +181,10 @@ public class DrugsInfoController extends BaseController
     return SUCCESS_MESSAGE;
   }
 
-  @RequestMapping (value = "/search", method = RequestMethod.POST)
-  public @ResponseBody Page<DrugsInfo> search (
-      @RequestBody DrugsInfoSearchRequest request)
+  @RequestMapping (value = "/drugsSearch", method = RequestMethod.GET)
+  public String drugsSearch ()
   {
-    String startDateStr = null;
-    String endDateStr = null;
-    if (request.getStartDate () != null
-        && DateTimeUtils.isValidDate (request.getStartDate ()))
-    {
-      startDateStr = request.getStartDate ();
-    }
-    if (request.getEndDate () != null
-        && DateTimeUtils.isValidDate (request.getEndDate ()))
-    {
-      endDateStr = request.getEndDate ();
-    }
-    if (LogUtil.isDebugEnabled (DrugsInfoController.class))
-    {
-      LogUtil.debug (DrugsInfoController.class, "search", "Search name: "
-          + request.getName () + "" + ", start date: " + startDateStr
-          + ", end date: " + endDateStr);
-    }
-
-    String text = QueryParser.escape (request.getName ());
-    IKAnalyzer analyzer = new IKAnalyzer ();
-    analyzer.setMaxWordLength (true);
-
-    QueryParser name = new QueryParser (Version.LUCENE_35, "name", analyzer);
-    Query nameQuery;
-    try
-    {
-      nameQuery = name.parse (text);
-      TermRangeQuery tQuery = new TermRangeQuery ("createDate", startDateStr,
-          endDateStr, true, true);
-
-      BooleanQuery query = new BooleanQuery ();
-      query.add (nameQuery, Occur.MUST);
-      query.add (tQuery, Occur.MUST);
-//      return drugsService.search (query, null, analyzer);
-    }
-    catch (ParseException e)
-    {
-      e.printStackTrace ();
-    }
-    return null;
-
-  }
-
-  /**
-   * 删除
-   */
-  @RequestMapping (value = "/delete", method = RequestMethod.POST)
-  public @ResponseBody Message delete (Long[] ids)
-  {
-    if (ids != null)
-    {
-      // 检查是否能被删除
-      // if()
-      drugsService.delete (ids);
-    }
-    return SUCCESS_MESSAGE;
+    return "prescription/addDrugs";
   }
   /**
    * 获取数据进入详情页面

@@ -64,7 +64,7 @@
 	    		
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.tenantUser.address")}:</th>
+	    		<th>${message("yly.address")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="address" data-options="required:true" value="${tenantUser.address}" validtype="length[0,200]"/>   
 	    		</td>
@@ -74,12 +74,12 @@
 	    	<tr>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="telephone" data-options="required:true" value="${tenantUser.telephone}" />   
+	    			 <input class="easyui-numberbox" type="text" name="telephone" data-options="required:true" value="${tenantUser.telephone}" />   
 	    		</td>
 	    	
 	    		<th>${message("yly.mobile")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" value="${tenantUser.mobile}" validtype="mobile"/>
+	    			 <input class="easyui-numberbox" type="text" name="mobile" data-options="required:true" value="${tenantUser.mobile}" validtype="mobile"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -100,7 +100,7 @@
 	    		</td>
 	    		<th>${message("yly.tenantUser.age")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="age" data-options="required:true" value="${tenantUser.age}"/>
+	    			 <input class="easyui-numberbox" type="text" name="age" data-options="required:true" value="${tenantUser.age}"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -110,13 +110,13 @@
 	    		</td>
 	    		<th>${message("yly.tenantUser.workingYear")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="workingYear" data-options="required:true" value="${tenantUser.workingYear}"/>
+	    			 <input class="easyui-numberbox" type="text" name="workingYear" data-options="required:true" value="${tenantUser.workingYear}"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.tenantUser.birthDay")}:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" value="${tenantUser.birthDay}"/>
+	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}',dateFmt:'yyyy-MM-dd'});" value="${tenantUser.birthDay}"/>
 	    		</td>
 	    		<th>${message("yly.tenantUser.zipCode")}:</th>
 	    		<td>
