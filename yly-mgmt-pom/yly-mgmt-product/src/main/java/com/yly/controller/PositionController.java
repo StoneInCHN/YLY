@@ -48,8 +48,10 @@ import com.yly.utils.DateTimeUtils;
  */
 @Controller ("PositionController")
 @RequestMapping ("console/position")
-public class PositionController extends BaseController
-{
+public class PositionController extends BaseController{
+  
+  @Resource (name = "departmentServiceImpl")
+  private DepartmentService departmentService;
 
   @Resource (name = "positionServiceImpl")
   private PositionService positionService;
@@ -61,44 +63,38 @@ public class PositionController extends BaseController
   }
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Position> list (Date beginDate, Date endDate,
-      String drugName, Pageable pageable, ModelMap model)
-  {
-    
+  public @ResponseBody Page<Position> list (Pageable pageable){
       return positionService.findPage (pageable);
   }
 
-  /**
-   * get data for vendor edit page
-   * 
-   * @param model
-   * @param vendorId
-   * @return
-   */
+
   @RequestMapping (value = "/edit", method = RequestMethod.GET)
-  public String edit (ModelMap model, Long id)
-  {
-    
-
+  public String edit (ModelMap model, Long id){
     model.addAttribute ("position", positionService.find (id));
-
     return "position/edit";
   }
 
   @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add (Position position)
+  public @ResponseBody Message add (Position position,Long departmentId)
   {
-
-
-    positionService.save (position);
-    return SUCCESS_MESSAGE;
+    if(departmentId !=null){
+     Department department =  departmentService.find(departmentId);
+     position.setDepartment(department);
+     positionService.save(position, true);
+     return SUCCESS_MESSAGE;
+    }else{
+      return ERROR_MESSAGE;
+    }
   }
 
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (Position position )
+  public @ResponseBody Message update (Position position ,Long departmentId)
   {
-
-    positionService.update (position, "createDate");
+    if(departmentId !=null){
+      Department department =  departmentService.find(departmentId);
+      position.setDepartment(department);
+     }
+    positionService.update (position,"tenantID");
     return SUCCESS_MESSAGE;
   }
 

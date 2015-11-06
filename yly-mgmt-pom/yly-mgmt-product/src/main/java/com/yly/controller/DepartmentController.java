@@ -77,7 +77,7 @@ public class DepartmentController extends BaseController {
       department.setParent(parent);
       department.setGrade(parent.getGrade() + 1);
     }
-    departmentService.update(department);
+    departmentService.update(department,"tenantID");
     return SUCCESS_MESSAGE;
   }
 

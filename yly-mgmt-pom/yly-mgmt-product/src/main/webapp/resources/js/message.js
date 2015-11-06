@@ -7,7 +7,9 @@ var messages = {
 	"yly.common.loading" : "加载中...",
 	"yly.common.save" : "保存",
 	"yly.common.saving" : "保存中...",
+	"yly.common.add" : "添加",
 	"yly.common.edit" : "编辑",
+	"yly.common.remove" : "删除",
 	"yly.common.cancel" : "取消",
     "yly.common.close" : "关闭",
 	"yly.common.progress" : "正在处理中...",
@@ -348,7 +350,13 @@ var messages = {
 	"yly.department.name":"部门名称",
 	"yly.department.grade":"部门层级",
 	"yly.department.parent":"上级部门",
-	"yly.department.add":"添加部门"
+	"yly.department.add":"添加部门",
+	
+	//position
+	"yly.position.add":"添加职位",
+	"yly.position.name":"职位名称",
+	"yly.position.department":"隶属部门"
+	
 	
 };
 //多语言
