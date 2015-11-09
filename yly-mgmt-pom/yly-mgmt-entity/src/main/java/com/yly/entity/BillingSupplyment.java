@@ -18,7 +18,6 @@ import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
-import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
@@ -30,16 +29,15 @@ import com.yly.entity.commonenum.CommonEnum.PaymentType;
 import com.yly.lucene.DateBridgeImpl;
 
 /**
- * 日常缴费账单
+ * 日常缴费账单补充
  * 
  * @author sujinxuan
  *
  */
 @Entity
-@Table(name = "yly_billing")
-@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_billing_sequence")
-@Indexed(index = "chargeManage/billingCharge")
-public class Billing extends BaseEntity {
+@Table(name = "yly_billing_supplyment")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_billing_supplyment_sequence")
+public class BillingSupplyment extends BaseEntity {
 
   private static final long serialVersionUID = -9092276707242009884L;
   /**
@@ -118,11 +116,6 @@ public class Billing extends BaseEntity {
   private BigDecimal mealAmount = new BigDecimal(0);
   
   /**
-   * 预存款金额
-   */
-  private BigDecimal advanceChargeAmount = new BigDecimal(0);
-
-  /**
    * 总金额
    */
   private BigDecimal totalAmount = new BigDecimal(0);
@@ -166,27 +159,22 @@ public class Billing extends BaseEntity {
   private Set<PaymentRecord> paymentRecords = new HashSet<PaymentRecord>();
 
   /**
-   * 账单调账
-   */
-  private Set<BillingAdjustment> billingAdjustment = new HashSet<BillingAdjustment>();
-  /**
-   * 账单类型（入住缴费，退住结算，日常缴费会形成bill）
+   * 账单类型（入住缴费，退住结算，日常缴费的补充账单）
    */
   private BillingType billType;
   
   /**
-   * 补充账单
+   * 原始账单
    */
-  private BillingSupplyment billingSupply;
+  private Billing billing;
   
-  
-  @OneToOne(mappedBy = "billing")
-  public BillingSupplyment getBillingSupply() {
-    return billingSupply;
+  @OneToOne
+  public Billing getBilling() {
+    return billing;
   }
 
-  public void setBillingSupply(BillingSupplyment billingSupply) {
-    this.billingSupply = billingSupply;
+  public void setBilling(Billing billing) {
+    this.billing = billing;
   }
 
   @Column(precision = 12, scale = 2)
@@ -208,15 +196,6 @@ public class Billing extends BaseEntity {
     this.billType = billType;
   }
 
-  @OneToMany(mappedBy = "billing")
-  public Set<BillingAdjustment> getBillingAdjustment() {
-    return billingAdjustment;
-  }
-
-  public void setBillingAdjustment(Set<BillingAdjustment> billingAdjustment) {
-    this.billingAdjustment = billingAdjustment;
-  }
-
   @OneToMany(mappedBy = "billing",cascade=CascadeType.ALL)
   public Set<PaymentRecord> getPaymentRecords() {
     return paymentRecords;
@@ -234,7 +213,7 @@ public class Billing extends BaseEntity {
     this.paymentType = paymentType;
   }
 
-  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
+  @OneToOne(mappedBy = "billingSupply",cascade=CascadeType.ALL)
   public BedNurseCharge getBedNurseCharge() {
     return bedNurseCharge;
   }
@@ -243,7 +222,7 @@ public class Billing extends BaseEntity {
     this.bedNurseCharge = bedNurseCharge;
   }
 
-  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
+  @OneToOne(mappedBy = "billingSupply",cascade=CascadeType.ALL)
   public MealCharge getMealCharge() {
     return mealCharge;
   }
@@ -252,7 +231,7 @@ public class Billing extends BaseEntity {
     this.mealCharge = mealCharge;
   }
 
-  @OneToOne(mappedBy = "billing")
+  @OneToOne(mappedBy = "billingSupply")
   public WaterElectricityCharge getWaterElectricityCharge() {
     return waterElectricityCharge;
   }
@@ -261,7 +240,7 @@ public class Billing extends BaseEntity {
     this.waterElectricityCharge = waterElectricityCharge;
   }
 
-  @OneToOne(mappedBy = "billing")
+  @OneToOne(mappedBy = "billingSupply")
   public PersonalizedCharge getPersonalizedCharge() {
     return personalizedCharge;
   }
@@ -334,7 +313,7 @@ public class Billing extends BaseEntity {
     this.chargeStatus = chargeStatus;
   }
 
-  @Index(name = "billing_tenantid")
+  @Index(name = "billing_supplyment_tenantid")
   @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
       analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
@@ -446,16 +425,5 @@ public class Billing extends BaseEntity {
   public void setTotalAmount(BigDecimal totalAmount) {
     this.totalAmount = totalAmount;
   }
-
-  @Column(precision = 12, scale = 2)
-  public BigDecimal getAdvanceChargeAmount() {
-    return advanceChargeAmount;
-  }
-
-  public void setAdvanceChargeAmount(BigDecimal advanceChargeAmount) {
-    this.advanceChargeAmount = advanceChargeAmount;
-  }
-
- 
 
 }

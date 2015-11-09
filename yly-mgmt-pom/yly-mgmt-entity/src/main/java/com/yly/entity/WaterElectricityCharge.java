@@ -120,6 +120,21 @@ public class WaterElectricityCharge extends BaseEntity {
   
   private BigDecimal totalAmount;
   
+  /**
+   * 所属补充账单
+   */
+  private BillingSupplyment billingSupply;
+  
+  
+  @OneToOne
+  public BillingSupplyment getBillingSupply() {
+    return billingSupply;
+  }
+
+  public void setBillingSupply(BillingSupplyment billingSupply) {
+    this.billingSupply = billingSupply;
+  }
+  
   @Transient
   public BigDecimal getTotalAmount() {
     totalAmount = waterAmount.add(electricityAmount);

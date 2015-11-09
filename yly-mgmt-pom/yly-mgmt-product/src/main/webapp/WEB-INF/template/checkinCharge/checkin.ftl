@@ -45,12 +45,37 @@
 	<div class="tool-button">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="checkinCharge_manager_tool.add();">${message("yly.charge.checkin")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.edit();">${message("yly.bill.editBill")}</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.edit();">${message("yly.bill.adjustment")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.adjustment();">${message("yly.bill.adjustment")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
 <table id="checkinCharge_table_list"></table>
 <div id="checkinDetail"></div>
+<div id="addCheckinAdjust">
+	<form id="addCheckinAdjust_form" method="post" class="form-table">
+		 <table class="table table-striped">
+		 	<input type="hidden" name="billId" id="billId">
+		 	<tr>
+	    		<th>${message("yly.bill.adjustment.cause")}:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="adjustmentCause" id="adjustmentCause" panelHeight="100px" style="width:130px;" data-options="required:true,editable:false" />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.bill.adjustment.amount")}:</th>
+	    		<td>
+	    			 <input class="easyui-numberbox" id="adjustmentAmount" name="adjustmentAmount" data-options="required:true,precision:2"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.remark")}:</th>
+	    		<td>
+	    			 <textarea  cols=40 rows=5 type="text" name="remark"></textarea>
+	    		</td>
+	    	</tr>
+		 </table>
+	</form>
+</div>
 <div id="addCheckinCharge">
 	<form id="addCheckinCharge_form" method="post" class="form-table"> 
 	    <input type="hidden" name="elderlyInfoID" id="addCheckinCharge_elderlyInfoID">  

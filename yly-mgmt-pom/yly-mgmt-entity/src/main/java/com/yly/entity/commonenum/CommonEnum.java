@@ -255,6 +255,10 @@ public class CommonEnum {
      * 结算日期,10
      */
     BILLDAY,
+    /**
+     * 调账原因（调钱）,11
+     */
+    ADJUSTMENTCAUSE
   }
   
   /**

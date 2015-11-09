@@ -9,6 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 
 /**
  * 账单调账记录
@@ -39,6 +40,15 @@ public class BillingAdjustment extends BaseEntity {
    */
   private Billing billing;
   
+  /**
+   * 经办人
+   */
+  private String operator;
+  /**
+   * 缴纳状态
+   */
+  private PaymentStatus chargeStatus;
+  
 
   @ManyToOne
   public Billing getBilling() {
@@ -49,7 +59,7 @@ public class BillingAdjustment extends BaseEntity {
     this.billing = billing;
   }
 
-  @Column(nullable = false, precision = 12, scale = 2)
+  @Column(precision = 12, scale = 2)
   public BigDecimal getAdjustmentAmount() {
     return adjustmentAmount;
   }
@@ -58,12 +68,30 @@ public class BillingAdjustment extends BaseEntity {
     this.adjustmentAmount = adjustmentAmount;
   }
 
+  @Column(length = 20)
   public String getAdjustmentCause() {
     return adjustmentCause;
   }
 
   public void setAdjustmentCause(String adjustmentCause) {
     this.adjustmentCause = adjustmentCause;
+  }
+  
+  @Column(length = 15)
+  public String getOperator() {
+    return operator;
+  }
+
+  public void setOperator(String operator) {
+    this.operator = operator;
+  }
+
+  public PaymentStatus getChargeStatus() {
+    return chargeStatus;
+  }
+
+  public void setChargeStatus(PaymentStatus chargeStatus) {
+    this.chargeStatus = chargeStatus;
   }
   
 }

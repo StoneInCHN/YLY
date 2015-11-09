@@ -111,6 +111,20 @@ public class PersonalizedCharge extends BaseEntity {
    */
   private Date periodEndDate;
   
+  /**
+   * 所属补充账单
+   */
+  private BillingSupplyment billingSupply;
+  
+  @OneToOne
+  public BillingSupplyment getBillingSupply() {
+    return billingSupply;
+  }
+
+  public void setBillingSupply(BillingSupplyment billingSupply) {
+    this.billingSupply = billingSupply;
+  }
+  
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPeriodStartDate() {

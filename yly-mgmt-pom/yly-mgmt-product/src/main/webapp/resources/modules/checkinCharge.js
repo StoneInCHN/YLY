@@ -106,8 +106,102 @@ var checkinCharge_manager_tool = {
 				    	 //$('#addCheckinCharge_form').form('reset');
 				    }
 				});  
+			},
+			
+	  adjustment:function(){
+	    	var _edit_row = $('#checkinCharge_table_list')
+				.datagrid('getSelections');
+			if (_edit_row.length == 0) {
+				$.messager.alert(message("yly.common.prompt"),
+						message("yly.common.select.editRow"), 'warning');
+				return false;
 			}
+			if (_edit_row.length>1) {
+				$.messager.alert(message("yly.common.prompt"),
+						message("yly.common.select.editRow.unique"), 'warning');
+				return false;
+			}
+			
+			if(_edit_row[0].chargeStatus == "PAID"){
+				$.messager.confirm(message("yly.common.confirm"), message("yly.charge.billing.confirm.paid.adjust"), function(r) {
+					if(r){
+					   checkinAdjustment(_edit_row[0].id);
+					}
+				});
+			}else{
+				checkinAdjustment(_edit_row[0].id);
+			}
+	      }
 	}
+
+function checkinAdjustment(billId){
+	$('#addCheckinAdjust').dialog({    
+	    title: message("yly.charge.billing.adjust"),    
+	    width: 450,    
+	    height: 300,
+	    modal: true,
+	    iconCls : 'icon-mini-edit',
+	    cache: false, 
+	    buttons:[{
+	    	text:message("yly.common.save"),
+	    	iconCls:'icon-save',
+			handler:function(){
+				var validate = $('#addCheckinAdjust_form').form('validate');
+				if(validate){
+					$.ajax({
+						url:"../billing/billPay.jhtml",
+						type:"post",
+						data:$("#addCheckinAdjust_form").serialize(),
+						beforeSend:function(){
+							$.messager.progress({
+								text:message("yly.common.saving")
+							});
+						},
+						success:function(result,response,status){
+							    showSuccessMsg(result.content);
+							    if(result.type == "success"){
+							    	$.messager.progress('close');
+									$('#addCheckinAdjust').dialog("close");
+									$("#checkinCharge_table_list").datagrid('reload');
+									$('#addCheckinAdjust_form').form("reset");
+							    }
+								
+						},
+						error:function (XMLHttpRequest, textStatus, errorThrown) {
+							$.messager.progress('close');
+							alertErrorMsg();
+						}
+					});
+				};
+			}
+		},{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#addCheckinAdjust').dialog("close");
+				 $('#addCheckinAdjust_form').form("reset");
+			}
+	    }],
+	    
+	    onOpen:function(){
+	    	$('#addCheckinAdjust_form').show();
+	    	$('#billId').val(billId);
+	    	$("#adjustmentCause").combobox({    
+			    valueField:'configValue',    
+			    textField:'configValue',
+			    cache: true,
+			    url:'../systemConfig/findByConfigKey.jhtml',
+			    onBeforeLoad : function(param) {
+			        param.configKey = 'ADJUSTMENTCAUSE';// 参数
+			    }
+			});
+	    },
+	    
+	    onClose:function(){
+	        $('#addCheckinAdjust_form').form("reset");
+	    }
+	}); 
+}
 
 $(function(){
 	
