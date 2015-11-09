@@ -12,7 +12,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 
@@ -26,6 +29,7 @@ import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 @Table(name = "yly_elderly_evaluating_record")
 @SequenceGenerator(name = "sequenceGenerator",
     sequenceName = "yly_elderly_evaluating_record_sequence")
+@Indexed(index = "elderlyEvaluatingRecord/elderlyEvaluatingRecord")
 public class ElderlyEvaluatingRecord extends BaseEntity {
 
   /**
@@ -64,7 +68,8 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   private EvaluatingForm evaluatingForm;
 
   private Set<EvaluatingItemsAnswer> evaluatingItemsAnswers = new HashSet<EvaluatingItemsAnswer>();
-
+  
+  @JsonProperty
   public EvaluatingReason getEvaluatingReason() {
     return evaluatingReason;
   }
@@ -72,7 +77,8 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setEvaluatingReason(EvaluatingReason evaluatingReason) {
     this.evaluatingReason = evaluatingReason;
   }
-
+  @JsonProperty  
+  @Column(length = 30)
   public String getEvaluatingResult() {
     return evaluatingResult;
   }
@@ -80,7 +86,7 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setEvaluatingResult(String evaluatingResult) {
     this.evaluatingResult = evaluatingResult;
   }
-
+  @JsonProperty
   @OneToMany(mappedBy = "elderlyEvaluatingRecord", fetch = FetchType.LAZY)
   public Set<EvaluatingItemsAnswer> getEvaluatingItemsAnswers() {
     return evaluatingItemsAnswers;
@@ -89,7 +95,7 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setEvaluatingItemsAnswers(Set<EvaluatingItemsAnswer> evaluatingItemsAnswers) {
     this.evaluatingItemsAnswers = evaluatingItemsAnswers;
   }
-
+  @JsonProperty
   @Column(length = 15)
   public String getOperator() {
     return operator;
@@ -98,8 +104,9 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setOperator(String operator) {
     this.operator = operator;
   }
-
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -116,7 +123,7 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
-
+  @JsonProperty
   @Column(length = 15)
   public String getStaffID() {
     return staffID;
@@ -125,7 +132,7 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setStaffID(String staffID) {
     this.staffID = staffID;
   }
-
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   public EvaluatingForm getEvaluatingForm() {
     return evaluatingForm;

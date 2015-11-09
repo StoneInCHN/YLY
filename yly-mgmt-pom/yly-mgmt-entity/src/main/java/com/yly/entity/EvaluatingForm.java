@@ -3,6 +3,7 @@ package com.yly.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
 
@@ -58,7 +60,8 @@ public class EvaluatingForm extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
-
+  @JsonProperty  
+  @Column(length = 30)
   public String getFormName() {
     return formName;
   }
@@ -66,7 +69,7 @@ public class EvaluatingForm extends BaseEntity {
   public void setFormName(String formName) {
     this.formName = formName;
   }
-
+  @JsonProperty
   public EvaluatingFormStatus getEvaluatingFormStatus() {
     return evaluatingFormStatus;
   }
@@ -76,6 +79,7 @@ public class EvaluatingForm extends BaseEntity {
   }
 
   @OneToMany(mappedBy = "evaluatingForm" , fetch = FetchType.LAZY)
+  @JsonProperty
   public Set<EvaluatingSection> getEvaluatingSections() {
     return evaluatingSections;
   }

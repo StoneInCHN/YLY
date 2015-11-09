@@ -85,7 +85,7 @@
 		    		<li><a href="#">办理出院</a></li>
 		    		<li><a href="#" data-url="${base}/console/billing/checkinCharge.jhtml">${message("yly.charge.checkin")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/billing/checkoutCharge.jhtml">${message("yly.charge.checkout")}</a></li>
-		    		<li><a href="#">入院评估</a></li>
+		    		<li><a href="#" data-url="${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml">${message("yly.elderlyInfo.evaluating")}</a></li>
 		    	</ul> 
 		        <ul title="老人管理" id="seniorCitizens">
 		    		<li><a href="#">老人档案</a></li>
