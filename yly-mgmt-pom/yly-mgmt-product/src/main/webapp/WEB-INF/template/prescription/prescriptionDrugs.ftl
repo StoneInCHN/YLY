@@ -3,19 +3,18 @@
 		<input type="hidden" name="drugsInfoID" id = "drugsInfoID" value="${drugsInfo.id}">     
 	    
     	<table border="0">
-	    	<tr>
+	    	<tr >
 	    	<th>药品名称:</th>
-		    		<td>
-		    			<input class="easyui-textbox" name="name" id="name" value="${drugsInfo.name}"/>
-		    			
-		    		</td>
+	    		<td>
+	    			<input class="easyui-textbox" name="name" id="name" value="${drugsInfo.name}"/>
+	    			
+	    		</td>
 	    	</tr>
-	    	<tr>
+	    	<tr class='hidCHI'>
 	    		<th>单次用量:</th>
 	    		<td>
 	    			 <input class="easyui-textbox"  name="singleDose" id="singleDose"/>
 	    		</td>
-	    		
 	    		<th>${message("yly.drugsInfo.doseFrequency")}:</th>
 	    		<td>
 	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:140px;">   
@@ -29,7 +28,7 @@
 	    		</td>
 	    		
 	    	</tr>
-	    	<tr>
+	    	<tr class='hidCHI'>
 	    		
 	    		<th>药品用法:</th>
 	    		<td>
@@ -41,7 +40,7 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    	<th>药总数:</th>
+	    	<th >药总数:</th>
 	    		<td>
 	    			 <input class="easyui-textbox"  name="medicineTotal" id="medicineTotal" />
 	    		</td>

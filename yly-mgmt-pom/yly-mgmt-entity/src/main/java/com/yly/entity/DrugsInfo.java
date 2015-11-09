@@ -163,6 +163,7 @@ public class DrugsInfo extends BaseEntity {
 
   @Column(length = 20)
   @JsonProperty
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getPhoneticCode() {
     return phoneticCode;
   }
@@ -265,7 +266,8 @@ public class DrugsInfo extends BaseEntity {
   public void setManufacturer(String manufacturer) {
     this.manufacturer = manufacturer;
   }
-
+  
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public DrugStatus getDrugStatus() {
     return drugStatus;
   }

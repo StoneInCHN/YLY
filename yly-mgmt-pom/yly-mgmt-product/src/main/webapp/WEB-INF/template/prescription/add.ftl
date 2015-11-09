@@ -24,7 +24,7 @@
 					      label: 'WESTEN_MEDICINE',
 					      value: '${message("yly.prescription.prescriptionType.WEST")}'
 					     }],
-					     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="prescriptionType" style="width:110px;"/>
+					     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="prescriptionType" id="prescriptionType" style="width:110px;"/>
 				        
 	    		</td>
 	    		<th>${message("yly.gender")}:</th>
@@ -37,10 +37,34 @@
 	    		</td>
 	    		<th>就诊时间:</th>
 	    		<td>
-	    			 <input class="input_text_line" name="time" id="phone" data-options="required:true,editable:false" />
+	    			 <input class="input_text_line" name="time" id="time" data-options="required:true,editable:false" />
 	    		</td>
 	    	</tr>
-	    	
+	    	<tr class="hid">
+	    		<th>每日剂量:</th>
+	    		<td>
+	    			 <input class="input_text_line" name="dailyDose" id="dailyDose" style = "width:20px" data-options="required:true,editable:false" />
+	    		</td>
+	    		<th>药品用法:</th>
+	    		<td>
+	    			 <input class="easyui-combobox" name="prescriptionUseMethod" id="prescriptionUseMethod" style="width:80px;"/>
+	    		</td>
+	    		<th>用药天数:</th>
+	    		<td>
+	    			 <input class="easyui-textbox" name="medicationDays" id="medicationDays" />
+	    		</td>
+	    			<th>${message("yly.drugsInfo.doseFrequency")}:</th>
+	    		<td>
+	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:120px;">   
+						<option value="Qd">${message("yly.drugsInfo.doseFrequency.Qd")}</option>
+						<option value="Bid">${message("yly.drugsInfo.doseFrequency.Bid")}</option>
+						<option value="Tid">${message("yly.drugsInfo.doseFrequency.Tid")}</option> 
+						<option value="Qid">${message("yly.drugsInfo.doseFrequency.Qid")}</option> 
+						<option value="Q2h">${message("yly.drugsInfo.doseFrequency.Q2h")}</option> 
+						<option value="Q4h">${message("yly.drugsInfo.doseFrequency.Q4h")}</option>						 
+				  	</select>    
+	    		</td>
+	    	</tr>
 	    </table>
 	    <div id="addPrescriptionDrugs"></div>
 	    <div align="center" style="font-size: large">处方笺</div>

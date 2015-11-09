@@ -9,4 +9,6 @@ import com.yly.framework.service.BaseService;
 
 public interface DrugsInfoService extends BaseService<DrugsInfo, Long> {
 
+  Page<DrugsInfo> drugsSerach(Date beginDate, Date endDate,
+      String drugName, Pageable pageable);
 }

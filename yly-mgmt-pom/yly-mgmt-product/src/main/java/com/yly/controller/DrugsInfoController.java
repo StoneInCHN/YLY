@@ -71,7 +71,13 @@ public class DrugsInfoController extends BaseController
 
     QueryParser nameParser = new QueryParser (Version.LUCENE_35, "name",
         analyzer);
+    QueryParser phoneticCodeParser = new QueryParser (Version.LUCENE_35, "phoneticCode",
+        analyzer);
+    QueryParser aliasParser = new QueryParser (Version.LUCENE_35, "phoneticCode",
+        analyzer);
     Query nameQuery = null;
+    Query phoneticCodeQuery = null;
+    Query aliasQuery = null;
     Filter filter = null;
     if (beginDate != null)
     {
@@ -84,11 +90,16 @@ public class DrugsInfoController extends BaseController
     if (drugName != null)
     {
       String text = QueryParser.escape (drugName);
+      
       try
       {
         nameQuery = nameParser.parse (text);
-        query.add (nameQuery, Occur.SHOULD);
+        phoneticCodeQuery=phoneticCodeParser.parse (text);
+        aliasQuery = aliasParser.parse (text);
         
+        query.add (nameQuery, Occur.SHOULD);
+        query.add (phoneticCodeQuery,Occur.SHOULD);
+        query.add (aliasQuery,Occur.SHOULD);
         if (LogUtil.isDebugEnabled (DrugsInfoController.class))
         {
           LogUtil.debug (DrugsInfoController.class, "search", "Search name: "
@@ -207,5 +218,11 @@ public class DrugsInfoController extends BaseController
     model.addAttribute ("units", units);
     model.addAttribute ("drugUseMethods", drugUseMethods);
     return "drugsInfo/details";
+  }
+  @RequestMapping (value = "/drugsSearch", method = RequestMethod.POST)
+  public @ResponseBody Page<DrugsInfo> drugsSerach (Date allDrugsBeginDate, Date allDrugsEndDate,
+      String allDrugName, Pageable pageable, ModelMap model)
+  {
+    return drugsService.drugsSerach (allDrugsBeginDate, allDrugsEndDate, allDrugName, pageable);
   }
 }

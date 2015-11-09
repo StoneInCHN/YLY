@@ -14,13 +14,14 @@ $(function(){
 				console.log(_drugUseMethodTxt);
 				var _medicationDays=$("#medicationDays").val();
 				var _medicineTotal=$("#medicineTotal").val();
-				var trHtml = 
+				var drugNameHtml = 
 				'<tr>\
 					<th>药品名称:<\/th>\
 					<td>\
 						<input class="easyui-textbox input_text_line " type="text" value="'+_drugsName+'" validtype="length[0,15]" style="width:75px;"\/>\
 						<input type="hidden" value ="'+_drugsId+'" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].drugsInfo.id" \/>\
-						<\/td>\
+						<\/td>';
+					var drugWestHtml='\
 					<th>单次用量:<\/th>\
 					<td>\
 						<input class="easyui-textbox input_text_line " type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].singleDose" value="'+_singleDose+'" style="width:10px;"\/>\
@@ -41,15 +42,24 @@ $(function(){
 					<th>用药天数:<\/th>\
 					<td>\
 						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicationDays" value="'+_medicationDays+'" style="width:10px;"\/>\
-					<\/td>\
-					<th>药总数:<\/th>\
+					<\/td>';
+					
+					var totalHtml='<th>药总数:<\/th>\
 					<td>\
 						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicineTotal" value="'+_medicineTotal+'" style="width:10px;"\/>\
 					<\/td>\
-				<\/tr>';
+						<\/tr>';
 				prescriptionDrugsItemIndex++;
+				var type=$('#prescriptionType').combo('getValue');
+				if(type == 'WESTEN_MEDICINE'){
+					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
+				}else{
+					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+totalHtml);
+				}
 				
-				$("#prescriptionDrugsAdd-table-list").append(trHtml);
+				if( prescriptionDrugsItemIndex > 0){
+					$('#prescriptionType').combo('readonly');
+				};
 			},
 			edit:function(){
 				var _edit_row = $('#drugs-table-list').datagrid('getSelected');
@@ -99,6 +109,9 @@ $(function(){
 			},
 			remove:function(){
 				listRemove('drugs-table-list','../drugs/delete.jhtml');
+				if( prescriptionDrugsItemIndex < 0){
+					$("#prescriptionType").attr("readonly","readonly");
+				};
 			}
 	};
 	$("#search-btn").click(function(){

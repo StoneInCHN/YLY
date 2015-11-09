@@ -153,15 +153,24 @@ public class PrescriptionController extends BaseController
   }
  
   @RequestMapping (value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message add (Prescription prescription,Long elderlyInfoID)
+  public @ResponseBody Message add (Prescription prescription,Long elderlyInfoID,Long drugsUseMethodId)
   {
     ElderlyInfo elderlyInfo = elderlyInfoService.find (elderlyInfoID);
     List<PrescriptionDrugsItems> itemsList=prescription.getPrescriptionDrugsItems ();
     for (PrescriptionDrugsItems items : itemsList)
     {
-      items.setDrugUseMethod (systemConfigService.find (items.getDrugUseMethod ().getId ()));
+      //西药情况
+      if (items.getDrugUseMethod () != null)
+      {
+        items.setDrugUseMethod (systemConfigService.find (items.getDrugUseMethod ().getId ()));
+      }
+      
       items.setDrugsInfo (drugsInfoService.find (items.getDrugsInfo ().getId ()));
       items.setPrescription (prescription);
+    }
+    if (drugsUseMethodId != null)
+    {
+      prescription.setDrugUseMethod (systemConfigService.find (drugsUseMethodId));
     }
     prescription.setElderlyInfo (elderlyInfo);
     prescription.setPrescriptionDrugsItems (itemsList);
