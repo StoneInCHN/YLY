@@ -36,13 +36,13 @@
 	    		</td>
 	    		<th>用药天数:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" name="medicationDays" id="medicationDays" />
+	    			 <input class="easyui-textbox" name="medicationDays" id="prescriptionDrugMedicationDays" />
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    	<th >药总数:</th>
 	    		<td>
-	    			 <input class="easyui-textbox"  name="medicineTotal" id="medicineTotal" />
+	    			 <input class="easyui-textbox"  name="medicineTotal" id="prescriptionDrugMedicineTotal" />
 	    		</td>
 	    	</tr>
 	    </table>

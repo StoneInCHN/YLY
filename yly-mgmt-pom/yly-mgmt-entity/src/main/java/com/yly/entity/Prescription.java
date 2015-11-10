@@ -141,6 +141,7 @@ public class Prescription extends BaseEntity {
   }
 
   @ManyToOne
+  @JsonProperty
   public SystemConfig getDrugUseMethod() {
     return drugUseMethod;
   }

@@ -153,7 +153,7 @@ public class PrescriptionController extends BaseController
   }
  
   @RequestMapping (value = "/save", method = RequestMethod.POST)
-  public @ResponseBody Message add (Prescription prescription,Long elderlyInfoID,Long drugsUseMethodId)
+  public @ResponseBody Message add (Prescription prescription,Long elderlyInfoID,Long prescriptionDrugsUseMethodId)
   {
     ElderlyInfo elderlyInfo = elderlyInfoService.find (elderlyInfoID);
     List<PrescriptionDrugsItems> itemsList=prescription.getPrescriptionDrugsItems ();
@@ -168,9 +168,9 @@ public class PrescriptionController extends BaseController
       items.setDrugsInfo (drugsInfoService.find (items.getDrugsInfo ().getId ()));
       items.setPrescription (prescription);
     }
-    if (drugsUseMethodId != null)
+    if (prescriptionDrugsUseMethodId != null)
     {
-      prescription.setDrugUseMethod (systemConfigService.find (drugsUseMethodId));
+      prescription.setDrugUseMethod (systemConfigService.find (prescriptionDrugsUseMethodId));
     }
     prescription.setElderlyInfo (elderlyInfo);
     prescription.setPrescriptionDrugsItems (itemsList);
@@ -180,8 +180,27 @@ public class PrescriptionController extends BaseController
 
   
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (Prescription prescription)
+  public @ResponseBody Message update (Prescription prescription,Long prescriptionDrugsUseMethodId,Long elderlyInfoID)
   {
+    ElderlyInfo elderlyInfo = elderlyInfoService.find (elderlyInfoID);
+    List<PrescriptionDrugsItems> itemsList=prescription.getPrescriptionDrugsItems ();
+    for (PrescriptionDrugsItems items : itemsList)
+    {
+      //西药情况
+      if (items.getDrugUseMethod () != null)
+      {
+        items.setDrugUseMethod (systemConfigService.find (items.getDrugUseMethod ().getId ()));
+      }
+      
+      items.setDrugsInfo (drugsInfoService.find (items.getDrugsInfo ().getId ()));
+      items.setPrescription (prescription);
+    }
+    if (prescriptionDrugsUseMethodId != null)
+    {
+      prescription.setDrugUseMethod (systemConfigService.find (prescriptionDrugsUseMethodId));
+    }
+    prescription.setElderlyInfo (elderlyInfo);
+    prescription.setPrescriptionDrugsItems (itemsList);
     prescriptionService.update (prescription);
     return SUCCESS_MESSAGE;
   }

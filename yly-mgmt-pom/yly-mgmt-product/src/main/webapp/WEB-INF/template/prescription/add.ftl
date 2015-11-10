@@ -47,7 +47,7 @@
 	    		</td>
 	    		<th>药品用法:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" name="prescriptionUseMethod" id="prescriptionUseMethod" style="width:80px;"/>
+	    			 <input class="easyui-combobox" name="prescriptionDrugsUseMethodId" id="prescriptionUseMethod" style="width:80px;" />
 	    		</td>
 	    		<th>用药天数:</th>
 	    		<td>

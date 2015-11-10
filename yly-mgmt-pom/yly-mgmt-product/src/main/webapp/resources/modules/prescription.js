@@ -148,7 +148,7 @@ $(function(){
 				 $('#addPrescription_form').show();
 			},
 			edit:function(){
-				var _edit_row = $('#drugs-table-list').datagrid('getSelected');
+				var _edit_row = $('#prescription-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert(message("yly.common.select.editRow"));  
 					return false;
@@ -190,7 +190,50 @@ $(function(){
 						handler:function(){
 							 $('#editPrescription').dialog("close");
 						}
-				    }]
+				    }],
+				    onLoad:function(){
+				    	var itemSize=$("#itemSize").val();
+				    	
+				    	$(".edithid").hide();
+				    	$("#editPrescriptionType").combobox({
+				    		onChange: function (n,o) {
+				    			if(n == "WESTEN_MEDICINE")
+				    				$(".edithid").hide();
+				    			else{
+				    				$(".edithid").show();
+				    			}
+				    		}
+				    	});
+				    	if(itemSize>0){
+				    		$("#editPrescriptionType").combobox("readonly",true);
+				    	};
+				    	$("#editPrescriptionUseMethod").combobox({    
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'DRUGSMETHOD';// 参数
+						    }
+						});
+				    	$("#editPrescriptionUseMethod").combobox("setValue",$("#editPrescriptionUseMethod").attr('data-value'));
+				    	
+				    	$("[use-method='editprescriptionDrugsMethod']").combobox({
+				    		valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'DRUGSMETHOD';// 参数
+						    }
+				    	});
+				    	for(var i=0 ;i < itemSize; i++){
+				    		$("#prescriptionDrugsItems"+i+"_drugUseMethod").combobox("setValue",$("#prescriptionDrugsItems"+i+"_drugUseMethod").attr('data-value'));;
+				    	}
+				    },
+				    onOpen:function(){
+				    	
+				    }
 				});  
 			},
 			addDrgus: function(){

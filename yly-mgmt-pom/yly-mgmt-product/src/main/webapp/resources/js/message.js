@@ -367,8 +367,13 @@ var messages = {
 	"yly.role.auth":"授权",
 	"yly.role.auth.manange":"权限分配",
 	"yly.role.auth.name":"菜单名称",
-	"yly.role.auth.status":"权限状态"
-	
+	"yly.role.auth.status":"权限状态",
+	"yly.drugsInfo.doseFrequency.Qd":"一天一次(Qd)",
+	"yly.drugsInfo.doseFrequency.Bid":"一天两次(Bid)",
+	"yly.drugsInfo.doseFrequency.Tid":"一天三次(Tid)",
+	"yly.drugsInfo.doseFrequency.Qid":"一天四次(Qid)",
+	"yly.drugsInfo.doseFrequency.Q2h":"两小时一次(Q2h)",
+	"yly.drugsInfo.doseFrequency.Q4h":"四小时一次(Q4h)"
 	
 };
 //多语言
