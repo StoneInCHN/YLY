@@ -149,7 +149,7 @@ function checkinAdjustment(billId){
 				var validate = $('#addCheckinAdjust_form').form('validate');
 				if(validate){
 					$.ajax({
-						url:"../billing/billPay.jhtml",
+						url:"../billingAdjust/billAmountAdjust.jhtml",
 						type:"post",
 						data:$("#addCheckinAdjust_form").serialize(),
 						beforeSend:function(){
@@ -217,7 +217,7 @@ $(function(){
 			$('#checkinDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 660,    
-			    height: 550, 
+			    height: 600, 
 			    cache: false,
 			    modal: true,
 			    href:'../billing/details.jhtml?id='+rowData.id+'&path=checkinCharge',

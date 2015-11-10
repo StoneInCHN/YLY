@@ -78,6 +78,33 @@
 	    			<input id="payTime" name="oprTime" type="text" value="${billing.createDate}" class="easyui-datetimebox" style="width:150px;" disabled=true /> 
 	    		</td>
 	    	</tr>
+	    	[#if billing.billingAdjustment?? && billing.billingAdjustment.size()>0]
+	    	<tr>
+	    		<td colspan=4>
+	    			  <fieldset> 
+	    			  	<legend>${message("yly.bill.adjustment")}</legend>
+	    			  	<table class="table table-striped">
+	    			  		<tr>
+	    			  			<th>${message("yly.bill.adjustment.cause")}</th>
+		    			  		<th>${message("yly.bill.adjustment.amount")}</th>
+		    			  		<th>${message("yly.common.charge.status")}</th>
+		    			  		<th>${message("yly.common.charge.operator")}</th>
+		    			  		<th>${message("yly.common.charge.oprTime")}</th>
+	    			  		</tr>
+	    			  			[#list billing.billingAdjustment as adjustItem]
+		    			  		   <tr>
+			    			  			<td>${adjustItem.adjustmentCause}</td>
+			    			  			<td>${adjustItem.adjustmentAmount}</td>
+			    			  			<td>${message("yly.common.charge.status.${adjustItem.chargeStatus}")}</td>
+			    			  			<td>${adjustItem.operator}</td>
+			    			  			<td>${adjustItem.createDate}</td>
+		    			  		   </tr> 
+	    			  			[/#list]
+	    			  	</table>
+	    			  </fieldset>
+	    		</td>
+	    	 </tr>
+	    	[/#if]
 	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td colspan=3>

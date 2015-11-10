@@ -3,11 +3,11 @@
 	    <table class="table table-striped">
 	    	<input type="hidden" name="billingId" value="${billing.id}">
 	    	<tr>
-	    		<th width="85px">${message("yly.common.elderly.name")}:</th>
+	    		<th width="90px">${message("yly.common.elderly.name")}:</th>
 	    		<td>
 	    			 <input class="easyui-textbox" type="text" name="elderlyInfoName" value="${billing.elderlyInfo.name}" style="width:85px;" data-options="disabled:true"/>   
 	    		</td>
-	    		<th width="85px">${message("yly.common.elderly.identifier")}:</th>
+	    		<th width="90px">${message("yly.common.elderly.identifier")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox" type="text" name="elderlyInfoIdentifier" value="${billing.elderlyInfo.identifier}" style="width:130px;" data-options="disabled:true"/> 
 	    		</td>
@@ -118,13 +118,48 @@
 	    		</td>
 	    	</tr>
 	    	[/#if]
+	    	[#if billing.billingAdjustment?? && billing.billingAdjustment.size()>0]
+	    	<tr>
+	    		<td colspan=4>
+	    			  <fieldset> 
+	    			  	<legend>${message("yly.bill.adjustment")}</legend>
+	    			  	<table class="table table-striped">
+	    			  		<tr>
+	    			  			<th>${message("yly.bill.adjustment.cause")}</th>
+		    			  		<th>${message("yly.bill.adjustment.amount")}</th>
+		    			  		<th>${message("yly.common.charge.status")}</th>
+		    			  		<th>${message("yly.common.charge.operator")}</th>
+		    			  		<th>${message("yly.common.charge.oprTime")}</th>
+	    			  		</tr>
+	    			  			[#list billing.billingAdjustment as adjustItem]
+		    			  		   <tr>
+			    			  			<td>${adjustItem.adjustmentCause}</td>
+			    			  			<td>${adjustItem.adjustmentAmount}</td>
+			    			  			<td>${message("yly.common.charge.status.${adjustItem.chargeStatus}")}</td>
+			    			  			<td>${adjustItem.operator}</td>
+			    			  			<td>${adjustItem.createDate}</td>
+		    			  		   </tr> 
+	    			  			[/#list]
+	    			  	</table>
+	    			  </fieldset>
+	    		</td>
+	    	 </tr>
+	    	[/#if]
 	    	<tr>
 	    		<td colspan=4></td>
 	    	</tr>
+	    	[#if billing.chargeStatus == "UNPAID_ADJUSTMENT"]
+		    	<tr>
+		    		<th>${message("yly.common.charge.totalAmount.PAID")}:</th>
+		    		<td colspan=3>
+		    			 <input class="easyui-numberbox" value="${paidAmount}" data-options="disabled:true,min:0,precision:2"/>
+		    		</td>
+		    	</tr>
+	    	[/#if]
 	    	<tr>
-	    		<th>${message("yly.common.charge.totalAmount")}:</th>
-	    		<td colspan="3">
-	    			 <input class="easyui-numberbox" id="chargeinPay_totalAmount" value="${billing.totalAmount}" data-options="disabled:true,min:0,precision:2"/>
+	    		<th>${message("yly.common.charge.totalAmount.pay")}:</th>
+	    		<td colspan=3>
+	    			 <input class="easyui-numberbox" id="chargeinPay_totalAmount" name="payTotalAmount" value="${billing.totalAmount}" data-options="editable:false,min:0,precision:2"/>
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -86,8 +86,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#checkinDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 550, 
+			    width: 680,    
+			    height: 600, 
 			    cache: false,
 			    modal: true,
 			    href:'../billing/details.jhtml?id='+rowData.id+'&path=checkinPay',
