@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -134,6 +135,7 @@ public class MedicalRecord extends BaseEntity {
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   @Index(name = "medical_record_elderly")
   public ElderlyInfo getElderlyInfo() {

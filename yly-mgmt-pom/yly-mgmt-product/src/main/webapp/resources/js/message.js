@@ -374,8 +374,10 @@ var messages = {
 	"yly.drugsInfo.doseFrequency.Tid":"一天三次(Tid)",
 	"yly.drugsInfo.doseFrequency.Qid":"一天四次(Qid)",
 	"yly.drugsInfo.doseFrequency.Q2h":"两小时一次(Q2h)",
-	"yly.drugsInfo.doseFrequency.Q4h":"四小时一次(Q4h)"
-	
+	"yly.drugsInfo.doseFrequency.Q4h":"四小时一次(Q4h)",
+	//病历管理
+	"yly.medicalRecord.list":"病历列表",
+	"yly.medicalRecord.add":"添加病历"
 };
 //多语言
 function message(code) {
