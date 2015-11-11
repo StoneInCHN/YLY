@@ -108,7 +108,8 @@ var messages = {
 	"yly.charge.billing.day.suffix":"号为账单结算日期",
 	"yly.charge.billing.prompt.already.paid":"该老人已经缴费！",
 	"yly.charge.billing.confirm.paid.adjust":"账单已缴费，您确定要进行调账?",
-	"yly.charge.billing.adjust":"调账",
+	"yly.charge.billing.adjust":"调整金额",
+	"yly.charge.billing.edit":"修改账单",
 	
 	
 	
