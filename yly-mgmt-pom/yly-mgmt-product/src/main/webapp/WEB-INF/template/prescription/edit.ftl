@@ -49,7 +49,7 @@
 	    		</td>
 	    		<th>药品用法:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" name="prescriptionUseMethod" id="editPrescriptionUseMethod" style="width:80px;" data-value="${prescription.drugUseMethod.id}"/>
+	    			 <input class="easyui-combobox" name="prescriptionUseMethodId" id="editPrescriptionUseMethod" style="width:80px;" data-value="${prescription.drugUseMethod.id}"/>
 	    		</td>
 	    		<th>用药天数:</th>
 	    		<td>
@@ -80,7 +80,7 @@
 		<table id ="prescriptionDrugsAdd-table-list" border="0">
 			<input type= "hidden" id ="itemSize" value="${prescription.prescriptionDrugsItems?size}"/>
 			[#list prescription.prescriptionDrugsItems as item]
-				<tr>
+				<tr id="drugsItem${item.id}">
 				<input type="hidden" name="prescriptionDrugsItems[${item_index}].id" value="${item.id}"/>
 					<th>药品名称:</th>
 					<td>
@@ -116,18 +116,20 @@
 					<td>
 						<input class="easyui-textbox input_text_line" value = "${item.medicineTotal}" type="text" name="prescriptionDrugsItems[${item_index}].medicineTotal" style="width:80px;"\/>
 					</td>
+					<td>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="prescriptionDrugsItem_manager_tool.editRemove(${item.id});">${message("yly.button.delete")}</a>
+					</td>
 					</tr>
 			[/#list]
 			<tr>
 				<td colspan="13" >
-					<a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.addDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a>
+					<a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.editAddDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a>
 				</td>
 			</tr>
 		</table>
-		
     </form>   
 </div>  
 
-<div id="prescriptionDrugs"></div>
+<div id="editPrescriptionDrugs"></div>
 
 

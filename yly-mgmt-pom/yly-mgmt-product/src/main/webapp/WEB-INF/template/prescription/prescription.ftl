@@ -39,6 +39,7 @@
 <table id="drugsInfoSearch-table-list"></table>
 <div id="editPrescription"></div>
 <div id="prescriptionDetail"></div>
-
+<div id="addPrescriptionDrugs"></div>
+<div id="prescriptionDrugs"></div>
 
 

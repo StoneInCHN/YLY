@@ -100,13 +100,13 @@ public class PrescriptionDrugsItemsController extends BaseController
    * 删除
    */
   @RequestMapping (value = "/delete", method = RequestMethod.POST)
-  public @ResponseBody Message delete (Long[] ids)
+  public @ResponseBody Message delete (Long id)
   {
-    if (ids != null)
+    if (id != null)
     {
       // 检查是否能被删除
       // if()
-      prescriptionDrugsItemsService.delete (ids);
+      prescriptionDrugsItemsService.delete (id);
     }
     return SUCCESS_MESSAGE;
   }

@@ -1,9 +1,14 @@
 
 $(function(){
-	var prescriptionDrugsItemIndex = 0;
+	
+	prescriptionDrugsItemIndex = 0;
 	prescriptionDrugsItem_manager_tool = {
-			add:function(){
-				
+			add:function(oper){
+		    	prescriptionDrugsItemIndex = $("#itemSize").val();
+		    	console.log(prescriptionDrugsItemIndex);
+		    	if(prescriptionDrugsItemIndex == null){
+		    		prescriptionDrugsItemIndex=0;
+		    	}
 				var _drugsName=$("#name").val();
 				var _drugsId=$("#drugsInfoID").val();
 				var _singleDose=$("#singleDose").val();
@@ -13,9 +18,8 @@ $(function(){
 				var _drugUseMethodTxt=$("#prescriptionDrugUseMethod").combobox("getText");
 				var _medicationDays=$("#prescriptionDrugMedicationDays").val();
 				var _medicineTotal=$("#prescriptionDrugMedicineTotal").val();
-				console.log(_medicationDays);
 				var drugNameHtml = 
-				'<tr>\
+				'<tr id="drugsItem'+prescriptionDrugsItemIndex+'">\
 					<th>药品名称:<\/th>\
 					<td>\
 						<input class="easyui-textbox input_text_line " type="text" value="'+_drugsName+'" validtype="length[0,15]" style="width:60px;"\/>\
@@ -45,9 +49,16 @@ $(function(){
 					<td>\
 						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicineTotal" value="'+_medicineTotal+'" style="width:15px;"\/>\
 					<\/td>\
+						<td>\
+						<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="prescriptionDrugsItem_manager_tool.remove('+prescriptionDrugsItemIndex+');">'+message("yly.common.remove")+'</a>\
+						</td>\
 						<\/tr>';
+				if(oper == "add"){
+					var type=$('#prescriptionType').combo('getValue');
+				}else if(oper == "edit"){
+					var type=$('#editPrescriptionType').combo('getValue');
+				}
 				
-				var type=$('#prescriptionType').combo('getValue');
 				if(type == 'WESTEN_MEDICINE'){
 					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
 					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox({    
@@ -137,21 +148,54 @@ $(function(){
 						handler:function(){
 							 $('#editDrugs').dialog("close").form("reset");
 						}
-				    }]
+				    }],
 				});  
 			},
-			remove:function(){
-				listRemove('drugs-table-list','../drugs/delete.jhtml');
-				if( prescriptionDrugsItemIndex < 0){
-					$("#prescriptionType").attr("readonly","readonly");
-				};
+			remove:function(id){
+				if(prescriptionDrugsItemIndex>0){
+					$("#drugsItem"+id).remove();
+					prescriptionDrugsItemIndex--;
+					if( prescriptionDrugsItemIndex <= 0){
+						$("#prescriptionType").combobox("readonly",false);
+					};
+				}
+			},
+			editRemove:function(id){
+				$.messager.confirm(message("yly.common.confirm"), message("yly.common.delete.confirm"), function(r) {
+					if (r) {
+						$.ajax({
+							url : "../prescriptionDrugsItem/delete.jhtml",
+							type : "post",
+							traditional : true,
+							data : {
+								"id" : id
+							},
+							beforeSend : function() {
+								$.messager.progress({
+									text : message("yly.common.progress")
+								});
+							},
+							success : function(result, response, status) {
+								$.messager.progress('close');
+								var resultMsg = result.content;
+								if (response == "success") {
+									showSuccessMsg(resultMsg);
+//									$("#" + _id).datagrid('reload');
+									$("#drugsItem"+id).remove();
+								} else {
+									alertErrorMsg();
+								}
+							}
+						});
+					}
+				})
 			}
 	};
 	$("#search-btn").click(function(){
 	  var _queryParams = {
 			  drugName:$("#drugName").val(),
 			  beginDate:$("#beginDate").val(),
-			  endDate:$("#endDate").val(),
+			  endDate:$("#endDate").val()
 	  }
 	  $('#drugs-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#drugs-table-list").datagrid('reload');

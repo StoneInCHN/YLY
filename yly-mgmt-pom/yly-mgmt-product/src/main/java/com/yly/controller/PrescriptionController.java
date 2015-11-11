@@ -180,12 +180,16 @@ public class PrescriptionController extends BaseController
 
   
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (Prescription prescription,Long prescriptionDrugsUseMethodId,Long elderlyInfoID)
+  public @ResponseBody Message update (Prescription prescription,Long prescriptionUseMethodId,Long elderlyInfoID)
   {
     ElderlyInfo elderlyInfo = elderlyInfoService.find (elderlyInfoID);
     List<PrescriptionDrugsItems> itemsList=prescription.getPrescriptionDrugsItems ();
     for (PrescriptionDrugsItems items : itemsList)
     {
+      //删除item时，item存在，但所有属性都为null
+//      if(items.getId () == null){
+//        continue;
+//      }
       //西药情况
       if (items.getDrugUseMethod () != null)
       {
@@ -195,9 +199,9 @@ public class PrescriptionController extends BaseController
       items.setDrugsInfo (drugsInfoService.find (items.getDrugsInfo ().getId ()));
       items.setPrescription (prescription);
     }
-    if (prescriptionDrugsUseMethodId != null)
+    if (prescriptionUseMethodId != null)
     {
-      prescription.setDrugUseMethod (systemConfigService.find (prescriptionDrugsUseMethodId));
+      prescription.setDrugUseMethod (systemConfigService.find (prescriptionUseMethodId));
     }
     prescription.setElderlyInfo (elderlyInfo);
     prescription.setPrescriptionDrugsItems (itemsList);

@@ -27,7 +27,7 @@ $(function(){
 			});   
 		},
 		onClickRow : function (rowIndex, rowData){
-			recordId =rowData.id;
+			var recordId =rowData.id;
 			$("#prescriptionDrugs-table-list").datagrid({
 				fitColumns:true,
 				pagination:false,
@@ -41,7 +41,7 @@ $(function(){
 				   [
 				      {field:'ck',checkbox:true},
 				      {title:'药品名称',field:"donateAmount",width:10},
-				      {title:'药品类型',field:"donateType",width:10},
+				      {title:'药品类型',field:"donateType",width:10}
 				   ]
 				]
 
@@ -142,7 +142,7 @@ $(function(){
 						        param.configKey = 'DRUGSMETHOD';// 参数
 						    }
 						});
-				    },
+				    }
 				
 				});  
 				 $('#addPrescription_form').show();
@@ -228,7 +228,7 @@ $(function(){
 						    }
 				    	});
 				    	for(var i=0 ;i < itemSize; i++){
-				    		$("#prescriptionDrugsItems"+i+"_drugUseMethod").combobox("setValue",$("#prescriptionDrugsItems"+i+"_drugUseMethod").attr('data-value'));;
+				    		$("#prescriptionDrugsItems"+i+"_drugUseMethod").combobox("setValue",$("#prescriptionDrugsItems"+i+"_drugUseMethod").attr('data-value'));
 				    	}
 				    },
 				    onOpen:function(){
@@ -252,9 +252,7 @@ $(function(){
 						}
 				    }],
 				    onLoad:function(){
-				    	$('#addPrescription_form').show();
 				    	var type=$('#prescriptionType').combo('getValue');
-				    	
 					    	$("#drgusAll-table-list").datagrid({
 					    		title:message("yly.drugsInfo.list"),
 					    		fitColumns:true,
@@ -278,7 +276,7 @@ $(function(){
 												var validate = $('#addPrescriptionDrugs_form').form('validate');
 												if(validate){
 													//call add prescription drugs
-													prescriptionDrugsItem_manager_tool.add();
+													prescriptionDrugsItem_manager_tool.add('add');
 													$('#prescriptionDrugs').dialog("close");
 												};
 											}
@@ -286,7 +284,7 @@ $(function(){
 											text:message("yly.common.cancel"),
 											iconCls:'icon-cancel',
 											handler:function(){
-												 $('#prescriptionDrugs').dialog("close").form("reset");
+												 $('#prescriptionDrugs').dialog("close");
 											}
 									    }],
 									    onLoad:function(){
@@ -305,7 +303,7 @@ $(function(){
 									    	}else if(type == 'WESTEN_MEDICINE'){
 									    		$(".hidCHI").hide();
 									    	} 
-									    },
+									    }
 					    			});
 					    			$('#addPrescriptionDrugs').dialog("close");				    			
 					    		},
@@ -335,18 +333,128 @@ $(function(){
 	
 					    	});
 				    	$("#prescriptionAddDrugs-search-btn").click(function(){
-//				    		alert('test');
 				    	  var _queryParams = {
 				    			  allDrugName:$("#allDrugName").val(),
 				    			  allDrugsBeginDate:$("#allDrugsBeginDate").val(),
-				    			  allDrugsEndDate:$("#allDrugsEndDate").val(),
+				    			  allDrugsEndDate:$("#allDrugsEndDate").val()
 				    	  }
 				    	  $('#drgusAll-table-list').datagrid('options').queryParams = _queryParams;  
 				    	  $("#drgusAll-table-list").datagrid('reload');
 				    	});	
-				    },
+				    }
 				
 				});  
+			},
+			editAddDrgus:function(){
+				alert('test');
+				$('#addPrescriptionDrugs').dialog({
+				    title: '选择药品',   
+				    width: 650,    
+				    height: 300,
+				    iconCls:'icon-mini-add',
+				    href:"../drugs/drugsSearch.jhtml",  
+				    cache: false, 
+				    buttons:[{
+						text:message("yly.common.cancel"),
+						iconCls:'icon-cancel',
+						handler:function(){
+							 $('#addPrescriptionDrugs').dialog("close");
+						}
+				    }],
+				    onLoad:function(){
+				    	var type=$('#editPrescriptionType').combo('getValue');
+					    	$("#drgusAll-table-list").datagrid({
+					    		title:message("yly.drugsInfo.list"),
+					    		fitColumns:true,
+					    		toolbar:"#drugs_manager_tool",
+					    		url:'../drugs/drugsSearch.jhtml',  
+					    		pagination:true,
+					    		loadMsg:message("yly.common.loading"),
+					    		striped:true,
+					    		onDblClickRow : function (rowIndex, rowData){
+					    			$('#prescriptionDrugs').dialog({
+									    title: '药品',   
+									    width: 500,    
+									    height: 300,
+									    iconCls:'icon-mini-add',
+									    href:"../prescriptionDrugsItem/prescriptionDrugs.jhtml?drugsId="+rowData.id,  
+									    cache: false, 
+									    buttons:[{
+									    	text:message("yly.common.save"),
+									    	iconCls:'icon-save',
+											handler:function(){
+												var validate = $('#addPrescriptionDrugs_form').form('validate');
+												if(validate){
+													//call add prescription drugs
+													prescriptionDrugsItem_manager_tool.add('edit');
+													$('#prescriptionDrugs').dialog("close");
+												};
+											}
+										},{
+											text:message("yly.common.cancel"),
+											iconCls:'icon-cancel',
+											handler:function(){
+												 $('#prescriptionDrugs').dialog("close");
+											}
+									    }],
+									    onLoad:function(){
+									    	$("#prescriptionDrugUseMethod").combobox({    
+											    valueField:'id',    
+											    textField:'configValue',
+											    cache: true,
+											    url:'../systemConfig/findByConfigKey.jhtml',
+											    onBeforeLoad : function(param) {
+											        param.configKey = 'DRUGSMETHOD';// 参数
+											    }
+											});
+									    	$(".hidCHI").hide();
+									    	if(type == 'WESTEN_MEDICINE'){
+									    		$(".hidCHI").show();
+									    	}else if(type == 'WESTEN_MEDICINE'){
+									    		$(".hidCHI").hide();
+									    	} 
+									    }
+					    			});
+					    			$('#addPrescriptionDrugs').dialog("close");				    			
+					    		},
+					    		columns:[
+					    		   [
+					    		      {field:'ck',checkbox:true},
+					    		      {title:message("yly.drugsInfo.name"),field:"name",width:100,sortable:true},
+					    		      {title:message("yly.drugsInfo.alias"),field:"alias",width:100,sortable:true},
+					    		      {title:message("yly.drugsInfo.drugCategory"),field:"drugCategory",width:100,sortable:true,
+					    	    	  formatter: function(value,row,index){
+					    		    	  if(value){
+					    		    		  return  value.configValue;
+					    		    	  }else{
+					    		    		  return  value;
+					    		    	  }
+					    					
+					    		      	}},
+					    		      {title:message("yly.common.createDate"),field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
+					    					return new Date(value).Format("yyyy-MM-dd");
+					    				}
+					    		      },
+					    		      {title:message("yly.common.modifyDate"),field:"modifyDate",width:100,sortable:true,formatter: function(value,row,index){
+					    					return new Date(value).Format("yyyy-MM-dd");
+					    				}},
+					    		   ]
+					    		]
+	
+					    	});
+				    	$("#prescriptionAddDrugs-search-btn").click(function(){
+				    	  var _queryParams = {
+				    			  allDrugName:$("#allDrugName").val(),
+				    			  allDrugsBeginDate:$("#allDrugsBeginDate").val(),
+				    			  allDrugsEndDate:$("#allDrugsEndDate").val()
+				    	  }
+				    	  $('#drgusAll-table-list').datagrid('options').queryParams = _queryParams;  
+				    	  $("#drgusAll-table-list").datagrid('reload');
+				    	});	
+				    }
+				
+				});  
+			
 			},
 			remove:function(){
 				listRemove('prescription-table-list','../prescription/delete.jhtml');
