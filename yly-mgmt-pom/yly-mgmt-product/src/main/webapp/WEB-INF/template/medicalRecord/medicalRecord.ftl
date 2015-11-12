@@ -4,17 +4,13 @@
 <div>
 	  <fieldset>
 	    <legend>${message("yly.fixedAssets.search")}</legend>
-	    <form id="fixedAssets-search-form" class="search-form">
+	    <form id="medicalRecord-search-form" class="search-form">
 	    	<div class="search-item">
-			    <label> ${message("yly.fixedAssets.search.name")}:</label>
+			    <label> ${message("yly.elderly.name")}:</label>
 			    <input type="text" class="easyui-textbox" id="name" name="name" />
 			</div>
 			<div class="search-item">
-			    <label> ${message("yly.fixedAssets.search.assetsDepartment")}:</label>
-			    <input type="text" class="easyui-combobox" id="assetsDepartment-search" name="departmentSearchId"/>
-			</div>
-			<div class="search-item">
-			    <label> ${message("yly.fixedAssets.search.time")}:</label>
+			    <label> ${message("yly.createDate")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">
@@ -23,7 +19,7 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="fixedAssets-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="medicalRecord-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
 	    </div>
 	  </fieldset>
 </div>

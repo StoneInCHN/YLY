@@ -4,14 +4,12 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
@@ -24,9 +22,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
-import com.yly.entity.Department;
 import com.yly.entity.ElderlyInfo;
-import com.yly.entity.FixedAssets;
 import com.yly.entity.MedicalRecord;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
@@ -59,8 +55,63 @@ public class MedicalRecordController extends BaseController
   @RequestMapping (value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<MedicalRecord> list (String name,Date beginDate, Date endDate, Pageable pageable, ModelMap model)
   {
-    Page<MedicalRecord> medicalRecordPage=medicalRecordService.findPage (pageable);
-    return medicalRecordPage;
+    String startDateStr = null;
+    String endDateStr = null;
+
+    IKAnalyzer analyzer = new IKAnalyzer ();
+    analyzer.setMaxWordLength (true);
+    BooleanQuery query = new BooleanQuery ();
+
+    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "elderlyInfo.name",
+        analyzer);
+    Query nameQuery = null;
+    TermRangeQuery rangeQuery = null;
+    Filter filter = null;
+    if (beginDate != null)
+    {
+      startDateStr = DateTimeUtils.convertDateToString (beginDate, null);
+    }
+    if (endDate != null)
+    {
+      endDateStr = DateTimeUtils.convertDateToString (endDate, null);
+    }
+    if (name != null)
+    {
+      String text = QueryParser.escape (name);
+        try
+        {
+          nameQuery = nameParser.parse (text);
+          query.add (nameQuery, Occur.MUST);
+          
+          if (LogUtil.isDebugEnabled (FixedAssetsController.class))
+          {
+            LogUtil.debug (FixedAssetsController.class, "search", "Search assetName: "
+                + name );
+          }
+        }
+        catch (ParseException e)
+        {
+          e.printStackTrace();
+        }
+        
+    }
+    
+    if (startDateStr != null || endDateStr != null)
+    {
+      rangeQuery = new TermRangeQuery ("createDate", startDateStr, endDateStr, true, true);
+      query.add (rangeQuery,Occur.MUST);
+      
+      if (LogUtil.isDebugEnabled (FixedAssetsController.class))
+      {
+        LogUtil.debug (FixedAssetsController.class, "search", "Search start date: "+startDateStr
+            +" end date: "+endDateStr);
+      }
+    }
+    if (nameQuery != null || rangeQuery != null)
+    {
+      return medicalRecordService.search (query, pageable, analyzer,filter);
+    }
+    return medicalRecordService.findPage (pageable);
   }
 
   /**
