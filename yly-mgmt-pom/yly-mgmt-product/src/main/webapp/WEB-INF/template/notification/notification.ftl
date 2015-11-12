@@ -55,7 +55,7 @@
 	    	<tr>
 	    		<th>${message("yly.notification.content")}:</th>
 	    		<td colspan="3">
-	    			 <input class="easyui-textbox" name="content" id= "content" data-options="required:true" style="height:200px;width:300px"/>   
+	    			 <input class="easyui-textbox" name="content" id= "content" data-options="required:true,multiline:true"  style="height:200px;width:300px"/>   
 	    		</td>
 	    	</tr>
 	    </table>

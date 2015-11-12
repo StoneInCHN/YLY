@@ -168,6 +168,6 @@ public class NotificationController extends BaseController
   public String details(ModelMap model, Long id) {
     Notification notification = notificationService.find(id);
     model.addAttribute("notification", notification);
-    return "medicalRecord/details";
+    return "notification/details";
   }
 }

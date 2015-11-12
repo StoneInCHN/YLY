@@ -57,8 +57,8 @@ var notification_manager_tool = {
 				}
 				var _dialog = $('#editNotification').dialog({    
 					title: message("yly.common.edit"),   
-				    width: 700,    
-				    height: 550,    
+				    width: 500,    
+				    height: 400,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../notification/edit.jhtml?id='+_edit_row.id,
@@ -116,8 +116,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#notificationDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 800,    
-			    height: 580, 
+			    width: 500,    
+			    height: 400, 
 			    cache: false,
 			    modal: true,
 			    href:'../notification/details.jhtml?id='+rowData.id,
