@@ -104,7 +104,7 @@
 		    	 <ul title="健康管理" id="health">
 		    		<li><a href="#" data-url="${base}/console/medicalRecord/medicalRecord.jhtml">病历档案</a></li>
 		    		<li><a href="#" data-url="${base}/console/prescription/prescription.jhtml">老人药方</a></li>
-		    		<li><a href="#">体检记录</a></li>
+		    		<li><a href="#" data-url="${base}/console/physicalExamination/physicalExamination.jhtml">体检记录</a></li>
 		    		<li><a href="#" data-url="${base}/console/drugs/drugsInfo.jhtml">药品管理</a></li>
 		    	</ul>
 		    	<ul title="院内事务" id="affairs">

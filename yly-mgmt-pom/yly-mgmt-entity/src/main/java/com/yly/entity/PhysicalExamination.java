@@ -6,12 +6,18 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -24,6 +30,7 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_physical_examination")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_physical_examination_sequence")
+@Indexed(index="physicalExamination")
 public class PhysicalExamination extends BaseEntity {
 
   /**
@@ -63,6 +70,9 @@ public class PhysicalExamination extends BaseEntity {
   }
 
   @Index(name = "physical_examination_elderlyinfo")
+  @ManyToOne(fetch=FetchType.LAZY)
+  @JsonProperty
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -70,7 +80,8 @@ public class PhysicalExamination extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-
+  
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Date getPhysicalExaminationDate() {
     return physicalExaminationDate;
   }
