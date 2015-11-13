@@ -4,6 +4,7 @@ var messages = {
 	 */
 	"yly.common.createDate" : "创建时间",
 	"yly.common.modifyDate" : "修改时间",
+	"yly.common.title" : "标题",
 	"yly.common.loading" : "加载中...",
 	"yly.common.save" : "保存",
 	"yly.common.saving" : "保存中...",
@@ -374,8 +375,15 @@ var messages = {
 	"yly.drugsInfo.doseFrequency.Tid":"一天三次(Tid)",
 	"yly.drugsInfo.doseFrequency.Qid":"一天四次(Qid)",
 	"yly.drugsInfo.doseFrequency.Q2h":"两小时一次(Q2h)",
-	"yly.drugsInfo.doseFrequency.Q4h":"四小时一次(Q4h)"
-	
+	"yly.drugsInfo.doseFrequency.Q4h":"四小时一次(Q4h)",
+	//病历管理
+	"yly.medicalRecord.list":"病历列表",
+	"yly.medicalRecord.add":"添加病历",
+	//通知公告
+	"yly.notification.operator":"发布人",
+	"yly.notification.publishTime":"发布时间",
+	"yly.notification.list":"通知列表",
+	"yly.notification.add":"添加通知公告"
 };
 //多语言
 function message(code) {

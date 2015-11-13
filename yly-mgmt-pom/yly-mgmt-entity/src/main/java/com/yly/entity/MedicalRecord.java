@@ -7,7 +7,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -20,6 +23,7 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_medical_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_medical_record_sequence")
+@Indexed(index="medicalRecord")
 public class MedicalRecord extends BaseEntity {
 
   /**
@@ -134,8 +138,10 @@ public class MedicalRecord extends BaseEntity {
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   @Index(name = "medical_record_elderly")
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }

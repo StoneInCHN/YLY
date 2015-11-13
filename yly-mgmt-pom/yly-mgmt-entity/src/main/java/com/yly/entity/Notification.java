@@ -8,7 +8,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -19,6 +25,7 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_notification")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_notification_sequence")
+@Indexed(index="notification")
 public class Notification extends BaseEntity{
 
   
@@ -47,6 +54,7 @@ public class Notification extends BaseEntity{
   private String content;
   
 
+  @JsonProperty
   public Date getPublishTime() {
     return publishTime;
   }
@@ -56,6 +64,8 @@ public class Notification extends BaseEntity{
   }
 
   @Column(length = 15)
+  @JsonProperty
+  @Field(store= Store.NO,index = org.hibernate.search.annotations.Index.TOKENIZED,analyzer = @Analyzer(impl = IKAnalyzer.class) )
   public String getOperator() {
     return operator;
   }
@@ -65,6 +75,7 @@ public class Notification extends BaseEntity{
   }
 
   @Column(length = 30)
+  @JsonProperty
   public String getTitle() {
     return title;
   }

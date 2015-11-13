@@ -66,7 +66,6 @@
 	    		</td>
 	    	</tr>
 	    </table>
-	    <div id="addPrescriptionDrugs"></div>
 	    <div align="center" style="font-size: large">处方笺</div>
 	    <div style="width:100%;height:1px;border-top:solid rgb(0,0,0) 1px;margin-bottom:10px;">
 		<table id ="prescriptionDrugsAdd-table-list">
@@ -81,6 +80,5 @@
 </div>  
 </div>
 
-<div id="prescriptionDrugs"></div>
 
 

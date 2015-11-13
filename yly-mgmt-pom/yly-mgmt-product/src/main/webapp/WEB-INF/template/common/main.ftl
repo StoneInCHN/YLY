@@ -102,16 +102,16 @@
 		    		<li><a href="#">${message("yly.residential.changeRoom")}</a></li>
 		    	</ul>
 		    	 <ul title="健康管理" id="health">
-		    		<li><a href="#">病历档案</a></li>
+		    		<li><a href="#" data-url="${base}/console/medicalRecord/medicalRecord.jhtml">病历档案</a></li>
 		    		<li><a href="#" data-url="${base}/console/prescription/prescription.jhtml">老人药方</a></li>
-		    		<li><a href="#">体检记录</a></li>
+		    		<li><a href="#" data-url="${base}/console/physicalExamination/physicalExamination.jhtml">体检记录</a></li>
 		    		<li><a href="#" data-url="${base}/console/drugs/drugsInfo.jhtml">药品管理</a></li>
 		    	</ul>
 		    	<ul title="院内事务" id="affairs">
 		    		<li><a href="#" data-url="${base}/console/fixedAssets/fixedAssets.jhtml">固定资产</a></li>
 		    		<li><a href="#">库存管理</a></li>
 		    		<li><a href="#" data-url="${base}/console/donateRecord/donateRecord.jhtml">捐赠管理</a></li>
-		    		<li><a href="#">通知公告</a></li>
+		    		<li><a href="#" data-url="${base}/console/notification/notification.jhtml">通知公告</a></li>
 		    	</ul>
 		    	<ul title="系统管理" id="system">
 		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">用户管理</a></li>
