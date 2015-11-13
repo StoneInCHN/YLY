@@ -157,7 +157,7 @@
 		    	<ul title="${message("yly.personnel.config")}" id="personnel">
 		    		<li><a href="#" data-url="${base}/console/department/department.jhtml">${message("yly.personnel.department")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/position/position.jhtml">${message("yly.personnel.position")}</a></li>
-		    		<li><a href="#" >${message("yly.personnel.tenantuser")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">${message("yly.personnel.tenantuser")}</a></li>
 		    		<li><a href="#" >${message("yly.personnel.vacate")}</a></li>
 		    	</ul>    
 

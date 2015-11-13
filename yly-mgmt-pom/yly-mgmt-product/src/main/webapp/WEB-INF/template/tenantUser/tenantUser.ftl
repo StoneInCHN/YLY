@@ -11,7 +11,7 @@
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.tenantUser.search.department")}:</label>
-			    <input type="text" class="easyui-combobox" id="tenantUserDepartment-search" name="departmentSearchId"/>
+			    <input type="text" class="easyui-combobox" id="tenantUserDepartment-search" name="departmentSearchId" data-options="prompt:'${message("yly.common.please.select")}'"/>
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.tenantUser.search.position")}:</label>
@@ -32,14 +32,6 @@
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="staffStatusSearch" style="width:110px;"/>
 			    
-			</div>
-			<div class="search-item">
-			    <label> ${message("yly.tenantUser.search.hireDate")}:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
-			</div>
-			<div class="search-item">
-			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
 			</div>
 		</form>
 		<div class="search-item">
@@ -111,7 +103,7 @@
 	    	<tr>
 	    		<th>${message("yly.tenantUser.staffID")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" validtype="length[0,30]"/>   
+	    			 <input class="easyui-textbox" type="text" name="staffID" data-options="required:true" validtype="length[0,30];remote['../tenantUser/checkStaffID.jhtml']"/>   
 	    		</td>
 	    	
 	    		
@@ -144,29 +136,29 @@
 	    	<tr>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			 <input class="easyui-numberbox" type="text" name="telephone" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="telephone" />   
 	    		</td>
 	    	
 	    		<th>${message("yly.mobile")}:</th>
 	    		<td>
-	    			 <input class="easyui-numberbox" type="text" name="mobile" data-options="required:true" validtype="mobile"/>
+	    			 <input class="easyui-textbox" type="text" name="mobile" data-options="required:true" validtype="mobile"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.tenantUser.department")}:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" id="tenantUserDepartment-add" name="departmentId" data-options="prompt:'${message("yly.common.please.select")}'" />   
+	    			 <input class="easyui-combobox" id="tenantUserDepartment-add" name="departmentId" />   
 	    		</td>
 	    	
 	    		<th>${message("yly.tenantUser.position")}:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" type="text" id="tenantUserPosition-add" name="positionId" id="position" data-options="prompt:'${message("yly.common.please.select")}'" />
+	    			 <input class="easyui-combobox" type="text" id="tenantUserPosition-add" name="positionId" />
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.tenantUser.hireDate")}:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" name="hireDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
+	    			 <input type="text" class="easyui-datebox" name="hireDate"  data-options="required:true,editable:false"/>   
 	    		</td>
 	    		<th>${message("yly.tenantUser.age")}:</th>
 	    		<td>
@@ -176,7 +168,7 @@
 	    	<tr>
 	    		<th>${message("yly.tenantUser.IDCard")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" validtype="length[0,30]"/>
+	    			 <input class="easyui-textbox" type="text" name="IDCard" data-options="required:true" validtype="idcard;length[0,30]"/>
 	    		</td>
 	    		<th>${message("yly.tenantUser.workingYear")}:</th>
 	    		<td>
@@ -186,7 +178,7 @@
 	    	<tr>
 	    		<th>${message("yly.tenantUser.birthDay")}:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="birthDay" name="birthDay" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}',dateFmt:'yyyy-MM-dd'});" />
+	    			 <input type="text" class="easyui-datebox" name="birthDay"  data-options="required:true,editable:false"/>
 	    		</td>
 	    		<th>${message("yly.tenantUser.zipCode")}:</th>
 	    		<td>

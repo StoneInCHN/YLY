@@ -127,8 +127,13 @@ public class PositionController extends BaseController{
     return "position/details";
   }
   
-  @RequestMapping(value = "/findAllPositions", method = RequestMethod.POST)
-  public @ResponseBody List<Map<String, Object>> findAllPositions() {
-    return positionService.findAllPositions ();
+  @RequestMapping(value = "/findPositions", method = RequestMethod.POST)
+  public @ResponseBody List<Map<String, Object>> findPositions(Long id) {
+    if (id !=null) {
+      return positionService.findPositions (departmentService.find(id));
+    }else{
+      return null;
+    }
+    
   }
 }

@@ -74,7 +74,7 @@
 	    	<tr>
 	    		<th>${message("yly.phoneNumber")}:</th>
 	    		<td>
-	    			 <input class="easyui-numberbox" type="text" name="telephone" data-options="required:true" value="${tenantUser.telephone}" />   
+	    			 <input class="easyui-numberbox" type="text" name="telephone"  value="${tenantUser.telephone}" />   
 	    		</td>
 	    	
 	    		<th>${message("yly.mobile")}:</th>

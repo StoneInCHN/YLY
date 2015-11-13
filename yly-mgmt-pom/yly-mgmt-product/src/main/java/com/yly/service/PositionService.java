@@ -3,6 +3,7 @@ package com.yly.service;
 import java.util.List;
 import java.util.Map;
 
+import com.yly.entity.Department;
 import com.yly.entity.Position;
 import com.yly.framework.service.BaseService;
 
@@ -17,5 +18,5 @@ public interface PositionService extends BaseService<Position, Long> {
    * 获取所有部门，用于下拉菜单
    * @return
    */
-  List<Map<String, Object>> findAllPositions();
+  List<Map<String, Object>> findPositions(Department department);
 }

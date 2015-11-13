@@ -18,11 +18,12 @@
 				/console/common/logout = logout
 				/console/common/captcha.jhtml = anon
 				/console/common/captchaCheck.jhtml = anon
-				<!-- /console/** = authc -->
+				 /console/** = authc
+				 <!--
 				/console/building/** = perms["building"]
 				/console/room/** = perms["room"]
 				/console/blackList/** = perms["blackList"]
-				
+				 -->
 			</value>
 		</property>
 		<property name="filters">
