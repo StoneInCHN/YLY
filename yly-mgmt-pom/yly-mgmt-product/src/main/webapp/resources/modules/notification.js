@@ -105,6 +105,37 @@ var notification_manager_tool = {
 			}
 	};
 $(function(){
+	if(typeof(KindEditor) != "undefined") {
+		KindEditor.ready(function(K) {
+			editor = K.create("#editor_id", {
+				items: [
+					"source", "|", "undo", "redo", "|", "preview", "print", "template", "cut", "copy", "paste",
+					"plainpaste", "wordpaste", "|", "justifyleft", "justifycenter", "justifyright",
+					"justifyfull", "insertorderedlist", "insertunorderedlist", "indent", "outdent", "subscript",
+					"superscript", "clearhtml", "quickformat", "selectall", "|", "fullscreen", "/",
+					"formatblock", "fontname", "fontsize", "|", "forecolor", "hilitecolor", "bold",
+					"italic", "underline", "strikethrough", "lineheight", "removeformat", "|", "image", "multiimage",
+					"table", "hr", "emoticons",  "pagebreak",
+					"anchor", "link", "unlink"
+				],
+				width:780,
+				height:400,
+				resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : true,
+				allowImageRemote : false,
+				showRemote : false,
+				allowFileManager: true,
+				filePostName: "file",
+				uploadJson:  "/operate/file/upload",
+				urlType:'relative',
+				afterBlur:function(){ 
+		            this.sync(); 
+		        }    
+			});
+			editor.sync();
+		});
+	};
 	$("#notification-table-list").datagrid({
 		title:message("yly.notification.list"),
 		fitColumns:true,

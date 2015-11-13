@@ -14,8 +14,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.AccountStatus;
 
@@ -28,6 +34,7 @@ import com.yly.entity.commonenum.CommonEnum.AccountStatus;
 @Entity
 @Table(name = "yly_tenant_account")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_tenant_account_sequence")
+@Indexed(index="tenantAccount")
 public class TenantAccount extends BaseEntity {
 
   private static final long serialVersionUID = -665961639617388534L;
@@ -78,6 +85,7 @@ public class TenantAccount extends BaseEntity {
   private TenantUser tenantUser;
   
   @ManyToOne
+  @JsonProperty
   public TenantUser getTenantUser() {
     return tenantUser;
   }
@@ -95,6 +103,8 @@ public class TenantAccount extends BaseEntity {
     this.staffID = staffID;
   }
 
+  @JsonProperty
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public AccountStatus getAccoutStatus() {
     return accoutStatus;
   }
@@ -104,6 +114,7 @@ public class TenantAccount extends BaseEntity {
   }
 
   @Column(length=20)
+  @JsonProperty
   public String getRealName() {
     return realName;
   }
@@ -112,6 +123,7 @@ public class TenantAccount extends BaseEntity {
     this.realName = realName;
   }
 
+  @JsonProperty
   public Date getLoginDate() {
     return loginDate;
   }
@@ -121,6 +133,7 @@ public class TenantAccount extends BaseEntity {
   }
 
   @Column(length=20)
+  @JsonProperty
   public String getLoginIp() {
     return loginIp;
   }
@@ -128,7 +141,7 @@ public class TenantAccount extends BaseEntity {
   public void setLoginIp(String loginIp) {
     this.loginIp = loginIp;
   }
-
+  @JsonProperty
   public Boolean getIsSystem() {
     return isSystem;
   }
@@ -145,6 +158,7 @@ public class TenantAccount extends BaseEntity {
   @NotEmpty
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "yly_tenant_account_role")
+  @JsonProperty
   public Set<Role> getRoles() {
       return roles;
   }
@@ -169,6 +183,8 @@ public class TenantAccount extends BaseEntity {
   }
 
   @Column(length = 20)
+  @JsonProperty
+  @Field(index=org.hibernate.search.annotations.Index.TOKENIZED,analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getUserName() {
     return userName;
   }

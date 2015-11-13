@@ -383,7 +383,17 @@ var messages = {
 	"yly.notification.operator":"发布人",
 	"yly.notification.publishTime":"发布时间",
 	"yly.notification.list":"通知列表",
-	"yly.notification.add":"添加通知公告"
+	"yly.notification.add":"添加通知公告",
+	// 租户用户
+	"yly.tenantAccount.userName":"用户名",
+	"yly.tenantAccount.realName":"真实姓名",
+	"yly.tenantAccount.isSystem":"是否内置",
+	"yly.tenantAccount.accoutStatus":"账号状态",
+	"yly.tenantAccount.loginDate":"最后登录时间",
+	"yly.tenantAccount.loginIp":"最后登录IP",
+	"yly.tenantAccount.active":"账号正常",
+	"yly.tenantAccount.list":"用户列表",
+	"yly.tenantAccount.locked":"账号锁定"
 };
 //多语言
 function message(code) {

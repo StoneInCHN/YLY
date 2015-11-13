@@ -114,7 +114,7 @@
 		    		<li><a href="#" data-url="${base}/console/notification/notification.jhtml">通知公告</a></li>
 		    	</ul>
 		    	<ul title="系统管理" id="system">
-		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">用户管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/tenantAccount/tenantAccount.jhtml">用户管理</a></li>
 		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">权限角色管理</a></li>
 		    		<li><a href="#">数据字典</a></li>
 		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
@@ -191,6 +191,8 @@
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
+    <script src="${base}/resources/js/editor.js"></script>
+	<script src="${base}/resources/js/kindeditor/kindeditor.js"></script>
 	<script>
 		var BASE_URL = '${base}/resources' ;
 	</script>
