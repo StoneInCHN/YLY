@@ -104,9 +104,12 @@ var tenantUser_manager_tool = {
 		}
 };
 
-$(function(){	
-	
-	$("")
+$(function(){
+	$("#accountStatusSearch").combobox({
+		loadFilter:function(data){
+			console.log(data);
+		}
+	});
 	$("#tenantAccount-table-list").datagrid({
 		title:message("yly.tenantAccount.list"),
 		fitColumns:true,
@@ -161,9 +164,7 @@ $(function(){
 		      },
 		      {title:message("yly.tenantAccount.loginIp"),field:"loginIp",width:100,sortable:true},
 		   ]
-		],onLoad:function(){
-		}
-
+		]
 	});
 
 	

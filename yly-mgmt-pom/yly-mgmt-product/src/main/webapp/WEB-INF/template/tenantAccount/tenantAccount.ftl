@@ -21,7 +21,7 @@
 				      label: 'LOCKED',
 				      value: '${message("yly.tenantAccount.accoutStatus.locked")}'
 				     }],
-				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="accountStatusSearch" style="width:110px;"/>
+				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="accountStatusSearch" id="accountStatusSearch" style="width:110px;"/>
 			</div>
 			
 		</form>
