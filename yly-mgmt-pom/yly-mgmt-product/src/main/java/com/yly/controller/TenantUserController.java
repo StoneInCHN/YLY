@@ -66,7 +66,11 @@ public class TenantUserController extends BaseController
   {
     return "tenantUser/tenantUser";
   }
-
+  @RequestMapping (value = "/commonTenantUserSearch", method = RequestMethod.GET)
+  public String commonTenantUserSearch (ModelMap model)
+  {
+    return "common/commonTenantUserSearch";
+  }
   @RequestMapping (value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<TenantUser> list (Pageable pageable, ModelMap model,
       Date beginDate, Date endDate, String realNameSearch, String staffStatusSearch,

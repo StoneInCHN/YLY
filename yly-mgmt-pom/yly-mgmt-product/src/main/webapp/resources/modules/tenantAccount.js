@@ -1,4 +1,4 @@
-var tenantUser_manager_tool = {
+var tenantAccount_manager_tool = {
 		add:function(){
 			$('#addTenantAccount').dialog({
 			    title: message("yly.tenantAccount.add"),    
@@ -45,8 +45,6 @@ var tenantUser_manager_tool = {
 			    }],
 			    onOpen:function(){
 			    	$('#addTenantAccount_form').show();
-			    	
-			     	
 			    },
 			});  
 		},
@@ -105,11 +103,6 @@ var tenantUser_manager_tool = {
 };
 
 $(function(){
-	$("#accountStatusSearch").combobox({
-		loadFilter:function(data){
-			console.log(data);
-		}
-	});
 	$("#tenantAccount-table-list").datagrid({
 		title:message("yly.tenantAccount.list"),
 		fitColumns:true,

@@ -40,26 +40,13 @@
 	<div class="tool-filter"></div>
 </div>
 <div id="addTenantAccount"> 
-	<form id="addTenantAccount_form" method="post" class="form-table">  
+	<form id="addTenantAccount_form" method="post" class="form-table">
+	<input type="hidden" name="tenantUserID" id="addTenantAccountUserID">  
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>${message("yly.tenantAccount.staffID")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-datebox" name="userName" id= "userName"  data-options="required:true,editable:false"/>
-	    		</td>
-	    		<th>${message("yly.tenantAccount.realName")}:</th>
-	    		<td>
-	    			 <input type="text" class="easyui-datebox" name="realName" id= "realName"  data-options="required:true,editable:false"/>
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.tenantAccount.userName")}:</th>
-	    		<td>
-	    			 <input type="text" class="easyui-datebox" name="userName" id= "userName"  data-options="required:true,editable:false"/>
-	    		</td>
-	    		<th>${message("yly.common.isSystem")}:</th>
-	    		<td>
-	    			 <input type="text" class="easyui-datebox" name="isSystem" id= "isSystem"  data-options="required:true,editable:false"/>
+	    			 <input type="text" class="easyui-textbox" name="staffID" id= "staffID"  data-options="required:true"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -79,13 +66,16 @@
 	    		</td>
 	    		<th>${message("yly.tenantAccount.tenantUser")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-datebox" name="tenantUser" id= "tenantUser"  data-options="required:true,editable:false"/>
+	    			 <input type="text" class="easyui-textbox" name="addTenantAccountUser" id= "addTenantAccountUser"  />
 	    		</td>
-	    		<th>${message("yly.tenantAccount.role")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-datebox" name="role" id= "role"  data-options="required:true,editable:false"/>
+	    			<a href="#" id="tenant_user_search_btn" class="easyui-linkbutton" onclick="searchTenantUser('addTenantAccountUser')" iconCls="icon-search" plain=true"></a>
 	    		</td>
-	    	</tr>
+	    		<!--<th>${message("yly.tenantAccount.role")}:</th>
+	    		<td>
+	    			 <input type="text" class="easyui-textbox" name="role" id= "role"  />
+	    		</td>
+	    	</tr>-->
 	    </table>
 	</form>
 </div>

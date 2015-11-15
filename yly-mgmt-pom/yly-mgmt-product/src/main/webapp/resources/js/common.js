@@ -240,7 +240,89 @@ function searchElderlyInfo(id) {
 	    }
 	});  
 }
+//查询用户
+function searchTenantUser(id){
+	alert(id);
+	$('#searchTenantUser').dialog({    
+	    title: message("yly.tenantUser.search"),    
+	    width: 1000,
+	    height: 500,
+	    modal:true,
+	    cache: false,   
+	    href:'../tenantUser/commonTenantUserSearch.jhtml',
+	    buttons:[{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#searchTenantUser').dialog("close");
+			}
+	    }],
+	    onLoad:function(){
+	    	/**
+	    	 * 此datagrid 用户展示老人数据,并且提供查询功能
+	    	 */
+	    	$("#common-tenantUser-table-list").datagrid({
+	    	 title:message("yly.elderlyinfo"),
+	    	 fitColumns:true,
+	    	 url:'../tenantUser/list.jhtml',  
+	    	 pagination:true,
+	    	 loadMsg:message("yly.common.loading"),
+	    	 striped:true,
+	    	 onDblClickRow : function (rowIndex, rowData){
+	    		 $("#"+id+"ID").val(rowData.id);
+	    		 alert("id"+ " "+rowData.realName)
+	    		 $("#"+id).textbox('setValue',rowData.realName);
+	    		 if($("#identifier")){
+	    			 $("#identifier").val(rowData.identifier);
+	    		 }
+	    		 $('#searchTenantUser').dialog("close");
+	    	 },
+	    	 columns:[
+	    	    [
+				{title:message("yly.common.age"),field:"age",width:100,sortable:true},
+				{title:message("yly.tenantUser.staffID"),field:"staffID",width:100,sortable:true},
+				{title:message("yly.tenantUser.staffStatus"),field:"staffStatus",width:100,sortable:true,
+					  formatter: function(value,row,index){
+				  	  if(value == "INSERVICE"){
+				  		  return  message("yly.tenantUser.staffStatus.inService");
+				  	  }else if (value = "OUTSERVICE"){
+				  		  return  message("yly.tenantUser.staffStatus.outService");
+				  	  }
+					  }  
+				},
+				
+				{title:message("yly.tenantUser.department"),field:"department",width:100,sortable:true,formatter: function(value,row,index){
+					  if(value){
+						  return  value.name;
+					  }else{
+						  return  value;
+					  }
+				  }},
+				{title:message("yly.tenantUser.position"),field:"position",width:100,sortable:true,formatter: function(value,row,index){
+					  if(value){
+						  return  value.name;
+					  }else{
+						  return  value;
+					  }
+				  }},
+				{title:message("yly.tenantUser.hireDate"),field:"hireDate",width:100,sortable:true,formatter: function(value,row,index){
+						return new Date(value).Format("yyyy-MM-dd");
+					}
+				},
+	    	    ]
+	    	 ]
 
+	    	});
+	    	
+	    	$("#common_elderlyinfo_search_btn").click(function(){
+	  		  var _queryParams = $("#common_elderlyinfo_search_form").serializeJSON();
+	  		  $('#common_elderlyInfoSearch-table-list').datagrid('options').queryParams = _queryParams;  
+	  		  $("#common_elderlyInfoSearch-table-list").datagrid('reload');
+	  	})
+	    }
+	});  
+
+}
 function formReset(formId,tableId){
 	$('#'+formId)[0].reset();
 	var _queryParams = {}
