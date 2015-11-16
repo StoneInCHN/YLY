@@ -309,7 +309,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
      * 更新老人信息
      */
     elderlyInfo.setId(elderlyInfoId);
-    elderlyInfo.setTenantID(currnetTenantId);//设置租户ID
+    //elderlyInfo.setTenantID(currnetTenantId);//设置租户ID
     elderlyInfo.setPersonnelCategory(personnelCategoryId != null?systemConfigService.find(personnelCategoryId):null);//设置人员类别
     elderlyInfo.setNursingLevel(nursingLevelId != null?systemConfigService.find(nursingLevelId):null);//设置护理级别
     elderlyInfo.setEvaluatingResult(evaluatingResultId != null?systemConfigService.find(evaluatingResultId):null);//设置评估结果
@@ -317,17 +317,17 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);//设置委托人
     elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);//设置委托人的租户ID
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_EVALUATING);//设置老人状态 ：入院评估
-    elderlyInfoService.update(elderlyInfo);
+    elderlyInfoService.update(elderlyInfo,"tenantID","createDate");
     /**
      * 更新评估记录
      */
     elderlyEvaluatingRecord.setId(elderlyEvaluatingRecordId);
-    elderlyEvaluatingRecord.setTenantID(currnetTenantId);//设置租户ID
+    //elderlyEvaluatingRecord.setTenantID(currnetTenantId);//设置租户ID
     elderlyEvaluatingRecord.setElderlyInfo(elderlyInfo);//设置
     elderlyEvaluatingRecord.setEvaluatingForm(evaluatingFormService.find(evaluatintFormID));//设置评估记录用的评估表
     //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
     elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
-    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
+    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
     /**
      * 依次更新每个项的评估选择结果
      */
@@ -367,7 +367,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     elderlyEvaluatingRecord.setSectionsResult(sectionResultSB.toString());
     //设置评估表最终结果等级
     elderlyEvaluatingRecord.setEvaluatingResult(elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));  
-    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
+    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
     return SUCCESS_MESSAGE;
   }
 

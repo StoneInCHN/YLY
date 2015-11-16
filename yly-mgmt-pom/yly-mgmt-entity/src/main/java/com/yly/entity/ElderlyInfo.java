@@ -376,11 +376,13 @@ public class ElderlyInfo extends BaseEntity {
   @Transient
   public String getBedLocation() {
     StringBuffer str = new StringBuffer();
-    Room room = bed.getRoom();
-    str.append(room.getBuilding().getBuildingName());
-    str.append(bed.getBedNumber());
-    str.append(room.getRoomType().getConfigValue());
-    bedLocation = str.toString();
+    if (bed != null) {
+      Room room = bed.getRoom();
+      str.append(room.getBuilding().getBuildingName());
+      str.append(bed.getBedNumber());
+      str.append(room.getRoomType().getConfigValue());
+      bedLocation = str.toString();
+    }
     return bedLocation;
   }
 

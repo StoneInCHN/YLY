@@ -1,16 +1,16 @@
-    <script type="text/javascript" src="${base}/resources/modules/addEvaluating.js"></script>
+<script type="text/javascript" src="${base}/resources/modules/editEvaluating.js"></script>
 
 <form id="editEvaluating_form">
 <input type="hidden" name="evaluatintFormID" value=" ${evaluatingForm.id}" />
 	<ul id="progressbar">
-		<a href="javascript:void(0);" onclick="skipTo(0)"><li id="li0" class="active"> 老人信息</li></a>
-		<a href="javascript:void(0);" onclick="skipTo(1)"><li id="li1">评估原因及说明</li></a>
+		<a href="javascript:void(0);" onclick="skipTo(0)"><li id="editli0" class="active"> 老人信息</li></a>
+		<a href="javascript:void(0);" onclick="skipTo(1)"><li id="editli1">评估原因及说明</li></a>
 		<#list evaluatingForm.evaluatingSections as evaluatingSection>
-		<a href="javascript:void(0);" onclick="skipTo(${evaluatingSection_index + 2})"><li id="li${evaluatingSection_index +2}">${evaluatingSection.sectionName}</li></a>
+		<a href="javascript:void(0);" onclick="skipTo(${evaluatingSection_index + 2})"><li id="editli${evaluatingSection_index +2}">${evaluatingSection.sectionName}</li></a>
 		</#list>
-		<a href="javascript:void(0);" onclick="skipTo(${evaluatingForm.evaluatingSections?size +2})"><li id="li${evaluatingForm.evaluatingSections?size +2}">评估报告</li></a>
+		<a href="javascript:void(0);" onclick="skipTo(${evaluatingForm.evaluatingSections?size +2})"><li id="editli${evaluatingForm.evaluatingSections?size +2}">评估报告</li></a>
 	</ul>
-	<fieldset id="fieldset0">
+	<fieldset id="editfieldset0">
 			<input type="hidden" name="elderlyInfoId" value="${elderlyInfo.id}"/> 
 			<input type="hidden" name="elderlyEvaluatingRecordId" value="${elderlyEvaluatingRecord.id}"/> 
 		<input type="hidden" name="elderlyConsigner.id" value="${elderlyInfo.elderlyConsigner.id}"/>
@@ -526,7 +526,7 @@
 	    </center>
 	</fieldset>
 
-		<fieldset style="text-align:left"  id="fieldset1">
+		<fieldset style="text-align:left"  id="editfieldset1">
 
 				<p style="font-size:110%"><strong>  请选择评估原因：</strong>
 		<input class="easyui-combobox" data-options="
@@ -610,7 +610,7 @@
 <#assign answer_index=0/>
 <#assign begin_answer_index=0/>
 <#list evaluatingForm.evaluatingSections as evaluatingSection>
-		<fieldset  style="text-align:left" id="fieldset${evaluatingSection_index + 2}">
+		<fieldset  style="text-align:left" id="editfieldset${evaluatingSection_index + 2}">
 <table class="table table-bordered">
 <#list evaluatingSection.evaluatingItems as evaluatingItem>
 <tr>
@@ -618,12 +618,12 @@
 		${answer_index + 1}.  ${evaluatingItem.itemName}
 	</td>
 	<td text-align="center"style="width:80px" rowspan="${evaluatingItem.evaluatingItemsOptions?size}">
-				<input type="hidden" id="itemNameOf${answer_index}" value="${evaluatingItem.itemName}"/>
+				<input type="hidden" id="edititemNameOf${answer_index}" value="${evaluatingItem.itemName}"/>
 				 
 					   <#list elderlyEvaluatingRecord.evaluatingItemsAnswers as evaluatingItemsAnswer>
 			<#if evaluatingItemsAnswer.evaluatingItemsOptions.evaluatingItems.itemName == evaluatingItem.itemName>
 			<input type="hidden" name="evaluatingItemsAnswers[${answer_index}].id" value="${evaluatingItemsAnswer.id}"/>
-			<input class="easyui-textbox" type="text" id="scoreOf${answer_index}" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.optionScore" 
+			<input class="easyui-textbox" type="text" id="editscoreOf${answer_index}" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.optionScore" 
 				value="${evaluatingItemsAnswer.evaluatingItemsOptions.optionScore}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分
 			</#if>
 	
@@ -667,7 +667,7 @@
 			<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
 		   		<#if key==evaluatingSection.sectionName>
-		   		<input class="easyui-textbox" type="text" id="sectionScoreOf${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分
+		   		<input class="easyui-textbox" type="text" id="editsectionScoreOf${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分
 				</#if>
 	      </#list>
 		</#if>
@@ -682,7 +682,7 @@
 <#if sectionLevelMap??&&sectionLevelMap?size gt 0>
 		   <#list sectionLevelMap.keySet() as key>
 		   		<#if key==evaluatingSection.sectionName>		   
-		   		<input class="easyui-textbox" type="text" id="sectionLevelOf${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/>		    
+		   		<input class="easyui-textbox" type="text" id="editsectionLevelOf${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/>		    
 				</#if>
 	      </#list>
 		</#if>
@@ -717,7 +717,7 @@
 	</fieldset>
 	</#list>
 
-	<fieldset  style="text-align:left" id="fieldset${evaluatingForm.evaluatingSections?size +2}">
+	<fieldset  style="text-align:left" id="editfieldset${evaluatingForm.evaluatingSections?size +2}">
 		<p style="text-align:center;font-size:180%">老年人能力评估报告</p>
 <table class="table table-bordered">
 <tr>
@@ -725,13 +725,13 @@
 	<td>	
 		<#list evaluatingForm.evaluatingSections as evaluatingSection>	
 	       <#if evaluatingSection_index == 0>
-	      		 <input type="hidden" id="sectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+	      		 <input type="hidden" id="editsectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
                C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
 				<font color="black">
 		<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
 		   <#list sectionLevelMap.keySet() as key>
 		   		<#if key==evaluatingSection.sectionName>		 
-		   		<input class="easyui-textbox sectionLevel" type="text" id="sectionLevel${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 级  
+		   		<input class="easyui-textbox sectionLevel" type="text" id="editsectionLevel${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 级  
 				</#if>
 	      </#list>
 		</#if>
@@ -747,13 +747,13 @@
 	       <#if evaluatingSection_index != 0>
                <tr>
                	<td>
-               	<input type="hidden" id="sectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+               	<input type="hidden" id="editsectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
                	C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;			   		    
 						<font color="black">
 								<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
 		   <#list sectionLevelMap.keySet() as key>
 		   		<#if key==evaluatingSection.sectionName>		 
-		   		<input class="easyui-textbox sectionLevel" type="text" id="sectionLevel${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 级  
+		   		<input class="easyui-textbox sectionLevel" type="text" id="editsectionLevel${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 级  
 				</#if>
 	      </#list>
 		</#if>
@@ -767,16 +767,16 @@
 	<td><strong>
 	
 		<#if formPrimaryLevel?contains("0")><font color="green">
-			<input class="easyui-textbox" type="text" id="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+			<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 		</#if>
 	<#if formPrimaryLevel?contains("1")><font color="orange">
-	<input class="easyui-textbox" type="text" id="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 	</#if>
 	<#if formPrimaryLevel?contains("2")><font color="#cc6600">
-	<input class="easyui-textbox" type="text" id="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 	</#if>
 	<#if formPrimaryLevel?contains("3")><font color="red">
-	<input class="easyui-textbox" type="text" id="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 	</#if>
 	</strong>
 	<a href="#" class="easyui-linkbutton" onclick="populateFormLevel(${evaluatingForm.evaluatingSections?size})" plain="true">生成等级</a>

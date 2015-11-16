@@ -150,6 +150,7 @@ function skipTo(selectedIndex){//直接选择每个模块，（非上一步下�
 	//隐藏当前的fieldset
 	current_fs.hide();
 }
+
 //自动填充每道题的分数、每个模块总分以及每个模块的等级
 function populateScore(answer_index,optionScore,answer_begin_index,sectionSize,section_index){
 	//填充每道题的分数
