@@ -185,7 +185,7 @@ public class TenantAccountServiceImpl extends BaseServiceImpl<TenantAccount, Lon
   @Transactional(readOnly = true)
   public boolean isSystemAdmin() {
     TenantAccount admin = getCurrent();
-    Set<Role> roles = admin.getRoles();
+    List<Role> roles = admin.getRoles();
     Iterator<Role> it = roles.iterator();
     while (it.hasNext()) {
       Role role = it.next();

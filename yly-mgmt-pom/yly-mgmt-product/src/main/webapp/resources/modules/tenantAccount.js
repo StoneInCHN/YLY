@@ -93,12 +93,12 @@ var tenantAccount_manager_tool = {
 					}
 			    }],
 			    onLoad:function(){
-			    	
+			    	$("#editAccountStatus").combobox("setValue",$("#editAccountStatus").attr("data-value"))
 			    }
 			});  
 		},
 		remove:function(){
-			listRemove('tenantUser-table-list','../tenantUser/delete.jhtml');
+			listRemove('tenantAccount-table-list','../tenantAccount/delete.jhtml');
 		}
 };
 

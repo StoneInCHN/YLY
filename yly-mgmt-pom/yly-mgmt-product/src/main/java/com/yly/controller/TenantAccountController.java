@@ -1,8 +1,8 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -147,7 +147,7 @@ public class TenantAccountController extends BaseController
   {
     TenantUser tenantUser=tenantUserService.find(tenantUserID);
     Role role =roleService.find (roleID);
-    Set<Role> roleSet = new HashSet<Role> ();
+    List<Role> roleSet = new ArrayList<Role> ();
     roleSet.add (role);
     tenantAccount.setTenantUser(tenantUser);
     tenantAccount.setIsSystem (false);

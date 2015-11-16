@@ -47,7 +47,7 @@
 	    	<tr>
 	    		<th>${message("yly.tenantAccount.staffID")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-textbox" name="staffID" id= "staffID"  data-options="required:true"/>
+	    			 <input type="text" class="easyui-textbox" name="staffID" id= "staffID"   data-options="required:true"/>
 	    		</td>
 	    		<th>${message("yly.tenantAccount.userName")}:</th>
 	    		<td>
