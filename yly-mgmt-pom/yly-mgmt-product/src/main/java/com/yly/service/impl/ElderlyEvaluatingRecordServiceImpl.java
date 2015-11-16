@@ -1,5 +1,6 @@
 package com.yly.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -86,7 +87,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     for (EvaluatingSection evaluatingSection : evaluatingSections) {
       sectionScoreMap.put(evaluatingSection.getSectionName(), 0);
     }
-    Set<EvaluatingItemsAnswer> evaluatingItemsAnswers = elderlyEvaluatingRecord.getEvaluatingItemsAnswers();
+    List<EvaluatingItemsAnswer> evaluatingItemsAnswers = elderlyEvaluatingRecord.getEvaluatingItemsAnswers();
     for (EvaluatingItemsAnswer evaluatingItemsAnswer : evaluatingItemsAnswers) {
       EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsAnswer.getEvaluatingItemsOptions();
       if (evaluatingItemsOptions != null && evaluatingItemsOptions.getEvaluatingItems() != null
@@ -97,7 +98,106 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     }
     return sectionScoreMap;
   }
-  
+  /**
+   * 返回单个模块等级
+   */
+  @Override
+  public Integer getSectionLevel(String sectionName, String answerScores) {
+    int level = -1;
+    String[] answerScoreArray = answerScores.split(";;;;");//字符串比如：    "意识水平::::1;;;;视力::::1;;;;听力::::2;;;;沟通交流::::3"
+    /*
+     * 日常生活活动分级 
+     * 0能力完好：总分100分 
+     * 1轻度受损：总分65-95分 
+     * 2中度受损：总分45-60分 
+     * 3重度受损：总分≤40分
+     */
+    int totalScore = 0;
+    for (String answerScore : answerScoreArray) {
+      totalScore += Integer.parseInt(answerScore.split("::::")[1]);
+    }
+      if (sectionName.equals("日常生活活动")) {
+        if (totalScore == 100) level = 0;
+        if (totalScore >= 65 && totalScore <= 95) level = 1;
+        if (totalScore >= 45 && totalScore <= 60) level = 2;
+        if (totalScore <= 40) level = 3;
+      }
+    /*
+     * 精神状态分级
+     *  0能力完好：总分为0分 
+     *  1轻度受损：总分为1分 
+     *  2中度受损：总分2-3分 
+     *  3重度受损：总分4-6分
+     */           
+      if (sectionName.equals("精神状态")) {
+        if (totalScore == 0) level = 0;
+        if (totalScore == 1) level = 1;
+        if (totalScore == 2 || totalScore == 3) level = 2;
+        if (totalScore >= 4 && totalScore <= 6) level = 3;
+      }
+    /*
+     * 社会参与分级 
+     * 0能力完好：总分为0-2分 
+     * 1轻度受损：总分为3-7分 
+     * 2中度受损：总分8-13分 
+     * 3重度受损：总分14-20分
+     */           
+      if (sectionName.equals("社会参与")) {
+        if (totalScore >= 0 && totalScore <= 2) level = 0;
+        if (totalScore >= 3 && totalScore <= 7) level = 1;
+        if (totalScore >= 8 && totalScore <= 13) level = 2;
+        if (totalScore >= 14 && totalScore <= 20)level = 3;
+      }  
+      /*
+       * 感知觉与沟通分级
+       * 0能力完好：意识清醒，且视力和听力评为0或1，沟通评为0 
+       * 1轻度受损：意识清醒，但视力或听力中至少一项评为2，或沟通评为1
+       * 2中度受损：意识清醒，但视力或听力中至少一项评为3，或沟通评为2；或嗜睡，视力或听力评定为3及以下，沟通评定为2及以下
+       * 3重度受损：意识清醒或嗜睡，但视力或听力中至少一项评为4，或沟通评为3；或昏睡/昏迷
+       */
+    if (sectionName.equals("感知觉与沟通")) {      
+      int consciousness = -1, eyesight = -1, hearing = -1, communication = -1;//分别记录 意识 视力 听力 沟通 四个小项目的得分  
+      for (String answerScore : answerScoreArray) {
+        String itemName = answerScore.split("::::")[0];
+        int itemScore = Integer.parseInt(answerScore.split("::::")[1]);
+        if (itemName.contains("意识")) consciousness = itemScore;
+        if (itemName.contains("听力")) eyesight = itemScore;
+        if (itemName.contains("视力")) hearing = itemScore;
+        if (itemName.contains("沟通")) communication = itemScore;
+      }
+      if (consciousness >= 0 && eyesight >= 0 && hearing >=0 && communication>= 0) {
+        /*
+         * 意识清醒，且视力和听力评为0或1，沟通评为0
+         */
+        if (consciousness == 0 && (eyesight == 0 || eyesight == 1) && (hearing == 0 || hearing == 1) && communication == 0) {
+          level = 0;
+        }
+        /*
+         * 意识清醒，但视力或听力中至少一项评为2，或沟通评为1
+         */
+        if (consciousness == 0 && (eyesight == 2 || hearing == 2 || communication == 1)) {
+          level = 1;
+        }
+        /*
+         * 意识清醒，但视力或听力中至少一项评为3，或沟通评为2；
+         * 或嗜睡，视力或听力评定为3及以下，沟通评定为2及以下
+         */
+        if ((consciousness == 0 && (eyesight == 3 || hearing == 3 || communication == 2)) 
+            || (consciousness == 1 && (eyesight <= 3 || hearing <= 3) && communication <= 2)) {
+          level = 2;
+        }
+        /*
+         * 意识清醒或嗜睡，但视力或听力中至少一项评为4，或沟通评为3；
+         * 或昏睡/昏迷
+         */
+        if (((consciousness == 0 || consciousness == 1) && (eyesight == 4 || hearing == 4 || communication == 3))
+            || consciousness >= 2) {
+          level = 3;
+        }
+      }
+    }          
+    return level;
+  }
   /**
    * @return 返回每个模块对应级别  
    * 备注 该方法判定每个模块的级别的规则是hardcode，并不适应于每个租户个性胡自定义的评估表(后期有待讨论)
@@ -108,7 +208,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     for (EvaluatingSection evaluatingSection : evaluatingSections) {
       sectionLevelMap.put(evaluatingSection.getSectionName(), -1);
     }
-    Set<EvaluatingItemsAnswer> evaluatingItemsAnswers = elderlyEvaluatingRecord.getEvaluatingItemsAnswers();
+    List<EvaluatingItemsAnswer> evaluatingItemsAnswers = elderlyEvaluatingRecord.getEvaluatingItemsAnswers();
     Iterator entries = sectionScoreMap.entrySet().iterator();          
     while (entries.hasNext()) {  
         Map.Entry entry = (Map.Entry) entries.next(); 
@@ -122,7 +222,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
         
       if (entry.getKey().toString().equals("感知觉与沟通")) {
         //获取 感知与沟通 模块下面的所有answers (Perception and communication) 缩小遍历范围(长度为4,感知与沟通模块下面只有四个小评估项目)
-        Set<EvaluatingItemsAnswer> answersForPerCom = new HashSet<EvaluatingItemsAnswer>();//用于存放 感知与沟通 模块下面的所有answers(长度为4)
+        List<EvaluatingItemsAnswer> answersForPerCom = new ArrayList<EvaluatingItemsAnswer>();//用于存放 感知与沟通 模块下面的所有answers(长度为4)
         for (EvaluatingItemsAnswer evaluatingItemsAnswer : evaluatingItemsAnswers) {
           EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsAnswer.getEvaluatingItemsOptions();
           if (evaluatingItemsOptions != null && evaluatingItemsOptions.getEvaluatingItems() != null
@@ -170,7 +270,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
            * 或昏睡/昏迷
            */
           if (((consciousness == 0 || consciousness == 1) && (eyesight == 4 || hearing == 4 || communication == 3))
-              || consciousness <= 2) {
+              || consciousness >= 2) {
             sectionLevelMap.replace(entry.getKey().toString(), 3);
           }
         }
@@ -264,19 +364,36 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   public String getFormScoreRule(){
     StringBuffer formScoreRule = new StringBuffer();
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;注：老年人能力初步等级划分标准<p/>");
-    formScoreRule.append("0 能力完好：<p/>");
+    formScoreRule.append("<font color='green'> 0 能力完好：<p/></font>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动、精神状态、感知觉与沟通分级均为0，社会参与的分级为0或1。<p/>");
-    formScoreRule.append("1 轻度失能：<p/>");
+    formScoreRule.append("<font color='orange'> 1 轻度失能：<p/></font>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动分级为0，但精神状态、感知觉与沟通中至少一项分级为1以上，或社会参与的分级为2；<p/>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为1，精神状态、感知觉与沟通、社会参与中至少有一项的分级为0或1。<p/>");
-    formScoreRule.append("2 中度失能：<p/>");
+    formScoreRule.append("<font color='#cc6600'> 2 中度失能：<p/></font>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动分级为1，但精神状态、感知觉与沟通、社会参与均为2，或有一项为3；<p/>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中有1-2项的分级为1或2。<p/>");
-    formScoreRule.append("3 重度失能：<p/>");
+    formScoreRule.append("<font color='red'> 3 重度失能：<p/></font>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动的分级为3；<p/>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动、精神状态、感知觉与沟通、社会参与分级均为2；<p/>");
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中至少有一项分级为3。<p/>");
     return formScoreRule.toString();
+  }
+  /**
+   * 解析每个模块对应等级的字符串，并调用getFormPrimaryLevel返回评估表等级
+   */
+  @Override
+  public String getFormLevel(String sectionLevels) {//日常生活活动::::1;;;;精神状态::::2;;;;
+    String formLevel = "";
+    Map<String,Integer> sectionLevelMap = new HashMap<String, Integer>();
+    String[] sectionLevelArray = sectionLevels.split(";;;;");
+    for (int i = 0; i < sectionLevelArray.length; i++) {
+      String[] sectionName_Level = sectionLevelArray[i].split("::::");
+      sectionLevelMap.put(sectionName_Level[0], Integer.parseInt(sectionName_Level[1]));
+    }
+    if (sectionLevelMap.size() > 0) {
+      formLevel = getFormPrimaryLevel(sectionLevelMap);
+    }
+    return formLevel;
   }
   /**
    * 根据每个模块对应等级，返回整个评估表的等级
@@ -379,4 +496,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       return false;
     }
   }
+
+
+
 }

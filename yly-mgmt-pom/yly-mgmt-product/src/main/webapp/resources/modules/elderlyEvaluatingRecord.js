@@ -1,54 +1,39 @@
 var elderlyEvaluating_manager_tool = {
 			add:function(){
-				$('#addElderlyEvent').dialog({    
-				    title: message("yly.elderly.event.add"),    
-				    width: 500,    
-				    height: 350,
+				$('#addEvaluating').dialog({    
+				    title: "添加入院评估",    
+				    width: 1250,    
+				    height: 850,
 				    iconCls:'icon-mini-add',
 				    modal:true,
-				    cache: false, 
-				    buttons:[{
-				    	text:message("yly.common.save"),
-				    	iconCls:'icon-save',
-				    	handler:function(){
-							var validate = $('#addElderlyEvent_form').form('validate');
-							if(validate){								
-								$.ajax({
-									url:"../elderlyEventRecord/add.jhtml",
-									type:"post",
-									data:$("#addElderlyEvent_form").serialize(),
-									beforeSend:function(){
-										$.messager.progress({
-											text:message("yly.common.saving")
-										});
-									},
-									success:function(result,response,status){
-										$.messager.progress('close');
-										showSuccessMsg(result.content);
-										$('#addElderlyEvent').dialog("close");
-										$("#event-table-list").datagrid('reload');
-									},
-									error:function (XMLHttpRequest, textStatus, errorThrown) {
-										$.messager.progress('close');
-										alertErrorMsg();
-									}
-								});
-							};
-						}
-					},{
-						text:message("yly.common.cancel"),
-						iconCls:'icon-cancel',
-						handler:function(){
-							 $('#addElderlyEvent').dialog("close");
-						}
-				    }],
+				    href:'../elderlyEvaluatingRecord/addEvaluating.jhtml',
 				    onOpen:function(){
-				    	$('#addElderlyEvent_form').show();
+				    	//$('#addElderlyEvent_form').show();
 				    },
 				    onClose:function(){
 				    	 $('#addElderlyEvent_form').form('reset');
 				    }
 				});
+			},
+			remove:function(){
+					listRemove('elderlyEvaluating-table-list','../elderlyEvaluatingRecord/delete.jhtml');
+			},
+			edit:function(){
+
+				var _edit_row = $('#elderlyEvaluating-table-list').datagrid('getSelected');
+				if( _edit_row == null ){
+					$.messager.alert(message("yly.common.prompt"),message("yly.common.select.editRow"),'warning');  
+					return false;
+				}
+				var _dialog = $('#editEvaluating').dialog({    
+				    title: "编辑入院评估记录",     
+				    width: 1250,    
+				    height: 850,    
+				    modal: true,
+				    iconCls:'icon-mini-edit',
+				    href:'../elderlyEvaluatingRecord/edit.jhtml?id='+_edit_row.id
+				});  
+			
 			}
 }
 $(function(){
@@ -61,18 +46,18 @@ $(function(){
 		loadMsg:message("yly.common.loading"),
 		striped:true,
 		onDblClickRow : function (rowIndex, rowData){
-			$('#editEvaluating').dialog({    
+			$('#listEvaluating').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 800,    
 			    height: 800, 
 			    cache: false,
 			    modal: true,
-			    href:'../elderlyEvaluatingRecord/detail.jhtml?id='+rowData.id+'&handle=view',
+			    href:'../elderlyEvaluatingRecord/view.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.close"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#editEvaluating').dialog("close");
+						 $('#listEvaluating').dialog("close");
 					}
 			    }]
 			});   
@@ -121,9 +106,13 @@ $(function(){
 		})
 })
 function formatLongString(str,len){
-	if(str.length > len){
-		return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
-	}else{
-		return str;
-	}	
+	if(str != null && str!=""&& len > 0){
+		if(str.length > len){
+			return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
+		}else{
+			return str;
+		}	
+	}
+	return "";
 }
+

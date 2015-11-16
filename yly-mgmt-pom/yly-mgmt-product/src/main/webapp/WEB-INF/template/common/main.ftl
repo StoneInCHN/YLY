@@ -21,6 +21,7 @@
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/newAlbum_style.css" >
  	<link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/_shared/css/style.css">
     <link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/connected-carousels/jcarousel.connected-carousels.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/css/evaluting.css">
   </head>
 
   <body class="easyui-layout">   
@@ -195,6 +196,7 @@
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
     <script src="${base}/resources/js/editor.js"></script>
 	<script src="${base}/resources/js/kindeditor/kindeditor.js"></script>
+    <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>
 	<script>
 		var BASE_URL = '${base}/resources' ;
 	</script>

@@ -47,4 +47,15 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @return 根据每个模块对应等级，返回整个评估表的等级
    */
   String getFormPrimaryLevel(Map<String,Integer> sectionLevelMap);
+  /**
+   * @param sectionName
+   * @param answerScores
+   * @return 返回单个模块等级
+   */
+  Integer getSectionLevel(String sectionName, String answerScores);
+  /**
+   * @param sectionLevels
+   * @return 返回整个评估表的等级
+   */
+  String getFormLevel(String sectionLevels);
 }

@@ -1290,5 +1290,9 @@ public class CommonEnum {
      * 入院办理(已出账单未交费)
      */
     IN_PROGRESS_CHECKIN_BILL,
+    /**
+     * 通过入院评估
+     */
+    IN_PROGRESS_EVALUATING,
   }
 }

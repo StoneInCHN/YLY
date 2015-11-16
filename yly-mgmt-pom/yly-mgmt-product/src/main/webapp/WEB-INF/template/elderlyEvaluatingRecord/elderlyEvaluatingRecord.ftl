@@ -24,12 +24,11 @@
 	    </div>
 	  </fieldset>
 </div>
-<div id="elderlyevent_manager_tool">
+<div id="elderlyEvaluating_manager_tool">
 	<div class="tool-button">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="elderlyEvaluating.add();">${message("yly.button.add")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="elderlyEvaluating.edit();">${message("yly.button.update")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="elderlyEvaluating.remove();">${message("yly.button.delete")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true">导出</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="elderlyEvaluating_manager_tool.add();">${message("yly.button.add")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="elderlyEvaluating_manager_tool.edit();">${message("yly.button.update")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="elderlyEvaluating_manager_tool.remove();">${message("yly.button.delete")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
@@ -67,7 +66,9 @@
 	</form>
 </div>
 <div id="editEvaluating"></div>  
+<div id="addEvaluating"></div>  
 <div id="showEvaluating"></div> 
+<div id="listEvaluating"></div>
 
 
 

@@ -1,6 +1,8 @@
 package com.yly.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -67,7 +69,13 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   
   private EvaluatingForm evaluatingForm;
 
-  private Set<EvaluatingItemsAnswer> evaluatingItemsAnswers = new HashSet<EvaluatingItemsAnswer>();
+  private List<EvaluatingItemsAnswer> evaluatingItemsAnswers = new ArrayList<EvaluatingItemsAnswer>();
+  
+  /**
+   * 每个模块总分和等级
+   * 保存为字符串 如  --> "日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级;"
+   */
+  private String sectionsResult;  
   
   @JsonProperty
   public EvaluatingReason getEvaluatingReason() {
@@ -85,20 +93,31 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
 
   public void setEvaluatingResult(String evaluatingResult) {
     this.evaluatingResult = evaluatingResult;
-  }
-  @JsonProperty
-  @OneToMany(mappedBy = "elderlyEvaluatingRecord", fetch = FetchType.LAZY)
-  public Set<EvaluatingItemsAnswer> getEvaluatingItemsAnswers() {
-    return evaluatingItemsAnswers;
+  }  
+  
+  @JsonProperty  
+  @Column(length = 300)
+  public String getSectionsResult() {
+    return sectionsResult;
   }
 
-  public void setEvaluatingItemsAnswers(Set<EvaluatingItemsAnswer> evaluatingItemsAnswers) {
-    this.evaluatingItemsAnswers = evaluatingItemsAnswers;
+  public void setSectionsResult(String sectionsResult) {
+    this.sectionsResult = sectionsResult;
   }
+
   @JsonProperty
   @Column(length = 15)
   public String getOperator() {
     return operator;
+  }
+  @JsonProperty
+  @OneToMany(mappedBy = "elderlyEvaluatingRecord", fetch = FetchType.LAZY)
+  public List<EvaluatingItemsAnswer> getEvaluatingItemsAnswers() {
+    return evaluatingItemsAnswers;
+  }
+
+  public void setEvaluatingItemsAnswers(List<EvaluatingItemsAnswer> evaluatingItemsAnswers) {
+    this.evaluatingItemsAnswers = evaluatingItemsAnswers;
   }
 
   public void setOperator(String operator) {

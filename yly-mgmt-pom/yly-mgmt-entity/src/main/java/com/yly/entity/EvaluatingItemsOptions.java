@@ -1,6 +1,8 @@
 package com.yly.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -32,8 +34,8 @@ public class EvaluatingItemsOptions extends BaseEntity{
    */
   private EvaluatingItemOptions evaluatingItemOptions;
   
-  private Set<EvaluatingItemsAnswer> evaluatingItemsAnswers = new HashSet<EvaluatingItemsAnswer>();
-  
+  //private Set<EvaluatingItemsAnswer> evaluatingItemsAnswers = new HashSet<EvaluatingItemsAnswer>();
+  private List<EvaluatingItemsAnswer> evaluatingItemsAnswers = new ArrayList<EvaluatingItemsAnswer>();
   /**
    * 每个选项的分值
    */
@@ -58,11 +60,11 @@ public class EvaluatingItemsOptions extends BaseEntity{
   }
 
   @OneToMany(mappedBy = "evaluatingItemsOptions",fetch = FetchType.LAZY)
-  public Set<EvaluatingItemsAnswer> getEvaluatingItemsAnswers() {
+  public List<EvaluatingItemsAnswer> getEvaluatingItemsAnswers() {
     return evaluatingItemsAnswers;
   }
 
-  public void setEvaluatingItemsAnswers(Set<EvaluatingItemsAnswer> evaluatingItemsAnswers) {
+  public void setEvaluatingItemsAnswers(List<EvaluatingItemsAnswer> evaluatingItemsAnswers) {
     this.evaluatingItemsAnswers = evaluatingItemsAnswers;
   }
 
