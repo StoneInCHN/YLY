@@ -242,7 +242,6 @@ function searchElderlyInfo(id) {
 }
 //查询用户
 function searchTenantUser(id){
-	alert(id);
 	$('#searchTenantUser').dialog({    
 	    title: message("yly.tenantUser.search"),    
 	    width: 1000,
@@ -270,7 +269,6 @@ function searchTenantUser(id){
 	    	 striped:true,
 	    	 onDblClickRow : function (rowIndex, rowData){
 	    		 $("#"+id+"ID").val(rowData.id);
-	    		 alert("id"+ " "+rowData.realName)
 	    		 $("#"+id).textbox('setValue',rowData.realName);
 	    		 if($("#identifier")){
 	    			 $("#identifier").val(rowData.identifier);
@@ -321,6 +319,64 @@ function searchTenantUser(id){
 	  	})
 	    }
 	});  
+
+}
+function searchRoles(id){
+	alert(id);
+	$('#searchRoles').dialog({    
+	    title: message("yly.role.search"),    
+	    width: 1000,
+	    height: 500,
+	    modal:true,
+	    cache: false,   
+	    href:'../role/commonRolesSearch.jhtml',
+	    buttons:[{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#searchRoles').dialog("close");
+			}
+	    }],
+	    onLoad:function(){
+	    	/**
+	    	 * 此datagrid 用户展示老人数据,并且提供查询功能
+	    	 */
+	    	$("#common-roles-table-list").datagrid({
+	    	 title:message("yly.elderlyinfo"),
+	    	 fitColumns:true,
+	    	 url:'../role/list.jhtml',  
+	    	 pagination:true,
+	    	 loadMsg:message("yly.common.loading"),
+	    	 striped:true,
+	    	 onDblClickRow : function (rowIndex, rowData){
+	    		 $("#"+id+"ID").val(rowData.id);
+	    		 $("#"+id).textbox('setValue',rowData.name);
+	    		 if($("#identifier")){
+	    			 $("#identifier").val(rowData.identifier);
+	    		 }
+	    		 $('#searchRoles').dialog("close");
+	    	 },
+	    	 columns:[
+	    	    [
+				 {title:message("yly.role.name"),field:"name",width:20,align:'center',formatter:function(value,row,index){
+		    	  return row.name;
+		      }},
+		      {title:message("yly.role.description"),field:"description",width:80,align:'center',formatter:function(value,row,index){
+		    	  return row.description;
+		      }}
+	    	    ]
+	    	 ]
+
+	    	});
+	    	
+	    	$("#common_elderlyinfo_search_btn").click(function(){
+	  		  var _queryParams = $("#common_elderlyinfo_search_form").serializeJSON();
+	  		  $('#common_elderlyInfoSearch-table-list').datagrid('options').queryParams = _queryParams;  
+	  		  $("#common_elderlyInfoSearch-table-list").datagrid('reload');
+	  	})
+	    }
+	});  
+
 
 }
 function formReset(formId,tableId){

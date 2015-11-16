@@ -176,6 +176,7 @@
     <div id="searchElderlyInfo"></div>
     <div id="searchAlbum"></div>
     <div id="searchTenantUser"></div>
+    <div id="searchRoles"></div>
     
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->

@@ -56,7 +56,11 @@ public class RoleController extends BaseController {
   public String list(ModelMap model) {
     return "/role/role";
   }
-
+  
+  @RequestMapping(value = "/commonRolesSearch", method = RequestMethod.GET)
+  public String commonRolesSearch(ModelMap model) {
+    return "/common/commonRolesSearch";
+  }
   /**
    * 列表
    * 

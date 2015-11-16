@@ -41,12 +41,17 @@
 </div>
 <div id="addTenantAccount"> 
 	<form id="addTenantAccount_form" method="post" class="form-table">
-	<input type="hidden" name="tenantUserID" id="addTenantAccountUserID">  
+	<input type="hidden" name="tenantUserID" id="addTenantAccountUserID">
+	<input type="hidden" name="roleID" id="addTenantAccountRoleID">  
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>${message("yly.tenantAccount.staffID")}:</th>
 	    		<td>
 	    			 <input type="text" class="easyui-textbox" name="staffID" id= "staffID"  data-options="required:true"/>
+	    		</td>
+	    		<th>${message("yly.tenantAccount.userName")}:</th>
+	    		<td>
+	    			 <input type="text" class="easyui-textbox" name="userName" id= "userName"  data-options="required:true"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -71,11 +76,14 @@
 	    		<td>
 	    			<a href="#" id="tenant_user_search_btn" class="easyui-linkbutton" onclick="searchTenantUser('addTenantAccountUser')" iconCls="icon-search" plain=true"></a>
 	    		</td>
-	    		<!--<th>${message("yly.tenantAccount.role")}:</th>
+	    		<th>${message("yly.tenantAccount.role")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-textbox" name="role" id= "role"  />
+	    			 <input type="text" class="easyui-textbox" name="addTenantAccountRole" id= "addTenantAccountRole"  />
 	    		</td>
-	    	</tr>-->
+	    		<td>
+	    			<a href="#" id="role_search_btn" class="easyui-linkbutton" onclick="searchRoles('addTenantAccountRole')" iconCls="icon-search" plain=true"></a>
+	    		</td>
+	    	</tr>
 	    </table>
 	</form>
 </div>

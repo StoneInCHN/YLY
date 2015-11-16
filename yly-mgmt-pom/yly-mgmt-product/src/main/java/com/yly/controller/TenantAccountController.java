@@ -1,6 +1,8 @@
 package com.yly.controller;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -24,11 +26,13 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.Role;
 import com.yly.entity.TenantAccount;
 import com.yly.entity.TenantUser;
 import com.yly.entity.commonenum.CommonEnum.AccountStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.RoleService;
 import com.yly.service.TenantAccountService;
 import com.yly.service.TenantUserService;
 import com.yly.utils.DateTimeUtils;
@@ -47,6 +51,8 @@ public class TenantAccountController extends BaseController
   private TenantAccountService tenantAccountService;
   @Resource (name = "tenantUserServiceImpl")
   private TenantUserService tenantUserService;
+  @Resource(name = "roleServiceImpl")
+  private RoleService roleService;
   
   @RequestMapping (value = "/tenantAccount", method = RequestMethod.GET)
   public String list (ModelMap model)
@@ -137,11 +143,15 @@ public class TenantAccountController extends BaseController
   }
 
   @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add (TenantAccount tenantAccount,Long tenantUserID)
+  public @ResponseBody Message add (TenantAccount tenantAccount,Long tenantUserID,Long roleID)
   {
-	TenantUser tenantUser=tenantUserService.find(tenantUserID);
-	
-	tenantAccount.setTenantUser(tenantUser);
+    TenantUser tenantUser=tenantUserService.find(tenantUserID);
+    Role role =roleService.find (roleID);
+    Set<Role> roleSet = new HashSet<Role> ();
+    roleSet.add (role);
+    tenantAccount.setTenantUser(tenantUser);
+    tenantAccount.setIsSystem (false);
+    tenantAccount.setRoles (roleSet);
     tenantAccountService.save (tenantAccount,true);
     return SUCCESS_MESSAGE;
   }
