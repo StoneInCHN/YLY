@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 
@@ -43,6 +44,11 @@ public class PhysicalExaminationItemConfig extends BaseEntity {
    */
   private Integer configOrder;
 
+  /**
+   * 是否启用
+   */
+  private Boolean isEnable;
+  
   public Integer getConfigOrder() {
     return configOrder;
   }
@@ -60,6 +66,7 @@ public class PhysicalExaminationItemConfig extends BaseEntity {
   }
 
   @Column(length = 20)
+  @JsonProperty
   public String getConfigValue() {
     return configValue;
   }
@@ -76,5 +83,15 @@ public class PhysicalExaminationItemConfig extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
+  @JsonProperty
+  public Boolean getIsEnable ()
+  {
+    return isEnable;
+  }
 
+  public void setIsEnable (Boolean isEnable)
+  {
+    this.isEnable = isEnable;
+  }
+  
 }

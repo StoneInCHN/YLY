@@ -393,7 +393,11 @@ var messages = {
 	"yly.tenantAccount.loginIp":"最后登录IP",
 	"yly.tenantAccount.active":"账号正常",
 	"yly.tenantAccount.list":"用户列表",
-	"yly.tenantAccount.locked":"账号锁定"
+	"yly.tenantAccount.locked":"账号锁定",
+	//体检项配置
+	"yly.physicalExaminationItemConfig.list":"体检项列表",
+	"yly.physicalExaminationItemConfig.isEnable":"是否启用",
+	"yly.physicalExaminationItemConfig.name":"体检项名称"
 };
 //多语言
 function message(code) {

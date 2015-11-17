@@ -118,6 +118,7 @@
 		    		<li><a href="#" data-url="${base}/console/tenantAccount/tenantAccount.jhtml">用户管理</a></li>
 		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">权限角色管理</a></li>
 		    		<li><a href="#">数据字典</a></li>
+		    		<li><a href="#" data-url="${base}/console/physicalExaminationItemConfig/physicalExaminationItemConfig.jhtml">体检项配置</a></li>
 		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">

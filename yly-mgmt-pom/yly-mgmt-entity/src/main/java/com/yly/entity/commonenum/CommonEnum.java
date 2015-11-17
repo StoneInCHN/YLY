@@ -258,7 +258,11 @@ public class CommonEnum {
     /**
      * 调账原因（调钱）,11
      */
-    ADJUSTMENTCAUSE
+    ADJUSTMENTCAUSE,
+    /**
+     * 体检配置项,12
+     */
+    PHYSICALEXAMITEM
   }
   
   /**
