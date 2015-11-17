@@ -6,11 +6,11 @@ import javax.annotation.Resource;
 
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
-import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,10 +24,15 @@ import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.PhysicalExamination;
+import com.yly.entity.PhysicalExaminationItemConfig;
+import com.yly.entity.PhysicalExaminationItems;
+import com.yly.entity.TenantAccount;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
+import com.yly.service.PhysicalExaminationItemConfigService;
 import com.yly.service.PhysicalExaminationService;
+import com.yly.service.TenantAccountService;
 import com.yly.utils.DateTimeUtils;
 
 /**
@@ -44,7 +49,10 @@ public class PhysicalExaminationController extends BaseController
   private PhysicalExaminationService physicalExaminationService;
   @Resource(name="elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
-
+  @Resource (name = "physicalExaminationItemConfigServiceImpl")
+  private PhysicalExaminationItemConfigService physicalExaminationItemConfigService;
+  @Resource(name="tenantAccountServiceImpl")
+  private TenantAccountService tenantAccountService;
   @RequestMapping (value = "/physicalExamination", method = RequestMethod.GET)
   public String list (ModelMap model)
   {
@@ -52,7 +60,7 @@ public class PhysicalExaminationController extends BaseController
   }
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<PhysicalExamination> list (String name,Date beginDate, Date endDate, 
+  public @ResponseBody Page<PhysicalExamination> list (String elderlyInfoName,String operatorName,Date beginDate, Date endDate, 
       Pageable pageable, ModelMap model
       )
   {
@@ -63,9 +71,13 @@ public class PhysicalExaminationController extends BaseController
     analyzer.setMaxWordLength (true);
     BooleanQuery query = new BooleanQuery ();
 
-    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "elderlyInfo.name",
+    QueryParser elderlyInfoNameParser = new QueryParser (Version.LUCENE_35, "elderlyInfo.name",
         analyzer);
-    Query nameQuery = null;
+    
+    QueryParser operateNameParser = new QueryParser (Version.LUCENE_35, "operator.realName",
+        analyzer);
+    Query elderlyInfoNameQuery = null;
+    Query operateNameQuery = null;
     TermRangeQuery rangeQuery = null;
     Filter filter = null;
     if (beginDate != null)
@@ -76,18 +88,18 @@ public class PhysicalExaminationController extends BaseController
     {
       endDateStr = DateTimeUtils.convertDateToString (endDate, null);
     }
-    if (name != null)
+    if (elderlyInfoName != null)
     {
-      String text = QueryParser.escape (name);
+      String text = QueryParser.escape (elderlyInfoName);
         try
         {
-          nameQuery = nameParser.parse (text);
-          query.add (nameQuery, Occur.MUST);
+          elderlyInfoNameQuery = elderlyInfoNameParser.parse (text);
+          query.add (elderlyInfoNameQuery, Occur.MUST);
           
           if (LogUtil.isDebugEnabled (FixedAssetsController.class))
           {
-            LogUtil.debug (FixedAssetsController.class, "search", "Search assetName: "
-                + name );
+            LogUtil.debug (FixedAssetsController.class, "search", "Search elderlyInfoName: "
+                + elderlyInfoName );
           }
         }
         catch (ParseException e)
@@ -96,7 +108,26 @@ public class PhysicalExaminationController extends BaseController
         }
         
     }
-    
+    if (operatorName != null)
+    {
+      String text = QueryParser.escape (operatorName);
+        try
+        {
+          operateNameQuery = operateNameParser.parse (text);
+          query.add (operateNameQuery, Occur.MUST);
+          
+          if (LogUtil.isDebugEnabled (FixedAssetsController.class))
+          {
+            LogUtil.debug (FixedAssetsController.class, "search", "Search operatorName: "
+                + operatorName );
+          }
+        }
+        catch (ParseException e)
+        {
+          e.printStackTrace();
+        }
+        
+    }
     if (startDateStr != null || endDateStr != null)
     {
       rangeQuery = new TermRangeQuery ("createDate", startDateStr, endDateStr, true, true);
@@ -108,7 +139,7 @@ public class PhysicalExaminationController extends BaseController
             +" end date: "+endDateStr);
       }
     }
-    if (nameQuery != null || rangeQuery != null)
+    if (elderlyInfoNameQuery != null || rangeQuery != null || operateNameQuery != null)
     {
       return physicalExaminationService.search (query, pageable, analyzer,filter);
     }
@@ -133,6 +164,18 @@ public class PhysicalExaminationController extends BaseController
   public @ResponseBody Message add (PhysicalExamination physicalExamination,Long elderlyInfoID)
   {
     ElderlyInfo elderlyInfo= elderlyInfoService.find (elderlyInfoID);
+    if (physicalExamination.getPhysicalExaminationItems () != null 
+        && !physicalExamination.getPhysicalExaminationItems ().isEmpty ())
+    {
+      for (PhysicalExaminationItems item: physicalExamination.getPhysicalExaminationItems ())
+      {
+        PhysicalExaminationItemConfig itemConfig=physicalExaminationItemConfigService.find (item.getPhysicalExaminationItem ().getId ());
+        item.setPhysicalExaminationItem (itemConfig);
+        item.setPhysicalExamination (physicalExamination);
+      }
+    }
+    TenantAccount account=tenantAccountService.getCurrent ();
+    physicalExamination.setOperator (account.getTenantUser ());
     physicalExamination.setElderlyInfo (elderlyInfo);
     physicalExaminationService.save (physicalExamination,true);
     return SUCCESS_MESSAGE;

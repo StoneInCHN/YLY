@@ -3,11 +3,15 @@
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
-	    <legend>${message("yly.fixedAssets.search")}</legend>
+	    <legend>${message("yly.physicalExamination.search")}</legend>
 	    <form id="physicalExamination-search-form" class="search-form">
 	    	<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
-			    <input type="text" class="easyui-textbox" id="name" name="name" />
+			    <input type="text" class="easyui-textbox" id="elderlyInfoName" name="elderlyInfoName" />
+			</div>
+			<div class="search-item">
+			    <label> ${message("yly.physicalExamination.operator")}:</label>
+			    <input type="text" class="easyui-textbox" id="operatorName" name="operatorName" />
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.physicalExamination.physicalExaminationDate")}:</label>
@@ -35,7 +39,7 @@
 <div id="addPhysicalExamination"> 
 	<form id="addPhysicalExamination_form" method="post" class="form-table">
 		<input type="hidden" name="elderlyInfoID" id="addPhysicalExamination_elderlyInfoID">   
-	    <table class="table table-striped"  border="0">
+	    <table id="addPhysicalExamination-table-list" class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}:</th>
 	    		<td>
@@ -47,9 +51,15 @@
 	    			 <input type="text" class="Wdate" id="physicalExaminationDate" name="physicalExaminationDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>
 	    	</tr>
+	    	<tr>
+				<td colspan="9">
+					<a href="javascript:;" id="addPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml()"><i class="fa fa-plus-square-o fa-2x"></i></a>
+				</td>
+			</tr>
 	    </table>
 	</form>
 </div>
+<div id ="physicalExaminationItemsList"></div>
 <div id="editPhysicalExamination"></div>
 <div id="physicalExaminationDetail"></div>
 

@@ -397,7 +397,10 @@ var messages = {
 	//体检项配置
 	"yly.physicalExaminationItemConfig.list":"体检项列表",
 	"yly.physicalExaminationItemConfig.isEnable":"是否启用",
-	"yly.physicalExaminationItemConfig.name":"体检项名称"
+	"yly.physicalExaminationItemConfig.name":"体检项名称",
+	"yly.physicalExamination.list":"体检记录列表",
+	"yly.physicalExamination.add":"添加体检记录",
+	"yly.physicalExamination.operator":"录入人"
 };
 //多语言
 function message(code) {

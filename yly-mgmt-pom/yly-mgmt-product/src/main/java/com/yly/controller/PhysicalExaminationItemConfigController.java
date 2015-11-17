@@ -53,6 +53,11 @@ public class PhysicalExaminationItemConfigController extends BaseController
   {
     return "physicalExaminationItemConfig/physicalExaminationItemConfig";
   }
+  @RequestMapping (value = "/searchItems", method = RequestMethod.GET)
+  public String searchItems (ModelMap model)
+  {
+    return "physicalExaminationItemConfig/examItemsList";
+  }
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<PhysicalExaminationItemConfig> list (String name,Date beginDate, Date endDate, 

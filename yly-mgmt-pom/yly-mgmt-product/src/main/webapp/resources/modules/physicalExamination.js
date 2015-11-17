@@ -1,4 +1,60 @@
+physicalExamItemIndex = 0;
 var physicalExamination_manager_tool = {
+		searchPhysicalExaminationItem:function(id){
+			$('#physicalExaminationItemsList').dialog({    
+			    title: message("yly.physicalExaminationItemConfig.search"),    
+			    width: 1000,
+			    height: 500,
+			    modal:true,
+			    cache: false,   
+			    href:'../physicalExaminationItemConfig/physicalExaminationItemConfig.jhtml',
+			    buttons:[{
+					text:message("yly.common.cancel"),
+					iconCls:'icon-cancel',
+					handler:function(){
+						 $('#physicalExaminationItemsList').dialog("close");
+					}
+			    }],
+			    onLoad:function(){
+			    	$("#physicalExaminationItemConfig-table-list").datagrid({
+						title:message("yly.physicalExaminationItemConfig.list"),
+						fitColumns:true,
+						toolbar:"#physicalExaminationItemConfig_manager_tool",
+						url:'../physicalExaminationItemConfig/list.jhtml',
+						pagination:true,
+						loadMsg:message("yly.common.loading"),
+						striped:true,
+						onDblClickRow : function (rowIndex, rowData){
+							 $("#"+id+"ID").val(rowData.id);
+							 console.log( $("#"+id));
+							 console.log(rowData.configValue);
+				    		 $("#"+id).val(rowData.configValue);
+				    		 
+				    		 $('#physicalExaminationItemsList').dialog("close");   
+						},
+						columns:[
+						   [
+						      {field:'ck',checkbox:true},
+						      {title:message("yly.physicalExaminationItemConfig.name"),field:"configValue",width:100,sortable:true},
+						      {title:message("yly.physicalExaminationItemConfig.isEnable"),field:"isEnable",width:100,sortable:true,formatter: function(value,row,index){
+						    	  if(value){
+						    		  return message("yly.common.yes");
+						    	  } else{
+						    		  return message("yly.common.no");
+						    	  }
+						      }},
+						      {title:message("yly.common.createDate"),field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
+									return new Date(value).Format("yyyy-MM-dd");
+								}
+						      },
+						   ]
+						]
+
+					});
+			    }
+			});
+			
+		},
 			add:function(){
 				$('#addPhysicalExamination').dialog({
 				    title: message("yly.physicalExamination.add"),    
@@ -49,6 +105,7 @@ var physicalExamination_manager_tool = {
 				});  
 				
 			},
+			
 			edit:function(){
 				var _edit_row = $('#physicalExamination-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
@@ -100,13 +157,31 @@ var physicalExamination_manager_tool = {
 				});
 				$('#editPhysicalExamination_form').show();
 			},
+			addExamItemHtml:function(){
+				
+			var examItemMapHtml='<tr id="physicalExamItem'+physicalExamItemIndex+'">\
+				<th>体检项名称:<\/th>\
+				<td>\
+					<input class="easyui-textbox input_text_line " id="physicalExamItemsConfig'+physicalExamItemIndex+'" type="text" validtype="length[0,15]" style="width:60px;"\/>\
+					<input type="hidden" id="physicalExamItemsConfig'+physicalExamItemIndex+'ID" name="physicalExaminationItems['+physicalExamItemIndex+'].physicalExaminationItem.id" \/>\
+					<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem(\'physicalExamItemsConfig'+physicalExamItemIndex+'\')" iconCls="icon-search" plain=true">test</a>\
+				<\/td>\
+				<th>体检值:<\/th>\
+				<td>\
+					<input class="easyui-textbox input_text_line " type="text" name="physicalExaminationItems['+physicalExamItemIndex+'].physicalExaminationItemValue" style="width:15px;"\/>\
+				<\/td>\
+				<\/tr>';
+				
+				$("#addPhysicalExamination-table-list").append(examItemMapHtml);
+				physicalExamItemIndex++;
+			},
 			remove:function(){
 				listRemove('physicalExamination-table-list','../physicalExamination/delete.jhtml');
 			}
 	};
 $(function(){
 	$("#physicalExamination-table-list").datagrid({
-		title:message("yly.medicalRecord.list"),
+		title:message("yly.physicalExamination.list"),
 		fitColumns:true,
 		toolbar:"#physicalExamination_manager_tool",
 		url:'../physicalExamination/list.jhtml',  
@@ -136,6 +211,14 @@ $(function(){
 		      {title:message("yly.common.name"),field:"elderlyInfo",width:100,sortable:true,formatter:function(value,row,index){
 			    	if(value != null) { 
 			    	  return value.name;
+			      	}else{
+			      		return value;
+			      	}
+			      }
+		      },
+		      {title:message("yly.physicalExamination.operator"),field:"operator",width:100,sortable:true,formatter:function(value,row,index){
+			    	if(value != null) { 
+			    	  return value.realName;
 			      	}else{
 			      		return value;
 			      	}

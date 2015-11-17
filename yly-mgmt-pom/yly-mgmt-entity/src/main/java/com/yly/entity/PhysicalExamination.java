@@ -1,9 +1,10 @@
 package com.yly.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -58,7 +59,7 @@ public class PhysicalExamination extends BaseEntity {
    */
   private TenantUser operator;
   
-  private Set<PhysicalExaminationItems> physicalExaminationItems = new HashSet<PhysicalExaminationItems>();
+  private List<PhysicalExaminationItems> physicalExaminationItems = new ArrayList<PhysicalExaminationItems>();
 
   @Index(name = "physical_examination_tenantid")
   public Long getTenantID() {
@@ -90,6 +91,9 @@ public class PhysicalExamination extends BaseEntity {
     this.physicalExaminationDate = physicalExaminationDate;
   }
 
+  @ManyToOne(fetch=FetchType.LAZY)
+  @JsonProperty
+  @IndexedEmbedded
   public TenantUser getOperator() {
     return operator;
   }
@@ -98,12 +102,12 @@ public class PhysicalExamination extends BaseEntity {
     this.operator = operator;
   }
 
-  @OneToMany(mappedBy = "physicalExamination" , fetch = FetchType.LAZY)
-  public Set<PhysicalExaminationItems> getPhysicalExaminationItems() {
+  @OneToMany(mappedBy = "physicalExamination" , fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+  public List<PhysicalExaminationItems> getPhysicalExaminationItems() {
     return physicalExaminationItems;
   }
 
-  public void setPhysicalExaminationItems(Set<PhysicalExaminationItems> physicalExaminationItems) {
+  public void setPhysicalExaminationItems(List<PhysicalExaminationItems> physicalExaminationItems) {
     this.physicalExaminationItems = physicalExaminationItems;
   }
   
