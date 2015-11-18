@@ -189,6 +189,14 @@ public class PhysicalExaminationItemConfigController extends BaseController
    */
   @RequestMapping(value = "/findByConfigKey", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findByConfigKey(ConfigKey configKey,Direction direction) {
+    
     return physicalExaminationItemConfigService.findByConfigKey(configKey, direction);
+  }
+  
+  @RequestMapping (value = "/searchByConfigKey", method = RequestMethod.POST)
+  public @ResponseBody Page<PhysicalExaminationItemConfig> searchByConfigKey (ConfigKey configKey,Date beginDate, Date endDate, 
+      Pageable pageable, ModelMap model,String searchItemName)
+  {
+   return physicalExaminationItemConfigService.searchByConfigKey (configKey, pageable, beginDate, endDate, searchItemName);
   }
 }

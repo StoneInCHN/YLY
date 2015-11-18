@@ -4,10 +4,10 @@
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
-	    <legend>${message("yly.fixedAssets.search")}</legend>
+	    <legend>${message("yly.physicalExaminationItemConfig.search")}</legend>
 	    <form id="physicalExaminationItemConfig-search-form" class="search-form">
 	    	<div class="search-item">
-			    <label> ${message("yly.elderly.name")}:</label>
+			    <label> ${message("yly.physicalExaminationItemConfig.name")}:</label>
 			    <input type="text" class="easyui-textbox" id="name" name="name" />
 			</div>
 			<div class="search-item">
@@ -20,7 +20,7 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="physicalExamination-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
+	  	  <button id="physicalExaminationItemConfig-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</button>
 	    </div>
 	  </fieldset>
 </div>

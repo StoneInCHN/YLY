@@ -42,12 +42,12 @@ $(function(){
 					<\/td>\
 					<th>用药天数:<\/th>\
 					<td>\
-						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicationDays" value="'+_medicationDays+'" style="width:15px;"\/>\
+						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicationDays" value="'+_medicationDays+'" style="width:50px;"\/>\
 					<\/td>';
 					
 					var totalHtml='<th>药总数:<\/th>\
 					<td>\
-						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicineTotal" value="'+_medicineTotal+'" style="width:15px;"\/>\
+						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicineTotal" value="'+_medicineTotal+'" style="width:50px;"\/>\
 					<\/td>\
 						<td>\
 						<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="prescriptionDrugsItem_manager_tool.remove('+prescriptionDrugsItemIndex+');">'+message("yly.common.remove")+'</a>\
@@ -60,7 +60,8 @@ $(function(){
 				}
 				
 				if(type == 'WESTEN_MEDICINE'){
-					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
+					var targetObj = $("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
+					$.parser.parse(targetObj);
 					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox({    
 					    valueField:'id',    
 					    textField:'configValue',
@@ -97,7 +98,8 @@ $(function(){
 					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox("setValue",_drugUseMethod);
 					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_doseFrequency").combobox("setValue",_doseFrequency);
 				}else{
-					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+totalHtml);
+					var targetObj = $("#prescriptionDrugsAdd-table-list").append(drugNameHtml+totalHtml);
+					$.parser.parse(targetObj);
 				}
 				
 				if( prescriptionDrugsItemIndex > 0){

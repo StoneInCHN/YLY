@@ -118,7 +118,8 @@ $(function(){
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addPrescription').dialog("close").form("reset");
+							 $('#addPrescription').dialog("close");
+							 $("#addPrescription_form").form("reset");
 						}
 				    }],
 				    onLoad:function(){

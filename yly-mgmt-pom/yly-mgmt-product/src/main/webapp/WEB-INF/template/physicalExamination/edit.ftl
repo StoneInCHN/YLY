@@ -21,7 +21,7 @@
     			<td>
     				<input class="easyui-textbox input_text_line" value="${item.physicalExaminationItem.configValue}" id="physicalExamItemsConfig${item_index}" type="text" validtype="length[0,15]" style="width:60px;"/>
 					<input type="hidden" id="physicalExamItemsConfig${item_index}ID" value="${item.physicalExaminationItem.id}" name="physicalExaminationItems[${item_index}].physicalExaminationItem.id" />
-					<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem('physicalExamItemsConfig${item_index}','edit')" iconCls="icon-search" plain=true"></a>
+					<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem('physicalExamItemsConfig${item_index}')" iconCls="icon-search" plain=true"></a>
     			</td>
     			<th>${message("yly.physicalExamination.physicalExaminationItemValue")}:</th>
 				<td>
