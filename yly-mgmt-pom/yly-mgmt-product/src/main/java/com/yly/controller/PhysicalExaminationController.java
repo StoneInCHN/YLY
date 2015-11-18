@@ -40,7 +40,7 @@ import com.yly.utils.DateTimeUtils;
  * @author huyong
  *
  */
-@Controller ("PhysicalExaminationController")
+@Controller ("physicalExaminationController")
 @RequestMapping ("console/physicalExamination")
 public class PhysicalExaminationController extends BaseController
 {
@@ -185,7 +185,22 @@ public class PhysicalExaminationController extends BaseController
   public @ResponseBody Message update (PhysicalExamination physicalExamination,Long elderlyInfoID)
   {
     ElderlyInfo elderlyInfo= elderlyInfoService.find (elderlyInfoID);
+    
+    
+    if (physicalExamination.getPhysicalExaminationItems () != null 
+        && !physicalExamination.getPhysicalExaminationItems ().isEmpty ())
+    {
+      for (PhysicalExaminationItems item: physicalExamination.getPhysicalExaminationItems ())
+      {
+        PhysicalExaminationItemConfig itemConfig=physicalExaminationItemConfigService.find (item.getPhysicalExaminationItem ().getId ());
+        item.setPhysicalExaminationItem (itemConfig);
+        item.setPhysicalExamination (physicalExamination);
+      }
+    }
+    TenantAccount account=tenantAccountService.getCurrent ();
+    physicalExamination.setOperator (account.getTenantUser ());
     physicalExamination.setElderlyInfo (elderlyInfo);
+    
     physicalExaminationService.update (physicalExamination);
     return SUCCESS_MESSAGE;
   }

@@ -1,6 +1,6 @@
 physicalExamItemIndex = 0;
 var physicalExamination_manager_tool = {
-		searchPhysicalExaminationItem:function(id){
+		searchPhysicalExaminationItem:function(id,operate){
 			$('#physicalExaminationItemsList').dialog({    
 			    title: message("yly.physicalExaminationItemConfig.search"),    
 			    width: 1000,
@@ -28,7 +28,11 @@ var physicalExamination_manager_tool = {
 							 $("#"+id+"ID").val(rowData.id);
 							 console.log( $("#"+id));
 							 console.log(rowData.configValue);
-				    		 $("#"+id).val(rowData.configValue);
+							 if(operate == "add"){
+								 $("#"+id).val(rowData.configValue);
+							 }else if (operate = "edit"){
+								 $("#"+id).textbox("setValue",rowData.configValue);
+							 }
 				    		 
 				    		 $('#physicalExaminationItemsList').dialog("close");   
 						},
@@ -157,26 +161,74 @@ var physicalExamination_manager_tool = {
 				});
 				$('#editPhysicalExamination_form').show();
 			},
-			addExamItemHtml:function(){
-				
-			var examItemMapHtml='<tr id="physicalExamItem'+physicalExamItemIndex+'">\
-				<th>体检项名称:<\/th>\
-				<td>\
-					<input class="easyui-textbox input_text_line " id="physicalExamItemsConfig'+physicalExamItemIndex+'" type="text" validtype="length[0,15]" style="width:60px;"\/>\
-					<input type="hidden" id="physicalExamItemsConfig'+physicalExamItemIndex+'ID" name="physicalExaminationItems['+physicalExamItemIndex+'].physicalExaminationItem.id" \/>\
-					<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem(\'physicalExamItemsConfig'+physicalExamItemIndex+'\')" iconCls="icon-search" plain=true">test</a>\
-				<\/td>\
-				<th>体检值:<\/th>\
-				<td>\
-					<input class="easyui-textbox input_text_line " type="text" name="physicalExaminationItems['+physicalExamItemIndex+'].physicalExaminationItemValue" style="width:15px;"\/>\
-				<\/td>\
-				<\/tr>';
-				
-				$("#addPhysicalExamination-table-list").append(examItemMapHtml);
+			addExamItemHtml : function(operate) {
+				physicalExamItemIndex = $("#physicalExamItemSize").val();
+				if (physicalExamItemIndex == null) {
+					physicalExamItemIndex = 0;
+				}
+				console.log(physicalExamItemIndex);
+				var examItemMapHtml = '<tr id="physicalExamItem'
+						+ physicalExamItemIndex
+						+ '">\
+						<th>体检项名称:<\/th>\
+						<td>\
+							<input class="easyui-textbox input_text_line " id="physicalExamItemsConfig'
+						+ physicalExamItemIndex
+						+ '" type="text" validtype="length[0,15]" style="width:60px;"\/>\
+							<input type="hidden" id="physicalExamItemsConfig'
+						+ physicalExamItemIndex
+						+ 'ID" name="physicalExaminationItems['
+						+ physicalExamItemIndex
+						+ '].physicalExaminationItem.id" \/>\
+							<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem(\'physicalExamItemsConfig'
+						+ physicalExamItemIndex
+						+ '\',\'add\')" iconCls="icon-search" plain=true">select</a>\
+						<\/td>\
+						<th>体检值:<\/th>\
+						<td>\
+							<input class="easyui-textbox input_text_line " type="text" name="physicalExaminationItems['
+						+ physicalExamItemIndex
+						+ '].physicalExaminationItemValue" style="width:15px;"\/>\
+						<\/td>\
+						<\/tr>';
+				if(operate == "add"){
+					$("#addPhysicalExamination-table-list").append(examItemMapHtml);
+				}else if (operate == "edit"){
+					$("#editPhysicalExamination-table-list").append(examItemMapHtml);
+				}
 				physicalExamItemIndex++;
 			},
 			remove:function(){
 				listRemove('physicalExamination-table-list','../physicalExamination/delete.jhtml');
+			},
+			editRemove:function(id){
+				$.messager.confirm(message("yly.common.confirm"), message("yly.common.delete.confirm"), function(r) {
+					if (r) {
+						$.ajax({
+							url : "../physicalExaminationItems/delete.jhtml",
+							type : "post",
+							traditional : true,
+							data : {
+								"id" : id
+							},
+							beforeSend : function() {
+								$.messager.progress({
+									text : message("yly.common.progress")
+								});
+							},
+							success : function(result, response, status) {
+								$.messager.progress('close');
+								var resultMsg = result.content;
+								if (response == "success") {
+									showSuccessMsg(resultMsg);
+									$("#physicalExaminationItem"+id).remove();
+								} else {
+									alertErrorMsg();
+								}
+							}
+						});
+					}
+				})
 			}
 	};
 $(function(){

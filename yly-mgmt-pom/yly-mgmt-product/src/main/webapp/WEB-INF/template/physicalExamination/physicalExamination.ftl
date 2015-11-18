@@ -53,7 +53,7 @@
 	    	</tr>
 	    	<tr>
 				<td colspan="9">
-					<a href="javascript:;" id="addPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml()"><i class="fa fa-plus-square-o fa-2x"></i></a>
+					<a href="javascript:;" id="addPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml('add')"><i class="fa fa-plus-square-o fa-2x"></i></a>
 				</td>
 			</tr>
 	    </table>
