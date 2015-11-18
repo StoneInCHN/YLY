@@ -18,12 +18,74 @@
 				/console/common/logout = logout
 				/console/common/captcha.jhtml = anon
 				/console/common/captchaCheck.jhtml = anon
-				 /console/** = authc
-				 <!--
+			<!-- 居住管理 -->
 				/console/building/** = perms["building"]
 				/console/room/** = perms["room"]
+				/console/bed/** = perms["bed"]
+				<!-- /console/room/changeRoom/** = perms["changeRoom"] -->
+			<!-- 来访登记 -->
+				/console/consultation/** = perms["consultation"]
+				/console/visitElderly/** = perms["visitElderly"]
+				/console/bookingRegistration/** = perms["bookingRegistration"]
+				/console/elderlyInfo/checkedInElderly。jhtml = perms["checkedInElderly"]
+				<!-- 床位状态 -->
+			<!-- 出院入院 -->
+				/console/admission/** = perms["admission"]
+				/console/billing/checkinCharge.jhtml=perms["checkinCharge"]
+				/console/billing/checkoutCharge.jhtml=perms["checkoutCharge"]
+				/console/elderlyEvaluatingRecord/**=perms["elderlyEvaluatingRecord"]
+			<!-- 老人管理 -->
+				<!-- 老人档案 -->
+		    	<!-- 合同附件 -->
+		    	<!-- 评估报告 -->
+		    	/console/elderlyPhotoAlbum/** = perms["elderlyPhotoAlbum"]
+		    	/console/elderlyEventRecord/** = perms["elderlyEventRecord"]
+		    	/console/elderlyStuffDeposit/** = perms["elderlyStuffDeposit"]
+		    <!-- 健康管理 -->
+		    	<!-- 病历档案 -->
+		    	/console/prescription/** = perms["prescription"]
+		    	<!-- 体检记录-->
+		    	/console/drugs/** = perms["drugsInfo"]
+		    <!-- 院内事务 -->
+		    	/console/fixedAssets/** = perms["fixedAssets"]
+		    	<!-- 库存管理 -->
+		    	/console/donateRecord/** = perms["donateRecord"]
+		    	<!-- 通知公告 -->
+		    <!-- 系统管理  -->
+		    	/console/tenantUser/** = perms["tenantUser"]
+		    	/console/role/** = perms["role"]
+		    	<!--数据字典 -->
+		    	/console/operationLog/** = perms["operationLog"]
+		    <!-- 收费设置 -->
+				/console/bedChargeConfig/** = perms["bedChargeConfig"]
+				/console/nurseChargeConfig/** = perms["nurseChargeConfig"]
+				/console/mealChargeConfig/** = perms["mealChargeConfig"]
+				/console/waterElectricityChargeConfig/** = perms["waterElectricityChargeConfig"]
+				/console/personalizedChargeConfig/** = perms["personalizedChargeConfig"]
+			<!-- 护理管理 -->
+			<!-- 志愿者 -->
+				/console/volunteer/** = perms["volunteer"]
+			<!-- 收费管理 -->
+				/console/billing/checkinPay.jhtml = perms["checkinPay"]
+				/console/billing/checkoutPay.jhtml = perms["checkoutPay"]
+				/console/billing/billing.jhtml = perms["billing"]
+				/console/advanceCharge/** = perms["advanceCharge"]
+				/console/deposit/** = perms["deposit"]
+				/console/bedNurseChargeRecord/** = perms["bedNurseChargeRecord"]
+				/console/mealChargeRecord/** = perms["mealChargeRecord"]
+				/console/waterElectricityChargeRecord/** = perms["waterElectricityChargeRecord"]
+				/console/personalizedChargeRecord/** = perms["personalizedChargeRecord"]
+			<!-- 黑名单 -->
 				/console/blackList/** = perms["blackList"]
-				 -->
+			<!-- 后勤管理 -->
+				/console/repairRecord/** = perms["repairRecord"]
+				/console/waterElectricityRecord/** = perms["waterElectricityRecord"]
+			<!-- 人事管理 -->
+				/console/department/** = perms["department"]
+				/console/position/** = perms["position"]
+				<!-- 人员档案 -->
+				<!-- 请假管理 -->
+				/console/** = authc
 			</value>
 		</property>
 		<property name="filters">

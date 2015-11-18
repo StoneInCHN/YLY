@@ -401,7 +401,14 @@ var messages = {
 	"yly.physicalExaminationItemConfig.search":"体检配置项搜索",
 	"yly.physicalExamination.list":"体检记录列表",
 	"yly.physicalExamination.add":"添加体检记录",
-	"yly.physicalExamination.operator":"录入人"
+	"yly.physicalExamination.operator":"录入人",
+	
+	//数据字典
+	"yly.systemConfig.list":"数据字典",
+	"yly.systemConfig.configValue":"配置项值",
+	"yly.systemConfig.isEnabled":"是否启用",
+	"yly.systemConfig.add":"添数据字典",
+	"yly.systemConfig.edit":"编辑数据字典"
 };
 //多语言
 function message(code) {

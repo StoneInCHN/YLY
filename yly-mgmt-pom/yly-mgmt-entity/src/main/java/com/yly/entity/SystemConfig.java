@@ -54,7 +54,7 @@ public class SystemConfig extends BaseEntity {
    */
   private Boolean isEnabled;
   
-
+  @JsonProperty
   public Boolean getIsEnabled() {
     return isEnabled;
   }
@@ -71,6 +71,7 @@ public class SystemConfig extends BaseEntity {
     this.configOrder = configOrder;
   }
 
+  @Index(name = "system_config_configKey")
   public ConfigKey getConfigKey() {
     return configKey;
   }

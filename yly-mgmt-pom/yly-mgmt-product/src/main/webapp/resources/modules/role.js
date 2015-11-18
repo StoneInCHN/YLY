@@ -48,8 +48,8 @@ $(function(){
 				}
 				$('#role-dialog-auth').dialog({    
 				    title: message("yly.role.auth.manange"),    
-				    width: 500,    
-				    height: 400,    
+				    width: 550,    
+				    height: 500,    
 				    closed: false,    
 				    cache: false,    
 				    modal: true ,
@@ -57,9 +57,9 @@ $(function(){
 				    	$('#role-table-auth').treegrid({    
 						    url:'../role/listAuth.jhtml?id='+_edit_row.id,  
 						    idField:'id',    
-						    treeField:'text',    
+						    treeField:'text', 
 						    columns:[[    
-						      {title:message("yly.role.auth.name"),field:"text",width:200,align:'center',formatter:function(value,row,index){
+						      {title:message("yly.role.auth.name"),field:"text",width:280,align:'center',formatter:function(value,row,index){
 						    	  return row.text;
 						      }},
 						      {title:message("yly.role.auth.status"),field:"checked",width:200,align:'center',formatter:function(value,row,index){
@@ -72,11 +72,15 @@ $(function(){
 						      }}
 						    ]],
 						    onClickCell:function(rowIndex, field, value){
-						    	
-						    	console.log(rowIndex);
 						    	console.log(field);
-						    	console.log(value);
+						    	//父节点
+						    	/*if(field.parentId==null && field.checked==true){
+						    		List childList=field.children;
+						    	}else if(field.parentId==null && field.checked==false){
+						    		
+						    	}*/
 						    	
+						    	//
 						    	/*$("input:checkbox[name=authId]").on("click",function(){
 						    		var selectRow = $('#role-table-auth').treegrid("getSelected");
 						    		console.log(selectRow);
@@ -115,7 +119,7 @@ $(function(){
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addrole').dialog("close");
+							 $('#role-dialog-auth').dialog("close");
 						}
 				    }]
 				}); 

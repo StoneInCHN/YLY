@@ -12,6 +12,7 @@ import com.yly.framework.service.BaseService;
 
 /**
  * 数据字典
+ * 
  * @author sujinxuan
  *
  */
@@ -19,18 +20,28 @@ public interface SystemConfigService extends BaseService<SystemConfig, Long> {
 
   /**
    * 获取系统配置
+   * 
    * @param configKey
    * @param direction
    * @return
    */
-  List<Map<String, Object>> findByConfigKey(ConfigKey configKey,Direction direction);
-  
+  List<Map<String, Object>> findByConfigKey(ConfigKey configKey, Direction direction);
+
   /**
    * 根据当前日期获取下一个结算日期
+   * 
    * @param currentDate
    * @return
    */
-  Map<String,Object> getBillingDate(Date currentDate);
-  
-  
+  Map<String, Object> getBillingDate(Date currentDate);
+
+  /**
+   * 通过配置项获取对应的配置值
+   * 
+   * @param configKey
+   * @return
+   */
+  List<SystemConfig> getListConfigValueByKey(int configKey);
+
+
 }

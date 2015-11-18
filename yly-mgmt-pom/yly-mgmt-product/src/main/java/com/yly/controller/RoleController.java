@@ -56,11 +56,7 @@ public class RoleController extends BaseController {
   public String list(ModelMap model) {
     return "/role/role";
   }
-  
-  @RequestMapping(value = "/commonRolesSearch", method = RequestMethod.GET)
-  public String commonRolesSearch(ModelMap model) {
-    return "/common/commonRolesSearch";
-  }
+
   /**
    * 列表
    * 
@@ -122,6 +118,7 @@ public class RoleController extends BaseController {
         } else {
           treeNodeResponse.setChecked(false);
         }
+        treeNodeResponse.setIconCls("icon-large-chart");
         parentMap.put(treeNodeResponse.getId(), treeNodeResponse);
         treeNodeResponses.add(treeNodeResponse);
       }
@@ -140,6 +137,7 @@ public class RoleController extends BaseController {
         } else {
           treeNodeResponseChild.setChecked(false);
         }
+        treeNodeResponseChild.setIconCls("icon-large-shapes");
         if (treeNodeResponseFather != null && treeNodeResponseFather.getChildren() != null) {
           childList = treeNodeResponseFather.getChildren();
         }
@@ -176,7 +174,7 @@ public class RoleController extends BaseController {
     }
     role.setAuthorityResources(authorityResources);
     roleService.save(role);
-
+    
     return SUCCESS_MESSAGE;
   }
 }

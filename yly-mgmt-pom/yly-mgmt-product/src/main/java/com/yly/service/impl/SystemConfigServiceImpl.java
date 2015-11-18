@@ -37,6 +37,7 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig, Long>
   public void setBaseDao(SystemConfigDao systemConfigDao) {
     super.setBaseDao(systemConfigDao);
   }
+  
   @Override
   public List<Map<String, Object>> findByConfigKey(ConfigKey configKey, Direction direction) {
     if(configKey!=null){
@@ -86,6 +87,15 @@ public class SystemConfigServiceImpl extends BaseServiceImpl<SystemConfig, Long>
       return map;
     }
     return null;
+  }
+
+  @Override
+  public List<SystemConfig> getListConfigValueByKey(int configKey) {
+    List<Filter> filters = new ArrayList<Filter>();
+    Filter keyFilter = new Filter("configKey", Operator.eq, configKey);
+    filters.add(keyFilter);
+    List<SystemConfig> systemConfigs = super.findList(null,filters,null,true,null);
+    return systemConfigs;
   }
 
 }

@@ -214,55 +214,65 @@ public class CommonEnum {
     /**
      * 房间类型,0
      */
-    ROOMTYPE,
+    ROOMTYPE("房间类型"),
     /**
      * 护理级别,1
      */
-    NURSELEVEL,
+    NURSELEVEL("护理级别"),
     /**
      * 伙食类别,2
      */
-    MEALTYPE,
+    MEALTYPE("伙食类别"),
     /**
      * 支付方式,3
      */
-    PAYMENTTYPE,
+    PAYMENTTYPE("支付方式"),
     /**
      * 表单类型,4
      */
-    FORMTYPE,
+    FORMTYPE("表单类型"),
     /**
      * 计量单位,5
      */
-    UNITS,
+    UNITS("计量单位"),
     /**
      * 药品分类,6
      */
-    DRUGSCATEGORY,
+    DRUGSCATEGORY("药品分类"),
     /**
      * 药品用法,7
      */
-    DRUGSMETHOD,
+    DRUGSMETHOD("药品用法"),
     /**
      * 人员类别,8
      */
-    PERSONNELCATEGORY,
+    PERSONNELCATEGORY("人员类别"),
     /**
      * 评估结果,9
      */
-    EVALUATINGRESULT,
+    EVALUATINGRESULT("评估结果"),
     /**
      * 结算日期,10
      */
-    BILLDAY,
+    BILLDAY("结算日期"),
     /**
      * 调账原因（调钱）,11
      */
-    ADJUSTMENTCAUSE,
+    ADJUSTMENTCAUSE("调账原因"),
     /**
      * 体检配置项,12
      */
-    PHYSICALEXAMITEM
+    PHYSICALEXAMITEM("体检配置项");
+    
+    private String keyName; 
+    
+    private ConfigKey(String keyName) { 
+        this.keyName = keyName; 
+    } 
+        
+    public String getKeyName() { 
+        return this.keyName; 
+    } 
   }
   
   /**
