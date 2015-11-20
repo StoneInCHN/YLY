@@ -97,6 +97,11 @@ public class TenantUser extends BaseEntity {
   private Date hireDate; 
   
   /**
+   * 是否参加护理
+   */
+  private Boolean isJoinNurse;
+  
+  /**
    * 表单实例
    */
   private Set<FormInstance> formInstances = new HashSet<FormInstance>();
@@ -291,6 +296,15 @@ public class TenantUser extends BaseEntity {
 
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
+  }
+
+  @Column(length=2)
+  public Boolean getIsJoinNurse() {
+    return isJoinNurse;
+  }
+
+  public void setIsJoinNurse(Boolean isJoinNurse) {
+    this.isJoinNurse = isJoinNurse;
   }
 
 }

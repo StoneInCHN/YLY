@@ -1,6 +1,8 @@
 package com.yly.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,12 +44,18 @@ public class NurseSchedule extends BaseEntity{
   /**
    * 值班类型
    */
-  private String dutyType;
+  private NurseDutyType dutyType;
   
   /**
    * 值班人姓名（可以是多个，中间逗号隔开）
    */
   private String dutyStaff;
+  
+  
+  /**
+   * 表单实例
+   */
+ // private Set<TenantUser> tenantUsers = new HashSet<TenantUser>();
   
   
   public Date getDutyStartTime() {
@@ -65,13 +73,13 @@ public class NurseSchedule extends BaseEntity{
   public void setDutyEndTime(Date dutyEndTime) {
     this.dutyEndTime = dutyEndTime;
   }
-
+  
   @Column(length=10)
-  public String getDutyType() {
+  public NurseDutyType getDutyType() {
     return dutyType;
   }
 
-  public void setDutyType(String dutyType) {
+  public void setDutyType(NurseDutyType dutyType) {
     this.dutyType = dutyType;
   }
 
@@ -93,5 +101,12 @@ public class NurseSchedule extends BaseEntity{
     this.tenantID = tenantID;
   }
 
+ /* public Set<TenantUser> getTenantUsers() {
+    return tenantUsers;
+  }
+
+  public void setTenantUsers(Set<TenantUser> tenantUsers) {
+    this.tenantUsers = tenantUsers;
+  }*/
   
 }
