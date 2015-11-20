@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,8 @@ import com.yly.entity.ElderlyEvaluatingRecord;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.ElderlyPhotoes;
 import com.yly.entity.EvaluatingForm;
+import com.yly.entity.EvaluatingItemOptions;
+import com.yly.entity.EvaluatingItems;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
 import com.yly.entity.EvaluatingSection;
@@ -34,8 +37,10 @@ import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.EvaluatingFormService;
+import com.yly.service.EvaluatingItemOptionsService;
 import com.yly.service.EvaluatingItemsAnswerService;
 import com.yly.service.EvaluatingItemsOptionsService;
+import com.yly.service.EvaluatingItemsService;
 import com.yly.service.EvaluatingSectionService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
@@ -74,15 +79,45 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   
   @Resource(name = "evaluatingItemsAnswerServiceImpl")
   private EvaluatingItemsAnswerService evaluatingItemsAnswerService;
+  
+  @Resource(name = "evaluatingItemsServiceImpl")
+  private EvaluatingItemsService evaluatingItemsService;
+  @Resource(name = "evaluatingItemOptionsServiceImpl")
+  private EvaluatingItemOptionsService evaluatingItemOptionsService;
+  
   /**
    * 列表页面
-   * 
    * @param model
    * @return
    */
   @RequestMapping(value = "/elderlyEvaluatingRecord", method = RequestMethod.GET)
   public String elderlyEvaluatingRecord(ModelMap model) {
     return "/elderlyEvaluatingRecord/elderlyEvaluatingRecord";
+  }
+  /**
+   * 创建评估表
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/createEvaluatingFrom", method = RequestMethod.GET)
+  public String createEvaluatingFrom(ModelMap model) {
+//    List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+//    model.addAttribute("evaluatingSections",evaluatingSections);
+    return "/elderlyEvaluatingRecord/createEvaluatingFrom";
+  }
+  
+  /**
+   * 获取所有评估模块
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/getAllSections", method = RequestMethod.GET)
+  public @ResponseBody List<EvaluatingSection> getAllSections(ModelMap model){
+    List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+    if (evaluatingSections != null && evaluatingSections.size() > 0) {
+      return evaluatingSections;
+    }
+    return null;
   }
 
   /**
@@ -101,6 +136,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       elderlyEvaluatingRecordPage = elderlyEvaluatingRecordService.searchPageByFilter(keysOfElderlyName, beginDate, endDate,
           pageable);
     }
+
     return elderlyEvaluatingRecordPage;
   }
 
@@ -143,12 +179,22 @@ public class ElderlyEvaluatingRecordController extends BaseController {
              sectionLevelMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionScoreLevel[1]));
         }
       }
+    }else {
+      List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+      if (evaluatingSections != null && evaluatingSections.size() > 0) {
+        sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
+        sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
+      }
     }
     model.addAttribute("sectionScoreMap", sectionScoreMap);
     model.addAttribute("sectionLevelMap", sectionLevelMap);
     model.addAttribute("elderlyEvaluatingRecord", elderlyEvaluatingRecord);
     model.addAttribute("elderlyInfo", elderlyEvaluatingRecord.getElderlyInfo());
-    model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
+    if (elderlyEvaluatingRecord.getEvaluatingResult() != null) {
+      model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
+    }else {
+      model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));
+    }
     return "elderlyEvaluatingRecord/edit";
   }
   /**
@@ -160,9 +206,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   @RequestMapping(value = "/view", method = RequestMethod.GET)
   public String view(ModelMap model, Long id) {
     if (id != null) {
-      List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
       ElderlyEvaluatingRecord elderlyEvaluatingRecord = elderlyEvaluatingRecordService.find(id);
-      if (elderlyEvaluatingRecord != null && evaluatingSections != null && evaluatingSections.size() > 0) {
+      if (elderlyEvaluatingRecord != null) {
         //每个模块对应评分规则
         Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
         //每个模块对应总得分
@@ -183,20 +228,84 @@ public class ElderlyEvaluatingRecordController extends BaseController {
             }
           }
         }else {
-          sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
-          sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
+          List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+          if (evaluatingSections != null && evaluatingSections.size() > 0) {
+            sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
+            sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
+          }
         }
         model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
         model.addAttribute("sectionScoreMap", sectionScoreMap);
         model.addAttribute("sectionLevelMap", sectionLevelMap);
         model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
-        model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
+        if (elderlyEvaluatingRecord.getEvaluatingResult() != null) {
+          model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
+        }else {
+          model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));
+        }
+        
         model.addAttribute("elderlyEvaluatingRecord", elderlyEvaluatingRecord);
       }
       return "elderlyEvaluatingRecord/view";
     }
     return "";
   }
+  /**
+   * 添加评估题目
+   * @param evaluatingItems
+   * @return
+   */
+  @RequestMapping(value = "/addItem", method = RequestMethod.POST)
+  public @ResponseBody Message addItem(EvaluatingItems evaluatingItems, Long evaluatingSectionId) {
+    if (evaluatingSectionId == null) {
+      return ERROR_MESSAGE;
+    }
+    EvaluatingSection evaluatingSection = evaluatingSectionService.find(evaluatingSectionId);
+    Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
+    if (evaluatingSection == null || currnetTenantId == null) {
+      return ERROR_MESSAGE;
+    }
+    if (evaluatingItems != null && evaluatingItems.getItemName() != null) {
+      evaluatingItems.setTenantID(currnetTenantId);
+      evaluatingItems.setAllowMutipleAnswers(false);
+      evaluatingItems.setAnswerRequired(true);
+      evaluatingItems.setEvaluatingSection(evaluatingSection);
+      evaluatingItemsService.save(evaluatingItems);//保存题目
+      
+      if (evaluatingItems.getEvaluatingItemsOptions() != null && evaluatingItems.getEvaluatingItemsOptions().size() > 0) {
+        List<EvaluatingItemsOptions> evaluatingItemsOptionsList = evaluatingItems.getEvaluatingItemsOptions();
+        for (int i = 0; i < evaluatingItemsOptionsList.size(); i ++) {
+          EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsOptionsList.get(i);
+          EvaluatingItemOptions evaluatingItemOptions = evaluatingItemsOptions.getEvaluatingItemOptions();
+          evaluatingItemOptions.setTenantID(currnetTenantId);
+          evaluatingItemOptionsService.save(evaluatingItemOptions);//依次保存选项
+          
+          evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptions);
+          evaluatingItemsOptions.setEvaluatingItems(evaluatingItems);
+          evaluatingItemsOptionsService.save(evaluatingItemsOptions);//依次保存选项关系（含得分）
+        }
+      }
+    }
+    
+    return SUCCESS_MESSAGE;
+  }
+  /**
+   * 添加评估模块
+   * @param evaluatingItems
+   * @return
+   */
+  @RequestMapping(value = "/addSection", method = RequestMethod.POST)
+  public @ResponseBody Message addSection(EvaluatingSection evaluatingSection) {
+    Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
+    if (evaluatingSection != null && evaluatingSection.getSectionName() != null) {
+      evaluatingSection.setTenantID(currnetTenantId);
+      evaluatingSection.setSystemSection(false);
+      evaluatingSectionService.save(evaluatingSection);
+    }
+    
+    return SUCCESS_MESSAGE;
+  }
+  
   /**
    * 添加入院评估 （数据准备）
    * 
@@ -224,6 +333,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/save", method = RequestMethod.POST)
+  //@Transactional(readOnly = true)
   public @ResponseBody Message save(Long personnelCategoryId, Long nursingLevelId,
       Long evaluatingResultId,Long evaluatintFormID, ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo) {
     
@@ -301,6 +411,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
+  //@Transactional(readOnly = true)
   public @ResponseBody Message update(Long personnelCategoryId, Long nursingLevelId,
       Long evaluatingResultId, Long evaluatintFormID, ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo,
       Long elderlyInfoId, Long elderlyEvaluatingRecordId) {

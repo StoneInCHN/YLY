@@ -156,7 +156,6 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 						editsectionLevelList.push(nextSectionName+"::::"+nextSectionLevel);
 					}
 				}	
-				alert(editsectionLevelList);
 				$.ajax({
 					url:"../elderlyEvaluatingRecord/getFormLevel.jhtml?sectionLevels="+editsectionLevelList.join(";;;;"),
 					type:"get",
