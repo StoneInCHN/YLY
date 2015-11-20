@@ -8,8 +8,8 @@
 	    <legend>${message("yly.drugsInfo.search")}</legend>
 	    <form id="search-form" class="search-form">
 	    <div class="search-item">
-			    <label> ${message("yly.drugsInfo.search.name")}:</label>
-			    <input type="text" class="easyui-textbox" id="prescriptionName" name="prescriptionName" />
+			    <label> ${message("yly.common.elderly.name")}:</label>
+			    <input type="text" class="easyui-textbox" id="elderNameSearch" name="elderNameSearch" />
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.drugsInfo.search.time")}:</label>

@@ -13,7 +13,7 @@ $(function(){
 			$('#prescriptionDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 700,    
-			    height: 680, 
+			    height: 600, 
 			    cache: false,
 			    modal: true,
 			    href:'../prescription/details.jhtml?id='+rowData.id,
@@ -81,8 +81,8 @@ $(function(){
 			add:function(){
 				$('#addPrescription').dialog({
 				    title: '添加处方',   
-				    width: 800,    
-				    height: 580,
+				    width: 900,    
+				    height: 500,
 				    iconCls:'icon-mini-add',
 				    href:"../prescription/add.jhtml",  
 				    cache: false, 
@@ -107,6 +107,7 @@ $(function(){
 											showSuccessMsg(result.content);
 											$('#addPrescription').dialog("close");
 											$("#prescription-table-list").datagrid('reload');
+											$('#addPrescription_form').form('reset');
 										}else{
 											alertErrorMsg();
 										}
@@ -125,7 +126,7 @@ $(function(){
 				    onLoad:function(){
 				    	$('#addPrescription_form').show();
 				    	$(".hid").hide();
-				    	$("#prescriptionType").combobox({
+				    	$("#addPrescriptionType").combobox({
 				    		onChange: function (n,o) {
 				    			if(n == "WESTEN_MEDICINE")
 				    				$(".hid").hide();
@@ -134,7 +135,7 @@ $(function(){
 				    			}
 				    		}
 				    	});
-				    	$("#prescriptionUseMethod").combobox({    
+				    	$("#addPrescriptionUseMethod").combobox({    
 						    valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -156,8 +157,8 @@ $(function(){
 				}
 				var _dialog = $('#editPrescription').dialog({    
 					title: message("yly.common.edit"),     
-				    width: 700,    
-				    height: 680,    
+				    width: 900,    
+				    height: 500,  
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../prescription/edit.jhtml?id='+_edit_row.id,
@@ -181,6 +182,7 @@ $(function(){
 										showSuccessMsg(result.content);
 										$('#editPrescription').dialog("close");
 										$("#prescription-table-list").datagrid('reload');
+										$('#editPrescription_form').form('reset');
 									}
 								});
 							};
@@ -190,10 +192,11 @@ $(function(){
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editPrescription').dialog("close");
+							 $('#editPrescription_form').form('reset');
 						}
 				    }],
 				    onLoad:function(){
-				    	var itemSize=$("#itemSize").val();
+				    	var itemSize=$("#drugsItemSize").val();
 				    	
 				    	$(".edithid").hide();
 				    	$("#editPrescriptionType").combobox({
@@ -208,18 +211,18 @@ $(function(){
 				    	if(itemSize>0){
 				    		$("#editPrescriptionType").combobox("readonly",true);
 				    	};
-				    	$("#editPrescriptionUseMethod").combobox({    
-						    valueField:'id',    
-						    textField:'configValue',
-						    cache: true,
-						    url:'../systemConfig/findByConfigKey.jhtml',
-						    onBeforeLoad : function(param) {
-						        param.configKey = 'DRUGSMETHOD';// 参数
-						    }
-						});
+//				    	$("#editPrescriptionUseMethod").combobox({    
+//						    valueField:'id',    
+//						    textField:'configValue',
+//						    cache: true,
+//						    url:'../systemConfig/findByConfigKey.jhtml',
+//						    onBeforeLoad : function(param) {
+//						        param.configKey = 'DRUGSMETHOD';// 参数
+//						    }
+//						});
 				    	$("#editPrescriptionUseMethod").combobox("setValue",$("#editPrescriptionUseMethod").attr('data-value'));
 				    	
-				    	$("[use-method='editprescriptionDrugsMethod']").combobox({
+				    	$("[use-method='editPrescriptionDrugsMethod']").combobox({
 				    		valueField:'id',    
 						    textField:'configValue',
 						    cache: true,
@@ -229,7 +232,7 @@ $(function(){
 						    }
 				    	});
 				    	for(var i=0 ;i < itemSize; i++){
-				    		$("#prescriptionDrugsItems"+i+"_drugUseMethod").combobox("setValue",$("#prescriptionDrugsItems"+i+"_drugUseMethod").attr('data-value'));
+				    		$("#editPrescriptionDrugsItems"+i+"_drugUseMethod").combobox("setValue",$("#editPrescriptionDrugsItems"+i+"_drugUseMethod").attr('data-value'));
 				    	}
 				    },
 				    onOpen:function(){
@@ -238,6 +241,10 @@ $(function(){
 				});  
 			},
 			addDrgus: function(){
+				if($("#addPrescriptionType").combobox('getValue') == ""){
+		    		alert("请选择处方类型！")
+		    		return ;
+		    	}
 				$('#addPrescriptionDrugs').dialog({
 				    title: '选择药品',   
 				    width: 650,    
@@ -253,7 +260,7 @@ $(function(){
 						}
 				    }],
 				    onLoad:function(){
-				    	var type=$('#prescriptionType').combo('getValue');
+				    	var type=$('#addPrescriptionType').combo('getValue');
 					    	$("#drgusAll-table-list").datagrid({
 					    		title:message("yly.drugsInfo.list"),
 					    		fitColumns:true,
@@ -265,8 +272,8 @@ $(function(){
 					    		onDblClickRow : function (rowIndex, rowData){
 					    			$('#prescriptionDrugs').dialog({
 									    title: '药品',   
-									    width: 500,    
-									    height: 300,
+									    width: 440,    
+									    height: 230,
 									    iconCls:'icon-mini-add',
 									    href:"../prescriptionDrugsItem/prescriptionDrugs.jhtml?drugsId="+rowData.id,  
 									    cache: false, 
@@ -286,6 +293,7 @@ $(function(){
 											iconCls:'icon-cancel',
 											handler:function(){
 												 $('#prescriptionDrugs').dialog("close");
+												 $('#addPrescriptionDrugs_form').form("reset")
 											}
 									    }],
 									    onLoad:function(){
@@ -306,7 +314,8 @@ $(function(){
 									    	} 
 									    }
 					    			});
-					    			$('#addPrescriptionDrugs').dialog("close");				    			
+					    			$('#addPrescriptionDrugs').dialog("close");
+					    			$('#addPrescriptionDrugs_form').form("reset")
 					    		},
 					    		columns:[
 					    		   [
@@ -342,12 +351,11 @@ $(function(){
 				    	  $('#drgusAll-table-list').datagrid('options').queryParams = _queryParams;  
 				    	  $("#drgusAll-table-list").datagrid('reload');
 				    	});	
-				    }
+				    },
 				
 				});  
 			},
 			editAddDrgus:function(){
-				alert('test');
 				$('#addPrescriptionDrugs').dialog({
 				    title: '选择药品',   
 				    width: 650,    
@@ -396,6 +404,7 @@ $(function(){
 											iconCls:'icon-cancel',
 											handler:function(){
 												 $('#prescriptionDrugs').dialog("close");
+												 $('#addPrescriptionDrugs_form').form('reset');
 											}
 									    }],
 									    onLoad:function(){
@@ -416,7 +425,8 @@ $(function(){
 									    	} 
 									    }
 					    			});
-					    			$('#addPrescriptionDrugs').dialog("close");				    			
+					    			$('#addPrescriptionDrugs').dialog("close");
+					    			$('#addPrescriptionDrugs_form').form('reset');
 					    		},
 					    		columns:[
 					    		   [

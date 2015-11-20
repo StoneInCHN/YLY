@@ -4,20 +4,23 @@ $(function(){
 	prescriptionDrugsItemIndex = 0;
 	prescriptionDrugsItem_manager_tool = {
 			add:function(oper){
-		    	prescriptionDrugsItemIndex = $("#itemSize").val();
-		    	console.log(prescriptionDrugsItemIndex);
-		    	if(prescriptionDrugsItemIndex == null){
-		    		prescriptionDrugsItemIndex=0;
+		    	var itemSize = $("#drugsItemSize").val();
+		    	
+		    	if(itemSize != undefined){
+		    		prescriptionDrugsItemIndex = itemSize;
 		    	}
+		    	
+		    	console.log(prescriptionDrugsItemIndex);
 				var _drugsName=$("#name").val();
 				var _drugsId=$("#drugsInfoID").val();
 				var _singleDose=$("#singleDose").val();
-				var _doseFrequency=$("#doseFrequency").val();
-				var _doseFrequencyTxt=$("#doseFrequency").find("option:selected").text();
+				var _doseFrequency=$("#prescriptionDrugDoseFrequency").combobox("getValue");
+				var _doseFrequencyTxt=$("#prescriptionDrugDoseFrequency").combobox("getText");
 				var _drugUseMethod=$("#prescriptionDrugUseMethod").combobox("getValue");
 				var _drugUseMethodTxt=$("#prescriptionDrugUseMethod").combobox("getText");
 				var _medicationDays=$("#prescriptionDrugMedicationDays").val();
 				var _medicineTotal=$("#prescriptionDrugMedicineTotal").val();
+				console.log(_drugUseMethod);
 				var drugNameHtml = 
 				'<tr id="drugsItem'+prescriptionDrugsItemIndex+'">\
 					<th>药品名称:<\/th>\
@@ -28,17 +31,16 @@ $(function(){
 					var drugWestHtml='\
 					<th>单次用量:<\/th>\
 					<td>\
-						<input class="easyui-textbox input_text_line " type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].singleDose" value="'+_singleDose+'" style="width:15px;"\/>\
+						<input class="easyui-textbox input_text_line " type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].singleDose" value="'+_singleDose+'" style="width:25px;"\/>\
 					<\/td>\
 					<th>频度:<\/th>\
 						<td>\
-		    			<input  class="easyui-combobox input_text_line" name = "prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].doseFrequency" id="prescriptionDrugsItems'+prescriptionDrugsItemIndex+'_doseFrequency" style="width:140px;">\
+		    			<input  class="easyui-combobox input_text_line" name = "prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].doseFrequency" id="'+oper+'PrescriptionDrugsItems'+prescriptionDrugsItemIndex+'_doseFrequency" style="width:120px;">\
 					  	<\/input>\
 						<\/td>\
 					<th>药品用法:<\/th>\
 					<td>\
-						<td>\
-					  	<input class="easyui-combobox" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].drugUseMethod.id" id="prescriptionDrugsItems'+prescriptionDrugsItemIndex+'_drugUseMethod" style="width:80px;"/>\
+					  	<input class="easyui-combobox" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].drugUseMethod.id" id="'+oper+'PrescriptionDrugsItems'+prescriptionDrugsItemIndex+'_drugUseMethod" style="width:80px;"/>\
 					<\/td>\
 					<th>用药天数:<\/th>\
 					<td>\
@@ -49,20 +51,19 @@ $(function(){
 					<td>\
 						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems['+prescriptionDrugsItemIndex+'].medicineTotal" value="'+_medicineTotal+'" style="width:50px;"\/>\
 					<\/td>\
-						<td>\
-						<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="prescriptionDrugsItem_manager_tool.remove('+prescriptionDrugsItemIndex+');">'+message("yly.common.remove")+'</a>\
+						<td colspan="2">\
+						<a href="javascript:;" class="family-member-remove red-color" onclick="prescriptionDrugsItem_manager_tool.remove('+prescriptionDrugsItemIndex+');"><i class="fa fa-times fa-2x"></i><\/a>\
 						</td>\
-						<\/tr>';
+					<\/tr>';
 				if(oper == "add"){
-					var type=$('#prescriptionType').combo('getValue');
+					var type=$('#addPrescriptionType').combo('getValue');
 				}else if(oper == "edit"){
 					var type=$('#editPrescriptionType').combo('getValue');
 				}
 				
 				if(type == 'WESTEN_MEDICINE'){
-					var targetObj = $("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
-					$.parser.parse(targetObj);
-					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox({    
+					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
+					$("#"+oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox({    
 					    valueField:'id',    
 					    textField:'configValue',
 					    cache: true,
@@ -71,7 +72,7 @@ $(function(){
 					        param.configKey = 'DRUGSMETHOD';// 参数
 					    }
 					});
-					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_doseFrequency").combobox({    
+					$("#"+oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_doseFrequency").combobox({    
 					    valueField:'label',    
 					    textField:'value',
 					    cache: true,
@@ -95,15 +96,16 @@ $(function(){
 							value: message("yly.drugsInfo.doseFrequency.Q4h")
 						}]
 					});
-					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox("setValue",_drugUseMethod);
-					$("#prescriptionDrugsItems"+prescriptionDrugsItemIndex+"_doseFrequency").combobox("setValue",_doseFrequency);
+					console.log(oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod");
+					$("#"+oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox("setValue",_drugUseMethod);
+					$("#"+oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_doseFrequency").combobox("setValue",_doseFrequency);
+					
 				}else{
-					var targetObj = $("#prescriptionDrugsAdd-table-list").append(drugNameHtml+totalHtml);
-					$.parser.parse(targetObj);
+					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+totalHtml);
 				}
 				
 				if( prescriptionDrugsItemIndex > 0){
-					$('#prescriptionType').combo('readonly');
+					$('#'+oper+'PrescriptionType').combo('readonly');
 				};
 				prescriptionDrugsItemIndex++;
 			},

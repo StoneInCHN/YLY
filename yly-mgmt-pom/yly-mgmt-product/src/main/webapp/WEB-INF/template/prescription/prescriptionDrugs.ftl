@@ -16,17 +16,33 @@
 	    			 <input class="easyui-textbox"  name="singleDose" id="singleDose"/>
 	    		</td>
 	    		<th>${message("yly.drugsInfo.doseFrequency")}:</th>
-	    		<td>
-	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:140px;">   
-						<option value="Qd">${message("yly.drugsInfo.doseFrequency.Qd")}</option>
-						<option value="Bid">${message("yly.drugsInfo.doseFrequency.Bid")}</option>
-						<option value="Tid">${message("yly.drugsInfo.doseFrequency.Tid")}</option> 
-						<option value="Qid">${message("yly.drugsInfo.doseFrequency.Qid")}</option> 
-						<option value="Q2h">${message("yly.drugsInfo.doseFrequency.Q2h")}</option> 
-						<option value="Q4h">${message("yly.drugsInfo.doseFrequency.Q4h")}</option>						 
-				  	</select>    
-	    		</td>
-	    		
+	    			<td>
+	    			
+		    		<input class="easyui-combobox" data-options="
+					     valueField: 'label',
+						     textField: 'value',
+						     data: [{
+						      label: 'Qd',
+						      value: '${message("yly.drugsInfo.doseFrequency.Qd")}'
+						     },{
+						      label: 'Bid',
+						      value: '${message("yly.drugsInfo.doseFrequency.Bid")}'
+						     },{
+						      label: 'Tid',
+						      value: '${message("yly.drugsInfo.doseFrequency.Tid")}'
+						     },{
+						      label: 'Qid',
+						      value: '${message("yly.drugsInfo.doseFrequency.Qid")}'
+						     },{
+						      label: 'Q2h',
+						      value: '${message("yly.drugsInfo.doseFrequency.Q2h")}'
+						     },{
+						      label: 'Q4h',
+						      value: '${message("yly.drugsInfo.doseFrequency.Q4h")}'
+						     }
+						     ],
+						     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="doseFrequency" id="prescriptionDrugDoseFrequency" style="width:110px;"/>
+				</td> 
 	    	</tr>
 	    	<tr class='hidCHI'>
 	    		

@@ -181,6 +181,19 @@ function searchElderlyInfo(id) {
 	    		 if($("#identifier")){
 	    			 $("#identifier").val(rowData.identifier);
 	    		 }
+	    		 if($("#"+id+"_age")){
+	    			 $("#"+id+"_age").val(rowData.age);
+	    		 }
+	    		 if($("#"+id+"_gender")){
+	    			
+	    			 if(rowData.gender == "MALE"){
+	    				 $("#"+id+"_gender").val(message("yly.common.male"));
+			    	 }
+			    	 if(rowData.gender == "FEMALE"){
+			    		 $("#"+id+"_gender").val(message("yly.common.female"));
+			    	 }
+	    		 }
+	    		 console.log(id);
 	    		 $('#searchElderlyInfo').dialog("close");
 	    	 },
 	    	 columns:[

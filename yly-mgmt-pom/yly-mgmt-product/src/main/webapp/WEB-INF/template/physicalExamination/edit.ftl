@@ -13,7 +13,14 @@
     			 <input type="text" class="Wdate" id="physicalExaminationDate" value="${physicalExamination.physicalExaminationDate}" name="physicalExaminationDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
     		</td>
     	</tr>
-    	<input type= "hidden" id ="physicalExamItemSize" value="${physicalExamination.physicalExaminationItems?size}"/>
+    	<tr>
+    		<td colspan="9">
+					<a href="javascript:;" id="editPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml('edit')"><i class="fa fa-plus-square-o fa-2x"></i></a>
+				</td>
+    	</tr>
+    </table>
+    <table id="editPhysicalExaminationItem-table-list" class="table table-striped">
+    <input type= "hidden" id ="physicalExamItemSize" value="${physicalExamination.physicalExaminationItems?size}"/>
     	[#list physicalExamination.physicalExaminationItems as item]
     	<input type="hidden" name="physicalExaminationItems[${item_index}].id" value="${item.id}"/>
     		<tr id="physicalExaminationItem${item.id}">
@@ -32,11 +39,6 @@
 				</td>
     		</tr>
     	[/#list]
-    	<tr>
-    		<td colspan="9">
-					<a href="javascript:;" id="editPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml('edit')"><i class="fa fa-plus-square-o fa-2x"></i></a>
-				</td>
-    	</tr>
     </table>
 </form>
 

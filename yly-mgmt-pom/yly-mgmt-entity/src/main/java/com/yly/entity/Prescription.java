@@ -1,9 +1,7 @@
 package com.yly.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +10,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -29,6 +28,7 @@ import com.yly.entity.commonenum.CommonEnum.PrescriptionType;
 @Entity
 @Table(name = "yly_prescription")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_prescription_sequence")
+@Indexed(index="prescription")
 public class Prescription extends BaseEntity {
 
   /**
@@ -84,6 +84,7 @@ public class Prescription extends BaseEntity {
 
   @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }

@@ -78,19 +78,19 @@
 	    <div align="center" style="font-size: large">处方笺</div>
 	    <div style="width:100%;height:1px;border-top:solid rgb(0,0,0) 1px;margin-bottom:10px;">
 		<table id ="prescriptionDrugsAdd-table-list" border="0">
-			<input type= "hidden" id ="itemSize" value="${prescription.prescriptionDrugsItems?size}"/>
+			<input type= "hidden" id ="drugsItemSize" value="${prescription.prescriptionDrugsItems?size}"/>
 			[#list prescription.prescriptionDrugsItems as item]
 				<tr id="drugsItem${item.id}">
 				<input type="hidden" name="prescriptionDrugsItems[${item_index}].id" value="${item.id}"/>
 					<th>药品名称:</th>
 					<td>
-						<input class="easyui-textbox input_text_line" value = "${item.drugsInfo.name}" type="text" validtype="length[0,15]" style="width:75px;"/>
+						<input class="input_text_line" value = "${item.drugsInfo.name}" type="text" validtype="length[0,15]" style="width:60px;"/>
 						<input type="hidden" name="prescriptionDrugsItems[${item_index}].drugsInfo.id" value="${item.drugsInfo.id}"/>
 						</td>
 					[#if prescription.prescriptionType != 'CHINESE_MEDICINE']
 					<th>单次用量:</th>
 					<td>
-						<input class="easyui-textbox input_text_line" type="text" name="prescriptionDrugsItems[${item_index}].singleDose" value="${item.singleDose}" style="width:80px;"/>
+						<input class="input_text_line" type="text" name="prescriptionDrugsItems[${item_index}].singleDose" value="${item.singleDose}" style="width:25px;"/>
 					</td>
 					<th>频度:</th>
 					<td>
@@ -105,28 +105,24 @@
 					</td>
 					<th>药品用法:</th>
 					<td>
-					  	<input class="easyui-combobox" use-method="editprescriptionDrugsMethod" name="prescriptionDrugsItems[${item_index}].drugUseMethod.id" id="prescriptionDrugsItems${item_index}_drugUseMethod" style="width:80px;" data-value="${item.drugUseMethod.id}"/>
+					  	<input class="input_text_line" use-method="editPrescriptionDrugsMethod" name="prescriptionDrugsItems[${item_index}].drugUseMethod.id" id="editPrescriptionDrugsItems${item_index}_drugUseMethod" style="width:80px;" data-value="${item.drugUseMethod.id}"/>
 					 </td>
 					<th>用药天数:</th>
 					<td>
-						<input class="easyui-textbox input_text_line" value = "${item.medicationDays}" type="text" name="prescriptionDrugsItems[${item_index}].medicationDays" style="width:80px;"\/>
+						<input class="input_text_line" value = "${item.medicationDays}" type="text" name="prescriptionDrugsItems[${item_index}].medicationDays" style="width:50px;"\/>
 					</td>
 					[/#if]
 					<th>药总数:</th>
 					<td>
-						<input class="easyui-textbox input_text_line" value = "${item.medicineTotal}" type="text" name="prescriptionDrugsItems[${item_index}].medicineTotal" style="width:80px;"\/>
+						<input class="input_text_line" value = "${item.medicineTotal}" type="text" name="prescriptionDrugsItems[${item_index}].medicineTotal" style="width:50px;"\/>
 					</td>
-					<td>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="prescriptionDrugsItem_manager_tool.editRemove(${item.id});">${message("yly.button.delete")}</a>
+					<td colspan='2'>
+						<a href="#" class="easyui-linkbutton family-member-remove red-color" plain=true onclick="prescriptionDrugsItem_manager_tool.editRemove(${item.id});"><i class="fa fa-times fa-2x"></i></a>
 					</td>
 					</tr>
 			[/#list]
-			<tr>
-				<td colspan="13" >
-					<a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.editAddDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a>
-				</td>
-			</tr>
 		</table>
+		<div><a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.editAddDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a><div>
     </form>   
 </div>  
 

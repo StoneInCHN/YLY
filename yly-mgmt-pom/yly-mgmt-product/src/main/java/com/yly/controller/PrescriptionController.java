@@ -5,13 +5,23 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Filter;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermRangeQuery;
+import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.beans.Message;
+import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.Prescription;
@@ -22,6 +32,7 @@ import com.yly.service.DrugsInfoService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.PrescriptionService;
 import com.yly.service.SystemConfigService;
+import com.yly.utils.DateTimeUtils;
 
 /**
  * 药方
@@ -51,83 +62,63 @@ public class PrescriptionController extends BaseController
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Prescription> list (Pageable pageable, ModelMap model,
-      Date beginDate, Date endDate, String realNameSearch, String staffStatusSearch,
-      String departmentSearchId, String positionSearchId)
+      Date beginDate, Date endDate, String elderNameSearch)
   {
-//    String startDateStr = null;
-//    String endDateStr = null;
-//
-//    IKAnalyzer analyzer = new IKAnalyzer ();
-//    analyzer.setMaxWordLength (true);
-//    BooleanQuery query = new BooleanQuery ();
-//
-//    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "realName",
-//        analyzer);
-//    Query nameQuery = null;
-//    TermRangeQuery rangeQuery = null;
-//    Filter filter = null;
-//    if (beginDate != null)
-//    {
-//      startDateStr = DateTimeUtils.convertDateToString (beginDate, null);
-//    }
-//    if (endDate != null)
-//    {
-//      endDateStr = DateTimeUtils.convertDateToString (endDate, null);
-//    }
-//    if (realNameSearch != null)
-//    {
-//      String text = QueryParser.escape (realNameSearch);
-//        try
-//        {
-//          nameQuery = nameParser.parse (text);
-//          query.add (nameQuery, Occur.MUST);
-//          
-//          if (LogUtil.isDebugEnabled (FixedAssetsController.class))
-//          {
-//            LogUtil.debug (FixedAssetsController.class, "search", "Search real name: "
-//                + realNameSearch );
-//          }
-//        }
-//        catch (ParseException e)
-//        {
-//          e.printStackTrace();
-//        }
-//        
-//    }
-//    //过滤部门
-//    if (departmentSearchId != null)
-//    {
-//      TermQuery departmentQuery = new TermQuery(new Term("department.id", departmentSearchId));  
-//      query.add (departmentQuery,Occur.MUST);
-//    }
-//    //过滤职位
-//    if (positionSearchId != null)
-//    {
-//      TermQuery positionQuery = new TermQuery(new Term("position.id", positionSearchId));  
-//      query.add (positionQuery,Occur.MUST);
-//    }
-//    //过滤状态
-//    if (staffStatusSearch != null)
-//    {
-//      TermQuery statusQuery = new TermQuery(new Term("staffStatus", staffStatusSearch));  
-//      query.add (statusQuery,Occur.MUST);
-//    }
-//    if (startDateStr != null || endDateStr != null)
-//    {
-//      rangeQuery = new TermRangeQuery ("hireDate", startDateStr, endDateStr, true, true);
-//      query.add (rangeQuery,Occur.MUST);
-//      
-//      if (LogUtil.isDebugEnabled (FixedAssetsController.class))
-//      {
-//        LogUtil.debug (FixedAssetsController.class, "search", "Search start date: "+startDateStr
-//            +" end date: "+endDateStr);
-//      }
-//    }
-//    if (nameQuery != null || rangeQuery != null || 
-//        departmentSearchId != null || positionSearchId != null || staffStatusSearch != null)
-//    {
-//      return tenantUserService.search (query, pageable, analyzer,filter);
-//    }
+    String startDateStr = null;
+    String endDateStr = null;
+
+    IKAnalyzer analyzer = new IKAnalyzer ();
+    analyzer.setMaxWordLength (true);
+    BooleanQuery query = new BooleanQuery ();
+
+    QueryParser nameParser = new QueryParser (Version.LUCENE_35, "elderlyInfo.name",
+        analyzer);
+    Query nameQuery = null;
+    TermRangeQuery rangeQuery = null;
+    Filter filter = null;
+    if (beginDate != null)
+    {
+      startDateStr = DateTimeUtils.convertDateToString (beginDate, null);
+    }
+    if (endDate != null)
+    {
+      endDateStr = DateTimeUtils.convertDateToString (endDate, null);
+    }
+    if (elderNameSearch != null)
+    {
+      String text = QueryParser.escape (elderNameSearch);
+        try
+        {
+          nameQuery = nameParser.parse (text);
+          query.add (nameQuery, Occur.MUST);
+          
+          if (LogUtil.isDebugEnabled (FixedAssetsController.class))
+          {
+            LogUtil.debug (FixedAssetsController.class, "search", "Search real name: "
+                + elderNameSearch );
+          }
+        }
+        catch (ParseException e)
+        {
+          e.printStackTrace();
+        }
+        
+    }
+    if (startDateStr != null || endDateStr != null)
+    {
+      rangeQuery = new TermRangeQuery ("createDate", startDateStr, endDateStr, true, true);
+      query.add (rangeQuery,Occur.MUST);
+      
+      if (LogUtil.isDebugEnabled (FixedAssetsController.class))
+      {
+        LogUtil.debug (FixedAssetsController.class, "search", "Search start date: "+startDateStr
+            +" end date: "+endDateStr);
+      }
+    }
+    if (nameQuery != null || rangeQuery != null)
+    {
+      return prescriptionService.search (query, pageable, analyzer,filter);
+    }
       return prescriptionService.findPage (pageable);
     
   }

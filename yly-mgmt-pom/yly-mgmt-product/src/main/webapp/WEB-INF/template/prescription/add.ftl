@@ -24,38 +24,38 @@
 					      label: 'WESTEN_MEDICINE',
 					      value: '${message("yly.prescription.prescriptionType.WEST")}'
 					     }],
-					     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="prescriptionType" id="prescriptionType" style="width:110px;"/>
+					     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="prescriptionType" id="addPrescriptionType" style="width:110px;"/>
 				        
 	    		</td>
 	    		<th>${message("yly.gender")}:</th>
 	    		<td>
-	    			 <input class="input_text_line" name="gender" id="gender" style = "width:20px" data-options="required:true,editable:false" />
+	    			 <input class="input_text_line" name="gender" id="addPrescription_elderlyInfo_gender" style = "width:20px" data-options="required:true,editable:false" />
 	    		</td>
 	    		<th>${message("yly.common.age")}:</th>
 	    		<td>
-	    			 <input class="input_text_line" name="age" id="age" style = "width:20px" data-options="required:true,editable:false" />
+	    			 <input class="input_text_line" name="age" id="addPrescription_elderlyInfo_age" style = "width:20px" data-options="required:true,editable:false" />
 	    		</td>
 	    		<th>就诊时间:</th>
 	    		<td>
-	    			 <input class="input_text_line" name="time" id="time" data-options="required:true,editable:false" />
+	    			 <input class="input_text_line" name="time" id="addPrescriptionTime" data-options="required:true,editable:false" />
 	    		</td>
 	    	</tr>
 	    	<tr class="hid">
 	    		<th>每日剂量:</th>
 	    		<td>
-	    			 <input class="input_text_line" name="dailyDose" id="dailyDose" style = "width:20px" data-options="required:true,editable:false" />
+	    			 <input class="input_text_line" name="dailyDose" id="addPrescriptiondailyDose" style = "width:20px" data-options="required:true,editable:false" />
 	    		</td>
 	    		<th>药品用法:</th>
 	    		<td>
-	    			 <input class="easyui-combobox" name="prescriptionDrugsUseMethodId" id="prescriptionUseMethod" style="width:80px;" />
+	    			 <input class="easyui-combobox" name="prescriptionDrugsUseMethodId" id="addPrescriptionUseMethod" style="width:80px;" />
 	    		</td>
 	    		<th>用药天数:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" name="medicationDays" id="medicationDays" />
+	    			 <input class="easyui-textbox" name="medicationDays" id="addPrescriptionmedicationDays" />
 	    		</td>
 	    			<th>${message("yly.drugsInfo.doseFrequency")}:</th>
 	    		<td>
-	    			<select id="doseFrequency" class="easyui-combobox" name="doseFrequency" style="width:120px;">   
+	    			<select id="addPrescriptiondoseFrequency" class="easyui-combobox" name="doseFrequency" style="width:120px;">   
 						<option value="Qd">${message("yly.drugsInfo.doseFrequency.Qd")}</option>
 						<option value="Bid">${message("yly.drugsInfo.doseFrequency.Bid")}</option>
 						<option value="Tid">${message("yly.drugsInfo.doseFrequency.Tid")}</option> 
@@ -69,13 +69,10 @@
 	    <div align="center" style="font-size: large">处方笺</div>
 	    <div style="width:100%;height:1px;border-top:solid rgb(0,0,0) 1px;margin-bottom:10px;">
 		<table id ="prescriptionDrugsAdd-table-list">
-			<tr>
-				<td colspan="9">
-					<a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.addDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a>
-				</td>
-			</tr>
 		</table>
-		
+		<div>
+			<a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.addDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a>
+		</div>
     </form>   
 </div>  
 </div>

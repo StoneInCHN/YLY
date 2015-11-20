@@ -1,4 +1,4 @@
-physicalExamItemIndex = 0;
+var physicalExamItemIndex = 0;
 var physicalExamination_manager_tool = {
 		searchPhysicalExaminationItem:function(id){
 			$('#physicalExaminationItemsList').dialog({    
@@ -84,7 +84,7 @@ var physicalExamination_manager_tool = {
 										if(response == "success"){
 											showSuccessMsg(result.content);
 											$('#addPhysicalExamination').dialog("close");
-											$('#addPhysicalExamination_form').form('reset');
+											$('#addPhysicalExamination_form').form('clear');
 											$("#physicalExamination-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
@@ -98,7 +98,7 @@ var physicalExamination_manager_tool = {
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#addPhysicalExamination').dialog("close");
-							 $('#addPhysicalExamination_form').form('reset');
+							 $('#addPhysicalExamination_form').form('clear');
 							 
 						}
 				    }],
@@ -141,7 +141,7 @@ var physicalExamination_manager_tool = {
 										$.messager.progress('close');
 											showSuccessMsg(result.content);
 											$('#editPhysicalExamination').dialog("close");
-											$('#editPhysicalExamination_form').form('reset');
+											$('#editPhysicalExamination_form').form('clear');
 											$("#physicalExamination-table-list").datagrid('reload');
 									}
 								});
@@ -152,7 +152,7 @@ var physicalExamination_manager_tool = {
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#editPhysicalExamination').dialog("close");
-							 $('#editPhysicalExamination_form').form('reset');
+							 $('#editPhysicalExamination_form').form('clear');
 						}
 				    }],onLoad:function(){
 				    	$('#editPhysicalExamination_form').show();
@@ -161,10 +161,10 @@ var physicalExamination_manager_tool = {
 				$('#editPhysicalExamination_form').show();
 			},
 			addExamItemHtml : function(operate) {
-				physicalExamItemIndex = $("#physicalExamItemSize").val();
-				if (physicalExamItemIndex == null) {
-					physicalExamItemIndex = 0;
+				if ($("#physicalExamItemSize").val()) {
+					physicalExamItemIndex = $("#physicalExamItemSize").val();
 				}
+				console.log('index='+physicalExamItemIndex);
 				var examItemMapHtml = '<tr id="physicalExamItem'
 						+ physicalExamItemIndex
 						+ '">\
@@ -180,7 +180,7 @@ var physicalExamination_manager_tool = {
 						+ '].physicalExaminationItem.id" \/>\
 							<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem(\'physicalExamItemsConfig'
 						+ physicalExamItemIndex
-						+ '\')" iconCls="icon-search" plain=true"></a>\
+						+ '\')" iconCls="icon-search" plain=true">select</a>\
 						<\/td>\
 						<th>体检值:<\/th>\
 						<td>\
@@ -190,10 +190,10 @@ var physicalExamination_manager_tool = {
 						<\/td>\
 						<\/tr>';
 				if(operate == "add"){
-					  var targetObj =$("#addPhysicalExamination-table-list").append(examItemMapHtml);
+					  var targetObj =$("#addPhysicalExaminationItem-table-list").append(examItemMapHtml);
 					  $.parser.parse(targetObj);
 				}else if (operate == "edit"){
-					 var targetObj = $("#editPhysicalExamination-table-list").append(examItemMapHtml);
+					 var targetObj = $("#editPhysicalExaminationItem-table-list").append(examItemMapHtml);
 					$.parser.parse(targetObj);
 				}
 				physicalExamItemIndex++;

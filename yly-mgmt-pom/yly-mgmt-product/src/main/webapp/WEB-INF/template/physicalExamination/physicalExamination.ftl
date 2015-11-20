@@ -57,6 +57,8 @@
 				</td>
 			</tr>
 	    </table>
+	    <table id="addPhysicalExaminationItem-table-list" class="table table-striped">
+	    <table>
 	</form>
 </div>
 <div id ="physicalExaminationItemsList"></div>
