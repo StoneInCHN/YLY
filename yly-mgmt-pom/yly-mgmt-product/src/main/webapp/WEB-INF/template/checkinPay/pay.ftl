@@ -1,4 +1,3 @@
-<script src="${base}/resources/modules/checkinPay.js"></script>
 <form id="addCheckinPay_form" method="post"> 
 	    <table class="table table-striped">
 	    	<input type="hidden" name="billingId" value="${billing.id}">
@@ -199,3 +198,51 @@
 	    	</tr>
 	    </table>
     </form>
+    
+ <script type="text/javascript">
+ 	//支付方式
+	$('#paymentType').combobox({
+		onChange:function(value){
+			if(value == "MIXTURE"){
+				$('#mixturePay').css("display","table-row");
+				$("#totalAmount_cash").numberbox({
+					required:true,
+				});
+				$("#totalAmount_card").numberbox({
+					required:true,
+				});
+			}else{
+				$('#mixturePay').css("display","none");
+				$("#totalAmount_cash").numberbox('reset');
+				$("#totalAmount_cash").numberbox({
+					required:false,
+				});
+				$("#totalAmount_card").numberbox('reset');
+				$("#totalAmount_card").numberbox({
+					required:false,
+				});
+				
+			}
+		}
+	});
+	
+	//混合支付计算
+	$('#totalAmount_cash').numberbox({
+		onChange:function(value){
+			if($('#paymentType').combobox('getValue')=="MIXTURE"){
+				var totalAmount=$('#chargeinPay_totalAmount').numberbox('getValue');
+				$('#totalAmount_card').numberbox('setValue',totalAmount-value);
+			}
+			
+		}
+	});
+	
+	$('#totalAmount_card').numberbox({
+		onChange:function(value){
+			if($('#paymentType').combobox('getValue')=="MIXTURE"){
+				var totalAmount=$('#chargeinPay_totalAmount').numberbox('getValue');
+				$('#totalAmount_cash').numberbox('setValue',totalAmount-value);
+			}
+		}
+	});
+ </script>

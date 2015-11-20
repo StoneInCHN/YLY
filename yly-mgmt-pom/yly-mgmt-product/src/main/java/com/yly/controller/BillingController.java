@@ -189,6 +189,15 @@ public class BillingController extends BaseController {
     return billingService.getBedNurseConfigByElderly(properties, elderlyInfo);
   }
 
+  
+  @RequestMapping(value = "/updateCheckinBill", method = RequestMethod.POST)
+  public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,
+      Long elderlyInfoID, Boolean isMonthlyMeal) {
+        Billing billing = billingService.find(checkinBill.getId());
+        billingService.updateUnpaidCheckInBill(billing,checkinBill);
+        return SUCCESS_MESSAGE;
+    
+  }
   /**
    * 入院缴费账单
    * 
@@ -346,6 +355,18 @@ public class BillingController extends BaseController {
   }
 
   /**
+   * 编辑页面
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/edit", method = RequestMethod.GET)
+  public String edit(ModelMap model, Long id) {
+    Billing record = billingService.find(id);
+    model.addAttribute("billing", record);
+    return "/checkinCharge/edit";
+  }
+  /**
    * 获取数据进入详情页面
    * 
    * @param model
@@ -355,9 +376,6 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id, String path) {
     Billing record = billingService.find(id);
-    if (record.getChargeStatus().equals(PaymentStatus.UNPAID_ADJUSTMENT)) {
-
-    }
     model.addAttribute("billing", record);
     return path + "/details";
   }

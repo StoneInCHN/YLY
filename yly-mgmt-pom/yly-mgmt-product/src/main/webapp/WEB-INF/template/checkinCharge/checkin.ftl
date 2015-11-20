@@ -44,13 +44,14 @@
 <div id="checkinCharge_manager_tool">
 	<div class="tool-button">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="checkinCharge_manager_tool.add();">${message("yly.charge.checkin")}</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.edit();">${message("yly.bill.editBill")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.editBill();">${message("yly.bill.editBill")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="checkinCharge_manager_tool.adjustment();">${message("yly.bill.adjustment")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
 <table id="checkinCharge_table_list"></table>
 <div id="checkinDetail"></div>
+<div id="editCheckinBill"></div>
 <div id="addCheckinAdjust">
 	<form id="addCheckinAdjust_form" method="post" class="form-table">
 		 <table class="table table-striped">

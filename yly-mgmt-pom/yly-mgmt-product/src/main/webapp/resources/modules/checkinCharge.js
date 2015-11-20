@@ -107,6 +107,31 @@ var checkinCharge_manager_tool = {
 				    }
 				});  
 			},
+	
+			editBill:function(){
+		    	var _edit_row = $('#checkinCharge_table_list')
+					.datagrid('getSelections');
+				if (_edit_row.length == 0) {
+					$.messager.alert(message("yly.common.prompt"),
+							message("yly.common.select.editRow"), 'warning');
+					return false;
+				}
+				if (_edit_row.length>1) {
+					$.messager.alert(message("yly.common.prompt"),
+							message("yly.common.select.editRow.unique"), 'warning');
+					return false;
+				}
+				
+				if(_edit_row[0].chargeStatus == "PAID"){
+					$.messager.confirm(message("yly.common.confirm"), message("yly.charge.billing.confirm.paid.adjust"), function(r) {
+						if(r){
+						   checkinEditBill(_edit_row[0].id);
+						}
+					});
+				}else{
+					checkinEditBill(_edit_row[0].id);
+				}
+		      },
 			
 	  adjustment:function(){
 	    	var _edit_row = $('#checkinCharge_table_list')
@@ -133,6 +158,61 @@ var checkinCharge_manager_tool = {
 			}
 	      }
 	}
+
+function checkinEditBill(billId){
+	$('#editCheckinBill').dialog({    
+	    title: message("yly.charge.billing.edit"),    
+	    width: 650,    
+	    height: 750,
+	    modal: true,
+	    iconCls : 'icon-mini-edit',
+	    href : '../billing/edit.jhtml?&id='+ billId,
+	    cache: false, 
+	    buttons:[{
+	    	text:message("yly.common.save"),
+	    	iconCls:'icon-save',
+			handler:function(){
+				var validate = $('#editCheckinCharge_form').form('validate');
+				if(validate){
+					$.ajax({
+						url:"../billing/updateCheckinBill.jhtml",
+						type:"post",
+						data:$("#editCheckinCharge_form").serialize(),
+						beforeSend:function(){
+							$.messager.progress({
+								text:message("yly.common.saving")
+							});
+						},
+						success:function(result,response,status){
+							    showSuccessMsg(result.content);
+							    console.log(result);
+							    if(result.type == "success"){
+							    	$.messager.progress('close');
+									$('#editCheckinBill').dialog("close");
+									$("#checkinCharge_table_list").datagrid('reload');
+							    }
+								
+						},
+						error:function (XMLHttpRequest, textStatus, errorThrown) {
+							$.messager.progress('close');
+							alertErrorMsg();
+						}
+					});
+				};
+			}
+		},{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#editCheckinBill').dialog("close");
+			}
+	    }],
+	    onOpen:function(){
+	    },
+	    onClose:function(){
+	    }
+	}); 
+}
 
 function checkinAdjustment(billId){
 	$('#addCheckinAdjust').dialog({    

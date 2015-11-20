@@ -21,5 +21,12 @@ public interface BillingService extends ChargeRecordService<Billing, Long> {
 	 * @return
 	 */
 	List<Map<String, Object>> getBedNurseConfigByElderly(String[] properties,ElderlyInfo elderlyInfo);
+	
+	/**
+	 * 修改未付款的入院缴费账单
+	 * @param originOrder
+	 * @param editOrder
+	 */
+	void updateUnpaidCheckInBill(Billing originBill,Billing editBill);
 
 }
