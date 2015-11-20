@@ -76,6 +76,9 @@ public class SystemConfigController extends BaseController {
   public @ResponseBody List<TreeNodeResponse> getAllConfigKey(Pageable pageable, ModelMap model) {
     List<TreeNodeResponse> treeList = new ArrayList<TreeNodeResponse>();
     for (ConfigKey configKey : ConfigKey.class.getEnumConstants()) {
+      if(configKey==ConfigKey.PHYSICALEXAMITEM){
+        continue;
+      }
       TreeNodeResponse treeNodeResponse = new TreeNodeResponse();
       treeNodeResponse.setId(Integer.toUnsignedLong(configKey.ordinal()));
       treeNodeResponse.setText(configKey.getKeyName());

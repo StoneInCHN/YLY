@@ -79,8 +79,48 @@ public class RoleController extends BaseController {
   public @ResponseBody Message add(Role role) {
     if (role != null) {
       role.setTenantID(tenantAccountService.getCurrentTenantID());
+      role.setIsSystem(true);
       roleService.save(role);
     }
+    return SUCCESS_MESSAGE;
+  }
+
+  /**
+   * 删除
+   * 
+   * @param id arrays
+   */
+  @RequestMapping(value = "/delete", method = RequestMethod.POST)
+  public @ResponseBody Message delete(Long[] ids) {
+    if (ids != null) {
+      roleService.delete(ids);
+    }
+    return SUCCESS_MESSAGE;
+  }
+
+  /**
+   * 获取数据进入编辑页面
+   * 
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/edit", method = RequestMethod.GET)
+  public String edit(ModelMap model, Long id) {
+    Role role = roleService.find(id);
+    model.addAttribute("role", role);
+    return "role/edit";
+  }
+
+  /**
+   * 更新
+   * 
+   * @param role
+   * @return
+   */
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public @ResponseBody Message update(Role role) {
+    roleService.update(role);
     return SUCCESS_MESSAGE;
   }
 
@@ -145,7 +185,7 @@ public class RoleController extends BaseController {
         treeNodeResponseFather.setChildren(childList);
       }
     }
-    
+
     return treeNodeResponses;
   }
 
@@ -174,7 +214,7 @@ public class RoleController extends BaseController {
     }
     role.setAuthorityResources(authorityResources);
     roleService.save(role);
-    
+
     return SUCCESS_MESSAGE;
   }
 }

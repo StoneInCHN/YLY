@@ -53,8 +53,7 @@
 	<table id="role-table-auth"></table>
 </div>
 
-<div id="editrole"></div> 
-<div id="roleDetail"></div>
+<div id="editRole"></div> 
 
 
 

@@ -87,6 +87,7 @@ public class BlackListController extends BaseController {
         blackListService.save(blackList);
       } catch (Exception e) {
         // 老人唯一性 验证
+        e.printStackTrace();
         LogUtil
             .debug(
                 BlackListController.class,
