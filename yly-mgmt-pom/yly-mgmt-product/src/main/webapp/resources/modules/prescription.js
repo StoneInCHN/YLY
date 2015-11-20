@@ -237,6 +237,9 @@ $(function(){
 				    },
 				    onOpen:function(){
 				    	
+				    },
+				    onClose:function(){
+				    	$("#drugsItemSize").val(0);
 				    }
 				});  
 			},

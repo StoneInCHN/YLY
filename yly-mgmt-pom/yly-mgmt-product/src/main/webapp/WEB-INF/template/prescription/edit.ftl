@@ -77,7 +77,7 @@
 	    <div id="editPrescriptionDrugs"></div>
 	    <div align="center" style="font-size: large">处方笺</div>
 	    <div style="width:100%;height:1px;border-top:solid rgb(0,0,0) 1px;margin-bottom:10px;">
-		<table id ="prescriptionDrugsAdd-table-list" border="0">
+		<table id ="editPrescriptionDrugs-table-list" border="0">
 			<input type= "hidden" id ="drugsItemSize" value="${prescription.prescriptionDrugsItems?size}"/>
 			[#list prescription.prescriptionDrugsItems as item]
 				<tr id="drugsItem${item.id}">

@@ -68,7 +68,7 @@
 	    </table>
 	    <div align="center" style="font-size: large">处方笺</div>
 	    <div style="width:100%;height:1px;border-top:solid rgb(0,0,0) 1px;margin-bottom:10px;">
-		<table id ="prescriptionDrugsAdd-table-list">
+		<table id ="addPrescriptionDrugs-table-list">
 		</table>
 		<div>
 			<a href="javascript:;" id="addprescriptionDrugs" class="btn green-color" onclick="prescription_manager_tool.addDrgus()"><i class="fa fa-plus-square-o fa-2x"></i></a>

@@ -379,6 +379,7 @@ var messages = {
 	//病历管理
 	"yly.medicalRecord.list":"病历列表",
 	"yly.medicalRecord.add":"添加病历",
+	"yly.prescriptionDrugsItem.delete.confirm":"删除后不可恢复，确认？",
 	//通知公告
 	"yly.notification.operator":"发布人",
 	"yly.notification.publishTime":"发布时间",

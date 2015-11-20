@@ -1,5 +1,6 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -175,12 +176,14 @@ public class PrescriptionController extends BaseController
   {
     ElderlyInfo elderlyInfo = elderlyInfoService.find (elderlyInfoID);
     List<PrescriptionDrugsItems> itemsList=prescription.getPrescriptionDrugsItems ();
+    List<PrescriptionDrugsItems> newItemList=new ArrayList<PrescriptionDrugsItems>();
     for (PrescriptionDrugsItems items : itemsList)
     {
       //删除item时，item存在，但所有属性都为null
-//      if(items.getId () == null){
-//        continue;
-//      }
+      //drugsInfo 为null为错误数据
+      if(items.getDrugsInfo () ==null){
+        continue;
+      }
       //西药情况
       if (items.getDrugUseMethod () != null)
       {
@@ -189,13 +192,16 @@ public class PrescriptionController extends BaseController
       
       items.setDrugsInfo (drugsInfoService.find (items.getDrugsInfo ().getId ()));
       items.setPrescription (prescription);
+      
+      newItemList.add (items);
     }
+    
     if (prescriptionUseMethodId != null)
     {
       prescription.setDrugUseMethod (systemConfigService.find (prescriptionUseMethodId));
     }
     prescription.setElderlyInfo (elderlyInfo);
-    prescription.setPrescriptionDrugsItems (itemsList);
+    prescription.setPrescriptionDrugsItems (newItemList);
     prescriptionService.update (prescription);
     return SUCCESS_MESSAGE;
   }

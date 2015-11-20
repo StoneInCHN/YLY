@@ -62,7 +62,7 @@ $(function(){
 				}
 				
 				if(type == 'WESTEN_MEDICINE'){
-					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
+					$("#"+oper+"PrescriptionDrugs-table-list").append(drugNameHtml+drugWestHtml+totalHtml);
 					$("#"+oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_drugUseMethod").combobox({    
 					    valueField:'id',    
 					    textField:'configValue',
@@ -101,7 +101,7 @@ $(function(){
 					$("#"+oper+"PrescriptionDrugsItems"+prescriptionDrugsItemIndex+"_doseFrequency").combobox("setValue",_doseFrequency);
 					
 				}else{
-					$("#prescriptionDrugsAdd-table-list").append(drugNameHtml+totalHtml);
+					$("#"+oper+"PrescriptionDrugs-table-list").append(drugNameHtml+totalHtml);
 				}
 				
 				if( prescriptionDrugsItemIndex > 0){
@@ -165,7 +165,7 @@ $(function(){
 				}
 			},
 			editRemove:function(id){
-				$.messager.confirm(message("yly.common.confirm"), message("yly.common.delete.confirm"), function(r) {
+				$.messager.confirm(message("yly.common.confirm"), message("yly.prescriptionDrugsItem.delete.confirm"), function(r) {
 					if (r) {
 						$.ajax({
 							url : "../prescriptionDrugsItem/delete.jhtml",
