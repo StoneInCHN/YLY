@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 @Entity
@@ -49,7 +50,7 @@ public class EvaluatingItemsOptions extends BaseEntity{
   public void setEvaluatingItems(EvaluatingItems evaluatingItems) {
     this.evaluatingItems = evaluatingItems;
   }
-
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
   public EvaluatingItemOptions getEvaluatingItemOptions() {
     return evaluatingItemOptions;
@@ -67,7 +68,7 @@ public class EvaluatingItemsOptions extends BaseEntity{
   public void setEvaluatingItemsAnswers(List<EvaluatingItemsAnswer> evaluatingItemsAnswers) {
     this.evaluatingItemsAnswers = evaluatingItemsAnswers;
   }
-
+@JsonProperty
 public Integer getOptionScore() {
 	return optionScore;
 }

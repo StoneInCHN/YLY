@@ -1,6 +1,8 @@
 package com.yly.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -56,7 +59,7 @@ public class EvaluatingItems extends BaseEntity {
    */
   private EvaluatingSection evaluatingSection; 
   
-  private Set<EvaluatingItemsOptions> evaluatingItemsOptions = new HashSet<EvaluatingItemsOptions>();
+  private List<EvaluatingItemsOptions> evaluatingItemsOptions = new ArrayList<EvaluatingItemsOptions>();
   
   @Index(name="evaluating_items_tenantid")
   public Long getTenantID() {
@@ -66,7 +69,7 @@ public class EvaluatingItems extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
-
+  @JsonProperty
   @Column(length = 120)
   public String getItemName() {
     return itemName;
@@ -100,13 +103,14 @@ public class EvaluatingItems extends BaseEntity {
   public void setEvaluatingSection(EvaluatingSection evaluatingSection) {
     this.evaluatingSection = evaluatingSection;
   }
-
+  @JsonProperty
   @OneToMany(mappedBy = "evaluatingItems",fetch = FetchType.LAZY)
-  public Set<EvaluatingItemsOptions> getEvaluatingItemsOptions() {
+  public List<EvaluatingItemsOptions> getEvaluatingItemsOptions() {
     return evaluatingItemsOptions;
   }
 
-  public void setEvaluatingItemsOptions(Set<EvaluatingItemsOptions> evaluatingItemsOptions) {
+  public void setEvaluatingItemsOptions(List<EvaluatingItemsOptions> evaluatingItemsOptions) {
     this.evaluatingItemsOptions = evaluatingItemsOptions;
   }
+ 
 }

@@ -27,9 +27,9 @@ function loadAlbum(){
 						    albumCoverImg = '${base}/resources/images/album_defaultCover.png';
 						}	
 						[@compress single_line = true]
-						divAlbumHtml += '<div class="col-sm-2 col-md-2" onmouseenter="deepColor()">
+						divAlbumHtml += '<div class="col-sm-2 col-md-2"">
 											<div class="thumbnail">
-												<a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><img src="'+albumCoverImg+'" title="相册主人:'+jsonObj[i].elderlyInfo.name+'" style="width:140px;height:100px;"></a>
+												<a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><img src="'+albumCoverImg+'" title="相册主人:'+jsonObj[i].elderlyInfo.name+'"  width="155" height="65"></a>
 												<div classheng="caption">
 													<h6><a href="javascript:void(0);" onclick="photoAlbum_manager_tool.showImage('+jsonObj[i].id+');"><span title="'+jsonObj[i].name+'">'+shortName+'</span></a></h6> 
 													<p><span title="'+jsonObj[i].remark+'">'+shortRemark+'</span></p>

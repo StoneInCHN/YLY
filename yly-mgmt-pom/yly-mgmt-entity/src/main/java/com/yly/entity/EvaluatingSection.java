@@ -1,6 +1,8 @@
 package com.yly.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -46,7 +49,36 @@ public class EvaluatingSection extends BaseEntity {
   /**
    * 每个评估项目对应的问题集
    */
-  private Set<EvaluatingItems> evaluatingItems = new HashSet<EvaluatingItems>();
+  private List<EvaluatingItems> evaluatingItems = new ArrayList<EvaluatingItems>();
+  
+  /**
+   * 该评估模块的评分规则
+   */
+  private String evaluatingRule;
+  
+  /**
+   * 标记是否系统定义的评估模块，比如 日常生活活动，精神状态，感知觉与沟通，社会参与 这个四个就是系统定义的评估模块
+   * true:系统定义     false：自定义
+   */
+  private Boolean systemSection;
+  
+  @JsonProperty
+  @Column(length = 100)
+  public String getEvaluatingRule() {
+    return evaluatingRule;
+  }
+
+  public void setEvaluatingRule(String evaluatingRule) {
+    this.evaluatingRule = evaluatingRule;
+  }
+  @JsonProperty
+  public Boolean getSystemSection() {
+    return systemSection;
+  }
+
+  public void setSystemSection(Boolean systemSection) {
+    this.systemSection = systemSection;
+  }
 
   @Index(name="evaluating_section_tenantid")
   public Long getTenantID() {
@@ -56,7 +88,7 @@ public class EvaluatingSection extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
-
+  @JsonProperty
   @Column(length = 50)
   public String getSectionName() {
     return sectionName;
@@ -66,18 +98,18 @@ public class EvaluatingSection extends BaseEntity {
     this.sectionName = sectionName;
   }
 
-  @OneToMany(mappedBy = "evaluatingSection", fetch = FetchType.LAZY)
-  public Set<EvaluatingItems> getEvaluatingItems() {
-    return evaluatingItems;
-  }
-
-  public void setEvaluatingItems(Set<EvaluatingItems> evaluatingItems) {
-    this.evaluatingItems = evaluatingItems;
-  }
-
   @ManyToOne(fetch = FetchType.LAZY)
   public EvaluatingForm getEvaluatingForm() {
     return evaluatingForm;
+  }
+  @JsonProperty
+  @OneToMany(mappedBy = "evaluatingSection", fetch = FetchType.LAZY)
+  public List<EvaluatingItems> getEvaluatingItems() {
+    return evaluatingItems;
+  }
+
+  public void setEvaluatingItems(List<EvaluatingItems> evaluatingItems) {
+    this.evaluatingItems = evaluatingItems;
   }
 
   public void setEvaluatingForm(EvaluatingForm evaluatingForm) {
