@@ -84,7 +84,15 @@ public class RoleController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
-
+  /**
+   * 查询角色
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/commonRolesSearch", method = RequestMethod.GET)
+  public String commonRolesSearch(ModelMap model) {
+    return "/common/commonRolesSearch";
+  }
   /**
    * 删除
    * 

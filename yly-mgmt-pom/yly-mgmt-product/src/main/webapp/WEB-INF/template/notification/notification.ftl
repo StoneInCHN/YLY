@@ -1,5 +1,13 @@
 <script src="${base}/resources/js/common.js"></script>
 <script src="${base}/resources/modules/notification.js"></script>
+<script src="${base}/resources/js/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="${base}/resources/js/kindeditor/lang/zh_CN.js"></script>
+<link href="${base}/resources/js/kindeditor/examples/index.css" rel="stylesheet" />
+<script  src="${base}/resources/js/kindeditor/kindeditor.js"></script>
+<script  src="${base}/resources/js/kindeditor/kindeditor-all.js"></script>
+<script  src="${base}/resources/js/kindeditor/kindeditor-all-min.js"></script>
+<script  src="${base}/resources/js/kindeditor/kindeditor-min.js"></script>
+<script  src="${base}/resources/js/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 <div>
 	  <fieldset>
@@ -55,7 +63,7 @@
 	    	<tr>
 	    		<th>${message("yly.notification.content")}:</th>
 	    		<td colspan="3">
-	    			 <textarea name="content" id= "editor_id"  style="height:200px;width:300px" textarea/>   
+	    			 <textarea name="content" class="easyui-kindeditor" id= "notification_content"  style="height:200px;width:300px" ></textarea>   
 	    		</td>
 	    	</tr>
 	    </table>

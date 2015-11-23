@@ -290,6 +290,7 @@ function searchTenantUser(id){
 	    	 },
 	    	 columns:[
 	    	    [
+	    	    {title:message("yly.common.name"),field:"realName",width:100,sortable:true},
 				{title:message("yly.common.age"),field:"age",width:100,sortable:true},
 				{title:message("yly.tenantUser.staffID"),field:"staffID",width:100,sortable:true},
 				{title:message("yly.tenantUser.staffStatus"),field:"staffStatus",width:100,sortable:true,

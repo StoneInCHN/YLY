@@ -157,9 +157,15 @@ public class TenantAccountController extends BaseController
   }
 
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (TenantAccount tenantAccount)
+  public @ResponseBody Message update (TenantAccount tenantAccount,Long tenantUserID,Long roleID)
   {
-    tenantAccountService.update (tenantAccount,"createDate");
+    TenantUser tenantUser=tenantUserService.find(tenantUserID);
+    Role role =roleService.find (roleID);
+    List<Role> roleSet = new ArrayList<Role> ();
+    roleSet.add (role);
+    tenantAccount.setTenantUser(tenantUser);
+    tenantAccount.setRoles (roleSet);
+    tenantAccountService.update (tenantAccount,"createDate","isSystem");
     return SUCCESS_MESSAGE;
   }
  
