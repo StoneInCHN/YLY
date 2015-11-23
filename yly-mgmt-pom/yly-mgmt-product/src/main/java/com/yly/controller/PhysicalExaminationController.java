@@ -1,6 +1,8 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -186,21 +188,28 @@ public class PhysicalExaminationController extends BaseController
   {
     ElderlyInfo elderlyInfo= elderlyInfoService.find (elderlyInfoID);
     
-    
-    if (physicalExamination.getPhysicalExaminationItems () != null 
-        && !physicalExamination.getPhysicalExaminationItems ().isEmpty ())
+    List<PhysicalExaminationItems> oldItems = physicalExamination.getPhysicalExaminationItems ();
+    List<PhysicalExaminationItems> newItems= new ArrayList<PhysicalExaminationItems>();
+    if ( oldItems!= null 
+        && !oldItems.isEmpty ())
     {
+      
       for (PhysicalExaminationItems item: physicalExamination.getPhysicalExaminationItems ())
       {
+        if (item.getPhysicalExaminationItem () == null)
+        {
+          continue;
+        }
         PhysicalExaminationItemConfig itemConfig=physicalExaminationItemConfigService.find (item.getPhysicalExaminationItem ().getId ());
         item.setPhysicalExaminationItem (itemConfig);
         item.setPhysicalExamination (physicalExamination);
+        newItems.add (item);
       }
     }
     TenantAccount account=tenantAccountService.getCurrent ();
     physicalExamination.setOperator (account.getTenantUser ());
     physicalExamination.setElderlyInfo (elderlyInfo);
-    
+    physicalExamination.setPhysicalExaminationItems (newItems);
     physicalExaminationService.update (physicalExamination);
     return SUCCESS_MESSAGE;
   }

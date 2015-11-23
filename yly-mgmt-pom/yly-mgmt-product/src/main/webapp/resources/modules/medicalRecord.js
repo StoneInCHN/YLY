@@ -107,8 +107,8 @@ $(function(){
 				}
 				var _dialog = $('#editMedicalRecord').dialog({    
 					title: message("yly.common.edit"),   
-				    width: 700,    
-				    height: 550,    
+				    width: 800,    
+				    height: 580,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../medicalRecord/edit.jhtml?id='+_edit_row.id,

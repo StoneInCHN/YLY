@@ -180,7 +180,7 @@ var physicalExamination_manager_tool = {
 						+ '].physicalExaminationItem.id" \/>\
 							<a href="#" id="elderly_info_search_btn" class="easyui-linkbutton" onclick="physicalExamination_manager_tool.searchPhysicalExaminationItem(\'physicalExamItemsConfig'
 						+ physicalExamItemIndex
-						+ '\')" iconCls="icon-search" plain=true">select</a>\
+						+ '\')" iconCls="icon-search" plain=true"></a>\
 						<\/td>\
 						<th>体检值:<\/th>\
 						<td>\

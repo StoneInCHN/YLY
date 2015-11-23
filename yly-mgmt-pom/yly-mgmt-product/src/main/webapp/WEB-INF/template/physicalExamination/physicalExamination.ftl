@@ -48,17 +48,15 @@
 	    		</td>
 	    		<th>${message("yly.physicalExamination.physicalExaminationDate")}:</th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="physicalExaminationDate" name="physicalExaminationDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
+	    			 <input type="text" class="Wdate" id="addPhysicalExaminationDate" name="physicalExaminationDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>
 	    	</tr>
-	    	<tr>
-				<td colspan="9">
-					<a href="javascript:;" id="addPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml('add')"><i class="fa fa-plus-square-o fa-2x"></i></a>
-				</td>
-			</tr>
 	    </table>
 	    <table id="addPhysicalExaminationItem-table-list" class="table table-striped">
 	    <table>
+	    <div>
+	    	<a href="javascript:;" id="addPhysicalExaminationItems" class="btn green-color" onclick="physicalExamination_manager_tool.addExamItemHtml('add')"><i class="fa fa-plus-square-o fa-2x"></i></a>
+	    </div>
 	</form>
 </div>
 <div id ="physicalExaminationItemsList"></div>

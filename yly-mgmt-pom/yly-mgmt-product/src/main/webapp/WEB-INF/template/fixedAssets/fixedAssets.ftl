@@ -120,19 +120,19 @@
 				     textField: 'value',
 				     data: [{
 				      label: 'BUILDING',
-				      value: '${message("yly.fixedAssets.buiding")}'
+				      value: '${message("yly.fixedAssets.assetsType.buiding")}'
 				     },{
 				      label: 'PRODUCTION',
-				      value: '${message("yly.fixedAssets.production")}'
+				      value: '${message("yly.fixedAssets.assetsType.production")}'
 				     },{
 				      label: 'VEHICLE',
-				      value: '${message("yly.fixedAssets.vehicle")}'
+				      value: '${message("yly.fixedAssets.assetsType.vehicle")}'
 				     },{
 				      label: 'ELECTRONIC',
-				      value: '${message("yly.fixedAssets.electronic")}'
+				      value: '${message("yly.fixedAssets.assetsType.electronic")}'
 				     },{
 				      label: 'OTHERS',
-				      value: '${message("yly.fixedAssets.other")}'
+				      value: '${message("yly.fixedAssets.assetsType.other")}'
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="assetsType" style="width:110px;"/>
 	    		</td>

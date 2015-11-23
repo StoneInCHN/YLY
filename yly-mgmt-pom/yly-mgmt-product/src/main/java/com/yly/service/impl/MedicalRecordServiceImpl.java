@@ -1,4 +1,4 @@
-/*package com.yly.service.impl;
+package com.yly.service.impl;
 
 import javax.annotation.Resource;
 
@@ -23,4 +23,3 @@ public class MedicalRecordServiceImpl extends BaseServiceImpl<MedicalRecord, Lon
 
 
 }
-*/

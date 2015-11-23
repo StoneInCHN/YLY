@@ -7,11 +7,11 @@
 	    <legend>${message("yly.donateRecord.search")}</legend>
 	    <form id="donateRecord-search-form" class="search-form">
 	    <div class="search-item">
-			    <label> >${message("yly.donateRecord.search.name")}:</label>
+			    <label>${message("yly.donateRecord.search.name")}:</label>
 			    <input type="text" class="easyui-textbox" id="donatorName" name="donatorName" />
 			</div>
 			<div class="search-item">
-			    <label> ${message("yly.donateRecord.search.donateTime")}:</label>
+			    <label> ${message("yly.donateRecord.donateTime")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
 			</div>
 			<div class="search-item">

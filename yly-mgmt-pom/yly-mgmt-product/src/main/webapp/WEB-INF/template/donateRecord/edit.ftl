@@ -20,7 +20,7 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
-	    		<th>${message("yly.donateRecord.donateTime")}:</th>
+	    		<th>${message("yly.donateRecord.donateName")}:</th>
 	    		<td>
 	    			 <input type="text" class="Wdate" id="donateTime" name="donateTime" value="${donateRecord.donateTime}" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />   
 	    		</td>

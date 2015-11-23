@@ -71,11 +71,11 @@
 	    		<th>${message("yly.fixedAssets.assetsType")}:</th>
 	    		<td>
 				      <select id="assetsType" class="easyui-combobox" name="dosageUnit" style="width:100px;">   
-						<option value="BUILDING" [#if fixedAssets.assetsType == 'BUILDING'] selected = "selected"[/#if]>${message("yly.fixedAssets.buiding")}</option>
-						<option value="PRODUCTION" [#if fixedAssets.assetsType == 'PRODUCTION'] selected = "selected"[/#if]>${message("yly.fixedAssets.production")}</option>
-						<option value="VEHICLE" [#if fixedAssets.assetsType == 'VEHICLE'] selected = "selected"[/#if]>${message("yly.fixedAssets.vehicle")}</option> 
-						<option value="ELECTRONIC" [#if fixedAssets.assetsType == 'ELECTRONIC'] selected = "selected"[/#if]>${message("yly.fixedAssets.electronic")}</option>
-						<option value="OTHERS" [#if fixedAssets.assetsType == 'OTHERS'] selected = "selected"[/#if]>${message("yly.fixedAssets.other")}</option>
+						<option value="BUILDING" [#if fixedAssets.assetsType == 'BUILDING'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.buiding")}</option>
+						<option value="PRODUCTION" [#if fixedAssets.assetsType == 'PRODUCTION'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.production")}</option>
+						<option value="VEHICLE" [#if fixedAssets.assetsType == 'VEHICLE'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.vehicle")}</option> 
+						<option value="ELECTRONIC" [#if fixedAssets.assetsType == 'ELECTRONIC'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.electronic")}</option>
+						<option value="OTHERS" [#if fixedAssets.assetsType == 'OTHERS'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.other")}</option>
 				  	</select> 
 	    		</td>
 	    	</tr>

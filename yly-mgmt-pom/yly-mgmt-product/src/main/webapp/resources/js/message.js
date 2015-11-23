@@ -337,6 +337,7 @@ var messages = {
 	"yly.fixedAssets.department":"存放部门",
 	"yly.fixedAssets.assetCount":"资产数量",
 	"yly.fixedAssets.assetTime":"录入时间",
+	"yly.fixedAssets.add":"固定资产添加",
 	//租户用户
 	"yly.tenantUser.list":"用户列表",
 	"yly.tenantUser.realName":"姓名",

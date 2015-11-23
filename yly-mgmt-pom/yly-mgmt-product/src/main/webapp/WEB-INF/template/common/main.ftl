@@ -152,11 +152,13 @@
 		    		<li><a href="#">${message("yly.residential.changeRoom")}</a></li>
 		    	</ul>
 		    	 <ul title="健康管理" id="health">
-		    		<li><a href="#">病历档案</a></li>
+		    		<li><a href="#" data-url="${base}/console/medicalRecord/medicalRecord.jhtml">病历档案</a></li>
 		    		[@shiro.hasPermission name="prescription"]
 		    		<li><a href="#" data-url="${base}/console/prescription/prescription.jhtml">老人药方</a></li>
-		    		[/@shiro.hasPermission]
-		    		<li><a href="#">体检记录</a></li>
+		    		[/@shiro.hasPermission ]
+		    		[@shiro.hasPermission name="physicalExamination"]
+		    		<li><a href="#" data-url="${base}/console/physicalExamination/physicalExamination.jhtml">体检记录</a></li>
+		    		[/@shiro.hasPermission ]
 		    		[@shiro.hasPermission name="drugsInfo"]
 		    		<li><a href="#" data-url="${base}/console/drugs/drugsInfo.jhtml">药品管理</a></li>
 		    		[/@shiro.hasPermission]
@@ -165,7 +167,7 @@
 		    		[@shiro.hasPermission name="fixedAssets"]
 		    		<li><a href="#" data-url="${base}/console/fixedAssets/fixedAssets.jhtml">固定资产</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#">库存管理</a></li>
+		    		<li><a href="#" >库存管理</a></li>
 		    		[@shiro.hasPermission name="donateRecord"]
 		    		<li><a href="#" data-url="${base}/console/donateRecord/donateRecord.jhtml">捐赠管理</a></li>
 		    		[/@shiro.hasPermission]
