@@ -126,9 +126,9 @@ public class TenantAccountController extends BaseController
     }
     if (nameQuery != null || rangeQuery != null || statusQuery != null)
     {
-      return tenantAccountService.search (query, pageable, analyzer,filter);
+      return tenantAccountService.search (query, pageable, analyzer,filter,true);
     }
-      return tenantAccountService.findPage (pageable);
+      return tenantAccountService.findPage (pageable, true);
     
   }
 

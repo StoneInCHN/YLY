@@ -40,7 +40,8 @@ var tenantAccount_manager_tool = {
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#addTenantAccount').dialog("close").form("reset");
+						 $('#addTenantAccount').dialog("close");
+						 $("#addTenantAccount_form").form("reset");
 					}
 			    }],
 			    onOpen:function(){

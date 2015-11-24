@@ -174,6 +174,7 @@ public class TenantAccount extends BaseEntity {
   }
 
   @Index(name="tenant_account_tenantid")
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Long getTenantID() {
     return tenantID;
   }

@@ -90,7 +90,7 @@ public class DonateDetailController extends BaseController
     DonateItemType itemType = donateItemTypeService.find (donateItemTypeId);
     donateDetail.setDonateItemType (itemType);
     donateDetail.setDonateRecord (record);
-    donateDetailService.update (donateDetail);
+    donateDetailService.update (donateDetail,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
 

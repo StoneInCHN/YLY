@@ -83,6 +83,7 @@ public class PhysicalExaminationItemConfig extends BaseEntity {
   }
 
   @Index(name = "physical_examination_item_config_tenantid")
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Long getTenantID() {
     return tenantID;
   }

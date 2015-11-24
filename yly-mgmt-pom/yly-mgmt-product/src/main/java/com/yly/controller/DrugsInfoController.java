@@ -112,14 +112,14 @@ public class DrugsInfoController extends BaseController
               endDateStr, true, true);
         }
 
-        return drugsService.search (query, null, analyzer,filter);
+        return drugsService.search (query, null, analyzer,filter,true);
       }
       catch (ParseException e)
       {
         e.printStackTrace ();
       }
     }
-      return drugsService.findPage (pageable);
+      return drugsService.findPage (pageable,true);
   }
 
   /**

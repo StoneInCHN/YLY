@@ -285,6 +285,7 @@ public class DrugsInfo extends BaseEntity {
   }
 
   @Index(name = "drugs_info_tenantid")
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Long getTenantID() {
     return tenantID;
   }

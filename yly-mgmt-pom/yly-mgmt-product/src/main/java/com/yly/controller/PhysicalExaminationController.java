@@ -143,9 +143,9 @@ public class PhysicalExaminationController extends BaseController
     }
     if (elderlyInfoNameQuery != null || rangeQuery != null || operateNameQuery != null)
     {
-      return physicalExaminationService.search (query, pageable, analyzer,filter);
+      return physicalExaminationService.search (query, pageable, analyzer,filter,true);
     }
-    return physicalExaminationService.findPage (pageable);
+    return physicalExaminationService.findPage (pageable,true);
   }
 
   /**
@@ -210,7 +210,7 @@ public class PhysicalExaminationController extends BaseController
     physicalExamination.setOperator (account.getTenantUser ());
     physicalExamination.setElderlyInfo (elderlyInfo);
     physicalExamination.setPhysicalExaminationItems (newItems);
-    physicalExaminationService.update (physicalExamination);
+    physicalExaminationService.update (physicalExamination,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
 

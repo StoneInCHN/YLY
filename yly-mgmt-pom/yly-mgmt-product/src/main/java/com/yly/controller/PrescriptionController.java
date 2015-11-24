@@ -118,9 +118,9 @@ public class PrescriptionController extends BaseController
     }
     if (nameQuery != null || rangeQuery != null)
     {
-      return prescriptionService.search (query, pageable, analyzer,filter);
+      return prescriptionService.search (query, pageable, analyzer,filter,true);
     }
-      return prescriptionService.findPage (pageable);
+      return prescriptionService.findPage (pageable,true);
     
   }
 
@@ -202,7 +202,7 @@ public class PrescriptionController extends BaseController
     }
     prescription.setElderlyInfo (elderlyInfo);
     prescription.setPrescriptionDrugsItems (newItemList);
-    prescriptionService.update (prescription);
+    prescriptionService.update (prescription,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
  

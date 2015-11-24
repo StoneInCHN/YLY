@@ -123,9 +123,9 @@ public class FixedAssetsController extends BaseController
     }
     if (nameQuery != null || rangeQuery != null || departmentSearchId != null)
     {
-      return fixedAssetsService.search (query, pageable, analyzer,filter);
+      return fixedAssetsService.search (query, pageable, analyzer,filter,true);
     }
-    Page<FixedAssets> fixedAssetsPage=fixedAssetsService.findPage (pageable);
+    Page<FixedAssets> fixedAssetsPage=fixedAssetsService.findPage (pageable,true);
     return fixedAssetsPage;
   }
 
@@ -157,7 +157,7 @@ public class FixedAssetsController extends BaseController
   {
     Department department =departmentService.find (departmentId);
     fixedAssets.setDepartment (department);
-    fixedAssetsService.update (fixedAssets);
+    fixedAssetsService.update (fixedAssets,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
 

@@ -62,6 +62,7 @@ public class PhysicalExamination extends BaseEntity {
   private List<PhysicalExaminationItems> physicalExaminationItems = new ArrayList<PhysicalExaminationItems>();
 
   @Index(name = "physical_examination_tenantid")
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Long getTenantID() {
     return tenantID;
   }

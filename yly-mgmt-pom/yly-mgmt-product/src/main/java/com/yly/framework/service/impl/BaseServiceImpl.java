@@ -13,7 +13,11 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.BooleanClause.Occur;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
@@ -240,7 +244,17 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
    
     return baseDao.search (query, pageable, analyzer,filter);
   }
-
+  @Override
+  public Page<T> search (Query query, Pageable pageable, Analyzer analyzer,org.apache.lucene.search.Filter filter, Boolean isTenant)
+  {
+     if (isTenant)
+    {
+       
+      TermQuery tenantIdQuery = new TermQuery(new Term("tenantID", tenantAccountService.getCurrentTenantID().toString ()));
+      ((BooleanQuery)query).add (tenantIdQuery,Occur.MUST);
+    }
+    return baseDao.search (query, pageable, analyzer,filter);
+  }
   @Override
   public void refreshIndex ()
   {

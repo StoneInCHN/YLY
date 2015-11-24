@@ -109,9 +109,9 @@ public class MedicalRecordController extends BaseController
     }
     if (nameQuery != null || rangeQuery != null)
     {
-      return medicalRecordService.search (query, pageable, analyzer,filter);
+      return medicalRecordService.search (query, pageable, analyzer,filter,true);
     }
-    return medicalRecordService.findPage (pageable);
+    return medicalRecordService.findPage (pageable,true);
   }
 
   /**
@@ -142,7 +142,7 @@ public class MedicalRecordController extends BaseController
   {
     ElderlyInfo elderlyInfo = elderlyInfoService.find (elderlyInfoID);
     medicalRecord.setElderlyInfo (elderlyInfo);
-    medicalRecordService.update (medicalRecord,"createDate");
+    medicalRecordService.update (medicalRecord,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
 

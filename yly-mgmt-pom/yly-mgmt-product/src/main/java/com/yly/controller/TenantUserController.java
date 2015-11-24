@@ -148,7 +148,7 @@ public class TenantUserController extends BaseController
     if (nameQuery != null || rangeQuery != null || 
         departmentSearchId != null || positionSearchId != null || staffStatusSearch != null)
     {
-      return tenantUserService.search (query, pageable, analyzer,filter);
+      return tenantUserService.search (query, pageable, analyzer,filter,true);
     }
       return tenantUserService.findPage (pageable);
     

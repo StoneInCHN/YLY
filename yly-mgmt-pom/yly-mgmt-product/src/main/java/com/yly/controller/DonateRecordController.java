@@ -109,9 +109,9 @@ public class DonateRecordController extends BaseController
     }
     if (nameQuery != null || rangeQuery != null)
     {
-      return donateRecordService.search (query, pageable, analyzer,filter);
+      return donateRecordService.search (query, pageable, analyzer,filter,true);
     }else {
-      return donateRecordService.findPage (pageable);
+      return donateRecordService.findPage (pageable,true);
     }
     
   }
@@ -140,7 +140,7 @@ public class DonateRecordController extends BaseController
   @RequestMapping (value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update (DonateRecord donateRecord)
   {
-    donateRecordService.update (donateRecord);
+    donateRecordService.update (donateRecord,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
 
