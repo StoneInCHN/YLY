@@ -171,11 +171,11 @@
 		    		[@shiro.hasPermission name="donateRecord"]
 		    		<li><a href="#" data-url="${base}/console/donateRecord/donateRecord.jhtml">捐赠管理</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#">通知公告</a></li>
+		    		<li><a href="#" data-url="${base}/console/notification/notification.jhtml" >通知公告</a></li>
 		    	</ul>
 		    	<ul title="系统管理" id="system">
 		    		[@shiro.hasPermission name="tenantUser"]
-		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">用户管理</a></li>
+		    		<li><a href="#" data-url="${base}/console/tenantAccount/tenantAccount.jhtml">用户管理</a></li>
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="role"]
 		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">权限角色管理</a></li>
@@ -280,6 +280,8 @@
     
     <div id="searchElderlyInfo"></div>
     <div id="searchAlbum"></div>
+    <div id = "searchRoles"></div>
+    <div id = "searchTenantUser"></div>
     
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -296,6 +298,12 @@
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
+    <link rel="stylesheet" href="${base}/resources/js/kindeditor/themes/default/default.css" />
+	<script  src="${base}/resources/js/kindeditor/kindeditor.js"></script>
+	<script  src="${base}/resources/js/kindeditor/kindeditor-all.js"></script>
+	<script  src="${base}/resources/js/kindeditor/kindeditor-all-min.js"></script>
+	<script  src="${base}/resources/js/kindeditor/kindeditor-min.js"></script>
+	<script  src="${base}/resources/js/kindeditor/lang/zh_CN.js"></script>
         <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>
         
         

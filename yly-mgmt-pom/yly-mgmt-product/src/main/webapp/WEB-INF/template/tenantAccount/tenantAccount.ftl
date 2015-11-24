@@ -1,6 +1,7 @@
 <script src="${base}/resources/js/common.js"></script>
 <script src="${base}/resources/modules/tenantAccount.js"></script>
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
+
 <div>
 	  <fieldset>
 	    <legend>${message("yly.tenantAccount.search")}</legend>
@@ -46,17 +47,25 @@
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>${message("yly.tenantAccount.staffID")}:</th>
-	    		<td>
+	    		<td colspan='2'>
 	    			 <input type="text" class="easyui-textbox" name="staffID" id= "staffID"   data-options="required:true"/>
 	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.tenantAccount.userName")}:</th>
-	    		<td>
+	    		<td colspan='2'>
 	    			 <input type="text" class="easyui-textbox" name="userName" id= "userName"  data-options="required:true"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
+	    		<th>${message("yly.tenantAccount.password")}:</th>
+	    		<td colspan='2'>
+	    			 <input type="password" class="easyui-textbox" name="password" id= "password"  data-options="required:true"/>
+	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.tenantAccount.accoutStatus")}:</th>
-	    		<td>
+	    		<td colspan='2'>
 	    			 <input class="easyui-combobox" data-options="
 				     valueField: 'label',
 				     textField: 'value',
@@ -69,6 +78,8 @@
 				     }],
 				     prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  name="accoutStatus" style="width:110px;"/>
 	    		</td>
+	    		</tr>
+	    	<tr>
 	    		<th>${message("yly.tenantAccount.tenantUser")}:</th>
 	    		<td>
 	    			 <input type="text" class="easyui-textbox" name="addTenantAccountUser" id= "addTenantAccountUser"  />
@@ -76,7 +87,9 @@
 	    		<td>
 	    			<a href="#" id="tenant_user_search_btn" class="easyui-linkbutton" onclick="searchTenantUser('addTenantAccountUser')" iconCls="icon-search" plain=true"></a>
 	    		</td>
-	    		<th>${message("yly.tenantAccount.role")}:</th>
+	    	</tr>
+	    	<tr>
+	    	<th>${message("yly.tenantAccount.role")}:</th>
 	    		<td>
 	    			 <input type="text" class="easyui-textbox" name="addTenantAccountRole" id= "addTenantAccountRole"  />
 	    		</td>

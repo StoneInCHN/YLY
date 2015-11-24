@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -32,6 +33,7 @@ import com.yly.entity.TenantUser;
 import com.yly.entity.commonenum.CommonEnum.AccountStatus;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.RSAService;
 import com.yly.service.RoleService;
 import com.yly.service.TenantAccountService;
 import com.yly.service.TenantUserService;
@@ -53,6 +55,8 @@ public class TenantAccountController extends BaseController
   private TenantUserService tenantUserService;
   @Resource(name = "roleServiceImpl")
   private RoleService roleService;
+  @Resource(name = "rsaServiceImpl")
+  private RSAService rsaService;
   
   @RequestMapping (value = "/tenantAccount", method = RequestMethod.GET)
   public String list (ModelMap model)
@@ -145,6 +149,7 @@ public class TenantAccountController extends BaseController
   @RequestMapping (value = "/add", method = RequestMethod.POST)
   public @ResponseBody Message add (TenantAccount tenantAccount,Long tenantUserID,Long roleID)
   {
+    
     TenantUser tenantUser=tenantUserService.find(tenantUserID);
     Role role =roleService.find (roleID);
     List<Role> roleSet = new ArrayList<Role> ();
@@ -152,20 +157,25 @@ public class TenantAccountController extends BaseController
     tenantAccount.setTenantUser(tenantUser);
     tenantAccount.setIsSystem (false);
     tenantAccount.setRoles (roleSet);
+    tenantAccount.setPassword (DigestUtils.md5Hex(tenantAccount.getPassword ()));
     tenantAccountService.save (tenantAccount,true);
     return SUCCESS_MESSAGE;
   }
 
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (TenantAccount tenantAccount,Long tenantUserID,Long roleID)
+  public @ResponseBody Message update (String enPassword,TenantAccount tenantAccount,Long tenantUserID,Long roleID)
   {
     TenantUser tenantUser=tenantUserService.find(tenantUserID);
     Role role =roleService.find (roleID);
     List<Role> roleSet = new ArrayList<Role> ();
     roleSet.add (role);
+    if (enPassword != tenantAccount.getPassword ())
+    {
+      tenantAccount.setPassword (DigestUtils.md5Hex(tenantAccount.getPassword ()));
+    }
     tenantAccount.setTenantUser(tenantUser);
     tenantAccount.setRoles (roleSet);
-    tenantAccountService.update (tenantAccount,"createDate","isSystem");
+    tenantAccountService.update (tenantAccount,"createDate","isSystem","tenantID");
     return SUCCESS_MESSAGE;
   }
  

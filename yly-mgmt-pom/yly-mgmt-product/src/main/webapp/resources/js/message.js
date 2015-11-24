@@ -387,6 +387,7 @@ var messages = {
 	"yly.notification.list":"通知列表",
 	"yly.notification.add":"添加通知公告",
 	// 租户用户
+	"yly.tenantAccount.add":"添加用户",
 	"yly.tenantAccount.userName":"用户名",
 	"yly.tenantAccount.realName":"真实姓名",
 	"yly.tenantAccount.isSystem":"是否内置",

@@ -2,8 +2,8 @@ var tenantAccount_manager_tool = {
 		add:function(){
 			$('#addTenantAccount').dialog({
 			    title: message("yly.tenantAccount.add"),    
-			    width: 700,    
-			    height: 550,
+			    width: 400,    
+			    height: 350,
 			    iconCls:'icon-mini-add',
 			    cache: false, 
 			    buttons:[{
@@ -56,8 +56,8 @@ var tenantAccount_manager_tool = {
 			}
 			var _dialog = $('#editTenantAccount').dialog({    
 				title: message("yly.common.edit"),     
-			    width: 700,    
-			    height: 550,    
+			    width: 400,    
+			    height: 350,    
 			    modal: true,
 			    iconCls:'icon-mini-edit',
 			    href:'../tenantAccount/edit.jhtml?id='+_edit_row.id,
@@ -114,8 +114,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#tenantAccountDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 660,    
-			    height: 550, 
+			    width: 400,    
+			    height: 350, 
 			    cache: false,
 			    modal: true,
 			    href:'../tenantAccount/details.jhtml?id='+rowData.id,
@@ -152,7 +152,7 @@ $(function(){
 		      	  }  
 		      },
 		      {title:message("yly.tenantAccount.loginDate"),field:"loginDate",width:100,sortable:true,formatter: function(value,row,index){
-					return new Date(value).Format("yyyy-MM-dd");
+					return new Date(value).Format("yyyy-MM-dd:hh:mm:ss");
 				}
 		      },
 		      {title:message("yly.tenantAccount.loginIp"),field:"loginIp",width:100,sortable:true},
