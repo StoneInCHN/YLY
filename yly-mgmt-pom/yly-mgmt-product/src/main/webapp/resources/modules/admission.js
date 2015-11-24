@@ -402,6 +402,12 @@ $(function(){
 		    	  	if(value == "DEAD"){
 		    	  		return  message("yly.elderly.status.dead");
 		    	  	}
+		    	  	if(value == "IN_PROGRESS_CHECKIN_BILL"){
+		    	  		return  "入院办理(已出账单未交费)";
+		    	  	}
+		    	  	if(value == "IN_PROGRESS_EVALUATING"){
+		    	  		return  "通过入院评估";
+		    	  	}
 		      	}}		      
 		   ]
 		],

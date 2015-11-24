@@ -70,16 +70,7 @@
 <div id="showEvaluating"></div> 
 <div id="listEvaluating"></div>
 <div id="chooseEvaluating">
-<form id="chooseEvaluating_form" method="post" class="form-table">   
-<p/>
-<p style="font-size:140%">选择已经存在的评估表</p>
-<ul>
-<li><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="elderlyEvaluating_manager_tool.add();">老年人能力评估(MZ/T 039-2013)</a></li>
-</ul>
-<hr>
-<p style="font-size:140%">自定义评估表</p>
-<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="createForm()">开始创建评估表</a>
-</form>
+
 </div>
 <div id="createEvaluatingForm"></div>
 

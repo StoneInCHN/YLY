@@ -7,31 +7,25 @@ var elderlyEvaluating_manager_tool = {
 				    height: 350,
 				    iconCls:'icon-mini-add',
 				    modal:true,
-				    cache: false, 
+				    href:'../elderlyEvaluatingRecord/listForm.jhtml',
 				    buttons:[{
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
 							 $('#chooseEvaluating').dialog("close");
 						}
-				    }],
-				    onOpen:function(){
-				    	$('#chooseEvaluating_form').show();
-				    },
-				    onClose:function(){
-				    	 $('#chooseEvaluating_form').form('reset');
-				    }
+				    }]
 				});
 			
 			},
-			add:function(){
+			add:function(formId){
 				$('#addEvaluating').dialog({    
 				    title: "添加入院评估",    
 				    width: 1250,    
 				    height: 850,
 				    iconCls:'icon-mini-add',
 				    modal:true,
-				    href:'../elderlyEvaluatingRecord/addEvaluating.jhtml',
+				    href:'../elderlyEvaluatingRecord/addEvaluating.jhtml?formId='+formId,
 				    onOpen:function(){
 				    	$('#chooseEvaluating').dialog("close");
 				    	$('#addAdmission_form').show();
@@ -278,6 +272,43 @@ function createForm(){
 	    modal:true,
 	    href:'../elderlyEvaluatingRecord/createEvaluatingFrom.jhtml',  
 	    buttons:[{
+	    	text:message("yly.common.save"),
+	    	iconCls:'icon-save',
+	    	handler:function(){
+	    		var _ids=[];
+				var sectionIds = $('.right .drop').find('input[name=sectionId]');
+				sectionIds.each(function(index, element) {
+					_ids.push(parseInt($(this).val()));
+			    });
+				if($("#formName").val()!=null&&$("#formName").val().trim()!=""&&_ids.length>0){	
+					$.ajax({
+						url:"../elderlyEvaluatingRecord/createForm.jhtml",
+						type:"post",
+						traditional : true,
+						data: {
+							"ids" : _ids,
+							"formName":$("#formName").val()
+						},
+						beforeSend:function(){
+							$.messager.progress({
+								text:message("yly.common.saving")
+							});
+						},
+						success:function(result,response,status){
+							$.messager.progress('close');
+							showSuccessMsg(result.content);
+							$('#createEvaluatingForm').dialog("close");//关闭当前对话框
+						},
+						error:function (XMLHttpRequest, textStatus, errorThrown) {
+							$.messager.progress('close');
+							alertErrorMsg();
+						}
+					});
+				}else{
+					$.messager.alert(message("yly.common.prompt"), message("请输入表名称!"),'warning');
+				}
+			}
+		},{
 			text:message("yly.common.cancel"),
 			iconCls:'icon-cancel',
 			handler:function(){
@@ -285,7 +316,7 @@ function createForm(){
 			}
 	    }],
 	    onOpen:function(){
-	    	//$('#chooseEvaluating').dialog("close");
+	    	$('#chooseEvaluating').dialog("close");
 	    },
 	    onClose:function(){
 	    	 

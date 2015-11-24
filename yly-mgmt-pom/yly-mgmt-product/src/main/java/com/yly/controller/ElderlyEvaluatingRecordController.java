@@ -1,5 +1,6 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +22,7 @@ import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyEvaluatingRecord;
 import com.yly.entity.ElderlyInfo;
+import com.yly.entity.ElderlyPhotoAlbum;
 import com.yly.entity.ElderlyPhotoes;
 import com.yly.entity.EvaluatingForm;
 import com.yly.entity.EvaluatingItemOptions;
@@ -29,8 +31,10 @@ import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
 import com.yly.entity.EvaluatingSection;
 import com.yly.entity.SystemConfig;
+import com.yly.entity.commonenum.CommonEnum;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
+import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
@@ -101,8 +105,6 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    */
   @RequestMapping(value = "/createEvaluatingFrom", method = RequestMethod.GET)
   public String createEvaluatingFrom(ModelMap model) {
-//    List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
-//    model.addAttribute("evaluatingSections",evaluatingSections);
     return "/elderlyEvaluatingRecord/createEvaluatingFrom";
   }
   
@@ -119,6 +121,29 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     }
     return null;
   }
+  /**
+   * 获取所有用户自定义评估模块,且可编辑模块（未被现有的评估表使用）
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/getAllCustomSections", method = RequestMethod.GET)
+  public @ResponseBody List<EvaluatingSection> getAllCustomSections(ModelMap model){
+    List<EvaluatingSection> evaluatingSectionList = evaluatingSectionService.findAll();
+    int count = 1;
+    while (count <= evaluatingSectionList.size()) {
+      EvaluatingSection evaluatingSection = evaluatingSectionList.get(count - 1);
+      if (evaluatingSection.getSystemSection() || evaluatingSection.getEvaluatingForm() != null){//移除系统定义的评估模块
+          evaluatingSectionList.remove(count - 1);    // 从List中移除         
+     }else{
+           count ++;
+     }  
+    }
+    if (evaluatingSectionList != null && evaluatingSectionList.size() > 0) {
+      return evaluatingSectionList;
+    }
+    return null;
+  } 
+  
 
   /**
    * 查询list
@@ -139,6 +164,20 @@ public class ElderlyEvaluatingRecordController extends BaseController {
 
     return elderlyEvaluatingRecordPage;
   }
+  /**
+   * 评估表list
+   * @return
+   */
+  @RequestMapping(value = "/listForm", method = RequestMethod.GET)
+  public String listForm(ModelMap model) {
+    List<EvaluatingForm> evaluatingFormlist = evaluatingFormService.findAll();
+    if (evaluatingFormlist != null && evaluatingFormlist.size() > 0) {
+      model.addAttribute("evaluatingFormlist", evaluatingFormlist);
+      return "/elderlyEvaluatingRecord/listForm";
+    } 
+    return "";
+  }  
+  
 
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findAll() {
@@ -154,7 +193,10 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    EvaluatingForm evaluatingForm = evaluatingFormService.find(new Long(1));
+    ElderlyEvaluatingRecord elderlyEvaluatingRecord = elderlyEvaluatingRecordService.find(id);
+    
+    //EvaluatingForm evaluatingForm = evaluatingFormService.find(new Long(1));
+    EvaluatingForm evaluatingForm = elderlyEvaluatingRecord.getEvaluatingForm();
     if (evaluatingForm != null) {
       model.addAttribute("evaluatingForm", evaluatingForm);
       //每个模块对应评分规则
@@ -162,7 +204,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
       model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
    }
-    ElderlyEvaluatingRecord elderlyEvaluatingRecord = elderlyEvaluatingRecordService.find(id);
+    
     //每个模块对应总得分
     Map<String,Integer> sectionScoreMap = new HashMap<String, Integer>();
     //每个模块对应级别
@@ -180,7 +222,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
         }
       }
     }else {
-      List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+      //List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+      List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
       if (evaluatingSections != null && evaluatingSections.size() > 0) {
         sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
         sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
@@ -228,7 +271,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
             }
           }
         }else {
-          List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+          //List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+          List<EvaluatingSection> evaluatingSections = elderlyEvaluatingRecord.getEvaluatingForm().getEvaluatingSections();
           if (evaluatingSections != null && evaluatingSections.size() > 0) {
             sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
             sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
@@ -314,8 +358,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/addEvaluating", method = RequestMethod.GET)
-  public String addEvaluating(ModelMap model) {
-     EvaluatingForm evaluatingForm = evaluatingFormService.find(new Long(1));
+  public String addEvaluating(ModelMap model, Long formId) {
+     EvaluatingForm evaluatingForm = evaluatingFormService.find(formId);
      if (evaluatingForm != null) {
        model.addAttribute("evaluatingForm", evaluatingForm);
        //每个模块对应评分规则
@@ -355,7 +399,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
        */      
       elderlyEvaluatingRecord.setTenantID(currnetTenantId);//设置租户ID
       elderlyEvaluatingRecord.setElderlyInfo(elderlyInfo);//设置
-      elderlyEvaluatingRecord.setEvaluatingForm(evaluatingFormService.find(evaluatintFormID));//设置评估记录用的评估表
+      EvaluatingForm evaluatingForm = evaluatingFormService.find(evaluatintFormID);
+      elderlyEvaluatingRecord.setEvaluatingForm(evaluatingForm);//设置评估记录用的评估表
       //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
       elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
       elderlyEvaluatingRecordService.save(elderlyEvaluatingRecord);
@@ -377,8 +422,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       /**
        * 更新入院评估记录的评估结果
        */
-    //应该根据form表的外键找？？？？？？？？？？？？？？不应该全部找
-      List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+      //获取该评估表下的所有评估模块
+      List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
       //每个模块对应总得分
       Map<String,Integer> sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
       //每个模块对应级别
@@ -435,7 +480,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     elderlyEvaluatingRecord.setId(elderlyEvaluatingRecordId);
     //elderlyEvaluatingRecord.setTenantID(currnetTenantId);//设置租户ID
     elderlyEvaluatingRecord.setElderlyInfo(elderlyInfo);//设置
-    elderlyEvaluatingRecord.setEvaluatingForm(evaluatingFormService.find(evaluatintFormID));//设置评估记录用的评估表
+    EvaluatingForm evaluatingForm = evaluatingFormService.find(evaluatintFormID);
+    elderlyEvaluatingRecord.setEvaluatingForm(evaluatingForm);//设置评估记录用的评估表
     //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
     elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
     elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
@@ -457,8 +503,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     /**
      * 更新入院评估记录的评估结果
      */
-  //应该根据form表的外键找？？？？？？？？？？？？？？不应该全部找
-    List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
+    //获取该评估表下的所有评估模块
+    List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
     //每个模块对应总得分
     Map<String,Integer> sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
     //每个模块对应级别
@@ -510,6 +556,35 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
+  
+  /**
+   * 自定义评估表
+   * @param ids
+   * @return
+   */
+  @RequestMapping(value = "/createForm", method = RequestMethod.POST)
+  public @ResponseBody Message createForm(String formName,Long[] ids) {
+    if (formName != null && ids != null) {
+      Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
+      EvaluatingForm evaluatingForm = new EvaluatingForm();
+      evaluatingForm.setTenantID(currnetTenantId);
+      evaluatingForm.setFormName(formName);
+      evaluatingForm.setEvaluatingFormStatus(EvaluatingFormStatus.ENABLE);
+      evaluatingFormService.save(evaluatingForm);//保存自定义评估表
+      
+      for (Long id : ids) {
+        EvaluatingSection evaluatingSection = evaluatingSectionService.find(id);
+        if (evaluatingSection != null && evaluatingSection.getId() != null) {
+          evaluatingSection.setEvaluatingForm(evaluatingForm);//设置自定义评估表关联的模块
+          evaluatingSectionService.update(evaluatingSection);
+        }
+      }
+    }else {
+      return ERROR_MESSAGE;
+    }
+    return SUCCESS_MESSAGE;
+  }
+  
   /**
    * 计算并返回单个模块的等级
    * @return

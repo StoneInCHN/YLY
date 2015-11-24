@@ -1,6 +1,8 @@
 package com.yly.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -48,7 +50,7 @@ public class EvaluatingForm extends BaseEntity {
    */
   private EvaluatingFormStatus evaluatingFormStatus;
   
-  private Set<EvaluatingSection> evaluatingSections = new HashSet<EvaluatingSection>();
+  private List<EvaluatingSection> evaluatingSections = new ArrayList<EvaluatingSection>();
   
   private Set<ElderlyEvaluatingRecord> elderlyEvaluatingRecords =  new HashSet<ElderlyEvaluatingRecord>();
 
@@ -78,16 +80,24 @@ public class EvaluatingForm extends BaseEntity {
     this.evaluatingFormStatus = evaluatingFormStatus;
   }
 
+//  @OneToMany(mappedBy = "evaluatingForm" , fetch = FetchType.LAZY)
+//  @JsonProperty
+//  public Set<EvaluatingSection> getEvaluatingSections() {
+//    return evaluatingSections;
+//  }
+//
+//  public void setEvaluatingSections(Set<EvaluatingSection> evaluatingSections) {
+//    this.evaluatingSections = evaluatingSections;
+//  }
   @OneToMany(mappedBy = "evaluatingForm" , fetch = FetchType.LAZY)
   @JsonProperty
-  public Set<EvaluatingSection> getEvaluatingSections() {
+  public List<EvaluatingSection> getEvaluatingSections() {
     return evaluatingSections;
   }
 
-  public void setEvaluatingSections(Set<EvaluatingSection> evaluatingSections) {
+  public void setEvaluatingSections(List<EvaluatingSection> evaluatingSections) {
     this.evaluatingSections = evaluatingSections;
   }
-
   @OneToMany(mappedBy = "evaluatingForm" , fetch = FetchType.LAZY)
   public Set<ElderlyEvaluatingRecord> getElderlyEvaluatingRecords() {
     return elderlyEvaluatingRecords;

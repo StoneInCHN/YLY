@@ -447,7 +447,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
            *   日常生活活动分级为0，但精神状态、感知觉与沟通中至少一项分级为1以上，或社会参与的分级为2；
            *   或日常生活活动分级为1，精神状态、感知觉与沟通、社会参与中至少有一项的分级为0或1。
            */
-        if ((dailyLife == 0 && (mentalState <=1 || perceptionCom <=1 || socialPart == 2))
+        else if ((dailyLife == 0 && (mentalState <=1 || perceptionCom <=1 || socialPart == 2))
                ||(dailyLife == 1 &&(mentalState <=1 || perceptionCom <=1 || socialPart <=1))) {
             formPrimaryLevel = "1 轻度失能";
          }
@@ -456,7 +456,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
            *   日常生活活动分级为1，但精神状态、感知觉与沟通、社会参与均为2，或有一项为3；
            *   或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中有1-2项的分级为1或2。
            */
-        if ((dailyLife == 1 && (
+        else if ((dailyLife == 1 && (
                     (mentalState == 2 && perceptionCom ==2 && socialPart == 2)
                   ||(mentalState == 3 && perceptionCom != 3 && socialPart != 3)
                   ||(mentalState != 3 && perceptionCom == 3 && socialPart != 3)
@@ -477,7 +477,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
          *    或日常生活活动、精神状态、感知觉与沟通、社会参与分级均为2；
          *    或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中至少有一项分级为3。
          */
-        if (dailyLife == 3
+        else if (dailyLife == 3
              || (dailyLife == 2 && mentalState == 2 && socialPart == 2 && perceptionCom == 2)
              || (dailyLife == 2 &&(mentalState == 3 || socialPart == 3 || perceptionCom == 3))){
           formPrimaryLevel = "3 重度失能";

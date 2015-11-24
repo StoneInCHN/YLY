@@ -52,6 +52,9 @@
 		.right .over{
 			background:#D2D2D2;
 		}
+		.hiddenAddItem{
+			display:none
+		}
 		.item{
 			text-align:center;
 			border:2px solid #0285b3;
@@ -73,15 +76,16 @@
 
 <div style="width:100%;height:100%">
 	<div id="leftDiv" class="left">
-	<p style="text-align:center;font-size:150%">题库</p>			
+	<p style="text-align:center;font-size:150%">添加题库</p>			
 	<div id="accordionDiv">
 
 	</div>
 	<a href="javascript:;" id="additem" class="btn bule-color" onclick="addSection()"><i class="fa fa-plus-square-o fa-2x"/> 添加模块</a>
 	</div>
 	<div class="right">
-		<p style="font-size:150%;margin-left:25px">评估表名：<input type="text" class="easyui-textbox"  data-options="prompt:'请输入评估表名...',required:true,width:450"   name="formName" validtype="length[0,30]" /></p>
+		<p style="font-size:150%;margin-left:25px">评估表名：<input type="text" class="easyui-textbox"  data-options="prompt:'请输入评估表名...',required:true,width:450"   id="formName" validtype="length[0,30]" /></p>
 		<div id="targetFormDiv" class="drop">
+		
 
 		
 		</div>
