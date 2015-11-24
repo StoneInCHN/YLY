@@ -13,11 +13,9 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeFilter;
-import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,13 +24,11 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
-import com.yly.entity.DonateRecord;
 import com.yly.entity.DrugsInfo;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.json.request.DrugsInfoSearchRequest;
 import com.yly.service.DrugsInfoService;
 import com.yly.service.SystemConfigService;
 import com.yly.utils.DateTimeUtils;
@@ -188,7 +184,7 @@ public class DrugsInfoController extends BaseController
       drugsInfo.setMinUnit (minUnit);
       drugsInfo.setDrugUseMethod (drugUseMethod);
     }
-    drugsService.update (drugsInfo, "createDate");
+    drugsService.update (drugsInfo,"createDate","tenantID");
     return SUCCESS_MESSAGE;
   }
 
