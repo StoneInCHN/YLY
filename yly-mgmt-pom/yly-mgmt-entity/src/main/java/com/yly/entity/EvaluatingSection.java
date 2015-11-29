@@ -8,12 +8,15 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -54,7 +57,12 @@ public class EvaluatingSection extends BaseEntity {
   /**
    * 该评估模块的评分规则
    */
-  private String evaluatingRule;
+//  private String evaluatingRule;
+  
+  /**
+   * 该评估模块的评分描述
+   */
+  private String sectionDescription;
   
   /**
    * 标记是否系统定义的评估模块，比如 日常生活活动，精神状态，感知觉与沟通，社会参与 这个四个就是系统定义的评估模块
@@ -62,15 +70,26 @@ public class EvaluatingSection extends BaseEntity {
    */
   private Boolean systemSection;
   
+//  @JsonProperty
+//  @Column(length = 100)
+//  public String getEvaluatingRule() {
+//    return evaluatingRule;
+//  }
+//
+//  public void setEvaluatingRule(String evaluatingRule) {
+//    this.evaluatingRule = evaluatingRule;
+//  }
+  
   @JsonProperty
   @Column(length = 100)
-  public String getEvaluatingRule() {
-    return evaluatingRule;
+  public String getSectionDescription() {
+    return sectionDescription;
   }
 
-  public void setEvaluatingRule(String evaluatingRule) {
-    this.evaluatingRule = evaluatingRule;
+  public void setSectionDescription(String sectionDescription) {
+    this.sectionDescription = sectionDescription;
   }
+
   @JsonProperty
   public Boolean getSystemSection() {
     return systemSection;
@@ -102,8 +121,10 @@ public class EvaluatingSection extends BaseEntity {
   public EvaluatingForm getEvaluatingForm() {
     return evaluatingForm;
   }
+  @NotEmpty
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "yly_evaluating_section_item")
   @JsonProperty
-  @OneToMany(mappedBy = "evaluatingSection", fetch = FetchType.LAZY)
   public List<EvaluatingItems> getEvaluatingItems() {
     return evaluatingItems;
   }

@@ -10,6 +10,7 @@ import com.yly.entity.EvaluatingSection;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
+import com.yly.json.request.EvaluatingScoreRequest;
 
 /**
  * 入院评估记录Service
@@ -38,9 +39,13 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    */
   Map<String,String> getSectionScoreRuleMap();
   /**
-   * 返回整个评估表的评分规则
+   * 返回默认评估表的评分规则
    */
   String getFormScoreRule();
+  /**
+   * 返回自定义评估表的评分规则
+   */
+  String getCustomFormScoreRule(String evaluatingRule);
   
   /**
    * @param sectionLevelMap
@@ -55,7 +60,18 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
   Integer getSectionLevel(String sectionName, String answerScores);
   /**
    * @param sectionLevels
-   * @return 返回整个评估表的等级
+   * @return 返回默认评估表的等级
    */
   String getFormLevel(String sectionLevels);
+  /**
+   * @param sectionLevels
+   * @return 返回自定义评估表的等级
+   */
+  String getCustomFormLevel(String evaluatingRule, String sectionLevels);
+  /**
+   * @param evaluatingScoreRequest
+   * @return 返回评估模块规则字符串
+   */
+  String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest);
+  
 }

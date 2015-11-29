@@ -358,13 +358,13 @@ $(function(){
 		loadAlbum();//重新加载相册
 	});
 })
-function formatLongString(str,len){
-	if(str.length > len){
-		return '<span title="'+str+'">'+str.substring(0,len-1)+"..."+'<span>'
-	}else{
-		return str;
-	}	
-}
+//function formatLongString(str,len){
+//	if(str.length > len){
+//		return '<span title="'+str+'">'+str.substring(0,len-1)+"..."+'<span>'
+//	}else{
+//		return str;
+//	}	
+//}
 function deepColor(){
 	$(this).css({
 		padding_top:'10px',

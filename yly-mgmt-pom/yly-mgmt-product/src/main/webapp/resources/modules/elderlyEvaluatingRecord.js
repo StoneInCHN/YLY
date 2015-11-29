@@ -4,7 +4,7 @@ var elderlyEvaluating_manager_tool = {
 				$('#chooseEvaluating').dialog({    
 				    title: "选择评估表",    
 				    width: 500,    
-				    height: 350,
+				    height: 450,
 				    iconCls:'icon-mini-add',
 				    modal:true,
 				    href:'../elderlyEvaluatingRecord/listForm.jhtml',
@@ -15,6 +15,140 @@ var elderlyEvaluating_manager_tool = {
 							 $('#chooseEvaluating').dialog("close");
 						}
 				    }]
+				});
+			
+			},
+			addCustom:function(formId){
+				$('#addEvaluating').dialog({    
+				    title: "添加自定义入院评估",    
+				    width: 1250,    
+				    height: 850,
+				    iconCls:'icon-mini-add',
+				    modal:true,
+				    href:'../elderlyEvaluatingRecord/addCustomEvaluating.jhtml?formId='+formId,
+				    onOpen:function(){
+				    	$('#chooseEvaluating').dialog("close");
+				    	$('#addAdmission_form').show();
+				    	$("#personnelCategoryId").combobox({    
+				    		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'PERSONNELCATEGORY';
+						    },		    		
+						});
+				     	$("#evaluatingResultId").combobox({    
+				     		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'EVALUATINGRESULT';
+						    }
+						});
+				     	$("#nursingLevelId").combobox({    
+				     		prompt:message("yly.common.please.select"),
+						    valueField:'id',    
+						    textField:'configValue',
+						    cache: true,
+						    url:'../systemConfig/findByConfigKey.jhtml',
+						    onBeforeLoad : function(param) {
+						        param.configKey = 'NURSELEVEL';
+						    }
+						});
+				     	//头像上传
+				     	var options ={
+				     			createOption:{
+				     				pick: {
+						                 id: '#admissionFilePicker-add',
+						                 label: '',
+						                 multiple :false
+						             },
+						             dnd: '#admissionUploader-add .queueList',
+						             accept: {
+						                 title: 'Images',
+						                 extensions: 'gif,jpg,jpeg,bmp,png',
+						                 mimeTypes: 'image/*'
+						             },
+						             //缩略图
+						             thumb:{
+						            	    width: 110,
+						            	    height: 110,
+						            	    quality: 90,
+						            	    allowMagnify: false,
+						            	    crop: false,
+						            	    type: 'image/jpeg'
+						              },
+						             // swf文件路径
+						             swf: BASE_URL + '/js/Uploader.swf',
+						             disableGlobalDnd: true,
+						             server: '../file/uploadProfilePhoto.jhtml',
+						             fileNumLimit: 1,
+						             fileSizeLimit: 10 * 1024 * 1024,    // 10 M
+						             fileSingleSizeLimit: 10 * 1024 * 1024,    //单个文件上传大小  10 M
+						             //图片裁剪
+						             compress:{
+						            	 width: 110,
+						            	 height: 110,
+						            	 // 图片质量，只有type为`image/jpeg`的时候才有效。
+						            	 quality: 90,
+						            	 // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+						            	 allowMagnify: false,
+						            	 // 是否允许裁剪。
+						            	 crop: false,
+						            	 // 是否保留头部meta信息。
+						            	 preserveHeaders: true,
+						            	 // 如果发现压缩后文件大小比原来还大，则使用原来图片
+						            	 // 此属性可能会影响图片自动纠正功能
+						            	 noCompressIfLarger: false,
+						            	 // 单位字节，如果图片大小小于此值，不会采用压缩。
+						            	 compressSize: 0
+						             }
+				     			},
+				     			//包裹上传组件的div id
+				     			warp :"addEvaluating_form",
+				     			uploadBeforeSend:function(object, data, headers){
+				     				 //在参数中增加一个老人编号字段 identifier
+				     				 data.identifier =$("#identifier_input").val();
+				     			},
+				     			uploadSuccess:function(file, response){
+				     				//将返回的图片路径放到隐藏的input中，用于表单保存
+				     				$("#addAdmission_form_file_input").val(response.content);
+				     				$.ajax({
+										url:"../admission/add.jhtml",
+										type:"post",
+										data:$("#addEvaluating_form").serialize(),
+										beforeSend:function(){
+											$.messager.progress({
+												text:message("yly.common.saving")
+											});
+										},
+										success:function(result,response,status){
+											$.messager.progress('close');
+											showSuccessMsg(result.content);
+											$('#addEvaluating_form').form('reset');
+											$('#addEvaluating').dialog("close");
+											$("#elderlyEvaluating-table-list").datagrid('reload');
+											
+										},
+										error:function (XMLHttpRequest, textStatus, errorThrown) {
+											$.messager.progress('close');
+											alertErrorMsg();
+										}
+									});
+				     			}
+				     	};
+				     	
+				     	//singleUpload(options);
+				     	
+				    },
+				    onClose:function(){
+				    	$("#admissionUploader-add .uploadBtn").trigger("clearFileQuene");
+				    	 $('#addEvaluating_form').form('reset');
+				    }
 				});
 			
 			},
@@ -222,19 +356,19 @@ $(function(){
 					}
 			  }},
 		      {title:"评估结果",field:"evaluatingResult",width:30,align:'center',formatter:function(value,row,index){
-		    	  if(value.indexOf("0")!=-1){
-		    		  		return '<span style="color:green">'+formatLongString(value,8)+'</span>';//绿色  能力完好
+		    	  		if(value.indexOf("0")!=-1){
+		    		  		return '<span style="color:green">'+value.replace('0','').trim()+'</span>';//绿色  能力完好
 						}
 						if(value.indexOf("1")!=-1){
-							return '<span style="color:orange">'+formatLongString(value,8)+'</span>';//橘黄色  轻度受损
+							return '<span style="color:orange">'+value.replace('1','').trim()+'</span>';//橘黄色  轻度受损
 						}
 						if(value.indexOf("2")!=-1){
-							return '<span style="color:#cc6600">'+formatLongString(value,8)+'</span>';//深黄色  中度受损
+							return '<span style="color:#cc6600">'+value.replace('2','').trim()+'</span>';//深黄色  中度受损
 						}
 						if(value.indexOf("3")!=-1){
-							return '<span style="color:red">'+formatLongString(value,8)+'</span>';//红色  重度受损
+							return '<span style="color:red">'+value.replace('3','').trim()+'</span>';//红色  重度受损
 						}
-			    	
+			    	  return  formatLongString(value,8);
 		      }},
 		      {title:"评估表编号",field:"evaluatingFormName",width:30,align:'center',formatter:function(value,row,index){
 		    	  var fullFormName = row.evaluatingForm.formName;//老年人能力评估(MZ/T 039-2013)
@@ -253,16 +387,7 @@ $(function(){
 		  $("#elderlyEvaluating-table-list").datagrid('reload');
 		})
 })
-function formatLongString(str,len){
-	if(str != null && str!=""&& len > 0){
-		if(str.length > len){
-			return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
-		}else{
-			return str;
-		}	
-	}
-	return "";
-}
+
 function createForm(){
 	$('#createEvaluatingForm').dialog({    
 	    title: "自定义评估表",    
@@ -275,38 +400,96 @@ function createForm(){
 	    	text:message("yly.common.save"),
 	    	iconCls:'icon-save',
 	    	handler:function(){
-	    		var _ids=[];
-				var sectionIds = $('.right .drop').find('input[name=sectionId]');
-				sectionIds.each(function(index, element) {
-					_ids.push(parseInt($(this).val()));
-			    });
-				if($("#formName").val()!=null&&$("#formName").val().trim()!=""&&_ids.length>0){	
-					$.ajax({
-						url:"../elderlyEvaluatingRecord/createForm.jhtml",
-						type:"post",
-						traditional : true,
-						data: {
-							"ids" : _ids,
-							"formName":$("#formName").val()
-						},
-						beforeSend:function(){
-							$.messager.progress({
-								text:message("yly.common.saving")
-							});
-						},
-						success:function(result,response,status){
-							$.messager.progress('close');
-							showSuccessMsg(result.content);
-							$('#createEvaluatingForm').dialog("close");//关闭当前对话框
-						},
-						error:function (XMLHttpRequest, textStatus, errorThrown) {
-							$.messager.progress('close');
-							alertErrorMsg();
+				var validate = $('#createEvaluating_form').form('validate');
+				if(validate){
+			    	var _ids=[];
+					var sectionIds = $('.right .drop').find('input[name=sectionId]');
+					sectionIds.each(function(index, element) {
+							_ids.push(parseInt($(this).val()));
+					});	
+					if(_ids.length>0){
+						var formLevelSize=$("#formLevelSize").val();
+						if(formLevelSize>0){
+							for(var i=0;i<formLevelSize;i++){
+								var formLevelName = $("#formLevelName").val();
+								var formScoreFrom = parseInt($("#formScore"+i+"From").val());
+								var formScoreTo = parseInt($("#formScore"+i+"To").val());
+								if(formScoreFrom>formScoreTo){
+									$.messager.alert(message("yly.common.prompt"), message("起始分数应该小于等于终止分数!"),'warning');
+									return;
+								}
+								if(i<formLevelSize-1){
+									if(parseInt($("#formScore"+i+"To").val())==parseInt($("#formScore"+(i+1)+"From").val())){
+										$.messager.alert(message("yly.common.prompt"), message("相邻等级的终止分数和起始分数不能相等,否者没法根据具体分数明确的划分等级分数区间!"),'warning');
+										return;
+									}
+								}
+//								 if(i<formLevelSize-1){
+//									if(parseInt($("#formScore"+i+"From").val())<=parseInt($("#formScore"+(i+1)+"From").val())){
+//										$.messager.alert(message("yly.common.prompt"), message("评估分数输入有误,高等级分数应该大于略低等级分数!"),'warning');
+//										return;
+//									}
+//								}
+								if(i==0){
+									if(parseInt($("#formScore"+i+"From").val())<0){
+										$.messager.alert(message("yly.common.prompt"), message("最低分数不能小于零!"),'warning');
+										return;
+									}
+								}
+							}
+							var _evaluatingRule="";
+							for(var i=0;i<formLevelSize;i++){
+								var formLevelName = $("#formLevel"+i+"Name").val();
+								var formScoreFrom = parseInt($("#formScore"+i+"From").val());
+								var formScoreTo = parseInt($("#formScore"+i+"To").val());
+								_evaluatingRule+=formLevelName+":"+formScoreFrom+"~"+formScoreTo;
+								if(i<formLevelSize-1){
+									_evaluatingRule+=";";
+								}
+							}
+							if(_evaluatingRule != ""){
+								$.ajax({
+									url:"../elderlyEvaluatingRecord/createForm.jhtml",
+									type:"post",
+									traditional : true,
+									data: {
+										"ids" : _ids,
+										"formName":$("#formName").val(),
+										"evaluatingRule":_evaluatingRule
+									},
+									beforeSend:function(){
+										$.messager.progress({
+											text:message("yly.common.saving")
+										});
+									},
+									success:function(result,response,status){
+										$.messager.progress('close');
+										showSuccessMsg(result.content);
+										$('#createEvaluatingForm').dialog("close");//关闭当前对话框
+										$.messager.alert('提示','自定义评估表: '+$("#formName").val()+' 创建成功!','info');
+									},
+									error:function (XMLHttpRequest, textStatus, errorThrown) {
+										$.messager.progress('close');
+										alertErrorMsg();
+									}
+								});
+							}
+
+						}else{
+							$.messager.alert(message("yly.common.prompt"), message("请先在系统配置的数据字典中配置评估等级!"),'warning');
 						}
-					});
+					}else{
+						$.messager.alert(message("yly.common.prompt"), message("请添加模块!"),'warning');
+					}
 				}else{
-					$.messager.alert(message("yly.common.prompt"), message("请输入表名称!"),'warning');
+					if($("#formName").val()==null || $("#formName").val().trim()==""){	
+						$.messager.alert(message("yly.common.prompt"), message("请输入表名称!"),'warning');
+					}else{
+						$.messager.alert(message("yly.common.prompt"), message("请输入评估等级评分规则!"),'warning');
+					}
 				}
+				
+
 			}
 		},{
 			text:message("yly.common.cancel"),

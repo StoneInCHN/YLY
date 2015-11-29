@@ -156,10 +156,10 @@ $(function(){
 		  $("#event-table-list").datagrid('reload');
 		})
 })
-function formatLongString(str,len){
-	if(str.length > len){
-		return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
-	}else{
-		return str;
-	}	
-}
+//function formatLongString(str,len){
+//	if(str.length > len){
+//		return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
+//	}else{
+//		return str;
+//	}	
+//}

@@ -262,7 +262,11 @@ public class CommonEnum {
     /**
      * 体检配置项,12
      */
-    PHYSICALEXAMITEM("体检配置项");
+    PHYSICALEXAMITEM("体检配置项"),
+    /**
+     * 评估等级,13
+     */
+    EVALUATINGLEVEL("评估等级");
     
     private String keyName; 
     

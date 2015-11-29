@@ -6,7 +6,7 @@
 <p style="font-size:140%">A.1　评估基本信息表</p>
 <table class="table table-bordered">
 <tr><td style="width:230px">A.1.1 评估编号</td><td>
-${elderlyEvaluatingRecord.evaluatingForm.formName?substring(elderlyEvaluatingRecord.evaluatingForm.formName?index_of("(")+1,elderlyEvaluatingRecord.evaluatingForm.formName?length-1)}
+
 </td></tr>
 <tr><td>A.1.2 姓名</td><td>${elderlyEvaluatingRecord.elderlyInfo.name}</td></tr>
 <tr><td>A.1.3 身份证号码</td><td>${elderlyEvaluatingRecord.elderlyInfo.IDCard}</td></tr>
@@ -35,7 +35,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(elderlyEvaluatingRec
 
 
 <p style="text-align:center;font-size:180%">
-${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingRecord.evaluatingForm.formName?index_of("("))}
+${elderlyEvaluatingRecord.evaluatingForm.formName}
 </p>
 
 <#list elderlyEvaluatingRecord.evaluatingForm.evaluatingSections as evaluatingSection>
@@ -51,8 +51,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 	   <#list elderlyEvaluatingRecord.evaluatingItemsAnswers as evaluatingItemsAnswer>
 			<#if evaluatingItemsAnswer.evaluatingItemsOptions.evaluatingItems.itemName == evaluatingItem.itemName>
 				<u>${evaluatingItemsAnswer.evaluatingItemsOptions.optionScore}分</u>
-			</#if>
-	
+			</#if>	
 	   </#list> 
 	</td>
 	<td><#list evaluatingItem.evaluatingItemsOptions as evaluatingItemsOption>	
@@ -85,26 +84,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 	</td>
 	<td>上述${evaluatingSection.evaluatingItems?size}个项目得分总和</td>
 </tr>
-<tr>
-	<td>B.${evaluatingSection_index+1}.${evaluatingItem_index+3}  ${evaluatingSection.sectionName}分级</td>
-	<td>
-		<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
-		   <#list sectionLevelMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		   		    
-					&nbsp;&nbsp;<u>${sectionLevelMap.get(key)}级</u>&nbsp&nbsp;&nbsp;
-				</#if>
-	      </#list>
-		</#if>
-	<td>
-		<#if sectionScoreRuleMap??&&sectionScoreRuleMap?size gt 0>
-		   <#list sectionScoreRuleMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		   		    
-					${sectionScoreRuleMap.get(key)}
-				</#if>
-	      </#list>
-		</#if>
-	</td>
-</tr>
+
 </table>
 </#list>
 
@@ -116,10 +96,10 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 		<#list elderlyEvaluatingRecord.evaluatingForm.evaluatingSections as evaluatingSection>	
 	       <#if evaluatingSection_index == 0>
                C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
-				<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
-		   			<#list sectionLevelMap.keySet() as key>
+				<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
+		   			<#list sectionScoreMap.keySet() as key>
 		   				<#if key==evaluatingSection.sectionName>		   		    
-							${sectionLevelMap.get(key)}级
+							&nbsp;&nbsp;<u>${sectionScoreMap.get(key)}分</u>&nbsp;&nbsp;&nbsp;
 						</#if>
 	      			</#list>
 				</#if>
@@ -132,10 +112,10 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 	       <#if evaluatingSection_index != 0>
                <tr>
                	<td>C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
-					<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
-		   				<#list sectionLevelMap.keySet() as key>
+					<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
+		   				<#list sectionScoreMap.keySet() as key>
 		   					<#if key==evaluatingSection.sectionName>		   		    
-								${sectionLevelMap.get(key)}级
+								&nbsp;&nbsp;<u>${sectionScoreMap.get(key)}分</u>&nbsp;&nbsp;&nbsp;
 							</#if>
 	      				</#list>
 					</#if>
@@ -146,11 +126,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 <tr>
 	<td text-align="center">C.2&nbsp;&nbsp;老年人能力初步等级&nbsp;&nbsp;</td>
 	<td>
-
-	<#if formPrimaryLevel?contains("0")><font color="green">${formPrimaryLevel}</font></#if>
-	<#if formPrimaryLevel?contains("1")><font color="orange">${formPrimaryLevel}</font></#if>
-	<#if formPrimaryLevel?contains("2")><font color="#cc6600">${formPrimaryLevel}</font></#if>
-	<#if formPrimaryLevel?contains("3")><font color="red">${formPrimaryLevel}</font></#if>
+		${formPrimaryLevel}
 	</td>
 	
 </tr>	

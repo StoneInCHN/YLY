@@ -29,8 +29,10 @@ import com.yly.entity.EvaluatingSection;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
+import com.yly.json.request.EvaluatingScoreRequest;
 import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.utils.DateTimeUtils;
+import com.yly.utils.ToolsUtils;
 
 /**
  * 入院评估记录 Service Implement
@@ -91,8 +93,8 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     for (EvaluatingItemsAnswer evaluatingItemsAnswer : evaluatingItemsAnswers) {
       EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsAnswer.getEvaluatingItemsOptions();
       if (evaluatingItemsOptions != null && evaluatingItemsOptions.getEvaluatingItems() != null
-          && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSection() != null) {
-            String sectionName = evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSection().getSectionName();
+          && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections() != null) {
+            String sectionName = evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections().get(0).getSectionName();
             sectionScoreMap.replace(sectionName, sectionScoreMap.get(sectionName)+evaluatingItemsOptions.getOptionScore());//累积得分
       }
     }
@@ -226,8 +228,8 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
         for (EvaluatingItemsAnswer evaluatingItemsAnswer : evaluatingItemsAnswers) {
           EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsAnswer.getEvaluatingItemsOptions();
           if (evaluatingItemsOptions != null && evaluatingItemsOptions.getEvaluatingItems() != null
-              && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSection() != null
-              && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSection().getSectionName().equals("感知觉与沟通")) {
+              && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections() != null
+              && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections().get(0).getSectionName().equals("感知觉与沟通")) {
                answersForPerCom.add(evaluatingItemsAnswer);
           }
         }
@@ -496,7 +498,86 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       return false;
     }
   }
+  /**
+   * @param evaluatingScoreRequest
+   * @return 返回评估模块规则字符串
+   * ie   0:能力完好 from Score To Score
+   */
+  public String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest){
+    StringBuffer evaluatingRule = new StringBuffer();
+    if (!ToolsUtils.checkObjAllFieldNull(evaluatingScoreRequest)) {
+      evaluatingRule.append("0:");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0From());
+      evaluatingRule.append(",");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0To());
+      evaluatingRule.append(";");
+      evaluatingRule.append("1:");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1From());
+      evaluatingRule.append(",");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1To());
+      evaluatingRule.append(";");        
+      evaluatingRule.append("2:");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2From());
+      evaluatingRule.append(",");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2To());
+      evaluatingRule.append(";");
+      evaluatingRule.append("3:");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3From());
+      evaluatingRule.append(",");
+      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3To());
+      evaluatingRule.append(";");        
+    }
+    return evaluatingRule.toString();
+  }
 
+  @Override
+  public String getCustomFormScoreRule(String evaluatingRule) {
+    //丧失能力:0~20;重度失能:19~40;中度失能:39~60;轻度失能:59~80;能力完好:79~100
+    StringBuffer formScoreRule = new StringBuffer();
+    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;自定义评估表等级划分标准<p/>");
+    if (StringUtils.isNotBlank(evaluatingRule) && evaluatingRule.contains(";")) {
+      String[] levels = evaluatingRule.split(";");
+      for (int i = 0; i < levels.length; i++) {
+        if (StringUtils.isNotBlank(levels[i]) && levels[i].contains(":")) {
+          String[] keyValue = levels[i].split(":");
+          formScoreRule.append(keyValue[0]);
+          formScoreRule.append(":");
+          formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;总分为");
+          formScoreRule.append(keyValue[1]);
+          formScoreRule.append("分<p/>");
+        }       
+      }
+    }
+    return formScoreRule.toString();
+  }
 
-
+  @Override
+  public String getCustomFormLevel(String evaluatingRule, String sectionLevels) {
+    String formPrimaryLevel = "";
+    String[] sectionLevelArray = sectionLevels.split(";;;;");
+    int totalScore = 0;//整个评估表的总分
+    for (int i = 0; i < sectionLevelArray.length; i++) {
+      String[] sectionName_Level = sectionLevelArray[i].split("::::");
+      totalScore += Integer.parseInt(sectionName_Level[1]);
+    }
+    // evaluatingRule 例如 --> 丧失能力:0~20;重度失能:19~40;中度失能:39~60;轻度失能:59~80;能力完好:79~100
+    if (evaluatingRule.contains(";")) {
+      String[] levels = evaluatingRule.split(";");
+      for (int i = 0; i < levels.length; i++) {
+        if (levels[i].contains(":")) {
+          String[] keyValue = levels[i].split(":");
+          if (keyValue[1].contains("~")) {
+            String[] scores = keyValue[1].split("~");
+            int from = Integer.parseInt(scores[0]);
+            int to = Integer.parseInt(scores[1]);
+            if (totalScore >= from && totalScore <= to) {
+              formPrimaryLevel = keyValue[0];
+              break;
+            }
+          }
+        }
+      }
+    }   
+    return formPrimaryLevel;
+  }
 }

@@ -153,7 +153,7 @@ public class ElderlyPhotoAlbumController extends BaseController {
     return "";
   }  
   /**
-   * 老人信息公共搜索页面
+   * 相册公共搜索页面
    * 
    * @param model
    * @return

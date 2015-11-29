@@ -8,12 +8,18 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -27,6 +33,7 @@ import com.yly.entity.base.BaseEntity;
 @Entity
 @Table(name = "yly_evaluating_items")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_evaluating_items_sequence")
+@Indexed(index = "evaluatingItems/evaluatingItems")
 public class EvaluatingItems extends BaseEntity {
 
   /**
@@ -57,7 +64,7 @@ public class EvaluatingItems extends BaseEntity {
   /**
    * 评估的每个项
    */
-  private EvaluatingSection evaluatingSection; 
+  private List<EvaluatingSection> evaluatingSections = new ArrayList<EvaluatingSection>();
   
   private List<EvaluatingItemsOptions> evaluatingItemsOptions = new ArrayList<EvaluatingItemsOptions>();
   
@@ -71,6 +78,7 @@ public class EvaluatingItems extends BaseEntity {
   }
   @JsonProperty
   @Column(length = 120)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getItemName() {
     return itemName;
   }
@@ -94,20 +102,23 @@ public class EvaluatingItems extends BaseEntity {
   public void setAllowMutipleAnswers(Boolean allowMutipleAnswers) {
     this.allowMutipleAnswers = allowMutipleAnswers;
   }
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  public EvaluatingSection getEvaluatingSection() {
-    return evaluatingSection;
+  
+  @ManyToMany(mappedBy = "evaluatingItems")
+  public List<EvaluatingSection> getEvaluatingSections() {
+    return evaluatingSections;
   }
 
-  public void setEvaluatingSection(EvaluatingSection evaluatingSection) {
-    this.evaluatingSection = evaluatingSection;
+  public void setEvaluatingSections(List<EvaluatingSection> evaluatingSections) {
+    this.evaluatingSections = evaluatingSections;
   }
+  
   @JsonProperty
   @OneToMany(mappedBy = "evaluatingItems",fetch = FetchType.LAZY)
   public List<EvaluatingItemsOptions> getEvaluatingItemsOptions() {
     return evaluatingItemsOptions;
   }
+
+
 
   public void setEvaluatingItemsOptions(List<EvaluatingItemsOptions> evaluatingItemsOptions) {
     this.evaluatingItemsOptions = evaluatingItemsOptions;

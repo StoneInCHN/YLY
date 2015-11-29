@@ -398,3 +398,15 @@ function formReset(formId,tableId){
 	var _queryParams = {}
 	$('#'+tableId).datagrid('options').queryParams = _queryParams;
 }
+
+//返回指定长度字符串截取,...作为后缀
+function formatLongString(str,len){
+	if(str != null && str!=""&& len > 0){
+		if(str.length > len){
+			return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
+		}else{
+			return str;
+		}	
+	}
+	return "";
+}

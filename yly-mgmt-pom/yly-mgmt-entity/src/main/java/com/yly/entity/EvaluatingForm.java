@@ -53,6 +53,21 @@ public class EvaluatingForm extends BaseEntity {
   private List<EvaluatingSection> evaluatingSections = new ArrayList<EvaluatingSection>();
   
   private Set<ElderlyEvaluatingRecord> elderlyEvaluatingRecords =  new HashSet<ElderlyEvaluatingRecord>();
+  
+  /**
+   * 该评估表的评分规则
+   */
+  private String evaluatingRule;
+  
+  @JsonProperty
+  @Column(length = 100)
+  public String getEvaluatingRule() {
+    return evaluatingRule;
+  }
+
+  public void setEvaluatingRule(String evaluatingRule) {
+    this.evaluatingRule = evaluatingRule;
+  }
 
   @Index(name="evaluating_form_tenantid")
   public Long getTenantID() {
