@@ -1,7 +1,7 @@
 <div>
 	  <fieldset>
 	    <legend>题库查询</legend>
-	    <form id="photoAlbum_search_form" class="search-form">
+	    <form id="item_search_form" class="search-form">
 	        <div class="search-item">&nbsp;&nbsp;</div>
 			<div class="search-item">
 			   <label>题目名称:</label>
@@ -9,7 +9,7 @@
 			</div>			        
 		</form>
 		<div class="search-item">
-	  	  <button id="photoAlbum_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	  <button id="item_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchItemsByKeys()">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>

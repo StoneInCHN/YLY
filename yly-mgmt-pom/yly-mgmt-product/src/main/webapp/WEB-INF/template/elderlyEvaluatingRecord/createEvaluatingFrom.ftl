@@ -122,14 +122,16 @@
 	<div id="hiddenDiv"></div>
 </form>
 </div>
+<div id="editEvaluatingSection">
+</div>
 <div id="addEvaluatingSection">
 <form id="addEvaluatingSection_form" method="post" class="form-table">   
 <div style="margin:10px">
 	<p style="font-size:130%">模块名称：
-		<input type="text" class="easyui-textbox"   validtype="length[0,50]" id="sectionName" name="sectionName" data-options="prompt:'请输入模块名称...',required:true,multiline:true,height:40,width:460" />
+		<input type="text" class="easyui-textbox"   validtype="length[0,500]" id="sectionName" name="sectionName" data-options="prompt:'请输入模块名称...',required:true,multiline:true,height:40,width:460" />
 	</p>
 	<p style="font-size:130%">模块描述：
-		<input type="text" class="easyui-textbox"   validtype="length[0,50]" id="sectionDescription" name="sectionDescription" data-options="prompt:'请输入模块的描述...',required:true,multiline:true,height:60,width:460" />
+		<input type="text" class="easyui-textbox"   validtype="length[0,500]" id="sectionDescription" name="sectionDescription" data-options="prompt:'请输入模块的描述...',required:true,multiline:true,height:60,width:460" />
 	</p>
 </div>
 </form>

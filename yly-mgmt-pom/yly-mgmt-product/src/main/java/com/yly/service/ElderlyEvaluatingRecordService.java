@@ -10,7 +10,6 @@ import com.yly.entity.EvaluatingSection;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.BaseService;
-import com.yly.json.request.EvaluatingScoreRequest;
 
 /**
  * 入院评估记录Service
@@ -72,6 +71,6 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @param evaluatingScoreRequest
    * @return 返回评估模块规则字符串
    */
-  String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest);
+  //String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest);
   
 }

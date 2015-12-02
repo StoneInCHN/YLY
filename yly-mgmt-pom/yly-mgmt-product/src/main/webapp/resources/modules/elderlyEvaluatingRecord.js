@@ -419,8 +419,8 @@ function createForm(){
 									return;
 								}
 								if(i<formLevelSize-1){
-									if(parseInt($("#formScore"+i+"To").val())==parseInt($("#formScore"+(i+1)+"From").val())){
-										$.messager.alert(message("yly.common.prompt"), message("相邻等级的终止分数和起始分数不能相等,否者没法根据具体分数明确的划分等级分数区间!"),'warning');
+									if(parseInt($("#formScore"+i+"To").val())>=parseInt($("#formScore"+(i+1)+"From").val())){
+										$.messager.alert(message("yly.common.prompt"), message("相邻等级的终止分数和起始分数输入有误,否者没法根据具体分数明确的划分等级分数区间!"),'warning');
 										return;
 									}
 								}
@@ -437,6 +437,7 @@ function createForm(){
 									}
 								}
 							}
+							return false;
 							var _evaluatingRule="";
 							for(var i=0;i<formLevelSize;i++){
 								var formLevelName = $("#formLevel"+i+"Name").val();

@@ -81,7 +81,7 @@ public class EvaluatingSection extends BaseEntity {
 //  }
   
   @JsonProperty
-  @Column(length = 100)
+  @Column(length = 500)
   public String getSectionDescription() {
     return sectionDescription;
   }

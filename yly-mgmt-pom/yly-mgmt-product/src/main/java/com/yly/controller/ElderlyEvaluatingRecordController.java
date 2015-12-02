@@ -40,7 +40,6 @@ import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.json.request.EvaluatingScoreRequest;
 import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.EvaluatingFormService;
@@ -135,6 +134,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   public @ResponseBody List<EvaluatingSection> getAllCustomSections(ModelMap model){
     List<EvaluatingSection> evaluatingSectionList = evaluatingSectionService.findAll();
     int count = 1;
+    
     while (count <= evaluatingSectionList.size()) {
       EvaluatingSection evaluatingSection = evaluatingSectionList.get(count - 1);
       if (evaluatingSection.getSystemSection() || evaluatingSection.getEvaluatingForm() != null){//移除系统定义的评估模块
@@ -189,7 +189,23 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     String[] propertys = {"id", "buildingName"};
     return FieldFilterUtils.filterCollectionMap(propertys, elderlyEvaluatingRecordService.findAll(true));
   }
-
+  /**
+   * 编辑模块
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/editSection", method = RequestMethod.GET)
+  public String editSection(ModelMap model, Long evaluatingSectionId) {
+    if (evaluatingSectionId != null) {
+      EvaluatingSection evaluatingSection = evaluatingSectionService.find(evaluatingSectionId);
+      if (evaluatingSection != null) {
+        model.addAttribute("evaluatingSection", evaluatingSection);
+      }
+    }    
+    return "elderlyEvaluatingRecord/editSection";
+  }
+  
   /**
    * 编辑
    * @param model
@@ -379,12 +395,34 @@ public class ElderlyEvaluatingRecordController extends BaseController {
           }
         }
         if (!existing && evaluatingItemsDB != null) {//如果当前模块没有包含模块evaluatingItemsDB
+          if (evaluatingItems.getEvaluatingItemsOptions() != null && evaluatingItems.getEvaluatingItemsOptions().size() > 0) {
+            List<EvaluatingItemsOptions> evaluatingItemsOptionsList = evaluatingItems.getEvaluatingItemsOptions();
+            for (int i = 0; i < evaluatingItemsOptionsList.size(); i ++) {
+              EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsOptionsList.get(i);
+              EvaluatingItemOptions evaluatingItemOptions = evaluatingItemsOptions.getEvaluatingItemOptions();
+              if (evaluatingItemOptions.getId() != null) {//已经存在的选项
+                EvaluatingItemOptions evaluatingItemOptionsDB = evaluatingItemOptionsService.find(evaluatingItemOptions.getId());
+                if (!evaluatingItemOptionsDB.getOptionName().equals(evaluatingItemOptions.getOptionName())) {//已经存在的选项，但是修改过，作为新建的选项处理，另外保存
+                  evaluatingItemOptions.setTenantID(currnetTenantId);
+                  evaluatingItemOptionsService.save(evaluatingItemOptions);//依次保存选项
+                  evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptions);
+                  evaluatingItemsOptionsService.save(evaluatingItemsOptions);//依次保存选项关系（含得分）
+                }
+              }else{//新添加的选项
+                evaluatingItemOptions.setTenantID(currnetTenantId);
+                evaluatingItemOptionsService.save(evaluatingItemOptions);//依次保存选项
+                evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptions);
+                evaluatingItemsOptionsService.save(evaluatingItemsOptions);//依次保存选项关系（含得分）
+              }              
+            }
+          }
           evaluatingItemsList.add(evaluatingItemsDB);
           evaluatingSectionService.update(evaluatingSection);//更新模块下面的题目
         }else {
           return ERROR_MESSAGE;
         }
       }else{//新添加的题目
+        evaluatingItems.setId(null);
         evaluatingItems.setTenantID(currnetTenantId);
         evaluatingItems.setAllowMutipleAnswers(false);
         evaluatingItems.setAnswerRequired(true);
@@ -398,10 +436,23 @@ public class ElderlyEvaluatingRecordController extends BaseController {
           for (int i = 0; i < evaluatingItemsOptionsList.size(); i ++) {
             EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsOptionsList.get(i);
             EvaluatingItemOptions evaluatingItemOptions = evaluatingItemsOptions.getEvaluatingItemOptions();
-            evaluatingItemOptions.setTenantID(currnetTenantId);
-            evaluatingItemOptionsService.save(evaluatingItemOptions);//依次保存选项
-            
-            evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptions);
+            if (evaluatingItemOptions.getId() != null) {//已经存在的选项
+              EvaluatingItemOptions evaluatingItemOptionsDB = evaluatingItemOptionsService.find(evaluatingItemOptions.getId());
+              if (evaluatingItemOptionsDB.getOptionName().equals(evaluatingItemOptions.getOptionName())) {//已经存在的选项，并且没有修改过
+                evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptionsDB);
+                
+              }else {//已经存在的选项，但是修改过，作为新建的选项处理，另外保存
+                evaluatingItemOptions.setTenantID(currnetTenantId);
+                evaluatingItemOptions.setId(null);
+                evaluatingItemOptionsService.save(evaluatingItemOptions);//依次保存选项
+                evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptions);
+              }
+              
+            }else{//新添加的选项
+              evaluatingItemOptions.setTenantID(currnetTenantId);
+              evaluatingItemOptionsService.save(evaluatingItemOptions);//依次保存选项
+              evaluatingItemsOptions.setEvaluatingItemOptions(evaluatingItemOptions);
+            }     
             evaluatingItemsOptions.setEvaluatingItems(evaluatingItems);
             evaluatingItemsOptionsService.save(evaluatingItemsOptions);//依次保存选项关系（含得分）
           }
@@ -421,7 +472,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/addSection", method = RequestMethod.POST)
-  public @ResponseBody Message addSection(EvaluatingSection evaluatingSection,EvaluatingScoreRequest evaluatingScoreRequest) {
+  public @ResponseBody Message addSection(EvaluatingSection evaluatingSection) {
     Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
     if (evaluatingSection != null && evaluatingSection.getSectionName() != null) {
       evaluatingSection.setTenantID(currnetTenantId);
@@ -577,7 +628,27 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       
       return SUCCESS_MESSAGE;
   }
-
+  
+  /**
+   * 更新模块
+   * 
+   * @param elderlyEvaluatingRecord
+   * @param elderlyInfoID
+   * @return
+   */
+  @RequestMapping(value = "/updateSection", method = RequestMethod.POST)
+  //@Transactional(readOnly = true)
+  public @ResponseBody Message updateSection(EvaluatingSection evaluatingSection){
+    if (evaluatingSection == null || evaluatingSection.getId() == null) {
+      return ERROR_MESSAGE;
+    }else {    
+      EvaluatingSection evaluatingSectionDB = evaluatingSectionService.find(evaluatingSection.getId());
+      evaluatingSectionDB.setSectionName(evaluatingSection.getSectionName());
+      evaluatingSectionDB.setSectionDescription(evaluatingSection.getSectionDescription());
+      evaluatingSectionService.update(evaluatingSectionDB);
+    }        
+    return SUCCESS_MESSAGE;
+  }
   /**
    * 更新
    * 
@@ -786,27 +857,102 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     return evaluatingItemsPage;
   }
   /**
-   * 返回当前模块是否已经包含了此题
+   * 返回当前所有空闲模块是否已经包含了此题
    * @return
    */
   @RequestMapping(value = "/sectionContainItem", method = RequestMethod.GET)
-  public @ResponseBody Map<String, Boolean> sectionContainItem(Long sectionId, Long itemId) {
+  public @ResponseBody Map<String, Boolean> sectionContainItem(Long sectionId, String itemName) {
     boolean sectionContainItem = false;
-    if (itemId != null) {
-      EvaluatingItems evaluatingItems = evaluatingItemsService.find(itemId);
-      if (evaluatingItems.getEvaluatingSections().size() > 0) {
-        List<EvaluatingSection> evaluatingSections = evaluatingItems.getEvaluatingSections();
-        for (EvaluatingSection evaluatingSection : evaluatingSections) {
-          if (evaluatingSection.getId() == sectionId) {
-            sectionContainItem = true;
-            break;
+    Map<String, Boolean> resultMap = new HashMap<String, Boolean>();  
+    
+    List<EvaluatingSection> evaluatingSectionList = evaluatingSectionService.findAll();
+    int count = 1;
+    while (count <= evaluatingSectionList.size()) {
+      EvaluatingSection evaluatingSection = evaluatingSectionList.get(count - 1);
+      if (evaluatingSection.getSystemSection() || evaluatingSection.getEvaluatingForm() != null){//移除系统定义的评估模块
+          evaluatingSectionList.remove(count - 1);    // 从List中移除         
+     }else{
+           count ++;
+     }  
+    }
+    if (StringUtils.isNotBlank(itemName) && evaluatingSectionList != null && evaluatingSectionList.size() > 0) {
+      for (EvaluatingSection evaluatingSection : evaluatingSectionList) {
+        List<EvaluatingItems> evaluatingItemsList = evaluatingSection.getEvaluatingItems();
+        for (EvaluatingItems evaluatingItems2 : evaluatingItemsList) {
+          if (evaluatingItems2.getItemName().equals(itemName)) {
+            resultMap.put("sectionContainItem", true);
+            return resultMap;
           }
         }
       }
-    }
-    Map<String, Boolean> resultMap = new HashMap<String, Boolean>();   
+    }    
     resultMap.put("sectionContainItem", sectionContainItem);
     return resultMap;
+  }
+  /**
+   * 删除未分配模块下的题目，
+   * 1.如果是已经分配过的题目就逻辑删（解除题目与模块之间的关系），
+   * 2.如果是新的未分配过的题目，题目肯定直接删，但是题目下面的选项包括两种情况：
+   *  2.1 如果题目下面的选项是已经分配过的就逻辑删（解除题目和选项之间的关系）
+   *  2.2 如果题目下面的选项是新的未分配过，就直接删除
+   * @return
+   */
+  @RequestMapping(value = "/deleteItem", method = RequestMethod.GET)
+  public @ResponseBody Message deleteItem(Long itemId){
+    EvaluatingItems evaluatingItems = evaluatingItemsService.find(itemId);
+    List<EvaluatingSection>  evaluatingSectionList = evaluatingItems.getEvaluatingSections();
+    boolean isNewItem = true;//标记这个题目是否是新的未被分配
+    for (EvaluatingSection evaluatingSection : evaluatingSectionList) {
+      if (evaluatingSection.getEvaluatingForm() != null) {//表示这个题目所属的这个模块已经被分配过
+        isNewItem = false;
+        break;
+      }
+    }
+    if (!isNewItem) {//1.如果是已经分配过的题目就逻辑删（解除题目与模块之间的关系），
+      for (EvaluatingSection evaluatingSection : evaluatingSectionList) {
+        if (evaluatingSection.getEvaluatingForm() == null) {
+          List<EvaluatingItems> evaluatingItemsList = evaluatingSection.getEvaluatingItems();
+          evaluatingItemsList.remove(evaluatingItems);
+          evaluatingSectionService.update(evaluatingSection);
+        }
+      }
+    }else {
+      //2.如果是新的未分配过的题目，题目肯定直接删，但是题目下面的选项包括两种情况：
+      //2.1 如果题目下面的选项是已经分配过的就逻辑删（解除题目和选项之间的关系）
+      //2.2 如果题目下面的选项是新的未分配过，就直接删除
+      List<EvaluatingItemsOptions> evaluatingItemsOptionsList_item = evaluatingItems.getEvaluatingItemsOptions();
+      for (EvaluatingItemsOptions evaluatingItemsOptions : evaluatingItemsOptionsList_item) {
+        List<EvaluatingItemsOptions> evaluatingItemsOptionsList_option = evaluatingItemsOptions.getEvaluatingItemOptions().getEvaluatingItemsOptions();
+        boolean isNewOption = true;//标记这个选项是否是新的未被分配
+        loop_option_items : for (EvaluatingItemsOptions evaluatingItemsOptions_option : evaluatingItemsOptionsList_option) {
+          EvaluatingItems evaluatingItems_option = evaluatingItemsOptions_option.getEvaluatingItems();
+          List<EvaluatingSection>  evaluatingSectionList_option = evaluatingItems_option.getEvaluatingSections();
+          for (EvaluatingSection evaluatingSection : evaluatingSectionList_option) {
+            if (evaluatingSection.getEvaluatingForm() != null) {//表示这个题目所属的这个模块已经被分配过
+              isNewOption = false;
+              break loop_option_items;
+            }
+          }
+        }
+        if (!isNewOption) {//分配过，逻辑删
+          evaluatingItemsOptionsService.delete(evaluatingItemsOptions);//逻辑删，解除关系
+        }else {//新的未分配，直接删
+          evaluatingItemsOptionsService.delete(evaluatingItemsOptions);//先解除关系
+          evaluatingItemOptionsService.delete(evaluatingItemsOptions.getEvaluatingItemOptions());//直接删
+        }
+      }  
+      //最终删除题目
+      for (EvaluatingSection evaluatingSection : evaluatingSectionList) {
+        if (evaluatingSection.getEvaluatingForm() == null) {
+          List<EvaluatingItems> evaluatingItemsList = evaluatingSection.getEvaluatingItems();
+          evaluatingItemsList.remove(evaluatingItems);
+          evaluatingSectionService.update(evaluatingSection);
+        }
+      }
+      evaluatingItemsService.delete(evaluatingItems);
+    }
+    
+    return SUCCESS_MESSAGE;
   }
   
 }

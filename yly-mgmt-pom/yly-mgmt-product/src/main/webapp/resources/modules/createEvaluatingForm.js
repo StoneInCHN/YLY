@@ -53,13 +53,23 @@ function reloadItems(){
 		success:function(jsonObj, textStatus){
 			if(jsonObj.length>0){
 						var itemsHtml = '<div id="itemsDisplay" class="easyui-accordion" style="height:720px;">';
+						var allNewSectionIds = [];
+						for(var i=0; i< jsonObj.length; i++){	
+							allNewSectionIds.push(jsonObj[i].id);
+						}
+						
 						for(var i=0; i< jsonObj.length; i++){			
 							var sectionNameShort=jsonObj[i].sectionName;
 							if(sectionNameShort.length>6){
 								sectionNameShort=sectionNameShort.substring(0,6)+'...';
 							}
 							//if(!jsonObj[i].systemSection){//标记自定义模块可编辑
-								itemsHtml+='<div title="'+sectionNameShort+'"  iconCls="icon-edit" style="overflow:auto;padding:10px;">';
+							if(false){//selected="true"是自动展开的意思
+								itemsHtml+='<div title="'+sectionNameShort+'22" class="sectionTitle"   selected="true" iconCls="icon-edit" style="overflow:auto;padding:10px;">';
+							}else{
+								itemsHtml+='<div title="'+sectionNameShort+'" class="sectionTitle"   iconCls="icon-edit" style="overflow:auto;padding:10px;">';
+							}
+								
 							//}else{//标记系统定义的模块
 								//itemsHtml+='<div title="'+sectionNameShort+'" class="section"  iconCls="icon-ok" style="overflow:auto;padding:10px;">';
 							//}
@@ -70,7 +80,12 @@ function reloadItems(){
 							//itemsHtml+='<input type="hidden" title="sectionRule"  value="'+jsonObj[i].evaluatingRule+'"/>';
 							itemsHtml+='<input type="hidden" title="indexId"  value="'+i+'"/>';
 							for(var j=0; j<jsonObj1.length; j++){	
-								itemsHtml+='<p  class="item">'+jsonObj1[j].itemName.substring(0,2);
+								if(jsonObj1[j].itemName!=null && jsonObj1[j].itemName.length>7){
+									itemsHtml+='<p  class="item"><span title="'+jsonObj1[j].itemName+'">'+jsonObj1[j].itemName.substring(0,7)+'</span>';
+								}else{
+									itemsHtml+='<p  class="item"><span title="'+jsonObj1[j].itemName+'">'+jsonObj1[j].itemName+'</span>';
+								}
+								
 								itemsHtml+='<input type="hidden" title="itemName"  value="'+jsonObj1[j].itemName+'"/>';
 								itemsHtml+='<input type="hidden" title="itemId"  value="'+jsonObj1[j].id+'"/>';
 								var jsonObj2=jsonObj1[j].evaluatingItemsOptions;
@@ -82,16 +97,63 @@ function reloadItems(){
 							}
 							itemsHtml+='</div>';	
 							//if(!jsonObj[i].systemSection){//自定义模块可以继续在该模块下添加题目
-							itemsHtml+='<div id="additemDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="addItem('+jsonObj[i].id +')"><i class="fa fa-plus-square-o fa-2x"/> 添加题目</a></div>';
+							itemsHtml+='<div id="additemDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="addItem('+jsonObj[i].id+')"><i class="fa fa-plus-square fa-2x"/> 添加题目</a></div>';
+							itemsHtml+='<div  id="deleteitemDIV'+i+'"class="trash btn bule-color"><i class="fa fa-trash fa-2x"/> 删除题目</div>';
+							itemsHtml+='<hr><div  id="editSectionDIV'+i+'"class="trash"><a href="javascript:;" id="additem" class="btn bule-color" onclick="editSection('+jsonObj[i].id+')"><i class="fa fa-edit fa-2x"/>编辑模块</a></div>';
 							//}
 							itemsHtml+='</div>';					
 						}
 						itemsHtml+='</div>';
 						$("#accordionDiv").html(itemsHtml);	
 						$.parser.parse($('#accordionDiv'));
-						//拖拽的源
+						//拖拽的源 单个题目
+						$('.left .item').draggable({
+							revert:true,
+							cursor: 'pointer',
+							proxy:'clone'
+						});
+						$('.left .trash').droppable({
+							onDragEnter:function(){
+								$(this).addClass('over');
+							},
+							onDragLeave:function(){
+								$(this).removeClass('over');
+							},
+							onDrop:function(e,source){
+								if($(source).attr("class").indexOf('item')!=-1){//只接单个题目的拖拽
+									$.messager.confirm('确认','确定删除此题目吗?',function(r){
+										if (r){
+											//删除操作
+											var itemId = $(source).find('input[title=itemId]').val();
+											if(itemId!=null && itemId.trim()!=""){
+												$.ajax({
+													url:"../elderlyEvaluatingRecord/deleteItem.jhtml",
+													type:"get",
+													data:{
+														"itemId":itemId
+													},
+													success:function(result,response,status){
+														if(result.content.indexOf("异常")!=-1){
+															$.messager.alert(message("yly.common.prompt"), message("题目："+$(source).find('input[title=itemName]').val()+" 已经被其他模块使用，不能被删除！！"),'warning');
+														}else{
+															reloadItems();//重新加载左边的题库
+														}
+													},
+													error:function (XMLHttpRequest, textStatus, errorThrown) {
+														$.messager.progress('close');
+														alertErrorMsg();
+													}
+												});
+											}
+										}
+									});
+								}
+							}
+						});
+						//拖拽的源 整个模块
 						$('.left .section').draggable({
 							revert:true,
+							cursor: 'pointer',
 							proxy:'clone'
 						});
 						//拖拽的目的地
@@ -103,61 +165,66 @@ function reloadItems(){
 								$(this).removeClass('over');
 							},
 							onDrop:function(e,source){
-								$(this).removeClass('over');	
-								var sectionName=$(source).find('input[title=hiddenSectionName]').val();		
-								if($(this).html().indexOf(sectionName) ==-1){//评估表不能重复加模块
-								var indexId=$(source).find('input[title=indexId]').val();
-								$("#additemDIV"+indexId).addClass('hiddenAddItem');
-								var appendElement='<div><hr><table style="background:#fff;width:95%;"><tr><td colspan="4" style="font-size:130%"><strong>评估模块：<a href="#" >'+sectionName+'</a></strong></td>'+
-											'<td style="width:20px"><a href="javascript:void(0);" onclick="removeSection(this,'+indexId+')"><i class="fa fa-times fa-1x"></i></a><p/><p/></td>';
-								var sectionId= $(source).find('input[title=sectionId]').val();
-								appendElement+='<input type="hidden" name="sectionId"  value="'+sectionId+'"/>';
-//								 var sectionRule= $(source).find('input[title=sectionRule]').val();
-//								 var sectionRules = sectionRule.split(";");
-//								 for(var i=0; i< sectionRules.length; i++){
-//									 var levelScore = sectionRules[i].split(":");
-//									 if(parseInt(levelScore[0])  == 0){
-//										 appendElement+='<tr><td><strong>0</strong> 能力完好:总分';
-//										 var scoreFromTo = levelScore[1].split(",");
-//										 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
-//									 }else if(parseInt(levelScore[0])  == 1){
-//										 appendElement+='<strong>1</strong> 轻度受损:总分';
-//										 var scoreFromTo = levelScore[1].split(",");
-//										 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
-//									 }else if(parseInt(levelScore[0])  ==2){
-//										 appendElement+='<strong>2</strong> 中度受损:总分';
-//										 var scoreFromTo = levelScore[1].split(",");
-//										 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
-//									 }else if(parseInt(levelScore[0])  ==3){
-//										 appendElement+='<strong>3</strong> 中度受损:总分';
-//										 var scoreFromTo = levelScore[1].split(",");
-//										 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>&nbsp;</td>';
+								if($(source).attr("class").indexOf('section')!=-1){//只接受整个模块的拖拽
+									$(this).removeClass('over');	
+									var sectionName=$(source).find('input[title=hiddenSectionName]').val();		
+									if($(this).html().indexOf(sectionName) ==-1){//评估表不能重复加模块
+									var indexId=$(source).find('input[title=indexId]').val();
+									$("#additemDIV"+indexId).addClass('hiddenAddItem');
+									$("#deleteitemDIV"+indexId).addClass('hiddenAddItem');
+									$("#editSectionDIV"+indexId).addClass('hiddenAddItem');
+									
+									var appendElement='<div><hr><table style="background:#fff;width:95%;"><tr><td colspan="4" style="font-size:130%"><strong>评估模块：<a href="#" >'+sectionName+'</a></strong></td>'+
+												'<td style="width:20px"><a href="javascript:void(0);" onclick="removeSection(this,'+indexId+')"><i class="fa fa-times fa-1x"></i></a><p/><p/></td>';
+									var sectionId= $(source).find('input[title=sectionId]').val();
+									appendElement+='<input type="hidden" name="sectionId"  value="'+sectionId+'"/>';
+//									 var sectionRule= $(source).find('input[title=sectionRule]').val();
+//									 var sectionRules = sectionRule.split(";");
+//									 for(var i=0; i< sectionRules.length; i++){
+//										 var levelScore = sectionRules[i].split(":");
+//										 if(parseInt(levelScore[0])  == 0){
+//											 appendElement+='<tr><td><strong>0</strong> 能力完好:总分';
+//											 var scoreFromTo = levelScore[1].split(",");
+//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
+//										 }else if(parseInt(levelScore[0])  == 1){
+//											 appendElement+='<strong>1</strong> 轻度受损:总分';
+//											 var scoreFromTo = levelScore[1].split(",");
+//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
+//										 }else if(parseInt(levelScore[0])  ==2){
+//											 appendElement+='<strong>2</strong> 中度受损:总分';
+//											 var scoreFromTo = levelScore[1].split(",");
+//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
+//										 }else if(parseInt(levelScore[0])  ==3){
+//											 appendElement+='<strong>3</strong> 中度受损:总分';
+//											 var scoreFromTo = levelScore[1].split(",");
+//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>&nbsp;</td>';
+//										 }
 //									 }
-//								 }
-								 appendElement+='</table><p/>';
-								 $.each( $(source).find('p[class=item]'), function(i,item){      
-										var itemName = $(item).find('input[title=itemName]').val();
-										var itemId= $(item).find('input[title=itemId]').val();
-										appendElement+='<table id="test" class="table table-bordered" fitColumns="true" style="width:95%;height:auto;">'+
-															'<tr><td colspan="2">'+itemName+'</td></tr>';
-										 $.each( $(item).find('input'), function(i,item){       
-										 		if(i>1){ 
-												    if(i%2==0){
-												    	appendElement+='<tr><td style="width:60px">'+$(item).val() +'分</td>';
-												    }else{
-												    	appendElement+='<td>'+$(item).val()+'</td></tr>';
+									 appendElement+='</table><p/>';
+									 $.each( $(source).find('p[class=item]'), function(i,item){      
+											var itemName = $(item).find('input[title=itemName]').val();
+											var itemId= $(item).find('input[title=itemId]').val();
+											appendElement+='<table id="test" class="table table-bordered" fitColumns="true" style="width:95%;height:auto;">'+
+																'<tr><td colspan="2">'+itemName+'</td></tr>';
+											 $.each( $(item).find('input'), function(i,item){       
+											 		if(i>1){ 
+													    if(i%2==0){
+													    	appendElement+='<tr><td style="width:60px">'+$(item).val() +'分</td>';
+													    }else{
+													    	appendElement+='<td>'+$(item).val()+'</td></tr>';
+													    }
 												    }
-											    }
-					   					 });		
-										appendElement+='</table>';
-			   					 });	
+						   					 });		
+											appendElement+='</table>';
+				   					 });	
 
-								 appendElement+='</div>';
-								$(this).append(appendElement);
-							}else{
-								$.messager.alert(message("yly.common.prompt"), message(sectionName+" 模块已经添加,不能重复添加!"),'warning');
-							}
-							}
+									 appendElement+='</div>';
+									$(this).append(appendElement);
+								}else{
+									$.messager.alert(message("yly.common.prompt"), message(sectionName+" 模块已经添加,不能重复添加!"),'warning');
+								}
+								}
+								}
 						});
 			}	
 		},
@@ -171,6 +238,8 @@ function reloadItems(){
 function removeSection(obj,indexId){
 	$(obj).parent().parent().parent().parent().parent().remove();
 	$("#additemDIV"+indexId).removeClass('hiddenAddItem');
+	$("#deleteitemDIV"+indexId).removeClass('hiddenAddItem');
+	$("#editSectionDIV"+indexId).removeClass('hiddenAddItem');
 }
 
 //添加模块
@@ -226,6 +295,53 @@ function addSection(){
 	    }
 	});
 }
+//编辑模块
+function editSection(evaluatingSectionId){
+		var _dialog = $('#editEvaluatingSection').dialog({    
+		    title: "编辑模块",    
+		    width: 600,    
+		    height: 300, 
+		    modal: true,
+		    iconCls:'icon-mini-edit',
+		    href:'../elderlyEvaluatingRecord/editSection.jhtml?evaluatingSectionId='+evaluatingSectionId,
+		    buttons:[{
+		    	text:message("yly.common.save"),
+		    	iconCls:'icon-save',
+				handler:function(){
+					var validate = $('#editEvaluatingSection_form').form('validate');
+					if(validate){
+						$.ajax({
+							url:"../elderlyEvaluatingRecord/updateSection.jhtml",
+							type:"post",
+							data:$("#editEvaluatingSection_form").serialize(),
+							beforeSend:function(){
+								$.messager.progress({
+									text:message("yly.common.saving")
+								});
+							},
+							success:function(result,response,status){
+								$.messager.progress('close');
+								showSuccessMsg(result.content);
+								$('#editEvaluatingSection').dialog("close");
+								reloadItems();
+							},
+							error:function (XMLHttpRequest, textStatus, errorThrown) {
+								$.messager.progress('close');
+								alertErrorMsg();
+							}
+						});
+					};
+				}
+			},{
+				text:message("yly.common.cancel"),
+				iconCls:'icon-cancel',
+				handler:function(){
+					 $('#editEvaluatingSection').dialog("close");
+				}
+		    }]
+		});  
+	
+}
 //添加题目
 function addItem(evaluatingSectionId){
 	$('#addEvaluatingItem').dialog({    
@@ -245,19 +361,21 @@ function addItem(evaluatingSectionId){
 							 var itemID = $("#itemNameID").val();
 							 var itemName = $("#itemName").val();
 								$.ajax({
-									url:"../elderlyEvaluatingRecord/sectionContainItem.jhtml?sectionId="+evaluatingSectionId+"&itemId="+itemID,
+									url:"../elderlyEvaluatingRecord/sectionContainItem.jhtml?sectionId="+evaluatingSectionId+"&itemName="+itemName,
 									type:"get",
 									success:function(result,response,status){
 										if(result.sectionContainItem+""=="true"){											
-											 $.messager.alert(message("yly.common.prompt"), message("该模块已经包含此题目，请另外添加其他题目!"),'warning');
+											 $.messager.alert(message("yly.common.prompt"), message("未分配的模块已经包含此题目，请另外添加其他题目!"),'warning');
 										}else{
 											$('#hiddenDiv').append('<input type="hidden"  name="evaluatingSectionId" value="'+evaluatingSectionId+'"/>');
-											var rows =  $('#optionList').datagrid('getRows');
+											var rows =  $('#optionList').datagrid('getRows');//获取表格中所有行
 											for(var i=0; i<rows.length; i++){
 												var optionScoreHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].optionScore" value="'+rows[i]['optionScore']+'"/>';
 												var optionNameHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].evaluatingItemOptions.optionName" value="'+rows[i]['optionName']+'"/>';
+												var optionIdHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].evaluatingItemOptions.id" value="'+rows[i]['optionId']+'"/>';
 												$('#hiddenDiv').append(optionScoreHtml);
 												$('#hiddenDiv').append(optionNameHtml);
+												$('#hiddenDiv').append(optionIdHtml);
 											}
 											$.ajax({
 												url:"../elderlyEvaluatingRecord/addItem.jhtml",
@@ -348,6 +466,7 @@ function deleterow(target){
 //清空自定义题目对话框里面的数据
 function empty(){
 	optionId=0;
+	$('#hiddenDiv').html("");
 	$("#itemName").textbox('setValue',null);
 	$('#optionList').datagrid('loadData',{total:0,rows:[]});
 }
@@ -374,6 +493,12 @@ function insert(){
 	//$('#optionList').datagrid('selectRow',index);
 	$('#optionList').datagrid('beginEdit',index);
 }
+
+function searchItemsByKeys(){
+	  var _queryParams = $("#item_search_form").serializeJSON();
+	  $('#searchAllItems-table-list').datagrid('options').queryParams = _queryParams;  
+	  $("#searchAllItems-table-list").datagrid('reload');
+	}
 /**
  * 题库查询功能
  */
@@ -410,12 +535,13 @@ function searchAllItems(id){
 //		    			 }
 //		    		 }
 //		    		 $("#itemSectionIDs").val(sectionIdStrList);
+		    		 empty();
 		    		 $("#"+id+"ID").val(rowData.id);
 		    		 $("#"+id).textbox('setValue',rowData.itemName);
 		    		 var options = rowData.evaluatingItemsOptions;
 		    		 var loadData='{"total":'+options.length+',"rows":[';
 		    		 for(var i=0; i<options.length; i++){
-		    			 loadData+='{"optionId":'+(i+1)+',"optionScore":"'+options[i].optionScore+'","optionName":"'+options[i].evaluatingItemOptions.optionName+'"}';
+		    			 loadData+='{"optionId":'+options[i].evaluatingItemOptions.id+',"optionScore":"'+options[i].optionScore+'","optionName":"'+options[i].evaluatingItemOptions.optionName+'"}';
 		    			 if((i+1)<options.length){
 		    				 loadData+=',';
 		    			 }

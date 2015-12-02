@@ -29,7 +29,6 @@ import com.yly.entity.EvaluatingSection;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
-import com.yly.json.request.EvaluatingScoreRequest;
 import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.utils.DateTimeUtils;
 import com.yly.utils.ToolsUtils;
@@ -498,37 +497,37 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       return false;
     }
   }
-  /**
-   * @param evaluatingScoreRequest
-   * @return 返回评估模块规则字符串
-   * ie   0:能力完好 from Score To Score
-   */
-  public String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest){
-    StringBuffer evaluatingRule = new StringBuffer();
-    if (!ToolsUtils.checkObjAllFieldNull(evaluatingScoreRequest)) {
-      evaluatingRule.append("0:");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0From());
-      evaluatingRule.append(",");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0To());
-      evaluatingRule.append(";");
-      evaluatingRule.append("1:");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1From());
-      evaluatingRule.append(",");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1To());
-      evaluatingRule.append(";");        
-      evaluatingRule.append("2:");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2From());
-      evaluatingRule.append(",");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2To());
-      evaluatingRule.append(";");
-      evaluatingRule.append("3:");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3From());
-      evaluatingRule.append(",");
-      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3To());
-      evaluatingRule.append(";");        
-    }
-    return evaluatingRule.toString();
-  }
+//  /**
+//   * @param evaluatingScoreRequest
+//   * @return 返回评估模块规则字符串
+//   * ie   0:能力完好 from Score To Score
+//   */
+//  public String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest){
+//    StringBuffer evaluatingRule = new StringBuffer();
+//    if (!ToolsUtils.checkObjAllFieldNull(evaluatingScoreRequest)) {
+//      evaluatingRule.append("0:");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0From());
+//      evaluatingRule.append(",");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0To());
+//      evaluatingRule.append(";");
+//      evaluatingRule.append("1:");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1From());
+//      evaluatingRule.append(",");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1To());
+//      evaluatingRule.append(";");        
+//      evaluatingRule.append("2:");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2From());
+//      evaluatingRule.append(",");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2To());
+//      evaluatingRule.append(";");
+//      evaluatingRule.append("3:");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3From());
+//      evaluatingRule.append(",");
+//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3To());
+//      evaluatingRule.append(";");        
+//    }
+//    return evaluatingRule.toString();
+//  }
 
   @Override
   public String getCustomFormScoreRule(String evaluatingRule) {
