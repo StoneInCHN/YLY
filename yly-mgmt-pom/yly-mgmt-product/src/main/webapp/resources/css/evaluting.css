@@ -159,3 +159,8 @@
 	box-shadow: 0 0 0 1px white, 0 0 0 2px #0285b3;
 	color: white;
 }
+#progressbar li.negative:before,  #progressbar li.negative:after{
+	background: #c0c0c0;
+	box-shadow: 0 0 0 1px white, 0 0 0 2px #c0c0c0;
+	color: white;
+}

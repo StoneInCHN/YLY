@@ -14,12 +14,12 @@ $(function(){
 					{field:'action',title:'操作',width:100,align:'center',
 						formatter:function(value,row,index){
 							if (row.editing){
-								var s = '<a href="#" onclick="saverow(this)">保存</a>&nbsp;&nbsp;';
-								var c = '<a href="#" onclick="cancelrow(this)">取消</a>&nbsp;&nbsp;';
+								var s = '<a href="#" onclick="saverow(this)"><span title="保存"><i class="fa fa-save fa-1x"/> 保存</span></a>&nbsp;&nbsp;';
+								var c = '<a href="#" onclick="cancelrow(this)"><span title="取消"><i class="fa fa-undo fa-1x"/> 取消</span></a>&nbsp;&nbsp;';
 								return s+c;
 							} else {
-								var e = '<a href="#" onclick="editrow(this)">编辑</a>&nbsp;&nbsp; ';
-								var d = '<a href="#" onclick="deleterow(this)">删除</a>&nbsp;&nbsp;';
+								var e = '<a href="#" onclick="editrow(this)"><span title="编辑"><i class="fa fa-edit fa-1x"/> 编辑</span></a>&nbsp;&nbsp; ';
+								var d = '<a href="#" onclick="deleterow(this)"<span title="删除"><i class="fa fa-remove fa-1x"/> 删除</span></a>&nbsp;&nbsp;';
 								return e+d;
 							}
 						}
@@ -63,16 +63,11 @@ function reloadItems(){
 							if(sectionNameShort.length>6){
 								sectionNameShort=sectionNameShort.substring(0,6)+'...';
 							}
-							//if(!jsonObj[i].systemSection){//标记自定义模块可编辑
 							if(false){//selected="true"是自动展开的意思
 								itemsHtml+='<div title="'+sectionNameShort+'22" class="sectionTitle"   selected="true" iconCls="icon-edit" style="overflow:auto;padding:10px;">';
 							}else{
 								itemsHtml+='<div title="'+sectionNameShort+'" class="sectionTitle"   iconCls="icon-edit" style="overflow:auto;padding:10px;">';
 							}
-								
-							//}else{//标记系统定义的模块
-								//itemsHtml+='<div title="'+sectionNameShort+'" class="section"  iconCls="icon-ok" style="overflow:auto;padding:10px;">';
-							//}
 							var jsonObj1= jsonObj[i].evaluatingItems;
 							itemsHtml+='<div class="section">';
 							itemsHtml+='<input type="hidden"  title="hiddenSectionName" value="'+jsonObj[i].sectionName+'"/>';
@@ -96,11 +91,9 @@ function reloadItems(){
 								itemsHtml+='</p>';
 							}
 							itemsHtml+='</div>';	
-							//if(!jsonObj[i].systemSection){//自定义模块可以继续在该模块下添加题目
+							itemsHtml+='<div  id="deleteitemDIV'+i+'"class="trash"><a href="javascript:;" class="btn bule-color"><i class="fa fa-trash fa-2x"/> 删除题目</a></div>';
 							itemsHtml+='<div id="additemDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="addItem('+jsonObj[i].id+')"><i class="fa fa-plus-square fa-2x"/> 添加题目</a></div>';
-							itemsHtml+='<div  id="deleteitemDIV'+i+'"class="trash btn bule-color"><i class="fa fa-trash fa-2x"/> 删除题目</div>';
-							itemsHtml+='<hr><div  id="editSectionDIV'+i+'"class="trash"><a href="javascript:;" id="additem" class="btn bule-color" onclick="editSection('+jsonObj[i].id+')"><i class="fa fa-edit fa-2x"/>编辑模块</a></div>';
-							//}
+							itemsHtml+='<div  id="editSectionDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="editSection('+jsonObj[i].id+')"><i class="fa fa-edit fa-2x"/>编辑模块</a></div>';
 							itemsHtml+='</div>';					
 						}
 						itemsHtml+='</div>';
@@ -113,14 +106,19 @@ function reloadItems(){
 							proxy:'clone'
 						});
 						$('.left .trash').droppable({
-							onDragEnter:function(){
-								$(this).addClass('over');
+							onDragEnter:function(e,source){
+								if($(source).attr("class").indexOf('item')!=-1){//只接单个题目的拖拽
+									$(this).addClass('over');
+								}
 							},
-							onDragLeave:function(){
-								$(this).removeClass('over');
+							onDragLeave:function(e,source){
+								if($(source).attr("class").indexOf('item')!=-1){//只接单个题目的拖拽
+									$(this).removeClass('over');
+								}
 							},
 							onDrop:function(e,source){
 								if($(source).attr("class").indexOf('item')!=-1){//只接单个题目的拖拽
+									$(this).removeClass('over');
 									$.messager.confirm('确认','确定删除此题目吗?',function(r){
 										if (r){
 											//删除操作
@@ -158,11 +156,15 @@ function reloadItems(){
 						});
 						//拖拽的目的地
 						$('.right .drop').droppable({
-							onDragEnter:function(){
-								$(this).addClass('over');
+							onDragEnter:function(e,source){
+								if($(source).attr("class").indexOf('section')!=-1){//只接受整个模块的拖拽
+									$(this).addClass('over');
+								}
 							},
-							onDragLeave:function(){
-								$(this).removeClass('over');
+							onDragLeave:function(e,source){
+								if($(source).attr("class").indexOf('section')!=-1){//只接受整个模块的拖拽
+									$(this).removeClass('over');
+								}
 							},
 							onDrop:function(e,source){
 								if($(source).attr("class").indexOf('section')!=-1){//只接受整个模块的拖拽
@@ -178,28 +180,6 @@ function reloadItems(){
 												'<td style="width:20px"><a href="javascript:void(0);" onclick="removeSection(this,'+indexId+')"><i class="fa fa-times fa-1x"></i></a><p/><p/></td>';
 									var sectionId= $(source).find('input[title=sectionId]').val();
 									appendElement+='<input type="hidden" name="sectionId"  value="'+sectionId+'"/>';
-//									 var sectionRule= $(source).find('input[title=sectionRule]').val();
-//									 var sectionRules = sectionRule.split(";");
-//									 for(var i=0; i< sectionRules.length; i++){
-//										 var levelScore = sectionRules[i].split(":");
-//										 if(parseInt(levelScore[0])  == 0){
-//											 appendElement+='<tr><td><strong>0</strong> 能力完好:总分';
-//											 var scoreFromTo = levelScore[1].split(",");
-//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
-//										 }else if(parseInt(levelScore[0])  == 1){
-//											 appendElement+='<strong>1</strong> 轻度受损:总分';
-//											 var scoreFromTo = levelScore[1].split(",");
-//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
-//										 }else if(parseInt(levelScore[0])  ==2){
-//											 appendElement+='<strong>2</strong> 中度受损:总分';
-//											 var scoreFromTo = levelScore[1].split(",");
-//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>';
-//										 }else if(parseInt(levelScore[0])  ==3){
-//											 appendElement+='<strong>3</strong> 中度受损:总分';
-//											 var scoreFromTo = levelScore[1].split(",");
-//											 appendElement+=scoreFromTo[0] + '~' + scoreFromTo[1] + '分</td><td>&nbsp;</td>';
-//										 }
-//									 }
 									 appendElement+='</table><p/>';
 									 $.each( $(source).find('p[class=item]'), function(i,item){      
 											var itemName = $(item).find('input[title=itemName]').val();
@@ -372,7 +352,9 @@ function addItem(evaluatingSectionId){
 											for(var i=0; i<rows.length; i++){
 												var optionScoreHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].optionScore" value="'+rows[i]['optionScore']+'"/>';
 												var optionNameHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].evaluatingItemOptions.optionName" value="'+rows[i]['optionName']+'"/>';
-												var optionIdHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].evaluatingItemOptions.id" value="'+rows[i]['optionId']+'"/>';
+												if(rows[i]['optionId']){
+													var optionIdHtml='<input type="hidden"  name="evaluatingItemsOptions['+i+'].evaluatingItemOptions.id" value="'+rows[i]['optionId']+'"/>';
+												}
 												$('#hiddenDiv').append(optionScoreHtml);
 												$('#hiddenDiv').append(optionNameHtml);
 												$('#hiddenDiv').append(optionIdHtml);
@@ -487,7 +469,7 @@ function insert(){
 	$('#optionList').datagrid('insertRow', {
 		index: index,
 		row:{
-			optionId:++optionId
+			//optionId:++optionId
 		}
 	});
 	//$('#optionList').datagrid('selectRow',index);
@@ -556,7 +538,7 @@ function searchAllItems(id){
 		  	    	    [
 		  	    	        {field:'ck',checkbox:true,width:8,align:'center'},
 		  	    	        {title:'题目名称',field:"itemName",width:10,align:'left',formatter:function(value,row,index){
-			 			    	 return formatLongString(value,10);
+			 			    	 return formatLongString(value,20);
 		  	    	        }}
 		  		      ]]
 	    	});

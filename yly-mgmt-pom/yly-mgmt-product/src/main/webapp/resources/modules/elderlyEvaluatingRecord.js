@@ -430,12 +430,12 @@ function createForm(){
 //										return;
 //									}
 //								}
-								if(i==0){
-									if(parseInt($("#formScore"+i+"From").val())<0){
-										$.messager.alert(message("yly.common.prompt"), message("最低分数不能小于零!"),'warning');
-										return;
-									}
-								}
+//								if(i==0){
+//									if(parseInt($("#formScore"+i+"From").val())<0){
+//										$.messager.alert(message("yly.common.prompt"), message("最低分数不能小于零!"),'warning');
+//										return;
+//									}
+//								}
 							}
 							return false;
 							var _evaluatingRule="";

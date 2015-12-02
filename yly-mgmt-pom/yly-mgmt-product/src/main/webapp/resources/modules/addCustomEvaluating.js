@@ -8,8 +8,11 @@ $(".next").click(function(){//单击 下一步按钮
 	next_fs = $(this).parent().parent().next();
 	
 	$("#li"+liIndex).removeClass("active");
+	$("#li"+liIndex).addClass("negative");
 	liIndex++;
 	$("#li"+liIndex).addClass("active");
+	$("#li"+liIndex).removeClass("negative");
+	
 	//显示下一个 fieldset
 	next_fs.show(); 
 	//隐藏当前的 fieldset
@@ -22,8 +25,13 @@ $(".previous").click(function(){//单击上一步按钮
 	previous_fs = $(this).parent().parent().prev();
 	
 	$("#li"+liIndex).removeClass("active");
+	$("#li"+liIndex).addClass("negative");
 	liIndex--;
 	$("#li"+liIndex).addClass("active");
+	$("#li"+liIndex).removeClass("negative");
+	
+
+	
 	//显示上一个 fieldset
 	previous_fs.show(); 
 	//隐藏当前的 fieldset
@@ -107,8 +115,12 @@ function skipTo(selectedIndex){//直接选择每个模块，（非上一步下�
 	selected_fs = $("#fieldset"+selectedIndex);
 
 	$("#li"+liIndex).removeClass("active");
+	$("#li"+liIndex).addClass("negative");
 	liIndex = selectedIndex;
 	$("#li"+selectedIndex).addClass("active");
+	$("#li"+liIndex).removeClass("negative");
+	
+
 	//显示选中的 fieldset
 	selected_fs.show(); 
 	//隐藏当前的fieldset

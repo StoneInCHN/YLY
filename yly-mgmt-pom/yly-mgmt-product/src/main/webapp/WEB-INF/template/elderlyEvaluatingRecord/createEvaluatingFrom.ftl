@@ -9,7 +9,7 @@
 			background: white;
 			border: 0 none;
 			border-radius: 3px;
-			box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.2);
 			box-sizing: border-box;
 		}
 		.left table{
@@ -28,7 +28,7 @@
 			background: white;
 			border: 0 none;
 			border-radius: 3px;
-			box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.2);
 			box-sizing: border-box;
 		}
 		.right table{
@@ -50,6 +50,9 @@
 			padding-bottom:40px;
 		}
 		.right .over{
+			background:#D2D2D2;
+		}
+		.left .over{
 			background:#D2D2D2;
 		}
 		.hiddenAddItem{
@@ -80,7 +83,7 @@
 	<div id="accordionDiv">
 
 	</div>
-	<a href="javascript:;" id="additem" class="btn bule-color" onclick="addSection()"><i class="fa fa-plus-square-o fa-2x"/> 添加模块</a>
+	<a href="javascript:;" id="additem" class="btn bule-color" onclick="addSection()"><i class="fa fa-plus-square fa-2x"/> 添加模块</a>
 	</div>
 	<div class="right">
 	<form id="createEvaluating_form" method="post" >   
@@ -131,7 +134,7 @@
 		<input type="text" class="easyui-textbox"   validtype="length[0,500]" id="sectionName" name="sectionName" data-options="prompt:'请输入模块名称...',required:true,multiline:true,height:40,width:460" />
 	</p>
 	<p style="font-size:130%">模块描述：
-		<input type="text" class="easyui-textbox"   validtype="length[0,500]" id="sectionDescription" name="sectionDescription" data-options="prompt:'请输入模块的描述...',required:true,multiline:true,height:60,width:460" />
+		<input type="text" class="easyui-textbox"   validtype="length[0,500]" id="sectionDescription" name="sectionDescription" data-options="prompt:'请输入模块的描述...',required:true,multiline:true,height:140,width:460" />
 	</p>
 </div>
 </form>
