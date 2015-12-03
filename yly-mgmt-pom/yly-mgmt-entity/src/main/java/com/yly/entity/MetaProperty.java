@@ -34,7 +34,7 @@ public class MetaProperty extends BaseEntity {
   /**
    * 属性key
    */
-  private String key;
+  private String metaKey;
 
   /**
    * 属性内容
@@ -49,7 +49,7 @@ public class MetaProperty extends BaseEntity {
   /**
    * 属性顺序
    */
-  private Integer order;
+  private Integer metaOrder;
 
   /**
    * 配置元
@@ -66,18 +66,22 @@ public class MetaProperty extends BaseEntity {
   }
 
   @Column(length = 30)
-  public String getKey() {
-    return key;
+  public String getMetaKey ()
+  {
+    return metaKey;
   }
 
-  public void setKey(String key) {
-    this.key = key;
+  public void setMetaKey (String metaKey)
+  {
+    this.metaKey = metaKey;
   }
 
   @Column(length = 50)
   public String getContent() {
     return content;
   }
+
+  
 
   public void setContent(String content) {
     this.content = content;
@@ -91,12 +95,14 @@ public class MetaProperty extends BaseEntity {
     this.metaDataType = metaDataType;
   }
 
-  public Integer getOrder() {
-    return order;
+  public Integer getMetaOrder ()
+  {
+    return metaOrder;
   }
 
-  public void setOrder(Integer order) {
-    this.order = order;
+  public void setMetaOrder (Integer metaOrder)
+  {
+    this.metaOrder = metaOrder;
   }
 
   @ManyToOne(fetch = FetchType.LAZY)

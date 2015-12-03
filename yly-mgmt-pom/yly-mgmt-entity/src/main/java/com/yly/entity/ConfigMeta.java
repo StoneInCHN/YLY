@@ -37,7 +37,7 @@ public class ConfigMeta extends BaseEntity {
   /**
    * 配置元 key
    */
-  private String key;
+  private String configKey;
 
   /**
    * 配置元内容
@@ -69,12 +69,14 @@ public class ConfigMeta extends BaseEntity {
   }
 
   @Column(length = 30)
-  public String getKey() {
-    return key;
+  public String getConfigKey ()
+  {
+    return configKey;
   }
 
-  public void setKey(String key) {
-    this.key = key;
+  public void setConfigKey (String configKey)
+  {
+    this.configKey = configKey;
   }
 
   public String getContent() {

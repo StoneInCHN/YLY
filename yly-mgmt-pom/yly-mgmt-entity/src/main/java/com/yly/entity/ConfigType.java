@@ -48,7 +48,7 @@ public class ConfigType extends BaseEntity {
    */
   private Set<ConfigMeta> configMeta = new HashSet<ConfigMeta>();
 
-  @Column(length = 10)
+  @Column(length = 20)
   public String getName() {
     return name;
   }

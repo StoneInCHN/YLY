@@ -26,7 +26,7 @@ public class TenantMetaProperty extends BaseEntity {
   /**
    * 描述当前行存储的数据用途,可以是数据类型,也可是元数据里面的参数值
    */
-  private String key;
+  private String tenantMetakey;
 
   /**
    * key对应的值
@@ -46,14 +46,16 @@ public class TenantMetaProperty extends BaseEntity {
   public void setTenantConfigInfo(TenantConfigInfo tenantConfigInfo) {
     this.tenantConfigInfo = tenantConfigInfo;
   }
-
+  
   @Column(length = 30)
-  public String getKey() {
-    return key;
+  public String getTenantMetakey ()
+  {
+    return tenantMetakey;
   }
 
-  public void setKey(String key) {
-    this.key = key;
+  public void setTenantMetakey (String tenantMetakey)
+  {
+    this.tenantMetakey = tenantMetakey;
   }
 
   @Column(length = 15)

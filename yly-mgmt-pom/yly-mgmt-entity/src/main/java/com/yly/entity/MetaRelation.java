@@ -13,9 +13,10 @@ import com.yly.entity.base.BaseEntity;
  *
  */
 @Entity
-@Table(name = "yly_meta_relation")
-@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_meta_relation_sequence")
-public class MetaRelation extends BaseEntity {
+@Table (name = "yly_meta_relation")
+@SequenceGenerator (name = "sequenceGenerator", sequenceName = "yly_meta_relation_sequence")
+public class MetaRelation extends BaseEntity
+{
 
   /**
    * 
@@ -35,29 +36,37 @@ public class MetaRelation extends BaseEntity {
   /**
    * 关系类型
    */
-  private MetaRelation metaRelation;
+  private com.yly.entity.commonenum.CommonEnum.MetaRelation metaRelation;
 
-  public Long getMainID() {
+  public Long getMainID ()
+  {
     return mainID;
   }
 
-  public void setMainID(Long mainID) {
+  public void setMainID (Long mainID)
+  {
     this.mainID = mainID;
   }
 
-  public Long getRelationID() {
+  public Long getRelationID ()
+  {
     return relationID;
   }
 
-  public void setRelationID(Long relationID) {
+  public void setRelationID (Long relationID)
+  {
     this.relationID = relationID;
   }
 
-  public MetaRelation getMetaRelation() {
+  public com.yly.entity.commonenum.CommonEnum.MetaRelation getMetaRelation ()
+  {
     return metaRelation;
   }
 
-  public void setMetaRelation(MetaRelation metaRelation) {
+  public void setMetaRelation (
+      com.yly.entity.commonenum.CommonEnum.MetaRelation metaRelation)
+  {
     this.metaRelation = metaRelation;
   }
+
 }
