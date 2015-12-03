@@ -232,6 +232,7 @@ public class FixedAssets extends BaseEntity {
   }
 
   @Index(name="fixed_assets_tenantid")
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public Long getTenantID() {
     return tenantID;
   }
