@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -59,6 +60,8 @@ public class ConfigMeta extends BaseEntity {
    */
   private Set<TenantConfigInfo> tenantConfigInfo = new HashSet<TenantConfigInfo>();
 
+  private Set<VersionConfig> versionConfig = new HashSet<VersionConfig> ();
+  
   @Column(length = 10)
   public String getName() {
     return name;
@@ -106,12 +109,25 @@ public class ConfigMeta extends BaseEntity {
     this.metaProperty = metaProperty;
   }
 
-  @OneToMany(mappedBy = "configMeta", fetch = FetchType.LAZY)
-  public Set<TenantConfigInfo> getTenantConfigInfo() {
-    return tenantConfigInfo;
+//  @OneToMany(mappedBy = "configMeta", fetch = FetchType.LAZY)
+//  public Set<TenantConfigInfo> getTenantConfigInfo() {
+//    return tenantConfigInfo;
+//  }
+//
+//  public void setTenantConfigInfo(Set<TenantConfigInfo> tenantConfigInfo) {
+//    this.tenantConfigInfo = tenantConfigInfo;
+//  }
+  
+  @ManyToMany(mappedBy = "configMeta", fetch = FetchType.LAZY)
+  public Set<VersionConfig> getVersionConfig ()
+  {
+    return versionConfig;
   }
 
-  public void setTenantConfigInfo(Set<TenantConfigInfo> tenantConfigInfo) {
-    this.tenantConfigInfo = tenantConfigInfo;
+  public void setVersionConfig (Set<VersionConfig> versionConfig)
+  {
+    this.versionConfig = versionConfig;
   }
+  
+  
 }
