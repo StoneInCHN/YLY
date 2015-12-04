@@ -659,8 +659,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   //@Transactional(readOnly = true)
   public @ResponseBody Message update(Long personnelCategoryId, Long nursingLevelId,
-      Long evaluatingResultId, Long evaluatintFormID, ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo,
-      Long elderlyInfoId, Long elderlyEvaluatingRecordId) {
+      Long evaluatingResultId, boolean customFormFlag, Long evaluatintFormID, ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo,
+      Long elderlyInfoId, Long elderlyEvaluatingRecordId,String formLevel, String sectionsResult) {
     Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
     /**
      * 更新老人信息
@@ -704,6 +704,19 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     /**
      * 更新入院评估记录的评估结果
      */
+    if (customFormFlag) {//处理使用自定义评估表的情况
+      if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
+        sectionsResult = sectionsResult.replace(";;;;", ";").replace("::::", ":");
+        //设置模块总分和等级(字符串)
+        elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
+        //设置评估表最终结果等级        
+        elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
+        elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+      }        
+    }else {//处理使用系统默认的评估表的情况
+    /**
+     * 更新入院评估记录的评估结果
+     */
     //获取该评估表下的所有评估模块
     List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
     //每个模块对应总得分
@@ -726,6 +739,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     //设置评估表最终结果等级
     elderlyEvaluatingRecord.setEvaluatingResult(elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));  
     elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+    }
     return SUCCESS_MESSAGE;
   }
 

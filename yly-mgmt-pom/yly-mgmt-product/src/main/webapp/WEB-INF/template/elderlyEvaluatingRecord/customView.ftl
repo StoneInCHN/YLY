@@ -6,7 +6,7 @@
 <p style="font-size:140%">A.1　评估基本信息表</p>
 <table class="table table-bordered">
 <tr><td style="width:230px">A.1.1 评估编号</td><td>
-
+${elderlyEvaluatingRecord.evaluatingForm.formName}
 </td></tr>
 <tr><td>A.1.2 姓名</td><td>${elderlyEvaluatingRecord.elderlyInfo.name}</td></tr>
 <tr><td>A.1.3 身份证号码</td><td>${elderlyEvaluatingRecord.elderlyInfo.IDCard}</td></tr>

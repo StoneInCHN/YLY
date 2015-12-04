@@ -1,7 +1,8 @@
-<script type="text/javascript" src="${base}/resources/modules/editEvaluating.js"></script>
+<script type="text/javascript" src="${base}/resources/modules/editCustomEvaluating.js"></script>
 
 <form id="editEvaluating_form">
-<input type="hidden" name="evaluatintFormID" value=" ${evaluatingForm.id}" />
+<input type="hidden" id="evaluatintFormID" name="evaluatintFormID" value=" ${evaluatingForm.id}" />
+<input type="hidden"  name="customFormFlag" value="true" />
 	<ul id="progressbar">
 		<a href="javascript:void(0);" onclick="skipTo(0)"><li id="editli0" class="active"> 老人信息</li></a>
 		<a href="javascript:void(0);" onclick="skipTo(1)"><li id="editli1">评估原因及说明</li></a>
@@ -547,61 +548,10 @@
 						}],
 						prompt:'${message("yly.common.please.select")}'"  value="${elderlyEvaluatingRecord.evaluatingReason}" panelHeight="100"  panelWidth="200" width="200" style="width:200px;" name="evaluatingReason" data-options="required:true;editable:false" />		</p>			
 		 <p style="font-size:140%;text-align:center"> ${evaluatingForm.formName}</p>
-         <p style="font-size:110%">1.1 日常生活活动activity of daily living</p>
-
-     <p>&nbsp;&nbsp;&nbsp;&nbsp;个体为独立生活而每天必须反复进行的、最基本的、具有共同性的身体动作群，即进行衣、食、住、行、个人卫生等日常活动的基本动作和技巧。</p>
-
-     <p style="font-size:110%">1.2 精神状态mental status</p>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;个体在认知功能、行为、情绪等方面的外在表现。</p>
-
-
-<p style="font-size:110%">1.3 感知觉与沟通sensory and communication</p>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;个体在意识水平、视力、听力、沟通交流等方面的主观条件。</p>
-
-<p style="font-size:110%">1.4 社会参与 social involvement</p>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;个体与周围人群和环境的联系与交流状况。<p/>
-
-<p style="font-size:110%">1.5评估指标<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;1.5.1 一级指标共4个，包括日常生活活动、精神状态、感知觉与沟通、社会参与。<p/>
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;1.5.1 二级指标共22个，日常生活活动采用Barthel指数分级1)进行评定，包括10个二级指标；精神状态包括3个二级指标；感知觉与沟通包括4个二级指标；社会参与采用“成人智残评定量表”进行评定，包括5个二级指标。<p/>
- 
- <table class="table table-bordered" style="font-size:90%">
- <tr><td>一级指标</td><td>二级指标</td></tr>
-  <tr><td>日常生活活动</td><td> 进食、洗澡、修饰、穿衣、大便控制、小便控制、如厕、床椅转移、平地行走、上下楼梯</td></tr>
-   <tr><td>精神状态</td><td> 认知功能、攻击行为、抑郁症状</td></tr>
-    <tr><td>感知觉与沟通</td><td> 意识水平、视力、听力、沟通交流</td></tr>
-     <tr><td>社会参与</td><td> 生活能力、工作能力、时间/空间定向、人物定向、社会交往能力</td></tr>
-     </table>
-<p style="font-size:110%">1.6 评估实施<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;1.6.1 评估环境<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估环境应安静、宽敞、光线明亮，至少有一把椅子和4-5个台阶，以供评估使用。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;1.6.1 评估时间<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在申请人提出申请的30日内完成评估。对评估结果有疑问者，在提出复评申请的7日内进行再次评定。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;1.6.1 评估提供方<p/>
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估机构应获得民政部门的资格认证或委托，负责委派或指定评估员对老年人进行评估。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估员应为经过专门培训并获得资格认证的专业人员，受评估机构的委派，对老年人进行评估。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;1.6.2 评估方法<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估员应佩戴资格证，在指定地点对老年人进行评估，每次评估应由两名评估员同时进行。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估员通过询问被评估者或主要照顾者，按照附录A“老年人能力评估表”进行逐项评估，并填写每个二级指标的评分。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估员根据各个一级指标的分级标准，确定各一级指标的分级，填写在“老年人能力评估表”中。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估员根据4个一级指标的分级，使用附录B“老年人能力等级结果判定卡”，最终确定老年人能力等级，填写在“老年人能力评估表”的“A.6老年人能力评估报告”中，进行确认并签名。<p/>
-
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评估双方对评估结果有疑问时，提交评估机构进行裁定。<p/>
+		 <#list evaluatingForm.evaluatingSections as evaluatingSection>
+		 <p style="font-size:110%">1.${evaluatingSection_index + 1}${evaluatingSection.sectionName}</p>
+		 <p>&nbsp;&nbsp;&nbsp;&nbsp;${evaluatingSection.sectionDescription}</p>
+		 </#list>
 	<center>
 		<input type="button" name="previous" class="previous action-button" value="上一步" />
 		<input type="button" name="next" class="next action-button" value="开始评估" />
@@ -708,7 +658,7 @@
 		<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
 		   		<#if key==evaluatingSection.sectionName>		
-		   			<input class="easyui-textbox" type="text" id="editsectionScoreOf${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分 
+		   			<input class="easyui-textbox" type="text" id="editsectionScore${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分 
 				</#if>
 	      </#list>
 		</#if>
@@ -730,7 +680,7 @@
 								<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
 		   		<#if key==evaluatingSection.sectionName>		 
-		   		<input class="easyui-textbox" type="text" id="editsectionScoreOf${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分  
+		   		<input class="easyui-textbox" type="text" id="editsectionScore${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分  
 				</#if>
 	      </#list>
 		</#if>
@@ -741,8 +691,9 @@
 	    </#list> 
 <tr>
 	<td text-align="center">C.2&nbsp;&nbsp;老年人能力等级&nbsp;&nbsp;</td>
+		<input type="hidden" id="editsectionsResult" name="sectionsResult" value="${elderlyEvaluatingRecord.sectionsResult?replace(':','::::')?replace(';',';;;;')}"/>
 	<td><strong>
-	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/>
+	<input class="easyui-textbox" type="text" id="editformLevel" name="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/>
 	</strong>
 	<a href="#" class="easyui-linkbutton" onclick="populateFormLevel(${evaluatingForm.evaluatingSections?size})" plain="true">生成等级</a>
 	</td>

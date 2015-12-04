@@ -437,7 +437,6 @@ function createForm(){
 //									}
 //								}
 							}
-							return false;
 							var _evaluatingRule="";
 							for(var i=0;i<formLevelSize;i++){
 								var formLevelName = $("#formLevel"+i+"Name").val();
