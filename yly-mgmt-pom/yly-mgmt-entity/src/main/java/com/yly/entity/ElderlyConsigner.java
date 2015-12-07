@@ -67,7 +67,7 @@ public class ElderlyConsigner extends BaseEntity {
    * 老人
    */
   private ElderlyInfo elderlyInfo;
-
+  @JsonProperty
   @Column(length = 15)
   public String getConsignerName() {
     return consignerName;
@@ -86,7 +86,7 @@ public class ElderlyConsigner extends BaseEntity {
   public void setConsignerPhoneNumber(String consignerPhoneNumber) {
     this.consignerPhoneNumber = consignerPhoneNumber;
   }
-
+  @JsonProperty
   @Column(length = 150)
   public String getConsignerResidentialAddress() {
     return consignerResidentialAddress;
@@ -95,7 +95,7 @@ public class ElderlyConsigner extends BaseEntity {
   public void setConsignerResidentialAddress(String consignerResidentialAddress) {
     this.consignerResidentialAddress = consignerResidentialAddress;
   }
-
+  @JsonProperty
   public Relation getConsignerRelation() {
     return consignerRelation;
   }
@@ -103,7 +103,7 @@ public class ElderlyConsigner extends BaseEntity {
   public void setConsignerRelation(Relation consignerRelation) {
     this.consignerRelation = consignerRelation;
   }
-
+  @JsonProperty
   @Column(length = 150)
   public String getCompanyAddress() {
     return companyAddress;
@@ -113,7 +113,7 @@ public class ElderlyConsigner extends BaseEntity {
     this.companyAddress = companyAddress;
   }
 
-
+  @JsonProperty
   public Boolean getIsSameCity() {
     return isSameCity;
   }

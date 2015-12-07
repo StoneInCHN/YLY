@@ -519,7 +519,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setGender(Gender gender) {
     this.gender = gender;
   }
-
+  @JsonProperty
   @Column(length = 50)
   public String getPlaceOfOrigin() {
     return placeOfOrigin;
@@ -528,7 +528,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPlaceOfOrigin(String placeOfOrigin) {
     this.placeOfOrigin = placeOfOrigin;
   }
-
+  @JsonProperty
   @Column(length = 10)
   public String getNation() {
     return nation;
@@ -565,7 +565,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
   }
-
+  @JsonProperty
   @Column(length = 25)
   public String getSocialInsuranceNumber() {
     return socialInsuranceNumber;
@@ -583,7 +583,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setEvaluatingResult(SystemConfig evaluatingResult) {
     this.evaluatingResult = evaluatingResult;
   }
-
+  @JsonProperty
   public Float getEvaluatingScore() {
     return evaluatingScore;
   }
@@ -621,7 +621,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPersonnelCategory(SystemConfig personnelCategory) {
     this.personnelCategory = personnelCategory;
   }
-
+  @JsonProperty
   @Column(length = 150)
   public String getRegisteredResidence() {
     return registeredResidence;
@@ -640,7 +640,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setResidentialAddress(String residentialAddress) {
     this.residentialAddress = residentialAddress;
   }
-
+  @JsonProperty
   @Column(length = 120)
   public String getOriginalCompany() {
     return originalCompany;
@@ -649,7 +649,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setOriginalCompany(String originalCompany) {
     this.originalCompany = originalCompany;
   }
-
+  @JsonProperty
   @Column(length = 20)
   public String getPosition() {
     return position;
@@ -658,7 +658,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPosition(String position) {
     this.position = position;
   }
-
+  @JsonProperty
   @Column(length = 150)
   public String getHonors() {
     return honors;
@@ -667,7 +667,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setHonors(String honors) {
     this.honors = honors;
   }
-
+  @JsonProperty
   @Column(length = 150)
   public String getHobbies() {
     return hobbies;
@@ -676,7 +676,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setHobbies(String hobbies) {
     this.hobbies = hobbies;
   }
-
+  @JsonProperty
   @Column(length = 150)
   public String getPersonalHabits() {
     return personalHabits;
@@ -685,7 +685,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPersonalHabits(String personalHabits) {
     this.personalHabits = personalHabits;
   }
-
+  @JsonProperty
   public PaymentWay getPaymentWay() {
     return paymentWay;
   }
@@ -710,7 +710,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setMealFeeMonthlyPayment(Boolean mealFeeMonthlyPayment) {
     this.mealFeeMonthlyPayment = mealFeeMonthlyPayment;
   }
-
+  @JsonProperty
   public EducationLevel getEducationLevel() {
     return educationLevel;
   }
@@ -718,7 +718,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setEducationLevel(EducationLevel educationLevel) {
     this.educationLevel = educationLevel;
   }
-
+  @JsonProperty
   public PoliticalOutlook getPoliticalOutlook() {
     return politicalOutlook;
   }
@@ -726,7 +726,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPoliticalOutlook(PoliticalOutlook politicalOutlook) {
     this.politicalOutlook = politicalOutlook;
   }
-
+  @JsonProperty
   public Religion getReligion() {
     return religion;
   }
@@ -734,7 +734,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setReligion(Religion religion) {
     this.religion = religion;
   }
-
+  @JsonProperty
   public MarriageState getMarriageState() {
     return marriageState;
   }
@@ -753,7 +753,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setBeHospitalizedDate(Date beHospitalizedDate) {
     this.beHospitalizedDate = beHospitalizedDate;
   }
-
+  @JsonProperty
   public LivingState getLivingState() {
     return livingState;
   }
@@ -761,7 +761,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setLivingState(LivingState livingState) {
     this.livingState = livingState;
   }
-
+  @JsonProperty
   public MedicalExpPaymentWay getMedicalExpPaymentWay() {
     return medicalExpPaymentWay;
   }
@@ -769,7 +769,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setMedicalExpPaymentWay(MedicalExpPaymentWay medicalExpPaymentWay) {
     this.medicalExpPaymentWay = medicalExpPaymentWay;
   }
-
+  @JsonProperty
   public BigDecimal getMonthlyIncome() {
     return monthlyIncome;
   }
@@ -777,7 +777,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setMonthlyIncome(BigDecimal monthlyIncome) {
     this.monthlyIncome = monthlyIncome;
   }
-
+  @JsonProperty
   public SourceOfIncome getSourceOfIncome() {
     return sourceOfIncome;
   }
@@ -821,7 +821,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPrescriptions(Set<Prescription> prescriptions) {
     this.prescriptions = prescriptions;
   }
-
+  @JsonProperty
   public HousingInfo getHousingInfo() {
     return housingInfo;
   }
