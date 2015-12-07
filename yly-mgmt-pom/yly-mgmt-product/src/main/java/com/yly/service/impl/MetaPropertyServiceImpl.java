@@ -9,7 +9,7 @@ import com.yly.entity.MetaProperty;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.MetaPropertyService;
 
-@Service("metaRelationServiceImpl")
+@Service("metaPropertyServiceImpl")
 public class MetaPropertyServiceImpl extends BaseServiceImpl<MetaProperty, Long> implements MetaPropertyService {
 
   @Resource(name = "metaPropertyDaoImpl")
