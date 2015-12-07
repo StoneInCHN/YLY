@@ -175,7 +175,7 @@ function populateScore(answer_index,optionScore,answer_begin_index,sectionSize,s
 	
 	}
 //填充每个模块的等级
-function populateLevel(answer_begin_index,sectionSize,section_index,section_name){
+function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 		var levelFlag=true;//标记是否可以开始为整个模块评等级
 		for(var i=0;  i<sectionSize; i++){
 			var nextScore=$("#scoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
@@ -188,34 +188,38 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_name
 		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
 			var answerScoreList = new Array();
 			for(var i=0;  i<sectionSize; i++){
-				var nextItemName=$("#itemNameOf"+(parseInt(answer_begin_index)+i)).val();
+				var nextItemId=$("#itemIdOf"+(parseInt(answer_begin_index)+i)).val();
 				var nextScore=$("#scoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
 				if(nextScore!=null  && nextScore!=""){
-					answerScoreList.push(nextItemName+"::::"+nextScore);
+					answerScoreList.push(nextItemId+":"+nextScore);
 				}
 			}			
 			$.ajax({
-				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml?sectionName="+section_name+"&answerScores="+answerScoreList.join(";;;;"),
+				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml?sectionId="+section_id+"&answerScores="+answerScoreList.join(";"),
 				type:"get",
 				success:function(result,response,status){
-					$("#sectionLevelOf"+section_index).textbox('setValue',result.level);	
-					$("#sectionLevel"+section_index).textbox('setValue',result.level);	
-					$("#formLevel").textbox('setValue',null);		//因为每个模块的等级发生改变，需要清空评估表之前的等级
- 				  if(parseInt(result.level)==0){
-						$("#sectionLevelOf"+section_index).parent().css("color","green");//绿色  能力完好
-						//$("#sectionLevel"+section_index).parent().css("color","green");//绿色  能力完好
-					}
-					if(parseInt(result.level)==1){
-						$("#sectionLevelOf"+section_index).parent().css("color","orange");//橘黄色  轻度受损
-						//$("#sectionLevel"+section_index).parent().css("color","orange");//橘黄色  轻度受损
-					}
-					if(parseInt(result.level)==2){
-						$("#sectionLevelOf"+section_index).parent().css("color","#cc6600");//深黄色  中度受损
-						//$("#sectionLevel"+section_index).parent().css("color","#cc6600");//深黄色  中度受损
-					}
-					if(parseInt(result.level)==3){
-						$("#sectionLevelOf"+section_index).parent().css("color","red");//红色  重度受损
-						//$("#sectionLevel"+section_index).parent().css("color","red");//红色  重度受损
+					if(result.level==-1){
+						$.messager.alert('提示','模块等级计算有误！','warning');
+					}else{
+							$("#sectionLevelOf"+section_index).textbox('setValue',result.level);	
+							$("#sectionLevel"+section_index).textbox('setValue',result.level);	
+							$("#formLevel").textbox('setValue',null);		//因为每个模块的等级发生改变，需要清空评估表之前的等级
+		 				  if(parseInt(result.level)==0){
+								$("#sectionLevelOf"+section_index).parent().css("color","green");//绿色  能力完好
+								//$("#sectionLevel"+section_index).parent().css("color","green");//绿色  能力完好
+							}
+							if(parseInt(result.level)==1){
+								$("#sectionLevelOf"+section_index).parent().css("color","orange");//橘黄色  轻度受损
+								//$("#sectionLevel"+section_index).parent().css("color","orange");//橘黄色  轻度受损
+							}
+							if(parseInt(result.level)==2){
+								$("#sectionLevelOf"+section_index).parent().css("color","#cc6600");//深黄色  中度受损
+								//$("#sectionLevel"+section_index).parent().css("color","#cc6600");//深黄色  中度受损
+							}
+							if(parseInt(result.level)==3){
+								$("#sectionLevelOf"+section_index).parent().css("color","red");//红色  重度受损
+								//$("#sectionLevel"+section_index).parent().css("color","red");//红色  重度受损
+							}
 					}
 				}
 			});			

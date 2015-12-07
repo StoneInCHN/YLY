@@ -813,9 +813,9 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/getSectionLevel", method = RequestMethod.GET)
-  public @ResponseBody Map<String, Integer> getSectionLevel(ModelMap model, String sectionName, String answerScores) {
+  public @ResponseBody Map<String, Integer> getSectionLevel(ModelMap model, Long sectionId, String answerScores) {
     int level=-1;
-    level = elderlyEvaluatingRecordService.getSectionLevel(sectionName,answerScores);
+    level = elderlyEvaluatingRecordService.getSectionLevel(sectionId,answerScores);
     Map<String, Integer> levelMap = new HashMap<String, Integer>();   
     levelMap.put("level", level);
     return levelMap;

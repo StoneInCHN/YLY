@@ -561,7 +561,7 @@
 		${answer_index + 1}.  ${evaluatingItem.itemName}
 	</td>
 	<td text-align="center"style="width:80px" rowspan="${evaluatingItem.evaluatingItemsOptions?size}">
-				<input type="hidden" id="itemNameOf${answer_index}" value="${evaluatingItem.itemName}"/>
+				<input type="hidden" id="itemIdOf${answer_index}" value="${evaluatingItem.id}"/>
 				 <input class="easyui-textbox" type="text" id="scoreOf${answer_index}" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.optionScore"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分
 				
 	</td>
@@ -570,7 +570,7 @@
 	       		<label class="radio-inline">
                <input type="radio" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.id" value=" ${evaluatingItemsOption.id}"  
                			onclick="populateScore(${answer_index},${evaluatingItemsOption.optionScore},${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index}),
-               						populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.sectionName}')">
+               						populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.id}')">
                ${evaluatingItemsOption.optionScore}&nbsp;分,&nbsp;&nbsp;${evaluatingItemsOption.evaluatingItemOptions.optionName}
                </label>
            </#if>	
@@ -584,7 +584,7 @@
 		  		<label class="radio-inline">
 		  		<input type="radio" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.id" value=" ${evaluatingItemsOption.id}"  
 		  					onclick="populateScore(${answer_index},${evaluatingItemsOption.optionScore},${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index}),
-		  										populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.sectionName}')">
+		  										populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.id}')">
 		  		${evaluatingItemsOption.optionScore}&nbsp;分,&nbsp;&nbsp;${evaluatingItemsOption.evaluatingItemOptions.optionName}
 		  		</label>
 		  	</td>

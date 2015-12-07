@@ -23,6 +23,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.dao.ElderlyEvaluatingRecordDao;
 import com.yly.entity.ElderlyEvaluatingRecord;
+import com.yly.entity.EvaluatingItems;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
 import com.yly.entity.EvaluatingSection;
@@ -30,6 +31,8 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.ElderlyEvaluatingRecordService;
+import com.yly.service.EvaluatingItemsService;
+import com.yly.service.EvaluatingSectionService;
 import com.yly.utils.DateTimeUtils;
 import com.yly.utils.ToolsUtils;
 
@@ -42,6 +45,9 @@ import com.yly.utils.ToolsUtils;
 @Service("elderlyEvaluatingRecordServiceImpl")
 public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyEvaluatingRecord, Long>
     implements ElderlyEvaluatingRecordService {
+  
+  @Resource(name = "evaluatingSectionServiceImpl")
+  private EvaluatingSectionService evaluatingSectionService;
 
   @Resource(name = "elderlyEvaluatingRecordDaoImpl")
   private ElderlyEvaluatingRecordDao elderlyEvaluatingRecordDao;
@@ -50,7 +56,9 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   public void setBaseDao(ElderlyEvaluatingRecordDao elderlyEvaluatingRecordDao) {
     super.setBaseDao(elderlyEvaluatingRecordDao);
   }
-
+  @Resource(name = "evaluatingItemsServiceImpl")
+  private EvaluatingItemsService evaluatingItemsService;
+  
   @Override
   public Page<ElderlyEvaluatingRecord> searchPageByFilter(String keysOfElderlyName, Date beginDate,
       Date endDate, Pageable pageable) {
@@ -103,9 +111,19 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
    * 返回单个模块等级
    */
   @Override
-  public Integer getSectionLevel(String sectionName, String answerScores) {
+  public Integer getSectionLevel(Long sectionId, String answerScores) {
+    EvaluatingSection evaluatingSection = null;
     int level = -1;
-    String[] answerScoreArray = answerScores.split(";;;;");//字符串比如：    "意识水平::::1;;;;视力::::1;;;;听力::::2;;;;沟通交流::::3"
+    if (sectionId == null) {
+      return level;
+    }else {
+      evaluatingSection = evaluatingSectionService.find(sectionId);
+    }
+    String sectionName = "";
+    if (evaluatingSection.getSectionName()!=null && evaluatingSection.getSectionName()!=null) {
+      sectionName = evaluatingSection.getSectionName();
+    }
+    String[] answerScoreArray = answerScores.split(";");// 题目id:得分;题目id:得分;...  字符串比如：  "1:1;2:1;" 表示id为1的题得1分，id为2的题得1分
     /*
      * 日常生活活动分级 
      * 0能力完好：总分100分 
@@ -115,9 +133,9 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
      */
     int totalScore = 0;
     for (String answerScore : answerScoreArray) {
-      totalScore += Integer.parseInt(answerScore.split("::::")[1]);
+      totalScore += Integer.parseInt(answerScore.split(":")[1]);
     }
-      if (sectionName.equals("日常生活活动")) {
+      if (evaluatingSection.getSectionName().equals("日常生活活动")) {
         if (totalScore == 100) level = 0;
         if (totalScore >= 65 && totalScore <= 95) level = 1;
         if (totalScore >= 45 && totalScore <= 60) level = 2;
@@ -159,8 +177,13 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     if (sectionName.equals("感知觉与沟通")) {      
       int consciousness = -1, eyesight = -1, hearing = -1, communication = -1;//分别记录 意识 视力 听力 沟通 四个小项目的得分  
       for (String answerScore : answerScoreArray) {
-        String itemName = answerScore.split("::::")[0];
-        int itemScore = Integer.parseInt(answerScore.split("::::")[1]);
+        String itemId = answerScore.split(":")[0];
+        String itemName = "";
+        EvaluatingItems evaluatingItems = evaluatingItemsService.find(Long.parseLong(itemId));
+        if (evaluatingItems != null) {
+          itemName = evaluatingItems.getItemName();
+        }
+        int itemScore = Integer.parseInt(answerScore.split(":")[1]);
         if (itemName.contains("意识")) consciousness = itemScore;
         if (itemName.contains("听力")) eyesight = itemScore;
         if (itemName.contains("视力")) hearing = itemScore;
