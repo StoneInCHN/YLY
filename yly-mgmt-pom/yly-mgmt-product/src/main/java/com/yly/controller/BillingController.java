@@ -28,6 +28,7 @@ import com.yly.entity.MealCharge;
 import com.yly.entity.PaymentRecord;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
+import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentType;
@@ -190,6 +191,14 @@ public class BillingController extends BaseController {
   }
 
   
+  /**
+   * 修改订单
+   * @param checkinBill
+   * @param mealTypeId
+   * @param elderlyInfoID
+   * @param isMonthlyMeal
+   * @return
+   */
   @RequestMapping(value = "/updateCheckinBill", method = RequestMethod.POST)
   public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,
       Long elderlyInfoID, Boolean isMonthlyMeal) {
@@ -364,6 +373,12 @@ public class BillingController extends BaseController {
   public String edit(ModelMap model, Long id) {
     Billing record = billingService.find(id);
     model.addAttribute("billing", record);
+    List<Map<String, Object>> systemConfigs = systemConfigService.findByConfigKey(ConfigKey.BILLDAY, null);
+    if (systemConfigs!=null && systemConfigs.size()>0) {
+    	 model.addAttribute("billDay",systemConfigs.get(0).get("configValue"));
+	}
+    String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
+    model.addAttribute("bedNurseConfig",billingService.getBedNurseConfigByElderly(properties, record.getElderlyInfo()));
     return "/checkinCharge/edit";
   }
   /**

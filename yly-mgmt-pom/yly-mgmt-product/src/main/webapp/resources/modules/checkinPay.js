@@ -20,7 +20,7 @@ var checkinPay_manager_tool = {
 				$('#addCheckinPay').dialog({    
 				    title: message("yly.pay.checkin"),    
 				    width: 650,    
-				    height: 750,
+				    height: 650,
 				    modal: true,
 				    iconCls : 'icon-mini-edit',
 				    href : '../billing/payPage.jhtml?path=checkinPay&id='

@@ -3,7 +3,7 @@ var checkinCharge_manager_tool = {
 				$('#addCheckinCharge').dialog({    
 				    title: message("yly.charge.checkin"),    
 				    width: 650,    
-				    height: 750,
+				    height: 650,
 				    modal: true,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
@@ -163,7 +163,7 @@ function checkinEditBill(billId){
 	$('#editCheckinBill').dialog({    
 	    title: message("yly.charge.billing.edit"),    
 	    width: 650,    
-	    height: 750,
+	    height: 650,
 	    modal: true,
 	    iconCls : 'icon-mini-edit',
 	    href : '../billing/edit.jhtml?&id='+ billId,
@@ -208,6 +208,15 @@ function checkinEditBill(billId){
 			}
 	    }],
 	    onOpen:function(){
+	    	$.ajax({
+				url:"../systemConfig/findByConfigKey.jhtml",
+				type:"post",
+				data:{configKey:"BILLDAY"},
+				success:function(result){
+					$('#billDay_update').html(message("yly.charge.billing.day.prefix")+result[0].configValue+message("yly.charge.billing.day.suffix"));
+					
+				}
+	    	});
 	    },
 	    onClose:function(){
 	    }
@@ -452,6 +461,31 @@ $(function(){
 	    }
 	});
 	
+	$('#update_bedNursePeriodStartDate').datebox({
+	    onSelect: function(date){
+            var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+	    	$.ajax({
+				url:"../systemConfig/getBillEndDate.jhtml",
+				type:"post",
+				data:{currentDay:dayStr},
+				success:function(result,response,status){
+					$('#update_bedNursePeriodEndDate').datebox('setValue',result.billDate);
+					console.log(result.periodMonth+"个月"+result.periodDay+"天");
+					var bedPerMonth = $('#bedPerMonth').val();
+					var bedPerDay = $('#bedPerDay').val();
+					var nurseLevelPerMonth = $('#nurseLevelPerMonth').val();
+					var nurseLevelPerDay = $('#nurseLevelPerDay').val();
+					var bedAmount = result.periodMonth*bedPerMonth+result.periodDay*bedPerDay;
+					var nurseAmount = result.periodMonth*nurseLevelPerMonth+result.periodDay*nurseLevelPerDay;
+					$('#update_chargein_bedAmount').numberbox('setValue',bedAmount);
+					$('#update_chargein_nurseAmount').numberbox('setValue',nurseAmount);
+				}
+			});
+	    }
+	});
+	
+	
+	
 	$('#mealPeriodStartDate').datebox({
 	    onSelect: function(date){
             var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -547,6 +581,7 @@ $(function(){
 		}
 	});
 	
+	
 	function calculChargeInAmount(){
 		var depositAmount = $('#checkin_deposit').numberbox('getValue');
 		var bedAmount = $('#chargein_bedAmount').numberbox('getValue');
@@ -561,5 +596,6 @@ $(function(){
 		}
 		
 	}
+	
 
 })
