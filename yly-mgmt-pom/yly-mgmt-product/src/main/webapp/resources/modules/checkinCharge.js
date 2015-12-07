@@ -207,17 +207,30 @@ function checkinEditBill(billId){
 				 $('#editCheckinBill').dialog("close");
 			}
 	    }],
-	    onOpen:function(){
-	    	$.ajax({
-				url:"../systemConfig/findByConfigKey.jhtml",
-				type:"post",
-				data:{configKey:"BILLDAY"},
-				success:function(result){
-					$('#billDay_update').html(message("yly.charge.billing.day.prefix")+result[0].configValue+message("yly.charge.billing.day.suffix"));
-					
-				}
+	    onLoad:function(){
+	    	$('#update_bedNursePeriodStartDate').datebox({
+	    	    onSelect: function(date){
+	                var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+	    	    	$.ajax({
+	    				url:"../systemConfig/getBillEndDate.jhtml",
+	    				type:"post",
+	    				data:{currentDay:dayStr},
+	    				success:function(result,response,status){
+	    					$('#update_bedNursePeriodEndDate').datebox('setValue',result.billDate);
+	    					var bedPerMonth = $('#update_bedPerMonth').attr("value");
+	    					var bedPerDay = $('#update_bedPerDay').attr("value");
+	    					var nurseLevelPerMonth = $('#update_nurseLevelPerMonth').attr("value");
+	    					var nurseLevelPerDay = $('#update_nurseLevelPerDay').attr("value");
+	    					var bedAmount = result.periodMonth*bedPerMonth+result.periodDay*bedPerDay;
+	    					var nurseAmount = result.periodMonth*nurseLevelPerMonth+result.periodDay*nurseLevelPerDay;
+	    					$('#update_chargein_bedAmount').numberbox('setValue',bedAmount);
+	    					$('#update_chargein_nurseAmount').numberbox('setValue',nurseAmount);
+	    				}
+	    			});
+	    	    }
 	    	});
 	    },
+	    
 	    onClose:function(){
 	    }
 	}); 
@@ -461,28 +474,6 @@ $(function(){
 	    }
 	});
 	
-	$('#update_bedNursePeriodStartDate').datebox({
-	    onSelect: function(date){
-            var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-	    	$.ajax({
-				url:"../systemConfig/getBillEndDate.jhtml",
-				type:"post",
-				data:{currentDay:dayStr},
-				success:function(result,response,status){
-					$('#update_bedNursePeriodEndDate').datebox('setValue',result.billDate);
-					console.log(result.periodMonth+"个月"+result.periodDay+"天");
-					var bedPerMonth = $('#bedPerMonth').val();
-					var bedPerDay = $('#bedPerDay').val();
-					var nurseLevelPerMonth = $('#nurseLevelPerMonth').val();
-					var nurseLevelPerDay = $('#nurseLevelPerDay').val();
-					var bedAmount = result.periodMonth*bedPerMonth+result.periodDay*bedPerDay;
-					var nurseAmount = result.periodMonth*nurseLevelPerMonth+result.periodDay*nurseLevelPerDay;
-					$('#update_chargein_bedAmount').numberbox('setValue',bedAmount);
-					$('#update_chargein_nurseAmount').numberbox('setValue',nurseAmount);
-				}
-			});
-	    }
-	});
 	
 	
 	

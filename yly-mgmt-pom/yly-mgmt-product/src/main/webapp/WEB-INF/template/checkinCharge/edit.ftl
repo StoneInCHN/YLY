@@ -47,7 +47,7 @@
 	    			  			<th>${message("yly.charge.record.bed")}:</th>
 					    		<td>
 					    			 <input class="easyui-numberbox" id="update_chargein_bedAmount" value="${billing.bedNurseCharge.bedAmount}" name="bedNurseCharge.bedAmount" data-options="required:true,min:0,precision:2,editable:false" />
-					    			<span class="margin-left-20">[${bedNurseConfig[0].chargeItem.configValue}]</span><span class="margin-left-10" id="bedPerMonth" value="${bedNurseConfig[0].amountPerMonth}">${message("yly.charge.record.perMonth",bedNurseConfig[0].amountPerMonth)}</span><span class="margin-left-10" id="bedPerDay" value="${bedNurseConfig[0].amountPerDay}">${message("yly.charge.record.perDay",bedNurseConfig[0].amountPerDay)}</span>
+					    			<span class="margin-left-20">[${bedNurseConfig[0].chargeItem.configValue}]</span><span class="margin-left-10" id="update_bedPerMonth" value="${bedNurseConfig[0].amountPerMonth}">${message("yly.charge.record.perMonth",bedNurseConfig[0].amountPerMonth)}</span><span class="margin-left-10" id="update_bedPerDay" value="${bedNurseConfig[0].amountPerDay}">${message("yly.charge.record.perDay",bedNurseConfig[0].amountPerDay)}</span>
 					    		</td>
 					    		
 	    			  		</tr>
@@ -55,7 +55,7 @@
 	    			  			<th>${message("yly.charge.record.nurse")}:</th>
 					    		<td>
 					    			 <input class="easyui-numberbox" id="update_chargein_nurseAmount"  value="${billing.bedNurseCharge.nurseAmount}" name="bedNurseCharge.nurseAmount" data-options="required:true,min:0,precision:2,editable:false" />
-					    		     <span class="margin-left-20">[${bedNurseConfig[1].chargeItem.configValue}]</span><span class="margin-left-10" id="nurseLevelPerMonth" value="${bedNurseConfig[1].amountPerMonth}">${message("yly.charge.record.perMonth",bedNurseConfig[1].amountPerMonth)}</span><span class="margin-left-10" id="nurseLevelPerDay" value="${bedNurseConfig[1].amountPerDay}">${message("yly.charge.record.perDay",bedNurseConfig[1].amountPerDay)}</span>
+					    		     <span class="margin-left-20">[${bedNurseConfig[1].chargeItem.configValue}]</span><span class="margin-left-10" id="update_nurseLevelPerMonth" value="${bedNurseConfig[1].amountPerMonth}">${message("yly.charge.record.perMonth",bedNurseConfig[1].amountPerMonth)}</span><span class="margin-left-10" id="update_nurseLevelPerDay" value="${bedNurseConfig[1].amountPerDay}">${message("yly.charge.record.perDay",bedNurseConfig[1].amountPerDay)}</span>
 					    		</td>
 					    		
 	    			  		</tr>
