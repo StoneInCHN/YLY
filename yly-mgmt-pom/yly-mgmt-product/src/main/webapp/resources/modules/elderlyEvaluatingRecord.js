@@ -23,6 +23,12 @@ var elderlyEvaluating_manager_tool = {
 				    title: "添加自定义入院评估",    
 				    width: 1250,    
 				    height: 850,
+				    left:($(window).width()-1250)/2,
+				    top:50,
+				    resizable:true,
+				    left:50,
+				    top:50,
+				    resizable:true,
 				    iconCls:'icon-mini-add',
 				    modal:true,
 				    href:'../elderlyEvaluatingRecord/addCustomEvaluating.jhtml?formId='+formId,
@@ -157,8 +163,14 @@ var elderlyEvaluating_manager_tool = {
 				    title: "添加入院评估",    
 				    width: 1250,    
 				    height: 850,
+				    left:($(window).width()-1250)/2,
+				    top:50,
+				    resizable:true,
 				    iconCls:'icon-mini-add',
 				    modal:true,
+				    left:50,
+				    top:50,
+				    resizable:true,
 				    href:'../elderlyEvaluatingRecord/addEvaluating.jhtml?formId='+formId,
 				    onOpen:function(){
 				    	$('#chooseEvaluating').dialog("close");
@@ -320,6 +332,9 @@ $(function(){
 			    title: message("yly.common.detail"),    
 			    width: 800,    
 			    height: 800, 
+			    left:($(window).width()-800)/2,
+			    top:50,
+			    resizable:true,
 			    cache: false,
 			    modal: true,
 			    href:'../elderlyEvaluatingRecord/view.jhtml?id='+rowData.id,
@@ -393,6 +408,9 @@ function createForm(){
 	    title: "自定义评估表",    
 	    width: 800,    
 	    height: 900,
+	    left:($(window).width()-800)/2,
+	    top:50,
+	    resizable:true,
 	    iconCls:'icon-mini-add',
 	    modal:true,
 	    href:'../elderlyEvaluatingRecord/createEvaluatingFrom.jhtml',  
@@ -505,6 +523,8 @@ function createForm(){
 	    	 
 	    }
 	});
+	//$("#createEvaluatingForm").dialog({ draggable: true }).closest('.ui-dialog').draggable({ containment: 'parent' });
+	
 }
 
 
