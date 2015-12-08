@@ -40,7 +40,6 @@ import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
-import com.yly.json.request.EvaluatingItemScoreRequest;
 import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.EvaluatingFormService;
