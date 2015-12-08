@@ -1,6 +1,6 @@
 package com.yly.dao;
 
-import com.yly.entity.AuthorityResource;
+import com.yly.entity.ConfigMeta;
 import com.yly.framework.dao.BaseDao;
 
 /**
@@ -8,6 +8,6 @@ import com.yly.framework.dao.BaseDao;
  * @author pengyanan
  *
  */
-public interface AuthorityDao extends BaseDao<AuthorityResource, Long>{
+public interface AuthorityDao extends BaseDao<ConfigMeta, Long>{
 
 }

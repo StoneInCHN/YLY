@@ -2,8 +2,10 @@ package com.yly.service;
 
 import java.util.List;
 
-import com.yly.entity.AuthorityResource;
+import com.yly.entity.ConfigMeta;
 import com.yly.entity.TenantAccount;
+import com.yly.entity.TenantInfo;
+import com.yly.entity.VersionConfig;
 import com.yly.framework.service.BaseService;
 
 /**
@@ -70,7 +72,7 @@ public interface TenantAccountService extends BaseService<TenantAccount, Long> {
 	 *            ID
 	 * @return 权限,若不存在则返回null
 	 */
-	List<AuthorityResource> findAuthorities(Long id);
+	List<ConfigMeta> findAuthorities(Long id);
 
 	/**
 	 * 判断是否登录
@@ -101,11 +103,17 @@ public interface TenantAccountService extends BaseService<TenantAccount, Long> {
     Long getCurrentTenantID();
     
     /**
+     * 获取当前登录租户信息
+     * @return 当前登录租户信息,若不存在则返回null
+     */
+    TenantInfo getCurrentTenantInfo();
+    
+    /**
      * 获取当前登录租户orgCode
      * @return
      */
     String getCurrentTenantOrgCode();
-	
+    
 	/**
 	 * 判断用户是否为内置
 	 * 

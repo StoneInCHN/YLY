@@ -9,15 +9,18 @@ import com.yly.entity.MetaRelation;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.MetaRelationService;
 
-@Service("metaRelationServiceImpl")
-public class MetaRelationServiceImpl extends BaseServiceImpl<MetaRelation, Long> implements MetaRelationService {
+@Service ("metaRelationServiceImpl")
+public class MetaRelationServiceImpl extends
+    BaseServiceImpl<MetaRelation, Long> implements MetaRelationService
+{
 
-  @Resource(name = "metaRelationDaoImpl")
+  @Resource (name = "metaRelationDaoImpl")
   private MetaRelationDao metaRelationDao;
-  
+
   @Resource
-  public void setBaseDao(MetaRelationDao metaRelationDao) {
-    super.setBaseDao(metaRelationDao);
+  public void setBaseDao (MetaRelationDao metaRelationDao)
+  {
+    super.setBaseDao (metaRelationDao);
   }
 
 }

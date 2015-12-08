@@ -61,16 +61,16 @@
 				[@shiro.hasPermission name="elderlyMange"]
 				<li><a href="#seniorCitizens"><i class="fa fa-pencil fa-1x"></i>老人管理</a></li>
 				[/@shiro.hasPermission]
-				[@shiro.hasPermission name="health"]
+				[@shiro.hasPermission name="healthManage"]
 				<li><a href="#health"><i class="fa fa-users fa-1x"></i>健康管理</a></li>
 				[/@shiro.hasPermission]
 				[@shiro.hasPermission name="affairs"]
 				<li><a href="#affairs"><i class="fa fa-users fa-1x"></i>院内事务</a></li>
 				[/@shiro.hasPermission]
-				<[@shiro.hasPermission name="system"]
+				<[@shiro.hasPermission name="systemManage"]
 				<li><a href="#system"><i class="fa fa-users fa-1x"></i>系统管理</a></li>
 				[/@shiro.hasPermission]
-				[@shiro.hasPermission name="personnel"]
+				[@shiro.hasPermission name="personnelManage"]
 				<li><a href="#personnel"><i class="fa fa-users fa-1x"></i>${message("yly.personnel.config")}</a></li>
 				[/@shiro.hasPermission]
 				<a href="#" id="nav-switcher" class="nav-switcher">更多<i class="fa fa-angle-down fa-1x"></i></a>
@@ -180,7 +180,9 @@
 		    		[@shiro.hasPermission name="role"]
 		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">权限角色管理</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="systemConfig"]
 		    		<li><a href="#" data-url="${base}/console/systemConfig/systemConfig.jhtml">数据字典</a></li>
+		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="operationLog"]
 		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
 		    		[/@shiro.hasPermission]
@@ -298,12 +300,6 @@
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
-    <link rel="stylesheet" href="${base}/resources/js/kindeditor/themes/default/default.css" />
-	<script  src="${base}/resources/js/kindeditor/kindeditor.js"></script>
-	<script  src="${base}/resources/js/kindeditor/kindeditor-all.js"></script>
-	<script  src="${base}/resources/js/kindeditor/kindeditor-all-min.js"></script>
-	<script  src="${base}/resources/js/kindeditor/kindeditor-min.js"></script>
-	<script  src="${base}/resources/js/kindeditor/lang/zh_CN.js"></script>
         <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>
         
         

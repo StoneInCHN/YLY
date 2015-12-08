@@ -1,6 +1,6 @@
 package com.yly.service;
 
-import com.yly.entity.AuthorityResource;
+import com.yly.entity.ConfigMeta;
 import com.yly.framework.service.BaseService;
 
 /**
@@ -8,6 +8,6 @@ import com.yly.framework.service.BaseService;
  * @author pengyanan
  *
  */
-public interface AuthorityService extends BaseService<AuthorityResource, Long>{
+public interface AuthorityService extends BaseService<ConfigMeta, Long>{
 
 }

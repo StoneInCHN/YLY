@@ -1,7 +1,9 @@
 package com.yly.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -62,6 +64,11 @@ public class TenantInfo extends BaseEntity {
    */
   private AccountStatus accountStatus;
 
+  /**
+   * 版本
+   */
+  private VersionConfig versionConfig;
+  
   @Column(length = 20)
   public String getOrgCode() {
     return orgCode;
@@ -140,5 +147,16 @@ public class TenantInfo extends BaseEntity {
 
   public void setAccountStatus(AccountStatus accountStatus) {
     this.accountStatus = accountStatus;
+  }
+  
+  @ManyToOne(cascade=CascadeType.ALL)
+  public VersionConfig getVersionConfig ()
+  {
+    return versionConfig;
+  }
+
+  public void setVersionConfig (VersionConfig versionConfig)
+  {
+    this.versionConfig = versionConfig;
   }
 }

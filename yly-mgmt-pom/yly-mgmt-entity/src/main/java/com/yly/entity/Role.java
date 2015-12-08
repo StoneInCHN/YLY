@@ -3,6 +3,7 @@ package com.yly.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class Role extends BaseEntity {
   private String description;
 
   /** 权限 */
-  private Set<AuthorityResource> authorityResources = new HashSet<AuthorityResource>();
+  private Set<ConfigMeta> configMetas = new HashSet<ConfigMeta>();
 
   /** 租户账号 */
   private Set<TenantAccount> tenantAccounts = new HashSet<TenantAccount>();
@@ -118,26 +119,23 @@ public class Role extends BaseEntity {
   public void setDescription(String description) {
     this.description = description;
   }
-
+  
   /**
    * 获取权限
    * 
    * @return 权限
    */
   @JsonProperty
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "yly_role_auth_resource")
-  public Set<AuthorityResource> getAuthorityResources() {
-    return authorityResources;
+  @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+  @JoinColumn(name = "yly_role_config_meta")
+  public Set<ConfigMeta> getConfigMetas ()
+  {
+    return configMetas;
   }
 
-  /**
-   * 设置权限
-   * 
-   * @param authorityResources 权限
-   */
-  public void setAuthorityResources(Set<AuthorityResource> authorityResources) {
-    this.authorityResources = authorityResources;
+  public void setConfigMetas (Set<ConfigMeta> configMetas)
+  {
+    this.configMetas = configMetas;
   }
 
   @ManyToMany(mappedBy = "roles")

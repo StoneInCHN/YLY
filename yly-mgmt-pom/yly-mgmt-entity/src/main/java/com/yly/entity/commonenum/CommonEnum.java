@@ -1313,4 +1313,19 @@ public class CommonEnum {
      */
     IN_PROGRESS_EVALUATING,
   }
+  /**
+   * 版本状态
+   * @author huyong
+   *
+   */
+  public enum VersionStatus{
+     /**
+      * 可用
+      */
+      ENABLE,
+      /**
+       * 禁用
+       */
+      DISABLE
+  }
 }

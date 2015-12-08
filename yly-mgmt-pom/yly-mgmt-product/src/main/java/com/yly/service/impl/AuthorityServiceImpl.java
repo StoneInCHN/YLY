@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import com.yly.dao.AuthorityDao;
-import com.yly.entity.AuthorityResource;
+import com.yly.entity.ConfigMeta;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.AuthorityService;
 
@@ -15,7 +15,7 @@ import com.yly.service.AuthorityService;
  *
  */
 @Repository("authorityServiceImpl")
-public class AuthorityServiceImpl extends BaseServiceImpl<AuthorityResource, Long> implements AuthorityService{
+public class AuthorityServiceImpl extends BaseServiceImpl<ConfigMeta, Long> implements AuthorityService{
   @Resource(name="authorityDaoImpl")
   private AuthorityDao authorityDao;
   

@@ -3,7 +3,6 @@ package com.yly.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -15,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yly.beans.Principal;
 import com.yly.dao.TenantAccountDao;
-import com.yly.entity.AuthorityResource;
+import com.yly.entity.ConfigMeta;
 import com.yly.entity.Role;
 import com.yly.entity.TenantAccount;
+import com.yly.entity.TenantInfo;
+import com.yly.entity.VersionConfig;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.TenantAccountService;
 
@@ -70,12 +71,12 @@ public class TenantAccountServiceImpl extends BaseServiceImpl<TenantAccount, Lon
 
 
   @Transactional(readOnly = true)
-  public List<AuthorityResource> findAuthorities(Long id) {
-    List<AuthorityResource> authorityResources = new ArrayList<AuthorityResource>();
+  public List<ConfigMeta> findAuthorities(Long id) {
+    List<ConfigMeta> authorityResources = new ArrayList<ConfigMeta>();
     TenantAccount tenantUser = tenantAccountDao.find(id);
     if (tenantUser != null) {
       for (Role role : tenantUser.getRoles()) {
-        authorityResources.addAll(role.getAuthorityResources());
+        authorityResources.addAll(role.getConfigMetas ());
       }
     }
     return authorityResources;
@@ -125,7 +126,18 @@ public class TenantAccountServiceImpl extends BaseServiceImpl<TenantAccount, Lon
     }
     return null;
   }
-
+  @Transactional(readOnly = true)
+  public TenantInfo getCurrentTenantInfo() {
+    Subject subject = SecurityUtils.getSubject();
+    if (subject != null) {
+      Principal principal = (Principal) subject.getPrincipal();
+      if (principal != null) {
+        return principal.getTenantInfo();
+      }
+    }
+    return null;
+  }
+  
   @Transactional(readOnly = true)
   public String getCurrentTenantOrgCode() {
 

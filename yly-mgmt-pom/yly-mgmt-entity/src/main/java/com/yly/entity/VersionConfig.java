@@ -10,11 +10,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.VersionStatus;
 
 @Entity
-@Table(name = "yly_version_config")
-@SequenceGenerator(name = "sequenceGenerator",
-    sequenceName = "yly_version_config")
+@Table (name = "yly_version_config")
+@SequenceGenerator (name = "sequenceGenerator", sequenceName = "yly_version_config")
 public class VersionConfig extends BaseEntity
 {
 
@@ -22,9 +22,29 @@ public class VersionConfig extends BaseEntity
    * 
    */
   private static final long serialVersionUID = -1856670758805303986L;
+  /**
+   * 版本名称
+   */
   private String versionName;
+
+  /**
+   * 元数据
+   */
   private Set<ConfigMeta> configMeta;
-  private Set<TenantConfigInfo> tenantConfigInfo;
+  /**
+   * 租户
+   */
+  private Set<TenantInfo> tenantInfos;
+
+  /**
+   * 租户ID
+   */
+  private Long tenantID;
+
+  /**
+   * 版本状态
+   */
+  private VersionStatus versionStatus;
 
   public String getVersionName ()
   {
@@ -46,16 +66,36 @@ public class VersionConfig extends BaseEntity
   {
     this.configMeta = configMeta;
   }
-  
-  @OneToMany(mappedBy = "versionConfig", fetch = FetchType.LAZY)
-  public Set<TenantConfigInfo> getTenantConfigInfo ()
+
+  @OneToMany (mappedBy = "versionConfig", fetch = FetchType.LAZY)
+  public Set<TenantInfo> getTenantInfos ()
   {
-    return tenantConfigInfo;
+    return tenantInfos;
   }
 
-  public void setTenantConfigInfo (Set<TenantConfigInfo> tenantConfigInfo)
+  public void setTenantInfos (Set<TenantInfo> tenantInfos)
   {
-    this.tenantConfigInfo = tenantConfigInfo;
+    this.tenantInfos = tenantInfos;
+  }
+
+  public Long getTenantID ()
+  {
+    return tenantID;
+  }
+
+  public void setTenantID (Long tenantID)
+  {
+    this.tenantID = tenantID;
+  }
+
+  public VersionStatus getVersionStatus ()
+  {
+    return versionStatus;
+  }
+
+  public void setVersionStatus (VersionStatus versionStatus)
+  {
+    this.versionStatus = versionStatus;
   }
 
 }

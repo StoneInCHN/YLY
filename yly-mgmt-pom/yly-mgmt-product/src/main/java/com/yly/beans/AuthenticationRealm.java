@@ -19,7 +19,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.yly.beans.Setting.CaptchaType;
-import com.yly.entity.AuthorityResource;
+import com.yly.entity.ConfigMeta;
 import com.yly.entity.TenantAccount;
 import com.yly.entity.TenantInfo;
 import com.yly.entity.commonenum.CommonEnum.AccountStatus;
@@ -102,10 +102,10 @@ public class AuthenticationRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Principal principal = (Principal) principals.fromRealm(getName()).iterator().next();
 		if (principal != null) {
-			List<AuthorityResource> authorityResources = tenantAccountService.findAuthorities(principal.getId());
+			List<ConfigMeta> authorityResources = tenantAccountService.findAuthorities(principal.getId());
 			List<String> strAuthorities = new ArrayList<String>();
-			for(AuthorityResource auth:authorityResources){
-			  strAuthorities.add(auth.getAuthEnName());
+			for(ConfigMeta auth:authorityResources){
+			  strAuthorities.add(auth.getConfigKey ());
 			}
 			if (authorityResources != null) {
 				SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();

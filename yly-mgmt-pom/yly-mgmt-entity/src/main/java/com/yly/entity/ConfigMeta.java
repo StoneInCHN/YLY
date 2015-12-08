@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -54,7 +56,7 @@ public class ConfigMeta extends BaseEntity {
    * 配置元属性
    */
   private Set<MetaProperty> metaProperty = new HashSet<MetaProperty>();
-
+  
   /**
    * 租户配置
    */
@@ -109,14 +111,14 @@ public class ConfigMeta extends BaseEntity {
     this.metaProperty = metaProperty;
   }
 
-//  @OneToMany(mappedBy = "configMeta", fetch = FetchType.LAZY)
-//  public Set<TenantConfigInfo> getTenantConfigInfo() {
-//    return tenantConfigInfo;
-//  }
-//
-//  public void setTenantConfigInfo(Set<TenantConfigInfo> tenantConfigInfo) {
-//    this.tenantConfigInfo = tenantConfigInfo;
-//  }
+  @OneToMany(mappedBy = "configMeta", fetch = FetchType.LAZY)
+  public Set<TenantConfigInfo> getTenantConfigInfo() {
+    return tenantConfigInfo;
+  }
+
+  public void setTenantConfigInfo(Set<TenantConfigInfo> tenantConfigInfo) {
+    this.tenantConfigInfo = tenantConfigInfo;
+  }
   
   @ManyToMany(mappedBy = "configMeta", fetch = FetchType.LAZY)
   public Set<VersionConfig> getVersionConfig ()
@@ -128,6 +130,5 @@ public class ConfigMeta extends BaseEntity {
   {
     this.versionConfig = versionConfig;
   }
-  
-  
+
 }

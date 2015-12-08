@@ -37,6 +37,11 @@ public class TenantConfigInfo extends BaseEntity {
   private Long tenantID;
 
   /**
+   * 配置元
+   */
+  private ConfigMeta configMeta;
+
+  /**
    * 租户自定义名字
    */
   private String name;
@@ -45,11 +50,6 @@ public class TenantConfigInfo extends BaseEntity {
    * 新增字段名称或者其他描述的值,并非具体的值
    */
   private String value;
-  
-  /**
-   * 版本
-   */
-  private VersionConfig versionConfig;
   
   private Set<TenantMetaProperty> tenantMetaProperty = new HashSet<TenantMetaProperty>();
 
@@ -60,6 +60,15 @@ public class TenantConfigInfo extends BaseEntity {
 
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
+  }
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  public ConfigMeta getConfigMeta() {
+    return configMeta;
+  }
+
+  public void setConfigMeta(ConfigMeta configMeta) {
+    this.configMeta = configMeta;
   }
 
   @Column(length = 10)
@@ -78,17 +87,6 @@ public class TenantConfigInfo extends BaseEntity {
 
   public void setValue(String value) {
     this.value = value;
-  }
-
-  @ManyToOne
-  public VersionConfig getVersionConfig ()
-  {
-    return versionConfig;
-  }
-
-  public void setVersionConfig (VersionConfig versionConfig)
-  {
-    this.versionConfig = versionConfig;
   }
 
   @OneToMany(mappedBy = "tenantConfigInfo", fetch = FetchType.LAZY)

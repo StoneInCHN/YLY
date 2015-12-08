@@ -1,6 +1,7 @@
 package com.yly.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,34 +27,37 @@ public class MetaRelation extends BaseEntity
   /**
    * 主配置元ID
    */
-  private Long mainID;
+  private ConfigMeta mainID;
 
   /**
    * 关系配置元ID
    */
-  private Long relationID;
+  private ConfigMeta relationID;
 
   /**
    * 关系类型
    */
   private com.yly.entity.commonenum.CommonEnum.MetaRelation metaRelation;
 
-  public Long getMainID ()
+ 
+  @ManyToOne
+  public ConfigMeta getMainID ()
   {
     return mainID;
   }
 
-  public void setMainID (Long mainID)
+  public void setMainID (ConfigMeta mainID)
   {
     this.mainID = mainID;
   }
 
-  public Long getRelationID ()
+  @ManyToOne
+  public ConfigMeta getRelationID ()
   {
     return relationID;
   }
 
-  public void setRelationID (Long relationID)
+  public void setRelationID (ConfigMeta relationID)
   {
     this.relationID = relationID;
   }
