@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+
 import com.yly.entity.ElderlyEvaluatingRecord;
 import com.yly.entity.EvaluatingSection;
 import com.yly.framework.paging.Page;
@@ -56,7 +58,7 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @param answerScores
    * @return 返回单个模块等级
    */
-  Integer getSectionLevel(Long sectionId, String answerScores);
+  Integer getSectionLevel(String itemsScoreJSON)  throws JSONException;
   /**
    * @param sectionLevels
    * @return 返回默认评估表的等级

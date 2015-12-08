@@ -34,7 +34,9 @@ import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.service.EvaluatingItemsService;
 import com.yly.service.EvaluatingSectionService;
 import com.yly.utils.DateTimeUtils;
-import com.yly.utils.ToolsUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 入院评估记录 Service Implement
@@ -109,11 +111,16 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   }
   /**
    * 返回单个模块等级
+   * @throws JSONException 
    */
   @Override
-  public Integer getSectionLevel(Long sectionId, String answerScores) {
+  public Integer getSectionLevel(String itemsScoreJSON) throws JSONException {
     EvaluatingSection evaluatingSection = null;
     int level = -1;
+    JSONObject itemsScore = new JSONObject(itemsScoreJSON);
+    Long sectionId = Long.parseLong(itemsScore.getString("sectionId"));
+    JSONArray itemsArray = itemsScore.getJSONArray("items");
+
     if (sectionId == null) {
       return level;
     }else {
@@ -123,7 +130,14 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     if (evaluatingSection.getSectionName()!=null && evaluatingSection.getSectionName()!=null) {
       sectionName = evaluatingSection.getSectionName();
     }
-    String[] answerScoreArray = answerScores.split(";");// 题目id:得分;题目id:得分;...  字符串比如：  "1:1;2:1;" 表示id为1的题得1分，id为2的题得1分
+    int totalScore = 0;
+//    for (String answerScore : answerScoreArray) {
+//      totalScore += Integer.parseInt(answerScore.split(":")[1]);
+//    }
+    for(int i=0 ; i < itemsArray.length() ;i++){
+      JSONObject itemScore = itemsArray.getJSONObject(i);                                                
+      totalScore += Integer.parseInt(itemScore.getString("score").toString());
+    }
     /*
      * 日常生活活动分级 
      * 0能力完好：总分100分 
@@ -131,10 +145,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
      * 2中度受损：总分45-60分 
      * 3重度受损：总分≤40分
      */
-    int totalScore = 0;
-    for (String answerScore : answerScoreArray) {
-      totalScore += Integer.parseInt(answerScore.split(":")[1]);
-    }
+
       if (evaluatingSection.getSectionName().equals("日常生活活动")) {
         if (totalScore == 100) level = 0;
         if (totalScore >= 65 && totalScore <= 95) level = 1;
@@ -174,16 +185,18 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
        * 2中度受损：意识清醒，但视力或听力中至少一项评为3，或沟通评为2；或嗜睡，视力或听力评定为3及以下，沟通评定为2及以下
        * 3重度受损：意识清醒或嗜睡，但视力或听力中至少一项评为4，或沟通评为3；或昏睡/昏迷
        */
+
     if (sectionName.equals("感知觉与沟通")) {      
       int consciousness = -1, eyesight = -1, hearing = -1, communication = -1;//分别记录 意识 视力 听力 沟通 四个小项目的得分  
-      for (String answerScore : answerScoreArray) {
-        String itemId = answerScore.split(":")[0];
+      for(int i=0 ; i < itemsArray.length() ;i++){
+        JSONObject itemScoreObj = itemsArray.getJSONObject(i);  
+        String itemId = itemScoreObj.getString("id").toString();
         String itemName = "";
         EvaluatingItems evaluatingItems = evaluatingItemsService.find(Long.parseLong(itemId));
         if (evaluatingItems != null) {
           itemName = evaluatingItems.getItemName();
         }
-        int itemScore = Integer.parseInt(answerScore.split(":")[1]);
+        int itemScore = Integer.parseInt(itemScoreObj.getString("score").toString());
         if (itemName.contains("意识")) consciousness = itemScore;
         if (itemName.contains("听力")) eyesight = itemScore;
         if (itemName.contains("视力")) hearing = itemScore;

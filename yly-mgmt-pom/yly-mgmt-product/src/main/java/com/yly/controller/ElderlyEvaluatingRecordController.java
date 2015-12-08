@@ -40,6 +40,7 @@ import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.EvaluatingItemScoreRequest;
 import com.yly.service.ElderlyEvaluatingRecordService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.EvaluatingFormService;
@@ -812,10 +813,14 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * 计算并返回单个模块的等级
    * @return
    */
-  @RequestMapping(value = "/getSectionLevel", method = RequestMethod.GET)
-  public @ResponseBody Map<String, Integer> getSectionLevel(ModelMap model, Long sectionId, String answerScores) {
+  @RequestMapping(value = "/getSectionLevel", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Integer> getSectionLevel(ModelMap model, String itemsScoreJSON) {
     int level=-1;
-    level = elderlyEvaluatingRecordService.getSectionLevel(sectionId,answerScores);
+    try {
+      level = elderlyEvaluatingRecordService.getSectionLevel(itemsScoreJSON);
+    } catch (Exception e) {
+      
+    }
     Map<String, Integer> levelMap = new HashMap<String, Integer>();   
     levelMap.put("level", level);
     return levelMap;

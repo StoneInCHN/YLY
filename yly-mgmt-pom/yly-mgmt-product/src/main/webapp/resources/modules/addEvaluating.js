@@ -186,17 +186,44 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 			}
 		}	
 		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
+			var dataMap ={};
+			dataMap.sectionId = section_id;
+			//var map = {}; // Map map = new HashMap();
+			//map[key] = value; // map.put(key, value);
+			//var value = map[key]; // Object value = map.get(key);
+			//var has = key in map; // boolean has = map.containsKey(key);
+			//delete map[key]; // map.remove(key);
 			var answerScoreList = new Array();
+//			var obj = new Object();
+//			obj.sectionIdStr="sectionId";
+//			obj.sectionId=section_id;
+//			answerScoreList.push(obj);
 			for(var i=0;  i<sectionSize; i++){
 				var nextItemId=$("#itemIdOf"+(parseInt(answer_begin_index)+i)).val();
 				var nextScore=$("#scoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
 				if(nextScore!=null  && nextScore!=""){
-					answerScoreList.push(nextItemId+":"+nextScore);
+					var map = {}; 
+					map["id"] = nextItemId; 
+					map["score"] = nextScore; 
+					answerScoreList.push(map);
 				}
 			}			
+			dataMap.items=answerScoreList;
+			
+			var dataMapString = JSON.stringify(dataMap);
+			
+			console.log(dataMapString);
+
+//			jsonDataMap = jQuery.toJSON(dataMap);
+//			alert("T1");
+//			console.log(jsonDataMap);
+			//alert("T2");
+			//var jsonStr = "{"+answerScoreList.join(",")+"}";
+			//var jsonObj = JSON.parse(jsonstr);
 			$.ajax({
-				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml?sectionId="+section_id+"&answerScores="+answerScoreList.join(";"),
-				type:"get",
+				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml",
+				type:"post",
+				data:{"itemsScoreJSON":dataMapString},
 				success:function(result,response,status){
 					if(result.level==-1){
 						$.messager.alert('提示','模块等级计算有误！','warning');
