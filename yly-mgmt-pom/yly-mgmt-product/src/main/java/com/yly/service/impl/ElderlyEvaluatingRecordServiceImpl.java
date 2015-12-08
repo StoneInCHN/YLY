@@ -3,11 +3,9 @@ package com.yly.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -18,11 +16,13 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.util.Version;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.dao.ElderlyEvaluatingRecordDao;
 import com.yly.entity.ElderlyEvaluatingRecord;
+import com.yly.entity.EvaluatingForm;
 import com.yly.entity.EvaluatingItems;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
@@ -31,9 +31,11 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.ElderlyEvaluatingRecordService;
+import com.yly.service.EvaluatingFormService;
 import com.yly.service.EvaluatingItemsService;
 import com.yly.service.EvaluatingSectionService;
 import com.yly.utils.DateTimeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +52,9 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   
   @Resource(name = "evaluatingSectionServiceImpl")
   private EvaluatingSectionService evaluatingSectionService;
-
+  @Resource(name = "evaluatingFormServiceImpl")
+  private EvaluatingFormService evaluatingFormService;
+  
   @Resource(name = "elderlyEvaluatingRecordDaoImpl")
   private ElderlyEvaluatingRecordDao elderlyEvaluatingRecordDao;
 
@@ -96,15 +100,15 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   public Map<String, Integer> getSectionScoreMap(List<EvaluatingSection> evaluatingSections, ElderlyEvaluatingRecord elderlyEvaluatingRecord) {
     Map<String,Integer> sectionScoreMap = new HashMap<String,Integer>();
     for (EvaluatingSection evaluatingSection : evaluatingSections) {
-      sectionScoreMap.put(evaluatingSection.getSectionName(), 0);
+      sectionScoreMap.put(evaluatingSection.getId().toString(), 0);
     }
     List<EvaluatingItemsAnswer> evaluatingItemsAnswers = elderlyEvaluatingRecord.getEvaluatingItemsAnswers();
     for (EvaluatingItemsAnswer evaluatingItemsAnswer : evaluatingItemsAnswers) {
       EvaluatingItemsOptions evaluatingItemsOptions = evaluatingItemsAnswer.getEvaluatingItemsOptions();
       if (evaluatingItemsOptions != null && evaluatingItemsOptions.getEvaluatingItems() != null
           && evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections() != null) {
-            String sectionName = evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections().get(0).getSectionName();
-            sectionScoreMap.replace(sectionName, sectionScoreMap.get(sectionName)+evaluatingItemsOptions.getOptionScore());//累积得分
+            String sectionId = evaluatingItemsOptions.getEvaluatingItems().getEvaluatingSections().get(0).getId().toString();
+            sectionScoreMap.replace(sectionId, sectionScoreMap.get(sectionId)+evaluatingItemsOptions.getOptionScore());//累积得分
       }
     }
     return sectionScoreMap;
@@ -115,10 +119,11 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
    */
   @Override
   public Integer getSectionLevel(String itemsScoreJSON) throws JSONException {
+    //{"sectionId":"2","items":[{"id":"11","score":"0"},{"id":"12","score":"1"},{"id":"13","score":"1"}]}
     EvaluatingSection evaluatingSection = null;
     int level = -1;
     JSONObject itemsScore = new JSONObject(itemsScoreJSON);
-    Long sectionId = Long.parseLong(itemsScore.getString("sectionId"));
+    Long sectionId = Long.parseLong(itemsScore.getString("sectionId").trim());
     JSONArray itemsArray = itemsScore.getJSONArray("items");
 
     if (sectionId == null) {
@@ -131,12 +136,9 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       sectionName = evaluatingSection.getSectionName();
     }
     int totalScore = 0;
-//    for (String answerScore : answerScoreArray) {
-//      totalScore += Integer.parseInt(answerScore.split(":")[1]);
-//    }
     for(int i=0 ; i < itemsArray.length() ;i++){
       JSONObject itemScore = itemsArray.getJSONObject(i);                                                
-      totalScore += Integer.parseInt(itemScore.getString("score").toString());
+      totalScore += Integer.parseInt(itemScore.getString("score").trim());
     }
     /*
      * 日常生活活动分级 
@@ -243,12 +245,20 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   public Map<String, Integer> getSectionLevelMap(List<EvaluatingSection> evaluatingSections,ElderlyEvaluatingRecord elderlyEvaluatingRecord, Map<String, Integer> sectionScoreMap) {
     Map<String,Integer> sectionLevelMap = new HashMap<String,Integer>();
     for (EvaluatingSection evaluatingSection : evaluatingSections) {
-      sectionLevelMap.put(evaluatingSection.getSectionName(), -1);
+      sectionLevelMap.put(evaluatingSection.getId().toString(), -1);
     }
     List<EvaluatingItemsAnswer> evaluatingItemsAnswers = elderlyEvaluatingRecord.getEvaluatingItemsAnswers();
     Iterator entries = sectionScoreMap.entrySet().iterator();          
     while (entries.hasNext()) {  
         Map.Entry entry = (Map.Entry) entries.next(); 
+        EvaluatingSection evaluatingSection = evaluatingSectionService.find(Long.parseLong(entry.getKey().toString()));
+        if (evaluatingSection == null) {
+          return sectionLevelMap;
+        }
+        if (StringUtils.isBlank(evaluatingSection.getSectionName())) {
+          return sectionLevelMap;
+        }
+        String sectionName = evaluatingSection.getSectionName();
       /*
        * 感知觉与沟通分级
        * 0能力完好：意识清醒，且视力和听力评为0或1，沟通评为0 
@@ -257,7 +267,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
        * 3重度受损：意识清醒或嗜睡，但视力或听力中至少一项评为4，或沟通评为3；或昏睡/昏迷
        */
         
-      if (entry.getKey().toString().equals("感知觉与沟通")) {
+      if (sectionName.equals("感知觉与沟通")) {
         //获取 感知与沟通 模块下面的所有answers (Perception and communication) 缩小遍历范围(长度为4,感知与沟通模块下面只有四个小评估项目)
         List<EvaluatingItemsAnswer> answersForPerCom = new ArrayList<EvaluatingItemsAnswer>();//用于存放 感知与沟通 模块下面的所有answers(长度为4)
         for (EvaluatingItemsAnswer evaluatingItemsAnswer : evaluatingItemsAnswers) {
@@ -319,7 +329,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
        * 2中度受损：总分45-60分 
        * 3重度受损：总分≤40分
        */
-        if (entry.getKey().toString().equals("日常生活活动")) {
+        if (sectionName.toString().equals("日常生活活动")) {
           if ((Integer)entry.getValue() == 100) {
             sectionLevelMap.replace(entry.getKey().toString(), 0);
           }
@@ -340,7 +350,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
        *  2中度受损：总分2-3分 
        *  3重度受损：总分4-6分
        */           
-        if (entry.getKey().toString().equals("精神状态")) {
+        if (sectionName.toString().equals("精神状态")) {
           if ((Integer)entry.getValue() == 0) {
             sectionLevelMap.replace(entry.getKey().toString(), 0);
           }
@@ -361,7 +371,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
        * 2中度受损：总分8-13分 
        * 3重度受损：总分14-20分
        */           
-        if (entry.getKey().toString().equals("社会参与")) {
+        if (sectionName.toString().equals("社会参与")) {
           if ((Integer)entry.getValue() >= 0 && (Integer)entry.getValue() <= 2) {
             sectionLevelMap.replace(entry.getKey().toString(), 0);
           }
@@ -419,13 +429,26 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
    * 解析每个模块对应等级的字符串，并调用getFormPrimaryLevel返回评估表等级
    */
   @Override
-  public String getFormLevel(String sectionLevels) {//日常生活活动::::1;;;;精神状态::::2;;;;
+  public String getFormLevel(String sectionsLevelJSON) {
+    //{"sectionId":"2","items":[{"id":"11","score":"0"},{"id":"12","score":"1"},{"id":"13","score":"1"}]}
     String formLevel = "";
     Map<String,Integer> sectionLevelMap = new HashMap<String, Integer>();
-    String[] sectionLevelArray = sectionLevels.split(";;;;");
-    for (int i = 0; i < sectionLevelArray.length; i++) {
-      String[] sectionName_Level = sectionLevelArray[i].split("::::");
-      sectionLevelMap.put(sectionName_Level[0], Integer.parseInt(sectionName_Level[1]));
+    JSONArray sectionsLevel = new JSONArray(sectionsLevelJSON);
+    for(int i=0 ; i < sectionsLevel.length() ;i++){
+      JSONObject sectionLevel = sectionsLevel.getJSONObject(i); 
+      String sectionName = "";
+      if (StringUtils.isNotBlank(sectionLevel.getString("id").trim())) {
+        EvaluatingSection evaluatingSection = evaluatingSectionService.find(Long.parseLong(sectionLevel.getString("id").trim()));
+        if (evaluatingSection != null && StringUtils.isNotBlank(evaluatingSection.getSectionName())) {
+          sectionName = evaluatingSection.getSectionName();
+          sectionLevelMap.put(sectionName,Integer.parseInt(sectionLevel.getString("level").trim()));
+        }else {
+          return formLevel;
+        }
+      }else {
+        return formLevel;
+      }
+      
     }
     if (sectionLevelMap.size() > 0) {
       formLevel = getFormPrimaryLevel(sectionLevelMap);
@@ -533,86 +556,67 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       return false;
     }
   }
-//  /**
-//   * @param evaluatingScoreRequest
-//   * @return 返回评估模块规则字符串
-//   * ie   0:能力完好 from Score To Score
-//   */
-//  public String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest){
-//    StringBuffer evaluatingRule = new StringBuffer();
-//    if (!ToolsUtils.checkObjAllFieldNull(evaluatingScoreRequest)) {
-//      evaluatingRule.append("0:");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0From());
-//      evaluatingRule.append(",");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore0To());
-//      evaluatingRule.append(";");
-//      evaluatingRule.append("1:");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1From());
-//      evaluatingRule.append(",");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore1To());
-//      evaluatingRule.append(";");        
-//      evaluatingRule.append("2:");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2From());
-//      evaluatingRule.append(",");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore2To());
-//      evaluatingRule.append(";");
-//      evaluatingRule.append("3:");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3From());
-//      evaluatingRule.append(",");
-//      evaluatingRule.append(evaluatingScoreRequest.getSectionScore3To());
-//      evaluatingRule.append(";");        
-//    }
-//    return evaluatingRule.toString();
-//  }
 
   @Override
   public String getCustomFormScoreRule(String evaluatingRule) {
     //丧失能力:0~20;重度失能:19~40;中度失能:39~60;轻度失能:59~80;能力完好:79~100
     StringBuffer formScoreRule = new StringBuffer();
     formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;自定义评估表等级划分标准<p/>");
-    if (StringUtils.isNotBlank(evaluatingRule) && evaluatingRule.contains(";")) {
-      String[] levels = evaluatingRule.split(";");
-      for (int i = 0; i < levels.length; i++) {
-        if (StringUtils.isNotBlank(levels[i]) && levels[i].contains(":")) {
-          String[] keyValue = levels[i].split(":");
-          formScoreRule.append(keyValue[0]);
-          formScoreRule.append(":");
-          formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;总分为");
-          formScoreRule.append(keyValue[1]);
-          formScoreRule.append("分<p/>");
-        }       
+    if (StringUtils.isNotBlank(evaluatingRule)) {
+      JSONArray jsonArray = new JSONArray(evaluatingRule);
+      for (int i = 0; i < jsonArray.length(); i++) {
+        JSONObject jsonObject = jsonArray.getJSONObject(i);
+        String LevelName = jsonObject.getString("LevelName");
+        String ScoreScope = jsonObject.getString("ScoreScope");
+        formScoreRule.append(LevelName);
+        formScoreRule.append(":");
+        formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;总分为");
+        formScoreRule.append(ScoreScope);
+        formScoreRule.append("分<p/>");
       }
     }
     return formScoreRule.toString();
   }
 
   @Override
-  public String getCustomFormLevel(String evaluatingRule, String sectionLevels) {
+  public String getCustomFormLevel(String sectionsScoreJSON) {
+    // {"formId":"12","sections":[{"id":"9","score":"38"},{"id":"10","score":"8"}]}
     String formPrimaryLevel = "";
-    String[] sectionLevelArray = sectionLevels.split(";;;;");
-    int totalScore = 0;//整个评估表的总分
-    for (int i = 0; i < sectionLevelArray.length; i++) {
-      String[] sectionName_Level = sectionLevelArray[i].split("::::");
-      totalScore += Integer.parseInt(sectionName_Level[1]);
+    JSONObject sectionsScore = new JSONObject(sectionsScoreJSON);
+    EvaluatingForm evaluatingForm = null;
+    String evaluatingRule = "";
+    Long formId = Long.parseLong(sectionsScore.getString("formId").trim());
+    if (formId != null) {
+      evaluatingForm = evaluatingFormService.find(formId);
+      if (evaluatingForm != null && StringUtils.isNotBlank(evaluatingForm.getEvaluatingRule())) {
+        evaluatingRule = evaluatingForm.getEvaluatingRule();
+      } else {
+        return formPrimaryLevel;
+      }
+    } else {
+      return formPrimaryLevel;
+    }
+    JSONArray sectionsScoreList = sectionsScore.getJSONArray("sections");
+    int totalScore = 0;// 整个评估表的总分
+    for (int i = 0; i < sectionsScoreList.length(); i++) {
+      JSONObject sectionScore = sectionsScoreList.getJSONObject(i);
+      totalScore += Integer.parseInt(sectionScore.getString("score").trim());
     }
     // evaluatingRule 例如 --> 丧失能力:0~20;重度失能:19~40;中度失能:39~60;轻度失能:59~80;能力完好:79~100
-    if (evaluatingRule.contains(";")) {
-      String[] levels = evaluatingRule.split(";");
-      for (int i = 0; i < levels.length; i++) {
-        if (levels[i].contains(":")) {
-          String[] keyValue = levels[i].split(":");
-          if (keyValue[1].contains("~")) {
-            String[] scores = keyValue[1].split("~");
-            int from = Integer.parseInt(scores[0]);
-            int to = Integer.parseInt(scores[1]);
-            if (totalScore >= from && totalScore <= to) {
-              formPrimaryLevel = keyValue[0];
-              break;
-            }
-          }
+    JSONArray jsonArray = new JSONArray(evaluatingRule);
+    for (int i = 0; i < jsonArray.length(); i++) {
+      JSONObject jsonObject = jsonArray.getJSONObject(i);
+      String ScoreScopeStr = jsonObject.getString("ScoreScope");
+      if (ScoreScopeStr.contains("~")) {
+        String[] scores = ScoreScopeStr.split("~");
+        int from = Integer.parseInt(scores[0]);
+        int to = Integer.parseInt(scores[1]);
+        if (totalScore >= from && totalScore <= to) {
+          formPrimaryLevel = jsonObject.getString("LevelName");
+          break;
         }
       }
-    }   
+    }
     return formPrimaryLevel;
   }
 }

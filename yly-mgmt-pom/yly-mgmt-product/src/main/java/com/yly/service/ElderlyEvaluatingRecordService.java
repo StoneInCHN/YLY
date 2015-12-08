@@ -63,12 +63,12 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @param sectionLevels
    * @return 返回默认评估表的等级
    */
-  String getFormLevel(String sectionLevels);
+  String getFormLevel(String sectionsLevelJSON);
   /**
    * @param sectionLevels
    * @return 返回自定义评估表的等级
    */
-  String getCustomFormLevel(String evaluatingRule, String sectionLevels);
+  String getCustomFormLevel(String sectionsScoreJSON);
   /**
    * @param evaluatingScoreRequest
    * @return 返回评估模块规则字符串

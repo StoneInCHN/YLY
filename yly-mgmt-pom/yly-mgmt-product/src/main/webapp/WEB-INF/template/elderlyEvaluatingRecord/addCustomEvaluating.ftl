@@ -1,7 +1,7 @@
     <script type="text/javascript" src="${base}/resources/modules/addCustomEvaluating.js"></script>
 
 <form id="addEvaluating_form">
-<input type="hidden" id="evaluatintFormID" name="evaluatintFormID" value=" ${evaluatingForm.id}" />
+<input type="hidden" id="evaluatintFormID" name="evaluatintFormID" value="${evaluatingForm.id}" />
 <input type="hidden"  name="customFormFlag" value="true" />
 	<ul id="progressbar">
 		<a href="javascript:void(0);" onclick="skipTo(0)"><li id="li0" class="active"> 老人信息</li></a>
@@ -577,6 +577,7 @@
 		<#list evaluatingForm.evaluatingSections as evaluatingSection>	
 	       <#if evaluatingSection_index == 0>
 	      		 <input type="hidden" id="sectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+	      		 <input type="hidden" id="sectionIdOf${evaluatingSection_index}" value="${evaluatingSection.id}"/>
                C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
 				<font color="black"><input class="easyui-textbox sectionLevel" type="text" id="sectionScore${evaluatingSection_index}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分</font>
            </#if>	
@@ -589,6 +590,7 @@
                <tr>
                	<td>
                	<input type="hidden" id="sectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+               	<input type="hidden" id="sectionIdOf${evaluatingSection_index}" value="${evaluatingSection.id}"/>
                	C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;			   		    
 						<font color="black"><input class="easyui-textbox sectionLevel" type="text" id="sectionScore${evaluatingSection_index}"   data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/>分</font>
 				</td>

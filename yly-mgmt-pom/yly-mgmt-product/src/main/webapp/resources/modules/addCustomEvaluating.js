@@ -99,6 +99,7 @@ $(".updateEvaluating").click(function(){//单击提交按钮
 	return false;
 })
 $("#generateIdentifier_btn").click(function(){//生成老人编号
+	
 	$.ajax({
 		url:"../identifier/generateId.jhtml",
 		type:"get",
@@ -153,53 +154,7 @@ function populateScore(answer_index,optionScore,answer_begin_index,sectionSize,s
 		$("#sectionScore"+section_index).textbox('setValue',optionScore);	//填充评估报表中每个模块的总分
 	}	
 }
-//填充每个模块的等级
-//function populateLevel(answer_begin_index,sectionSize,section_index,section_name){
-//		var levelFlag=true;//标记是否可以开始为整个模块评等级
-//		for(var i=0;  i<sectionSize; i++){
-//			var nextScore=$("#scoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
-//			if(nextScore!=null  && nextScore!=""){
-//				levelFlag =levelFlag&& true;
-//			}else{
-//				levelFlag =levelFlag&& false;
-//			}
-//		}	
-//		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
-//			var answerScoreList = new Array();
-//			for(var i=0;  i<sectionSize; i++){
-//				var nextItemName=$("#itemNameOf"+(parseInt(answer_begin_index)+i)).val();
-//				var nextScore=$("#scoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
-//				if(nextScore!=null  && nextScore!=""){
-//					answerScoreList.push(nextItemName+"::::"+nextScore);
-//				}
-//			}			
-//			$.ajax({
-//				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml?sectionName="+section_name+"&answerScores="+answerScoreList.join(";;;;"),
-//				type:"get",
-//				success:function(result,response,status){
-//					$("#sectionLevelOf"+section_index).textbox('setValue',result.level);	
-//					$("#sectionLevel"+section_index).textbox('setValue',result.level);	
-//					$("#formLevel").textbox('setValue',null);		//因为每个模块的等级发生改变，需要清空评估表之前的等级
-// 				  if(parseInt(result.level)==0){
-//						$("#sectionLevelOf"+section_index).parent().css("color","green");//绿色  能力完好
-//						//$("#sectionLevel"+section_index).parent().css("color","green");//绿色  能力完好
-//					}
-//					if(parseInt(result.level)==1){
-//						$("#sectionLevelOf"+section_index).parent().css("color","orange");//橘黄色  轻度受损
-//						//$("#sectionLevel"+section_index).parent().css("color","orange");//橘黄色  轻度受损
-//					}
-//					if(parseInt(result.level)==2){
-//						$("#sectionLevelOf"+section_index).parent().css("color","#cc6600");//深黄色  中度受损
-//						//$("#sectionLevel"+section_index).parent().css("color","#cc6600");//深黄色  中度受损
-//					}
-//					if(parseInt(result.level)==3){
-//						$("#sectionLevelOf"+section_index).parent().css("color","red");//红色  重度受损
-//						//$("#sectionLevel"+section_index).parent().css("color","red");//红色  重度受损
-//					}
-//				}
-//			});			
-//	}
-//}
+
 //填充评估表的等级
 function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 
@@ -213,19 +168,36 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 				}
 			}	
 			if(formLevelFlag){//当且仅当每个模块的总分出来了，才能对整个评估表评等级
+				var form_Id = $("#evaluatintFormID").val() ;
+				if(form_Id == null || form_Id == ""){
+					$.messager.alert('提示','评估表等级计算有误！','warning');
+					return false;
+				}
+				var dataMap ={};
+				dataMap.formId = form_Id;
 				
 				var sectionLevelList = new Array();
 				for(var i=0;  i<form_sectionSize; i++){
-					var nextSectionLevel=$("#sectionScore"+i).textbox('getValue');
-					var nextSectionName=$("#sectionNameOf"+i).val();
-					if(nextSectionLevel!=null  && nextSectionLevel!=""){
-						sectionLevelList.push(nextSectionName+"::::"+nextSectionLevel);
+					var nextSectionScore=$("#sectionScore"+i).textbox('getValue');
+					var nextSectionId=$("#sectionIdOf"+i).val();
+					if(nextSectionScore!=null  && nextSectionId!=""){
+							var map = {}; 
+							map["id"] = nextSectionId; 
+							map["score"] = nextSectionScore; 
+							sectionLevelList.push(map);
 					}
 				}	
-				$("#sectionsResult").val(sectionLevelList.join(";;;;"));	
+				if(sectionLevelList.length == 0){
+					$.messager.alert('提示','评估表等级计算有误！','warning');
+					return false;
+				}
+				dataMap.sections=sectionLevelList;
+				var dataMapStr = JSON.stringify(dataMap);//{"formId":"12","sections":[{"id":"9","score":"38"},{"id":"10","score":"8"}]}
+				$("#sectionsResult").val(JSON.stringify(sectionLevelList));//[{"id":"9","score":"38"},{"id":"10","score":"8"}]
 				$.ajax({
-					url:"../elderlyEvaluatingRecord/getCustomFormLevel.jhtml?formId="+$("#evaluatintFormID").val() +"&sectionLevels="+sectionLevelList.join(";;;;"),
-					type:"get",
+					url:"../elderlyEvaluatingRecord/getCustomFormLevel.jhtml",
+					type:"post",
+					data:{"sectionsScoreJSON":dataMapStr},
 					success:function(result,response,status){
 						$("#formLevel").textbox('setValue',result.level);	
 					}

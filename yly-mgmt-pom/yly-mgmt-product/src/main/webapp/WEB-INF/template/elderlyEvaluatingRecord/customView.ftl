@@ -76,7 +76,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 	<td>
 		<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>
+		   		<#if key==evaluatingSection.id>
 					&nbsp;&nbsp;<u>${sectionScoreMap.get(key)}分</u>&nbsp;&nbsp;&nbsp;
 				</#if>
 	      </#list>
@@ -98,7 +98,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
                C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
 				<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   			<#list sectionScoreMap.keySet() as key>
-		   				<#if key==evaluatingSection.sectionName>		   		    
+		   				<#if key==evaluatingSection.id>		   		    
 							&nbsp;&nbsp;<u>${sectionScoreMap.get(key)}分</u>&nbsp;&nbsp;&nbsp;
 						</#if>
 	      			</#list>
@@ -114,7 +114,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
                	<td>C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
 					<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   				<#list sectionScoreMap.keySet() as key>
-		   					<#if key==evaluatingSection.sectionName>		   		    
+		   					<#if key==evaluatingSection.id>		   		    
 								&nbsp;&nbsp;<u>${sectionScoreMap.get(key)}分</u>&nbsp;&nbsp;&nbsp;
 							</#if>
 	      				</#list>

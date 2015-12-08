@@ -1,7 +1,7 @@
 <script type="text/javascript" src="${base}/resources/modules/editCustomEvaluating.js"></script>
 
 <form id="editEvaluating_form">
-<input type="hidden" id="evaluatintFormID" name="evaluatintFormID" value=" ${evaluatingForm.id}" />
+<input type="hidden" id="evaluatintFormID" name="evaluatintFormID" value="${evaluatingForm.id}" />
 <input type="hidden"  name="customFormFlag" value="true" />
 	<ul id="progressbar">
 		<a href="javascript:void(0);" onclick="skipTo(0)"><li id="editli0" class="active"> 老人信息</li></a>
@@ -616,7 +616,7 @@
 	<td>
 			<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>
+		   		<#if key==evaluatingSection.id>
 		   		<input class="easyui-textbox" type="text" id="editsectionScoreOf${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分
 				</#if>
 	      </#list>
@@ -653,11 +653,12 @@
 		<#list evaluatingForm.evaluatingSections as evaluatingSection>	
 	       <#if evaluatingSection_index == 0>
 	      		 <input type="hidden" id="editsectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+	      		  <input type="hidden" id="editsectionIdOf${evaluatingSection_index}" value="${evaluatingSection.id}"/>
                C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
 				<font color="black">
 		<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		
+		   		<#if key==evaluatingSection.id>		
 		   			<input class="easyui-textbox" type="text" id="editsectionScore${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分 
 				</#if>
 	      </#list>
@@ -675,11 +676,12 @@
                <tr>
                	<td>
                	<input type="hidden" id="editsectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+               	<input type="hidden" id="editsectionIdOf${evaluatingSection_index}" value="${evaluatingSection.id}"/>
                	C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;			   		    
 						<font color="black">
 								<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		 
+		   		<#if key==evaluatingSection.id>		 
 		   		<input class="easyui-textbox" type="text" id="editsectionScore${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分  
 				</#if>
 	      </#list>
@@ -691,7 +693,7 @@
 	    </#list> 
 <tr>
 	<td text-align="center">C.2&nbsp;&nbsp;老年人能力等级&nbsp;&nbsp;</td>
-		<input type="hidden" id="editsectionsResult" name="sectionsResult" value="${elderlyEvaluatingRecord.sectionsResult?replace(':','::::')?replace(';',';;;;')}"/>
+	<input type="hidden" id="sectionsResult" name="sectionsResult" value='${elderlyEvaluatingRecord.sectionsResult}'/>
 	<td><strong>
 	<input class="easyui-textbox" type="text" id="editformLevel" name="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/>
 	</strong>

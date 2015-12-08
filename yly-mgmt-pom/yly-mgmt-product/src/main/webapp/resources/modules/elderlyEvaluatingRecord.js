@@ -455,16 +455,18 @@ function createForm(){
 //									}
 //								}
 							}
-							var _evaluatingRule="";
+							
+							var evaluatingRuleArray=new Array();
 							for(var i=0;i<formLevelSize;i++){
 								var formLevelName = $("#formLevel"+i+"Name").val();
 								var formScoreFrom = parseInt($("#formScore"+i+"From").val());
 								var formScoreTo = parseInt($("#formScore"+i+"To").val());
-								_evaluatingRule+=formLevelName+":"+formScoreFrom+"~"+formScoreTo;
-								if(i<formLevelSize-1){
-									_evaluatingRule+=";";
-								}
+								var map = {};
+								map["LevelName"]=formLevelName;
+								map["ScoreScope"]=formScoreFrom+"~"+formScoreTo
+								evaluatingRuleArray.push(map);
 							}
+							var _evaluatingRule = JSON.stringify(evaluatingRuleArray);
 							if(_evaluatingRule != ""){
 								$.ajax({
 									url:"../elderlyEvaluatingRecord/createForm.jhtml",

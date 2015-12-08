@@ -619,7 +619,7 @@
 	</td>
 	<td text-align="center"style="width:80px" rowspan="${evaluatingItem.evaluatingItemsOptions?size}">
 				<input type="hidden" id="edititemNameOf${answer_index}" value="${evaluatingItem.itemName}"/>
-				 
+				 <input type="hidden" id="edititemIdOf${answer_index}" value="${evaluatingItem.id}"/>
 					   <#list elderlyEvaluatingRecord.evaluatingItemsAnswers as evaluatingItemsAnswer>
 			<#if evaluatingItemsAnswer.evaluatingItemsOptions.evaluatingItems.itemName == evaluatingItem.itemName>
 			<input type="hidden" name="evaluatingItemsAnswers[${answer_index}].id" value="${evaluatingItemsAnswer.id}"/>
@@ -637,7 +637,7 @@
                <input type="radio" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.id" value=" ${evaluatingItemsOption.id}" 
                	       		<#list elderlyEvaluatingRecord.evaluatingItemsAnswers as evaluatingItemsAnswer><#if evaluatingItemsAnswer.evaluatingItemsOptions.id == evaluatingItemsOption.id> checked</#if></#list>
                			onclick="populateScore(${answer_index},${evaluatingItemsOption.optionScore},${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index}),
-               						populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.sectionName}')">
+               						populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.id}')">
                ${evaluatingItemsOption.optionScore}&nbsp;分,&nbsp;&nbsp;${evaluatingItemsOption.evaluatingItemOptions.optionName}
                </label>
            </#if>	
@@ -652,7 +652,7 @@
 		  		<input type="radio" name="evaluatingItemsAnswers[${answer_index}].evaluatingItemsOptions.id" value=" ${evaluatingItemsOption.id}"  
 		  		<#list elderlyEvaluatingRecord.evaluatingItemsAnswers as evaluatingItemsAnswer><#if evaluatingItemsAnswer.evaluatingItemsOptions.id == evaluatingItemsOption.id> checked</#if></#list>
 		  					onclick="populateScore(${answer_index},${evaluatingItemsOption.optionScore},${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index}),
-		  										populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.sectionName}')">
+		  										populateLevel(${begin_answer_index},${evaluatingSection.evaluatingItems?size},${evaluatingSection_index},'${evaluatingSection.id}')">
 		  		${evaluatingItemsOption.optionScore}&nbsp;分,&nbsp;&nbsp;${evaluatingItemsOption.evaluatingItemOptions.optionName}
 		  		</label>
 		  	</td>
@@ -666,7 +666,7 @@
 	<td>
 			<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>
+		   		<#if key==evaluatingSection.id>
 		   		<input class="easyui-textbox" type="text" id="editsectionScoreOf${evaluatingSection_index}"  value = "${sectionScoreMap.get(key)}" data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 分
 				</#if>
 	      </#list>
@@ -681,7 +681,7 @@
 		<strong><font color="black">
 <#if sectionLevelMap??&&sectionLevelMap?size gt 0>
 		   <#list sectionLevelMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		   
+		   		<#if key==evaluatingSection.id>		   
 		   		<input class="easyui-textbox" type="text" id="editsectionLevelOf${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/>		    
 				</#if>
 	      </#list>
@@ -726,11 +726,12 @@
 		<#list evaluatingForm.evaluatingSections as evaluatingSection>	
 	       <#if evaluatingSection_index == 0>
 	      		 <input type="hidden" id="editsectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+	      		 <input type="hidden" id="editsectionIdOf${evaluatingSection_index}" value="${evaluatingSection.id}"/>
                C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;
 				<font color="black">
 		<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
 		   <#list sectionLevelMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		 
+		   		<#if key==evaluatingSection.id>		 
 		   		<input class="easyui-textbox sectionLevel" type="text" id="editsectionLevel${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 级  
 				</#if>
 	      </#list>
@@ -748,11 +749,12 @@
                <tr>
                	<td>
                	<input type="hidden" id="editsectionNameOf${evaluatingSection_index}" value="${evaluatingSection.sectionName}"/>
+               	<input type="hidden" id="editsectionIdOf${evaluatingSection_index}" value="${evaluatingSection.id}"/>
                	C.1.${evaluatingSection_index+1}&nbsp;&nbsp;${evaluatingSection.sectionName}:&nbsp;&nbsp;			   		    
 						<font color="black">
 								<#if sectionLevelMap??&&sectionLevelMap?size gt 0>
 		   <#list sectionLevelMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		 
+		   		<#if key==evaluatingSection.id>		 
 		   		<input class="easyui-textbox sectionLevel" type="text" id="editsectionLevel${evaluatingSection_index}"  value = "${sectionLevelMap.get(key)}"  data-options="required:true,editable:false" validtype="length[0,3]" style="width:40px;"/> 级  
 				</#if>
 	      </#list>
@@ -764,19 +766,20 @@
 	    </#list> 
 <tr>
 	<td text-align="center">C.2&nbsp;&nbsp;老年人能力等级&nbsp;&nbsp;</td>
+	<input type="hidden" id="sectionsResult" name="sectionsResult"  value='${elderlyEvaluatingRecord.sectionsResult}'/>
 	<td><strong>
 	
 		<#if formPrimaryLevel?contains("0")><font color="green">
-			<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+			<input class="easyui-textbox" type="text" id="editformLevel" name="formLevel" value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 		</#if>
 	<#if formPrimaryLevel?contains("1")><font color="orange">
-	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+	<input class="easyui-textbox" type="text" id="editformLevel" name="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 	</#if>
 	<#if formPrimaryLevel?contains("2")><font color="#cc6600">
-	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+	<input class="easyui-textbox" type="text" id="editformLevel" name="formLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 	</#if>
 	<#if formPrimaryLevel?contains("3")><font color="red">
-	<input class="easyui-textbox" type="text" id="editformLevel"  value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
+	<input class="easyui-textbox" type="text" id="editformLevel" name="formLevel" value="${formPrimaryLevel}" data-options="required:true,editable:false" validtype="length[0,8]" style="width:100px;"/></font>
 	</#if>
 	</strong>
 	<a href="#" class="easyui-linkbutton" onclick="populateFormLevel(${evaluatingForm.evaluatingSections?size})" plain="true">生成等级</a>

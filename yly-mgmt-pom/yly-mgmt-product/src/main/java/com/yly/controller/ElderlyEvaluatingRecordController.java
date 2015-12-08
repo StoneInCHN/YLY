@@ -3,17 +3,15 @@ package com.yly.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.bouncycastle.crypto.agreement.srp.SRP6Client;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,21 +21,16 @@ import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyEvaluatingRecord;
 import com.yly.entity.ElderlyInfo;
-import com.yly.entity.ElderlyPhotoAlbum;
-import com.yly.entity.ElderlyPhotoes;
 import com.yly.entity.EvaluatingForm;
 import com.yly.entity.EvaluatingItemOptions;
 import com.yly.entity.EvaluatingItems;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
 import com.yly.entity.EvaluatingSection;
-import com.yly.entity.SystemConfig;
-import com.yly.entity.commonenum.CommonEnum;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
-import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyEvaluatingRecordService;
@@ -51,7 +44,6 @@ import com.yly.service.EvaluatingSectionService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.FieldFilterUtils;
-import com.yly.utils.ToolsUtils;
 
 /**
  * 入院评估记录controller
@@ -239,43 +231,42 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    }
     
     //每个模块对应总得分
-    Map<String,Integer> sectionScoreMap = new HashMap<String, Integer>();
+    Map<Long,Integer> sectionScoreMap = new HashMap<Long, Integer>();
     //每个模块对应级别
-    Map<String,Integer> sectionLevelMap = new HashMap<String, Integer>();
+    Map<Long,Integer> sectionLevelMap = new HashMap<Long, Integer>();
     if (StringUtils.isNotBlank(elderlyEvaluatingRecord.getSectionsResult())) {
-      // 日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级; 
+      // 自定义：[{"id":"9","score":"38"},{"id":"10","score":"6"}]
+      //系统:[{"id":"1","score":"80","level":"1"},{"id":"2","score":"3","level":"2"},{"id":"3","score":"2","level":"2"},{"id":"4","score":"0","level":"0"}]
       String sectionsResult = elderlyEvaluatingRecord.getSectionsResult();
-      String[] sectionNameScoreLevels = sectionsResult.split(";");
-      for (int i = 0; i < sectionNameScoreLevels.length; i++) {
-        String[] sectionNameScoreLevel = sectionNameScoreLevels[i].split(":");
-        if (sectionNameScoreLevel.length == 2) {
-            if (sectionNameScoreLevel[1].contains(",")) {
-              String[] sectionScoreLevel = sectionNameScoreLevel[1].split(",");
-              sectionScoreMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionScoreLevel[0]));
-              sectionLevelMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionScoreLevel[1]));
-            }else{//自定义评估试卷，没有模块等级，只有模块总分
-              sectionScoreMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionNameScoreLevel[1]));
+      if (StringUtils.isNotBlank(sectionsResult)) {
+        JSONArray jsonArray = new JSONArray(sectionsResult);
+        for (int i = 0; i < jsonArray.length(); i++) {
+          JSONObject jsonObject = jsonArray.getJSONObject(i);
+          String sectionId = jsonObject.getString("id").trim();
+          String sectionScore = jsonObject.getString("score").trim();
+          //每个模块总分
+          if (StringUtils.isNotBlank(sectionId)&& StringUtils.isNotBlank(sectionScore)){
+            sectionScoreMap.put(Long.parseLong(sectionId), Integer.parseInt(sectionScore));
+          }
+          if (isSystemForm) {//系统评估表，每个模块还有模块等级
+            String sectionLevel = jsonObject.getString("level").trim();
+            if (StringUtils.isNotBlank(sectionLevel)){
+              sectionLevelMap.put(Long.parseLong(sectionId), Integer.parseInt(sectionLevel));
             }
+          }              
         }
       }
     }
-//    else {
-//      //List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
-//      List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
-//      if (evaluatingSections != null && evaluatingSections.size() > 0) {
-//        sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
-//        sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
-//      }
-//    }
     model.addAttribute("sectionScoreMap", sectionScoreMap);
     model.addAttribute("sectionLevelMap", sectionLevelMap);
     model.addAttribute("elderlyEvaluatingRecord", elderlyEvaluatingRecord);
     model.addAttribute("elderlyInfo", elderlyEvaluatingRecord.getElderlyInfo());
     if (elderlyEvaluatingRecord.getEvaluatingResult() != null) {
       model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
-    }else if(isSystemForm){
-      model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));
     }
+//    else if(isSystemForm){
+//      model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));
+//    }
     return returnPage;
   }
   /**
@@ -300,36 +291,33 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       if (elderlyEvaluatingRecord != null) {
 
         //每个模块对应总得分
-        Map<String,Integer> sectionScoreMap = new HashMap<String, Integer>();
+        Map<Long,Integer> sectionScoreMap = new HashMap<Long, Integer>();
         //每个模块对应级别
-        Map<String,Integer> sectionLevelMap = new HashMap<String, Integer>();
+        Map<Long,Integer> sectionLevelMap = new HashMap<Long, Integer>();
 
         if (StringUtils.isNotBlank(elderlyEvaluatingRecord.getSectionsResult())) {
-          // 日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级; 
+          // 自定义：[{"id":"9","score":"38"},{"id":"10","score":"6"}]
+          //系统:[{"id":"1","score":"80","level":"1"},{"id":"2","score":"3","level":"2"},{"id":"3","score":"2","level":"2"},{"id":"4","score":"0","level":"0"}]
           String sectionsResult = elderlyEvaluatingRecord.getSectionsResult();
-          String[] sectionNameScoreLevels = sectionsResult.split(";");
-          for (int i = 0; i < sectionNameScoreLevels.length; i++) {
-            String[] sectionNameScoreLevel = sectionNameScoreLevels[i].split(":");
-            if (sectionNameScoreLevel.length == 2) {
-                 if (sectionNameScoreLevel[1].contains(",") && isSystemForm) {
-                   String[] sectionScoreLevel = sectionNameScoreLevel[1].split(",");
-                   sectionScoreMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionScoreLevel[0]));
-                   sectionLevelMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionScoreLevel[1]));
-                }else{//用户自定义评估表的每个模块没有评分规则
-                  sectionScoreMap.put(sectionNameScoreLevel[0], Integer.parseInt(sectionNameScoreLevel[1]));
+          if (StringUtils.isNotBlank(sectionsResult)) {
+            JSONArray jsonArray = new JSONArray(sectionsResult);
+            for (int i = 0; i < jsonArray.length(); i++) {
+              JSONObject jsonObject = jsonArray.getJSONObject(i);
+              String sectionId = jsonObject.getString("id").trim();
+              String sectionScore = jsonObject.getString("score").trim();
+              //每个模块总分
+              if (StringUtils.isNotBlank(sectionId)&& StringUtils.isNotBlank(sectionScore)){
+                sectionScoreMap.put(Long.parseLong(sectionId), Integer.parseInt(sectionScore));
+              }
+              if (isSystemForm) {//系统评估表，每个模块还有模块等级
+                String sectionLevel = jsonObject.getString("level").trim();
+                if (StringUtils.isNotBlank(sectionLevel)){
+                  sectionLevelMap.put(Long.parseLong(sectionId), Integer.parseInt(sectionLevel));
                 }
-
+              }              
             }
           }
         }
-//        else {
-//          //List<EvaluatingSection> evaluatingSections = evaluatingSectionService.findAll();
-//          List<EvaluatingSection> evaluatingSections = elderlyEvaluatingRecord.getEvaluatingForm().getEvaluatingSections();
-//          if (evaluatingSections != null && evaluatingSections.size() > 0) {
-//            sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
-//            sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
-//          }
-//        }
         if (isSystemForm) {//针对系统默认评估表，每个模块有评分规则和等级
           //每个模块对应评分规则
           Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
@@ -346,9 +334,10 @@ public class ElderlyEvaluatingRecordController extends BaseController {
         
         if (elderlyEvaluatingRecord.getEvaluatingResult() != null) {
           model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
-        }else if(isSystemForm){
-          model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));
         }
+//        else if(isSystemForm){
+//          model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));
+//        }
         
         model.addAttribute("elderlyEvaluatingRecord", elderlyEvaluatingRecord);
       }
@@ -547,7 +536,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   @RequestMapping(value = "/save", method = RequestMethod.POST)
   //@Transactional(readOnly = true)
   public @ResponseBody Message save(Long personnelCategoryId, Long nursingLevelId,
-      Long evaluatingResultId ,boolean customFormFlag, Long evaluatintFormID, String formLevel, String sectionsResult,
+      Long evaluatingResultId, Long evaluatintFormID, String formLevel,
       ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo) {
     
       Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
@@ -596,39 +585,48 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       /**
        * 更新入院评估记录的评估结果
        */
-      if (customFormFlag) {//处理使用自定义评估表的情况
-        if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
-          sectionsResult = sectionsResult.replace(";;;;", ";").replace("::::", ":");
-          //设置模块总分和等级(字符串)
-          elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
-          //设置评估表最终结果等级        
-          elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
-          elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
-        }        
-      }else {//处理使用系统默认的评估表的情况
-      //获取该评估表下的所有评估模块
-        List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
-        //每个模块对应总得分
-        Map<String,Integer> sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
-        //每个模块对应级别
-        Map<String,Integer> sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
-        //日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级;    
-        StringBuffer sectionResultSB = new StringBuffer();
-        for (int i = 0; i < evaluatingSections.size(); i++) {
-          String sectionName = evaluatingSections.get(i).getSectionName();
-          sectionResultSB.append(sectionName);
-          sectionResultSB.append(":");
-          sectionResultSB.append(sectionScoreMap.get(sectionName));
-          sectionResultSB.append(",");
-          sectionResultSB.append(sectionLevelMap.get(sectionName));
-          sectionResultSB.append(";");
-        }
-        //设置模块总分和等级(字符串)
-        elderlyEvaluatingRecord.setSectionsResult(sectionResultSB.toString());
-        //设置评估表最终结果等级
-        elderlyEvaluatingRecord.setEvaluatingResult(elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));  
+      String sectionsResult = elderlyEvaluatingRecord.getSectionsResult();
+      if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
+        //设置模块总分和等级(json字符串)
+        elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
+        //设置评估表最终结果等级        
+        elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
         elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
-      }
+      }        
+//      if (customFormFlag) {//处理使用自定义评估表的情况
+//        if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
+//          //设置模块总分和等级(字符串)
+//          elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
+//          //设置评估表最终结果等级        
+//          elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
+//          elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
+//        }        
+//      }else {//处理使用系统默认的评估表的情况
+//      //获取该评估表下的所有评估模块
+//        List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
+//        //每个模块对应总得分
+//        Map<String,Integer> sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
+//        //每个模块对应级别
+//        Map<String,Integer> sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
+//        //日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级; 
+//        JSONArray jsonArray = new JSONArray();
+//        for (int i = 0; i < evaluatingSections.size(); i++) {
+//          JSONObject jsonObject = new JSONObject();
+//          String sectionIdStr = evaluatingSections.get(i).getId().toString();
+//          jsonObject.put("id", sectionIdStr);
+//          jsonObject.put("score", sectionScoreMap.get(sectionIdStr));
+//          jsonObject.put("level", sectionLevelMap.get(sectionIdStr));
+//          jsonArray.put(jsonObject);
+//        }
+//        if (jsonArray.length() > 0) {
+//          //设置模块总分和等级(字符串)
+//          elderlyEvaluatingRecord.setSectionsResult(jsonArray.toString());
+//        }
+//
+//        //设置评估表最终结果等级
+//        //elderlyEvaluatingRecord.setEvaluatingResult(elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));  
+//        elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
+//      }
       
       
       return SUCCESS_MESSAGE;
@@ -664,8 +662,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   //@Transactional(readOnly = true)
   public @ResponseBody Message update(Long personnelCategoryId, Long nursingLevelId,
-      Long evaluatingResultId, boolean customFormFlag, Long evaluatintFormID, ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo,
-      Long elderlyInfoId, Long elderlyEvaluatingRecordId,String formLevel, String sectionsResult) {
+      Long evaluatingResultId, Long evaluatintFormID, ElderlyEvaluatingRecord elderlyEvaluatingRecord, ElderlyInfo elderlyInfo,
+      Long elderlyInfoId, Long elderlyEvaluatingRecordId,String formLevel) {
     Long currnetTenantId = tenantAccountService.getCurrentTenantID();//获取租户ID
     /**
      * 更新老人信息
@@ -709,42 +707,51 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     /**
      * 更新入院评估记录的评估结果
      */
-    if (customFormFlag) {//处理使用自定义评估表的情况
-      if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
-        sectionsResult = sectionsResult.replace(";;;;", ";").replace("::::", ":");
-        //设置模块总分和等级(字符串)
-        elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
-        //设置评估表最终结果等级        
-        elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
-        elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
-      }        
-    }else {//处理使用系统默认的评估表的情况
-    /**
-     * 更新入院评估记录的评估结果
-     */
-    //获取该评估表下的所有评估模块
-    List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
-    //每个模块对应总得分
-    Map<String,Integer> sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
-    //每个模块对应级别
-    Map<String,Integer> sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
-    //日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级;    
-    StringBuffer sectionResultSB = new StringBuffer();
-    for (int i = 0; i < evaluatingSections.size(); i++) {
-      String sectionName = evaluatingSections.get(i).getSectionName();
-      sectionResultSB.append(sectionName);
-      sectionResultSB.append(":");
-      sectionResultSB.append(sectionScoreMap.get(sectionName));
-      sectionResultSB.append(",");
-      sectionResultSB.append(sectionLevelMap.get(sectionName));
-      sectionResultSB.append(";");
-    }
-    //设置模块总分和等级(字符串)
-    elderlyEvaluatingRecord.setSectionsResult(sectionResultSB.toString());
-    //设置评估表最终结果等级
-    elderlyEvaluatingRecord.setEvaluatingResult(elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));  
-    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
-    }
+    String sectionsResult = elderlyEvaluatingRecord.getSectionsResult();
+    if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
+      //设置模块总分和等级(json字符串)
+      elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
+      //设置评估表最终结果等级        
+      elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
+      elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+    }  
+    
+//    if (customFormFlag) {//处理使用自定义评估表的情况
+//      if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
+//        sectionsResult = sectionsResult.replace(";;;;", ";").replace("::::", ":");
+//        //设置模块总分和等级(字符串)
+//        elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
+//        //设置评估表最终结果等级        
+//        elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
+//        elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+//      }        
+//    }else {//处理使用系统默认的评估表的情况
+//    /**
+//     * 更新入院评估记录的评估结果
+//     */
+//    //获取该评估表下的所有评估模块
+//    List<EvaluatingSection> evaluatingSections = evaluatingForm.getEvaluatingSections();
+//    //每个模块对应总得分
+//    Map<String,Integer> sectionScoreMap = elderlyEvaluatingRecordService.getSectionScoreMap(evaluatingSections, elderlyEvaluatingRecord);
+//    //每个模块对应级别
+//    Map<String,Integer> sectionLevelMap = elderlyEvaluatingRecordService.getSectionLevelMap(evaluatingSections, elderlyEvaluatingRecord, sectionScoreMap);
+//    //日常生活活动:总分,等级;精神状态:总分,等级;感知觉与沟通:总分,等级;社会参与:总分,等级;    
+//    StringBuffer sectionResultSB = new StringBuffer();
+//    for (int i = 0; i < evaluatingSections.size(); i++) {
+//      String sectionName = evaluatingSections.get(i).getSectionName();
+//      sectionResultSB.append(sectionName);
+//      sectionResultSB.append(":");
+//      sectionResultSB.append(sectionScoreMap.get(sectionName));
+//      sectionResultSB.append(",");
+//      sectionResultSB.append(sectionLevelMap.get(sectionName));
+//      sectionResultSB.append(";");
+//    }
+//    //设置模块总分和等级(字符串)
+//    elderlyEvaluatingRecord.setSectionsResult(sectionResultSB.toString());
+//    //设置评估表最终结果等级
+//    elderlyEvaluatingRecord.setEvaluatingResult(elderlyEvaluatingRecordService.getFormPrimaryLevel(sectionLevelMap));  
+//    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+//    }
     return SUCCESS_MESSAGE;
   }
 
@@ -815,12 +822,16 @@ public class ElderlyEvaluatingRecordController extends BaseController {
   @RequestMapping(value = "/getSectionLevel", method = RequestMethod.POST)
   public @ResponseBody Map<String, Integer> getSectionLevel(ModelMap model, String itemsScoreJSON) {
     int level=-1;
+    Map<String, Integer> levelMap = new HashMap<String, Integer>(); 
+    if (StringUtils.isBlank(itemsScoreJSON)) {
+      levelMap.put("level", level);
+      return levelMap;
+    }
     try {
       level = elderlyEvaluatingRecordService.getSectionLevel(itemsScoreJSON);
     } catch (Exception e) {
       
     }
-    Map<String, Integer> levelMap = new HashMap<String, Integer>();   
     levelMap.put("level", level);
     return levelMap;
   }
@@ -828,12 +839,11 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * 计算并返回自定义评估表的等级
    * @return
    */
-  @RequestMapping(value = "/getCustomFormLevel", method = RequestMethod.GET)
-  public @ResponseBody Map<String, String> getCustomFormLevel(ModelMap model, Long formId, String sectionLevels) {
-    EvaluatingForm evaluatingForm = evaluatingFormService.find(formId);
-    if (evaluatingForm != null && StringUtils.isNotBlank(evaluatingForm.getEvaluatingRule())) {
+  @RequestMapping(value = "/getCustomFormLevel", method = RequestMethod.POST)
+  public @ResponseBody Map<String, String> getCustomFormLevel(ModelMap model, String sectionsScoreJSON) {
+    if (StringUtils.isNotBlank(sectionsScoreJSON)) {
       String level= "";
-      level = elderlyEvaluatingRecordService.getCustomFormLevel(evaluatingForm.getEvaluatingRule(), sectionLevels);
+      level = elderlyEvaluatingRecordService.getCustomFormLevel(sectionsScoreJSON);
       Map<String, String> levelMap = new HashMap<String,String>();   
       levelMap.put("level", level);
       return levelMap;
@@ -844,11 +854,15 @@ public class ElderlyEvaluatingRecordController extends BaseController {
    * 计算并返回系统默认评估表的等级
    * @return
    */
-  @RequestMapping(value = "/getFormLevel", method = RequestMethod.GET)
-  public @ResponseBody Map<String, String> getFormLevel(ModelMap model, String sectionLevels) {
+  @RequestMapping(value = "/getFormLevel", method = RequestMethod.POST)
+  public @ResponseBody Map<String, String> getFormLevel(ModelMap model, String sectionsLevelJSON) {
     String level= "";
-    level = elderlyEvaluatingRecordService.getFormLevel(sectionLevels);
-    Map<String, String> levelMap = new HashMap<String, String>();   
+    Map<String, String> levelMap = new HashMap<String, String>(); 
+    if (StringUtils.isBlank(sectionsLevelJSON)) {
+      levelMap.put("level", level);
+      return levelMap;
+    }
+    level = elderlyEvaluatingRecordService.getFormLevel(sectionsLevelJSON);
     levelMap.put("level", level);
     return levelMap;
   }

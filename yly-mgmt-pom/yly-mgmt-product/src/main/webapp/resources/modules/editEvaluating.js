@@ -94,7 +94,7 @@ function populateScore(answer_index,optionScore,answer_begin_index,sectionSize,s
 	
 	}
 //填充每个模块的等级
-function populateLevel(answer_begin_index,sectionSize,section_index,section_name){
+function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 		var levelFlag=true;//标记是否可以开始为整个模块评等级
 		for(var i=0;  i<sectionSize; i++){
 			var nextScore=$("#editscoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
@@ -105,17 +105,34 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_name
 			}
 		}	
 		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
+			if(section_id == null || section_id == ""){
+				$.messager.alert('提示','模块等级计算有误！','warning');
+				return false;
+			}
+			var dataMap ={};
+			dataMap.sectionId = section_id;
 			var answerScoreList = new Array();
 			for(var i=0;  i<sectionSize; i++){
-				var nextItemName=$("#edititemNameOf"+(parseInt(answer_begin_index)+i)).val();
+				var nextItemId=$("#edititemIdOf"+(parseInt(answer_begin_index)+i)).val();
 				var nextScore=$("#editscoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
-				if(nextScore!=null  && nextScore!=""){
-					answerScoreList.push(nextItemName+"::::"+nextScore);
+				if(nextScore!=null  && nextScore!="" && nextItemId!=null  && nextItemId!=""){
+					var map = {}; 
+					map["id"] = nextItemId; 
+					map["score"] = nextScore; 
+					answerScoreList.push(map);
 				}
-			}			
+			}		
+			if(answerScoreList.length == 0){
+				$.messager.alert('提示','2模块等级计算有误！','warning');
+				return false;
+			}
+			dataMap.items=answerScoreList;
+			
+			var dataMapString = JSON.stringify(dataMap);		
 			$.ajax({
-				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml?sectionName="+section_name+"&answerScores="+answerScoreList.join(";;;;"),
-				type:"get",
+				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml",
+				type:"post",
+				data:{"itemsScoreJSON":dataMapString},
 				success:function(result,response,status){
 					$("#editsectionLevelOf"+section_index).textbox('setValue',result.level);	
 					$("#editsectionLevel"+section_index).textbox('setValue',result.level);	
@@ -153,18 +170,30 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 				}
 			}	
 			if(editformLevelFlag){//当且仅当每个模块的等级都出来了，才能对整个评估表评等级
-				
-				var editsectionLevelList = new Array();
+				var sectionLevelList = new Array();
 				for(var i=0;  i<form_sectionSize; i++){
+					var nextSectionId=$("#editsectionIdOf"+i).val();
+					var nextSectionScore=$("#editsectionScoreOf"+i).textbox('getValue');
 					var nextSectionLevel=$("#editsectionLevel"+i).textbox('getValue');
-					var nextSectionName=$("#editsectionNameOf"+i).val();
 					if(nextSectionLevel!=null  && nextSectionLevel!=""){
-						editsectionLevelList.push(nextSectionName+"::::"+nextSectionLevel);
+						var map = {}; 
+						map["id"] = nextSectionId; 
+						map["score"] = nextSectionScore; 
+						map["level"] = nextSectionLevel; 
+						sectionLevelList.push(map);
 					}
 				}	
+				if(sectionLevelList.length == 0){
+					$.messager.alert('提示','评估表等级计算有误！','warning');
+					return false;
+				}
+				var dataMapString = JSON.stringify(sectionLevelList);
+				$("#sectionsResult").val(JSON.stringify(sectionLevelList));
+								
 				$.ajax({
-					url:"../elderlyEvaluatingRecord/getFormLevel.jhtml?sectionLevels="+editsectionLevelList.join(";;;;"),
-					type:"get",
+					url:"../elderlyEvaluatingRecord/getFormLevel.jhtml",
+					type:"post",
+					data:{"sectionsLevelJSON":dataMapString},
 					success:function(result,response,status){
 						$("#editformLevel").textbox('setValue',result.level);	
 	 				  if(parseInt(result.level)==0){

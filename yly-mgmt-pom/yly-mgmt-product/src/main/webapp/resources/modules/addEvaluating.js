@@ -186,40 +186,30 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 			}
 		}	
 		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
+			if(section_id == null || section_id == ""){
+				$.messager.alert('提示','模块等级计算有误！','warning');
+				return false;
+			}
 			var dataMap ={};
 			dataMap.sectionId = section_id;
-			//var map = {}; // Map map = new HashMap();
-			//map[key] = value; // map.put(key, value);
-			//var value = map[key]; // Object value = map.get(key);
-			//var has = key in map; // boolean has = map.containsKey(key);
-			//delete map[key]; // map.remove(key);
 			var answerScoreList = new Array();
-//			var obj = new Object();
-//			obj.sectionIdStr="sectionId";
-//			obj.sectionId=section_id;
-//			answerScoreList.push(obj);
 			for(var i=0;  i<sectionSize; i++){
 				var nextItemId=$("#itemIdOf"+(parseInt(answer_begin_index)+i)).val();
 				var nextScore=$("#scoreOf"+(parseInt(answer_begin_index)+i)).textbox('getValue');
-				if(nextScore!=null  && nextScore!=""){
+				if(nextScore!=null  && nextScore!=""&& nextItemId!=null  && nextItemId!=""){
 					var map = {}; 
 					map["id"] = nextItemId; 
 					map["score"] = nextScore; 
 					answerScoreList.push(map);
 				}
-			}			
+			}		
+			if(answerScoreList.length == 0){
+				$.messager.alert('提示','模块等级计算有误！','warning');
+				return false;
+			}
 			dataMap.items=answerScoreList;
 			
 			var dataMapString = JSON.stringify(dataMap);
-			
-			console.log(dataMapString);
-
-//			jsonDataMap = jQuery.toJSON(dataMap);
-//			alert("T1");
-//			console.log(jsonDataMap);
-			//alert("T2");
-			//var jsonStr = "{"+answerScoreList.join(",")+"}";
-			//var jsonObj = JSON.parse(jsonstr);
 			$.ajax({
 				url:"../elderlyEvaluatingRecord/getSectionLevel.jhtml",
 				type:"post",
@@ -265,33 +255,49 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 				}
 			}	
 			if(formLevelFlag){//当且仅当每个模块的等级都出来了，才能对整个评估表评等级
-				
 				var sectionLevelList = new Array();
 				for(var i=0;  i<form_sectionSize; i++){
+					var nextSectionId=$("#sectionIdOf"+i).val();
+					var nextSectionScore=$("#sectionScoreOf"+i).textbox('getValue');
 					var nextSectionLevel=$("#sectionLevel"+i).textbox('getValue');
-					var nextSectionName=$("#sectionNameOf"+i).val();
 					if(nextSectionLevel!=null  && nextSectionLevel!=""){
-						sectionLevelList.push(nextSectionName+"::::"+nextSectionLevel);
+						var map = {}; 
+						map["id"] = nextSectionId; 
+						map["score"] = nextSectionScore; 
+						map["level"] = nextSectionLevel; 
+						sectionLevelList.push(map);
 					}
 				}	
-				
+				if(sectionLevelList.length == 0){
+					$.messager.alert('提示','评估表等级计算有误！','warning');
+					return false;
+				}
+				var dataMapString = JSON.stringify(sectionLevelList);
+				$("#sectionsResult").val(JSON.stringify(sectionLevelList));
 				$.ajax({
-					url:"../elderlyEvaluatingRecord/getFormLevel.jhtml?sectionLevels="+sectionLevelList.join(";;;;"),
-					type:"get",
+					url:"../elderlyEvaluatingRecord/getFormLevel.jhtml",
+					type:"post",
+					data:{"sectionsLevelJSON":dataMapString},
 					success:function(result,response,status){
-						$("#formLevel").textbox('setValue',result.level);	
-	 				  if(parseInt(result.level)==0){
-	 					 $("#formLevel").parent().css("color","green");//绿色  能力完好
+						if(result.level ==""){
+							$.messager.alert('提示','评估表等级计算有误！','warning');
+							return false;
+						}else{
+							$("#formLevel").textbox('setValue',result.level);	
+			 				  if(parseInt(result.level)==0){
+			 					 $("#formLevel").parent().css("color","green");//绿色  能力完好
+								}
+								if(parseInt(result.level)==1){
+									$("#formLevel").parent().css("color","orange");//橘黄色  轻度受损
+								}
+								if(parseInt(result.level)==2){
+									$("#formLevel").parent().css("color","#cc6600");//深黄色  中度受损
+								}
+								if(parseInt(result.level)==3){
+									$("#formLevel").parent().css("color","red");//红色  重度受损
+								}
 						}
-						if(parseInt(result.level)==1){
-							$("#formLevel").parent().css("color","orange");//橘黄色  轻度受损
-						}
-						if(parseInt(result.level)==2){
-							$("#formLevel").parent().css("color","#cc6600");//深黄色  中度受损
-						}
-						if(parseInt(result.level)==3){
-							$("#formLevel").parent().css("color","red");//红色  重度受损
-						}
+						
 					}
 				});
 			}

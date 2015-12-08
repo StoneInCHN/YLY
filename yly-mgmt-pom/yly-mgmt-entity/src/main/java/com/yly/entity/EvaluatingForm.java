@@ -60,7 +60,7 @@ public class EvaluatingForm extends BaseEntity {
   private String evaluatingRule;
   
   @JsonProperty
-  @Column(length = 100)
+  @Column(length = 400)
   public String getEvaluatingRule() {
     return evaluatingRule;
   }
