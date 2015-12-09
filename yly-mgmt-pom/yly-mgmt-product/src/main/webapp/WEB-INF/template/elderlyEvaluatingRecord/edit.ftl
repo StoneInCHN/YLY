@@ -689,13 +689,7 @@
 		
 		 级</font></strong>
 	<td>
-		<#if sectionScoreRuleMap??&&sectionScoreRuleMap?size gt 0>
-		   <#list sectionScoreRuleMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		   		    
-					${sectionScoreRuleMap.get(key)}
-				</#if>
-	      </#list>
-		</#if>
+			${evaluatingSection.sectionRuleDescription}
 	</td>
 </tr>
 </table>
@@ -792,7 +786,7 @@
 </tr>
 <tr>
 	<td colspan="2">
-${formScoreRule}
+${evaluatingForm.formRuleDescription}
 	</td>
 </tr>
 </table>

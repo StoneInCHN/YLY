@@ -60,26 +60,29 @@ public class EvaluatingSection extends BaseEntity {
 //  private String evaluatingRule;
   
   /**
-   * 该评估模块的评分描述
+   * 该评估模块的内容描述
    */
   private String sectionDescription;
-  
+  /**
+   * 该评估模块的评分规则描述
+   */
+  private String sectionRuleDescription;
   /**
    * 标记是否系统定义的评估模块，比如 日常生活活动，精神状态，感知觉与沟通，社会参与 这个四个就是系统定义的评估模块
    * true:系统定义     false：自定义
    */
   private Boolean systemSection;
   
-//  @JsonProperty
-//  @Column(length = 100)
-//  public String getEvaluatingRule() {
-//    return evaluatingRule;
-//  }
-//
-//  public void setEvaluatingRule(String evaluatingRule) {
-//    this.evaluatingRule = evaluatingRule;
-//  }
-  
+  @JsonProperty
+  @Column(length = 500)
+  public String getSectionRuleDescription() {
+    return sectionRuleDescription;
+  }
+
+  public void setSectionRuleDescription(String sectionRuleDescription) {
+    this.sectionRuleDescription = sectionRuleDescription;
+  }
+
   @JsonProperty
   @Column(length = 500)
   public String getSectionDescription() {

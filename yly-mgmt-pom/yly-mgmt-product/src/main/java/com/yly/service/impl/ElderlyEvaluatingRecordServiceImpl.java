@@ -388,43 +388,43 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
     }
     return sectionLevelMap;
   }
-  /**
-   * 返回每个模块对应评分规则(字符串形式) 目前为hardcode (后期改成动态的获取规则字符串)
-   */
-  @Override
-  public Map<String, String> getSectionScoreRuleMap() {
-    Map<String,String> sectionScoreRuleMap = new HashMap<String,String>();
-    sectionScoreRuleMap.put("日常生活活动", "0 能力完好：总分100分<p/>1 轻度受损：总分65-95分<p/>2 中度受损：总分45-60分<p/>3 重度受损：总分≤40分");
-    sectionScoreRuleMap.put("精神状态", "0能力完好：总分为0分<p/>1轻度受损：总分为1分<p/>2中度受损：总分2-3分<p/>3重度受损：总分4-6分");
-    sectionScoreRuleMap.put("社会参与", "0能力完好：总分为0-2分 <p/>1轻度受损：总分为3-7分<p/>2中度受损：总分8-13分 <p/>3重度受损：总分14-20分");
-    sectionScoreRuleMap.put("感知觉与沟通", "0能力完好：意识清醒，且视力和听力评为0或1，沟通评为0<p/>1轻度受损：意识清醒，但视力或听力中至少一项评为2，或沟通评为1<p/>"
-                  + "2中度受损：意识清醒，但视力或听力中至少一项评为3，或沟通评为2；或嗜睡，视力或听力评定为3及以下，沟通评定为2及以下<p/>"
-                  + "3重度受损：意识清醒或嗜睡，但视力或听力中至少一项评为4，或沟通评为3；或昏睡/昏迷");
-    return sectionScoreRuleMap;
-  }
+//  /**
+//   * 返回每个模块对应评分规则(字符串形式) 目前为hardcode (后期改成动态的获取规则字符串)
+//   */
+//  @Override
+//  public Map<String, String> getSectionScoreRuleMap() {
+//    Map<String,String> sectionScoreRuleMap = new HashMap<String,String>();
+//    sectionScoreRuleMap.put("日常生活活动", "0 能力完好：总分100分<p/>1 轻度受损：总分65-95分<p/>2 中度受损：总分45-60分<p/>3 重度受损：总分≤40分");
+//    sectionScoreRuleMap.put("精神状态", "0能力完好：总分为0分<p/>1轻度受损：总分为1分<p/>2中度受损：总分2-3分<p/>3重度受损：总分4-6分");
+//    sectionScoreRuleMap.put("社会参与", "0能力完好：总分为0-2分 <p/>1轻度受损：总分为3-7分<p/>2中度受损：总分8-13分 <p/>3重度受损：总分14-20分");
+//    sectionScoreRuleMap.put("感知觉与沟通", "0能力完好：意识清醒，且视力和听力评为0或1，沟通评为0<p/>1轻度受损：意识清醒，但视力或听力中至少一项评为2，或沟通评为1<p/>"
+//                  + "2中度受损：意识清醒，但视力或听力中至少一项评为3，或沟通评为2；或嗜睡，视力或听力评定为3及以下，沟通评定为2及以下<p/>"
+//                  + "3重度受损：意识清醒或嗜睡，但视力或听力中至少一项评为4，或沟通评为3；或昏睡/昏迷");
+//    return sectionScoreRuleMap;
+//  }
   
 
-  /**
-   * 返回整个评估表的评分规则
-   */
-  @Override
-  public String getFormScoreRule(){
-    StringBuffer formScoreRule = new StringBuffer();
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;注：老年人能力初步等级划分标准<p/>");
-    formScoreRule.append("<font color='green'> 0 能力完好：<p/></font>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动、精神状态、感知觉与沟通分级均为0，社会参与的分级为0或1。<p/>");
-    formScoreRule.append("<font color='orange'> 1 轻度失能：<p/></font>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动分级为0，但精神状态、感知觉与沟通中至少一项分级为1以上，或社会参与的分级为2；<p/>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为1，精神状态、感知觉与沟通、社会参与中至少有一项的分级为0或1。<p/>");
-    formScoreRule.append("<font color='#cc6600'> 2 中度失能：<p/></font>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动分级为1，但精神状态、感知觉与沟通、社会参与均为2，或有一项为3；<p/>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中有1-2项的分级为1或2。<p/>");
-    formScoreRule.append("<font color='red'> 3 重度失能：<p/></font>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动的分级为3；<p/>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动、精神状态、感知觉与沟通、社会参与分级均为2；<p/>");
-    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中至少有一项分级为3。<p/>");
-    return formScoreRule.toString();
-  }
+//  /**
+//   * 返回整个评估表的评分规则
+//   */
+//  @Override
+//  public String getFormScoreRule(){
+//    StringBuffer formScoreRule = new StringBuffer();
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;注：老年人能力初步等级划分标准<p/>");
+//    formScoreRule.append("<font color='green'> 0 能力完好：<p/></font>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动、精神状态、感知觉与沟通分级均为0，社会参与的分级为0或1。<p/>");
+//    formScoreRule.append("<font color='orange'> 1 轻度失能：<p/></font>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动分级为0，但精神状态、感知觉与沟通中至少一项分级为1以上，或社会参与的分级为2；<p/>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为1，精神状态、感知觉与沟通、社会参与中至少有一项的分级为0或1。<p/>");
+//    formScoreRule.append("<font color='#cc6600'> 2 中度失能：<p/></font>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动分级为1，但精神状态、感知觉与沟通、社会参与均为2，或有一项为3；<p/>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中有1-2项的分级为1或2。<p/>");
+//    formScoreRule.append("<font color='red'> 3 重度失能：<p/></font>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日常生活活动的分级为3；<p/>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动、精神状态、感知觉与沟通、社会参与分级均为2；<p/>");
+//    formScoreRule.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或日常生活活动分级为2，且精神状态、感知觉与沟通、社会参与中至少有一项分级为3。<p/>");
+//    return formScoreRule.toString();
+//  }
   /**
    * 解析每个模块对应等级的字符串，并调用getFormPrimaryLevel返回评估表等级
    */

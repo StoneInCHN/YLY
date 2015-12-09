@@ -58,9 +58,23 @@ public class EvaluatingForm extends BaseEntity {
    * 该评估表的评分规则
    */
   private String evaluatingRule;
+  /**
+   * 该评估表的评分规则描述
+   */
+  private String formRuleDescription;
   
   @JsonProperty
-  @Column(length = 400)
+  @Column(length = 2000)  
+  public String getFormRuleDescription() {
+    return formRuleDescription;
+  }
+
+  public void setFormRuleDescription(String formRuleDescription) {
+    this.formRuleDescription = formRuleDescription;
+  }
+
+  @JsonProperty
+  @Column(length = 500)
   public String getEvaluatingRule() {
     return evaluatingRule;
   }

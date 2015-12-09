@@ -222,12 +222,16 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       model.addAttribute("evaluatingForm", evaluatingForm);
       if (isSystemForm) {
         //每个模块对应评分规则
-        Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
-        model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
-        model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
-      }else {
+//        Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
+//        model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
+        //model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
+      }
+//      else {
+      if (!isSystemForm) {
         model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getCustomFormScoreRule(elderlyEvaluatingRecord.getEvaluatingForm().getEvaluatingRule()));
       }
+        
+//      }
    }
     
     //每个模块对应总得分
@@ -320,17 +324,19 @@ public class ElderlyEvaluatingRecordController extends BaseController {
         }
         if (isSystemForm) {//针对系统默认评估表，每个模块有评分规则和等级
           //每个模块对应评分规则
-          Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
-          model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
+//          Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
+//          model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
           model.addAttribute("sectionLevelMap", sectionLevelMap);
         }
         
         model.addAttribute("sectionScoreMap", sectionScoreMap);
-        if (isSystemForm) {
-            model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
-        }else{
+//        if (isSystemForm) {
+//            model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
+//        }else{
+        if (!isSystemForm) {
              model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getCustomFormScoreRule(elderlyEvaluatingRecord.getEvaluatingForm().getEvaluatingRule()));
         }
+//        }
         
         if (elderlyEvaluatingRecord.getEvaluatingResult() != null) {
           model.addAttribute("formPrimaryLevel", elderlyEvaluatingRecord.getEvaluatingResult());
@@ -500,9 +506,9 @@ public class ElderlyEvaluatingRecordController extends BaseController {
      if (evaluatingForm != null) {
        model.addAttribute("evaluatingForm", evaluatingForm);
        //每个模块对应评分规则
-       Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
-       model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
-       model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
+//       Map<String,String> sectionScoreRuleMap = elderlyEvaluatingRecordService.getSectionScoreRuleMap();
+//       model.addAttribute("sectionScoreRuleMap", sectionScoreRuleMap);
+       //model.addAttribute("formScoreRule",elderlyEvaluatingRecordService.getFormScoreRule());
     }
       return "elderlyEvaluatingRecord/addEvaluating";
   }

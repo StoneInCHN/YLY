@@ -96,13 +96,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 	      </#list>
 		</#if>
 	<td>
-		<#if sectionScoreRuleMap??&&sectionScoreRuleMap?size gt 0>
-		   <#list sectionScoreRuleMap.keySet() as key>
-		   		<#if key==evaluatingSection.sectionName>		   		    
-					${sectionScoreRuleMap.get(key)}
-				</#if>
-	      </#list>
-		</#if>
+			${evaluatingSection.sectionRuleDescription}
 	</td>
 </tr>
 </table>
@@ -173,7 +167,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 </tr>
 <tr>
 	<td colspan="2">
-${formScoreRule}
+${elderlyEvaluatingRecord.evaluatingForm.formRuleDescription}
 	</td>
 </tr>
 </table>

@@ -38,11 +38,11 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @param evaluatingSections
    * @return 返回每个模块对应评分规则(字符串形式)
    */
-  Map<String,String> getSectionScoreRuleMap();
+  //Map<String,String> getSectionScoreRuleMap();
   /**
    * 返回默认评估表的评分规则
    */
-  String getFormScoreRule();
+//  String getFormScoreRule();
   /**
    * 返回自定义评估表的评分规则
    */
