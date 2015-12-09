@@ -502,34 +502,25 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       /**
        * 保存老人信息
        */
-
+      elderlyInfo.setTenantID(currnetTenantId);//设置租户ID
+      elderlyInfo.setPersonnelCategory(personnelCategoryId != null?systemConfigService.find(personnelCategoryId):null);//设置人员类别
+      elderlyInfo.setNursingLevel(nursingLevelId != null?systemConfigService.find(nursingLevelId):null);//设置护理级别
+      elderlyInfo.setEvaluatingResult(evaluatingResultId != null?systemConfigService.find(evaluatingResultId):null);//设置评估结果
+      elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);//表示没有删除
+      elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);//设置委托人
+      elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);//设置委托人的租户ID
+      elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_EVALUATING);//设置老人状态 ：入院评估
       if (elderlyInfoID != null) {
         elderlyInfo.setId(elderlyInfoID);
-        elderlyInfo.setTenantID(currnetTenantId);//设置租户ID
-        elderlyInfo.setPersonnelCategory(personnelCategoryId != null?systemConfigService.find(personnelCategoryId):null);//设置人员类别
-        elderlyInfo.setNursingLevel(nursingLevelId != null?systemConfigService.find(nursingLevelId):null);//设置护理级别
-        elderlyInfo.setEvaluatingResult(evaluatingResultId != null?systemConfigService.find(evaluatingResultId):null);//设置评估结果
-        elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);//表示没有删除
-        elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);//设置委托人
-        elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);//设置委托人的租户ID
-        elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_EVALUATING);//设置老人状态 ：入院评估
         elderlyInfoService.update(elderlyInfo);
       }else{
-        elderlyInfo.setTenantID(currnetTenantId);//设置租户ID
-        elderlyInfo.setPersonnelCategory(personnelCategoryId != null?systemConfigService.find(personnelCategoryId):null);//设置人员类别
-        elderlyInfo.setNursingLevel(nursingLevelId != null?systemConfigService.find(nursingLevelId):null);//设置护理级别
-        elderlyInfo.setEvaluatingResult(evaluatingResultId != null?systemConfigService.find(evaluatingResultId):null);//设置评估结果
-        elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);//表示没有删除
-        elderlyInfo.getElderlyConsigner().setElderlyInfo(elderlyInfo);//设置委托人
-        elderlyInfo.getElderlyConsigner().setTenantID(currnetTenantId);//设置委托人的租户ID
-        elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_EVALUATING);//设置老人状态 ：入院评估
         elderlyInfoService.save(elderlyInfo);
       }
       /**
        * 保存入院评估记录
        */      
       elderlyEvaluatingRecord.setTenantID(currnetTenantId);//设置租户ID
-      elderlyInfo = elderlyInfoService.find(elderlyInfoID);
+      elderlyInfo = elderlyInfoService.find(elderlyInfo.getId());
       elderlyEvaluatingRecord.setElderlyInfo(elderlyInfo);//设置
       EvaluatingForm evaluatingForm = evaluatingFormService.find(evaluatintFormID);
       elderlyEvaluatingRecord.setEvaluatingForm(evaluatingForm);//设置评估记录用的评估表

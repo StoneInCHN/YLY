@@ -429,25 +429,52 @@ function searchAllElderlyInfo() {
 	    				 var familymember = familymembers[i];
 	    				 familymenbersHtml+='<tr>';
 	    				 familymenbersHtml+='<th>成员名称:</th>';
-	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberName" value="'+familymember.memberName+'" readonly=true validtype="length[0,15]" style="width:75px;"/></td>';
+	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberName" value="'+familymember.memberName+'" readonly=true  style="width:75px;"/></td>';
 	    				 familymenbersHtml+='<th>成员电话:</th>';
-	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberPhoneNumber" value="'+familymember.memberPhoneNumber+'" readonly=true validtype="mobile" style="width:110px;"/></td>';
+	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberPhoneNumber" value="'+familymember.memberPhoneNumber+'" readonly=true  style="width:110px;"/></td>';
 	    				 familymenbersHtml+='<th>和老人关系:</th>';
-	    				 familymenbersHtml+='<td><input class="easyui-combobox" data-options=" valueField: "label", textField: "value",';
-						familymenbersHtml+='data: [{ label: "CHILDREN", value: "${message("yly.common.relation.children")}"';
-						familymenbersHtml+='},{ label: "MARRIAGE_RELATIONSHIP", value: "${message("yly.common.relation.marriage_relationship")}"';
-						familymenbersHtml+='},{ label: "GRANDPARENTS_AND_GRANDCHILDREN", value: "${message("yly.common.relation.grandparents_and_grandchildren")}"';
-						familymenbersHtml+='},{ label: "BROTHERS_OR_SISTERS", value: "${message("yly.common.relation.brothers_or_sisters")}"';
-						familymenbersHtml+='},{ label: "DAUGHTERINLAW_OR_SONINLAW", value: "${message("yly.common.relation.daughterinlaw_or_soninlaw")}"';
-						familymenbersHtml+='},{ label: "FRIEND", value: "${message("yly.common.relation.friend")}"';
-						familymenbersHtml+='},{ label: "OTHER", value: "${message("yly.common.other")}"}],';
-						familymenbersHtml+='prompt:"${message("yly.common.please.select")}"" ,value="'+familymember.memberRelation+'"  readonly=true name="elderlyFamilyMembers['+i+'].memberRelation" style="width:100px;"/></td>';
+	    				 familymenbersHtml+='<input  type="hidden" name="elderlyFamilyMembers['+i+'].memberRelation" value="'+familymember.memberRelation+'"/>';
+	    				 var memberRelation="";
+	    				 if(familymember.memberRelation == "SELF"){
+	    					 memberRelation="本人";
+	    				 }
+		    			 if(familymember.memberRelation == "CHILDREN"){
+		    					 memberRelation="子女";
+		    			 }
+		    			 if(familymember.memberRelation == "MARRIAGE_RELATIONSHIP"){
+	    					 memberRelation="夫妻";
+		    			 }
+		    			 if(familymember.memberRelation == "GRANDPARENTS_AND_GRANDCHILDREN"){
+	    					 memberRelation="祖孙关系";
+		    			 }
+		    			 if(familymember.memberRelation == "BROTHERS_OR_SISTERS"){
+	    					 memberRelation="兄弟或姐妹";
+		    			 }
+		    			 if(familymember.memberRelation == "DAUGHTERINLAW_OR_SONINLAW"){
+	    					 memberRelation="儿媳或女婿";
+		    			 }
+		    			 if(familymember.memberRelation == "FRIEND"){
+	    					 memberRelation="朋友";
+		    			 }
+		    			 if(familymember.memberRelation == "OTHER"){
+	    					 memberRelation="其它";
+		    			 }
+	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text"  value="'+memberRelation+'" readonly=true  style="width:110px;"/></td>';
+//	    				 familymenbersHtml+='<td><input class="easyui -combobox" data-options=" valueField: "label", textField: "value",';
+//						familymenbersHtml+='data: [{ label: "CHILDREN", value: "${message("yly.common.relation.children")}"';
+//						familymenbersHtml+='},{ label: "MARRIAGE_RELATIONSHIP", value: "${message("yly.common.relation.marriage_relationship")}"';
+//						familymenbersHtml+='},{ label: "GRANDPARENTS_AND_GRANDCHILDREN", value: "${message("yly.common.relation.grandparents_and_grandchildren")}"';
+//						familymenbersHtml+='},{ label: "BROTHERS_OR_SISTERS", value: "${message("yly.common.relation.brothers_or_sisters")}"';
+//						familymenbersHtml+='},{ label: "DAUGHTERINLAW_OR_SONINLAW", value: "${message("yly.common.relation.daughterinlaw_or_soninlaw")}"';
+//						familymenbersHtml+='},{ label: "FRIEND", value: "${message("yly.common.relation.friend")}"';
+//						familymenbersHtml+='},{ label: "OTHER", value: "${message("yly.common.other")}"}],';
+//						familymenbersHtml+='prompt:"${message("yly.common.please.select")}"" ,value="'+familymember.memberRelation+'"  readonly=true name="elderlyFamilyMembers['+i+'].memberRelation" style="width:100px;"/></td>';
 						familymenbersHtml+='<th>地址</th>';
 						var memberResidentialAddress="";
 						if(familymember.memberResidentialAddress != null){
 							memberResidentialAddress=familymember.memberResidentialAddress;
 						}
-						familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberResidentialAddress" value="'+memberResidentialAddress+'" readonly=true validtype="length[0,150]" style="width:400px;"/></td>';
+						familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberResidentialAddress" value="'+memberResidentialAddress+'" readonly=true  style="width:400px;"/></td>';
 						familymenbersHtml+='</tr>';
 	    			 }
 	    		 } 
