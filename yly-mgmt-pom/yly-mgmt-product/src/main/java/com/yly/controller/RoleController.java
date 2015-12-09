@@ -24,12 +24,10 @@ import com.yly.entity.Role;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.response.TreeNodeResponse;
-import com.yly.service.AuthorityService;
 import com.yly.service.ConfigMetaService;
 import com.yly.service.RoleService;
 import com.yly.service.TenantAccountService;
 import com.yly.service.TenantInfoService;
-import com.yly.service.VersionConfigService;
 
 /**
  * Controller - 角色
@@ -166,7 +164,7 @@ public class RoleController extends BaseController {
         treeNodeResponse.setId(packagecConfigMeta.getId());
         treeNodeResponse.setText(packagecConfigMeta.getName ());
         if (currentAuthList.contains(packagecConfigMeta)) {
-          treeNodeResponse.setChecked(true);
+//          treeNodeResponse.setChecked(true);
         } else {
           treeNodeResponse.setChecked(false);
         }
@@ -188,7 +186,6 @@ public class RoleController extends BaseController {
             treeNodeResponseChild.setChecked(false);
           }
           treeNodeResponseChild.setIconCls("icon-large-shapes");
-          
           if (treeNodeResponse != null && treeNodeResponse.getChildren() != null) {
             childList = treeNodeResponse.getChildren();
           }
@@ -212,21 +209,17 @@ public class RoleController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/addAuth", method = RequestMethod.POST)
-  public @ResponseBody Message addAuth(Long[] authId, Long id) {
+  public @ResponseBody Message addAuth(Long[] authIds, Long id) {
     Role role = roleService.find(id);
     Set<ConfigMeta> authorityResources = new HashSet<ConfigMeta>();
-//    if (role != null && role.getConfigMetas () != null) {
-//      authorityResources = role.getConfigMetas ();
-//    }
-    if (authId == null || id == null) {
+
+    if (authIds == null || id == null) {
       LogUtil.debug(RoleController.class, "RoleController.addAuth()",
           "authId=null or id=null, tenant ID=%s", tenantAccountService.getCurrentTenantID());
       return ERROR_MESSAGE;
     }
-    for (Long auth_id : authId) {
-      ConfigMeta authorityResource = configMetaService.find(auth_id);
-      authorityResources.add(authorityResource);
-    }
+    List<ConfigMeta> authorityResourceList = configMetaService.findList (authIds);
+    authorityResources.addAll (authorityResourceList);
     role.setConfigMetas (authorityResources);
     roleService.update (role);
 

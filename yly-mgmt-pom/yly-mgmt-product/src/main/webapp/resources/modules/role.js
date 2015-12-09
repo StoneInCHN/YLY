@@ -14,92 +14,32 @@ var role_manager_tool = {
 			    cache: false,    
 			    modal: true ,
 			    onOpen:function(){
-			    	$('#role-table-auth').treegrid({    
-					    url:'../role/listAuth.jhtml?id='+_edit_row.id,  
-					    idField:'id',    
-					    treeField:'text', 
-					    columns:[[    
-					      {title:message("yly.role.auth.name"),field:"text",width:180,align:'left',formatter:function(value,row,index){
-					    	  return row.text;
-					      }},
-					      {title:message("yly.role.auth.status"),field:"checked",width:180,align:'center',formatter:function(value,row,index){
-					    	  if(row.checked){
-		                    	  return "<input type='checkbox' id='role-table-auth-treeId-"+row.id+"' name='authId' data-partentId='"+row._parentId+"' value='"+row.id+"'  checked/>" ; 
-		                      }else{
-		                    	  return "<input type='checkbox' id='role-table-auth-treeId-"+row.id+"' name='authId' data-partentId='"+row._parentId+"' value='"+row.id+"'  />" ; 
-		                      }
-					    	   
-					      }}
-					    ]],
-					    onLoadSuccess:function(){
-					    	$(":input[name='authId']").click(function(){
-					    		var _this = $(this);
-					    		var value = _this.val();
-					    		var partentId = _this.attr("data-partentId");
-//					    		var flagCheck = $("#role-table-auth-treeId-"+value).attr('checked');
-					    		var flagCheck = _this.attr('checked');
-					    		//console.log(value);
-					    		//console.log(partentId);
-//					    		console.log(flagCheck);
-//					    		console.log($("#role-table-auth-treeId-"+partentId).attr("checked"));
-//					    		console.log($('#role-table-auth').treegrid("getChildren",partentId));
-					    	//	console.log($("#role-table-auth-treeId-"+value).attr("checked"));
-					    		//console.log($('#role-table-auth').treegrid("find",value));
-					    		
-					    		//方案2
-					    		if(partentId == "undefined"){
-					    			if(flagCheck){
-					    				$("#role-table-auth-treeId-"+value).attr("checked",false);
-					    				var list =$('#role-table-auth').treegrid("getChildren",value);
-					    				for(var obj in list){
-					    					console.log(list[obj].id);
-					    					$("#role-table-auth-treeId-"+list[obj].id).prop("checked",false);
-					    				}
-					    			}else{
-					    				$("#role-table-auth-treeId-"+value).attr("checked",true);
-					    				var list =$('#role-table-auth').treegrid("getChildren",value);
-					    				for(var obj in list){
-					    					console.log(list[obj].id);
-					    					$("#role-table-auth-treeId-"+list[obj].id).prop("checked",true);
-					    				}
-					    			}
-					    		}else{
-					    			if(flagCheck){
-					    				console.log("1111111111111");
-					    				$("#role-table-auth-treeId-"+value).attr("checked",false);
-					    				var list =$('#role-table-auth').treegrid("getChildren",partentId);
-					    				for(var obj in list){
-//					    					console.log(list[obj].checked);
-					    					if(list[obj].checked=="true"){
-					    						console.log(list[obj].checked);
-					    						$("#role-table-auth-treeId-"+partentId).prop("checked",true);
-					    						break;
-					    					}else{
-					    						console.log(list[obj].checked);
-					    						$("#role-table-auth-treeId-"+partentId).prop("checked",false);
-					    					}
-					    				}
-					    			}else{
-					    				console.log("22222");
-					    				$("#role-table-auth-treeId-"+value).attr("checked",true);
-					    				$("#role-table-auth-treeId-"+partentId).prop("checked",true);
-					    			}
-					    		}
-					    		
-					    	})
-					    }
-					});
+			    	$('#roleTreeAuth').tree({
+			    		url:'../role/listAuth.jhtml?id='+_edit_row.id,  
+			    		cache:false,
+			    	    animate:true,
+			    	    lines:true
+			    	});
 			    },
 				buttons:[{
 			    	text:message("yly.common.save"),
 			    	iconCls:'icon-save',
 					handler:function(){
-						//console.log($('input:checkbox[name=auth_id]:checked'));
+							//console.log($('input:checkbox[name=auth_id]:checked'));
+							var selectedList = $('#roleTreeAuth').tree('getChecked', ['checked','indeterminate']);
+							
+							var _ids = [];
+							for(var i=0; i< selectedList.length; i++){
+								_ids[i] = selectedList[i].id;
+							}
 							$.ajax({
-								url:"../role/addAuth.jhtml?id="+_edit_row.id,
+								url:"../role/addAuth.jhtml",
 								type:"post",
-								
-								data:$("input:checkbox[name=authId]:checked").serialize(),
+								traditional : true,
+								data:{
+									"id":_edit_row.id,
+									"authIds": _ids
+								},
 								beforeSend:function(){
 									$.messager.progress({
 										text:message("yly.common.saving")
@@ -109,7 +49,7 @@ var role_manager_tool = {
 									$.messager.progress('close');
 									showSuccessMsg(result.content);
 									$('#role-dialog-auth').dialog("close");
-									
+									$('#roleTreeAuth').tree("reload");
 								},
 								error:function (XMLHttpRequest, textStatus, errorThrown) {
 									$.messager.progress('close');

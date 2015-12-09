@@ -50,7 +50,7 @@
 	</form>
 </div>
 <div id="role-dialog-auth">
-	<table id="role-table-auth"></table>
+	<ul id="roleTreeAuth" class="easyui-tree" checkbox="true"></ul>  
 </div>
 
 <div id="editRole"></div> 
