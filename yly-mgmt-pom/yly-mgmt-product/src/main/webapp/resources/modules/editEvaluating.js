@@ -189,7 +189,7 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 				}
 				var dataMapString = JSON.stringify(sectionLevelList);
 				$("#sectionsResult").val(JSON.stringify(sectionLevelList));
-								
+				console.info($("#sectionsResult").val());				
 				$.ajax({
 					url:"../elderlyEvaluatingRecord/getFormLevel.jhtml",
 					type:"post",

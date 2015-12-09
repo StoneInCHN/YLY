@@ -1,7 +1,6 @@
 package com.yly.service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @param sectionScoreMap
    * @return 返回每个模块对应级别
    */
-  Map<String, Integer> getSectionLevelMap(List<EvaluatingSection> evaluatingSections,ElderlyEvaluatingRecord elderlyEvaluatingRecord, Map<String, Integer> sectionScoreMap);
+//  Map<String, Integer> getSectionLevelMap(List<EvaluatingSection> evaluatingSections,ElderlyEvaluatingRecord elderlyEvaluatingRecord, Map<String, Integer> sectionScoreMap);
   /**
    * @param evaluatingSections
    * @return 返回每个模块对应评分规则(字符串形式)

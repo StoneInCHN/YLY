@@ -786,7 +786,7 @@
 </tr>
 <tr>
 	<td colspan="2">
-${evaluatingForm.formRuleDescription}
+${evaluatingForm.evaluatingRule}
 	</td>
 </tr>
 </table>

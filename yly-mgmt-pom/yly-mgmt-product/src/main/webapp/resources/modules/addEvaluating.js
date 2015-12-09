@@ -338,86 +338,86 @@ function searchAllElderlyInfo() {
 	    			 return false;
 	    		 }
 	    		 //挨个填充赋值
-	    		 $("#id").val(rowData.id);
+	    		 $("#elderlyInfoID").val(rowData.id);
 	    		 $("#identifier_input").textbox('setValue',rowData.identifier);
-	    		 $('#identifier_input').textbox('disable');//不可编辑
+	    		 $('#identifier_input').textbox('readonly');//只读
 	    		 $("#beHospitalizedDate").datebox('setValue',new Date(rowData.beHospitalizedDate).Format("yyyy-MM-dd"));
-	    		 $('#beHospitalizedDate').datebox('disable');//不可编辑
+	    		 $('#beHospitalizedDate').datebox('readonly');//只读
 	    		 $("#name").textbox('setValue',rowData.name);
-	    		 $('#name').textbox('disable');//不可编辑
+	    		 $('#name').textbox('readonly');//只读
 	    		 $("#personnelCategoryId").textbox('setValue',rowData.personnelCategoryId);//???
-	    		 $('#personnelCategoryId').textbox('disable');//不可编辑
+	    		 $('#personnelCategoryId').textbox('readonly');//只读
 	    		 $("#gender").combobox('setValue',rowData.gender);
-	    		 $('#gender').combobox('disable');//不可编辑
+	    		 $('#gender').combobox('readonly');//只读
 	    		 $("#elderlyPhoneNumber").textbox('setValue',rowData.elderlyPhoneNumber);
-	    		 $('#elderlyPhoneNumber').textbox('disable');//不可编辑
+	    		 $('#elderlyPhoneNumber').textbox('readonly');//只读
 	    		 $("#IDCard").textbox('setValue',rowData.IDCard);
-	    		 $('#IDCard').textbox('disable');//不可编辑
+	    		 $('#IDCard').textbox('readonly');//只读
 	    		 $("#age").numberbox('setValue',rowData.age);
-	    		 $('#age').numberbox('disable');//不可编辑
+	    		 $('#age').numberbox('readonly');//只读
 	    		 $("#birthday").datebox('setValue',new Date(rowData.birthday).Format("yyyy-MM-dd"));
-	    		 $('#birthday').datebox('disable');//不可编辑
+	    		 $('#birthday').datebox('readonly');//只读
 	    		 $("#socialInsuranceNumber").textbox('setValue',rowData.socialInsuranceNumber);
-	    		 $('#socialInsuranceNumber').textbox('disable');//不可编辑
+	    		 $('#socialInsuranceNumber').textbox('readonly');//只读
 	    		 $("#placeOfOrigin").textbox('setValue',rowData.placeOfOrigin);
-	    		 $('#placeOfOrigin').textbox('disable');//不可编辑
+	    		 $('#placeOfOrigin').textbox('readonly');//只读
 	    		 $("#nation").textbox('setValue',rowData.nation);
-	    		 $('#nation').textbox('disable');//不可编辑
+	    		 $('#nation').textbox('readonly');//只读
 	    		 $("#marriageState").combobox('setValue',rowData.marriageState);
-	    		 $('#marriageState').combobox('disable');//不可编辑
+	    		 $('#marriageState').combobox('readonly');//只读
 	    		 $("#educationLevel").combobox('setValue',rowData.educationLevel);
-	    		 $('#educationLevel').combobox('disable');//不可编辑
+	    		 $('#educationLevel').combobox('readonly');//只读
 	    		 $("#politicalOutlook").combobox('setValue',rowData.politicalOutlook);
-	    		 $('#politicalOutlook').combobox('disable');//不可编辑
+	    		 $('#politicalOutlook').combobox('readonly');//只读
 	    		 $("#religion").combobox('setValue',rowData.religion);
-	    		 $('#religion').combobox('disable');//不可编辑
+	    		 $('#religion').combobox('readonly');//只读
 	    		 $("#originalCompany").textbox('setValue',rowData.originalCompany);
-	    		 $('#originalCompany').textbox('disable');//不可编辑
+	    		 $('#originalCompany').textbox('readonly');//只读
 	    		 $("#position").textbox('setValue',rowData.position);
-	    		 $('#position').textbox('disable');//不可编辑
+	    		 $('#position').textbox('readonly');//只读
 	    		 $("#registeredResidence").textbox('setValue',rowData.registeredResidence);
-	    		 $('#registeredResidence').textbox('disable');//不可编辑
+	    		 $('#registeredResidence').textbox('readonly');//只读
 	    		 $("#residentialAddress").textbox('setValue',rowData.residentialAddress);
-	    		 $('#residentialAddress').textbox('disable');//不可编辑
+	    		 $('#residentialAddress').textbox('readonly');//只读
 	    		 $("#personalHabits").textbox('setValue',rowData.personalHabits);
-	    		 $('#personalHabits').textbox('disable');//不可编辑
+	    		 $('#personalHabits').textbox('readonly');//只读
 	    		 $("#hobbies").textbox('setValue',rowData.hobbies);
-	    		 $('#hobbies').textbox('disable');//不可编辑
+	    		 $('#hobbies').textbox('readonly');//只读
 	    		 $("#honors").textbox('setValue',rowData.honors);
-	    		 $('#honors').textbox('disable');//不可编辑
+	    		 $('#honors').textbox('readonly');//只读
 	    		 $("#livingState").combobox('setValue',rowData.livingState);
-	    		 $('#livingState').combobox('disable');//不可编辑
+	    		 $('#livingState').combobox('readonly');//只读
 	    		 $("#housingInfo").combobox('setValue',rowData.housingInfo);
-	    		 $('#housingInfo').combobox('disable');//不可编辑
+	    		 $('#housingInfo').combobox('readonly');//只读
 	    		 $("#elderlyConsigner_id").val(rowData.elderlyConsigner.id);
 	    		 $("#elderlyConsigner_consignerName").textbox('setValue',rowData.elderlyConsigner.consignerName);
-	    		 $('#elderlyConsigner_consignerName').textbox('disable');//不可编辑
+	    		 $('#elderlyConsigner_consignerName').textbox('readonly');//只读
 	    		 $("#elderlyConsigner_consignerPhoneNumber").textbox('setValue',rowData.elderlyConsigner.consignerPhoneNumber);
-	    		 $('#elderlyConsigner_consignerPhoneNumber').textbox('disable');//不可编辑
+	    		 $('#elderlyConsigner_consignerPhoneNumber').textbox('readonly');//只读
 	    		 $("#elderlyConsigner_isSameCity").combobox('setValue',rowData.elderlyConsigner.isSameCity);
-	    		 $('#elderlyConsigner_isSameCity').combobox('disable');//不可编辑
+	    		 $('#elderlyConsigner_isSameCity').combobox('readonly');//只读
 	    		 $("#elderlyConsigner_consignerRelation").combobox('setValue',rowData.elderlyConsigner.consignerRelation);
-	    		 $('#elderlyConsigner_consignerRelation').combobox('disable');//不可编辑
+	    		 $('#elderlyConsigner_consignerRelation').combobox('readonly');//只读
 	    		 $("#elderlyConsigner_companyAddress").textbox('setValue',rowData.elderlyConsigner.companyAddress);
-	    		 $('#elderlyConsigner_companyAddress').textbox('disable');//不可编辑
+	    		 $('#elderlyConsigner_companyAddress').textbox('readonly');//只读
 	    		 $("#elderlyConsigner_consignerResidentialAddress").textbox('setValue',rowData.elderlyConsigner.consignerResidentialAddress);
-	    		 $('#elderlyConsigner_consignerResidentialAddress').textbox('disable');//不可编辑
+	    		 $('#elderlyConsigner_consignerResidentialAddress').textbox('readonly');//只读
 	    		 $("#monthlyIncome").numberbox('setValue',rowData.monthlyIncome);
-	    		 $('#monthlyIncome').numberbox('disable');//不可编辑
+	    		 $('#monthlyIncome').numberbox('readonly');//只读
 	    		 $("#sourceOfIncome").combobox('setValue',rowData.sourceOfIncome);
-	    		 $('#sourceOfIncome').combobox('disable');//不可编辑
+	    		 $('#sourceOfIncome').combobox('readonly');//只读
 	    		 $("#paymentWay").combobox('setValue',rowData.paymentWay);
-	    		 $('#paymentWay').combobox('disable');//不可编辑
+	    		 $('#paymentWay').combobox('readonly');//只读
 	    		 $("#medicalExpPaymentWay").combobox('setValue',rowData.medicalExpPaymentWay);
-	    		 $('#medicalExpPaymentWay').combobox('disable');//不可编辑
+	    		 $('#medicalExpPaymentWay').combobox('readonly');//只读
 	    		 $("#evaluatingResultId").combobox('setValue',rowData.evaluatingResultId);//????
-	    		 $('#evaluatingResultId').combobox('disable');//不可编辑
+	    		 $('#evaluatingResultId').combobox('readonly');//只读
 	    		 $("#evaluatingScore").numberbox('setValue',rowData.evaluatingScore);
-	    		 $('#evaluatingScore').numberbox('disable');//不可编辑
+	    		 $('#evaluatingScore').numberbox('readonly');//只读
 	    		 $("#nursingLevelId").combobox('setValue',rowData.nursingLevelId);//????
-	    		 $('#nursingLevelId').combobox('disable');//不可编辑
+	    		 $('#nursingLevelId').combobox('readonly');//只读
 	    		 $("#evaluatingReason").combobox('setValue',rowData.evaluatingReason);//???
-	    		 $('#evaluatingReason').combobox('disable');//不可编辑
+	    		 //$('#evaluatingReason').combobox('disable');//只读
 	    		 //关闭当前窗口
 	    		 $('#searchElderlyInfo').dialog("close");
 	    	 },

@@ -167,7 +167,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 </tr>
 <tr>
 	<td colspan="2">
-${elderlyEvaluatingRecord.evaluatingForm.formRuleDescription}
+${elderlyEvaluatingRecord.evaluatingForm.evaluatingRule}
 	</td>
 </tr>
 </table>

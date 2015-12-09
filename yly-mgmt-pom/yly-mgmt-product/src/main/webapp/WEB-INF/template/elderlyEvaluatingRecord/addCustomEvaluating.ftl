@@ -2,6 +2,7 @@
 
 <form id="addEvaluating_form">
 <input type="hidden" id="evaluatintFormID" name="evaluatintFormID" value="${evaluatingForm.id}" />
+<input type="hidden" id="elderlyInfoID" name="elderlyInfoID" />
 <input type="hidden"  name="customFormFlag" value="true" />
 	<ul id="progressbar">
 		<a href="javascript:void(0);" onclick="skipTo(0)"><li id="li0" class="active"> 老人信息</li></a>
@@ -13,7 +14,6 @@
 	</ul>
 	<fieldset id="fieldset0">
 	<input type="hidden" id="addAdmission_form_file_input" name="profilePhoto">
-	<input type="hidden" id="id" name="id">
 	<input type="hidden" id="elderlyConsigner_id" name="elderlyConsigner.id"/>
 	    <table class="table table-striped table-bordered">
 	    	<tr>
