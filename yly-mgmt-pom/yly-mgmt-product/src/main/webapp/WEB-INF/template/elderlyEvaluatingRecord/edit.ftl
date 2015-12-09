@@ -796,3 +796,86 @@ ${evaluatingForm.evaluatingRule}
 		</center>
 	</fieldset>
 </form>
+<script type="text/javascript">
+$().ready(function() {
+	var $addFamilyMemberEdit = $("#addFamilyMember-edit");
+	var $tableFamilyMember = $("#talbe-familyMember-edit");
+	var familyMemberIndex = $("#familyMemberIndexInitValueId").val();
+	if(familyMemberIndex == undefined){
+		familyMemberIndex=0;
+	}
+	
+	//删除编辑之前已经存在的家庭成员数据	
+	$("a.family-member-remove-edit-original").click(function() {
+	var $this = $(this);
+	$this.parent().parent().remove();
+	});
+	
+	$addFamilyMemberEdit.click(function() {
+		var trHtml = 
+		'<tr>'+
+			'<th>${message("yly.elderlyInfo.familyMember.memberName")}:</th>'+
+			'<td>'+
+				'<input class="easyui-textbox family-member-textbox-edit" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberName" validtype="length[0,15]" style="width:75px;"/>'+
+			'</td>'+
+			'<th>${message("yly.elderlyInfo.familyMember.PhoneNumber")}:</th>'+
+			'<td>'+
+				'<input class="easyui-textbox family-member-textbox-edit" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberPhoneNumber" validtype="mobile" style="width:110px;"/>'+
+			'</td>'+
+			'<th>${message("yly.elderlyInfo.familyMember.relation")}:</th>'+
+			'<td>'+
+				'<input class="easyui-combobox family-member-combobox-edit" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberRelation" style="width:100px;"/>'+
+			'</td>'+
+			'<th>${message("yly.address")}:</th>'+
+			'<td>'+
+				'<input class="easyui-textbox family-member-textbox-edit" type="text" name="elderlyFamilyMembers[' + familyMemberIndex + '].memberResidentialAddress" validtype="length[0,150]" style="width:400px;"/>'+
+			'</td>'+
+			'<td>'+
+				'<a href="javascript:;" class="family-member-remove-edit red-color"><i class="fa fa-times fa-2x"></i></a>'+
+			'</td>'+
+		'</tr>';
+	$tableFamilyMember.append(trHtml);
+	familyMemberIndex ++;
+	
+	$('.family-member-textbox-edit').textbox({    
+	})
+
+	
+	$('.family-member-combobox-edit').combobox({    
+	    valueField: 'label',
+		textField: 'value',
+	    data: [{
+				label: 'CHILDREN',
+				value: '${message("yly.common.relation.children")}'
+				},{
+					label: 'MARRIAGE_RELATIONSHIP',
+					value: '${message("yly.common.relation.marriage_relationship")}'
+				},{
+					label: 'GRANDPARENTS_AND_GRANDCHILDREN',
+					value: '${message("yly.common.relation.grandparents_and_grandchildren")}'
+				},{
+					label: 'BROTHERS_OR_SISTERS',
+					value: '${message("yly.common.relation.brothers_or_sisters")}'
+				},{
+					label: 'DAUGHTERINLAW_OR_SONINLAW',
+					value: '${message("yly.common.relation.daughterinlaw_or_soninlaw")}'
+				},{
+					label: 'FRIEND',
+					value: '${message("yly.common.relation.friend")}'
+				},{
+					label: 'OTHER',
+					value: '${message("yly.common.other")}'
+				}],
+				prompt:'${message("yly.common.please.select")}'
+	}); 
+	
+	
+	$("a.family-member-remove-edit").click(function() {
+	var $this = $(this);
+	$this.parent().parent().remove();
+	});
+	});
+	
+	
+})
+</script>

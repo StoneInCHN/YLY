@@ -481,6 +481,7 @@ public class ElderlyInfo extends BaseEntity {
   @ElementCollection
   @LazyCollection(LazyCollectionOption.FALSE)
   @CollectionTable(name = "yly_elderly_family_members")
+  @JsonProperty
   public List<ElderlyFamilyMembers> getElderlyFamilyMembers() {
     return elderlyFamilyMembers;
   }

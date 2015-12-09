@@ -315,9 +315,47 @@ function searchAllElderlyInfo() {
 	    		 $('#nursingLevelId').combobox('readonly');//只读
 	    		 $("#evaluatingReason").combobox('setValue',rowData.evaluatingReason);//???
 	    		 //$('#evaluatingReason').combobox('readonly');//只读
-	    		 //关闭当前窗口
+	    		 //填充familymember
+	    		 $('#talbe-familyMember').html('<caption><h5>家庭成员</h5></caption>');
+	    		 var familymenbersHtml="";
+	    		 var familymembers = rowData.elderlyFamilyMembers;
+	    		 if(familymembers != null && familymembers.length > 0){
+	    			 var size = parseInt(familymembers.length);
+	    			 for(var i = 0; i<size; i++){
+	    				 var familymember = familymembers[i];
+	    				 familymenbersHtml+='<tr>';
+	    				 familymenbersHtml+='<th>成员名称:</th>';
+	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberName" value="'+familymember.memberName+'" readonly=true validtype="length[0,15]" style="width:75px;"/></td>';
+	    				 familymenbersHtml+='<th>成员电话:</th>';
+	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberPhoneNumber" value="'+familymember.memberPhoneNumber+'"readonly=true  validtype="mobile" style="width:110px;"/></td>';
+	    				 familymenbersHtml+='<th>和老人关系:</th>';
+	    				 familymenbersHtml+='<td><input class="easyui-combobox" data-options=" valueField: "label", textField: "value",';
+						familymenbersHtml+='data: [{ label: "CHILDREN", value: "${message("yly.common.relation.children")}"';
+						familymenbersHtml+='},{ label: "MARRIAGE_RELATIONSHIP", value: "${message("yly.common.relation.marriage_relationship")}"';
+						familymenbersHtml+='},{ label: "GRANDPARENTS_AND_GRANDCHILDREN", value: "${message("yly.common.relation.grandparents_and_grandchildren")}"';
+						familymenbersHtml+='},{ label: "BROTHERS_OR_SISTERS", value: "${message("yly.common.relation.brothers_or_sisters")}"';
+						familymenbersHtml+='},{ label: "DAUGHTERINLAW_OR_SONINLAW", value: "${message("yly.common.relation.daughterinlaw_or_soninlaw")}"';
+						familymenbersHtml+='},{ label: "FRIEND", value: "${message("yly.common.relation.friend")}"';
+						familymenbersHtml+='},{ label: "OTHER", value: "${message("yly.common.other")}"}],';
+						familymenbersHtml+='prompt:"${message("yly.common.please.select")}"" ,value="'+familymember.memberRelation+'"  name="elderlyFamilyMembers['+i+'].memberRelation" readonly=true style="width:100px;"/></td>';
+						familymenbersHtml+='<th>地址</th>';
+						var memberResidentialAddress="";
+						if(familymember.memberResidentialAddress != null){
+							memberResidentialAddress=familymember.memberResidentialAddress;
+						}
+						familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberResidentialAddress" value="'+memberResidentialAddress+'" readonly=true validtype="length[0,150]" style="width:400px;"/></td>';
+						familymenbersHtml+='</tr>';
+	    			 }
+	    		 } 
+	    		 
+	    		 $('#talbe-familyMember').append(familymenbersHtml);
+	    		 
 	    		 //关闭当前窗口
 	    		 $('#searchElderlyInfo').dialog("close");
+	    		 
+	    		 $.parser.parse($('#talbe-familyMember'));
+	    		
+	    		 
 	    	 },
 	    	 columns:[
 	    	    [
