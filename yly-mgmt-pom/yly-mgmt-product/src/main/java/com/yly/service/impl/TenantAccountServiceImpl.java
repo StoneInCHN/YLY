@@ -3,6 +3,7 @@ package com.yly.service.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -18,7 +19,6 @@ import com.yly.entity.ConfigMeta;
 import com.yly.entity.Role;
 import com.yly.entity.TenantAccount;
 import com.yly.entity.TenantInfo;
-import com.yly.entity.VersionConfig;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.TenantAccountService;
 
@@ -197,7 +197,7 @@ public class TenantAccountServiceImpl extends BaseServiceImpl<TenantAccount, Lon
   @Transactional(readOnly = true)
   public boolean isSystemAdmin() {
     TenantAccount admin = getCurrent();
-    List<Role> roles = admin.getRoles();
+    Set<Role> roles = admin.getRoles();
     Iterator<Role> it = roles.iterator();
     while (it.hasNext()) {
       Role role = it.next();

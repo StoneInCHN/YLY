@@ -1,8 +1,8 @@
 package com.yly.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,7 +55,7 @@ public class TenantAccount extends BaseEntity {
   private String password;
   
   /** 角色 */
-  private List<Role> roles = new ArrayList<Role>();
+  private Set<Role> roles = new HashSet <Role>();
   
   /**
    * 账号状态
@@ -159,7 +159,7 @@ public class TenantAccount extends BaseEntity {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "yly_tenant_account_role")
   @JsonProperty
-  public List<Role> getRoles() {
+  public Set<Role> getRoles() {
       return roles;
   }
 
@@ -169,7 +169,7 @@ public class TenantAccount extends BaseEntity {
    * @param roles
    *            角色
    */
-  public void setRoles(List<Role> roles) {
+  public void setRoles(Set<Role> roles) {
       this.roles = roles;
   }
 
