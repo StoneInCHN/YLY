@@ -1,12 +1,18 @@
 package com.yly.controller.base;
 
+import java.io.OutputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -15,6 +21,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import com.yly.beans.DateEditor;
 import com.yly.beans.Message;
+import com.yly.entity.ElderlyEventRecord;
+import com.yly.entity.base.BaseEntity;
+import com.yly.utils.DateTimeUtils;
+import com.yly.utils.ExportExcel;
 import com.yly.utils.SpringUtils;
 
 
@@ -131,4 +141,61 @@ public class BaseController{
 			requestAttributes.setAttribute(Log.LOG_CONTENT_ATTRIBUTE_NAME, content, RequestAttributes.SCOPE_REQUEST);
 		}*/
 	}
+	/**
+	 * 导出数据到Excel
+	 * @param response 
+	 * @param baseEntityList  源集合
+	 * @param headers  需要导出的字段
+	 * @param headersName 字段对应列的列名
+	 */
+	protected void exportListToExcel(HttpServletResponse response, List<? extends BaseEntity> baseEntityList,
+	    String title, String[] headers, String[] headersName) {
+	      if (baseEntityList != null && baseEntityList.size() > 0) {
+	        if (StringUtils.isBlank(title)) {
+	          title = "YLY_DATA";
+            }
+	        if (headers != null && headersName != null && headers.length == headersName.length) {
+	          JSONArray jsonArray = new JSONArray();
+	          for (int i = 0; i < headersName.length; i++) {
+	            JSONObject jsonObject = new JSONObject();
+	            jsonObject.put("headerName", headersName[i]);
+	            jsonObject.put("header", headers[i]);
+	            jsonArray.put(jsonObject);
+              }
+	            ExportExcel ex = new ExportExcel();
+                try {  
+                   response.setContentType("octets/stream"); 
+                   //导出文件名
+                   String filename = title + "_" + DateTimeUtils.getSimpleFormatString(DateTimeUtils.filePostfixFormat, new Date());
+                   response.addHeader("Content-Disposition", "attachment;filename=" + filename +".xls"); 
+                   OutputStream out = response.getOutputStream();//获得输出流
+                   ex.exportExcel(title, jsonArray, baseEntityList, out); //导出数据
+                   out.flush();
+                   out.close();
+                } catch (Exception e) {            
+                   e.printStackTrace();
+                }
+            }
+
+	      }
+	} 
+	public class ExportTask implements Runnable{
+	  private  HttpServletResponse response;
+	  private  List<? extends BaseEntity> baseEntityList;
+	  private  String title; 
+	  private  String[] headers;
+	  private  String[] headersName;
+	
+	  public ExportTask(HttpServletResponse response, List<? extends BaseEntity> baseEntityList,
+	        String title, String[] headers, String[] headersName){
+	   this.response = response;
+	   this.baseEntityList = baseEntityList;
+	   this.title = title;
+	   this.headers = headers;
+	   this.headersName = headersName;
+	  }
+	  public void run(){
+	    exportListToExcel(response, baseEntityList, title, headers, headersName);
+	  }
+   }
 }

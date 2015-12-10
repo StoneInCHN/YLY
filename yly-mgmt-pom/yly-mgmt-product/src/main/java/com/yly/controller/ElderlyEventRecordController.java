@@ -1,12 +1,19 @@
 package com.yly.controller;
 
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +29,8 @@ import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyEventRecordService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
+import com.yly.utils.DateTimeUtils;
+import com.yly.utils.ExportExcel;
 import com.yly.utils.FieldFilterUtils;
 import com.yly.utils.ToolsUtils;
 
@@ -156,4 +165,20 @@ public class ElderlyEventRecordController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
+  /**
+   * 导出列表数据
+   * @param withDays
+   */
+  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
+  public void exportData(HttpServletResponse response) {
+      List<ElderlyEventRecord> elderlyEventRecordList = elderlyEventRecordService.findAll();
+      String title = "Elderly Event Record"; //工作簿标题，同时也是excel文件名前缀
+      String[] headers = {"elderlyInfo.name","operator","eventDate","eventContent"};  //需要导出的字段 
+      String[] headersName = {"老人姓名","记录人","事件发生时间","事件内容"}; //字段对应列的列名
+      //导出数据到Excel
+       exportListToExcel(response, elderlyEventRecordList, title, headers, headersName);  
+//      ExecutorService threadPool = Executors.newFixedThreadPool(2);
+//      ExportTask exportTask = new ExportTask(response, elderlyEventRecordList, title, headers, headersName);
+//      threadPool.execute(exportTask);
+  }   
 }

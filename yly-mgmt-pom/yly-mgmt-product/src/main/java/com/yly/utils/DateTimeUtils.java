@@ -13,7 +13,18 @@ public class DateTimeUtils implements Serializable {
   private static final SimpleDateFormat longDateFormat =
       new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-  private static final SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  public static final SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  
+  public static final SimpleDateFormat filePostfixFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+  
+  /**
+   * 格式化时间  
+   * @param date
+   * @return format string
+   */
+  public static String getSimpleFormatString(SimpleDateFormat sf, Date date){
+      return sf.format(date);
+  }
 
   // public static void main(String args[]){
   // System.out.println(getLastWeek()+"--"+getLastMonth());

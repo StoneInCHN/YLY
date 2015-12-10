@@ -102,6 +102,9 @@ var elderlyevent_manager_tool = {
 						}
 				    }]
 				});  
+			},
+			exportData:function(){
+				window.open("../elderlyEventRecord/exportData.jhtml");
 			}
 	}
 	
