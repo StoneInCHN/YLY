@@ -43,9 +43,12 @@
 				[@shiro.hasPermission name="chargeManage"]
 				<li><a href="#chargeManage"><i class="fa fa-jpy fa-1x"></i>${message("yly.charge.manage")}</a></li>
 				[/@shiro.hasPermission]
+				<!--
 				[@shiro.hasPermission name="nurseManage"]
 				<li><a href="#nurseManage"><i class="fa fa-hand-paper-o fa-1x"></i>${message("yly.nurseManage.config")}</a></li>
 				[/@shiro.hasPermission]
+				-->
+				<li><a href="#nurseManage"><i class="fa fa-hand-paper-o fa-1x"></i>${message("yly.nurseManage.config")}</a></li>
 				[@shiro.hasPermission name="volunteerMain"]
 				<li><a href="#volunteerMain"><i class="fa fa-gift fa-1x"></i>${message("yly.volunteer.config")}</a></li>
 				[/@shiro.hasPermission]
@@ -205,6 +208,7 @@
 		    		[/@shiro.hasPermission]
 		    	</ul>     
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
+		    		<li><a href="#" data-url="${base}/console/nurseDutyType/nurseDutyType.jhtml">${message("yly.nurse.nurseDutyType")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.arrange")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.schedule")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.plan")}</a></li>

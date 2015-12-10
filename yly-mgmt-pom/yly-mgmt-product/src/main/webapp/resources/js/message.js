@@ -411,7 +411,15 @@ var messages = {
 	"yly.systemConfig.configValue":"配置项值",
 	"yly.systemConfig.isEnabled":"是否启用",
 	"yly.systemConfig.add":"添数据字典",
-	"yly.systemConfig.edit":"编辑数据字典"
+	"yly.systemConfig.edit":"编辑数据字典",
+	
+	
+	//排班
+	"yly.nurseDutyType.list":"班次类型列表",
+	"yly.nurseDutyType.dutyStartTime":"开始时间",
+	"yly.nurseDutyType.dutyEndTime":"结束时间",
+	"yly.nurseDutyType.dutyName":"班次名称",
+	"yly.nurseDutyType.remark":"备注"
 };
 //多语言
 function message(code) {
