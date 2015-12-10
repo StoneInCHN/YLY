@@ -306,7 +306,7 @@ public class BillingController extends BaseController {
     checkinBill.setRemark(remark);
     ElderlyInfo elderlyInfo = checkinBill.getElderlyInfo();
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
-    checkinBill.setChargeStatus(PaymentStatus.PAID);
+    
     //账单缴费 (case1:未调整金额或修改订单; case2:缴费之前调整了金额或修改订单)
     if (checkinBill.getChargeStatus().equals(PaymentStatus.UNPAID)) {
       if (checkinBill.getDeposit() != null) {
@@ -355,6 +355,7 @@ public class BillingController extends BaseController {
       checkinBill.getPaymentRecords().add(paymentRecord);
     }
 
+    checkinBill.setChargeStatus(PaymentStatus.PAID);
     if (LogUtil.isDebugEnabled(BillingController.class)) {
       LogUtil.debug(BillingController.class, "Check In Charge", "Bill Entity=%s",
           ToolsUtils.entityToString(checkinBill));
@@ -376,6 +377,9 @@ public class BillingController extends BaseController {
     List<Map<String, Object>> systemConfigs = systemConfigService.findByConfigKey(ConfigKey.BILLDAY, null);
     if (systemConfigs!=null && systemConfigs.size()>0) {
     	 model.addAttribute("billDay",systemConfigs.get(0).get("configValue"));
+	}
+    if (record.getChargeStatus().equals(PaymentStatus.PAID)) {
+		
 	}
     String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
     model.addAttribute("bedNurseConfig",billingService.getBedNurseConfigByElderly(properties, record.getElderlyInfo()));

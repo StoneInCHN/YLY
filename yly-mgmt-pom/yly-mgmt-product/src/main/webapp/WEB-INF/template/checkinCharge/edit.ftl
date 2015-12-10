@@ -1,5 +1,6 @@
 <form id="editCheckinCharge_form" method="post"> 
 	    <input type="hidden" name="id" id="billingId" value="${billing.id}">  
+	    <input type="hidden" name="isPaid"  value="${billing.id}"> 
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}:</th>

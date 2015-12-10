@@ -122,6 +122,7 @@ var checkinCharge_manager_tool = {
 					return false;
 				}
 				
+				
 				if(_edit_row[0].chargeStatus == "PAID"){
 					$.messager.confirm(message("yly.common.confirm"), message("yly.charge.billing.confirm.paid.adjust"), function(r) {
 						if(r){
