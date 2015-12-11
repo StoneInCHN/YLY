@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,10 @@ import com.yly.utils.SpringUtils;
 
 
 public class BaseController{
+  
+  @Resource(name = "threadPoolExecutor")
+  private Executor threadPoolExecutor;
+  
 	/** 错误视图 */
 	protected static final String ERROR_VIEW = "/common/error";
 
@@ -162,16 +167,27 @@ public class BaseController{
 	            jsonObject.put("header", headers[i]);
 	            jsonArray.put(jsonObject);
               }
-	            ExportExcel ex = new ExportExcel();
+	            
                 try {  
                    response.setContentType("octets/stream"); 
                    //导出文件名
                    String filename = title + "_" + DateTimeUtils.getSimpleFormatString(DateTimeUtils.filePostfixFormat, new Date());
                    response.addHeader("Content-Disposition", "attachment;filename=" + filename +".xls"); 
                    OutputStream out = response.getOutputStream();//获得输出流
+                   
+                   ExportExcel ex = new ExportExcel(title, jsonArray, baseEntityList, out);//开启一个导出数据的线程
+                   
+//                   threadPoolExecutor.execute(ex);     //加入到线程池中执行
+                   
+//                   Thread t = new Thread(ex);
+//                   t.start();
+//                   t.join();
+                   
                    ex.exportExcel(title, jsonArray, baseEntityList, out); //导出数据
+                   
                    out.flush();
                    out.close();
+                   
                 } catch (Exception e) {            
                    e.printStackTrace();
                 }
@@ -179,23 +195,5 @@ public class BaseController{
 
 	      }
 	} 
-	public class ExportTask implements Runnable{
-	  private  HttpServletResponse response;
-	  private  List<? extends BaseEntity> baseEntityList;
-	  private  String title; 
-	  private  String[] headers;
-	  private  String[] headersName;
 	
-	  public ExportTask(HttpServletResponse response, List<? extends BaseEntity> baseEntityList,
-	        String title, String[] headers, String[] headersName){
-	   this.response = response;
-	   this.baseEntityList = baseEntityList;
-	   this.title = title;
-	   this.headers = headers;
-	   this.headersName = headersName;
-	  }
-	  public void run(){
-	    exportListToExcel(response, baseEntityList, title, headers, headersName);
-	  }
-   }
 }

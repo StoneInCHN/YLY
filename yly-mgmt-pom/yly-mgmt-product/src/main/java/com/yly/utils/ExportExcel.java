@@ -3,6 +3,8 @@ package com.yly.utils;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +19,19 @@ import com.yly.entity.base.BaseEntity;
  * 导出excel
  * @author luzhang
  */
-public class ExportExcel {
-
+public class ExportExcel implements Runnable {
+    
+    private String title;
+    private JSONArray jsonArray;
+    private Collection<? extends BaseEntity> baseEntityList;
+    private OutputStream out;
+    public ExportExcel(String title, JSONArray jsonArray,
+      Collection<? extends BaseEntity> baseEntityList, OutputStream out){
+    this.title = title;
+    this.jsonArray = jsonArray;
+    this.baseEntityList = baseEntityList;
+    this.out = out;
+  }
    public void exportExcel(Collection<? extends BaseEntity> dataset, OutputStream out) {
       exportExcel("YLY_DATA", null, dataset, out, "yyyy-MM-dd");
    }
@@ -27,8 +40,12 @@ public class ExportExcel {
          OutputStream out) {
       exportExcel(title, jsonArray, dataset, out, "yyyy-MM-dd");
    }
-  
-   @SuppressWarnings("unchecked")
+   @Override
+   public void run() {
+     exportExcel(title, jsonArray, baseEntityList, out);
+   }
+   
+   //@SuppressWarnings("unchecked")
    public void exportExcel(String title, JSONArray jsonArray,
          Collection<? extends BaseEntity> dataset, OutputStream out, String pattern) {
 
@@ -87,6 +104,7 @@ public class ExportExcel {
  
       Iterator it = dataset.iterator();
       int index = 0;
+      //boolean ready = false;
       while (it.hasNext()) {
          index++;
          row = sheet.createRow(index);
@@ -118,15 +136,22 @@ public class ExportExcel {
 
             }
          } 
+         //if (index == dataset.size()) {
+          //ready = true;
+        //}
       }
       try {
-         workbook.write(out);
-         workbook.close();
+        //if (ready) {
+          workbook.write(out);
+          workbook.close();
+        //}
+
       } catch (IOException e) {
          e.printStackTrace();
       }
  
    }
+
    /**
     * 返回某个属性或者级联属性所对应的值
     * @return
@@ -161,4 +186,5 @@ public class ExportExcel {
     }
      return textValue;
    }
+
 }

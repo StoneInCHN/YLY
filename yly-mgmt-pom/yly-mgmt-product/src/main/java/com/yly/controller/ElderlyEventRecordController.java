@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +45,7 @@ import com.yly.utils.ToolsUtils;
 @Controller("elderlyEventRecordController")
 @RequestMapping("/console/elderlyEventRecord")
 public class ElderlyEventRecordController extends BaseController {
-
+ 
   @Resource(name = "elderlyEventRecordServiceImpl")
   private ElderlyEventRecordService elderlyEventRecordService;
 
@@ -173,12 +175,10 @@ public class ElderlyEventRecordController extends BaseController {
   public void exportData(HttpServletResponse response) {
       List<ElderlyEventRecord> elderlyEventRecordList = elderlyEventRecordService.findAll();
       String title = "Elderly Event Record"; //工作簿标题，同时也是excel文件名前缀
-      String[] headers = {"elderlyInfo.name","operator","eventDate","eventContent"};  //需要导出的字段 
-      String[] headersName = {"老人姓名","记录人","事件发生时间","事件内容"}; //字段对应列的列名
+      String[] headers = {"operator","eventDate","eventContent","elderlyInfo.name"};  //需要导出的字段 
+      String[] headersName = {"记录人","事件发生时间","事件内容","老人姓名"}; //字段对应列的列名
       //导出数据到Excel
-       exportListToExcel(response, elderlyEventRecordList, title, headers, headersName);  
-//      ExecutorService threadPool = Executors.newFixedThreadPool(2);
-//      ExportTask exportTask = new ExportTask(response, elderlyEventRecordList, title, headers, headersName);
-//      threadPool.execute(exportTask);
+      exportListToExcel(response, elderlyEventRecordList, title, headers, headersName);  
+       
   }   
 }
