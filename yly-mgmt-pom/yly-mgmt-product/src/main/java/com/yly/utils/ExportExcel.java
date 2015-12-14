@@ -25,15 +25,20 @@ public class ExportExcel extends Thread {
     private JSONArray jsonArray;
     private List<Map<String, String>> eventRecordMapList;
     private OutputStream out;
-    public ExportExcel(String title, JSONArray jsonArray, List<Map<String, String>> eventRecordMapList, OutputStream out){
+    private Object locker;
+    public ExportExcel(String title, JSONArray jsonArray, List<Map<String, String>> eventRecordMapList, OutputStream out,Object locker){
         this.title = title;
         this.jsonArray = jsonArray;
         this.eventRecordMapList = eventRecordMapList;
         this.out = out;
+        this.locker = locker;
     }
    @Override
    public void run() {
      exportExcel(title, jsonArray, eventRecordMapList, out);
+     synchronized (this.locker) {
+       locker.notify();
+    }
    }
    
    public void exportExcel(String title, JSONArray jsonArray, List<Map<String, String>> eventRecordMapList, OutputStream out) {
