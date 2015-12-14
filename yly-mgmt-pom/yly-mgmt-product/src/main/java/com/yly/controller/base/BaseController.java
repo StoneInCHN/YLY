@@ -3,6 +3,7 @@ package com.yly.controller.base;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executor;
 
@@ -25,6 +26,7 @@ import com.yly.beans.Message;
 import com.yly.entity.ElderlyEventRecord;
 import com.yly.entity.base.BaseEntity;
 import com.yly.utils.DateTimeUtils;
+import com.yly.utils.ExportExcel;
 import com.yly.utils.ExportExcel;
 import com.yly.utils.SpringUtils;
 
@@ -153,21 +155,70 @@ public class BaseController{
 	 * @param headers  需要导出的字段
 	 * @param headersName 字段对应列的列名
 	 */
-	protected void exportListToExcel(HttpServletResponse response, List<? extends BaseEntity> baseEntityList,
-	    String title, String[] headers, String[] headersName) {
-	      if (baseEntityList != null && baseEntityList.size() > 0) {
-	        if (StringUtils.isBlank(title)) {
-	          title = "YLY_DATA";
+//	protected void exportListToExcel(HttpServletResponse response, List<? extends BaseEntity> baseEntityList,
+//	    String title, String[] headers, String[] headersName) {
+//	      if (baseEntityList != null && baseEntityList.size() > 0) {
+//	        if (StringUtils.isBlank(title)) {
+//	          title = "YLY_DATA";
+//            }
+//	        if (headers != null && headersName != null && headers.length == headersName.length) {
+//	          JSONArray jsonArray = new JSONArray();
+//	          for (int i = 0; i < headersName.length; i++) {
+//	            JSONObject jsonObject = new JSONObject();
+//	            jsonObject.put("headerName", headersName[i]);
+//	            jsonObject.put("header", headers[i]);
+//	            jsonArray.put(jsonObject);
+//              }
+//	            
+//                try {  
+//                   response.setContentType("octets/stream"); 
+//                   //导出文件名
+//                   String filename = title + "_" + DateTimeUtils.getSimpleFormatString(DateTimeUtils.filePostfixFormat, new Date());
+//                   response.addHeader("Content-Disposition", "attachment;filename=" + filename +".xls"); 
+//                   OutputStream out = response.getOutputStream();//获得输出流
+//                   
+//                   ExportExcel ex = new ExportExcel(title, jsonArray, baseEntityList, out);//开启一个导出数据的线程
+//                   
+////                   threadPoolExecutor.execute(ex);     //加入到线程池中执行
+////                   ex.join();
+//                   
+////                   Thread t = new Thread(ex);
+////                   t.start();
+////                   t.join();
+//                   
+//                   ex.exportExcel(title, jsonArray, baseEntityList, out); //导出数据
+//                   
+//                   out.flush();
+//                   out.close();
+//                   
+//                } catch (Exception e) {            
+//                   e.printStackTrace();
+//                }
+//            }
+//
+//	      }
+//	} 
+	   /**
+     * 导出数据到Excel
+     * @param response 
+     * @param baseEntityList  源集合
+     * @param headers  需要导出的字段
+     * @param headersName 字段对应列的列名
+     */
+    protected void exportListToExcel(HttpServletResponse response, List<Map<String, String>> eventRecordMapList,
+        String title, String[] headers, String[] headersName) {
+            if (StringUtils.isBlank(title)) {
+              title = "YLY_DATA";
             }
-	        if (headers != null && headersName != null && headers.length == headersName.length) {
-	          JSONArray jsonArray = new JSONArray();
-	          for (int i = 0; i < headersName.length; i++) {
-	            JSONObject jsonObject = new JSONObject();
-	            jsonObject.put("headerName", headersName[i]);
-	            jsonObject.put("header", headers[i]);
-	            jsonArray.put(jsonObject);
+            if (headers != null && headersName != null && headers.length == headersName.length) {
+              JSONArray jsonArray = new JSONArray();
+              for (int i = 0; i < headersName.length; i++) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("headerName", headersName[i]);
+                jsonObject.put("header", headers[i]);
+                jsonArray.put(jsonObject);
               }
-	            
+                
                 try {  
                    response.setContentType("octets/stream"); 
                    //导出文件名
@@ -175,15 +226,12 @@ public class BaseController{
                    response.addHeader("Content-Disposition", "attachment;filename=" + filename +".xls"); 
                    OutputStream out = response.getOutputStream();//获得输出流
                    
-                   ExportExcel ex = new ExportExcel(title, jsonArray, baseEntityList, out);//开启一个导出数据的线程
+                   ExportExcel ex = new ExportExcel(title, jsonArray, eventRecordMapList, out);//开启一个导出数据的线程
                    
-//                   threadPoolExecutor.execute(ex);     //加入到线程池中执行
+                   threadPoolExecutor.execute(ex);     //加入到线程池中执行
+                   ex.join();
                    
-//                   Thread t = new Thread(ex);
-//                   t.start();
-//                   t.join();
-                   
-                   ex.exportExcel(title, jsonArray, baseEntityList, out); //导出数据
+//                   ex.exportExcel(title, jsonArray, eventRecordMapList, out);
                    
                    out.flush();
                    out.close();
@@ -193,7 +241,5 @@ public class BaseController{
                 }
             }
 
-	      }
-	} 
-	
+    }
 }

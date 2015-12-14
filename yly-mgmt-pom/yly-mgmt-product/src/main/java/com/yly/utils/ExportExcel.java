@@ -16,175 +16,121 @@ import org.json.JSONObject;
 import com.yly.entity.base.BaseEntity;
 
 /**
- * 导出excel
+ * 导出数据到excel
  * @author luzhang
  */
-public class ExportExcel implements Runnable {
+public class ExportExcel extends Thread {
     
     private String title;
     private JSONArray jsonArray;
-    private Collection<? extends BaseEntity> baseEntityList;
+    private List<Map<String, String>> eventRecordMapList;
     private OutputStream out;
-    public ExportExcel(String title, JSONArray jsonArray,
-      Collection<? extends BaseEntity> baseEntityList, OutputStream out){
-    this.title = title;
-    this.jsonArray = jsonArray;
-    this.baseEntityList = baseEntityList;
-    this.out = out;
-  }
-   public void exportExcel(Collection<? extends BaseEntity> dataset, OutputStream out) {
-      exportExcel("YLY_DATA", null, dataset, out, "yyyy-MM-dd");
-   }
- 
-   public void exportExcel(String title, JSONArray jsonArray, Collection<? extends BaseEntity> dataset,
-         OutputStream out) {
-      exportExcel(title, jsonArray, dataset, out, "yyyy-MM-dd");
-   }
+    public ExportExcel(String title, JSONArray jsonArray, List<Map<String, String>> eventRecordMapList, OutputStream out){
+        this.title = title;
+        this.jsonArray = jsonArray;
+        this.eventRecordMapList = eventRecordMapList;
+        this.out = out;
+    }
    @Override
    public void run() {
-     exportExcel(title, jsonArray, baseEntityList, out);
+     exportExcel(title, jsonArray, eventRecordMapList, out);
    }
    
-   //@SuppressWarnings("unchecked")
-   public void exportExcel(String title, JSONArray jsonArray,
-         Collection<? extends BaseEntity> dataset, OutputStream out, String pattern) {
-
+   public void exportExcel(String title, JSONArray jsonArray, List<Map<String, String>> eventRecordMapList, OutputStream out) {
+      //创建一个excel工作簿
       HSSFWorkbook workbook = new HSSFWorkbook();
-
       HSSFSheet sheet = workbook.createSheet(title);
-
+      //excel列默认宽度
       sheet.setDefaultColumnWidth(20);
-
-      HSSFCellStyle style = workbook.createCellStyle();
+      
+      //第一行标题样式（白字蓝底）
+      HSSFCellStyle titleStyle = workbook.createCellStyle();
       HSSFPalette palette = workbook.getCustomPalette();  
       palette.setColorAtIndex((short) 63, (byte) (50), (byte) (126), (byte) (179));
-      style.setFillForegroundColor((short) 63);
-      style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-      style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-      style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-      style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-      style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-      style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+      titleStyle.setFillForegroundColor((short) 63);
+      titleStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+      titleStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+      titleStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+      titleStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+      titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+      titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
       HSSFFont font = workbook.createFont();
       font.setColor(HSSFColor.WHITE.index);
       font.setFontHeightInPoints((short) 12);
       font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-      style.setFont(font);
-      style.setWrapText(false);  
-            
-      HSSFCellStyle style2 = workbook.createCellStyle();      
-      style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-      style2.setFillForegroundColor(HSSFColor.WHITE.index);
-      style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-      style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-      style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-      style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-      style2.setAlignment(HSSFCellStyle.ALIGN_LEFT);
-      style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);     
+      titleStyle.setFont(font);
+      titleStyle.setWrapText(false);  
+      
+      //内容行样式   （白底黑字）
+      HSSFCellStyle contentStyle = workbook.createCellStyle();      
+      contentStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+      contentStyle.setFillForegroundColor(HSSFColor.WHITE.index);
+      contentStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+      contentStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+      contentStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+      contentStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+      contentStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+      contentStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);     
       HSSFFont font2 = workbook.createFont();
       font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
-      style2.setFont(font2);
-      style2.setWrapText(true);  
+      contentStyle.setFont(font2);
+      contentStyle.setWrapText(true);  
 
       HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
       HSSFComment comment = patriarch.createComment(new HSSFClientAnchor(0, 0, 0, 0, (short) 4, 2, (short) 6, 5));
       comment.setString(new HSSFRichTextString("数据列表"));
       comment.setAuthor("yly");
- 
+      
+      //填充标题,就是第一行啦
       HSSFRow row = sheet.createRow(0);
       row.setHeight((short)500);
-      //填充标题
       for (short i = 0; i < jsonArray.length(); i++) {
          HSSFCell cell = row.createCell(i);
-         cell.setCellStyle(style);      
+         cell.setCellStyle(titleStyle);      
          JSONObject jsonObject = jsonArray.getJSONObject(i);
          HSSFRichTextString text = new HSSFRichTextString(jsonObject.getString("headerName"));
          cell.setCellValue(text);
       }
- 
-      Iterator it = dataset.iterator();
-      int index = 0;
-      //boolean ready = false;
-      while (it.hasNext()) {
-         index++;
-         row = sheet.createRow(index);
-         row.setHeight((short)350);
-         BaseEntity t = (BaseEntity)it.next();
-         //填充内容
-         for (int i = 0; i < jsonArray.length(); i++) {
-           JSONObject jsonObject = jsonArray.getJSONObject(i);
-            HSSFCell cell = row.createCell(i);
-    		cell.setCellStyle(style2);
-            try {
-                String textValue = getTextValue(jsonObject.getString("header"), t);
-                if(textValue != null){
-                   Pattern p = Pattern.compile("^//d+(//.//d+)?$");  
-                   Matcher matcher = p.matcher(textValue);
-                   if(matcher.matches()){
-                      cell.setCellValue(Double.parseDouble(textValue));
-                   }else{             	   
-                      HSSFRichTextString richString = new HSSFRichTextString(textValue);
-                      HSSFFont font3 = workbook.createFont();
-                      font3.setColor(HSSFColor.BLACK.index);
-                      richString.applyFont(font3);
-                      cell.setCellValue(richString);
-                   }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
+      
+      //填充内容行，就是除第一行外的所有行，从第二行开始
+      for (int i = 0; i < eventRecordMapList.size(); i++) {
+        row = sheet.createRow(i+1);
+        row.setHeight((short)350);
+        Map<String, String> eventRecordMap = eventRecordMapList.get(i);
+        for (int j = 0; j < jsonArray.length(); j++) {
+          JSONObject jsonObject = jsonArray.getJSONObject(j);
+           HSSFCell cell = row.createCell(j);
+           cell.setCellStyle(contentStyle);
+           try {
+               String textValue = eventRecordMap.get(jsonObject.getString("header"));
+               if(textValue != null){
+                  Pattern p = Pattern.compile("^//d+(//.//d+)?$"); //匹配是否是数值类型
+                  Matcher matcher = p.matcher(textValue);
+                  if(matcher.matches()){
+                     cell.setCellValue(Double.parseDouble(textValue));
+                  }else{                  
+                     HSSFRichTextString richString = new HSSFRichTextString(textValue);
+                     HSSFFont font3 = workbook.createFont();
+                     font3.setColor(HSSFColor.BLACK.index);
+                     richString.applyFont(font3);
+                     cell.setCellValue(richString);
+                  }
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+           } finally {
 
-            }
-         } 
-         //if (index == dataset.size()) {
-          //ready = true;
-        //}
+           }
+        } 
+     
       }
       try {
-        //if (ready) {
-          workbook.write(out);
-          workbook.close();
-        //}
+          workbook.write(out);//将excel工作簿写入到输出流中
+          workbook.close();//关闭
 
       } catch (IOException e) {
          e.printStackTrace();
       }
  
    }
-
-   /**
-    * 返回某个属性或者级联属性所对应的值
-    * @return
-    */
-   private String getTextValue(String fieldName, BaseEntity t){
-     String textValue = "";
-     try {
-       if (!fieldName.contains(".")) {//参数fieldName为单个属性，例如operator
-         String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);//get方法，例如getOperator
-         Class tCls = t.getClass();
-         Method getMethod = tCls.getMethod(getMethodName, new Class[] {});
-         Object object = getMethod.invoke(t, new Object[] {});
-         if (object instanceof Date) {
-           Date date = (Date) object;
-           textValue = DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, date);
-         }else {
-           textValue = object.toString();
-         }
-      }else{//参数fieldName为级联属性，例如elderlyInfo.name
-        int point = fieldName.indexOf(".");//第一个点"."的位置
-        String parentFieldName = fieldName.substring(0, point);//获取到第一个点之前的部分elderlyInfo
-        String getMethodName = "get" + parentFieldName.substring(0, 1).toUpperCase() + parentFieldName.substring(1);//get方法，例如getElderlyInfo
-        Class tCls = t.getClass();
-        Method getMethod = tCls.getMethod(getMethodName, new Class[] {});
-        BaseEntity object = (BaseEntity)getMethod.invoke(t, new Object[] {});
-        t = object;
-        fieldName = fieldName.substring(point + 1);//剩下的部分name
-        textValue = getTextValue(fieldName, t);//递归调用
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-     return textValue;
-   }
-
 }
