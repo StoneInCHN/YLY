@@ -8,15 +8,18 @@
 	    	<div class="search-item">
 			   <label>${message("yly.common.elderly.name")}:</label>
 			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
+			   <input type="hidden" id="keysOfElderlyNameHidden"  name="keysOfElderlyNameHidden" >
 			</div>
 			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.event.date.from")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="hidden" id="beginDateHidden" name="beginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="hidden" id="endDateHidden" name="endDateHidden">
 			</div>
 		</form>
 		<div class="search-item">

@@ -611,6 +611,44 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
     return new Page<T> (entityList, fullTextQuery.getResultSize (), pageable);
 
   }
+  /**
+   * 关键字搜索，所有匹配的个数
+   */
+  @Override
+  public int count(Query query, Analyzer analyzer, org.apache.lucene.search.Filter filter){
+
+    int count = 0;
+    FullTextEntityManager fullTextEntityManager = Search
+        .getFullTextEntityManager (entityManager);
+    FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery (
+        query, entityClass);
+    fullTextQuery.setFirstResult (0);
+    if (filter != null)
+    {
+      fullTextQuery.setFilter(filter);
+    }
+    count = fullTextQuery.getResultSize();
+    return count;
+  }
+  /**
+   * 关键字搜索，所有匹配的List
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<T> searchList (Query query, Analyzer analyzer, org.apache.lucene.search.Filter filter){
+    List<T> entityList = new ArrayList<T> ();
+    FullTextEntityManager fullTextEntityManager = Search
+        .getFullTextEntityManager (entityManager);
+    FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery (
+        query, entityClass);
+    fullTextQuery.setFirstResult (0);
+    if (filter != null)
+    {
+      fullTextQuery.setFilter (filter);
+    }
+    entityList = fullTextQuery.getResultList ();
+    return entityList;
+  }
   
   /**
    * 从数据库初始化Index

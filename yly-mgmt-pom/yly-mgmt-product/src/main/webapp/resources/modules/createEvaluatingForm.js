@@ -517,7 +517,7 @@ function searchAllItems(id){
 //		    			 }
 //		    		 }
 //		    		 $("#itemSectionIDs").val(sectionIdStrList);
-		    		 empty();
+		    		 empty();//清空
 		    		 $("#"+id+"ID").val(rowData.id);
 		    		 $("#"+id).textbox('setValue',rowData.itemName);
 		    		 var options = rowData.evaluatingItemsOptions;

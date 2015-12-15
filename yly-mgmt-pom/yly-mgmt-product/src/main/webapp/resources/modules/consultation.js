@@ -208,7 +208,52 @@ $(function(){
 			},
 			remove:function(){
 				listRemove('consultation-table-list','../consultation/delete.jhtml');
-			}
+			},
+			exportData:function(){
+				$.ajax({
+					url:"../consultation/count.jhtml",
+					type:"post",
+					data:$("#consultation_search_form").serialize(),
+					success:function(result,response,status){
+						if(result.count != null){
+							var text = "";
+							if(result.count == 0){
+								text = "当前条件无可导出的数据。";
+								$.messager.alert(message("yly.common.notice"), text,'warning');
+							}else if(result.count <= 500){
+								text = "确定导出 "+result.count+" 条记录？";
+								$.messager.confirm(message("yly.common.confirm"), text, function(r) {
+									if(r){
+										$("#consultation_search_form").attr("action","../consultation/exportData.jhtml");
+										$("#consultation_search_form").attr("target","_blank");
+										$("#consultation_search_form").submit();
+									}
+								});
+							}else{
+								text = "导出数据超过500条数据，建议搜索查询条件以缩小查询范围，再导出。";
+								$.messager.confirm(message("yly.common.notice"), text, function(r) {
+									if (!r) {
+										text = "导出共有"+ result.count +"条数据，导出超过500条数据可能需要您耐心等待，仍需操作请确定继续。";
+										$.messager.confirm(message("yly.common.confirm"), text, function(yes) {
+											if(yes){
+												$("#consultation_search_form").attr("action","../consultation/exportData.jhtml");
+												$("#consultation_search_form").attr("target","_blank");
+												$("#consultation_search_form").submit();
+											}
+										});
+									}
+								})
+							}
+						}
+						$("#event-table-list").datagrid('reload');
+					},
+					error:function (XMLHttpRequest, textStatus, errorThrown) {
+						alert("error");
+						$.messager.progress('close');
+						alertErrorMsg();
+					}
+				});
+			}	
 	}
 	$("#consultation_search_btn").click(function(){
 //	  var _queryParams = {
@@ -222,6 +267,14 @@ $(function(){
 		var _queryParams = $("#consultation_search_form").serializeJSON();
 	  $('#consultation-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#consultation-table-list").datagrid('reload');
+	//隐藏域用于标记上次使用过的查询条件
+	  $("#visitorHidden").val($("#search-vistor").val());
+	  $("#elderlyNameHidden").val($("#search-elderlyName").val());
+	  $("#checkinIntentionHidden").val($("#search-checkinIntention").val());
+	  $("#infoChannelHidden").val($("#search-infoChannel").val());
+	  $("#returnVisitDateBeginDateHidden").val($("#returnVisitDateBeginDate").val());
+	  $("#returnVisitDateEndDateHidden").val($("#returnVisitDateEndDate").val());
+	     
 	})
 	
 	 

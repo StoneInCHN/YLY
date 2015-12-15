@@ -150,5 +150,14 @@ public interface BaseDao<T, ID extends Serializable> {
    * 重建索引
    */
   void refreshIndex();
+  
+  /**
+   * 查询实体对象数量
+   */
+  int count(Query query, Analyzer analyzer, org.apache.lucene.search.Filter filter);
+  /**
+   * 查找实体对象集合
+   */
+  List<T> searchList(Query query, Analyzer analyzer, org.apache.lucene.search.Filter filter);
    
 }

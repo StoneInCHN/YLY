@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.core.task.TaskExecutor;
@@ -28,6 +29,7 @@ import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyEventRecord;
 import com.yly.entity.ElderlyInfo;
+import com.yly.framework.filter.Filter;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyEventRecordService;
@@ -77,6 +79,7 @@ public class ElderlyEventRecordController extends BaseController {
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<ElderlyEventRecord> list(String keysOfElderlyName, Date beginDate,
       Date endDate, Pageable pageable) {
+    //返回到页面的隐藏域XXXHidden，表示已经查询出来的结果
     if (keysOfElderlyName == null && beginDate == null && endDate == null) {
       return elderlyEventRecordService.findPage(pageable, true);
     } else {
@@ -169,44 +172,46 @@ public class ElderlyEventRecordController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
-  
-//  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
-//  public void exportData(HttpServletResponse response) {
-//      List<ElderlyEventRecord> eventRecordList = elderlyEventRecordService.findAll();
-//      Long startLong = System.currentTimeMillis();
-//      if (eventRecordList != null && eventRecordList.size() > 0) {
-//        String title = "Elderly Event Record"; //工作簿标题，同时也是excel文件名前缀
-//        String[] headers = {"elderlyInfo.name","operator","eventDate","eventContent"};  //需要导出的字段 
-//        String[] headersName = {"老人姓名","记录人","事件发生时间","事件内容"}; //字段对应列的列名
-//        //导出数据到Excel
-//        //List<Map<String, String>> eventRecordMapList = prepareMap(eventRecordList);
-//        if (eventRecordList.size() > 0) {
-//          exportListToExcel(response, eventRecordList, title, headers, headersName);  
-//        }
-//      }
-//      Long endLong = System.currentTimeMillis();
-//      System.out.println("end - start = "+ (endLong - startLong));
-//  } 
   /**
-   * 导出列表数据
+   * 导出数据前，计算当前呈现给用户的有多少条数据
+   * @return
+   */
+  @RequestMapping(value = "/count", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Long> count(String keysOfElderlyNameHidden, Date beginDateHidden,
+      Date endDateHidden) {
+    Long count = null;
+    if (keysOfElderlyNameHidden == null && beginDateHidden == null && endDateHidden == null) {
+      count = elderlyEventRecordService.count();
+    }else{
+      count = new Long(elderlyEventRecordService.countByFilter(keysOfElderlyNameHidden, beginDateHidden, endDateHidden));
+    }
+    Map<String, Long> levelMap = new HashMap<String, Long>(); 
+    levelMap.put("count", count);
+    return levelMap;
+  }
+  /**
+   * 导出列表数据，即用户已经查询出来的数据
    * @param withDays
    */
   @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
-  public void exportData(HttpServletResponse response) {
-      List<ElderlyEventRecord> eventRecordList = elderlyEventRecordService.findAll();
-      Long startLong = System.currentTimeMillis();
-      if (eventRecordList != null && eventRecordList.size() > 0) {
-        String title = "Elderly Event Record"; //工作簿标题，同时也是excel文件名前缀
-        String[] headers = {"elderlyInfo.name","operator","eventDate","eventContent"};  //需要导出的字段 
-        String[] headersName = {"老人姓名","记录人","事件发生时间","事件内容"}; //字段对应列的列名
-        //导出数据到Excel
-        List<Map<String, String>> eventRecordMapList = prepareMap(eventRecordList);
-        if (eventRecordMapList.size() > 0) {
-          exportListToExcel(response, eventRecordMapList, title, headers, headersName);  
-        }
+  public void exportData(HttpServletResponse response,  String keysOfElderlyNameHidden, Date beginDateHidden,
+      Date endDateHidden) {
+    List<ElderlyEventRecord> eventRecordList = null;
+    if (keysOfElderlyNameHidden == null && beginDateHidden == null && endDateHidden == null) {
+      eventRecordList = elderlyEventRecordService.findAll();
+    } else {
+      eventRecordList = elderlyEventRecordService.searchListByFilter(keysOfElderlyNameHidden, beginDateHidden, endDateHidden);
+    }
+    if (eventRecordList != null && eventRecordList.size() > 0) {
+      String title = "Elderly Event Record"; // 工作簿标题，同时也是excel文件名前缀
+      String[] headers = {"elderlyInfo.name", "operator", "eventDate", "eventContent"}; // 需要导出的字段
+      String[] headersName = {"老人姓名", "记录人", "事件发生时间", "事件内容"}; // 字段对应列的列名
+      // 导出数据到Excel
+      List<Map<String, String>> eventRecordMapList = prepareMap(eventRecordList);
+      if (eventRecordMapList.size() > 0) {
+        exportListToExcel(response, eventRecordMapList, title, headers, headersName);
       }
-      Long endLong = System.currentTimeMillis();
-      System.out.println("end - start = "+ (endLong - startLong));
+    }
   } 
   /**
    * 准备数据，将list转化成HashMap,作为需要导出的数据
@@ -225,7 +230,6 @@ public class ElderlyEventRecordController extends BaseController {
       eventRecordMap.put("eventDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, eventRecord.getEventDate()));
       mapList.add(eventRecordMap);
     }
-    
     return mapList;
   }
 }

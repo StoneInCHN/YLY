@@ -1,6 +1,7 @@
 package com.yly.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -44,7 +45,43 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
       Date endDate, Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, beginDate, endDate);
+      return elderlyEventRecordDao.search(query, pageable, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
 
+  @Override
+  public int countByFilter(String keysOfElderlyName, Date beginDate, Date endDate) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, beginDate, endDate);
+      return elderlyEventRecordDao.count(query, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+  
+  @Override
+  public List<ElderlyEventRecord> searchListByFilter(String keysOfElderlyName, Date beginDate,
+      Date endDate) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, beginDate, endDate);
+      return elderlyEventRecordDao.searchList(query, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  
+  private BooleanQuery getQuery(IKAnalyzer analyzer, String keysOfElderlyName, Date beginDate, Date endDate) {
     try {
       BooleanQuery query = new BooleanQuery();
       if (keysOfElderlyName != null) {
@@ -59,11 +96,13 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
                 DateTimeUtils.convertDateToString(endDate, null), beginDate != null, endDate != null);
         query.add(tQuery, Occur.MUST);
       }
-
-      return elderlyEventRecordDao.search(query, pageable, analyzer, null);
+      return query;
     } catch (Exception e) {
       e.printStackTrace();
+      return null;
     }
-    return null;
+   
   }
+
+
 }

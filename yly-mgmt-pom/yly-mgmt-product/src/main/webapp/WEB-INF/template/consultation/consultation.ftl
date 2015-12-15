@@ -6,10 +6,12 @@
 	   	 	<div class="search-item">
 			    <label> ${message("yly.consultation.vistor")}:</label>
 			    <input class="easyui-textbox" type="text" id="search-vistor" name="visitor" validtype="length[0,15]" style="width:85px;"/>
+			    <input type="hidden" id="visitorHidden" name="visitorHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
 			    <input class="easyui-textbox" id="search-elderlyName" type="text" name="elderlyName" style="width:85px;"/> 
+			    <input type="hidden" id="elderlyNameHidden" name="elderlyNameHidden">
 			</div>
 			
 			
@@ -32,6 +34,7 @@
 					value: '${message("yly.consultation.checkinIntention.will_not_checkin")}'
 				}],
 				prompt:'${message("yly.common.please.select")}',panelMaxHeight:100"  id="search-checkinIntention" name="checkinIntention" style="width:130px;"/>
+				<input type="hidden" id="checkinIntentionHidden" name="checkinIntentionHidden">
 			</div>
 			
 			<div class="search-item">
@@ -56,15 +59,18 @@
 					value: '${message("yly.common.other")}'
 				}],
 				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120" id="search-infoChannel" name="infoChannel" style="width:100px;"/>
+				<input type="hidden" id="infoChannelHidden" name="infoChannelHidden">
 			</div>
 			
 			<div class="search-item">
 			    <label> ${message("yly.consultation.returnVisitDate")}:</label>
 			     <input type="text" class="Wdate" id="returnVisitDateBeginDate" name="returnVisitDateBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'returnVisitDateEndDate\')}'});" />
+			     <input type="hidden" id="returnVisitDateBeginDateHidden" name="returnVisitDateBeginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="returnVisitDateEndDate"  name="returnVisitDateEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'returnVisitDateBeginDate\')}'});"/>
+			   	<input type="hidden" id="returnVisitDateEndDateHidden" name="returnVisitDateEndDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -78,6 +84,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="consultation_manager_tool.add();">${message("yly.button.add")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="consultation_manager_tool.edit();">${message("yly.button.update")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="consultation_manager_tool.remove();">${message("yly.button.delete")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="consultation_manager_tool.exportData();">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

@@ -460,15 +460,6 @@ function searchAllElderlyInfo() {
 	    					 memberRelation="其它";
 		    			 }
 	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text"  value="'+memberRelation+'" readonly=true  style="width:110px;"/></td>';
-//	    				 familymenbersHtml+='<td><input class="easyui -combobox" data-options=" valueField: "label", textField: "value",';
-//						familymenbersHtml+='data: [{ label: "CHILDREN", value: "${message("yly.common.relation.children")}"';
-//						familymenbersHtml+='},{ label: "MARRIAGE_RELATIONSHIP", value: "${message("yly.common.relation.marriage_relationship")}"';
-//						familymenbersHtml+='},{ label: "GRANDPARENTS_AND_GRANDCHILDREN", value: "${message("yly.common.relation.grandparents_and_grandchildren")}"';
-//						familymenbersHtml+='},{ label: "BROTHERS_OR_SISTERS", value: "${message("yly.common.relation.brothers_or_sisters")}"';
-//						familymenbersHtml+='},{ label: "DAUGHTERINLAW_OR_SONINLAW", value: "${message("yly.common.relation.daughterinlaw_or_soninlaw")}"';
-//						familymenbersHtml+='},{ label: "FRIEND", value: "${message("yly.common.relation.friend")}"';
-//						familymenbersHtml+='},{ label: "OTHER", value: "${message("yly.common.other")}"}],';
-//						familymenbersHtml+='prompt:"${message("yly.common.please.select")}"" ,value="'+familymember.memberRelation+'"  readonly=true name="elderlyFamilyMembers['+i+'].memberRelation" style="width:100px;"/></td>';
 						familymenbersHtml+='<th>地址</th>';
 						var memberResidentialAddress="";
 						if(familymember.memberResidentialAddress != null){
