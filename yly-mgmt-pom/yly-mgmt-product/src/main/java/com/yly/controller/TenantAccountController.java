@@ -142,7 +142,13 @@ public class TenantAccountController extends BaseController
   @RequestMapping (value = "/edit", method = RequestMethod.GET)
   public String edit (ModelMap model, Long id)
   {
-    model.put ("tenantAccount", tenantAccountService.find (id));
+    TenantAccount tenantAccount = tenantAccountService.find (id);
+    Set<Role> roles =tenantAccount.getRoles ();
+    model.put ("tenantAccount", tenantAccount);
+    if (roles != null && roles.iterator ().hasNext ())
+    {
+      model.put ("roleInfo", roles.iterator ().next ());
+    }
     return "tenantAccount/edit";
   }
 
@@ -169,7 +175,7 @@ public class TenantAccountController extends BaseController
     Role role =roleService.find (roleID);
     Set<Role> roleSet = new HashSet<Role> ();
     roleSet.add (role);
-    if (enPassword != tenantAccount.getPassword ())
+    if (!enPassword.equals (tenantAccount.getPassword ()))
     {
       tenantAccount.setPassword (DigestUtils.md5Hex(tenantAccount.getPassword ()));
     }

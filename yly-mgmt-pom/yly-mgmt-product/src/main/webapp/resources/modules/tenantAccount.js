@@ -168,6 +168,9 @@ $(function(){
 	  $("#tenantAccount-table-list").datagrid('reload');
 	})
 	
-	 
+	$("input:text").focus(function(){
+		console.log('selected');
+		  this.select();
+	});
 	 
 })

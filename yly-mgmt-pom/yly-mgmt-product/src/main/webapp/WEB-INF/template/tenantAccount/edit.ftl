@@ -1,9 +1,9 @@
 <form id="editTenantAccount_form" method="post">   
-		<input type="hidden" name="id" value= "${tenantAccount.id}">
-		<input type="hidden" name="enPassword" value= "${tenantAccount.password}">
-		<input type="hidden" name="staffID" value= "${tenantAccount.staffID}">
-	    <input type="hidden" name="tenantUserID" id="editTenantAccountUserID" value="${tenantAccount.tenantUser.id}">
-		<input type="hidden" name="roleID" id="editTenantAccountRoleID" value="${tenantAccount.roles[0].id}">  
+		<input type="hidden" name="id" value= "${tenantAccount.id}"/>
+		<input type="hidden" name="enPassword" value= "${tenantAccount.password}"/>
+		<input type="hidden" name="staffID" value= "${tenantAccount.staffID}"/>
+	    <input type="hidden" name="tenantUserID" id="editTenantAccountUserID" value="${tenantAccount.tenantUser.id}"/>
+		<input type="hidden" name="roleID" id="editTenantAccountRoleID" value="${roleInfo.id}"/>  
 	    <table class="table table-striped"  border="0">
 	    	<tr>
 	    		<th>${message("yly.tenantAccount.staffID")}:</th>
@@ -52,7 +52,7 @@
 	    	<tr>
 	    		<th>${message("yly.tenantAccount.role")}:</th>
 	    		<td>
-	    			 <input type="text" class="easyui-textbox" name="addTenantAccountRole" value = "${tenantAccount.roles[0].name}"id= "editTenantAccountRole"  />
+	    			 <input type="text" class="easyui-textbox" name="addTenantAccountRole" value = "${roleInfo.name}" id= "editTenantAccountRole"  />
 	    		</td>
 	    		<td>
 	    			<a href="#" id="role_search_btn" class="easyui-linkbutton" onclick="searchRoles('editTenantAccountRole')" iconCls="icon-search" plain=true"></a>
