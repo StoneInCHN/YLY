@@ -228,7 +228,7 @@ $(function(){
 								})
 							}
 						}
-						$("#event-table-list").datagrid('reload');
+						$("#visitElderly-table-list").datagrid('reload');
 					},
 					error:function (XMLHttpRequest, textStatus, errorThrown) {
 						alert("error");

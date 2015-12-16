@@ -178,8 +178,6 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   }
   /**
    * 根据查询条件中的 开始时间和结束时间，返回对回访时间的过滤 
-   * @param returnVisitDateBeginDate
-   * @param returnVisitDateEndDate
    * @return
    */
   private Filter getFilter(ConsultationRecordSearchRequest consultationSearch){
@@ -205,8 +203,6 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   }
   /**
    * 根据查询条件中的 咨询人，老人姓名，入住意向，信息来源，返回带条件的查询Query
-   * @param analyzer
-   * @param consultationRecord
    * @return
    */
   private BooleanQuery getQuery(IKAnalyzer analyzer, ConsultationRecordSearchRequest consultationSearch) {

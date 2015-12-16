@@ -245,7 +245,7 @@ $(function(){
 								})
 							}
 						}
-						$("#event-table-list").datagrid('reload');
+						$("#consultation-table-list").datagrid('reload');
 					},
 					error:function (XMLHttpRequest, textStatus, errorThrown) {
 						alert("error");
