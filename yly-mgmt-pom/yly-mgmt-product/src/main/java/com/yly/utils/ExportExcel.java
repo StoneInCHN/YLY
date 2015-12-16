@@ -1,10 +1,7 @@
 package com.yly.utils;
 
 import java.io.*;
-import java.lang.reflect.*;
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,8 +9,6 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.yly.entity.base.BaseEntity;
 
 /**
  * 导出数据到excel
@@ -35,9 +30,9 @@ public class ExportExcel extends Thread {
     }
    @Override
    public void run() {
-     exportExcel(title, jsonArray, eventRecordMapList, out);
+     exportExcel(title, jsonArray, eventRecordMapList, out);//导出excel
      synchronized (this.locker) {
-       locker.notify();
+       locker.notify();//导出excel完毕，notify主线程的对象锁
     }
    }
    

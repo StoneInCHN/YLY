@@ -138,7 +138,9 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     }
     return search(query, pageable, analyzer, returnVisitDateFilter);
   }
-
+  /**
+   * 根据搜索条件，返回查询结果个数
+   */
   @Override
   public int countByFilter(ConsultationRecordSearchRequest consultationSearch) {
 
@@ -156,7 +158,9 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     return 0;
   
   }
-
+  /**
+   * 根据搜索条件，返回查询结果List
+   */
   @Override
   public List<ConsultationRecord> searchListByFilter(ConsultationRecordSearchRequest consultationSearch) {
     IKAnalyzer analyzer = new IKAnalyzer();
@@ -220,6 +224,14 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
       String infoChannel = consultationSearch.getInfoChannelHidden();
       String checkinIntention = consultationSearch.getCheckinIntentionHidden();
 
+      try {
+        queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        query = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
+        booleanQuery.add(query, Occur.MUST);
+      } catch (ParseException e1) {
+        e1.printStackTrace();
+      }
+      
       if (visitor != null) {
         try {
           queryParser = new QueryParser(Version.LUCENE_35, "visitor", analyzer);
@@ -271,7 +283,7 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   
   /**
    * 准备数据，将list转化成HashMap,作为需要导出的数据
-   * @param eventRecordList
+   * @param consultationList
    * @return
    */
   @Override

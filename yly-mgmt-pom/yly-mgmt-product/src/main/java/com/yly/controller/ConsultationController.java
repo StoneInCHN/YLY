@@ -1,6 +1,5 @@
 package com.yly.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,17 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ConsultationRecord;
-import com.yly.entity.ElderlyEventRecord;
-import com.yly.entity.commonenum.CommonEnum.CheckinIntention;
-import com.yly.entity.commonenum.CommonEnum.Gender;
-import com.yly.entity.commonenum.CommonEnum.InfoChannel;
-import com.yly.entity.commonenum.CommonEnum.Relation;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.request.ConsultationRecordSearchRequest;
 import com.yly.service.ConsultationService;
 import com.yly.service.TenantAccountService;
-import com.yly.utils.DateTimeUtils;
 
 /**
  * 咨询
@@ -157,15 +150,8 @@ public class ConsultationController extends BaseController {
    */
   @RequestMapping(value = "/count", method = RequestMethod.POST)
   public @ResponseBody Map<String, Long> count(ConsultationRecordSearchRequest consultationSearch) {
-    Long count = null;
-    if(consultationSearch.getVisitorHidden() == null && consultationSearch.getElderlyNameHidden() == null
-        && consultationSearch.getCheckinIntentionHidden() == null && consultationSearch.getCheckinIntentionHidden() == null
-        && consultationSearch.getReturnVisitDateBeginDateHidden() == null
-        && consultationSearch.getReturnVisitDateEndDateHidden() == null){
-      count = consultationService.count();
-    }else {
-      count = new Long(consultationService.countByFilter(consultationSearch));
-    }
+    Long count = new Long(0);
+    count = new Long(consultationService.countByFilter(consultationSearch));
     Map<String, Long> levelMap = new HashMap<String, Long>(); 
     levelMap.put("count", count);
     return levelMap;
@@ -176,15 +162,7 @@ public class ConsultationController extends BaseController {
    */
   @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
   public void exportData(HttpServletResponse response,  ConsultationRecordSearchRequest consultationSearch) {
-    List<ConsultationRecord> consultationList = null;
-    if(consultationSearch.getVisitorHidden() == null && consultationSearch.getElderlyNameHidden() == null
-        && consultationSearch.getCheckinIntentionHidden() == null && consultationSearch.getCheckinIntentionHidden() == null
-        && consultationSearch.getReturnVisitDateBeginDateHidden() == null
-        && consultationSearch.getReturnVisitDateEndDateHidden() == null){
-      consultationList = consultationService.findAll();
-    }else {
-      consultationList = consultationService.searchListByFilter(consultationSearch);
-    }
+    List<ConsultationRecord> consultationList = consultationService.searchListByFilter(consultationSearch);
     if (consultationList != null && consultationList.size() > 0) {
       String title = "Consultation Record"; // 工作簿标题，同时也是excel文件名前缀
       String[] headers = {"visitor", "phoneNumber", "elderlyName", "gender", "checkinIntention", "relation", "infoChannel", "returnVisit", "returnVisitDate"}; // 需要导出的字段
