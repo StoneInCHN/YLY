@@ -209,6 +209,34 @@ function checkinEditBill(billId){
 			}
 	    }],
 	    onLoad:function(){
+	    	update_calculChargeInAmount();
+	    	$('#update_mealPeriodStartDate').datebox({
+	    	    onSelect: function(date){
+	                var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+	    	    	$.ajax({
+	    				url:"../systemConfig/getBillEndDate.jhtml",
+	    				type:"post",
+	    				data:{currentDay:dayStr},
+	    				success:function(result){
+	    					$('#update_mealPeriodEndDate').datebox({disabled:false});
+	    					$('#update_mealPeriodEndDate').datebox('setValue',result.billDate);
+	    					//console.log(result.periodMonth+"个月"+result.periodDay+"天");
+	    					$('#update_periodMonMeal').val(result.periodMonth);
+	    					$('#update_periodDayMeal').val(result.periodDay);
+	    					
+	    					$('#update_mealType').textbox("reset");
+	    					$('#update_chargein_mealAmount').textbox("reset");
+	    					$('#update_mealTypeVal').html("");
+	    					$('#update_mealTypeVal').attr("data-value","");
+	    					$('#update_mealPerMonth').html("");
+	    					$('#update_mealPerMonth').attr("data-value","");
+	    					$('#update_mealPerDay').html("");
+	    					$('#update_mealPerDay').attr("data-value","");
+	    				}
+	    			});
+	    	    }
+	    	});
+	    	
 	    	$('#update_bedNursePeriodStartDate').datebox({
 	    	    onSelect: function(date){
 	                var dayStr = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -230,6 +258,86 @@ function checkinEditBill(billId){
 	    			});
 	    	    }
 	    	});
+	    	
+	    	
+	    	$('#update_checkin_deposit').numberbox({
+	    		onChange:function(value){
+	    			update_calculChargeInAmount();
+	    		}
+	    	});
+	    	
+	    	$('#update_chargein_bedAmount').numberbox({
+	    		onChange:function(value){
+	    			update_calculChargeInAmount();
+	    		}
+	    	});
+	    	
+	    	$('#update_chargein_nurseAmount').numberbox({
+	    		onChange:function(value){
+	    			update_calculChargeInAmount();
+	    		}
+	    	});
+	    	
+	    	$('#update_chargein_mealAmount').numberbox({
+	    		onChange:function(value){
+	    			update_calculChargeInAmount();
+	    		}
+	    	});
+	    	
+	    	$("#update_mealType").combobox({    
+			    valueField:'id',    
+			    textField:'configValue',
+			    cache: true,
+			    panelHeight:100,
+			    url:'../systemConfig/findByConfigKey.jhtml',
+			    onBeforeLoad : function(param) {
+			        param.configKey = 'MEALTYPE';// 参数
+			    },
+			    onChange:function(value){
+			    	if(value==null || value=='') return;
+			    	$.ajax({
+						url:"../mealChargeConfig/detail.jhtml",
+						type:"post",
+						data:{configId:value},
+						success:function(result,response,status){
+							$('#update_mealTypeVal').html("["+result.chargeItem.configValue+"]");
+							$('#update_mealTypeVal').attr("data-value",result.chargeItem.configValue);
+							$('#update_mealPerMonth').html(message("yly.charge.record.perMonth")+result.amountPerMonth);
+							$('#update_mealPerMonth').attr("data-value",result.amountPerMonth);
+							$('#update_mealPerDay').html(message("yly.charge.record.perDay")+result.amountPerDay);
+							$('#update_mealPerDay').attr("data-value",result.amountPerDay);
+							var mealPerMonth = $('#update_mealPerMonth').attr("data-value");
+							var mealPerDay = $('#update_mealPerDay').attr("data-value");
+							var periodMonMeal=$('#update_periodMonMeal').val();
+							var periodDayMeal=$('#update_periodDayMeal').val();
+							console.log(periodMonMeal);
+							console.log(mealPerMonth);
+							console.log(periodDayMeal);
+							console.log(mealPerDay);
+							if(periodMonMeal!="" && periodDayMeal!=""){
+								var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
+								$('#update_chargein_mealAmount').numberbox('setValue',mealAmount);
+							}
+							
+							
+						}
+					});
+			    }
+			});
+			    	
+	    	function update_calculChargeInAmount(){
+	    		var depositAmount = $('#update_checkin_deposit').numberbox('getValue');
+	    		var bedAmount = $('#update_chargein_bedAmount').numberbox('getValue');
+	    		var nurseAmount = $('#update_chargein_nurseAmount').numberbox('getValue');
+	    		var mealAmount = $('#update_chargein_mealAmount').numberbox('getValue');
+	    		//console.log(bedAmount+"-"+nurseAmount+"-"+mealAmount);
+	    		if(bedAmount == null && nurseAmount == null && mealAmount == null && deposit == null){
+	    			$('#update_chargein_totalAmount').numberbox("reset");
+	    		}else{
+	    			var totalAmount = Number(bedAmount)+Number(nurseAmount)+Number(mealAmount)+Number(depositAmount);
+	    			$('#update_chargein_totalAmount').numberbox("setValue",totalAmount);
+	    		}
+	    	}
 	    },
 	    
 	    onClose:function(){

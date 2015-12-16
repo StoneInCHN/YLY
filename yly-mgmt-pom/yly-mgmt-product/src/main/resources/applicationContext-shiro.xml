@@ -55,6 +55,7 @@
 		    	/console/tenantUser/** = perms["tenantUser"]
 		    	/console/role/** = perms["role"]
 		    	<!--数据字典 -->
+		    	/console/systemConfig/** = perms["systemConfig"]
 		    	/console/operationLog/** = perms["operationLog"]
 		    <!-- 收费设置 -->
 				/console/bedChargeConfig/** = perms["bedChargeConfig"]
