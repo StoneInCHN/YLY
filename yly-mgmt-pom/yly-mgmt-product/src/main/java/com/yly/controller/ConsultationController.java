@@ -152,9 +152,9 @@ public class ConsultationController extends BaseController {
   public @ResponseBody Map<String, Long> count(ConsultationRecordSearchRequest consultationSearch) {
     Long count = new Long(0);
     count = new Long(consultationService.countByFilter(consultationSearch));
-    Map<String, Long> levelMap = new HashMap<String, Long>(); 
-    levelMap.put("count", count);
-    return levelMap;
+    Map<String, Long> countMap = new HashMap<String, Long>(); 
+    countMap.put("count", count);
+    return countMap;
   }
   /**
    * 导出列表数据，即用户已经查询出来的数据

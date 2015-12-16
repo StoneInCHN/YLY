@@ -138,9 +138,9 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
     analyzer.setMaxWordLength(true);
     try {
       BooleanQuery query = getQuery(analyzer, bookingRegSearch);
-      Filter returnVisitDateFilter = getFilter(bookingRegSearch);
+      Filter bookingCheckInDateFilter = getFilter(bookingRegSearch);
       
-      return bookingRegistrationDao.searchList(query, analyzer, returnVisitDateFilter);
+      return bookingRegistrationDao.searchList(query, analyzer, bookingCheckInDateFilter);
       
     } catch (Exception e) {
       e.printStackTrace();
@@ -246,7 +246,6 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
 
   /**
    * 准备数据，将list转化成HashMap,作为需要导出的数据
-   * @param consultationList
    * @return
    */
   @Override

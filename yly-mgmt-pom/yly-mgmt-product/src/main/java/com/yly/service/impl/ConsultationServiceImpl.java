@@ -279,7 +279,6 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   
   /**
    * 准备数据，将list转化成HashMap,作为需要导出的数据
-   * @param consultationList
    * @return
    */
   @Override

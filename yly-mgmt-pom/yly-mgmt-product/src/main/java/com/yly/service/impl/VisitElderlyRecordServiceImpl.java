@@ -146,9 +146,9 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
     analyzer.setMaxWordLength(true);
     try {
       BooleanQuery query = getQuery(analyzer, vistor, elderlyName);
-      Filter returnVisitDateFilter = getFilter(visitDateBeginDate, visitDateEndDate);
+      Filter visitDateFilter = getFilter(visitDateBeginDate, visitDateEndDate);
       
-      return visitElderlyRecordDao.searchList(query, analyzer, returnVisitDateFilter);
+      return visitElderlyRecordDao.searchList(query, analyzer, visitDateFilter);
       
     } catch (Exception e) {
       e.printStackTrace();
@@ -212,7 +212,6 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
   }
   /**
    * 准备数据，将list转化成HashMap,作为需要导出的数据
-   * @param visitElderlyRecordList
    * @return
    */
   @Override
