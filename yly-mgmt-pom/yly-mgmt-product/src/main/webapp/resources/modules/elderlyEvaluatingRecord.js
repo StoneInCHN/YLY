@@ -315,8 +315,53 @@ var elderlyEvaluating_manager_tool = {
 				    iconCls:'icon-mini-edit',
 				    href:'../elderlyEvaluatingRecord/edit.jhtml?id='+_edit_row.id
 				});  
-			
-			}
+			},
+			exportData:function(){
+				$.ajax({
+					url:"../elderlyEvaluatingRecord/count.jhtml",
+					type:"post",
+					data:$("#elderlyEvaluating_search_form").serialize(),
+					success:function(result,response,status){
+						if(result.count != null){
+							var text = "";
+							if(result.count == 0){
+								text = "当前条件无可导出的数据。";
+								$.messager.alert(message("yly.common.notice"), text,'warning');
+							}else if(result.count <= 500){
+								text = "确定导出 "+result.count+" 条记录？";
+								$.messager.confirm(message("yly.common.confirm"), text, function(r) {
+									if(r){
+										$("#elderlyEvaluating_search_form").attr("action","../elderlyEvaluatingRecord/exportData.jhtml");
+										$("#elderlyEvaluating_search_form").attr("target","_blank");
+										$("#elderlyEvaluating_search_form").submit();
+									}
+
+								});
+							}else{
+								text = "导出数据超过500条数据，建议搜索查询条件以缩小查询范围，再导出。";
+								$.messager.confirm(message("yly.common.notice"), text, function(r) {
+									if (!r) {
+										text = "导出共有"+ result.count +"条数据，导出超过500条数据可能需要您耐心等待，仍需操作请确定继续。";
+										$.messager.confirm(message("yly.common.confirm"), text, function(yes) {
+											if(yes){
+												$("#elderlyEvaluating_search_form").attr("action","../elderlyEvaluatingRecord/exportData.jhtml");
+												$("#elderlyEvaluating_search_form").attr("target","_blank");
+												$("#elderlyEvaluating_search_form").submit();
+											}
+										});
+									}
+								})
+							}
+						}
+						$("#elderlyEvaluating-table-list").datagrid('reload');
+					},
+					error:function (XMLHttpRequest, textStatus, errorThrown) {
+						alert("error");
+						$.messager.progress('close');
+						alertErrorMsg();
+					}
+				});
+			}	
 }
 $(function(){
 	$("#elderlyEvaluating-table-list").datagrid({
@@ -353,7 +398,7 @@ $(function(){
 		      {title:"被评估老人",field:"elderlyInfoName",width:30,align:'center',formatter:function(value,row,index){
 		    	  return row.elderlyInfo.name;
 		      }},
-		      {title:"评估人操作人",field:"operator",width:30,align:'center',formatter:function(value,row,index){
+		      {title:"评估操作人",field:"operator",width:30,align:'center',formatter:function(value,row,index){
 		    	 return formatLongString(value,8);
 		      }},
 		      {title:"评估原因",field:"evaluatingReason",width:30,align:'center',formatter:function(value,row,index){
@@ -385,12 +430,12 @@ $(function(){
 						}
 			    	  return  formatLongString(value,8);
 		      }},
-		      {title:"评估表编号",field:"evaluatingFormName",width:30,align:'center',formatter:function(value,row,index){
+		      {title:"评估表名及编号",field:"evaluatingFormName",width:30,align:'center',formatter:function(value,row,index){
 		    	  var fullFormName = row.evaluatingForm.formName;//老年人能力评估(MZ/T 039-2013)
 		    	  var codeOfFormName = fullFormName.substring(fullFormName.indexOf("(")+1,fullFormName.length-1);//MZ/T 039-2013
 		    	  return codeOfFormName;
 		      }},
-		      {title:"评估基准时间",field:"createDate",width:30,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:"评估基准时间",field:"evaluatingDate",width:30,align:'center',sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}},
 		   ]
@@ -400,6 +445,10 @@ $(function(){
 		  var _queryParams = $("#elderlyEvaluating_search_form").serializeJSON();
 		  $('#elderlyEvaluating-table-list').datagrid('options').queryParams = _queryParams;  
 		  $("#elderlyEvaluating-table-list").datagrid('reload');
+		  //隐藏域用于标记上次使用过的查询条件 
+		  $("#elderlyNameHidden").val($("#elderlyName").val());
+		  $("#beginDateHidden").val($("#beginDate").val());		
+		  $("#endDateHidden").val($("#endDate").val());	
 		})
 })
 
@@ -442,18 +491,6 @@ function createForm(){
 										return;
 									}
 								}
-//								 if(i<formLevelSize-1){
-//									if(parseInt($("#formScore"+i+"From").val())<=parseInt($("#formScore"+(i+1)+"From").val())){
-//										$.messager.alert(message("yly.common.prompt"), message("评估分数输入有误,高等级分数应该大于略低等级分数!"),'warning');
-//										return;
-//									}
-//								}
-//								if(i==0){
-//									if(parseInt($("#formScore"+i+"From").val())<0){
-//										$.messager.alert(message("yly.common.prompt"), message("最低分数不能小于零!"),'warning');
-//										return;
-//									}
-//								}
 							}
 							
 							var evaluatingRuleArray=new Array();
@@ -525,7 +562,6 @@ function createForm(){
 	    	 
 	    }
 	});
-	//$("#createEvaluatingForm").dialog({ draggable: true }).closest('.ui-dialog').draggable({ containment: 'parent' });
 	
 }
 

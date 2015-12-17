@@ -1,7 +1,10 @@
 package com.yly.service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import com.yly.entity.ElderlyEvaluatingRecord;
 import com.yly.entity.EvaluatingSection;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
@@ -16,4 +19,6 @@ import com.yly.framework.service.BaseService;
 public interface EvaluatingSectionService extends BaseService<EvaluatingSection, Long> {
   Page<EvaluatingSection> searchPageByFilter(String keysOfElderlyName, Date beginDate,
       Date endDate, Pageable pageable);
+
+
 }

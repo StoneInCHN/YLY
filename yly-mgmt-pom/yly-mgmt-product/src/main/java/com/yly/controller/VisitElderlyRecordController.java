@@ -153,7 +153,6 @@ public class VisitElderlyRecordController extends BaseController {
   }
   /**
    * 导出数据前，计算当前呈现给用户的有多少条数据
-   * @return
    */
   @RequestMapping(value = "/count", method = RequestMethod.POST)
   public @ResponseBody Map<String, Long> count(String elderlyNameHidden, String vistorHidden, Date visitDateBeginDateHidden,
@@ -166,7 +165,6 @@ public class VisitElderlyRecordController extends BaseController {
   }
   /**
    * 导出列表数据，即用户已经查询出来的数据
-   * @param withDays
    */
   @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
   public void exportData(HttpServletResponse response,  String elderlyNameHidden, String vistorHidden, Date visitDateBeginDateHidden,

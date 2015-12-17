@@ -1,6 +1,7 @@
 package com.yly.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,8 +15,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -66,8 +73,26 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
    * 评估结果
    */
   private String evaluatingResult;
-  
+  /**
+   * 该评估记录所使用的评估表
+   */
   private EvaluatingForm evaluatingForm;
+  
+  /**
+   * 评估基准时间
+   */
+  private Date evaluatingDate;
+  
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
+  public Date getEvaluatingDate() {
+    return evaluatingDate;
+  }
+
+  public void setEvaluatingDate(Date evaluatingDate) {
+    this.evaluatingDate = evaluatingDate;
+  }
 
   private List<EvaluatingItemsAnswer> evaluatingItemsAnswers = new ArrayList<EvaluatingItemsAnswer>();
   
@@ -133,7 +158,8 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-
+  
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   @Index(name = "elderly_evaluating_record_tenantid")
   public Long getTenantID() {
     return tenantID;
@@ -153,6 +179,7 @@ public class ElderlyEvaluatingRecord extends BaseEntity {
   }
   @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
+  @IndexedEmbedded
   public EvaluatingForm getEvaluatingForm() {
     return evaluatingForm;
   }

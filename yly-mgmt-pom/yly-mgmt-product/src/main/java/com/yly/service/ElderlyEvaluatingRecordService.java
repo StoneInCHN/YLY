@@ -27,21 +27,7 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @return 返回每个模块对应总得分
    */
   Map<String,Integer> getSectionScoreMap(List<EvaluatingSection> evaluatingSections, ElderlyEvaluatingRecord elderlyEvaluatingRecord);
-  /**
-   * @param evaluatingSections
-   * @param sectionScoreMap
-   * @return 返回每个模块对应级别
-   */
-//  Map<String, Integer> getSectionLevelMap(List<EvaluatingSection> evaluatingSections,ElderlyEvaluatingRecord elderlyEvaluatingRecord, Map<String, Integer> sectionScoreMap);
-  /**
-   * @param evaluatingSections
-   * @return 返回每个模块对应评分规则(字符串形式)
-   */
-  //Map<String,String> getSectionScoreRuleMap();
-  /**
-   * 返回默认评估表的评分规则
-   */
-//  String getFormScoreRule();
+
   /**
    * 返回自定义评估表的评分规则
    */
@@ -68,10 +54,11 @@ public interface ElderlyEvaluatingRecordService extends BaseService<ElderlyEvalu
    * @return 返回自定义评估表的等级
    */
   String getCustomFormLevel(String sectionsScoreJSON);
-  /**
-   * @param evaluatingScoreRequest
-   * @return 返回评估模块规则字符串
-   */
-  //String getEvaluatingRule(EvaluatingScoreRequest evaluatingScoreRequest);
-  
+
+  List<Map<String, String>> prepareMap(List<ElderlyEvaluatingRecord> evaluatingRecordList);
+
+  int countByFilter(String elderlyNameHidden, Date beginDateHidden, Date endDateHidden);
+
+  List<ElderlyEvaluatingRecord> searchListByFilter(String elderlyNameHidden, Date beginDateHidden,
+      Date endDateHidden);
 }

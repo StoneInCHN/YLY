@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
@@ -526,6 +527,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       elderlyEvaluatingRecord.setEvaluatingForm(evaluatingForm);//设置评估记录用的评估表
       //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
       elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
+      elderlyEvaluatingRecord.setEvaluatingDate(new Date());
       elderlyEvaluatingRecordService.save(elderlyEvaluatingRecord);
       /**
        * 依次保存每个项的评估选择结果
@@ -877,5 +879,33 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     
     return SUCCESS_MESSAGE;
   }
-  
+  /**
+   * 导出数据前，计算当前呈现给用户的有多少条数据
+   */
+  @RequestMapping(value = "/count", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Long> count(String elderlyNameHidden, Date beginDateHidden, Date endDateHidden) {
+    Long count = new Long(0);
+    count = new Long(elderlyEvaluatingRecordService.countByFilter(elderlyNameHidden, beginDateHidden, endDateHidden));
+    Map<String, Long> countMap = new HashMap<String, Long>(); 
+    countMap.put("count", count);
+    return countMap;
+  }
+  /**
+   * 导出列表数据，即用户已经查询出来的数据
+   */
+  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
+  public void exportData(HttpServletResponse response, String elderlyNameHidden, Date beginDateHidden, Date endDateHidden) {
+    List<ElderlyEvaluatingRecord> evaluatingRecordList = null;
+    evaluatingRecordList = elderlyEvaluatingRecordService.searchListByFilter(elderlyNameHidden, beginDateHidden, endDateHidden);
+    if (evaluatingRecordList != null && evaluatingRecordList.size() > 0) {
+      String title = "Elderly Evaluating Record"; // 工作簿标题，同时也是excel文件名前缀
+      String[] headers = {"elderlyInfo.name", "operator", "evaluatingReason", "evaluatingResult", "evaluatingForm.formName", "evaluatingDate"}; // 需要导出的字段
+      String[] headersName = {"被评估老人", "评估操作人", "评估原因", "评估结果", "评估表名及编号", "评估基准时间"}; // 字段对应列的列名
+      // 导出数据到Excel
+      List<Map<String, String>> evaluatingRecordMapList = elderlyEvaluatingRecordService.prepareMap(evaluatingRecordList);
+      if (evaluatingRecordMapList.size() > 0) {
+        exportListToExcel(response, evaluatingRecordMapList, title, headers, headersName);
+      }
+    }
+  } 
 }

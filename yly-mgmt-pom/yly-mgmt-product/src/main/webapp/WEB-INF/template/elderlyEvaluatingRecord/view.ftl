@@ -19,7 +19,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(elderlyEvaluatingRec
 </tr>
 <tr><td>A.1.5 评估日期</td>
 	<td>
-		${(elderlyEvaluatingRecord.createDate?string("yyyy年MM月dd日"))!''} 
+		${(elderlyEvaluatingRecord.evaluatingDate?string("yyyy年MM月dd日"))!''} 
 	</td>
 </tr>
 <tr><td>A.1.6 评估原因</td>
@@ -161,7 +161,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName?substring(0,elderlyEvaluatingR
 	<td>暂时不做这个等级评定</td>
 </tr>
 <tr>
-	<td colspan="2">评估员签名<u>  ${elderlyEvaluatingRecord.operator} </u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期 ${(elderlyEvaluatingRecord.createDate?string("yyyy年MM月dd日"))!''}<p/>
+	<td colspan="2">评估员签名<u>  ${elderlyEvaluatingRecord.operator} </u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期 ${(elderlyEvaluatingRecord.evaluatingDate?string("yyyy年MM月dd日"))!''}<p/>
 					信息提供者签名________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期_____年___月___日
 	</td>
 </tr>

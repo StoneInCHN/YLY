@@ -641,7 +641,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
         .getFullTextEntityManager (entityManager);
     FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery (
         query, entityClass);
-    fullTextQuery.setFirstResult (0);
+    //fullTextQuery.setFirstResult (0);
     if (filter != null)
     {
       fullTextQuery.setFilter (filter);
