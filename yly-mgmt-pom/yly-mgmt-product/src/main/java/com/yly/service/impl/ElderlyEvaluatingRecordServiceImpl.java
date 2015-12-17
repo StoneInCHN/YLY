@@ -10,10 +10,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -28,9 +26,7 @@ import com.yly.entity.EvaluatingItems;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
 import com.yly.entity.EvaluatingSection;
-import com.yly.entity.VisitElderlyRecord;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
-import com.yly.entity.commonenum.CommonEnum.Relation;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
@@ -485,9 +481,12 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   private BooleanQuery getQuery(IKAnalyzer analyzer, String elderlyNameHidden, Date beginDateHidden, Date endDateHidden) {
     BooleanQuery booleanQuery  = new BooleanQuery();
     try {
-      QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
-      Query query = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
-      booleanQuery.add(query, Occur.MUST);
+      Long tennateId = tenantAccountService.getCurrentTenantID();
+      if (tennateId != null) {
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        Query query = queryParser.parse(tennateId.toString());
+        booleanQuery.add(query, Occur.MUST);
+      }
       
       if (elderlyNameHidden != null) {
         String text = QueryParser.escape(elderlyNameHidden);
@@ -528,7 +527,12 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       }
       evaluatingRecordMap.put("evaluatingResult", evaluatingRecord.getEvaluatingResult());
       evaluatingRecordMap.put("evaluatingForm.formName", evaluatingRecord.getEvaluatingForm()!=null?evaluatingRecord.getEvaluatingForm().getFormName():"");
-      evaluatingRecordMap.put("evaluatingDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, evaluatingRecord.getEvaluatingDate()));
+      if (evaluatingRecord.getEvaluatingDate() != null) {
+        evaluatingRecordMap.put("evaluatingDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, evaluatingRecord.getEvaluatingDate()));
+      }else {
+        evaluatingRecordMap.put("evaluatingDate", "");
+      }
+      
       mapList.add(evaluatingRecordMap);
     }
     return mapList;

@@ -527,7 +527,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       elderlyEvaluatingRecord.setEvaluatingForm(evaluatingForm);//设置评估记录用的评估表
       //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
       elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
-      elderlyEvaluatingRecord.setEvaluatingDate(new Date());
+      elderlyEvaluatingRecord.setEvaluatingDate(new Date());//评估基准时间就是当前时间
       elderlyEvaluatingRecordService.save(elderlyEvaluatingRecord);
       /**
        * 依次保存每个项的评估选择结果
@@ -613,7 +613,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
     elderlyEvaluatingRecord.setEvaluatingForm(evaluatingForm);//设置评估记录用的评估表
     //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
     elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
-    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+    elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","evaluatingDate");
     /**
      * 依次更新每个项的评估选择结果
      */
@@ -638,7 +638,7 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
       //设置评估表最终结果等级        
       elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
-      elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","createDate");
+      elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord,"tenantID","evaluatingDate");
     }  
     return SUCCESS_MESSAGE;
   }

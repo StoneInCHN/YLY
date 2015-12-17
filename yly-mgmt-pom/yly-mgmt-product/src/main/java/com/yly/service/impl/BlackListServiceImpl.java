@@ -1,6 +1,10 @@
 package com.yly.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -86,5 +90,103 @@ public class BlackListServiceImpl extends BaseServiceImpl<BlackList, Long> imple
 
   public void setBlackListDao(BlackListDao blackListDao) {
     this.blackListDao = blackListDao;
+  }
+  /**
+   * 根据搜索条件，返回查询结果个数
+   */
+  @Override
+  public int countByFilter(String nameHidden, Date beginDateHidden, Date endDateHidden) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery booleanQuery = getQuery(analyzer, nameHidden, beginDateHidden, endDateHidden);
+      return blackListDao.count(booleanQuery, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+
+  /**
+   * 根据搜索条件，返回查询结果List
+   */
+  @Override
+  public List<BlackList> searchListByFilter(String nameHidden, Date beginDateHidden,
+      Date endDateHidden) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery query = getQuery(analyzer, nameHidden, beginDateHidden, endDateHidden);
+      return blackListDao.searchList(query, analyzer, null);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  /**
+   * 根据查询条件中的 老人姓名，录入开始时间和结束时间，返回带条件的查询Query
+   * @return
+   */
+  private BooleanQuery getQuery(IKAnalyzer analyzer, String nameHidden, Date beginDateHidden,
+      Date endDateHidden) {
+    BooleanQuery booleanQuery = new BooleanQuery();
+    Query query = null;
+      
+    try {
+      
+      Long tennateId = tenantAccountService.getCurrentTenantID();
+      if (tennateId != null) {
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        query = queryParser.parse(tennateId.toString());
+        booleanQuery.add(query, Occur.MUST);
+      }
+      
+      if(nameHidden!=null){
+        String text = QueryParser.escape(nameHidden);
+        QueryParser nameParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+        query = nameParser.parse(text);
+        booleanQuery.add(query, Occur.MUST);
+      }
+      if (beginDateHidden != null || endDateHidden != null) {
+        TermRangeQuery tQuery =
+            new TermRangeQuery("createDate", DateTimeUtils.convertDateToString(beginDateHidden, null),
+                DateTimeUtils.convertDateToString(endDateHidden, null), beginDateHidden != null,
+                    endDateHidden != null);
+        booleanQuery.add(tQuery, Occur.MUST);
+      }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return booleanQuery;
+      
+  }
+  /**
+   * 准备数据，将list转化成HashMap,作为需要导出的数据
+   * @return
+   */
+  @Override
+  public List<Map<String, String>> prepareMap(List<BlackList> blackListList) {
+    List<Map<String, String>> mapList = new ArrayList<Map<String,String>>();
+    for (BlackList blackList : blackListList) {
+      Map<String, String> blackListMap = new HashMap<String, String>();
+      blackListMap.put("elderlyInfo.name", blackList.getElderlyInfo()!=null?blackList.getElderlyInfo().getName():"");
+      if (blackList.getBlackDate() != null) {
+        blackListMap.put("blackDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, blackList.getBlackDate()));
+      }else {
+        blackListMap.put("blackDate","");
+      }
+      blackListMap.put("elderlyInfo.elderlyPhoneNumber", blackList.getElderlyInfo()!=null?blackList.getElderlyInfo().getElderlyPhoneNumber():"");
+      if (blackList.getElderlyInfo()!=null && blackList.getElderlyInfo().getAge()!=null) {
+        blackListMap.put("elderlyInfo.age", blackList.getElderlyInfo().getAge().toString());
+      }else {
+        blackListMap.put("elderlyInfo.age", "");
+      }
+      blackListMap.put("cause", blackList.getCause());
+      mapList.add(blackListMap);
+    }
+    return mapList;
+  
   }
 }

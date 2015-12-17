@@ -199,14 +199,17 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
       String peopleWhoBooked = bookingRegSearch.getPeopleWhoBookedHidden();
       String elderlyName = bookingRegSearch.getElderlyNameHidden();
       String searchRoomTypeValue = bookingRegSearch.getSearchRoomTypeValueHidden();
-
-      try {
-        queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
-        query = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
-        booleanQuery.add(query, Occur.MUST);
-      } catch (ParseException e1) {
-        e1.printStackTrace();
+      Long tennateId = tenantAccountService.getCurrentTenantID();
+      if (tennateId != null) {
+        try {
+          queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+          query = queryParser.parse(tennateId.toString());
+          booleanQuery.add(query, Occur.MUST);
+        } catch (ParseException e1) {
+          e1.printStackTrace();
+        }
       }
+     
       if (searchRoomTypeValue != null) {
         try {
           queryParser = new QueryParser(Version.LUCENE_35, "intentRoomType.configValue", analyzer);
@@ -257,7 +260,12 @@ public class BookingRegistrationServiceImpl extends BaseServiceImpl<BookingRegis
       bookingRegMap.put("peopleWhoBooked", bookingReg.getPeopleWhoBooked());
       bookingRegMap.put("elderlyName", bookingReg.getElderlyName());
       bookingRegMap.put("phoneNumber", bookingReg.getPhoneNumber());
-      bookingRegMap.put("bookingCheckInDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, bookingReg.getBookingCheckInDate()));
+      if (bookingReg.getBookingCheckInDate() != null) {
+        bookingRegMap.put("bookingCheckInDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, bookingReg.getBookingCheckInDate()));
+      }else {
+        bookingRegMap.put("bookingCheckInDate", "");
+      }
+      
       bookingRegMap.put("IDCard", bookingReg.getIDCard());
       bookingRegMap.put("intentRoomType", bookingReg.getIntentRoomType()!=null?bookingReg.getIntentRoomType().getConfigValue():"");
       if(bookingReg.getGender() == Gender.MALE) {

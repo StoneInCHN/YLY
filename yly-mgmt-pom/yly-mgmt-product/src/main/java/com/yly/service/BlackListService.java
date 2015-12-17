@@ -1,6 +1,8 @@
 package com.yly.service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import com.yly.entity.BlackList;
 import com.yly.framework.paging.Page;
@@ -22,4 +24,11 @@ public interface BlackListService extends BaseService<BlackList, Long>{
    * @return
    */
   public Page<BlackList> searchList(Date beginDate, Date endDate, Pageable pageable,  BlackList blackList);
+
+  public int countByFilter(String nameHidden, Date beginDateHidden, Date endDateHidden);
+
+  public List<BlackList> searchListByFilter(String nameHidden, Date beginDateHidden,
+      Date endDateHidden);
+
+  public List<Map<String, String>> prepareMap(List<BlackList> blackListList);
 }

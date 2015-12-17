@@ -1,8 +1,12 @@
 package com.yly.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -83,6 +87,7 @@ public class BlackListController extends BaseController {
     if (elderlyInfo != null && blackList != null) {
       blackList.setTenantID(tenantAccountService.getCurrentTenantID());
       blackList.setElderlyInfo(elderlyInfo);
+      blackList.setBlackDate(new Date());
       try {
         blackListService.save(blackList);
       } catch (Exception e) {
@@ -160,8 +165,37 @@ public class BlackListController extends BaseController {
   public @ResponseBody Message update(BlackList blackList, Long elderlyInfoID) {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
     blackList.setElderlyInfo(elderlyInfo);
-    blackListService.update(blackList);
+    blackListService.update(blackList,"blackDate");
     return SUCCESS_MESSAGE;
   }
+  /**
+   * 导出数据前，计算当前呈现给用户的有多少条数据
+   */
+  @RequestMapping(value = "/count", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Long> count(String nameHidden, Date beginDateHidden, Date endDateHidden) {
+    Long count = new Long(0);
+    count = new Long(blackListService.countByFilter(nameHidden, beginDateHidden, endDateHidden));
+    Map<String, Long> countMap = new HashMap<String, Long>(); 
+    countMap.put("count", count);
+    return countMap;
+  }
+  /**
+   * 导出列表数据，即用户已经查询出来的数据
+   */
+  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
+  public void exportData(HttpServletResponse response, String nameHidden, Date beginDateHidden, Date endDateHidden) {
+    List<BlackList> blackListList = null;
+    blackListList = blackListService.searchListByFilter(nameHidden, beginDateHidden, endDateHidden);
+    if (blackListList != null && blackListList.size() > 0) {
+      String title = "Black List"; // 工作簿标题，同时也是excel文件名前缀
+      String[] headers = {"elderlyInfo.name", "blackDate", "elderlyInfo.elderlyPhoneNumber", "elderlyInfo.age", "cause"}; // 需要导出的字段
+      String[] headersName = {"黑名单老人姓名", "录入时间", "电话号码", "年龄", "加入黑名单原因"}; // 字段对应列的列名
+      // 导出数据到Excel
+      List<Map<String, String>> blackListMapList = blackListService.prepareMap(blackListList);
+      if (blackListMapList.size() > 0) {
+        exportListToExcel(response, blackListMapList, title, headers, headersName);
+      }
+    }
+  } 
 
 }

@@ -277,7 +277,12 @@ public class ElderlyInfoServiceImpl extends BaseServiceImpl<ElderlyInfo, Long> i
       elderlyInfoMap.put("name", elderlyInfo.getName());
       elderlyInfoMap.put("age", elderlyInfo.getAge()!=null?elderlyInfo.getAge().toString():"");
       elderlyInfoMap.put("elderlyPhoneNumber", elderlyInfo.getElderlyPhoneNumber());
-      elderlyInfoMap.put("beHospitalizedDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, elderlyInfo.getBeHospitalizedDate()));
+      if (elderlyInfo.getBeHospitalizedDate() != null) {
+        elderlyInfoMap.put("beHospitalizedDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, elderlyInfo.getBeHospitalizedDate()));
+      }else {
+        elderlyInfoMap.put("beHospitalizedDate", "");
+      }
+      
       if(elderlyInfo.getGender() == Gender.MALE) {
         elderlyInfoMap.put("gender", "男");
       } else if(elderlyInfo.getGender() == Gender.FEMALE) {

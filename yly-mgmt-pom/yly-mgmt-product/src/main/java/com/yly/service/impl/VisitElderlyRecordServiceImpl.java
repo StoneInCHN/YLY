@@ -180,13 +180,15 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
     BooleanQuery booleanQuery = new BooleanQuery();
     QueryParser queryParser = null;
     Query query = null;
-    
-    try {
-      queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
-      query = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
-      booleanQuery.add(query, Occur.MUST);
-    } catch (ParseException e1) {
-      e1.printStackTrace();
+    Long tennateId = tenantAccountService.getCurrentTenantID();
+    if (tennateId != null) {
+      try {
+        queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        query = queryParser.parse(tennateId.toString());
+        booleanQuery.add(query, Occur.MUST);
+      } catch (ParseException e1) {
+        e1.printStackTrace();
+      }
     }
 
     if (vistor != null) {
@@ -241,8 +243,17 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
       }else if(visitElderlyRecord.getRelation() == Relation.OTHER){
         visitElderlyMap.put("relation", "其它");
       }
-      visitElderlyMap.put("visitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, visitElderlyRecord.getVisitDate()));
-      visitElderlyMap.put("dueLeaveDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, visitElderlyRecord.getDueLeaveDate()));
+      if (visitElderlyRecord.getVisitDate() != null) {
+        visitElderlyMap.put("visitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, visitElderlyRecord.getVisitDate()));
+      }else {
+        visitElderlyMap.put("visitDate", "");
+      }
+      if (visitElderlyRecord.getDueLeaveDate() != null) {
+        visitElderlyMap.put("dueLeaveDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, visitElderlyRecord.getDueLeaveDate()));
+      }else {
+        visitElderlyMap.put("dueLeaveDate", "");
+      }
+      
       visitElderlyMap.put("reasonForVisit", visitElderlyRecord.getReasonForVisit());
       visitElderlyMap.put("remark", visitElderlyRecord.getRemark());
       

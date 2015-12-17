@@ -219,13 +219,15 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
       String elderlyName = consultationSearch.getElderlyNameHidden();
       String infoChannel = consultationSearch.getInfoChannelHidden();
       String checkinIntention = consultationSearch.getCheckinIntentionHidden();
-
-      try {
-        queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
-        query = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
-        booleanQuery.add(query, Occur.MUST);
-      } catch (ParseException e1) {
-        e1.printStackTrace();
+      Long tennateId = tenantAccountService.getCurrentTenantID();
+      if (tennateId != null) {
+        try {
+          queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+          query = queryParser.parse(tennateId.toString());
+          booleanQuery.add(query, Occur.MUST);
+        } catch (ParseException e1) {
+          e1.printStackTrace();
+        }
       }
       
       if (visitor != null) {
@@ -338,7 +340,12 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
       }else{
         consultationMap.put("returnVisit", "否");
       }
-      consultationMap.put("returnVisitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, consultation.getReturnVisitDate()));
+      if (consultation.getReturnVisitDate() != null) {
+        consultationMap.put("returnVisitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, consultation.getReturnVisitDate()));
+      }else {
+        consultationMap.put("returnVisitDate", "");
+      }
+      
       mapList.add(consultationMap);
     }
     return mapList;
