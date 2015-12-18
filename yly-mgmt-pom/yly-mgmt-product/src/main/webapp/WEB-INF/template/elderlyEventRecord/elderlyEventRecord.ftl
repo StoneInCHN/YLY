@@ -8,18 +8,32 @@
 	    	<div class="search-item">
 			   <label>${message("yly.common.elderly.name")}:</label>
 			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
-			   <input type="hidden" id="keysOfElderlyNameHidden"  name="keysOfElderlyNameHidden" >
+			</div>
+			<div class="search-item">
+				<label> 事件类型:</label>
+	    		<input class="easyui-combobox" data-options="
+				valueField: 'label',
+				textField: 'value',
+				data: [{
+					label: 'NEGATIVE',
+					value: '恶劣事件'
+				},{
+					label: 'NORMAL',
+					value: '普通事件'
+				},{
+					label: 'ACTIVE',
+					value: '表扬事件'
+				}],
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120"  id="elderlyEventType" name="elderlyEventType" style="width:100px;"/>
 			</div>
 			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.event.date.from")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
-			    <input type="hidden" id="beginDateHidden" name="beginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
-			   	<input type="hidden" id="endDateHidden" name="endDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -32,7 +46,6 @@
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="elderlyevent_manager_tool.add();">${message("yly.button.add")}</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="elderlyevent_manager_tool.edit();">${message("yly.button.update")}</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="elderlyevent_manager_tool.remove();">${message("yly.button.delete")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="elderlyevent_manager_tool.exportData();">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

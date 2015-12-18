@@ -102,53 +102,7 @@ var elderlyevent_manager_tool = {
 						}
 				    }]
 				});  
-			},
-			exportData:function(){
-				$.ajax({
-					url:"../elderlyEventRecord/count.jhtml",
-					type:"post",
-					data:$("#elderlyEvent_search_form").serialize(),
-					success:function(result,response,status){
-						if(result.count != null){
-							var text = "";
-							if(result.count == 0){
-								text = "当前条件无可导出的数据。";
-								$.messager.alert(message("yly.common.notice"), text,'warning');
-							}else if(result.count <= 500){
-								text = "确定导出 "+result.count+" 条记录？";
-								$.messager.confirm(message("yly.common.confirm"), text, function(r) {
-									if(r){
-										$("#elderlyEvent_search_form").attr("action","../elderlyEventRecord/exportData.jhtml");
-										$("#elderlyEvent_search_form").attr("target","_blank");
-										$("#elderlyEvent_search_form").submit();
-									}
-
-								});
-							}else{
-								text = "导出数据超过500条数据，建议搜索查询条件以缩小查询范围，再导出。";
-								$.messager.confirm(message("yly.common.notice"), text, function(r) {
-									if (!r) {
-										text = "导出共有"+ result.count +"条数据，导出超过500条数据可能需要您耐心等待，仍需操作请确定继续。";
-										$.messager.confirm(message("yly.common.confirm"), text, function(yes) {
-											if(yes){
-												$("#elderlyEvent_search_form").attr("action","../elderlyEventRecord/exportData.jhtml");
-												$("#elderlyEvent_search_form").attr("target","_blank");
-												$("#elderlyEvent_search_form").submit();
-											}
-										});
-									}
-								})
-							}
-						}
-						$("#event-table-list").datagrid('reload');
-					},
-					error:function (XMLHttpRequest, textStatus, errorThrown) {
-						alert("error");
-						$.messager.progress('close');
-						alertErrorMsg();
-					}
-				});
-			}	
+			}
 	}
 	
 $(function(){
@@ -186,6 +140,17 @@ $(function(){
 		      {title:message("yly.elderlyInfo.common.operator"),field:"operator",width:30,align:'center',formatter:function(value,row,index){
 		    	 return formatLongString(value,8);
 		      }},
+		      {title:"事件类型",field:"elderlyEventType",width:30,align:'center',formatter:function(value,row,index){
+		    		if(value == "NEGATIVE"){
+		    	  		return  "恶劣事件";
+		    	  	}
+		    	  	if(value == "NORMAL"){
+		    	  		return  "普通事件";
+		    	  	}
+		    	  	if(value == "ACTIVE"){
+		    	  		return  "表扬事件"
+		    	  	}
+			      }},
 		      {title:message("yly.elderlyInfo.event.eventDate"),field:"eventDate",width:30,align:'center',sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}},
@@ -194,23 +159,11 @@ $(function(){
 			  }},
 		   ]
 		]
-		
-
 	});
 	$("#elderlyEvent_search_btn").click(function(){
 		  var _queryParams = $("#elderlyEvent_search_form").serializeJSON();
 		  $('#event-table-list').datagrid('options').queryParams = _queryParams;  
 		  $("#event-table-list").datagrid('reload');
-			//隐藏域用于标记上次使用过的查询条件 
-			$("#keysOfElderlyNameHidden").val($("#elderlyName").val());
-			$("#beginDateHidden").val($("#beginDate").val());
-			$("#endDateHidden").val($("#endDate").val());
+			
 		})
 })
-//function formatLongString(str,len){
-//	if(str.length > len){
-//		return '<span title="'+str+'">'+str.substring(0,len)+"..."+'<span>'
-//	}else{
-//		return str;
-//	}	
-//}

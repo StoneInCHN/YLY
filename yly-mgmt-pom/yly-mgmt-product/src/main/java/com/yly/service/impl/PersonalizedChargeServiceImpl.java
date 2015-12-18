@@ -21,7 +21,6 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.dao.PersonalizedChargeDao;
 import com.yly.entity.PersonalizedCharge;
-import com.yly.entity.WaterElectricityCharge;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.json.request.WaterElectricitySearchRequest;
 import com.yly.service.PersonalizedChargeService;

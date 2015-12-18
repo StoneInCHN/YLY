@@ -1328,4 +1328,23 @@ public class CommonEnum {
        */
       DISABLE
   }
+  /**
+   * 老人事件类型
+   * @author luzhang
+   *
+   */
+  public enum ElderlyEventType{
+    /**
+     * 恶劣事件
+     */
+    NEGATIVE,
+    /**
+     * 普通事件
+     */
+    NORMAL,
+    /**
+     * 表扬事件
+     */
+    ACTIVE
+  }
 }
