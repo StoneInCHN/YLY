@@ -106,34 +106,13 @@ public class WaterElectricityChargeRecordController extends BaseController {
     return "waterElectricityChargeRecord/details";
   }
   
-  @Resource(name = "elderlyInfoServiceImpl")
-  private ElderlyInfoService elderlyInfoService;
-  @Resource(name = "billingServiceImpl")
-  private BillingService billingService;
+
   /**
    * 导出数据前，计算当前呈现给用户的有多少条数据
    * @return
    */
   @RequestMapping(value = "/count", method = RequestMethod.POST)
   public @ResponseBody Map<String, Long> count(WaterElectricitySearchRequest waterElectricitySearch) {
-//    WaterElectricityCharge waterElectricityCharge = new WaterElectricityCharge();
-//    waterElectricityCharge.setBillingNo("1");
-//    waterElectricityCharge.setChargeStatus(PaymentStatus.PAID);
-//    ElderlyInfo elderlyInfo = elderlyInfoService.find(new Long(73));
-//    waterElectricityCharge.setElderlyInfo(elderlyInfo);
-//    waterElectricityCharge.setElectricityAmount(new BigDecimal(1.0));
-//    waterElectricityCharge.setWaterAmount(new BigDecimal(1.0));
-//    waterElectricityCharge.setElectricityCount(new BigDecimal(1.0));
-//    waterElectricityCharge.setWaterCount(new BigDecimal(1.0));
-//    waterElectricityCharge.setInvoiceNo("0");
-//    waterElectricityCharge.setOperator("小红");
-//    waterElectricityCharge.setPayTime(new Date());
-//    waterElectricityCharge.setPeriodStartDate(new Date());
-//    waterElectricityCharge.setPeriodEndDate(new Date());
-//    waterElectricityCharge.setRemark("备注");
-//    waterElectricityCharge.setTenantID(new Long(1));
-//    waterElectricityCharge.setBilling(billingService.find(new Long(1)));
-//    waterElectricityChargeService.save(waterElectricityCharge);
     Long count = new Long(0);
     count = new Long(waterElectricityChargeService.countByFilter(waterElectricitySearch));
     Map<String, Long> countMap = new HashMap<String, Long>(); 
