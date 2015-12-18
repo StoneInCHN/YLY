@@ -81,8 +81,61 @@ $(function(){
 	  var _queryParams = $("#waterElectricityChargeRecord_search_form").serializeJSON();
 	  $('#waterElectricityChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
 	  $("#waterElectricityChargeRecord_table_list").datagrid('reload');
+	  //隐藏域用于标记上次使用过的查询条件 
+	  $("#nameHidden").val($("#name").val());
+	  $("#identifierHidden").val($("#identifier").val());
+	  $("#statusHidden").val($("#status").val());
+	  $("#beginDateHidden").val($("#beginDate").val());
+	  $("#endDateHidden").val($("#endDate").val());
 	})
 	
-	 
+	 waterElectricityCharge_manager_tool = {
+		exportData:function(){
+			$.ajax({
+				url:"../waterElectricityChargeRecord/count.jhtml",
+				type:"post",
+				data:$("#waterElectricityChargeRecord_search_form").serialize(),
+				success:function(result,response,status){
+					if(result.count != null){
+						var text = "";
+						if(result.count == 0){
+							text = "当前条件无可导出的数据。";
+							$.messager.alert(message("yly.common.notice"), text,'warning');
+						}else if(result.count <= 500){
+							text = "确定导出 "+result.count+" 条记录？";
+							$.messager.confirm(message("yly.common.confirm"), text, function(r) {
+								if(r){
+									$("#waterElectricityChargeRecord_search_form").attr("action","../waterElectricityChargeRecord/exportData.jhtml");
+									$("#waterElectricityChargeRecord_search_form").attr("target","_blank");
+									$("#waterElectricityChargeRecord_search_form").submit();
+								}
+
+							});
+						}else{
+							text = "导出数据超过500条数据，建议搜索查询条件以缩小查询范围，再导出。";
+							$.messager.confirm(message("yly.common.notice"), text, function(r) {
+								if (!r) {
+									text = "导出共有"+ result.count +"条数据，导出超过500条数据可能需要您耐心等待，仍需操作请确定继续。";
+									$.messager.confirm(message("yly.common.confirm"), text, function(yes) {
+										if(yes){
+											$("#waterElectricityChargeRecord_search_form").attr("action","../waterElectricityChargeRecord/exportData.jhtml");
+											$("#waterElectricityChargeRecord_search_form").attr("target","_blank");
+											$("#waterElectricityChargeRecord_search_form").submit();
+										}
+									});
+								}
+							})
+						}
+					}
+					$("#waterElectricityChargeRecord_table_list").datagrid('reload');
+				},
+				error:function (XMLHttpRequest, textStatus, errorThrown) {
+					alert("error");
+					$.messager.progress('close');
+					alertErrorMsg();
+				}
+			});
+		}	
+	}
 	 
 })

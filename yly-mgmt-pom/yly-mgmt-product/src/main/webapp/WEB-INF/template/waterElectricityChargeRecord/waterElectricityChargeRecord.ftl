@@ -6,11 +6,13 @@
 	    <form id="waterElectricityChargeRecord_search_form" class="search-form">
 	        <div class="search-item">
 			    <label>${message("yly.charge.record.elder.name")}:</label>
-			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.elderlyName")}" name="realName"/>
+			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.elderlyName")}" id = "name" name="realName"/>
+			   	<input type="hidden" id="nameHidden" name="nameHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.charge.record.elder.identifier")}:</label>
-			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" name="identifier"/>
+			   	<input class="easyui-textbox" type="text" prompt="${message("yly.common.prompt.input.identifier")}" id="identifier" name="identifier"/>
+			   	<input type="hidden" id="identifierHidden" name="identifierHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.common.charge.status")}:</label>
@@ -25,14 +27,17 @@
 						value: 'UNPAID',
 						label: '${message("yly.common.charge.status.UNPAID")}'
 					}]" />
+					<input type="hidden" id="statusHidden" name="statusHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.charge.record.date")}:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate" placeholder="${message("yly.common.prompt.beginDate")}" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="hidden" id="beginDateHidden" name="beginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" placeholder="${message("yly.common.prompt.endDate")}" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="hidden" id="endDateHidden" name="endDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -40,7 +45,12 @@
 	    </div>
 	 </fieldset>
 </div>
-
+<div id="waterElectricityCharge_manager_tool">
+	<div class="tool-button">
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="waterElectricityCharge_manager_tool.exportData();">导出</a>
+	</div>
+	<div class="tool-filter"></div>
+</div> 
 <table id="waterElectricityChargeRecord_table_list"></table>
 <div id="waterElectricityChargeRecordDetail"></div>
 
