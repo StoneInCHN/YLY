@@ -1347,4 +1347,27 @@ public class CommonEnum {
      */
     ACTIVE
   }
+  /**
+   * 全国评估表评估结果
+   * @author luzhang
+   *
+   */
+  public enum EvaluatingResult{
+    /**
+     * 0 能力完好
+     */
+    ABILITY_GOOD,
+    /**
+     * 1 轻度失能
+     */
+    ABILITY_MILD,
+    /**
+     * 2 中度失能
+     */
+    ABILITY_MODERATE,
+    /**
+     * 3 重度失能
+     */
+    ABILITY_SEVERE
+  }
 }

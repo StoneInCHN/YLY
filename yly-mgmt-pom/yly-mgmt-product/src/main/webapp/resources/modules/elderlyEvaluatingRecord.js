@@ -384,6 +384,19 @@ $(function(){
 			    modal: true,
 			    href:'../elderlyEvaluatingRecord/view.jhtml?id='+rowData.id,
 			    buttons:[{
+					text:"打印",
+					iconCls:'icon-print',
+					handler:function(){
+					    var newWindow=window.open("评估结果详情","_blank");
+					    var docStr = $('#listEvaluating').prop('outerHTML');
+					   console.info(docStr);
+					    newWindow.document.write(docStr);
+					    newWindow.document.close();
+					    newWindow.print();
+					    newWindow.close();
+						// $('#listEvaluating').dialog("close");
+					}
+			    },{
 					text:message("yly.common.close"),
 					iconCls:'icon-cancel',
 					handler:function(){
