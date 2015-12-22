@@ -399,7 +399,7 @@ function formReset(formId,tableId){
 	$('#'+tableId).datagrid('options').queryParams = _queryParams;
 }
 
-//返回指定长度字符串截取,...作为后缀
+//返回指定长度字符串截取,超出部分不显示,以...作为后缀显示
 function formatLongString(str,len){
 	if(str != null && str!=""&& len > 0){
 		if(str.length > len){
@@ -412,6 +412,8 @@ function formatLongString(str,len){
 }
 //导出excel数据
 function exportData(control,form){
+	//建议一次导出excel数据的最大值为500
+	var maxSize = 500;
 	$.ajax({
 		url:"../"+control+"/count.jhtml",
 		type:"post",
@@ -420,10 +422,12 @@ function exportData(control,form){
 			if(result.count != null){
 				var text = "";
 				if(result.count == 0){
-					text = "当前条件无可导出的数据。";
+					//"当前条件无可导出的数据。"
+					text = message("yly.common.notice.current_condition_no_export_data");
 					$.messager.alert(message("yly.common.notice"), text,'warning');
-				}else if(result.count <= 500){
-					text = "确定导出 "+result.count+" 条记录？";
+				}else if(result.count <= maxSize){
+					//"确定导出 {0}条记录？"
+					text = message("yly.common.notice.comfirm_export_data", result.count);
 					$.messager.confirm(message("yly.common.confirm"), text, function(r) {
 						if(r){
 							$("#"+form).attr("action","../"+control+"/exportData.jhtml");
@@ -433,10 +437,12 @@ function exportData(control,form){
 
 					});
 				}else{
-					text = "导出数据超过500条数据，建议搜索查询条件以缩小查询范围，再导出。";
+					//"导出数据超过 "+maxSize+" 条数据，建议搜索查询条件以缩小查询范围，再导出。";
+					text = message("yly.common.notice.export_data_too_much_advice_use_filter", maxSize);
 					$.messager.confirm(message("yly.common.notice"), text, function(r) {
 						if (!r) {
-							text = "导出共有"+ result.count +"条数据，导出超过500条数据可能需要您耐心等待，仍需操作请确定继续。";
+							//"导出共有"+ result.count +"条数据，导出超过 "+maxSize+" 条数据可能需要您耐心等待，仍需操作请确定继续。";
+							text = message("yly.common.notice.need_wait_export_too_much_data", result.count, maxSize);
 							$.messager.confirm(message("yly.common.confirm"), text, function(yes) {
 								if(yes){
 									$("#"+form).attr("action","../"+control+"/exportData.jhtml");

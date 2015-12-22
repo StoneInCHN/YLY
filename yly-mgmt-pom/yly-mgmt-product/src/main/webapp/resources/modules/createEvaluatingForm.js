@@ -1,7 +1,7 @@
 $(function(){
 			reloadItems();//加载题库
 			$('#optionList').datagrid({
-				title:'编辑选项',
+				title:message("yly.elderly.evaluating.dialog_title.edit_option"),
 				iconCls:'icon-edit',
 				width:880,
 				height:220,
@@ -9,17 +9,17 @@ $(function(){
 				idField:'optionId',
 				columns:[[
 					{field:'optionId',title:'ID',width:40},
-					{field:'optionScore',title:'得分',width:60,align:'right',editor:'numberspinner'},
-					{field:'optionName',title:'选项名称',width:650,editor:'text'},
-					{field:'action',title:'操作',width:100,align:'center',
+					{field:'optionScore',title:message("yly.elderly.evaluating.score"),width:60,align:'right',editor:'numberspinner'},
+					{field:'optionName',title:message("yly.elderly.evaluating.option_name"),width:650,editor:'text'},
+					{field:'action',title:message("yly.common.action"),width:100,align:'center',
 						formatter:function(value,row,index){
 							if (row.editing){
-								var s = '<a href="#" onclick="saverow(this)"><span title="保存"><i class="fa fa-save fa-1x"/> 保存</span></a>&nbsp;&nbsp;';
-								var c = '<a href="#" onclick="cancelrow(this)"><span title="取消"><i class="fa fa-undo fa-1x"/> 取消</span></a>&nbsp;&nbsp;';
+								var s = '<a href="#" onclick="saverow(this)"><span title="'+message("yly.common.save")+'"><i class="fa fa-save fa-1x"/> '+message("yly.common.save")+'</span></a>&nbsp;&nbsp;';
+								var c = '<a href="#" onclick="cancelrow(this)"><span title="'+message("yly.common.cancel")+'"><i class="fa fa-undo fa-1x"/> '+message("yly.common.cancel")+'</span></a>&nbsp;&nbsp;';
 								return s+c;
 							} else {
-								var e = '<a href="#" onclick="editrow(this)"><span title="编辑"><i class="fa fa-edit fa-1x"/> 编辑</span></a>&nbsp;&nbsp; ';
-								var d = '<a href="#" onclick="deleterow(this)"<span title="删除"><i class="fa fa-remove fa-1x"/> 删除</span></a>&nbsp;&nbsp;';
+								var e = '<a href="#" onclick="editrow(this)"><span title="'+message("yly.common.edit")+'"><i class="fa fa-edit fa-1x"/> '+message("yly.common.edit")+'</span></a>&nbsp;&nbsp; ';
+								var d = '<a href="#" onclick="deleterow(this)"<span title="'+message("yly.common.remove")+'"><i class="fa fa-remove fa-1x"/> '+message("yly.common.remove")+'</span></a>&nbsp;&nbsp;';
 								return e+d;
 							}
 						}
@@ -91,9 +91,11 @@ function reloadItems(){
 								itemsHtml+='</p>';
 							}
 							itemsHtml+='</div>';	
-							itemsHtml+='<div  id="deleteitemDIV'+i+'"class="trash"><a href="javascript:;" class="btn bule-color"><i class="fa fa-trash fa-2x"/> 删除题目</a></div>';
-							itemsHtml+='<div id="additemDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="addItem('+jsonObj[i].id+')"><i class="fa fa-plus-square fa-2x"/> 添加题目</a></div>';
-							itemsHtml+='<div  id="editSectionDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="editSection('+jsonObj[i].id+')"><i class="fa fa-edit fa-2x"/>编辑模块</a></div>';
+							itemsHtml+='<div  id="deleteitemDIV'+i+'"class="trash"><a href="javascript:;" class="btn bule-color"><i class="fa fa-trash fa-2x"/> '+message("yly.elderly.evaluating.delete_item")+'</a></div>';
+							itemsHtml+='<div id="additemDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="addItem('+jsonObj[i].id+')"><i class="fa fa-plus-square fa-2x"/> '
+										+message("yly.elderly.evaluating.add_item")+'</a></div>';
+							itemsHtml+='<div  id="editSectionDIV'+i+'"><a href="javascript:;" id="additem" class="btn bule-color" onclick="editSection('+jsonObj[i].id+')"><i class="fa fa-edit fa-2x"/>'
+											+message("yly.elderly.evaluating.dialog_title.edit_section")+'</a></div>';
 							itemsHtml+='</div>';					
 						}
 						itemsHtml+='</div>';
@@ -119,7 +121,7 @@ function reloadItems(){
 							onDrop:function(e,source){
 								if($(source).attr("class").indexOf('item')!=-1){//只接单个题目的拖拽
 									$(this).removeClass('over');
-									$.messager.confirm('确认','确定删除此题目吗?',function(r){
+									$.messager.confirm(message("yly.common.confirm"),message("yly.elderly.evaluating.confirm_theItem"),function(r){
 										if (r){
 											//删除操作
 											var itemId = $(source).find('input[title=itemId]').val();
@@ -132,7 +134,7 @@ function reloadItems(){
 													},
 													success:function(result,response,status){
 														if(result.content.indexOf("异常")!=-1){
-															$.messager.alert(message("yly.common.prompt"), message("题目："+$(source).find('input[title=itemName]').val()+" 已经被其他模块使用，不能被删除！！"),'warning');
+															$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.item_cannot_delete",$(source).find('input[title=itemName]').val()) ,'warning');
 														}else{
 															reloadItems();//重新加载左边的题库
 														}
@@ -176,7 +178,8 @@ function reloadItems(){
 									$("#deleteitemDIV"+indexId).addClass('hiddenAddItem');
 									$("#editSectionDIV"+indexId).addClass('hiddenAddItem');
 									
-									var appendElement='<div><hr><table style="background:#fff;width:95%;"><tr><td colspan="4" style="font-size:130%"><strong>评估模块：<a href="#" >'+sectionName+'</a></strong></td>'+
+									var appendElement='<div><hr><table style="background:#fff;width:95%;"><tr><td colspan="4" style="font-size:130%"><strong>'+message("yly.elderly.evaluating.evaluating_section")
+													+'：<a href="#" >'+sectionName+'</a></strong></td>'+
 												'<td style="width:20px"><a href="javascript:void(0);" onclick="removeSection(this,'+indexId+')"><i class="fa fa-times fa-1x"></i></a><p/><p/></td>';
 									var sectionId= $(source).find('input[title=sectionId]').val();
 									appendElement+='<input type="hidden" name="sectionId"  value="'+sectionId+'"/>';
@@ -201,7 +204,7 @@ function reloadItems(){
 									 appendElement+='</div>';
 									$(this).append(appendElement);
 								}else{
-									$.messager.alert(message("yly.common.prompt"), message(sectionName+" 模块已经添加,不能重复添加!"),'warning');
+									$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.section_existing", sectionName),'warning');
 								}
 								}
 								}
@@ -225,7 +228,7 @@ function removeSection(obj,indexId){
 //添加模块
 function addSection(){
 	$('#addEvaluatingSection').dialog({    
-	    title: "自定义模块",    
+	    title: message("yly.elderly.evaluating.dialog_customSection"),    
 	    width: 600,    
 	    height: 300,
 	    iconCls:'icon-mini-add',
@@ -257,7 +260,7 @@ function addSection(){
 									}
 								});
 						}else{
-							$.messager.alert(message("yly.common.prompt"), message("还有未填字段!"),'warning');
+							$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.missing_info"),'warning');
 						}
 					}
 				},
@@ -278,7 +281,7 @@ function addSection(){
 //编辑模块
 function editSection(evaluatingSectionId){
 		var _dialog = $('#editEvaluatingSection').dialog({    
-		    title: "编辑模块",    
+		    title: message("yly.elderly.evaluating.dialog_title.edit_section"),    
 		    width: 600,    
 		    height: 300, 
 		    modal: true,
@@ -325,7 +328,7 @@ function editSection(evaluatingSectionId){
 //添加题目
 function addItem(evaluatingSectionId){
 	$('#addEvaluatingItem').dialog({    
-	    title: "自定义题目",    
+	    title: message("yly.elderly.evaluating.dialog_customItem"),    
 	    width: 900,    
 	    height: 400,
 	    iconCls:'icon-mini-add',
@@ -345,7 +348,7 @@ function addItem(evaluatingSectionId){
 									type:"get",
 									success:function(result,response,status){
 										if(result.sectionContainItem+""=="true"){											
-											 $.messager.alert(message("yly.common.prompt"), message("未分配的模块已经包含此题目，请另外添加其他题目!"),'warning');
+											 $.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.section_contain_theItem"),'warning');
 										}else{
 											$('#hiddenDiv').append('<input type="hidden"  name="evaluatingSectionId" value="'+evaluatingSectionId+'"/>');
 											var rows =  $('#optionList').datagrid('getRows');//获取表格中所有行
@@ -385,7 +388,7 @@ function addItem(evaluatingSectionId){
 									}
 								});		
 						}else{
-							$.messager.alert(message("yly.common.prompt"), message("还有未填字段!"),'warning');
+							$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.missing_info"),'warning');
 						}
 					}
 				},
@@ -439,7 +442,7 @@ function editrow(target){
 	$('#optionList').datagrid('beginEdit', getRowIndex(target));
 }
 function deleterow(target){
-	$.messager.confirm('确认','确定删除此选项吗?',function(r){
+	$.messager.confirm(message("yly.common.confirm"),message("yly.elderly.evaluating.confirm_theOption"),function(r){
 		if (r){
 			$('#optionList').datagrid('deleteRow', getRowIndex(target));
 		}
@@ -486,7 +489,7 @@ function searchItemsByKeys(){
  */
 function searchAllItems(id){
 	$('#searchAllItems').dialog({
-	    title: "选择已有题目",    
+	    title: message("yly.elderly.evaluating.dialog_choose_existing_item"),    
 	    width: 600,
 	    height: 450,
 	    modal:true,
@@ -501,7 +504,7 @@ function searchAllItems(id){
 	    }],
 	    onLoad:function(){
 	    	$("#searchAllItems-table-list").datagrid({
-	    		title:'题库查询',
+	    		title:message("yly.elderly.evaluating.items_base_search"),
 		    	 fitColumns:true,
 		    	 url:'../elderlyEvaluatingRecord/getAllItems.jhtml',  
 		    	 pagination:true,
@@ -537,7 +540,7 @@ function searchAllItems(id){
 		    	 columns:[
 		  	    	    [
 		  	    	        {field:'ck',checkbox:true,width:8,align:'center'},
-		  	    	        {title:'题目名称',field:"itemName",width:10,align:'left',formatter:function(value,row,index){
+		  	    	        {title:message("yly.elderly.evaluating.item_name"),field:"itemName",width:10,align:'left',formatter:function(value,row,index){
 			 			    	 return formatLongString(value,20);
 		  	    	        }}
 		  		      ]]

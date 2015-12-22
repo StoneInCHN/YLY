@@ -10,7 +10,7 @@ var photoAlbum_manager_tool = {
 				    href:'../elderlyPhotoAlbum/viewPhotos.jhtml?photoAlbumID='+photoAlbumID,
 				    cache: false, 	
 				    buttons:[{
-				    	text:"编辑相册",
+				    	text:message("yly.elderly.Photo.Album.edit"),
 				    	iconCls:'icon-save',
 						handler:function(){
 							$('#showPhotoAlbum').dialog("close");
@@ -26,7 +26,7 @@ var photoAlbum_manager_tool = {
 				});
 		    },
 		    remove:function(photoAlbumID){
-				$.messager.confirm(message("yly.common.confirm"),"确定删除相册以及相册下的所有照片吗？", function(r) {
+				$.messager.confirm(message("yly.common.confirm"),message("yly.elderly.Photo.Album.confirm_delete_album_and_allPhotos"), function(r) {
 					if(r){
 						$.ajax({
 							url : '../elderlyPhotoAlbum/delete.jhtml',
@@ -85,7 +85,7 @@ var photoAlbum_manager_tool = {
 				    			
 				    		        pick: {
 				    		            id: '#filePicker',
-				    		            label: '点击选择图片'
+				    		            label: message("yly.elderly.Photo.Album.click_choose_photo")
 				    		        },
 				    		        dnd: '#uploader .queueList',
 				    		        paste: document.body,
@@ -149,7 +149,7 @@ var photoAlbum_manager_tool = {
 		    },
 		    edit:function(photoAlbumID){
 				var _dialog = $('#editElderlyPhotoAlbum').dialog({  
-				    title: "编辑相册相片",    
+				    title:message("yly.elderly.Photo.Album.edit"),    
 				    width: 750,    
 				    height: 750,
 				    iconCls:'icon-mini-edit',
@@ -175,7 +175,7 @@ var photoAlbum_manager_tool = {
 										showSuccessMsg(result.content);
 										$('#editElderlyPhotoAlbum').dialog("close");
 										loadAlbum();//重新加载相册
-										$.messager.alert('提示','相册编辑成功','info');
+										$.messager.alert(message("yly.common.prompt"),message("yly.elderly.Photo.Album.edit_success"),'info');
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
 										$.messager.progress('close');
@@ -261,7 +261,7 @@ var photoAlbum_manager_tool = {
 		    },
 		    uploadPhotos:function(){
 		    	var _dialog = $('#addElderlyPhotos').dialog({  
-				    title: '上传照片',    
+				    title: message("yly.elderly.Photo.Album.upload"),    
 				    width: 700,    
 				    height: 700,
 				    iconCls:'icon-mini-add',
@@ -291,7 +291,7 @@ var photoAlbum_manager_tool = {
 				    			
 				    		        pick: {
 				    		            id: '#filePicker_Photos',
-				    		            label: '点击选择图片'
+				    		            label: message("yly.elderly.Photo.Album.click_choose_photo")
 				    		        },
 				    		        dnd: '#uploader .queueList',
 				    		        paste: document.body,
@@ -392,7 +392,7 @@ function showImg(id,url){
 function setAlbumCover(){
 	$('#editElderlyPhotoAlbum').dialog("close");
 	$('#setAlbumCover').dialog({  
-		 title: "设置封面",    
+		 title: message("yly.elderly.Photo.Album.setAlbum"),    
 		    width: 300,    
 		    height: 300,
 		    iconCls:'icon-mini-edit',
@@ -512,7 +512,7 @@ function setAlbumCover(){
  */
 function searchAlbum(id,defaultImg){
 	$('#searchAlbum').dialog({
-	    title: "选择相册",    
+	    title: message("yly.elderly.Photo.Album.chooseAlbum"),    
 	    width: 850,
 	    height: 600,
 	    modal:true,
@@ -527,7 +527,7 @@ function searchAlbum(id,defaultImg){
 	    }],
 	    onLoad:function(){
 	    	$("#albumSearch-table-list").datagrid({
-	    		title:'相册查询',
+	    		title:message("yly.elderly.Photo.Album.search"),
 		    	 fitColumns:true,
 		    	 url:'../elderlyPhotoAlbum/list.jhtml',  
 		    	 pagination:true,
@@ -544,7 +544,7 @@ function searchAlbum(id,defaultImg){
 		    	 columns:[
 		  	    	    [
 		  	    	        {field:'ck',checkbox:true,width:8,align:'center'},
-		  		      {title:'封面',field:"albumCover",width:10,align:'center',formatter: function(value,row,index){
+		  		      {title:message("yly.elderly.Photo.Album.albumCover"),field:"albumCover",width:10,align:'center',formatter: function(value,row,index){
 							if(value==null || value==""){
 								return  '<div style="margin:3px;padding:3px">'+
 					    		        '<span title="默认封面" >'+
@@ -554,11 +554,11 @@ function searchAlbum(id,defaultImg){
 			    		        		'<span title="自定义封面" >'+'<img src="'+value+'" width="50" height="40"></img></span></div>';
 							}
 					  }},
-		  		    {title:'相册名',field:"name",width:10,align:'center',sortable:true},
-		  		  {title:'所属老人',field:"elderlyInfoName",width:10,align:'center',formatter: function(value,row,index){
+		  		    {title:message("yly.elderly.Photo.Album.albumName"),field:"name",width:10,align:'center',sortable:true},
+		  		  {title:message("yly.elderlyInfo.stuffDeposit.elderlyName"),field:"elderlyInfoName",width:10,align:'center',formatter: function(value,row,index){
 		  			 return row.elderlyInfo.name;
 				  }},
-		  		{title:'备注',field:"remark",width:20,align:'center',sortable:true},
+		  		{title:message("yly.common.remark"),field:"remark",width:20,align:'center',sortable:true},
 		  		      ]]
 	    	});
 	    }
@@ -582,8 +582,8 @@ function saveAlbumAndPhotos(){
 					$.messager.progress('close');
 					showSuccessMsg(result.content);
 					$('#addElderlyPhotoAlbum_form').form('reset');
-					showSuccessMsg('操作成功');  
-					$.messager.alert('提示','照片上传成功','info');
+					showSuccessMsg(message("yly.common.success"));  
+					$.messager.alert(message("yly.common.prompt"),message("yly.elderly.Photo.Album.upload_success"),'info');
 					$('#addElderlyPhotoAlbum').dialog("close");
 				},
 				error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -606,8 +606,8 @@ function saveAlbumAndPhotos(){
 					$.messager.progress('close');
 					showSuccessMsg(result.content);
 					$('#addElderlyPhotos_form').form('reset');
-					showSuccessMsg('操作成功');  
-					$.messager.alert('提示','照片上传成功','info');
+					showSuccessMsg(message("yly.common.success"));  
+					$.messager.alert(message("yly.common.prompt"),message("yly.elderly.Photo.Album.upload_success"),'info');
 					$('#addElderlyPhotos').dialog("close");
 				},
 				error:function (XMLHttpRequest, textStatus, errorThrown) {
