@@ -30,7 +30,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="blacklist_manager_tool.add();">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="blacklist_manager_tool.edit();">修改</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="blacklist_manager_tool.remove();">删除</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="blacklist_manager_tool.exportData();">导出</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('blackList','blacklist_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

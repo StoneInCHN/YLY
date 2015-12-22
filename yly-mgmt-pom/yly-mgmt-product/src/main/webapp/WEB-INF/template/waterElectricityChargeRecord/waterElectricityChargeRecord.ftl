@@ -47,7 +47,7 @@
 </div>
 <div id="waterElectricityCharge_manager_tool">
 	<div class="tool-button">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="waterElectricityCharge_manager_tool.exportData();">导出</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('waterElectricityChargeRecord','waterElectricityChargeRecord_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

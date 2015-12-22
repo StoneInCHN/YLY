@@ -190,52 +190,6 @@ $(function(){
 			},
 			remove:function(){
 				listRemove('visitElderly-table-list','../visitElderly/delete.jhtml');
-			},
-			exportData:function(){
-				$.ajax({
-					url:"../visitElderly/count.jhtml",
-					type:"post",
-					data:$("#visitElderly_search_form").serialize(),
-					success:function(result,response,status){
-						if(result.count != null){
-							var text = "";
-							if(result.count == 0){
-								text = "当前条件无可导出的数据。";
-								$.messager.alert(message("yly.common.notice"), text,'warning');
-							}else if(result.count <= 500){
-								text = "确定导出 "+result.count+" 条记录？";
-								$.messager.confirm(message("yly.common.confirm"), text, function(r) {
-									if(r){
-										$("#visitElderly_search_form").attr("action","../visitElderly/exportData.jhtml");
-										$("#visitElderly_search_form").attr("target","_blank");
-										$("#visitElderly_search_form").submit();
-									}
-
-								});
-							}else{
-								text = "导出数据超过500条数据，建议搜索查询条件以缩小查询范围，再导出。";
-								$.messager.confirm(message("yly.common.notice"), text, function(r) {
-									if (!r) {
-										text = "导出共有"+ result.count +"条数据，导出超过500条数据可能需要您耐心等待，仍需操作请确定继续。";
-										$.messager.confirm(message("yly.common.confirm"), text, function(yes) {
-											if(yes){
-												$("#visitElderly_search_form").attr("action","../visitElderly/exportData.jhtml");
-												$("#visitElderly_search_form").attr("target","_blank");
-												$("#visitElderly_search_form").submit();
-											}
-										});
-									}
-								})
-							}
-						}
-						$("#visitElderly-table-list").datagrid('reload');
-					},
-					error:function (XMLHttpRequest, textStatus, errorThrown) {
-						alert("error");
-						$.messager.progress('close');
-						alertErrorMsg();
-					}
-				});
 			}
 	}
 	  $("#visitElderly_search_btn").click(function(){

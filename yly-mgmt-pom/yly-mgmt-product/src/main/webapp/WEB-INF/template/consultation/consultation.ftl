@@ -84,7 +84,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="consultation_manager_tool.add();">${message("yly.button.add")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="consultation_manager_tool.edit();">${message("yly.button.update")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="consultation_manager_tool.remove();">${message("yly.button.delete")}</a>
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="consultation_manager_tool.exportData();">导出</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('consultation','consultation_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

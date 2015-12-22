@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.yly.entity.ConsultationRecord;
 import com.yly.entity.VisitElderlyRecord;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;

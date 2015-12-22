@@ -58,7 +58,7 @@
 </div>
 <div id="checkedInElderly_manager_tool">
 	<div class="tool-button">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="checkedInElderly_manager_tool.exportData();">导出</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('elderlyInfo','checkedInElderly_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 
