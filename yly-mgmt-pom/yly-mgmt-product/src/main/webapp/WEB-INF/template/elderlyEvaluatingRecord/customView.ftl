@@ -72,7 +72,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </#list>
 </#list>
 <tr>
-	<td>B.${evaluatingSection_index+1}.${evaluatingItem_index+2}  ${evaluatingSection.sectionName}总分</td>
+	<td>B.${evaluatingSection_index+1}.${evaluatingSection.evaluatingItems?size + 1}  ${evaluatingSection.sectionName}总分</td>
 	<td>
 		<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
