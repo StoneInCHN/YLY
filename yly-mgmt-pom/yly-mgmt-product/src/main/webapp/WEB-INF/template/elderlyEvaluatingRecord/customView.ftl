@@ -4,7 +4,7 @@
 <div style="margin:15px;padding:15px">
 <p style="text-align:center;font-size:180%">老年人能力评估基本信息表 </p>
 <p style="font-size:140%">A.1　评估基本信息表</p>
-<table class="table table-bordered">
+<table class="table table-bordered" border="1px" style="border-collapse:collapse">
 <tr><td style="width:230px">A.1.1 评估编号</td><td>
 ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </td></tr>
@@ -41,7 +41,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 <#list elderlyEvaluatingRecord.evaluatingForm.evaluatingSections as evaluatingSection>
 <p style="font-size:140%">B.${evaluatingSection_index + 1} ${evaluatingSection.sectionName}</p>
 
-<table class="table table-bordered">
+<table class="table table-bordered" border="1px" style="border-collapse:collapse">
 <#list evaluatingSection.evaluatingItems as evaluatingItem>
 <tr>
 	<td text-align="center" style="width:150px" rowspan="${evaluatingItem.evaluatingItemsOptions?size}">
@@ -89,7 +89,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </#list>
 
 <p style="text-align:center;font-size:180%">老年人能力评估报告</p>
-<table class="table table-bordered">
+<table class="table table-bordered" border="1px" style="border-collapse:collapse">
 <tr>
 	<td style="width:150px" rowspan="${elderlyEvaluatingRecord.evaluatingForm.evaluatingSections?size}">C.1&nbsp;&nbsp;一级指标分级&nbsp;&nbsp;</td>
 	<td>	
