@@ -6,7 +6,7 @@
 <div>
 	  <fieldset>
 	    <legend>${message("yly.drugsInfo.search")}</legend>
-	    <form id="search-form" class="search-form">
+	    <form id="prescription-search-form" class="search-form">
 	    <div class="search-item">
 			    <label> ${message("yly.common.elderly.name")}:</label>
 			    <input type="text" class="easyui-textbox" id="elderNameSearch" name="elderNameSearch" />
@@ -21,7 +21,7 @@
 			</div>
 		</form>
 		<div class="search-item">
-	  	  <button id="search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
+	  	  <button id="prescription-search-btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
 	    </div>
 	  </fieldset>
 </div>
