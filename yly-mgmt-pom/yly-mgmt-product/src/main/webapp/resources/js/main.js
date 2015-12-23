@@ -76,7 +76,7 @@ $(function(){
                 	var value = [nameArray[i],data[0][dataArray[i]]]
                 	id.series[0].data.push(value)
                 }
-
+                console.log(id)
                 var chart = new Highcharts.Chart(id);
             }
 
@@ -127,12 +127,13 @@ $(function(){
 			['出院','在院','办理入院','办理出院','过世'],
 			['outNursingHome','inNursingHome','inProcessCheckin','inProcessCheckout','dead'])
 	//在院老人年龄段统计
-	$('#elderlyAgeReport').highcharts({
+	var elderlyAgeReport = {
 		colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
 		credits:{
             enabled:false // 禁用版权信息
         },
         chart: {
+        	renderTo: 'elderlyAgeReportId',
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
@@ -157,16 +158,12 @@ $(function(){
         series: [{
             type: 'pie',
             name:'人数',
-            data: [
-                {name:'60岁以下',   y:1},
-                {name:'61~65岁',    y: 40},
-                {name:'66~70岁',    y:20},
-                {name:'71~75岁',     y:11},
-                {name:'76~80岁', y:8}
-            ]
+            data: []
         }]
-    });
-	
+	};
+	loadData(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',
+			['60岁以下','61~65岁','66~70岁','71~75岁','76岁以上'],
+			['under60','range61To65','range66To70','range71To75','above76'])
 	//男女比例
 	$('#sexualProportionReport').highcharts({
 		credits:{

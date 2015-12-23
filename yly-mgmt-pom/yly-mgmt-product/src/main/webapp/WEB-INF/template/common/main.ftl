@@ -314,9 +314,9 @@
 				        	<div id="elderlyStatusReportId" style="height:300px;width:400px">
 				        </td>
 				        
-				         <!--<td>
-				            <div id="sexualProportionReport" style="height:300px;width: 400px;">
-				        </td>-->
+				         <td>
+				            <div id="elderlyAgeReportId" style="height:300px;width: 400px;">
+				        </td> 
 				    </tr>
 				    <tr >
 				    	<td >
