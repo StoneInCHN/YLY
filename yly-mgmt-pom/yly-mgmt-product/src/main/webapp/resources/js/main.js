@@ -163,13 +163,14 @@ $(function(){
 	};
 	loadData(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',
 			['60岁以下','61~65岁','66~70岁','71~75岁','76岁以上'],
-			['under60','range61To65','range66To70','range71To75','above76'])
+			['under60','range61To65','range66To70','range71To75','above76']);
 	//男女比例
-	$('#sexualProportionReport').highcharts({
+	var elderlyGenderRateReport={
 		credits:{
             enabled:false // 禁用版权信息
         },
         chart: {
+        	renderTo: 'elderlyGenderRateReportId',
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: true
@@ -185,24 +186,19 @@ $(function(){
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
-                    enabled: true,
-                    formatter: function() {
-                        return '<b>'+ this.point.name +'</b>: '+ this.point.y;
-                    },
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
+                    enabled: false
+                },
+        		showInLegend: true
             }
         },
         series: [{
             type: 'pie',
-            data: [
-                {name:'出院',   y:45/80*100},
-                {name:'在院',    y: 35/80*100},
-            ]
+            data: []
         }]
-    });
+    };
+	loadData(elderlyGenderRateReport,'../../console/reportElderlyGenderRate/list.jhtml',
+			['男','女'],
+			['male','female']);
 	//每月看病人数统计
 	 $(function () {
          $('#elderlyMedicalReport').highcharts({

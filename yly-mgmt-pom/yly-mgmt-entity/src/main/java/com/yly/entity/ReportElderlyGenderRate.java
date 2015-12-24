@@ -27,26 +27,16 @@ public class ReportElderlyGenderRate extends BaseEntity
    * 租户ID
    */
   private Long tenantID;
+
   /**
-   * 在院
+   * 女
    */
-  private int inNursingHome;
+  private int female;
+
   /**
-   * 出院
+   * 男
    */
-  private int outnursingHome;
-  /**
-   * 办理入院
-   */
-  private int inProcessCheckin;
-  /**
-   * 办理出院
-   */
-  private int inprocessCheckout;
-  /**
-   * 死亡
-   */
-  private int dead;
+  private int male;
 
   @Index (name = "report_elderly_gender_rate_tenantid")
   public Long getTenantID ()
@@ -60,58 +50,25 @@ public class ReportElderlyGenderRate extends BaseEntity
   }
 
   @JsonProperty
-  public int getInNursingHome ()
+  public int getFemale ()
   {
-    return inNursingHome;
+    return female;
   }
 
-  public void setInNursingHome (int inNursingHome)
+  public void setFemale (int female)
   {
-    this.inNursingHome = inNursingHome;
-  }
-
-  @JsonProperty
-  public int getOutnursingHome ()
-  {
-    return outnursingHome;
-  }
-
-  public void setOutnursingHome (int outnursingHome)
-  {
-    this.outnursingHome = outnursingHome;
+    this.female = female;
   }
 
   @JsonProperty
-  public int getInProcessCheckin ()
+  public int getMale ()
   {
-    return inProcessCheckin;
+    return male;
   }
 
-  public void setInProcessCheckin (int inProcessCheckin)
+  public void setMale (int male)
   {
-    this.inProcessCheckin = inProcessCheckin;
-  }
-
-  @JsonProperty
-  public int getInprocessCheckout ()
-  {
-    return inprocessCheckout;
-  }
-
-  public void setInprocessCheckout (int inprocessCheckout)
-  {
-    this.inprocessCheckout = inprocessCheckout;
-  }
-
-  @JsonProperty
-  public int getDead ()
-  {
-    return dead;
-  }
-
-  public void setDead (int dead)
-  {
-    this.dead = dead;
+    this.male = male;
   }
 
 }

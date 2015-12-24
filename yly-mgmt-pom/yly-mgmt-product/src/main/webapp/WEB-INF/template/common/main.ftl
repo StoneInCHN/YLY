@@ -316,7 +316,10 @@
 				        
 				         <td>
 				            <div id="elderlyAgeReportId" style="height:300px;width: 400px;">
-				        </td> 
+				        </td>
+				         <td>
+				            <div id="elderlyGenderRateReportId" style="height:300px;width: 300px;">
+				        </td>  
 				    </tr>
 				    <tr >
 				    	<td >
