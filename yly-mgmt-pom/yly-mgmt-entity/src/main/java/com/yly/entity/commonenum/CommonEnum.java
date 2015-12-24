@@ -1370,4 +1370,19 @@ public class CommonEnum {
      */
     ABILITY_SEVERE
   }
+  /**
+   * 评估表类型
+   * @author luzhang
+   *
+   */
+  public enum EvaluatingFormType{
+    /**
+     * 系统默认评估表
+     */
+    SYSTEM_FORM,
+    /**
+     * 用户自定义评估表
+     */
+    CUSTOM_FORM
+  }
 }

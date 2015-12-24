@@ -32,6 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
+import com.yly.entity.commonenum.CommonEnum.EvaluatingFormType;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyEvaluatingRecordService;
@@ -684,7 +685,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       EvaluatingForm evaluatingForm = new EvaluatingForm();
       evaluatingForm.setTenantID(currnetTenantId);
       evaluatingForm.setFormName(formName);
-      evaluatingForm.setEvaluatingFormStatus(EvaluatingFormStatus.ENABLE);
+      evaluatingForm.setEvaluatingFormStatus(EvaluatingFormStatus.ENABLE);//评估表状态：启用
+      evaluatingForm.setEvaluatingFormType(EvaluatingFormType.CUSTOM_FORM);//评估表类型：用户自定义评估表
       if (StringUtils.isNotBlank(evaluatingRule)) {
         evaluatingForm.setEvaluatingRule(evaluatingRule);
       }
