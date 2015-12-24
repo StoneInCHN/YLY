@@ -70,14 +70,16 @@ $(function(){
             type:"post",
             cache: false,
             success: function (data) {
+            	if(data.length > 0 ){
                 for(i=0;i <nameArray.length;i++)
-                {
-                	console.log(dataArray[i]);
-                	var value = [nameArray[i],data[0][dataArray[i]]]
-                	id.series[0].data.push(value)
-                }
-                console.log(id)
-                var chart = new Highcharts.Chart(id);
+	                {
+	                	console.log(dataArray[i]);
+	                	var value = [nameArray[i],data[0][dataArray[i]]]
+	                	id.series[0].data.push(value)
+	                }
+	                console.log(id)
+	                var chart = new Highcharts.Chart(id);
+            	}
             }
 
         });
