@@ -2,7 +2,7 @@ var elderlyEvaluating_manager_tool = {
 			chooseFrom:function(){
 
 				$('#chooseEvaluating').dialog({    
-				    title: "选择评估表",    
+				    title: message("yly.elderly.evaluating.dialog_title.select_form"),    
 				    width: 500,    
 				    height: 450,
 				    iconCls:'icon-mini-add',
@@ -20,7 +20,7 @@ var elderlyEvaluating_manager_tool = {
 			},
 			addCustom:function(formId){
 				$('#addEvaluating').dialog({    
-				    title: "添加自定义入院评估",    
+				    title: message("yly.elderly.evaluating.dialog_title.add_custom_form"),    
 				    width: 1250,    
 				    height: 850,
 				    left:($(window).width()-1250)/2,
@@ -160,7 +160,7 @@ var elderlyEvaluating_manager_tool = {
 			},
 			add:function(formId){
 				$('#addEvaluating').dialog({    
-				    title: "添加入院评估",    
+				    title: message("yly.elderly.evaluating.dialog_title.add_evaluating"),    
 				    width: 1250,    
 				    height: 850,
 				    left:($(window).width()-1250)/2,
@@ -308,19 +308,18 @@ var elderlyEvaluating_manager_tool = {
 					return false;
 				}
 				var _dialog = $('#editEvaluating').dialog({    
-				    title: "编辑入院评估记录",     
+				    title: message("yly.elderly.evaluating.dialog_title.edit_evaluating"),     
 				    width: 1250,    
 				    height: 850,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../elderlyEvaluatingRecord/edit.jhtml?id='+_edit_row.id
 				});  
-			
 			}
 }
 $(function(){
 	$("#elderlyEvaluating-table-list").datagrid({
-		title:"入院评估记录列表",
+		title:message("yly.elderly.evaluating.dialog_title.evaluating_list"),
 		fitColumns:true,
 		toolbar:"#elderlyEvaluating_manager_tool",
 		url:'../elderlyEvaluatingRecord/list.jhtml',  
@@ -339,6 +338,19 @@ $(function(){
 			    modal: true,
 			    href:'../elderlyEvaluatingRecord/view.jhtml?id='+rowData.id,
 			    buttons:[{
+					text:message("yly.common.print"),
+					iconCls:'icon-print',
+					handler:function(){
+					    var newWindow=window.open(message("yly.common.detail"),"_blank");
+					    var docStr = $('#listEvaluating').prop('outerHTML');
+					   console.info(docStr);
+					    newWindow.document.write(docStr);
+					    newWindow.document.close();
+					    newWindow.print();
+					    newWindow.close();
+						// $('#listEvaluating').dialog("close");
+					}
+			    },{
 					text:message("yly.common.close"),
 					iconCls:'icon-cancel',
 					handler:function(){
@@ -350,27 +362,27 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:"被评估老人",field:"elderlyInfoName",width:30,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.elderly.evaluating.elderlyInfoName"),field:"elderlyInfoName",width:30,align:'center',formatter:function(value,row,index){
 		    	  return row.elderlyInfo.name;
 		      }},
-		      {title:"评估人操作人",field:"operator",width:30,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.elderly.evaluating.operator"),field:"operator",width:30,align:'center',formatter:function(value,row,index){
 		    	 return formatLongString(value,8);
 		      }},
-		      {title:"评估原因",field:"evaluatingReason",width:30,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.elderly.evaluating.evaluatingReason"),field:"evaluatingReason",width:30,align:'center',formatter:function(value,row,index){
 					if(value=="CHECKIN_EVALUATING"){
-						return "接受服务前初评";
+						return message("yly.elderly.evaluating.CHECKIN_EVALUATING");
 					}
 					if(value=="ROUTINE_EVALUATING"){
-						return "接受服务后的常规评估";
+						return message("yly.elderly.evaluating.ROUTINE_EVALUATING");
 					}
 					if(value=="IMMEDIATE_EVALUATING"){
-						return "状况发生变化后的即时评估";
+						return message("yly.elderly.evaluating.IMMEDIATE_EVALUATING");
 					}
 					if(value=="QUESTION_EVALUATING"){
-						return "因评估结果有疑问进行的复评";
+						return message("yly.elderly.evaluating.QUESTION_EVALUATING");
 					}
 			  }},
-		      {title:"评估结果",field:"evaluatingResult",width:30,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.elderly.evaluating.evaluatingResult"),field:"evaluatingResult",width:30,align:'center',formatter:function(value,row,index){
 		    	  		if(value.indexOf("0")!=-1){
 		    		  		return '<span style="color:green">'+value.replace('0','').trim()+'</span>';//绿色  能力完好
 						}
@@ -385,12 +397,12 @@ $(function(){
 						}
 			    	  return  formatLongString(value,8);
 		      }},
-		      {title:"评估表编号",field:"evaluatingFormName",width:30,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.elderly.evaluating.evaluatingFormName"),field:"evaluatingFormName",width:30,align:'center',formatter:function(value,row,index){
 		    	  var fullFormName = row.evaluatingForm.formName;//老年人能力评估(MZ/T 039-2013)
 		    	  var codeOfFormName = fullFormName.substring(fullFormName.indexOf("(")+1,fullFormName.length-1);//MZ/T 039-2013
 		    	  return codeOfFormName;
 		      }},
-		      {title:"评估基准时间",field:"createDate",width:30,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.elderly.evaluating.evaluatingDate"),field:"evaluatingDate",width:30,align:'center',sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
 				}},
 		   ]
@@ -400,12 +412,16 @@ $(function(){
 		  var _queryParams = $("#elderlyEvaluating_search_form").serializeJSON();
 		  $('#elderlyEvaluating-table-list').datagrid('options').queryParams = _queryParams;  
 		  $("#elderlyEvaluating-table-list").datagrid('reload');
+		  //隐藏域用于标记上次使用过的查询条件 
+		  $("#elderlyNameHidden").val($("#elderlyName").val());
+		  $("#beginDateHidden").val($("#beginDate").val());		
+		  $("#endDateHidden").val($("#endDate").val());	
 		})
 })
 
 function createForm(){
 	$('#createEvaluatingForm').dialog({    
-	    title: "自定义评估表",    
+	    title: message("yly.elderly.evaluating.dialog_title.custom_form"),    
 	    width: 800,    
 	    height: 900,
 	    left:($(window).width()-800)/2,
@@ -433,27 +449,15 @@ function createForm(){
 								var formScoreFrom = parseInt($("#formScore"+i+"From").val());
 								var formScoreTo = parseInt($("#formScore"+i+"To").val());
 								if(formScoreFrom>formScoreTo){
-									$.messager.alert(message("yly.common.prompt"), message("起始分数应该小于等于终止分数!"),'warning');
+									$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.beginScore_lower_equal_endScore"),'warning');
 									return;
 								}
 								if(i<formLevelSize-1){
 									if(parseInt($("#formScore"+i+"To").val())>=parseInt($("#formScore"+(i+1)+"From").val())){
-										$.messager.alert(message("yly.common.prompt"), message("相邻等级的终止分数和起始分数输入有误,否者没法根据具体分数明确的划分等级分数区间!"),'warning');
+										$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.nearScore_keyin_error"),'warning');
 										return;
 									}
 								}
-//								 if(i<formLevelSize-1){
-//									if(parseInt($("#formScore"+i+"From").val())<=parseInt($("#formScore"+(i+1)+"From").val())){
-//										$.messager.alert(message("yly.common.prompt"), message("评估分数输入有误,高等级分数应该大于略低等级分数!"),'warning');
-//										return;
-//									}
-//								}
-//								if(i==0){
-//									if(parseInt($("#formScore"+i+"From").val())<0){
-//										$.messager.alert(message("yly.common.prompt"), message("最低分数不能小于零!"),'warning');
-//										return;
-//									}
-//								}
 							}
 							
 							var evaluatingRuleArray=new Array();
@@ -486,7 +490,7 @@ function createForm(){
 										$.messager.progress('close');
 										showSuccessMsg(result.content);
 										$('#createEvaluatingForm').dialog("close");//关闭当前对话框
-										$.messager.alert('提示','自定义评估表: '+$("#formName").val()+' 创建成功!','info');
+										$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.customForm_create_success", $("#formName").val()),'info');
 									},
 									error:function (XMLHttpRequest, textStatus, errorThrown) {
 										$.messager.progress('close');
@@ -496,16 +500,16 @@ function createForm(){
 							}
 
 						}else{
-							$.messager.alert(message("yly.common.prompt"), message("请先在系统配置的数据字典中配置评估等级!"),'warning');
+							$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.please_config_evaluating_level"),'warning');
 						}
 					}else{
-						$.messager.alert(message("yly.common.prompt"), message("请添加模块!"),'warning');
+						$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.please_add_section"),'warning');
 					}
 				}else{
 					if($("#formName").val()==null || $("#formName").val().trim()==""){	
-						$.messager.alert(message("yly.common.prompt"), message("请输入表名称!"),'warning');
+						$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.please_keyin_form_name"),'warning');
 					}else{
-						$.messager.alert(message("yly.common.prompt"), message("请输入评估等级评分规则!"),'warning');
+						$.messager.alert(message("yly.common.prompt"), message("yly.elderly.evaluating.please_keyin_evaluating_rule"),'warning');
 					}
 				}
 				
@@ -525,7 +529,6 @@ function createForm(){
 	    	 
 	    }
 	});
-	//$("#createEvaluatingForm").dialog({ draggable: true }).closest('.ui-dialog').draggable({ containment: 'parent' });
 	
 }
 

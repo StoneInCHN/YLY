@@ -1,6 +1,10 @@
 package com.yly.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -18,6 +22,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.common.log.LogUtil;
 import com.yly.dao.VisitElderlyRecordDao;
 import com.yly.entity.VisitElderlyRecord;
+import com.yly.entity.commonenum.CommonEnum.Relation;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
@@ -50,6 +55,7 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
 
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
+    
     BooleanQuery query = new BooleanQuery();
 
     QueryParser visitorParser = new QueryParser(Version.LUCENE_35, "visitor", analyzer);
@@ -106,5 +112,153 @@ public class VisitElderlyRecordServiceImpl extends BaseServiceImpl<VisitElderlyR
     }
 
     return search(query, pageable, analyzer, visitDateFilter);
+  }
+
+
+  /**
+   * 根据搜索条件，返回查询结果个数
+   */
+  @Override
+  public int countByFilter(String elderlyName, String vistor,
+      Date visitDateBeginDate, Date visitDateEndDate) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery booleanQuery = getQuery(analyzer, vistor, elderlyName);
+      Filter returnVisitDateFilter = getFilter(visitDateBeginDate, visitDateEndDate);
+      
+      return visitElderlyRecordDao.count(booleanQuery, analyzer, returnVisitDateFilter);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+
+  /**
+   * 根据搜索条件，返回查询结果List
+   */
+  @Override
+  public List<VisitElderlyRecord> searchListByFilter(String elderlyName, String vistor,
+      Date visitDateBeginDate, Date visitDateEndDate) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery query = getQuery(analyzer, vistor, elderlyName);
+      Filter visitDateFilter = getFilter(visitDateBeginDate, visitDateEndDate);
+      
+      return visitElderlyRecordDao.searchList(query, analyzer, visitDateFilter);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  /**
+  * 根据查询条件中的 开始时间和结束时间，返回对来访时间的过滤 
+  * @param visitDateBeginDate
+  * @param visitDateEndDate
+  * @return
+  */
+  private Filter getFilter(Date visitDateBeginDate, Date visitDateEndDate) {
+    Filter visitDateFilter = null;
+    if (visitDateBeginDate != null || visitDateEndDate != null) {
+      visitDateFilter =
+          new TermRangeFilter("visitDate", DateTimeUtils.convertDateToString(visitDateBeginDate,
+              null), DateTimeUtils.convertDateToString(visitDateEndDate, null), true, true);
+    }
+    return visitDateFilter;
+  }
+  /**
+  * 根据查询条件中的 被探望老人，来访者，返回带条件的查询Query
+  * @param analyzer
+  * @param consultationRecord
+  * @return
+  */
+  private BooleanQuery getQuery(IKAnalyzer analyzer, String elderlyName, String vistor){
+    BooleanQuery booleanQuery = new BooleanQuery();
+    QueryParser queryParser = null;
+    Query query = null;
+    Long tennateId = tenantAccountService.getCurrentTenantID();
+    if (tennateId != null) {
+      try {
+        queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        query = queryParser.parse(tennateId.toString());
+        booleanQuery.add(query, Occur.MUST);
+      } catch (ParseException e1) {
+        e1.printStackTrace();
+      }
+    }
+
+    if (vistor != null) {
+      try {
+        queryParser = new QueryParser(Version.LUCENE_35, "visitor", analyzer);
+        query = queryParser.parse(QueryParser.escape(vistor));
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+      booleanQuery.add(query, Occur.MUST);
+    }
+
+    if (elderlyName != null) {
+      try {
+        queryParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+        query = queryParser.parse(QueryParser.escape(elderlyName));
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+      booleanQuery.add(query, Occur.MUST);
+    }
+    return booleanQuery;
+  }
+  /**
+   * 准备数据，将list转化成HashMap,作为需要导出的数据
+   * @return
+   */
+  @Override
+  public List<Map<String, String>> prepareMap(List<VisitElderlyRecord> visitElderlyRecordList) {
+    List<Map<String, String>> mapList = new ArrayList<Map<String,String>>();
+    for (VisitElderlyRecord visitElderlyRecord : visitElderlyRecordList) {
+      Map<String, String> visitElderlyMap = new HashMap<String, String>();
+      visitElderlyMap.put("elderlyInfo.name", visitElderlyRecord.getElderlyInfo()!=null?visitElderlyRecord.getElderlyInfo().getName():"");
+      visitElderlyMap.put("visitor", visitElderlyRecord.getVisitor());
+      visitElderlyMap.put("IDCard", visitElderlyRecord.getIDCard());
+      visitElderlyMap.put("phoneNumber", visitElderlyRecord.getPhoneNumber());
+      visitElderlyMap.put("visitPersonnelNumber", visitElderlyRecord.getVisitPersonnelNumber().toString());      
+      if(visitElderlyRecord.getRelation() == Relation.SELF){
+        visitElderlyMap.put("relation", "本人");
+      }else if(visitElderlyRecord.getRelation() == Relation.CHILDREN){
+        visitElderlyMap.put("relation", "子女");
+      }else if(visitElderlyRecord.getRelation() == Relation.MARRIAGE_RELATIONSHIP){
+        visitElderlyMap.put("relation", "夫妻");
+      }else if(visitElderlyRecord.getRelation() == Relation.GRANDPARENTS_AND_GRANDCHILDREN){
+        visitElderlyMap.put("relation", "祖孙关系");
+      }else if(visitElderlyRecord.getRelation() == Relation.BROTHERS_OR_SISTERS){
+        visitElderlyMap.put("relation", "兄弟或姐妹");
+      }else if(visitElderlyRecord.getRelation() == Relation.DAUGHTERINLAW_OR_SONINLAW){
+        visitElderlyMap.put("relation", "儿媳或女婿");
+      }else if(visitElderlyRecord.getRelation() == Relation.FRIEND){
+        visitElderlyMap.put("relation", "朋友");
+      }else if(visitElderlyRecord.getRelation() == Relation.OTHER){
+        visitElderlyMap.put("relation", "其它");
+      }
+      if (visitElderlyRecord.getVisitDate() != null) {
+        visitElderlyMap.put("visitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, visitElderlyRecord.getVisitDate()));
+      }else {
+        visitElderlyMap.put("visitDate", "");
+      }
+      if (visitElderlyRecord.getDueLeaveDate() != null) {
+        visitElderlyMap.put("dueLeaveDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, visitElderlyRecord.getDueLeaveDate()));
+      }else {
+        visitElderlyMap.put("dueLeaveDate", "");
+      }
+      
+      visitElderlyMap.put("reasonForVisit", visitElderlyRecord.getReasonForVisit());
+      visitElderlyMap.put("remark", visitElderlyRecord.getRemark());
+      
+      mapList.add(visitElderlyMap);
+    }
+    return mapList;
   }
 }

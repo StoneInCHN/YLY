@@ -4,7 +4,7 @@
 <div style="margin:15px;padding:15px">
 <p style="text-align:center;font-size:180%">老年人能力评估基本信息表 </p>
 <p style="font-size:140%">A.1　评估基本信息表</p>
-<table class="table table-bordered">
+<table class="table table-bordered" border="1px" style="border-collapse:collapse">
 <tr><td style="width:230px">A.1.1 评估编号</td><td>
 ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </td></tr>
@@ -19,7 +19,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </tr>
 <tr><td>A.1.5 评估日期</td>
 	<td>
-		${(elderlyEvaluatingRecord.createDate?string("yyyy年MM月dd日"))!''} 
+		${(elderlyEvaluatingRecord.evaluatingDate?string("yyyy年MM月dd日"))!''} 
 	</td>
 </tr>
 <tr><td>A.1.6 评估原因</td>
@@ -41,7 +41,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 <#list elderlyEvaluatingRecord.evaluatingForm.evaluatingSections as evaluatingSection>
 <p style="font-size:140%">B.${evaluatingSection_index + 1} ${evaluatingSection.sectionName}</p>
 
-<table class="table table-bordered">
+<table class="table table-bordered" border="1px" style="border-collapse:collapse">
 <#list evaluatingSection.evaluatingItems as evaluatingItem>
 <tr>
 	<td text-align="center" style="width:150px" rowspan="${evaluatingItem.evaluatingItemsOptions?size}">
@@ -72,7 +72,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </#list>
 </#list>
 <tr>
-	<td>B.${evaluatingSection_index+1}.${evaluatingItem_index+2}  ${evaluatingSection.sectionName}总分</td>
+	<td>B.${evaluatingSection_index+1}.${evaluatingSection.evaluatingItems?size + 1}  ${evaluatingSection.sectionName}总分</td>
 	<td>
 		<#if sectionScoreMap??&&sectionScoreMap?size gt 0>
 		   <#list sectionScoreMap.keySet() as key>
@@ -89,7 +89,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 </#list>
 
 <p style="text-align:center;font-size:180%">老年人能力评估报告</p>
-<table class="table table-bordered">
+<table class="table table-bordered" border="1px" style="border-collapse:collapse">
 <tr>
 	<td style="width:150px" rowspan="${elderlyEvaluatingRecord.evaluatingForm.evaluatingSections?size}">C.1&nbsp;&nbsp;一级指标分级&nbsp;&nbsp;</td>
 	<td>	
@@ -143,7 +143,7 @@ ${elderlyEvaluatingRecord.evaluatingForm.formName}
 	<td>暂时不做这个等级评定</td>
 </tr>
 <tr>
-	<td colspan="2">评估员签名<u>  ${elderlyEvaluatingRecord.operator} </u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期 ${(elderlyEvaluatingRecord.createDate?string("yyyy年MM月dd日"))!''}<p/>
+	<td colspan="2">评估员签名<u>  ${elderlyEvaluatingRecord.operator} </u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期 ${(elderlyEvaluatingRecord.evaluatingDate?string("yyyy年MM月dd日"))!''}<p/>
 					信息提供者签名________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期_____年___月___日
 	</td>
 </tr>

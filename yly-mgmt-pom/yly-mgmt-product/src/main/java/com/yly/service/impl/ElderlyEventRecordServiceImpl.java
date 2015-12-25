@@ -1,13 +1,12 @@
 package com.yly.service.impl;
 
 import java.util.Date;
-import java.util.List;
-
 import javax.annotation.Resource;
-
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.util.Version;
@@ -41,47 +40,20 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
   }
 
   @Override
-  public Page<ElderlyEventRecord> SearchPageByFilter(String keysOfElderlyName, Date beginDate,
+  public Page<ElderlyEventRecord> searchPageByFilter(String keysOfElderlyName, String elderlyEventType, Date beginDate,
       Date endDate, Pageable pageable) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
     try {
-      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, beginDate, endDate);
+      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, elderlyEventType, beginDate, endDate);
       return elderlyEventRecordDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return null;
   }
-
-  @Override
-  public int countByFilter(String keysOfElderlyName, Date beginDate, Date endDate) {
-    IKAnalyzer analyzer = new IKAnalyzer();
-    analyzer.setMaxWordLength(true);
-    try {
-      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, beginDate, endDate);
-      return elderlyEventRecordDao.count(query, analyzer, null);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return 0;
-  }
   
-  @Override
-  public List<ElderlyEventRecord> searchListByFilter(String keysOfElderlyName, Date beginDate,
-      Date endDate) {
-    IKAnalyzer analyzer = new IKAnalyzer();
-    analyzer.setMaxWordLength(true);
-    try {
-      BooleanQuery query = getQuery(analyzer, keysOfElderlyName, beginDate, endDate);
-      return elderlyEventRecordDao.searchList(query, analyzer, null);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-  
-  private BooleanQuery getQuery(IKAnalyzer analyzer, String keysOfElderlyName, Date beginDate, Date endDate) {
+  private BooleanQuery getQuery(IKAnalyzer analyzer, String keysOfElderlyName, String elderlyEventType, Date beginDate, Date endDate) {
     try {
       BooleanQuery query = new BooleanQuery();
       if (keysOfElderlyName != null) {
@@ -90,6 +62,11 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
+      if (elderlyEventType != null) {
+        Term elderlyStatusTerm = new Term("elderlyEventType", elderlyEventType);
+        TermQuery termQuery = new TermQuery(elderlyStatusTerm);
+        query.add(termQuery, Occur.MUST);
+     }
       if (beginDate != null || endDate != null) {
         TermRangeQuery tQuery =
             new TermRangeQuery("eventDate", DateTimeUtils.convertDateToString(beginDate, null),
@@ -103,6 +80,7 @@ public class ElderlyEventRecordServiceImpl extends BaseServiceImpl<ElderlyEventR
     }
    
   }
+
 
 
 }

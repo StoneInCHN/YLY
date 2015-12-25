@@ -138,7 +138,9 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     }
     return search(query, pageable, analyzer, returnVisitDateFilter);
   }
-
+  /**
+   * 根据搜索条件，返回查询结果个数
+   */
   @Override
   public int countByFilter(ConsultationRecordSearchRequest consultationSearch) {
 
@@ -156,7 +158,9 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
     return 0;
   
   }
-
+  /**
+   * 根据搜索条件，返回查询结果List
+   */
   @Override
   public List<ConsultationRecord> searchListByFilter(ConsultationRecordSearchRequest consultationSearch) {
     IKAnalyzer analyzer = new IKAnalyzer();
@@ -174,8 +178,6 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   }
   /**
    * 根据查询条件中的 开始时间和结束时间，返回对回访时间的过滤 
-   * @param returnVisitDateBeginDate
-   * @param returnVisitDateEndDate
    * @return
    */
   private Filter getFilter(ConsultationRecordSearchRequest consultationSearch){
@@ -201,8 +203,6 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   }
   /**
    * 根据查询条件中的 咨询人，老人姓名，入住意向，信息来源，返回带条件的查询Query
-   * @param analyzer
-   * @param consultationRecord
    * @return
    */
   private BooleanQuery getQuery(IKAnalyzer analyzer, ConsultationRecordSearchRequest consultationSearch) {
@@ -219,7 +219,17 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
       String elderlyName = consultationSearch.getElderlyNameHidden();
       String infoChannel = consultationSearch.getInfoChannelHidden();
       String checkinIntention = consultationSearch.getCheckinIntentionHidden();
-
+      Long tennateId = tenantAccountService.getCurrentTenantID();
+      if (tennateId != null) {
+        try {
+          queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+          query = queryParser.parse(tennateId.toString());
+          booleanQuery.add(query, Occur.MUST);
+        } catch (ParseException e1) {
+          e1.printStackTrace();
+        }
+      }
+      
       if (visitor != null) {
         try {
           queryParser = new QueryParser(Version.LUCENE_35, "visitor", analyzer);
@@ -271,7 +281,6 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
   
   /**
    * 准备数据，将list转化成HashMap,作为需要导出的数据
-   * @param eventRecordList
    * @return
    */
   @Override
@@ -331,7 +340,12 @@ public class ConsultationServiceImpl extends BaseServiceImpl<ConsultationRecord,
       }else{
         consultationMap.put("returnVisit", "否");
       }
-      consultationMap.put("returnVisitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, consultation.getReturnVisitDate()));
+      if (consultation.getReturnVisitDate() != null) {
+        consultationMap.put("returnVisitDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, consultation.getReturnVisitDate()));
+      }else {
+        consultationMap.put("returnVisitDate", "");
+      }
+      
       mapList.add(consultationMap);
     }
     return mapList;

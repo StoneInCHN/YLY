@@ -1328,4 +1328,61 @@ public class CommonEnum {
        */
       DISABLE
   }
+  /**
+   * 老人事件类型
+   * @author luzhang
+   *
+   */
+  public enum ElderlyEventType{
+    /**
+     * 恶劣事件
+     */
+    NEGATIVE,
+    /**
+     * 普通事件
+     */
+    NORMAL,
+    /**
+     * 表扬事件
+     */
+    ACTIVE
+  }
+  /**
+   * 全国评估表评估结果
+   * @author luzhang
+   *
+   */
+  public enum EvaluatingResult{
+    /**
+     * 0 能力完好
+     */
+    ABILITY_GOOD,
+    /**
+     * 1 轻度失能
+     */
+    ABILITY_MILD,
+    /**
+     * 2 中度失能
+     */
+    ABILITY_MODERATE,
+    /**
+     * 3 重度失能
+     */
+    ABILITY_SEVERE
+  }
+  /**
+   * 评估表类型
+   * @author luzhang
+   *
+   */
+  public enum EvaluatingFormType{
+    /**
+     * 系统默认评估表
+     */
+    SYSTEM_FORM,
+    /**
+     * 用户自定义评估表
+     */
+    CUSTOM_FORM
+  }
 }

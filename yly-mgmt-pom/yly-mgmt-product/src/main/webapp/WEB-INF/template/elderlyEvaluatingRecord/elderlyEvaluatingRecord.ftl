@@ -8,15 +8,18 @@
 	    	<div class="search-item">
 			   <label>${message("yly.common.elderly.name")}:</label>
 			   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  id="elderlyName" name="keysOfElderlyName" validtype="length[0,15]" style="width:110px;"/>
+			   <input type="hidden" id="elderlyNameHidden" name="elderlyNameHidden">
 			</div>
 			<div class="search-item">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div class="search-item">
 			    <label> 评估开始时间:</label>
-			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="text" class="Wdate" id="beginDate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="hidden" id="beginDateHidden" name="beginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="endDate"  name="endDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="endDate" id="endDate"  name="endDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="hidden" id="endDateHidden" name="endDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -29,6 +32,7 @@
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="elderlyEvaluating_manager_tool.chooseFrom();">${message("yly.button.add")}</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"  plain=true onclick="elderlyEvaluating_manager_tool.edit();">${message("yly.button.update")}</a>
 		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"  onclick="elderlyEvaluating_manager_tool.remove();">${message("yly.button.delete")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('elderlyEvaluatingRecord','elderlyEvaluating_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

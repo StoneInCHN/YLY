@@ -81,8 +81,11 @@ $(function(){
 	  var _queryParams = $("#waterElectricityChargeRecord_search_form").serializeJSON();
 	  $('#waterElectricityChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
 	  $("#waterElectricityChargeRecord_table_list").datagrid('reload');
+	  //隐藏域用于标记上次使用过的查询条件 
+	  $("#nameHidden").val($("#name").val());
+	  $("#identifierHidden").val($("#identifier").val());
+	  $("#statusHidden").val($("#status").val());
+	  $("#beginDateHidden").val($("#beginDate").val());
+	  $("#endDateHidden").val($("#endDate").val());
 	})
-	
-	 
-	 
 })

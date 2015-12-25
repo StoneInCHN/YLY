@@ -5,23 +5,28 @@
 	    <form id="bookingRegistration_search_form" class="search-form">
 			<div class="search-item">
 			    <label> ${message("yly.bookingRegistration.peopleWhoBooked")}:</label>
-			    <input class="easyui-textbox" type="text"  name="peopleWhoBooked" validtype="length[0,15]" style="width:85px;"/>
+			    <input class="easyui-textbox" type="text"  id="peopleWhoBooked" name="peopleWhoBooked" validtype="length[0,15]" style="width:85px;"/>
+			    <input type="hidden" id="peopleWhoBookedHidden" name="peopleWhoBookedHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
-			    <input class="easyui-textbox" type="text"  name="elderlyName" validtype="length[0,15]" style="width:85px;"/>
+			    <input class="easyui-textbox" type="text" id="elderlyName" name="elderlyName" validtype="length[0,15]" style="width:85px;"/>
+			    <input type="hidden" id="elderlyNameHidden" name="elderlyNameHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.bookingRegistration.intentRoomType")}:</label>
 			    <input class="easyui-combobox" id="bookingRegistrationSearchRoomType"  name="searchRoomTypeId" style="width:80px;"/>
+			    <input type="hidden" id="searchRoomTypeValueHidden" name="searchRoomTypeValueHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.bookingRegistration.bookingCheckInDate")}:</label>
 			     <input type="text" class="Wdate" id="bookingCheckInDateBeginDate" name="bookingCheckInDateBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'bookingCheckInDateDateEndDate\')}'});" />
+			     <input type="hidden" id="bookingCheckInBeginDateHidden" name="bookingCheckInBeginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="bookingCheckInDateDateEndDate"  name="bookingCheckInDateEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'bookingCheckInDateBeginDate\')}'});"/>
+			   	<input type="hidden" id="bookingCheckInEndDateHidden" name="bookingCheckInEndDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -35,6 +40,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="bookingRegistration_manager_tool.add();">${message("yly.button.add")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="bookingRegistration_manager_tool.edit();">${message("yly.button.update")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="bookingRegistration_manager_tool.remove();">${message("yly.button.delete")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('bookingRegistration','bookingRegistration_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

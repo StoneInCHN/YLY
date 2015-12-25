@@ -1,5 +1,7 @@
 package com.yly.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,8 +10,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -49,6 +58,19 @@ public class BlackList extends BaseEntity {
    * 租户ID
    */
   private Long tenantID;
+  
+  private Date blackDate;
+  
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
+  public Date getBlackDate() {
+    return blackDate;
+  }
+
+  public void setBlackDate(Date blackDate) {
+    this.blackDate = blackDate;
+  }
 
   @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
@@ -62,6 +84,8 @@ public class BlackList extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Index(name = "elderly_evaluating_record_tenantid")
   public Long getTenantID() {
     return tenantID;
   }

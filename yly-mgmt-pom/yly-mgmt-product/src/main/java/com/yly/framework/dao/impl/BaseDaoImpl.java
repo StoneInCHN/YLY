@@ -577,6 +577,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
   /**
    * 关键字搜索
    */
+  @SuppressWarnings ("unchecked")
   @Override
   public Page<T> search (Query query, Pageable pageable, Analyzer analyzer,org.apache.lucene.search.Filter filter)
   {
@@ -608,7 +609,8 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
         entityList.add ((T) o);
       }
     }
-    return new Page<T> (entityList, fullTextQuery.getResultSize (), pageable);
+    int resultSize = fullTextQuery.getResultSize ();
+    return new Page<T> (entityList,resultSize , pageable);
 
   }
   /**
@@ -628,6 +630,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
       fullTextQuery.setFilter(filter);
     }
     count = fullTextQuery.getResultSize();
+    fullTextEntityManager.close ();
     return count;
   }
   /**
@@ -641,12 +644,12 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
         .getFullTextEntityManager (entityManager);
     FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery (
         query, entityClass);
-    fullTextQuery.setFirstResult (0);
     if (filter != null)
     {
       fullTextQuery.setFilter (filter);
     }
     entityList = fullTextQuery.getResultList ();
+    fullTextEntityManager.close ();
     return entityList;
   }
   
@@ -662,5 +665,6 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
     } catch (InterruptedException e) {
       e.printStackTrace ();
     }
+    fullTextEntityManager.close ();
     }
 }

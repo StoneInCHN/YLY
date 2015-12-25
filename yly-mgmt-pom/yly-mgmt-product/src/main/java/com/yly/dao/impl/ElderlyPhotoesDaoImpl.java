@@ -1,11 +1,9 @@
 package com.yly.dao.impl;
 
-import javax.persistence.FlushModeType;
 
 import org.springframework.stereotype.Repository;
 
 import com.yly.dao.ElderlyPhotoesDao;
-import com.yly.entity.ElderlyPhotoAlbum;
 import com.yly.entity.ElderlyPhotoes;
 import com.yly.framework.dao.impl.BaseDaoImpl;
 

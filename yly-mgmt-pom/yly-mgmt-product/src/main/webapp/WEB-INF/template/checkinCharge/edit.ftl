@@ -72,6 +72,48 @@
 	    		</td>
 	    	</tr>
 	    	
+	    	[#if billing.elderlyInfo.mealFeeMonthlyPayment?? && billing.elderlyInfo.mealFeeMonthlyPayment=="true"]
+	    	<tr>
+	    		<td colspan=4>
+	    		     <div><input type="checkbox" checked="true" name="isMonthlyMeal" value="true" id="update_isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
+	    			  <fieldset id="update_monthlyMeal"> 
+	    			  	<legend>${message("yly.charge.meal.reocrd")}:</legend>
+	    			  	<table class="table table-striped">
+	    			  		<tr>
+					    		<th>${message("yly.common.charge.period")}:</th>
+					    		<td>
+					    			<input id="update_mealPeriodStartDate" value="${billing.mealCharge.periodStartDate}" name="mealCharge.periodStartDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false"/>
+					    		    ──
+				    			    <input id="update_mealPeriodEndDate" value="${billing.mealCharge.periodEndDate}" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false" readonly=true/>    
+					    		</td>
+					    		<input type="hidden" id="update_periodMonMeal">
+					    		<input type="hidden" id="update_periodDayMeal">
+					    	</tr>
+	    			  		<tr>
+	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
+					    		<td>
+					    			 <input class="easyui-textbox" value="${billing.elderlyInfo.mealType.configValue}" name="mealTypeId" id="update_mealType" panelHeight="150px" data-options="editable:false" />   
+					    		     <span class="margin-left-20" id="update_mealTypeVal"></span><span class="margin-left-10" id="update_mealPerMonth"></span><span class="margin-left-10" id="update_mealPerDay"></span>
+					    		</td>
+	    			  		</tr>
+	    			  		<tr>
+	    			  			<th>${message("yly.common.charge.money")}:</th>
+					    		<td>
+					    			 <input class="easyui-numberbox" value="${billing.mealCharge.mealAmount}" id="update_chargein_mealAmount" name="mealCharge.mealAmount" data-options="min:0,precision:2,editable:false,disabled:true" />
+					    		</td>
+					    		
+	    			  		</tr>
+	    			  		<tr>
+	    			  			<th>${message("yly.remark")}:</th>
+					    		<td>
+					    			 <input class="easyui-textbox" id="update_mealRemark" name="mealCharge.remark" style="width:400px" validtype="length[0,50]" data-options="disabled:true"/> 
+					    		</td>
+	    			  		</tr>
+	    			  	</table>
+	    			  </fieldset>
+	    		</td>
+	    	</tr>
+	    	[#else]
 	    	<tr>
 	    		<td colspan=4>
 	    		     <div><input type="checkbox" name="isMonthlyMeal" value="true" id="update_isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
@@ -94,7 +136,13 @@
 					    		     <span class="margin-left-20" id="mealTypeVal"></span><span class="margin-left-10" id="mealPerMonth"></span><span class="margin-left-10" id="mealPerDay"></span>
 					    		</td>
 	    			  		</tr>
-	    			  		
+	    			  		<tr>
+	    			  			<th>${message("yly.common.charge.money")}:</th>
+					    		<td>
+					    			 <input class="easyui-numberbox" id="update_chargein_mealAmount" name="mealCharge.mealAmount" data-options="min:0,precision:2,editable:false,disabled:true" />
+					    		</td>
+					    		
+	    			  		</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.remark")}:</th>
 					    		<td>
@@ -105,6 +153,7 @@
 	    			  </fieldset>
 	    		</td>
 	    	</tr>
+	    	[/#if]
 	    	<tr>
 	    		<td colspan=4></td>
 	    	</tr>

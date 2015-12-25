@@ -21,6 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.ElderlyEventType;
 
 /**
  * 老人事件记录表
@@ -54,6 +55,20 @@ public class ElderlyEventRecord extends BaseEntity {
    * 事件内容描述
    */
   private String eventContent;
+  /**
+   * 事件类型
+   */
+  private ElderlyEventType elderlyEventType;
+  
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  public ElderlyEventType getElderlyEventType() {
+    return elderlyEventType;
+  }
+
+  public void setElderlyEventType(ElderlyEventType elderlyEventType) {
+    this.elderlyEventType = elderlyEventType;
+  }
 
   /**
    * 事件老人

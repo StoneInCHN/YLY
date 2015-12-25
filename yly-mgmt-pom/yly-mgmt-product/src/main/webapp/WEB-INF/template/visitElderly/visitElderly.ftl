@@ -5,19 +5,23 @@
 	    <form id="visitElderly_search_form" class="search-form">
 	    	<div class="search-item">
 			    <label> ${message("yly.visitelderly.elderlyInfo")}:</label>
-			    <input class="easyui-textbox"  type="text"  name="elderlyInfo.name" style="width:85px;"/>
+			    <input class="easyui-textbox"  type="text" id="elderlyName"  name="elderlyInfo.name" style="width:85px;"/>
+			    <input type="hidden" id="elderlyNameHidden" name="elderlyNameHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.visitelderly.visitor")}:</label>
-			    <input class="easyui-textbox" type="text" name="visitor" validtype="length[0,15]" style="width:85px;"/>
+			    <input class="easyui-textbox" type="text" id="vistor" name="visitor" validtype="length[0,15]" style="width:85px;"/>
+			    <input type="hidden" id="vistorHidden" name="vistorHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.visitelderly.visitDate")}:</label>
 			    <input type="text" class="Wdate" id="visitDateBeginDate" name="visitDateBeginDate" readonly="readonly" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'visitDateEndDate\')}'});" />
+			    <input type="hidden" id="visitDateBeginDateHidden" name="visitDateBeginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="visitDateEndDate"  name="visitDateEndDate" readonly="readonly" onclick="WdatePicker({minDate: '#F{$dp.$D(\'visitDateBeginDate\')}'});"/>
+			   	<input type="hidden" id="visitDateEndDateHidden" name="visitDateEndDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -31,6 +35,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="visitElderly_manager_tool.add();">${message("yly.button.add")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="visitElderly_manager_tool.edit();">${message("yly.button.update")}</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="visitElderly_manager_tool.remove();">${message("yly.button.delete")}</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('visitElderly','visitElderly_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

@@ -59,7 +59,7 @@ $(".updateEvaluating").click(function(){//单击提交按钮
 			}
 		});
 	}else{
-		$.messager.alert('提示','信息提供有误或者不够完善！请核查...','warning');
+		$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.info_no_enough"),'warning');
 	}
 	return false;
 })
@@ -106,7 +106,7 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 		}	
 		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
 			if(section_id == null || section_id == ""){
-				$.messager.alert('提示','模块等级计算有误！','warning');
+				$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.section_level_error"),'warning');
 				return false;
 			}
 			var dataMap ={};
@@ -123,7 +123,7 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 				}
 			}		
 			if(answerScoreList.length == 0){
-				$.messager.alert('提示','2模块等级计算有误！','warning');
+				$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.section_level_error"),'warning');
 				return false;
 			}
 			dataMap.items=answerScoreList;
@@ -184,7 +184,7 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 					}
 				}	
 				if(sectionLevelList.length == 0){
-					$.messager.alert('提示','评估表等级计算有误！','warning');
+					$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.form_level_error"),'warning');
 					return false;
 				}
 				var dataMapString = JSON.stringify(sectionLevelList);

@@ -16,4 +16,6 @@ import com.yly.framework.service.BaseService;
 public interface EvaluatingSectionService extends BaseService<EvaluatingSection, Long> {
   Page<EvaluatingSection> searchPageByFilter(String keysOfElderlyName, Date beginDate,
       Date endDate, Pageable pageable);
+
+
 }

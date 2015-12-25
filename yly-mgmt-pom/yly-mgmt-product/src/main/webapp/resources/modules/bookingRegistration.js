@@ -164,6 +164,12 @@ $(function(){
 	  var _queryParams = $("#bookingRegistration_search_form").serializeJSON();
 	  $('#bookingRegistration-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#bookingRegistration-table-list").datagrid('reload');
+		//隐藏域用于标记上次使用过的查询条件 
+	  $("#peopleWhoBookedHidden").val($("#peopleWhoBooked").val());
+	  $("#elderlyNameHidden").val($("#elderlyName").val());
+	  $("#searchRoomTypeValueHidden").val($("#bookingRegistrationSearchRoomType").combobox('getText'));
+	  $("#bookingCheckInBeginDateHidden").val($("#bookingCheckInDateBeginDate").val());
+	  $("#bookingCheckInEndDateHidden").val($("#bookingCheckInDateDateEndDate").val());
 	})
 	/**
 	 * 加载查询项里面的数据

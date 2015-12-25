@@ -30,7 +30,7 @@ $(function(){
 		      {title:message("yly.blacklist.name"),field:"name",width:20,align:'center',formatter:function(value,row,index){
 		    	  return row.elderlyInfo.name;
 		      }},
-		      {title:message("yly.common.insertDate"),field:"createDate",width:20,align:'center',formatter:function(value,row,index){
+		      {title:message("yly.common.insertDate"),field:"blackDate",width:20,align:'center',formatter:function(value,row,index){
 		    	  return new Date(value).Format("yyyy-MM-dd");
 		      }},
 		      {title:message("yly.common.phonenumber"),field:"elderlyPhoneNumber",width:20,align:'center',formatter:function(value,row,index){
@@ -159,6 +159,10 @@ $(function(){
 	  var _queryParams = $("#blacklist_search_form").serializeJSON();
 	  $('#blacklist-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#blacklist-table-list").datagrid('reload');
+	//隐藏域用于标记上次使用过的查询条件 
+	  $("#nameHidden").val($("#name").val());
+	  $("#beginDateHidden").val($("#beginDate").val());		
+	  $("#endDateHidden").val($("#endDate").val());
 	})
 	
 	$.extend($.fn.validatebox.defaults.rules, {

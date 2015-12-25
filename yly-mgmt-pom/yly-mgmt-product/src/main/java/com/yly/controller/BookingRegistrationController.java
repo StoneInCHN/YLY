@@ -1,8 +1,12 @@
 package com.yly.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,10 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.BookingRegistration;
+import com.yly.entity.ConsultationRecord;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.request.BookingRegistrationSearchRequest;
+import com.yly.json.request.ConsultationRecordSearchRequest;
 import com.yly.service.BookingRegistrationService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
@@ -140,5 +147,36 @@ public class BookingRegistrationController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
-
+  /**
+   * 导出数据前，计算当前呈现给用户的有多少条数据
+   * @return
+   */
+  @RequestMapping(value = "/count", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Long> count(BookingRegistrationSearchRequest bookingRegSearch) {
+    Long count = new Long(0);
+    count = new Long(bookingRegistrationService.countByFilter(bookingRegSearch));
+    Map<String, Long> countMap = new HashMap<String, Long>(); 
+    countMap.put("count", count);
+    return countMap;
+  }
+  /**
+   * 导出列表数据，即用户已经查询出来的数据
+   * @param withDays
+   */
+  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
+  public void exportData(HttpServletResponse response,  BookingRegistrationSearchRequest bookingRegSearch) {
+    List<BookingRegistration> bookingRegistrationList = bookingRegistrationService.searchListByFilter(bookingRegSearch);
+    if (bookingRegistrationList != null && bookingRegistrationList.size() > 0) {
+      
+      String title = "Booking Registration"; // 工作簿标题，同时也是excel文件名前缀
+      
+      String[] headers = {"peopleWhoBooked", "elderlyName", "phoneNumber", "bookingCheckInDate", "IDCard", "intentRoomType", "gender", "remark"}; // 需要导出的字段
+      String[] headersName = {"预约人", "老人姓名", "电话号码", "预约入住时间", "身份证号码", "意向房型", "性别", "备注"}; // 字段对应列的列名
+      // 导出数据到Excel
+      List<Map<String, String>> bookingRegMapList = bookingRegistrationService.prepareMap(bookingRegistrationList);
+      if (bookingRegMapList.size() > 0) {
+        exportListToExcel(response, bookingRegMapList, title, headers, headersName);
+      }
+    }
+  } 
 }

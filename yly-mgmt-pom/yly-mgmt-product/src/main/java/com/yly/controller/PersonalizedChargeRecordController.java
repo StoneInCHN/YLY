@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,7 @@ import com.yly.entity.PersonalizedRecord;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.request.ChargeSearchRequest;
+import com.yly.json.request.WaterElectricitySearchRequest;
 import com.yly.service.PersonalizedChargeService;
 import com.yly.utils.FieldFilterUtils;
 
@@ -111,6 +113,36 @@ public class PersonalizedChargeRecordController extends BaseController {
     model.addAttribute("serviceDetails", serviceDetails);
     return "personalizedChargeRecord/details";
   }
-
+  /**
+   * 导出数据前，计算当前呈现给用户的有多少条数据
+   * @return
+   */
+  @RequestMapping(value = "/count", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Long> count(WaterElectricitySearchRequest waterElectricitySearch) {
+    Long count = new Long(0);
+    count = new Long(personalizedChargeService.countByFilter(waterElectricitySearch));
+    Map<String, Long> countMap = new HashMap<String, Long>(); 
+    countMap.put("count", count);
+    return countMap;
+  }
+  /**
+   * 导出列表数据，即用户已经查询出来的数据
+   * @param withDays
+   */
+  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
+  public void exportData(HttpServletResponse response, WaterElectricitySearchRequest waterElectricitySearch) {
+    List<PersonalizedCharge> personalizedChargeList = personalizedChargeService.searchListByFilter(waterElectricitySearch);
+    if (personalizedChargeList != null && personalizedChargeList.size() > 0) {
+      String title = "Water Electricity Charge"; // 工作簿标题，同时也是excel文件名前缀
+      String[] headers = {"elderlyInfo.name", "elderlyInfo.identifier", "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel.configValue",
+          "personalizedAmount", "operator", "periodStartDate","chargeStatus"}; // 需要导出的字段
+      String[] headersName = {"老人姓名", "编号", "房间", "护理等级", "服务费(元)", "经办人", "收款时间段", "状态"}; // 字段对应列的列名
+      // 导出数据到Excel
+      List<Map<String, String>> personalizedChargeMapList = personalizedChargeService.prepareMap(personalizedChargeList);
+      if (personalizedChargeMapList.size() > 0) {
+        exportListToExcel(response, personalizedChargeMapList, title, headers, headersName);
+      }
+    }
+  } 
 
 }

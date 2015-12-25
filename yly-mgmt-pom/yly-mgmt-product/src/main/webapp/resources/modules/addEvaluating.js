@@ -97,7 +97,7 @@ $(".saveEvaluating").click(function(){//单击提交按钮
 			}
 		});
 	}else{
-		$.messager.alert('提示','信息提供有误或者不够完善！请核查...','warning');
+		$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.info_no_enough"),'warning');
 	}
 	return false;
 })
@@ -127,7 +127,7 @@ $(".updateEvaluating").click(function(){//单击提交按钮
 			}
 		});
 	}else{
-		$.messager.alert('提示','信息提供有误或者不够完善！请核查...','warning');
+		$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.info_no_enough"),'warning');
 	}
 	return false;
 })
@@ -187,7 +187,7 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 		}	
 		if(levelFlag){//当且仅当整个模块的所有题都做了，才能评等级
 			if(section_id == null || section_id == ""){
-				$.messager.alert('提示','模块等级计算有误！','warning');
+				$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.section_level_error"),'warning');
 				return false;
 			}
 			var dataMap ={};
@@ -204,7 +204,7 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 				}
 			}		
 			if(answerScoreList.length == 0){
-				$.messager.alert('提示','模块等级计算有误！','warning');
+				$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.section_level_error"),'warning');
 				return false;
 			}
 			dataMap.items=answerScoreList;
@@ -216,7 +216,7 @@ function populateLevel(answer_begin_index,sectionSize,section_index,section_id){
 				data:{"itemsScoreJSON":dataMapString},
 				success:function(result,response,status){
 					if(result.level==-1){
-						$.messager.alert('提示','模块等级计算有误！','warning');
+						$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.section_level_error"),'warning');
 					}else{
 							$("#sectionLevelOf"+section_index).textbox('setValue',result.level);	
 							$("#sectionLevel"+section_index).textbox('setValue',result.level);	
@@ -269,7 +269,7 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 					}
 				}	
 				if(sectionLevelList.length == 0){
-					$.messager.alert('提示','评估表等级计算有误！','warning');
+					$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.form_level_error"),'warning');
 					return false;
 				}
 				var dataMapString = JSON.stringify(sectionLevelList);
@@ -280,7 +280,7 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 					data:{"sectionsLevelJSON":dataMapString},
 					success:function(result,response,status){
 						if(result.level ==""){
-							$.messager.alert('提示','评估表等级计算有误！','warning');
+							$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.form_level_error"),'warning');
 							return false;
 						}else{
 							$("#formLevel").textbox('setValue',result.level);	
@@ -420,7 +420,7 @@ function searchAllElderlyInfo() {
 	    		 //$('#evaluatingReason').combobox('disable');//只读
 	    		 
 	    		 //填充familymember
-	    		 $('#talbe-familyMember').html('<caption><h5>家庭成员</h5></caption>');
+	    		 $('#talbe-familyMember').html('<caption><h5>'+message("yly.elderlyInfo.elderlyFamilyMembers")+'</h5></caption>');
 	    		 var familymenbersHtml="";
 	    		 var familymembers = rowData.elderlyFamilyMembers;
 	    		 if(familymembers != null && familymembers.length > 0){
@@ -428,39 +428,39 @@ function searchAllElderlyInfo() {
 	    			 for(var i = 0; i<size; i++){
 	    				 var familymember = familymembers[i];
 	    				 familymenbersHtml+='<tr>';
-	    				 familymenbersHtml+='<th>成员名称:</th>';
+	    				 familymenbersHtml+='<th>'+message("yly.elderlyInfo.familyMember.memberName")+':</th>';
 	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberName" value="'+familymember.memberName+'" readonly=true  style="width:75px;"/></td>';
-	    				 familymenbersHtml+='<th>成员电话:</th>';
+	    				 familymenbersHtml+='<th>'+message("yly.elderlyInfo.familyMember.PhoneNumber")+':</th>';
 	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text" name="elderlyFamilyMembers['+i+'].memberPhoneNumber" value="'+familymember.memberPhoneNumber+'" readonly=true  style="width:110px;"/></td>';
-	    				 familymenbersHtml+='<th>和老人关系:</th>';
+	    				 familymenbersHtml+='<th>'+message("yly.common.relation")+':</th>';
 	    				 familymenbersHtml+='<input  type="hidden" name="elderlyFamilyMembers['+i+'].memberRelation" value="'+familymember.memberRelation+'"/>';
 	    				 var memberRelation="";
 	    				 if(familymember.memberRelation == "SELF"){
-	    					 memberRelation="本人";
+	    					 memberRelation=message("yly.common.relation.self");
 	    				 }
 		    			 if(familymember.memberRelation == "CHILDREN"){
-		    					 memberRelation="子女";
+		    					 memberRelation=message("yly.common.relation.children");
 		    			 }
 		    			 if(familymember.memberRelation == "MARRIAGE_RELATIONSHIP"){
-	    					 memberRelation="夫妻";
+	    					 memberRelation=message("yly.common.relation.marriage_relationship");
 		    			 }
 		    			 if(familymember.memberRelation == "GRANDPARENTS_AND_GRANDCHILDREN"){
-	    					 memberRelation="祖孙关系";
+	    					 memberRelation=message("yly.common.relation.grandparents_and_grandchildren");
 		    			 }
 		    			 if(familymember.memberRelation == "BROTHERS_OR_SISTERS"){
-	    					 memberRelation="兄弟或姐妹";
+	    					 memberRelation=message("yly.common.relation.brothers_or_sisters");
 		    			 }
 		    			 if(familymember.memberRelation == "DAUGHTERINLAW_OR_SONINLAW"){
-	    					 memberRelation="儿媳或女婿";
+	    					 memberRelation=message("yly.common.relation.daughterinlaw_or_soninlaw");
 		    			 }
 		    			 if(familymember.memberRelation == "FRIEND"){
-	    					 memberRelation="朋友";
+	    					 memberRelation=message("yly.common.relation.friend");
 		    			 }
 		    			 if(familymember.memberRelation == "OTHER"){
-	    					 memberRelation="其它";
+	    					 memberRelation=message("yly.common.other");
 		    			 }
 	    				 familymenbersHtml+='<td><input class="easyui-textbox" type="text"  value="'+memberRelation+'" readonly=true  style="width:110px;"/></td>';
-						familymenbersHtml+='<th>地址</th>';
+						familymenbersHtml+='<th>'+message("yly.common.address")+'</th>';
 						var memberResidentialAddress="";
 						if(familymember.memberResidentialAddress != null){
 							memberResidentialAddress=familymember.memberResidentialAddress;

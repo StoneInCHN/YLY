@@ -13,10 +13,15 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.EvaluatingFormStatus;
+import com.yly.entity.commonenum.CommonEnum.EvaluatingFormType;
 
 /**
  * 评估表
@@ -58,6 +63,19 @@ public class EvaluatingForm extends BaseEntity {
    * 该评估表的评分规则
    */
   private String evaluatingRule;
+  /**
+   * 评估表类型
+   */
+  private EvaluatingFormType EvaluatingFormType;
+  
+  @JsonProperty
+  public EvaluatingFormType getEvaluatingFormType() {
+    return EvaluatingFormType;
+  }
+
+  public void setEvaluatingFormType(EvaluatingFormType evaluatingFormType) {
+    EvaluatingFormType = evaluatingFormType;
+  }
 
   @JsonProperty
   @Column(length = 2000)
@@ -79,6 +97,7 @@ public class EvaluatingForm extends BaseEntity {
   }
   @JsonProperty  
   @Column(length = 30)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getFormName() {
     return formName;
   }

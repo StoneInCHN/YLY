@@ -2,7 +2,6 @@ package com.yly.service;
 
 import java.util.Date;
 
-import com.yly.entity.ElderlyPhotoes;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;

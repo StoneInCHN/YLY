@@ -1,10 +1,12 @@
 package com.yly.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -149,4 +151,35 @@ public class VisitElderlyRecordController extends BaseController {
     }
     return SUCCESS_MESSAGE;
   }
+  /**
+   * 导出数据前，计算当前呈现给用户的有多少条数据
+   */
+  @RequestMapping(value = "/count", method = RequestMethod.POST)
+  public @ResponseBody Map<String, Long> count(String elderlyNameHidden, String vistorHidden, Date visitDateBeginDateHidden,
+      Date visitDateEndDateHidden) {
+    Long count = new Long(0);
+    count = new Long(visitElderlyRecordService.countByFilter(elderlyNameHidden, vistorHidden, visitDateBeginDateHidden, visitDateEndDateHidden));
+    Map<String, Long> countMap = new HashMap<String, Long>(); 
+    countMap.put("count", count);
+    return countMap;
+  }
+  /**
+   * 导出列表数据，即用户已经查询出来的数据
+   */
+  @RequestMapping(value = "/exportData", method = {RequestMethod.GET,RequestMethod.POST})
+  public void exportData(HttpServletResponse response,  String elderlyNameHidden, String vistorHidden, Date visitDateBeginDateHidden,
+      Date visitDateEndDateHidden) {
+    List<VisitElderlyRecord> visitElderlyRecordList = null;
+    visitElderlyRecordList = visitElderlyRecordService.searchListByFilter(elderlyNameHidden, vistorHidden, visitDateBeginDateHidden, visitDateEndDateHidden);
+    if (visitElderlyRecordList != null && visitElderlyRecordList.size() > 0) {
+      String title = "Visit Elderly Record"; // 工作簿标题，同时也是excel文件名前缀
+      String[] headers = {"elderlyInfo.name", "visitor", "IDCard", "phoneNumber", "visitPersonnelNumber", "relation", "visitDate", "dueLeaveDate", "reasonForVisit", "remark"}; // 需要导出的字段
+      String[] headersName = {"被探望老人", "来访者", "身份证号码", "电话号码", "来访人数", "与老人关系", "来访时间", "预计离开时间", "来访原因", "备注"}; // 字段对应列的列名
+      // 导出数据到Excel
+      List<Map<String, String>> eventRecordMapList = visitElderlyRecordService.prepareMap(visitElderlyRecordList);
+      if (eventRecordMapList.size() > 0) {
+        exportListToExcel(response, eventRecordMapList, title, headers, headersName);
+      }
+    }
+  } 
 }

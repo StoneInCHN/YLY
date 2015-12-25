@@ -474,5 +474,9 @@ $(function(){
 				listRemove('prescription-table-list','../prescription/delete.jhtml');
 			}
 	};
-
+	$("#prescription-search-btn").click(function(){
+		  var _queryParams = $("#prescription-search-form").serializeJSON();
+		  $('#prescription-table-list').datagrid('options').queryParams = _queryParams;  
+		  $("#prescription-table-list").datagrid('reload');
+		})
 })

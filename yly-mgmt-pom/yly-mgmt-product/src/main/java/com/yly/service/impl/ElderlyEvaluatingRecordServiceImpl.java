@@ -1,5 +1,6 @@
 package com.yly.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import com.yly.entity.EvaluatingItems;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.entity.EvaluatingItemsOptions;
 import com.yly.entity.EvaluatingSection;
+import com.yly.entity.commonenum.CommonEnum.EvaluatingReason;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
@@ -63,33 +65,7 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
   @Resource(name = "evaluatingItemsServiceImpl")
   private EvaluatingItemsService evaluatingItemsService;
   
-  @Override
-  public Page<ElderlyEvaluatingRecord> searchPageByFilter(String keysOfElderlyName, Date beginDate,
-      Date endDate, Pageable pageable) {
-    IKAnalyzer analyzer = new IKAnalyzer();
-    analyzer.setMaxWordLength(true);
 
-    try {
-      BooleanQuery query = new BooleanQuery();
-      if (keysOfElderlyName != null) {
-        String text = QueryParser.escape(keysOfElderlyName);
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
-        Query filterQuery = filterParser.parse(text);
-        query.add(filterQuery, Occur.MUST);
-      }
-      if (beginDate != null || endDate != null) {
-        TermRangeQuery tQuery =
-            new TermRangeQuery("creatDate", DateTimeUtils.convertDateToString(beginDate, null),
-                DateTimeUtils.convertDateToString(endDate, null), beginDate != null, endDate != null);
-        query.add(tQuery, Occur.MUST);
-      }
-
-      return elderlyEvaluatingRecordDao.search(query, pageable, analyzer, null);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
   
   /**
    * @return 返回每个模块对应总得分
@@ -429,5 +405,136 @@ public class ElderlyEvaluatingRecordServiceImpl extends BaseServiceImpl<ElderlyE
       }
     }
     return formPrimaryLevel;
+  }
+
+  /**
+   * 根据搜索条件，返回查询结果个数
+   */
+  @Override
+  public int countByFilter(String elderlyNameHidden, Date beginDateHidden, Date endDateHidden) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery booleanQuery = getQuery(analyzer, elderlyNameHidden, beginDateHidden, endDateHidden);
+      return elderlyEvaluatingRecordDao.count(booleanQuery, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+  /**
+   * 根据搜索条件，返回查询结果List
+   */
+  @Override
+  public List<ElderlyEvaluatingRecord> searchListByFilter(String elderlyNameHidden,
+      Date beginDateHidden, Date endDateHidden) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+    try {
+      BooleanQuery query = getQuery(analyzer, elderlyNameHidden, beginDateHidden, endDateHidden);
+      return elderlyEvaluatingRecordDao.searchList(query, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  /**
+   * 根据搜索条件，返回查询结果page
+   */ 
+  @Override
+  public Page<ElderlyEvaluatingRecord> searchPageByFilter(String keysOfElderlyName, Date beginDate,
+      Date endDate, Pageable pageable) {
+    IKAnalyzer analyzer = new IKAnalyzer();
+    analyzer.setMaxWordLength(true);
+
+    try {
+      BooleanQuery booleanQuery = new BooleanQuery();
+      
+      QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+      Query query = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
+      booleanQuery.add(query, Occur.MUST);
+      
+      if (keysOfElderlyName != null) {
+        String text = QueryParser.escape(keysOfElderlyName);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+        Query filterQuery = filterParser.parse(text);
+        booleanQuery.add(filterQuery, Occur.MUST);
+      }
+      if (beginDate != null || endDate != null) {
+        TermRangeQuery tQuery =
+            new TermRangeQuery("evaluatingDate", DateTimeUtils.convertDateToString(beginDate, null),
+                DateTimeUtils.convertDateToString(endDate, null), beginDate != null, endDate != null);
+        booleanQuery.add(tQuery, Occur.MUST);
+      }
+
+      return elderlyEvaluatingRecordDao.search(booleanQuery, pageable, analyzer, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  /**
+   * 根据查询条件中的 老人姓名，评估开始时间和结束时间，返回带条件的查询Query
+   * @return
+   */
+  private BooleanQuery getQuery(IKAnalyzer analyzer, String elderlyNameHidden, Date beginDateHidden, Date endDateHidden) {
+    BooleanQuery booleanQuery  = new BooleanQuery();
+    try {
+      Long tennateId = tenantAccountService.getCurrentTenantID();
+      if (tennateId != null) {
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        Query query = queryParser.parse(tennateId.toString());
+        booleanQuery.add(query, Occur.MUST);
+      }
+      
+      if (elderlyNameHidden != null) {
+        String text = QueryParser.escape(elderlyNameHidden);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+        Query filterQuery = filterParser.parse(text);
+        booleanQuery.add(filterQuery, Occur.MUST);
+      }  
+      if (beginDateHidden != null || endDateHidden != null) {
+        TermRangeQuery tQuery =
+            new TermRangeQuery("evaluatingDate", DateTimeUtils.convertDateToString(beginDateHidden, null),
+                DateTimeUtils.convertDateToString(endDateHidden, null), beginDateHidden != null, endDateHidden != null);
+        booleanQuery.add(tQuery, Occur.MUST);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return booleanQuery;
+  }
+  /**
+   * 准备数据，将list转化成HashMap,作为需要导出的数据
+   * @return
+   */
+  @Override
+  public List<Map<String, String>> prepareMap(List<ElderlyEvaluatingRecord> evaluatingRecordList) {
+    List<Map<String, String>> mapList = new ArrayList<Map<String,String>>();
+    for (ElderlyEvaluatingRecord evaluatingRecord : evaluatingRecordList) {
+      Map<String, String> evaluatingRecordMap = new HashMap<String, String>();
+      evaluatingRecordMap.put("elderlyInfo.name", evaluatingRecord.getElderlyInfo()!=null?evaluatingRecord.getElderlyInfo().getName():"");
+      evaluatingRecordMap.put("operator", evaluatingRecord.getOperator());
+      if(evaluatingRecord.getEvaluatingReason() == EvaluatingReason.CHECKIN_EVALUATING){
+        evaluatingRecordMap.put("evaluatingReason", "入院评估");
+      }else if (evaluatingRecord.getEvaluatingReason() == EvaluatingReason.ROUTINE_EVALUATING) {
+        evaluatingRecordMap.put("evaluatingReason", "入院后常规评估");
+      }else if (evaluatingRecord.getEvaluatingReason() == EvaluatingReason.IMMEDIATE_EVALUATING) {
+        evaluatingRecordMap.put("evaluatingReason", "状况发生变化后的即时评估");
+      }else if (evaluatingRecord.getEvaluatingReason() == EvaluatingReason.QUESTION_EVALUATING) {
+        evaluatingRecordMap.put("evaluatingReason", "有疑问的再次评估");
+      }
+      evaluatingRecordMap.put("evaluatingResult", evaluatingRecord.getEvaluatingResult());
+      evaluatingRecordMap.put("evaluatingForm.formName", evaluatingRecord.getEvaluatingForm()!=null?evaluatingRecord.getEvaluatingForm().getFormName():"");
+      if (evaluatingRecord.getEvaluatingDate() != null) {
+        evaluatingRecordMap.put("evaluatingDate", DateTimeUtils.getSimpleFormatString(DateTimeUtils.shortDateFormat, evaluatingRecord.getEvaluatingDate()));
+      }else {
+        evaluatingRecordMap.put("evaluatingDate", "");
+      }
+      
+      mapList.add(evaluatingRecordMap);
+    }
+    return mapList;
   }
 }

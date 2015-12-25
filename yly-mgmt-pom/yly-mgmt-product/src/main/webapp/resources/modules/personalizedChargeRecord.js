@@ -72,8 +72,12 @@ $(function(){
 	  var _queryParams = $("#personalizedChargeRecord_search_form").serializeJSON();
 	  $('#personalizedChargeRecord_table_list').datagrid('options').queryParams = _queryParams;  
 	  $("#personalizedChargeRecord_table_list").datagrid('reload');
+	  //隐藏域用于标记上次使用过的查询条件 
+	  $("#nameHidden").val($("#name").val());
+	  $("#identifierHidden").val($("#identifier").val());
+	  $("#statusHidden").val($("#status").val());
+	  $("#beginDateHidden").val($("#beginDate").val());
+	  $("#endDateHidden").val($("#endDate").val());
 	})
-	
-	 
 	 
 })

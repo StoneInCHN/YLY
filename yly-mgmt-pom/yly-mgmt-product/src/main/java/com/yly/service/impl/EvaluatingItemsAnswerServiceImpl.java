@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.dao.EvaluatingItemsAnswerDao;
-import com.yly.entity.ElderlyPhotoes;
 import com.yly.entity.EvaluatingItemsAnswer;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;

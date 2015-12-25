@@ -1,6 +1,5 @@
 package com.yly.dao;
 
-import com.yly.entity.BedNurseCharge;
 import com.yly.entity.ElderlyStuffDeposit;
 import com.yly.framework.dao.BaseDao;
 

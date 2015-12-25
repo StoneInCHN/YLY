@@ -59,7 +59,7 @@ $(".updateEvaluating").click(function(){//单击提交按钮
 			}
 		});
 	}else{
-		$.messager.alert('提示','信息提供有误或者不够完善！请核查...','warning');
+		$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.info_no_enough"),'warning');
 	}
 	return false;
 })
@@ -121,7 +121,7 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 			if(editformLevelFlag){//当且仅当每个模块的等级都出来了，才能对整个评估表评等级
 				var form_Id = $("#evaluatintFormID").val() ;
 				if(form_Id == null || form_Id == ""){
-					$.messager.alert('提示','评估表等级计算有误！','warning');
+					$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.form_level_error"),'warning');
 					return false;
 				}
 				var dataMap ={};
@@ -138,7 +138,7 @@ function populateFormLevel(form_sectionSize){//模块等级发生改变时候
 					}
 				}	
 				if(sectionLevelList.length == 0){
-					$.messager.alert('提示','评估表等级计算有误！','warning');
+					$.messager.alert(message("yly.common.prompt"),message("yly.elderly.evaluating.form_level_error"),'warning');
 					return false;
 				}
 				dataMap.sections=sectionLevelList;

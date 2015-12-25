@@ -1,13 +1,11 @@
 package com.yly.service.impl;
 
-import java.util.Date;
 
 import javax.annotation.Resource;
 
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,6 @@ import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.EvaluatingItemsService;
-import com.yly.utils.DateTimeUtils;
 
 /**
  * 题目表 Service Implement

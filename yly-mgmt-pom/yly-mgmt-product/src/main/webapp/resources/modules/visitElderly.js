@@ -196,6 +196,12 @@ $(function(){
 	  var _queryParams = $("#visitElderly_search_form").serializeJSON();
 	  $('#visitElderly-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#visitElderly-table-list").datagrid('reload');
+	  	//隐藏域用于标记上次使用过的查询条件 
+		$("#elderlyNameHidden").val($("#elderlyName").val());
+		$("#vistorHidden").val($("#vistor").val());
+		$("#visitDateBeginDateHidden").val($("#visitDateBeginDate").val());
+		$("#visitDateEndDateHidden").val($("#visitDateEndDate").val());
+	  
 	})
 	
 

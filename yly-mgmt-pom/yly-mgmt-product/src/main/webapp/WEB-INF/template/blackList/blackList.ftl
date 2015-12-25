@@ -6,14 +6,17 @@
 	    	<div class="search-item">
 			    <label> 黑名单:</label>
 			    <input type="text" class="easyui-textbox" id="name" name="elderlyInfo.name" validtype="length[0,20]" style="width:85px;" />
+			    <input type="hidden" id="nameHidden" name="nameHidden">
 			</div>
 			<div class="search-item">
 			    <label> 录入时间:</label>
 			    <input type="text" class="Wdate" id="beginDate" name="beginDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'endDate\')}'});" />
+			    <input type="hidden" id="beginDateHidden" name="beginDateHidden">
 			</div>
 			<div class="search-item">
 			    <label>到:</label>
 			   	<input type="text" class="Wdate" id="endDate"  name="endDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beginDate\')}'});"/>
+			   	<input type="hidden" id="endDateHidden" name="endDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -27,6 +30,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="blacklist_manager_tool.add();">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="blacklist_manager_tool.edit();">修改</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="blacklist_manager_tool.remove();">删除</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('blackList','blacklist_search_form');">导出</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

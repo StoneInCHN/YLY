@@ -70,9 +70,13 @@
 				[@shiro.hasPermission name="affairs"]
 				<li><a href="#affairs"><i class="fa fa-users fa-1x"></i>院内事务</a></li>
 				[/@shiro.hasPermission]
-				<[@shiro.hasPermission name="systemManage"]
+				[@shiro.hasPermission name="systemManage"]
 				<li><a href="#system"><i class="fa fa-users fa-1x"></i>系统管理</a></li>
 				[/@shiro.hasPermission]
+				[@shiro.hasPermission name="statisticalReports"]
+				<li><a href="#statisticalReports"><i class="fa fa-users fa-1x"></i>统计报表</a></li>
+				[/@shiro.hasPermission]
+				
 				[@shiro.hasPermission name="personnelManage"]
 				<li><a href="#personnel"><i class="fa fa-users fa-1x"></i>${message("yly.personnel.config")}</a></li>
 				[/@shiro.hasPermission]
@@ -121,9 +125,7 @@
 		    		[@shiro.hasPermission name="checkinCharge"]
 		    		<li><a href="#" data-url="${base}/console/billing/checkinCharge.jhtml">${message("yly.charge.checkin")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		[@shiro.hasPermission name="checkoutCharge"]
-		    		<li><a href="#" data-url="${base}/console/billing/checkoutCharge.jhtml">${message("yly.charge.checkout")}</a></li>
-		    		[/@shiro.hasPermission]
+
 		    		[@shiro.hasPermission name="elderlyEvaluatingRecord"]
 		    		<li><a href="#" data-url="${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml">${message("yly.elderlyInfo.evaluating")}</a></li>
 		    		[/@shiro.hasPermission]
@@ -190,6 +192,17 @@
 		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
 		    		[/@shiro.hasPermission]
 		    	</ul>
+		    	<ul title="统计报表" id="statisticalReports">
+		    		[@shiro.hasPermission name="reportElderlyStatus"]
+		    		<li><a href="#" data-url="${base}/console/tenantAccount/tenantAccount.jhtml">用户管理</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportSexualProportion"]
+		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">男女比例</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportDonate"]
+		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">捐赠统计</a></li>
+		    		[/@shiro.hasPermission]
+		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]
 		    		<li><a href="#" data-url="${base}/console/bedChargeConfig/bedChargeConfig.jhtml">${message("yly.charge.bed")}</a></li>
@@ -214,7 +227,7 @@
 		    		<li><a href="#" data-url="${base}/console/nursePlan/nursePlan.jhtml">${message("yly.nurse.plan")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.modify")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.personal")}</a></li>
-		    	</ul> 
+		    	</ul>
 		    	[@shiro.hasPermission name="volunteer"]  
 		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
@@ -248,6 +261,9 @@
 		    		[@shiro.hasPermission name="personalizedChargeRecord"]
 		    		<li><a href="#" data-url="${base}/console/personalizedChargeRecord/personalizedChargeRecord.jhtml">${message("yly.charge.personalized.service.record")}</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="checkoutCharge"]
+		    		<li><a href="#" data-url="${base}/console/billing/checkoutCharge.jhtml">${message("yly.charge.checkout")}</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>       
 		    	[@shiro.hasPermission name="blackList"]   
 		    	<ul title="${message("yly.blacklist.config")}" id="blacklist">
@@ -272,17 +288,50 @@
 		    		<li><a href="#" >${message("yly.personnel.tenantuser")}</a></li>
 		    		<li><a href="#" >${message("yly.personnel.vacate")}</a></li>
 		    	</ul>    
-    </div>   
+    </div>
+    <!--<div class="right-content" data-options="region:'east',title:'通知公告'" >
+    </div>
+    -->   
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   
 		    <div title="起始页" style="padding:20px;">   
-		        <p>欢迎来到管理系统</p>
+		        <!--<p>欢迎来到管理系统</p>
 		        
 		        <button id="selectRoom">选房</button>
-		        
+		        -->
+		        <table border="0" >
+				    <tr>
+				        <!--<td>
+				        	<div class="jumbotron">
+				        	<div class="container">
+    
+							  <h1>Hello, world!</h1>
+							  <p>...</p>
+							  </
+							</div>
+				        </td>
+				        -->
+				        <td style="float:right">
+				        	<div id="elderlyStatusReportId" style="height:300px;width:400px">
+				        </td>
+				        
+				         <td>
+				            <div id="elderlyAgeReportId" style="height:300px;width: 400px;">
+				        </td>
+				         <td>
+				            <div id="elderlyGenderRateReportId" style="height:300px;width: 300px;">
+				        </td>  
+				    </tr>
+				    <tr >
+				    	<td >
+				    		<div id="elderlyMedicalReport" style="height:300px;width: 100%;">
+				    	</td>
+				    <tr>
+				</table>
+		    </div>
 		    </div>    
 		</div> 
-    </div>   
+    </div>    
     
     <div id="searchElderlyInfo"></div>
     <div id="searchAlbum"></div>
@@ -302,6 +351,8 @@
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
+	<script type="text/javascript" src="${base}/resources/js/highcharts.js"></script>
+	<script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
         <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>
