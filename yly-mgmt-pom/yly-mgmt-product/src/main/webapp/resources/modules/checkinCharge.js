@@ -223,9 +223,8 @@ function checkinEditBill(billId){
 	    					//console.log(result.periodMonth+"个月"+result.periodDay+"天");
 	    					$('#update_periodMonMeal').val(result.periodMonth);
 	    					$('#update_periodDayMeal').val(result.periodDay);
-	    					
-	    					$('#update_mealType').textbox("reset");
-	    					$('#update_chargein_mealAmount').textbox("reset");
+	    					$('#update_mealType').textbox("clear");
+	    					$('#update_chargein_mealAmount').textbox("clear");
 	    					$('#update_mealTypeVal').html("");
 	    					$('#update_mealTypeVal').attr("data-value","");
 	    					$('#update_mealPerMonth').html("");
@@ -259,6 +258,66 @@ function checkinEditBill(billId){
 	    	    }
 	    	});
 	    	
+	    	//是否伙食费包月
+	    	$("#update_isMonthlyMeal").click(function(){
+	    		
+	    		if($("#update_isMonthlyMeal").is(":checked")==true){
+	    			$("#update_monthlyMeal").css('display','block');
+//	    			$("#update_mealRemark").textbox({
+//	    				disabled:false
+//	    				
+//	    			});
+	    			$("#update_mealPeriodStartDate").textbox({
+	    				disabled:false
+	    				
+	    			});
+	    			$("#update_mealPeriodEndDate").textbox({
+	    				disabled:false
+	    				
+	    			});
+	    			$("#update_mealType").textbox({
+	    				required:true,
+	    				disabled:false
+	    				
+	    			});
+	    			$("#update_chargein_mealAmount").numberbox({
+	    				required:true,
+	    				disabled:false
+	    			});
+	    			$("#update_monthlyMeal table input[type=hidden]").each(function(){
+	    				$(this).attr("disabled",false);
+	    			});
+	    		}
+	    		
+	    		if($("#update_isMonthlyMeal").is(":checked")==false){
+	    			$("#update_monthlyMeal").css('display','none'); 
+//	    			$("#update_mealRemark").textbox({
+//	    				disabled:true
+//	    			});
+	    			$("#update_mealPeriodStartDate").textbox({
+	    				disabled:true
+	    				
+	    			});
+	    			$("#update_mealPeriodEndDate").textbox({
+	    				disabled:true
+	    				
+	    			});
+	    			$("#update_mealType").textbox('clear');
+	    			$("#update_mealType").textbox({
+	    				required:false,
+	    				disabled:true
+	    			});
+	    			$("#update_chargein_mealAmount").numberbox('clear');
+	    			$("#update_chargein_mealAmount").numberbox({
+	    				required:false,
+	    				disabled:true
+	    			});
+	    			$("#update_monthlyMeal table input[type=hidden]").each(function(){
+	    				$(this).attr("disabled",true);
+	    			});
+	    		}
+	    		
+	    	});
 	    	
 	    	$('#update_checkin_deposit').numberbox({
 	    		onChange:function(value){
@@ -316,6 +375,7 @@ function checkinEditBill(billId){
 							console.log(mealPerDay);
 							if(periodMonMeal!="" && periodDayMeal!=""){
 								var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
+								console.log(mealAmount);
 								$('#update_chargein_mealAmount').numberbox('setValue',mealAmount);
 							}
 							

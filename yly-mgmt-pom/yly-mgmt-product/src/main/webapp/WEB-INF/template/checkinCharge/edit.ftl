@@ -21,7 +21,7 @@
 					    		</td>
 					    		<th>${message("yly.remark")}:</th>
 					    		<td width="250px">
-					    			 <input class="easyui-textbox" name="deposit.remark" value="${billing.deposit.remark}" style="width:200px" validtype="length[0,50]"/> 
+					    			 <input class="easyui-textbox" name="deposit.remark" value="${billing.deposit.remark}" style="width:200px" validtype="length[0,50]" data-options="disabled:true"/> 
 					    		</td>
 	    			  		</tr>
 	    			  		
@@ -64,7 +64,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.remark")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" name="bedNurseCharge.remark" style="width:400px" validtype="length[0,50]"/> 
+					    			 <input class="easyui-textbox" name="bedNurseCharge.remark" style="width:400px" validtype="length[0,50]" data-options="disabled:true"/> 
 					    		</td>
 	    			  		</tr>
 	    			  	</table>
@@ -75,7 +75,7 @@
 	    	[#if billing.elderlyInfo.mealFeeMonthlyPayment?? && billing.elderlyInfo.mealFeeMonthlyPayment=="true"]
 	    	<tr>
 	    		<td colspan=4>
-	    		     <div><input type="checkbox" checked="true" name="isMonthlyMeal" value="true" id="update_isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
+	    		     <div><input type="checkbox" name="isMonthlyMeal" checked="true" id="update_isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
 	    			  <fieldset id="update_monthlyMeal"> 
 	    			  	<legend>${message("yly.charge.meal.reocrd")}:</legend>
 	    			  	<table class="table table-striped">
@@ -86,8 +86,8 @@
 					    		    ──
 				    			    <input id="update_mealPeriodEndDate" value="${billing.mealCharge.periodEndDate}" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false" readonly=true/>    
 					    		</td>
-					    		<input type="hidden" id="update_periodMonMeal">
-					    		<input type="hidden" id="update_periodDayMeal">
+					    		<input type="hidden" id="update_periodMonMeal" value="${billDateMap.periodMonth}">
+					    		<input type="hidden" id="update_periodDayMeal" value="${billDateMap.periodDay}">
 					    	</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
@@ -99,7 +99,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.mealCharge.mealAmount}" id="update_chargein_mealAmount" name="mealCharge.mealAmount" data-options="min:0,precision:2,editable:false,disabled:true" />
+					    			 <input class="easyui-numberbox"  value="${billing.mealCharge.mealAmount}" id="update_chargein_mealAmount" name="mealCharge.mealAmount" data-options="min:0,precision:2,editable:false" />
 					    		</td>
 					    		
 	    			  		</tr>
@@ -133,7 +133,7 @@
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
 					    		<td>
 					    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="mealTypeId" id="mealType" panelHeight="150px" data-options="editable:false,disabled:true" />   
-					    		     <span class="margin-left-20" id="mealTypeVal"></span><span class="margin-left-10" id="mealPerMonth"></span><span class="margin-left-10" id="mealPerDay"></span>
+					    		     <span class="margin-left-20" id="update_mealTypeVal"></span><span class="margin-left-10" id="update_mealPerMonth"></span><span class="margin-left-10" id="update_mealPerDay"></span>
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>

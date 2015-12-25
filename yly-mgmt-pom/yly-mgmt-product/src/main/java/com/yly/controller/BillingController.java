@@ -190,9 +190,10 @@ public class BillingController extends BaseController {
     return billingService.getBedNurseConfigByElderly(properties, elderlyInfo);
   }
 
-  
+
   /**
    * 修改订单
+   * 
    * @param checkinBill
    * @param mealTypeId
    * @param elderlyInfoID
@@ -202,11 +203,22 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/updateCheckinBill", method = RequestMethod.POST)
   public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,
       Long elderlyInfoID, Boolean isMonthlyMeal) {
-        Billing billing = billingService.find(checkinBill.getId());
-        billingService.updateUnpaidCheckInBill(billing,checkinBill);
-        return SUCCESS_MESSAGE;
-    
+    Billing billing = billingService.find(checkinBill.getId());
+    if (PaymentStatus.UNPAID.equals(billing.getChargeStatus())) {//未缴费的入院账单可以多次修改
+          billingService.updateUnpaidCheckInBill(billing, checkinBill);
+    } else {// 已缴费的入院账单修改
+      if (billing.getBillingSupply() != null) {//在缴费后已经修改过一次的入院缴费账单不能再次修改
+        return Message.error("yly.checkin.billEdit.unable");
+      } else {//缴费后修改入院账单
+
+
+      }
+    }
+
+    return SUCCESS_MESSAGE;
+
   }
+
   /**
    * 入院缴费账单
    * 
@@ -299,15 +311,15 @@ public class BillingController extends BaseController {
    */
   @RequestMapping(value = "/billPay", method = RequestMethod.POST)
   public @ResponseBody Message billPay(Long billingId, String remark, PaymentType paymentType,
-      BigDecimal cardAmount, BigDecimal cashAmount,BigDecimal payTotalAmount) {
+      BigDecimal cardAmount, BigDecimal cashAmount, BigDecimal payTotalAmount) {
     Billing checkinBill = billingService.find(billingId);
     checkinBill.setPayStaff(tenantAccountService.getCurrentUsername());
     checkinBill.setPaymentType(paymentType);
     checkinBill.setRemark(remark);
     ElderlyInfo elderlyInfo = checkinBill.getElderlyInfo();
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
-    
-    //账单缴费 (case1:未调整金额或修改订单; case2:缴费之前调整了金额或修改订单)
+
+    // 账单缴费 (case1:未调整金额或修改订单; case2:缴费之前调整了金额或修改订单)
     if (checkinBill.getChargeStatus().equals(PaymentStatus.UNPAID)) {
       if (checkinBill.getDeposit() != null) {
         checkinBill.getDeposit().setChargeStatus(PaymentStatus.PAID);
@@ -318,16 +330,16 @@ public class BillingController extends BaseController {
       if (checkinBill.getMealCharge() != null) {
         checkinBill.getMealCharge().setChargeStatus(PaymentStatus.PAID);
       }
-      
-     
+
+
     }
-    //账单缴费(case3:缴费之后修改订单或调整金额)
+    // 账单缴费(case3:缴费之后修改订单或调整金额)
     else if (checkinBill.getChargeStatus().equals(PaymentStatus.UNPAID_ADJUSTMENT)) {
-      
+
     }
-    
-    //如果账单存在调整金额，设置调整金额记录为已付款
-    for(BillingAdjustment billingAdjustment:checkinBill.getBillingAdjustment()){
+
+    // 如果账单存在调整金额，设置调整金额记录为已付款
+    for (BillingAdjustment billingAdjustment : checkinBill.getBillingAdjustment()) {
       if (!billingAdjustment.getChargeStatus().equals(PaymentStatus.PAID)) {
         billingAdjustment.setChargeStatus(PaymentStatus.PAID);
       }
@@ -366,6 +378,7 @@ public class BillingController extends BaseController {
 
   /**
    * 编辑页面
+   * 
    * @param model
    * @param id
    * @return
@@ -374,17 +387,26 @@ public class BillingController extends BaseController {
   public String edit(ModelMap model, Long id) {
     Billing record = billingService.find(id);
     model.addAttribute("billing", record);
-    List<Map<String, Object>> systemConfigs = systemConfigService.findByConfigKey(ConfigKey.BILLDAY, null);
-    if (systemConfigs!=null && systemConfigs.size()>0) {
-    	 model.addAttribute("billDay",systemConfigs.get(0).get("configValue"));
-	}
+    List<Map<String, Object>> systemConfigs =
+        systemConfigService.findByConfigKey(ConfigKey.BILLDAY, null);
+    if (systemConfigs != null && systemConfigs.size() > 0) {
+      model.addAttribute("billDay", systemConfigs.get(0).get("configValue"));
+    }
     if (record.getChargeStatus().equals(PaymentStatus.PAID)) {
-		
-	}
+
+    }
     String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
-    model.addAttribute("bedNurseConfig",billingService.getBedNurseConfigByElderly(properties, record.getElderlyInfo()));
+    model.addAttribute("bedNurseConfig",
+        billingService.getBedNurseConfigByElderly(properties, record.getElderlyInfo()));
+    if (record.getMealCharge() != null) {
+      Map<String, Object> map =
+          systemConfigService.getBillingDate(record.getMealCharge().getPeriodStartDate());
+      model.addAttribute("billDateMap", map);
+    }
+
     return "/checkinCharge/edit";
   }
+
   /**
    * 获取数据进入详情页面
    * 
