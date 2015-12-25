@@ -1,6 +1,5 @@
 <form id="editCheckinCharge_form" method="post"> 
 	    <input type="hidden" name="id" id="billingId" value="${billing.id}">  
-	    <input type="hidden" name="isPaid"  value="${billing.id}"> 
 	    <table class="table table-striped">
 	    	<tr>
 	    		<th>${message("yly.common.elderly")}:</th>
@@ -21,7 +20,7 @@
 					    		</td>
 					    		<th>${message("yly.remark")}:</th>
 					    		<td width="250px">
-					    			 <input class="easyui-textbox" name="deposit.remark" value="${billing.deposit.remark}" style="width:200px" validtype="length[0,50]" data-options="disabled:true"/> 
+					    			 <input class="easyui-textbox" name="deposit.remark" value="${billing.deposit.remark}" style="width:200px" validtype="length[0,50]"/> 
 					    		</td>
 	    			  		</tr>
 	    			  		
@@ -64,7 +63,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.remark")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" name="bedNurseCharge.remark" style="width:400px" validtype="length[0,50]" data-options="disabled:true"/> 
+					    			 <input class="easyui-textbox" name="bedNurseCharge.remark" style="width:400px" validtype="length[0,50]"/> 
 					    		</td>
 	    			  		</tr>
 	    			  	</table>
@@ -92,8 +91,9 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" value="${billing.elderlyInfo.mealType.configValue}" name="mealTypeId" id="update_mealType" panelHeight="150px" data-options="editable:false" />   
+					    			 <input class="easyui-textbox" name="mealTypeId" id="update_mealType" panelHeight="150px" data-options="editable:false" />   
 					    		     <span class="margin-left-20" id="update_mealTypeVal"></span><span class="margin-left-10" id="update_mealPerMonth"></span><span class="margin-left-10" id="update_mealPerDay"></span>
+					    			 <input type="hidden" id="update_mealTypeId" value="${billing.elderlyInfo.mealType.id}">
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>
@@ -106,7 +106,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.remark")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" id="update_mealRemark" name="mealCharge.remark" style="width:400px" validtype="length[0,50]" data-options="disabled:true"/> 
+					    			 <input class="easyui-textbox" id="update_mealRemark" name="mealCharge.remark" style="width:400px" validtype="length[0,50]"/> 
 					    		</td>
 	    			  		</tr>
 	    			  	</table>
@@ -116,7 +116,7 @@
 	    	[#else]
 	    	<tr>
 	    		<td colspan=4>
-	    		     <div><input type="checkbox" name="isMonthlyMeal" value="true" id="update_isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
+	    		     <div><input type="checkbox" name="isMonthlyMeal" id="update_isMonthlyMeal" style="width:20px;"><span>${message("yly.charge.isMonthly.meal")}</span></div>
 	    			  <fieldset id="update_monthlyMeal" style="display:none"> 
 	    			  	<legend>${message("yly.charge.meal.reocrd")}:</legend>
 	    			  	<table class="table table-striped">
@@ -127,12 +127,13 @@
 					    		    ──
 				    			    <input id="update_mealPeriodEndDate" name="mealCharge.periodEndDate" type="text" class="easyui-datebox" style="width:100px;" data-options="editable:false,disabled:true" readonly=true/>    
 					    		</td>
-					    		
+					    		<input type="hidden" id="update_periodMonMeal" />
+					    		<input type="hidden" id="update_periodDayMeal" />
 					    	</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.mealCharge.mealType")}:</th>
 					    		<td>
-					    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="mealTypeId" id="mealType" panelHeight="150px" data-options="editable:false,disabled:true" />   
+					    			 <input class="easyui-textbox" prompt="${message("yly.common.please.select")}" name="mealTypeId" id="update_mealType" panelHeight="150px" data-options="editable:false,disabled:true" />   
 					    		     <span class="margin-left-20" id="update_mealTypeVal"></span><span class="margin-left-10" id="update_mealPerMonth"></span><span class="margin-left-10" id="update_mealPerDay"></span>
 					    		</td>
 	    			  		</tr>
