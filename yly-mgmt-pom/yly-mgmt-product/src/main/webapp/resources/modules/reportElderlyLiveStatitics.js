@@ -1,6 +1,6 @@
 //老人评估结果统计
 var reportElderlyLiveStatitics = {
-	colors : [ '#FF00FF', '#0000FF', '#ED561B', '#DDDF00', '#24CBE5',
+	colors : [ '#FF00FF', '#0000CD', '#ED561B', '#DDDF00', '#24CBE5',
 			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
 	credits : {
 		enabled : false
@@ -8,10 +8,20 @@ var reportElderlyLiveStatitics = {
 	},
 	chart : {
 		renderTo : 'elderlyLiveStatiticsReportId',
-		plotBackgroundColor : null,
-		plotBorderWidth : null,
-		plotShadow : false,
-		borderWidth : null,
+		plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+		plotShadow: true,
+		backgroundColor: {
+			linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+			stops: [
+				[0, 'rgb(255, 255, 255)'],
+				[1, 'rgb(240, 240, 255)']
+			]
+		},
+		options3d: {
+	        enabled: true,
+	        alpha: 45,
+	        beta: 0
+		}
 	},
 	title : {
 		text : '老人居住情况统计'
@@ -23,6 +33,7 @@ var reportElderlyLiveStatitics = {
 		pie : {
 			allowPointSelect : true,
 			cursor : 'pointer',
+			depth: 20,
 			dataLabels : {
 				enabled : false
 			},

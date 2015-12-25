@@ -490,6 +490,7 @@ function loadDataPie(id, url, nameArray, dataArray) {
 				
 			}
 			var chart = new Highcharts.Chart(id);
+			console.log(id);
 		}
 
 	});
