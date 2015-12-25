@@ -64,27 +64,7 @@ $(function(){
 		}); 
 		
 	});
-	function loadData(id,url,nameArray,dataArray){
-        $.ajax({
-            url:url,
-            type:"post",
-            cache: false,
-            success: function (data) {
-            	if(data.length > 0 ){
-                for(i=0;i <nameArray.length;i++)
-	                {
-	                	console.log(dataArray[i]);
-	                	var value = [nameArray[i],data[0][dataArray[i]]]
-	                	id.series[0].data.push(value)
-	                }
-	                console.log(id)
-	                var chart = new Highcharts.Chart(id);
-            	}
-            }
-
-        });
-
-    };
+	
 	//老人在院情况统计
 	var elderlyStatusReport ={
 		colors: ['#DDDF00','#058DC7', '#50B432', '#ED561B',  '#000000', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
@@ -125,7 +105,7 @@ $(function(){
                  data: []
         }]
     };
-	loadData(elderlyStatusReport,'../../console/reportElderlyStatus/list.jhtml',
+	loadDataPie(elderlyStatusReport,'../../console/reportElderlyStatus/list.jhtml',
 			['出院','在院','办理入院','办理出院','过世'],
 			['outNursingHome','inNursingHome','inProcessCheckin','inProcessCheckout','dead'])
 	//在院老人年龄段统计
@@ -163,7 +143,7 @@ $(function(){
             data: []
         }]
 	};
-	loadData(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',
+	loadDataPie(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',
 			['60岁以下','61~65岁','66~70岁','71~75岁','76岁以上'],
 			['under60','range61To65','range66To70','range71To75','above76']);
 	//男女比例
@@ -195,10 +175,11 @@ $(function(){
         },
         series: [{
             type: 'pie',
+            name:'人数',
             data: []
         }]
     };
-	loadData(elderlyGenderRateReport,'../../console/reportElderlyGenderRate/list.jhtml',
+	loadDataPie(elderlyGenderRateReport,'../../console/reportElderlyGenderRate/list.jhtml',
 			['男','女'],
 			['male','female']);
 	//每月看病人数统计

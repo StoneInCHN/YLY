@@ -202,6 +202,12 @@
 		    		[@shiro.hasPermission name="reportDonate"]
 		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">捐赠统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportEvluatingResult"]
+		    		<li><a href="#" data-url="${base}/console/reportEvaluatingResult/reportEvaluatingResult.jhtml">评估结果统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportLiveStatitics"]
+		    		<li><a href="#" data-url="${base}/console/reportElderlyLiveStatitics/reportElderlyLiveStatitics.jhtml">居住统计</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]
@@ -300,26 +306,15 @@
 		        <button id="selectRoom">选房</button>
 		        -->
 		        <table border="0" >
-				    <tr>
-				        <!--<td>
-				        	<div class="jumbotron">
-				        	<div class="container">
-    
-							  <h1>Hello, world!</h1>
-							  <p>...</p>
-							  </
-							</div>
-				        </td>
-				        -->
 				        <td style="float:right">
-				        	<div id="elderlyStatusReportId" style="height:300px;width:400px">
+				        	<div id="elderlyStatusReportId" style="height:300px;width:380px">
 				        </td>
 				        
 				         <td>
-				            <div id="elderlyAgeReportId" style="height:300px;width: 400px;">
+				            <div id="elderlyAgeReportId" style="height:300px;width: 380px;">
 				        </td>
 				         <td>
-				            <div id="elderlyGenderRateReportId" style="height:300px;width: 300px;">
+				            <div id="elderlyGenderRateReportId" style="height:300px;width: 280px;">
 				        </td>  
 				    </tr>
 				    <tr >
@@ -344,6 +339,7 @@
     <script type="text/javascript" src="${base}/resources/js/jquery.serializejson.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="${base}/resources/js/highcharts.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/common.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/message.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/main.js"></script>
@@ -351,7 +347,6 @@
 	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
-	<script type="text/javascript" src="${base}/resources/js/highcharts.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>

@@ -462,3 +462,36 @@ function exportData(control,form){
 		}
 	});
 }	
+
+function loadDataPie(id, url, nameArray, dataArray) {
+	$.ajax({
+		url : url,
+		type : "post",
+		cache : false,
+		success : function(data) {
+			
+			if (data.length == 1) {
+				if(id.chart.renderTo == 'elderlyLiveStatiticsReportId'){
+					var value = [ nameArray[0], data[0]['inUsingZoomCount'] ];
+					id.series[0].data.push(value);
+					var free = [ nameArray[1], data[0]['totalZoomCount']-data[0]['inUsingZoomCount']];
+					id.series[0].data.push(free);
+				}else {
+					for (var i = 0; i < nameArray.length; i++) {
+						var value = [ nameArray[i], data[0][dataArray[i]] ];
+						id.series[0].data.push(value);
+					}
+				}
+			}else if (data.length > 1){
+				for(var i =0; i <data.length;i++){
+					var value = [data[i].evaluatingResultName,data[i].elderlyCount];
+					id.series[0].data.push(value);
+				}
+				
+			}
+			var chart = new Highcharts.Chart(id);
+		}
+
+	});
+
+}

@@ -6,6 +6,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -44,6 +45,7 @@ public class ReportElderlyLiveStatitics extends BaseEntity
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public int getTotalZoomCount ()
   {
     return totalZoomCount;
@@ -53,7 +55,8 @@ public class ReportElderlyLiveStatitics extends BaseEntity
   {
     this.totalZoomCount = totalZoomCount;
   }
-
+  
+  @JsonProperty
   public int getInUsingZoomCount ()
   {
     return inUsingZoomCount;
@@ -64,6 +67,7 @@ public class ReportElderlyLiveStatitics extends BaseEntity
     this.inUsingZoomCount = inUsingZoomCount;
   }
 
+  @JsonProperty
   public Double getInUsingRate ()
   {
     return inUsingRate;
