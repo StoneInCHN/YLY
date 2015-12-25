@@ -22,7 +22,7 @@
 	    	<tr>
 	    		<th>${message("yly.nurseDutyType.remark")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" value="${nurseDutyType.remark}"  name="remark" data-options="required:true" />
+	    			  <input class="easyui-textbox" value="${nurseDutyType.remark}"  name="remark" data-options="required:true,multiline:true,height:100" />
 	    		</td>
 	    	</tr>
 	    </table>
