@@ -201,12 +201,11 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/updateCheckinBill", method = RequestMethod.POST)
-  public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,
-      Long elderlyInfoID, Boolean isMonthlyMeal) {
+  public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,Boolean isMonthlyMeal) {
     Billing billing = billingService.find(checkinBill.getId());
     if (PaymentStatus.UNPAID.equals(billing.getChargeStatus())) {//未缴费的入院账单可以多次修改
           billingService.updateUnpaidCheckInBill(billing, checkinBill);
-    } else {// 已缴费的入院账单修改
+      } else {//已缴费的入院账单修改
       if (billing.getBillingSupply() != null) {//在缴费后已经修改过一次的入院缴费账单不能再次修改
         return Message.error("yly.checkin.billEdit.unable");
       } else {//缴费后修改入院账单

@@ -263,10 +263,10 @@ function checkinEditBill(billId){
 	    		
 	    		if($("#update_isMonthlyMeal").is(":checked")==true){
 	    			$("#update_monthlyMeal").css('display','block');
-//	    			$("#update_mealRemark").textbox({
-//	    				disabled:false
-//	    				
-//	    			});
+	    			$("#update_mealRemark").textbox({
+	    				disabled:false
+	    				
+	    			});
 	    			$("#update_mealPeriodStartDate").textbox({
 	    				disabled:false
 	    				
@@ -291,9 +291,9 @@ function checkinEditBill(billId){
 	    		
 	    		if($("#update_isMonthlyMeal").is(":checked")==false){
 	    			$("#update_monthlyMeal").css('display','none'); 
-//	    			$("#update_mealRemark").textbox({
-//	    				disabled:true
-//	    			});
+	    			$("#update_mealRemark").textbox({
+	    				disabled:true
+	    			});
 	    			$("#update_mealPeriodStartDate").textbox({
 	    				disabled:true
 	    				
@@ -315,6 +315,12 @@ function checkinEditBill(billId){
 	    			$("#update_monthlyMeal table input[type=hidden]").each(function(){
 	    				$(this).attr("disabled",true);
 	    			});
+	    			$('#update_mealTypeVal').html("");
+					$('#update_mealTypeVal').attr("data-value","");
+					$('#update_mealPerMonth').html("");
+					$('#update_mealPerMonth').attr("data-value","");
+					$('#update_mealPerDay').html("");
+					$('#update_mealPerDay').attr("data-value","");
 	    		}
 	    		
 	    	});
@@ -352,6 +358,10 @@ function checkinEditBill(billId){
 			    onBeforeLoad : function(param) {
 			        param.configKey = 'MEALTYPE';// 参数
 			    },
+			    onLoadSuccess:function(){
+			    	console.log($("#update_mealTypeId").val());
+			    	$('#update_mealType').combobox('setValue', $("#update_mealTypeId").val());
+			    },
 			    onChange:function(value){
 			    	if(value==null || value=='') return;
 			    	$.ajax({
@@ -369,16 +379,15 @@ function checkinEditBill(billId){
 							var mealPerDay = $('#update_mealPerDay').attr("data-value");
 							var periodMonMeal=$('#update_periodMonMeal').val();
 							var periodDayMeal=$('#update_periodDayMeal').val();
-							console.log(periodMonMeal);
-							console.log(mealPerMonth);
-							console.log(periodDayMeal);
-							console.log(mealPerDay);
+//							console.log(periodMonMeal);
+//							console.log(mealPerMonth);
+//							console.log(periodDayMeal);
+//							console.log(mealPerDay);
 							if(periodMonMeal!="" && periodDayMeal!=""){
 								var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
 								console.log(mealAmount);
 								$('#update_chargein_mealAmount').numberbox('setValue',mealAmount);
 							}
-							
 							
 						}
 					});
@@ -620,6 +629,12 @@ $(function(){
 			$("#monthlyMeal table input[type=hidden]").each(function(){
 				$(this).attr("disabled",true);
 			});
+			$('#mealTypeVal').html("");
+			$('#mealTypeVal').attr("data-value","");
+			$('#mealPerMonth').html("");
+			$('#mealPerMonth').attr("data-value","");
+			$('#mealPerDay').html("");
+			$('#mealPerDay').attr("data-value","");
 		}
 		
 	});
