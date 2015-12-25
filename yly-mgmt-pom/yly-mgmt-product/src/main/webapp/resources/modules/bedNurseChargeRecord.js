@@ -42,10 +42,11 @@ $(function(){
 		      }},
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
-		    	  return row.elderlyInfo.nursingLevel.configValue;
-//		    	  if(value!=null && value.nursingLevel!=null){
-//		    		  return value.nursingLevel.configValue;
-//		    	  }
+		    	  if(row.elderlyInfo.nursingLevel != null){
+		    		  return row.elderlyInfo.nursingLevel.configValue;
+		    	  }else{
+		    		  return null;
+		    	  }
 		      }},
 		      //床位费
 		      {title:message("yly.charge.record.bed"),field:"bedAmount",width:25,align:'center',sortable:true},

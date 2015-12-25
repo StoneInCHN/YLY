@@ -42,7 +42,11 @@ $(function(){
 		      }},
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
-		    	  return row.elderlyInfo.nursingLevel.configValue;		    	
+		    	  if(row.elderlyInfo.nursingLevel != null){
+		    		  return row.elderlyInfo.nursingLevel.configValue;
+		    	  }else{
+		    		  return null;
+		    	  }    	
 		      }},
 		      //伙食类型
 		      {title:message("yly.charge.record.meal.type"),field:"mealType",width:25,align:'center',sortable:true,formatter:function(value,row,index){

@@ -84,7 +84,11 @@ $(function(){
 		      {title:message("yly.common.bedRoom"),field:"bedLocation",width:50,align:'center'},
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"nursingLevel",width:30,align:'center',sortable:true,formatter:function(value,row,index){
-		    	  return value.configValue;
+		    	  if(value!=null){
+		    		  return value.configValue;
+		    	  }else{
+		    		  return null;
+		    	  }
 		      }},
 		      //预存款总额(元)
 		      {title:message("yly.charge.record.advanceChargeAmount"),field:"advanceChargeAmount",width:50,align:'center',sortable:true}

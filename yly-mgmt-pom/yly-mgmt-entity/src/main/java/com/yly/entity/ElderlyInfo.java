@@ -223,6 +223,22 @@ public class ElderlyInfo extends BaseEntity {
    * 入院时间
    */
   private Date beHospitalizedDate;
+  
+  /**
+   * 出院时间
+   */
+  private Date outHospitalizedDate;
+  
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @FieldBridge(impl = DateBridgeImpl.class)
+  public Date getOutHospitalizedDate() {
+    return outHospitalizedDate;
+  }
+
+  public void setOutHospitalizedDate(Date outHospitalizedDate) {
+    this.outHospitalizedDate = outHospitalizedDate;
+  }
 
   /**
    * 居住情况
@@ -839,7 +855,8 @@ public class ElderlyInfo extends BaseEntity {
   public void setDeleteStatus(DeleteStatus deleteStatus) {
     this.deleteStatus = deleteStatus;
   }
-
+  
+  @Index(name = "elderly_info_elderlystatus")
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   public ElderlyStatus getElderlyStatus() {

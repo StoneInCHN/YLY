@@ -87,7 +87,18 @@ public class Filter implements Serializable {
     this.operator = operator;
     this.value = value;
   }
-
+  /**
+   * 初始化一个新创建的Filter对象
+   * 
+   * @param property 属性
+   * @param operator 运算符
+   * @param 多个 value 值
+   */
+  public Filter(String property, Operator operator, Object... value) {
+    this.property = property;
+    this.operator = operator;
+    this.value = value;
+  }
   /**
    * 初始化一个新创建的Filter对象
    * 
