@@ -518,7 +518,11 @@ $(function(){
 		      }},
 		      //护理等级
 		      {title:message("yly.common.nurseLevel"),field:"elderlyInfoNurseLevel",width:30,align:'center',formatter:function(value,row,index){
-		    	  return row.elderlyInfo.nursingLevel.configValue;
+		    	  if(row.elderlyInfo.nursingLevel != null){
+		    		  return row.elderlyInfo.nursingLevel.configValue;
+		    	  }else{
+		    		  return null;
+		    	  }
 		      }},
 		      //押金(元)
 		      {title:message("yly.charge.record.depositAmount"),field:"depositAmount",width:20,align:'center',sortable:true},
@@ -636,8 +640,8 @@ $(function(){
 					var nurseLevelPerDay = $('#nurseLevelPerDay').attr("data-value");
 					var bedAmount = result.periodMonth*bedPerMonth+result.periodDay*bedPerDay;
 					var nurseAmount = result.periodMonth*nurseLevelPerMonth+result.periodDay*nurseLevelPerDay;
-					$('#chargein_bedAmount').numberbox('setValue',bedAmount);
-					$('#chargein_nurseAmount').numberbox('setValue',nurseAmount);
+					$('#chargein_bedAmount').numberbox('setValue',bedAmount+"");
+					$('#chargein_nurseAmount').numberbox('setValue',nurseAmount+"");
 				}
 			});
 	    }

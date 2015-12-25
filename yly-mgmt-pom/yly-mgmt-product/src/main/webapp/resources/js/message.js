@@ -235,6 +235,7 @@ var messages = {
 	"yly.elderlyInfo.religion":"宗教",
 	"yly.elderlyInfo.marriageState":"婚姻状况",
 	"yly.elderlyInfo.beHospitalizedDate":"入院时间",
+	"yly.elderlyInfo.outHospitalizedDate":"出院时间",
 	"yly.elderlyInfo.livingState":"居住情况",
 	"yly.elderlyInfo.housingInfo":"住房信息",
 	"yly.elderlyInfo.medicalExpPaymentWay":"医疗支付方式",
@@ -480,7 +481,6 @@ var messages = {
 	
 	//排班
 	"yly.nurseDutyType.list":"班次类型列表",
-	"yly.nurseDutyType.add":"添加班次",
 	"yly.nurseDutyType.dutyStartTime":"开始时间",
 	"yly.nurseDutyType.dutyEndTime":"结束时间",
 	"yly.nurseDutyType.dutyName":"班次名称",

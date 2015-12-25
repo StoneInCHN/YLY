@@ -121,7 +121,7 @@
 		    		[@shiro.hasPermission name="admission"]
 		    		<li><a href="#" data-url="${base}/console/admission/admission.jhtml">${message("yly.elderlyInfo.admission")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#">办理出院</a></li>
+		    		<li><a href="#" data-url="${base}/console/leave/leave.jhtml">${message("yly.elderlyInfo.leave")}</a></li>
 		    		[@shiro.hasPermission name="checkinCharge"]
 		    		<li><a href="#" data-url="${base}/console/billing/checkinCharge.jhtml">${message("yly.charge.checkin")}</a></li>
 		    		[/@shiro.hasPermission]
@@ -223,8 +223,8 @@
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
 		    		<li><a href="#" data-url="${base}/console/nurseDutyType/nurseDutyType.jhtml">${message("yly.nurse.nurseDutyType")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.arrange")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/nurseSchedule/nurseSchedule.jhtml">${message("yly.nurse.schedule")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/nursePlan/nursePlan.jhtml">${message("yly.nurse.plan")}</a></li>
+		    		<li><a href="#">${message("yly.nurse.schedule")}</a></li>
+		    		<li><a href="#">${message("yly.nurse.plan")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.modify")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.personal")}</a></li>
 		    	</ul>

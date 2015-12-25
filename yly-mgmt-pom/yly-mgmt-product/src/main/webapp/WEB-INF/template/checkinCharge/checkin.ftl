@@ -178,7 +178,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" id="update_chargein_mealAmount" name="mealCharge.mealAmount" data-options="min:0,precision:2,editable:false,disabled:true" />
+					    			 <input class="easyui-numberbox" id="chargein_mealAmount" name="mealCharge.mealAmount" data-options="min:0,precision:2,editable:false,disabled:true" />
 					    		</td>
 					    		
 	    			  		</tr>
