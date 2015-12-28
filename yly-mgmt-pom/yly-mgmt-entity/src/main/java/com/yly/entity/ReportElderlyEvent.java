@@ -1,11 +1,14 @@
 package com.yly.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -28,24 +31,24 @@ public class ReportElderlyEvent extends BaseEntity
   private Long tenantID;
  
   /**
-   * 积极事件
+   * 积极事件人数
    */
   private int positiveEvent;
   
   /**
-   * 消极事件
+   * 消极事件人数
    */
   private int negativeEvent;
   
   /**
-   * 一般事件
+   * 一般事件人数
    */
   private int normalEvent;
   
   /**
    * 统计周期
    */
-  private String eventStatiticsCycle;
+  private Date eventStatiticsCycle;
   
   @Index (name = "report_elderly_event_tenantid")
   public Long getTenantID ()
@@ -58,6 +61,7 @@ public class ReportElderlyEvent extends BaseEntity
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public int getPositiveEvent ()
   {
     return positiveEvent;
@@ -68,6 +72,7 @@ public class ReportElderlyEvent extends BaseEntity
     this.positiveEvent = positiveEvent;
   }
 
+  @JsonProperty
   public int getNegativeEvent ()
   {
     return negativeEvent;
@@ -78,6 +83,7 @@ public class ReportElderlyEvent extends BaseEntity
     this.negativeEvent = negativeEvent;
   }
 
+  @JsonProperty
   public int getNormalEvent ()
   {
     return normalEvent;
@@ -88,12 +94,13 @@ public class ReportElderlyEvent extends BaseEntity
     this.normalEvent = normalEvent;
   }
 
-  public String getEventStatiticsCycle ()
+  @JsonProperty
+  public Date getEventStatiticsCycle ()
   {
     return eventStatiticsCycle;
   }
 
-  public void setEventStatiticsCycle (String eventStatiticsCycle)
+  public void setEventStatiticsCycle (Date eventStatiticsCycle)
   {
     this.eventStatiticsCycle = eventStatiticsCycle;
   }

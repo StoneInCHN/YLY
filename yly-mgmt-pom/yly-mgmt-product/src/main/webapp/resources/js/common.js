@@ -740,7 +740,7 @@ function loadDataPie(id, url, nameArray, dataArray) {
 	});
 
 };
-function loadDataLine(id, url, categoryName, valueName) {
+function loadDataLine(id, url, categoryName, valueName, viewName) {
 	$.ajax({
 		url : url,
 		type : "post",
@@ -748,16 +748,25 @@ function loadDataLine(id, url, categoryName, valueName) {
 		success : function(data) {
 
 			if (data.length > 0) {
+				if( valueName instanceof Array){
+					for(var j = 0; j< valueName.length;j++){
+						var value = new Object();
+						value.name = viewName[j];
+						value.data = [];
+						id.series.push(value);
+					}
+				}
 				for (var i = 0; i < data.length; i++) {
-
 					id.xAxis.categories.push(new Date(data[i][categoryName])
 							.Format("yyyy年MM月"));
-					id.series[0].data.push(data[i][valueName]);
+					if( valueName instanceof Array){
+						for(var j = 0; j< valueName.length;j++){
+							id.series[j].data.push(data[i][valueName[j]]);
+						}
+					}else{
+						id.series[0].data.push(data[i][valueName]);
+					}
 				}
-
-//				id.xAxis.categories = [ '一月', '二月', '三月', '四月', '五月', '六月',
-//						'七月', '八月', '九月', '十月', '十一月', '十二月' ];
-
 			}
 			var chart = new Highcharts.Chart(id);
 		}

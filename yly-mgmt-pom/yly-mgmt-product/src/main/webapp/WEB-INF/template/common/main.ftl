@@ -211,6 +211,9 @@
 		    		[@shiro.hasPermission name="reportElderlyMedicalRecord"]
 		    		<li><a href="#" data-url="${base}/console/reportElderlyMedicalRecord/reportElderlyMedicalRecord.jhtml">老人看病统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportElderlyEvent"]
+		    		<li><a href="#" data-url="${base}/console/reportElderlyEvent/reportElderlyEvent.jhtml">老人事件统计</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]
@@ -353,9 +356,7 @@
 	<script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
-        <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>
-        
-        
+    <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>
 	<script>
 		var BASE_URL = '${base}/resources' ;
 	</script>

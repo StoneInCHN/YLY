@@ -1,11 +1,9 @@
 //老人看病情况统计
-var reportElderlyMedicalRecord = {
-	//	colors : [ '#FF00FF', '#0000CD', '#ED561B', '#DDDF00', '#24CBE5',
-	//			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
-
-	colors : [ '#004B97' ],
+var reportElderlyEvent = {
+	colors : [ '#008000', '#FF0000', '#FFFF00', '#DDDF00', '#24CBE5',
+			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
 	chart : {
-		renderTo : 'elderlyMedicalRecordReportId',
+		renderTo : 'elderlyEventReportId',
 		backgroundColor : {
 			linearGradient : {
 				x1 : 0,
@@ -21,7 +19,7 @@ var reportElderlyMedicalRecord = {
 	title : {
 		text : '每月看病人数统计',
 		x : -20
-	//center
+	// center
 	},
 	credits : {
 		enabled : false
@@ -56,12 +54,10 @@ var reportElderlyMedicalRecord = {
 		verticalAlign : 'middle',
 		borderWidth : 0
 	},
-	series : [ {
-		name : '',
-		data : []
-	} ]
+	series : []
 };
-var chart = new Highcharts.Chart(reportElderlyMedicalRecord);
-loadDataLine(reportElderlyMedicalRecord,
-		'../../console/reportElderlyMedicalRecord/report.jhtml',
-		'medicalStatiticsCycle', 'elderlyCount');
+var chart = new Highcharts.Chart(reportElderlyEvent);
+loadDataLine(reportElderlyEvent,
+		'../../console/reportElderlyEvent/report.jhtml', 'eventStatiticsCycle',
+		[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
+				'一般事件' ]);
