@@ -208,6 +208,9 @@
 		    		[@shiro.hasPermission name="reportLiveStatitics"]
 		    		<li><a href="#" data-url="${base}/console/reportElderlyLiveStatitics/reportElderlyLiveStatitics.jhtml">居住统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportElderlyMedicalRecord"]
+		    		<li><a href="#" data-url="${base}/console/reportElderlyMedicalRecord/reportElderlyMedicalRecord.jhtml">老人看病统计</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]

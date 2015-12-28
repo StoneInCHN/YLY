@@ -8,10 +8,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
- * 
+ * 按照日期统计周期，每个月生成一条统计记录
  * 
  * @author yohu
  *
@@ -49,6 +50,7 @@ public class ReportElderlyMedicalRecord extends BaseEntity
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public int getElderlyCount ()
   {
     return elderlyCount;
@@ -59,6 +61,7 @@ public class ReportElderlyMedicalRecord extends BaseEntity
     this.elderlyCount = elderlyCount;
   }
 
+  @JsonProperty
   public Date getMedicalStatiticsCycle ()
   {
     return medicalStatiticsCycle;

@@ -31,7 +31,7 @@ var reportElderlyLiveStatitics = {
 	},
 	plotOptions : {
 		pie : {
-			allowPointSelect : true,
+			allowPointSelect : false,
 			cursor : 'pointer',
 			depth: 20,
 			dataLabels : {
