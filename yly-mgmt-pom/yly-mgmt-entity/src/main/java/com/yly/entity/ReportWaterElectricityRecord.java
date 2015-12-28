@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -43,7 +44,7 @@ public class ReportWaterElectricityRecord extends BaseEntity
   /**
    * 水电费统计周期
    */
-  private Date WaterElectricityStatiticsCycle;
+  private Date waterElectricityStatiticsCycle;
   
   @Index (name = "report_water_electricity_record_tenantid")
   public Long getTenantID ()
@@ -56,6 +57,7 @@ public class ReportWaterElectricityRecord extends BaseEntity
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public BigDecimal getElectricityCount ()
   {
     return electricityCount;
@@ -66,6 +68,7 @@ public class ReportWaterElectricityRecord extends BaseEntity
     this.electricityCount = electricityCount;
   }
 
+  @JsonProperty
   public BigDecimal getWaterCount ()
   {
     return waterCount;
@@ -76,17 +79,16 @@ public class ReportWaterElectricityRecord extends BaseEntity
     this.waterCount = waterCount;
   }
 
+  @JsonProperty
   public Date getWaterElectricityStatiticsCycle ()
   {
-    return WaterElectricityStatiticsCycle;
+    return waterElectricityStatiticsCycle;
   }
 
   public void setWaterElectricityStatiticsCycle (
       Date waterElectricityStatiticsCycle)
   {
-    WaterElectricityStatiticsCycle = waterElectricityStatiticsCycle;
+    this.waterElectricityStatiticsCycle = waterElectricityStatiticsCycle;
   }
 
-  
- 
 }
