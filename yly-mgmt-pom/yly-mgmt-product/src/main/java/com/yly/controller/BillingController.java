@@ -202,14 +202,18 @@ public class BillingController extends BaseController {
    */
   @RequestMapping(value = "/updateCheckinBill", method = RequestMethod.POST)
   public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,Boolean isMonthlyMeal) {
-    Billing billing = billingService.find(checkinBill.getId());
-    if (PaymentStatus.UNPAID.equals(billing.getChargeStatus())) {//未缴费的入院账单可以多次修改
-          billingService.updateUnpaidCheckInBill(billing, checkinBill);
+    Billing originBilling = billingService.find(checkinBill.getId());
+    if (PaymentStatus.UNPAID.equals(originBilling.getChargeStatus())) {//未缴费的入院账单可以多次修改
+          billingService.updateUnpaidCheckInBill(originBilling, checkinBill);
       } else {//已缴费的入院账单修改
-      if (billing.getBillingSupply() != null) {//在缴费后已经修改过一次的入院缴费账单不能再次修改
-        return Message.error("yly.checkin.billEdit.unable");
+      if (originBilling.getBillingSupply() != null) {//在缴费后已经修改过一次的入院缴费账单不能再次修改
+          return Message.error("yly.checkin.billEdit.unable");
       } else {//缴费后修改入院账单
-
+         Billing updateBilling = billingService.updatePaidCheckInBill(originBilling, checkinBill, mealTypeId, isMonthlyMeal);
+         if (updateBilling == null) {
+           return Message.error("yly.checkin.bill.unchanged");
+        }
+          
 
       }
     }
@@ -242,7 +246,7 @@ public class BillingController extends BaseController {
         .getCurrentTenantOrgCode()));
     checkinBill.setOperator(tenantAccountService.getCurrentUsername());
     checkinBill.setTenantID(tenantAccountService.getCurrentTenantID());
-    checkinBill.setPayTime(new Date());
+    //checkinBill.setPayTime(new Date());
     // 押金
     Deposit deposit = checkinBill.getDeposit();
     deposit.setBilling(checkinBill);
@@ -250,8 +254,8 @@ public class BillingController extends BaseController {
     deposit.setElderlyInfo(elderlyInfo);
     deposit.setChargeStatus(checkinBill.getChargeStatus());
     deposit.setInvoiceNo(checkinBill.getInvoiceNo());
-    deposit.setPayTime(checkinBill.getPayTime());
-    deposit.setPaymentType(checkinBill.getPaymentType());
+    //deposit.setPayTime(checkinBill.getPayTime());
+    //deposit.setPaymentType(checkinBill.getPaymentType());
     deposit.setOperator(checkinBill.getOperator());
     deposit.setTenantID(checkinBill.getTenantID());
     checkinBill.setDepositAmount(deposit.getDepositAmount());
@@ -263,8 +267,8 @@ public class BillingController extends BaseController {
     bedNurseCharge.setElderlyInfo(elderlyInfo);
     bedNurseCharge.setChargeStatus(checkinBill.getChargeStatus());
     bedNurseCharge.setInvoiceNo(checkinBill.getInvoiceNo());
-    bedNurseCharge.setPayTime(checkinBill.getPayTime());
-    bedNurseCharge.setPaymentType(checkinBill.getPaymentType());
+    //bedNurseCharge.setPayTime(checkinBill.getPayTime());
+    //bedNurseCharge.setPaymentType(checkinBill.getPaymentType());
     bedNurseCharge.setOperator(checkinBill.getOperator());
     bedNurseCharge.setTenantID(checkinBill.getTenantID());
     checkinBill.setBedAmount(bedNurseCharge.getBedAmount());
@@ -282,8 +286,8 @@ public class BillingController extends BaseController {
       mealCharge.setElderlyInfo(elderlyInfo);
       mealCharge.setChargeStatus(checkinBill.getChargeStatus());
       mealCharge.setInvoiceNo(checkinBill.getInvoiceNo());
-      mealCharge.setPayTime(checkinBill.getPayTime());
-      mealCharge.setPaymentType(checkinBill.getPaymentType());
+      //mealCharge.setPayTime(checkinBill.getPayTime());
+      //mealCharge.setPaymentType(checkinBill.getPaymentType());
       mealCharge.setOperator(checkinBill.getOperator());
       mealCharge.setTenantID(checkinBill.getTenantID());
       checkinBill.setMealAmount(mealCharge.getMealAmount());
@@ -315,6 +319,7 @@ public class BillingController extends BaseController {
     checkinBill.setPayStaff(tenantAccountService.getCurrentUsername());
     checkinBill.setPaymentType(paymentType);
     checkinBill.setRemark(remark);
+    checkinBill.setPayTime(new Date());
     ElderlyInfo elderlyInfo = checkinBill.getElderlyInfo();
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
 
@@ -322,12 +327,18 @@ public class BillingController extends BaseController {
     if (checkinBill.getChargeStatus().equals(PaymentStatus.UNPAID)) {
       if (checkinBill.getDeposit() != null) {
         checkinBill.getDeposit().setChargeStatus(PaymentStatus.PAID);
+        checkinBill.getDeposit().setPayTime(checkinBill.getPayTime());
+        checkinBill.getDeposit().setPaymentType(checkinBill.getPaymentType());
       }
       if (checkinBill.getBedNurseCharge() != null) {
         checkinBill.getBedNurseCharge().setChargeStatus(PaymentStatus.PAID);
+        checkinBill.getBedNurseCharge().setPayTime(checkinBill.getPayTime());
+        checkinBill.getBedNurseCharge().setPaymentType(checkinBill.getPaymentType());
       }
       if (checkinBill.getMealCharge() != null) {
         checkinBill.getMealCharge().setChargeStatus(PaymentStatus.PAID);
+        checkinBill.getMealCharge().setPayTime(checkinBill.getPayTime());
+        checkinBill.getMealCharge().setPaymentType(checkinBill.getPaymentType());
       }
 
 
@@ -419,6 +430,23 @@ public class BillingController extends BaseController {
     model.addAttribute("billing", record);
     return path + "/details";
   }
+  
+  /**
+   * 入院账单是否已经在缴费后修改过一次，目前缴费后只允许修改一次
+   * @param model
+   * @param id
+   * @param path
+   * @return
+   */
+  @RequestMapping(value = "/isChargeinBillUpdated", method = RequestMethod.GET)
+  public @ResponseBody Boolean isChargeinBillUpdated(ModelMap model, Long id) {
+    Billing record = billingService.find(id);
+    if (record.getBillingSupply()!=null) {
+      return true;
+    }
+    return false;
+  }
+  
 
   /**
    * 支付页面详情

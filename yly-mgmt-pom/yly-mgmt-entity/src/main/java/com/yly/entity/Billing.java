@@ -180,7 +180,7 @@ public class Billing extends BaseEntity {
   private BillingSupplyment billingSupply;
   
   
-  @OneToOne(mappedBy = "billing")
+  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public BillingSupplyment getBillingSupply() {
     return billingSupply;
   }

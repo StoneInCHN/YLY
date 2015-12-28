@@ -117,7 +117,7 @@ var messages = {
 	"yly.charge.billing.confirm.paid.adjust":"账单已缴费，您确定要进行调账?",
 	"yly.charge.billing.adjust":"调整金额",
 	"yly.charge.billing.edit":"修改账单",
-	
+	"yly.chargein.billing.isUpdated":"该账单缴费后已修改过，不允许再次修改!",
 	
 	
 	

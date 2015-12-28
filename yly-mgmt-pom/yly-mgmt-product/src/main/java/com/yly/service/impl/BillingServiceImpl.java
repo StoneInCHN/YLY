@@ -10,10 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yly.common.log.LogUtil;
+import com.yly.controller.BillingController;
 import com.yly.dao.BillingDao;
 import com.yly.entity.BedChargeConfig;
+import com.yly.entity.BedNurseCharge;
 import com.yly.entity.Billing;
+import com.yly.entity.BillingSupplyment;
+import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
+import com.yly.entity.MealCharge;
 import com.yly.entity.NurseChargeConfig;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
@@ -23,7 +29,9 @@ import com.yly.service.BillingService;
 import com.yly.service.DepositService;
 import com.yly.service.MealChargeService;
 import com.yly.service.NurseChargeConfigService;
+import com.yly.service.TenantAccountService;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.ToolsUtils;
 
 /**
  * 日常缴费账单
@@ -53,8 +61,10 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   @Resource(name = "mealChargeServiceImpl")
   private MealChargeService mealChargeService;
   
-  
+  @Resource(name = "tenantAccountServiceImpl")
+  private TenantAccountService tenantAccountService;
 
+  
   @Resource
   public void setBaseDao(BillingDao billingDao) {
     super.setBaseDao(billingDao);
@@ -111,8 +121,93 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       originBill.setMealCharge(editBill.getMealCharge());
     }
     
-    
+    if (LogUtil.isDebugEnabled(BillingServiceImpl.class)) {
+      LogUtil.debug(BillingServiceImpl.class, "Check In Charge Update unpaid bill", "Bill Entity=%s",
+          ToolsUtils.entityToString(originBill));
+    }
     billingDao.merge(originBill);
+  }
+
+  @Override
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+  public Billing updatePaidCheckInBill(Billing originBill, Billing editBill,Long mealTypeId,Boolean isMonthlyMeal) {
+    Boolean depositeChanged = false;
+    Boolean bedNuresChanged = false;
+    Boolean mealChanged = false;
+    /**
+     * 判定押金是否修改
+     */
+    if (!originBill.getDeposit().getDepositAmount().equals(editBill.getDeposit().getDepositAmount())) {
+      depositeChanged=true;
+    }
+    /**
+     * 判断床位护理费是否修改
+     */
+    if(originBill.getBedNurseCharge().getPeriodStartDate().getTime() != editBill.getBedNurseCharge().getPeriodStartDate().getTime()){
+      bedNuresChanged=true;
+    }
+    /**
+     * 判断伙食费是否修改
+     */
+    if ((originBill.getMealCharge()==null&&editBill.getMealCharge()!=null) 
+        || (originBill.getMealCharge()!=null && editBill.getMealCharge()==null) 
+        || (originBill.getMealCharge().getPeriodStartDate().getTime()!=editBill.getMealCharge().getPeriodStartDate().getTime())
+        || (originBill.getMealCharge().getPeriodStartDate().getTime()==editBill.getMealCharge().getPeriodStartDate().getTime() && !originBill.getElderlyInfo().getMealType().getId().equals(mealTypeId))) {
+     
+      mealChanged=true;
+    }
+    
+    if (depositeChanged || bedNuresChanged || mealChanged) {
+        BillingSupplyment billingSupplyment = new BillingSupplyment();
+        billingSupplyment.setBilling(originBill);
+        billingSupplyment.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService
+            .getCurrentTenantOrgCode()));
+        billingSupplyment.setOperator(tenantAccountService.getCurrentUsername());
+        billingSupplyment.setTenantID(tenantAccountService.getCurrentTenantID());
+        
+        if (depositeChanged) {
+          // 押金
+          Deposit deposit = editBill.getDeposit();
+          deposit.setBillingSupply(billingSupplyment);
+          deposit.setBillingNo(billingSupplyment.getBillingNo());
+          deposit.setOperator(billingSupplyment.getOperator());
+          deposit.setTenantID(billingSupplyment.getTenantID());
+          billingSupplyment.setDeposit(deposit);
+          billingSupplyment.setDepositAmount(deposit.getDepositAmount());
+        }
+        
+        if (bedNuresChanged) {
+          BedNurseCharge bedNurseCharge = editBill.getBedNurseCharge();
+          bedNurseCharge.setBillingSupply(billingSupplyment);
+          bedNurseCharge.setBillingNo(billingSupplyment.getBillingNo());
+          bedNurseCharge.setOperator(billingSupplyment.getOperator());
+          bedNurseCharge.setTenantID(billingSupplyment.getTenantID());
+          billingSupplyment.setBedNurseCharge(bedNurseCharge);
+          billingSupplyment.setBedAmount(bedNurseCharge.getBedAmount());
+          billingSupplyment.setNurseAmount(bedNurseCharge.getNurseAmount());
+        }
+        
+        if (mealChanged) {
+          if (isMonthlyMeal!=null) {
+            MealCharge mealCharge = editBill.getMealCharge();
+            mealCharge.setBillingSupply(billingSupplyment);
+            mealCharge.setBillingNo(billingSupplyment.getBillingNo());
+            mealCharge.setOperator(billingSupplyment.getOperator());
+            mealCharge.setTenantID(billingSupplyment.getTenantID());
+            billingSupplyment.setMealCharge(mealCharge);
+            billingSupplyment.setMealAmount(mealCharge.getMealAmount());
+          }
+        }
+        
+        originBill.setBillingSupply(billingSupplyment);
+        if (LogUtil.isDebugEnabled(BillingServiceImpl.class)) {
+          LogUtil.debug(BillingController.class, "Check In Charge Update paid Bill", "Bill Entity=%s",
+              ToolsUtils.entityToString(billingSupplyment));
+        }
+        
+        return billingDao.merge(originBill);
+    }
+    return null;
   }
 
 }

@@ -122,17 +122,29 @@ var checkinCharge_manager_tool = {
 					return false;
 				}
 				
-				
-				if(_edit_row[0].chargeStatus == "PAID"){
-					$.messager.confirm(message("yly.common.confirm"), message("yly.charge.billing.confirm.paid.adjust"), function(r) {
-						if(r){
-						   checkinEditBill(_edit_row[0].id);
+				$.ajax({
+					url:"../billing/isChargeinBillUpdated.jhtml",
+					type:"get",
+					data:{id:_edit_row[0].id},
+					success:function(result){
+						if(result){//缴费账单已修改过，不允许再次修改
+							$.messager.alert(message("yly.common.prompt"),
+									message("yly.chargein.billing.isUpdated"), 'warning');
+							return false;
 						}
-					});
-				}else{
-					checkinEditBill(_edit_row[0].id);
-				}
-		      },
+						
+						if(_edit_row[0].chargeStatus == "PAID"){
+							$.messager.confirm(message("yly.common.confirm"), message("yly.charge.billing.confirm.paid.adjust"), function(r) {
+								if(r){
+								   checkinEditBill(_edit_row[0].id);
+								}
+							});
+						}else{
+							checkinEditBill(_edit_row[0].id);
+						}
+					}
+		    	});
+		     },
 			
 	  adjustment:function(){
 	    	var _edit_row = $('#checkinCharge_table_list')
@@ -186,11 +198,12 @@ function checkinEditBill(billId){
 						},
 						success:function(result,response,status){
 							    showSuccessMsg(result.content);
-							    console.log(result);
 							    if(result.type == "success"){
 							    	$.messager.progress('close');
 									$('#editCheckinBill').dialog("close");
 									$("#checkinCharge_table_list").datagrid('reload');
+							    }else if(result.type == "error"){
+							    	$.messager.progress('close');
 							    }
 								
 						},
