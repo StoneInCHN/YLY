@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 
@@ -19,9 +20,9 @@ import com.yly.entity.base.BaseEntity;
  *
  */
 @Entity
-@Table(name = "yly_nurse_level_statistics")
-@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_nurse_level_statistics_sequence")
-public class NurseLevelStatistics extends BaseEntity{
+@Table(name = "yly_report_nurse_level_statistics")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_report_nurse_level_statistics_sequence")
+public class ReportNurseLevelStatistics extends BaseEntity{
    
   private static final long serialVersionUID = 697841321332586266L;
   
@@ -43,7 +44,7 @@ public class NurseLevelStatistics extends BaseEntity{
    */
   private Date statisticsDate;
   
-  
+  @JsonProperty
   public Date getStatisticsDate() {
     return statisticsDate;
   }
@@ -53,6 +54,7 @@ public class NurseLevelStatistics extends BaseEntity{
   }
   
   @ManyToOne
+  @JsonProperty
   public SystemConfig getNursingLevel() {
     return nursingLevel;
   }
@@ -61,6 +63,7 @@ public class NurseLevelStatistics extends BaseEntity{
     this.nursingLevel = nursingLevel;
   }
 
+  @JsonProperty
   public Integer getElderlyCount() {
     return elderlyCount;
   }
@@ -69,7 +72,7 @@ public class NurseLevelStatistics extends BaseEntity{
     this.elderlyCount = elderlyCount;
   }
 
-  @Index(name="nurse_level_statistics_tenantid")
+  @Index(name="report_nurse_level_statistics_tenantid")
   public Long getTenantID() {
     return tenantID;
   }

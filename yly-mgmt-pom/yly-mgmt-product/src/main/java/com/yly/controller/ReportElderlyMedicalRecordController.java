@@ -59,7 +59,7 @@ public class ReportElderlyMedicalRecordController extends BaseController
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
     Ordering dateCycleOrdering = new Ordering ("medicalStatiticsCycle",
-        Direction.desc);
+        Direction.asc);
     orderings.add (dateCycleOrdering);
 
     List<ReportElderlyMedicalRecord> reportElderlyMedicalRecordList = reportElderlyMedicalRecordService

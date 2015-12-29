@@ -55,7 +55,7 @@ public class ReportElderlyEventController extends BaseController {
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
     Ordering dateCycleOrdering = new Ordering ("eventStatiticsCycle",
-        Direction.desc);
+        Direction.asc);
     orderings.add (dateCycleOrdering);
     List<ReportElderlyEvent>  reportElderlyEventList = reportElderlyEventService.findList (12, null, orderings, true,null);
     return reportElderlyEventList;

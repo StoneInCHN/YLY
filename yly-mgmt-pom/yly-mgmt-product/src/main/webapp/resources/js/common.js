@@ -774,3 +774,43 @@ function loadDataLine(id, url, categoryName, valueName, viewName) {
 	});
 
 }
+function loadDataColumn(id, url, valueName, seriesName) {
+	$.ajax({
+		url : url,
+		type : "post",
+		cache : false,
+		success : function(data) {
+
+			if (data.length > 0) {
+				var viewName = [];
+				var categoryValue = [];
+				for(var k = 0; k < data.length; k++){
+					var name = data[k]['nursingLevel'].configValue;
+					var category = new Date(data[k]['statisticsDate']).Format("yyyy年MM月");
+					if(categoryValue.indexOf(category) == -1){
+						categoryValue.push(category);
+					}
+					if(viewName.indexOf(name) == -1){
+						viewName.push(name);
+						
+						var value = new Object();
+						value.name = name;
+						value.data = [];
+						id.series.push(value);
+					}
+				}
+				id.xAxis.categories = categoryValue;
+				for (var i = 0; i < data.length; i++) {
+					for(var j = 0; j<viewName.length; j++){
+						if(viewName[j] == data[i]['nursingLevel'].configValue){
+							id.series[j].data.push(data[i]['elderlyCount']);
+						}
+					}
+				}
+			}
+			var chart = new Highcharts.Chart(id);
+		}
+
+	});
+
+}
