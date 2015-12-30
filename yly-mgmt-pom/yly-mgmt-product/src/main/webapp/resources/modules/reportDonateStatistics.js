@@ -1,10 +1,10 @@
-//护理级别统计
-var reportNurseLevelStatistics = {
+//捐赠统计
+var reportDonateStatistics = {
 //	colors : [ '#008000', '#FF0000', '#FFFF00', '#DDDF00', '#24CBE5',
 //			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
 	chart : {
 		type: 'column',
-		renderTo : 'nurseLevelStatisticsReportId',
+		renderTo : 'donateStatisticsReportId',
 		backgroundColor : {
 			linearGradient : {
 				x1 : 0,
@@ -18,7 +18,7 @@ var reportNurseLevelStatistics = {
 		plotBorderWidth : 1
 	},
 	title : {
-		text : '护理级别统计',
+		text : '捐赠统计',
 		x : -20
 	// center
 	},
@@ -56,9 +56,15 @@ var reportNurseLevelStatistics = {
 		verticalAlign : 'middle',
 		borderWidth : 0
 	},
-	series: []
+	series: [{
+		name:"钱",
+		data:[]
+	},{
+		name:"物",
+		data:[]
+	}]
 };
-var chart = new Highcharts.Chart(reportNurseLevelStatistics);
-loadDataColumn(reportNurseLevelStatistics,
-		'../../console/reportNurseLevelStatistics/report.jhtml', 'statisticsDate',
-		'elderlyCount', 'nursingLevel');
+var chart = new Highcharts.Chart(reportDonateStatistics);
+loadDataColumn(reportDonateStatistics,
+		'../../console/reportDonateStatistics/report.jhtml', 'donateStatisticsCycle',
+		'donateCount', 'donateName');

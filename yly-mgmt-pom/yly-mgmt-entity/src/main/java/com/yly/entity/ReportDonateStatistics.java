@@ -8,7 +8,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
+import com.yly.entity.commonenum.CommonEnum.DonateType;
 
 /**
  * 
@@ -28,7 +30,7 @@ public class ReportDonateStatistics extends BaseEntity
    * 租户ID
    */
   private Long tenantID;
- 
+
   /**
    * 捐赠物品（钱或具体的物品）
    */
@@ -37,12 +39,15 @@ public class ReportDonateStatistics extends BaseEntity
    * 统计捐赠数量，可能是物或钱
    */
   private Double donateCount;
- /**
-  * 统计周期
-  */
+  /**
+   * 赠送类型
+   */
+  private DonateType donateType;
+  /**
+   * 统计周期
+   */
   private Date donateStatisticsCycle;
 
-  
   @Index (name = "report_donate_statistics_tenantid")
   public Long getTenantID ()
   {
@@ -54,6 +59,7 @@ public class ReportDonateStatistics extends BaseEntity
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public String getDonateName ()
   {
     return donateName;
@@ -64,6 +70,7 @@ public class ReportDonateStatistics extends BaseEntity
     this.donateName = donateName;
   }
 
+  @JsonProperty
   public Double getDonateCount ()
   {
     return donateCount;
@@ -74,6 +81,7 @@ public class ReportDonateStatistics extends BaseEntity
     this.donateCount = donateCount;
   }
 
+  @JsonProperty
   public Date getDonateStatisticsCycle ()
   {
     return donateStatisticsCycle;
@@ -84,5 +92,15 @@ public class ReportDonateStatistics extends BaseEntity
     this.donateStatisticsCycle = donateStatisticsCycle;
   }
 
-  
+  @JsonProperty
+  public DonateType getDonateType ()
+  {
+    return donateType;
+  }
+
+  public void setDonateType (DonateType donateType)
+  {
+    this.donateType = donateType;
+  }
+
 }

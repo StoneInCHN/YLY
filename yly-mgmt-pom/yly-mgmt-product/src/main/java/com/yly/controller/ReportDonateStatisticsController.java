@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
-import com.yly.entity.ReportNurseLevelStatistics;
+import com.yly.entity.ReportDonateStatistics;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Pageable;
-import com.yly.service.ReportNurseLevelStatisticsService;
+import com.yly.service.ReportDonateStatisticsService;
 
 /**
- * Controller - 老人事件报表
+ * Controller - 捐赠统计报表
  * 
  * @author yohu
  *
  */
-@Controller("reportNurseLevelStatisticsController")
-@RequestMapping("console/reportNurseLevelStatistics")
-public class ReportNurseLevelStatisticsController extends BaseController {
-  @Resource(name = "reportNurseLevelStatisticsServiceImpl")
-  private ReportNurseLevelStatisticsService reportNurseLevelStatisticsService;
+@Controller("reportDonateStatisticsController")
+@RequestMapping("console/reportDonateStatistics")
+public class ReportDonateStatisticsController extends BaseController {
+  @Resource(name = "reportDonateStatisticsServiceImpl")
+  private ReportDonateStatisticsService reportDonateStatisticsService;
 
   /**
    * 界面展示
@@ -37,9 +37,9 @@ public class ReportNurseLevelStatisticsController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/reportNurseLevelStatistics", method = RequestMethod.GET)
+  @RequestMapping(value = "/reportDonateStatistics", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/report/reportNurseLevelStatistics";
+    return "/report/reportDonateStatistics";
   }
 
   /**
@@ -50,14 +50,14 @@ public class ReportNurseLevelStatisticsController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/report", method = RequestMethod.POST)
-  public @ResponseBody List<ReportNurseLevelStatistics> list(Model model, Pageable pageable) {
+  public @ResponseBody List<ReportDonateStatistics> list(Model model, Pageable pageable) {
     
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
-    Ordering dateCycleOrdering = new Ordering ("statisticsDate",
+    Ordering dateCycleOrdering = new Ordering ("donateStatisticsCycle",
         Direction.asc);
     orderings.add (dateCycleOrdering);
-    List<ReportNurseLevelStatistics>  reportNurseLevelStatisticsList = reportNurseLevelStatisticsService.findList (null, null, orderings, true,null);
-    return reportNurseLevelStatisticsList;
+    List<ReportDonateStatistics>  reportDonateStatisticList = reportDonateStatisticsService.findList (null, null, orderings, true,null);
+    return reportDonateStatisticList;
   }
 }

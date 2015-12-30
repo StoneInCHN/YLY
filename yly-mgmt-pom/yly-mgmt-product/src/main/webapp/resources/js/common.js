@@ -774,7 +774,7 @@ function loadDataLine(id, url, categoryName, valueName, viewName) {
 	});
 
 }
-function loadDataColumn(id, url, valueName, seriesName) {
+function loadDataColumn(id, url,categoryName, valueName, seriesName) {
 	$.ajax({
 		url : url,
 		type : "post",
@@ -784,29 +784,55 @@ function loadDataColumn(id, url, valueName, seriesName) {
 			if (data.length > 0) {
 				var viewName = [];
 				var categoryValue = [];
-				for(var k = 0; k < data.length; k++){
-					var name = data[k]['nursingLevel'].configValue;
-					var category = new Date(data[k]['statisticsDate']).Format("yyyy年MM月");
-					if(categoryValue.indexOf(category) == -1){
-						categoryValue.push(category);
-					}
-					if(viewName.indexOf(name) == -1){
-						viewName.push(name);
-						
-						var value = new Object();
-						value.name = name;
-						value.data = [];
-						id.series.push(value);
-					}
-				}
-				id.xAxis.categories = categoryValue;
-				for (var i = 0; i < data.length; i++) {
-					for(var j = 0; j<viewName.length; j++){
-						if(viewName[j] == data[i]['nursingLevel'].configValue){
-							id.series[j].data.push(data[i]['elderlyCount']);
+				
+				if(id.chart.renderTo == 'donateStatisticsReportId'){
+					for(var k = 0; k < data.length; k++){
+						var category = new Date(data[k][categoryName]).Format("yyyy年MM月");
+						if(categoryValue.indexOf(category) == -1){
+							categoryValue.push(category);
 						}
 					}
+					var index = 0;
+					for(var j = 0; j<categoryValue.length; j++){
+						var total = 0 ;
+						for(var i = 0; i < data.length; i++){
+							var category = new Date(data[i][categoryName]).Format("yyyy年MM月");
+							var type = data[i]['donateType'];
+							if(type == 'MONEY' && categoryValue[j] == category){
+								id.series[0].data.push(data[i].donateCount);
+							}else if(type == 'ITEM' && categoryValue[j] == category){
+								total = total+data[i].donateCount;
+							}
+						}
+						id.series[1].data[index] = total;
+						index++;
+					}
+				}else{
+					for(var k = 0; k < data.length; k++){
+						var name = data[k][seriesName].configValue;
+						var category = new Date(data[k][categoryName]).Format("yyyy年MM月");
+						if(categoryValue.indexOf(category) == -1){
+							categoryValue.push(category);
+						}
+						if(viewName.indexOf(name) == -1){
+							viewName.push(name);
+							var value = new Object();
+							value.name = name;
+							value.data = [];
+							id.series.push(value);
+						}
+					}
+					
+					for (var i = 0; i < data.length; i++) {
+						for(var j = 0; j<viewName.length; j++){
+							if(viewName[j] == data[i][seriesName].configValue){
+								id.series[j].data.push(data[i][valueName]);
+							}
+						}
+					}
+					
 				}
+				id.xAxis.categories = categoryValue;
 			}
 			var chart = new Highcharts.Chart(id);
 		}

@@ -221,6 +221,10 @@
 		    		[@shiro.hasPermission name="reportNurseLevelStatistics"]
 		    		<li><a href="#" data-url="${base}/console/reportNurseLevelStatistics/reportNurseLevelStatistics.jhtml">护理级别统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportDonateStatistics"]
+		    		<li><a href="#" data-url="${base}/console/reportDonateStatistics/reportDonateStatistics.jhtml">捐赠统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]
