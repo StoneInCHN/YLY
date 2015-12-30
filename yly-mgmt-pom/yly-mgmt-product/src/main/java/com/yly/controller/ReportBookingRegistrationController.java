@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
-import com.yly.entity.ReportWaterElectricityRecord;
+import com.yly.entity.ReportBookingRegistration;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Pageable;
-import com.yly.service.ReportWaterElectricityRecordService;
+import com.yly.service.ReportBookingRegistrationService;
 
 /**
  * Controller - 老人事件报表
@@ -25,11 +25,11 @@ import com.yly.service.ReportWaterElectricityRecordService;
  * @author yohu
  *
  */
-@Controller("ReportWaterElectricityRecordController")
-@RequestMapping("console/reportWaterElectricityRecord")
-public class ReportWaterElectricityRecordController extends BaseController {
-  @Resource(name = "reportWaterElectricityRecordServiceImpl")
-  private ReportWaterElectricityRecordService reportWaterElectricityRecordService;
+@Controller("reportBookingRegistrationController")
+@RequestMapping("console/reportBookingRegistration")
+public class ReportBookingRegistrationController extends BaseController {
+  @Resource(name = "reportBookingRegistrationServiceImpl")
+  private ReportBookingRegistrationService reportBookingRegistrationService;
 
   /**
    * 界面展示
@@ -37,9 +37,9 @@ public class ReportWaterElectricityRecordController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/reportWaterElectricityRecord", method = RequestMethod.GET)
+  @RequestMapping(value = "/reportBookingRegistration", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/report/ReportWaterElectricityRecord";
+    return "/report/reportBookingRegistration";
   }
 
   /**
@@ -50,14 +50,14 @@ public class ReportWaterElectricityRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/report", method = RequestMethod.POST)
-  public @ResponseBody List<ReportWaterElectricityRecord> list(Model model, Pageable pageable) {
+  public @ResponseBody List<ReportBookingRegistration> list(Model model, Pageable pageable) {
     
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
-    Ordering dateCycleOrdering = new Ordering ("waterElectricityStatiticsCycle",
+    Ordering dateCycleOrdering = new Ordering ("bookingDateStatitics",
         Direction.asc);
     orderings.add (dateCycleOrdering);
-    List<ReportWaterElectricityRecord>  reportWaterElectricityRecordList = reportWaterElectricityRecordService.findList (12, null, orderings, true,null);
-    return reportWaterElectricityRecordList;
+    List<ReportBookingRegistration>  reportBookingRegistrationList = reportBookingRegistrationService.findList (12, null, orderings, true,null);
+    return reportBookingRegistrationList;
   }
 }

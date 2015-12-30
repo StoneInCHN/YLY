@@ -1,11 +1,14 @@
 package com.yly.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -35,7 +38,7 @@ public class ReportBookingRegistration extends BaseEntity
   /**
    * 统计周期
    */
-  private int bookingDateStatitics;
+  private Date bookingDateStatitics;
   
   @Index (name = "report_booking_registration_tenantid")
   public Long getTenantID ()
@@ -48,6 +51,7 @@ public class ReportBookingRegistration extends BaseEntity
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public int getBookingCount ()
   {
     return bookingCount;
@@ -58,12 +62,13 @@ public class ReportBookingRegistration extends BaseEntity
     this.bookingCount = bookingCount;
   }
 
-  public int getBookingDateStatitics ()
+  @JsonProperty
+  public Date getBookingDateStatitics ()
   {
     return bookingDateStatitics;
   }
 
-  public void setBookingDateStatitics (int bookingDateStatitics)
+  public void setBookingDateStatitics (Date bookingDateStatitics)
   {
     this.bookingDateStatitics = bookingDateStatitics;
   }

@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
-import com.yly.entity.ReportWaterElectricityRecord;
+import com.yly.entity.ReportDonateStatistics;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Pageable;
-import com.yly.service.ReportWaterElectricityRecordService;
+import com.yly.service.ReportDonateStatisticsService;
 
 /**
- * Controller - 老人事件报表
+ * Controller - 捐赠统计报表
  * 
  * @author yohu
  *
  */
-@Controller("ReportWaterElectricityRecordController")
-@RequestMapping("console/reportWaterElectricityRecord")
-public class ReportWaterElectricityRecordController extends BaseController {
-  @Resource(name = "reportWaterElectricityRecordServiceImpl")
-  private ReportWaterElectricityRecordService reportWaterElectricityRecordService;
+@Controller("reportDonateStatisticsController")
+@RequestMapping("console/reportDonateStatistics")
+public class ReportDonateStatisticsController extends BaseController {
+  @Resource(name = "reportDonateStatisticsServiceImpl")
+  private ReportDonateStatisticsService reportDonateStatisticsService;
 
   /**
    * 界面展示
@@ -37,9 +37,9 @@ public class ReportWaterElectricityRecordController extends BaseController {
    * @param model
    * @return
    */
-  @RequestMapping(value = "/reportWaterElectricityRecord", method = RequestMethod.GET)
+  @RequestMapping(value = "/reportDonateStatistics", method = RequestMethod.GET)
   public String list(ModelMap model) {
-    return "/report/ReportWaterElectricityRecord";
+    return "/report/reportDonateStatistics";
   }
 
   /**
@@ -50,14 +50,14 @@ public class ReportWaterElectricityRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/report", method = RequestMethod.POST)
-  public @ResponseBody List<ReportWaterElectricityRecord> list(Model model, Pageable pageable) {
+  public @ResponseBody List<ReportDonateStatistics> list(Model model, Pageable pageable) {
     
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
-    Ordering dateCycleOrdering = new Ordering ("waterElectricityStatiticsCycle",
+    Ordering dateCycleOrdering = new Ordering ("donateStatisticsCycle",
         Direction.asc);
     orderings.add (dateCycleOrdering);
-    List<ReportWaterElectricityRecord>  reportWaterElectricityRecordList = reportWaterElectricityRecordService.findList (12, null, orderings, true,null);
-    return reportWaterElectricityRecordList;
+    List<ReportDonateStatistics>  reportDonateStatisticList = reportDonateStatisticsService.findList (null, null, orderings, true,null);
+    return reportDonateStatisticList;
   }
 }

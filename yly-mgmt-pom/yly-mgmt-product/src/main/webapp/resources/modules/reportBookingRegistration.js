@@ -1,11 +1,10 @@
-//老人看病情况统计
-var reportElderlyMedicalRecord = {
-	//	colors : [ '#FF00FF', '#0000CD', '#ED561B', '#DDDF00', '#24CBE5',
-	//			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
-
-	colors : [ '#004B97' ],
+//预约登记统计
+var reportBookingRegistration = {
+	colors : [ '#008000', '#FF0000', '#FFFF00', '#DDDF00', '#24CBE5',
+			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
 	chart : {
-		renderTo : 'elderlyMedicalRecordReportId',
+		type: 'column',
+		renderTo : 'bookingRegistrationReportId',
 		backgroundColor : {
 			linearGradient : {
 				x1 : 0,
@@ -19,9 +18,9 @@ var reportElderlyMedicalRecord = {
 		plotBorderWidth : 1
 	},
 	title : {
-		text : '每月看病人数统计',
+		text : '预约登记统计',
 		x : -20
-	//center
+	// center
 	},
 	credits : {
 		enabled : false
@@ -48,7 +47,7 @@ var reportElderlyMedicalRecord = {
 		} ]
 	},
 	tooltip : {
-		valueSuffix : '人'
+		valueSuffix : '次'
 	},
 	legend : {
 		layout : 'vertical',
@@ -56,12 +55,9 @@ var reportElderlyMedicalRecord = {
 		verticalAlign : 'middle',
 		borderWidth : 0
 	},
-	series : [ {
-		name : '人数',
-		data : []
-	} ]
+	series : []
 };
-var chart = new Highcharts.Chart(reportElderlyMedicalRecord);
-loadDataLine(reportElderlyMedicalRecord,
-		'../../console/reportElderlyMedicalRecord/report.jhtml',
-		'medicalStatiticsCycle', 'elderlyCount');
+var chart = new Highcharts.Chart(reportBookingRegistration);
+loadDataLine(reportBookingRegistration,
+		'../../console/reportBookingRegistration/report.jhtml', 'bookingDateStatitics',
+		[ 'bookingCount'], ['预约人数']);

@@ -193,7 +193,7 @@
 		    		[/@shiro.hasPermission]
 		    	</ul>
 		    	<ul title="统计报表" id="statisticalReports">
-		    		[@shiro.hasPermission name="reportElderlyStatus"]
+		    		<!--[@shiro.hasPermission name="reportElderlyStatus"]
 		    		<li><a href="#" data-url="${base}/console/tenantAccount/tenantAccount.jhtml">用户管理</a></li>
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="reportSexualProportion"]
@@ -202,6 +202,7 @@
 		    		[@shiro.hasPermission name="reportDonate"]
 		    		<li><a href="#" data-url="${base}/console/role/role.jhtml">捐赠统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		-->
 		    		[@shiro.hasPermission name="reportEvluatingResult"]
 		    		<li><a href="#" data-url="${base}/console/reportEvaluatingResult/reportEvaluatingResult.jhtml">评估结果统计</a></li>
 		    		[/@shiro.hasPermission]
@@ -216,6 +217,18 @@
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="reportWaterElectricityRecord"]
 		    		<li><a href="#" data-url="${base}/console/reportWaterElectricityRecord/reportWaterElectricityRecord.jhtml">水电费统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportNurseLevelStatistics"]
+		    		<li><a href="#" data-url="${base}/console/reportNurseLevelStatistics/reportNurseLevelStatistics.jhtml">护理级别统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportDonateStatistics"]
+		    		<li><a href="#" data-url="${base}/console/reportDonateStatistics/reportDonateStatistics.jhtml">捐赠统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportRepairRecord"]
+		    		<li><a href="#" data-url="${base}/console/reportRepairRecord/reportRepairRecord.jhtml">维修记录统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportBookingRegistration"]
+		    		<li><a href="#" data-url="${base}/console/reportBookingRegistration/reportBookingRegistration.jhtml">预约登记统计</a></li>
 		    		[/@shiro.hasPermission]
 		    		
 		    	</ul>
