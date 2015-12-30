@@ -1,10 +1,10 @@
-//维修记录统计
-var reportRepairRecord = {
+//预约登记统计
+var reportBookingRegistration = {
 	colors : [ '#008000', '#FF0000', '#FFFF00', '#DDDF00', '#24CBE5',
 			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
 	chart : {
 		type: 'column',
-		renderTo : 'repairRecordReportId',
+		renderTo : 'bookingRegistrationReportId',
 		backgroundColor : {
 			linearGradient : {
 				x1 : 0,
@@ -18,7 +18,7 @@ var reportRepairRecord = {
 		plotBorderWidth : 1
 	},
 	title : {
-		text : '维修记录统计',
+		text : '预约登记统计',
 		x : -20
 	// center
 	},
@@ -57,7 +57,7 @@ var reportRepairRecord = {
 	},
 	series : []
 };
-var chart = new Highcharts.Chart(reportRepairRecord);
-loadDataLine(reportRepairRecord,
-		'../../console/reportRepairRecord/report.jhtml', 'repairedStatiticsCycle',
-		[ 'repairedCount'], ['维修次数']);
+var chart = new Highcharts.Chart(reportBookingRegistration);
+loadDataLine(reportBookingRegistration,
+		'../../console/reportBookingRegistration/report.jhtml', 'bookingDateStatitics',
+		[ 'bookingCount'], ['预约人数']);

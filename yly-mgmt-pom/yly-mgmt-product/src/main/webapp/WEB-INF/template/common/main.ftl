@@ -227,6 +227,10 @@
 		    		[@shiro.hasPermission name="reportRepairRecord"]
 		    		<li><a href="#" data-url="${base}/console/reportRepairRecord/reportRepairRecord.jhtml">维修记录统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportBookingRegistration"]
+		    		<li><a href="#" data-url="${base}/console/reportBookingRegistration/reportBookingRegistration.jhtml">预约登记统计</a></li>
+		    		[/@shiro.hasPermission]
+		    		
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]
