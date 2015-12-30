@@ -3,6 +3,7 @@
 <script src='${base}/resources/js/moment.min.js'></script>
 <script src='${base}/resources/js/jquery-ui.custom.min.js'></script>
 <script src='${base}/resources/js/fullcalendar.min.js'></script>
+<script src='${base}/resources/js/fullcalendar/lang/zh-cn.js'></script>
 <div id='nursePlanWrap'>
     <div id='nursePlan-events'>
         <h4>排班类型</h4>
@@ -11,7 +12,7 @@
 		[/#list]
         <p>
             <input type='checkbox' id='drop-remove' />
-            <label for='drop-remove'>remove after drop</label>
+            <label for='drop-remove'>拖拽后移除</label>
         </p>
     </div>
 

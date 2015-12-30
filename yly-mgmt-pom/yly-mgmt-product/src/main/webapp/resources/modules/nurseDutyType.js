@@ -14,7 +14,7 @@
 					$("#addNurseDutyType").dialog({    
 					    title:message("yly.nurseDutyType.add"),   
 					    width: 350,    
-					    height: 350,    
+					    height: 380,    
 					    closed: false,    
 					    cache: false,
 					    iconCls:'icon-mini-add',
@@ -172,6 +172,7 @@
 			      {title:message("yly.nurseDutyType.dutyEndTime"),field:"dutyEndTime",width:100,sortable:true},
 			      {title:message("yly.nurseDutyType.dutyName"),field:"dutyName",width:100,sortable:true},
 			      {title:message("yly.nurseDutyType.remark"),field:"remark",width:100,sortable:true},
+			      {title:message("yly.nurseDutyType.order"),field:"orderIndex",width:100,sortable:true},
 			      {title:message("yly.common.createDate"),field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
 						return new Date(value).Format("yyyy-MM-dd");
 					}},

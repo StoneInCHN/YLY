@@ -39,6 +39,11 @@ public class NurseDutyType extends BaseEntity {
 	 * 班次名称
 	 */
 	private String dutyName;
+	
+	/**
+	 * 排序
+	 */
+	private Integer orderIndex;
 
 	/**
 	 * 备注
@@ -94,4 +99,18 @@ public class NurseDutyType extends BaseEntity {
 		this.remark = remark;
 	}
 
+	@JsonProperty
+    @Column(length = 4)
+  public Integer getOrderIndex() {
+    return orderIndex;
+  }
+
+  public void setOrderIndex(Integer orderIndex) {
+    this.orderIndex = orderIndex;
+  }
+
+	
+
+	
+	
 }

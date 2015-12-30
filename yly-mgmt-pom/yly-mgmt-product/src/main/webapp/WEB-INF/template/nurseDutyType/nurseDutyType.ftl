@@ -22,6 +22,12 @@
 	    		</td>
 	    	</tr>
 	    	<tr>
+	    		<th>${message("yly.nurseDutyType.order")}:</th>
+	    		<td>
+	    			 <input class="easyui-textbox"  name="orderIndex" data-options="required:true" />   
+	    		</td>
+	    	</tr>
+	    	<tr>
 	    		<th>${message("yly.nurseDutyType.remark")}:</th>
 	    		<td>
 	    			  <input class="easyui-textbox"  name="remark" data-options="required:true,multiline:true,height:100" /> 

@@ -481,9 +481,11 @@ var messages = {
 	
 	//排班
 	"yly.nurseDutyType.list":"班次类型列表",
+	"yly.nurseDutyType.add":"添加班次",
 	"yly.nurseDutyType.dutyStartTime":"开始时间",
 	"yly.nurseDutyType.dutyEndTime":"结束时间",
 	"yly.nurseDutyType.dutyName":"班次名称",
+	"yly.nurseDutyType.order":"排序",
 	"yly.nurseDutyType.remark":"备注"
 };
 //多语言
