@@ -408,7 +408,7 @@ public class BillingSupplyment extends BaseEntity {
     this.depositAmount = depositAmount;
   }
 
-  @OneToOne(mappedBy = "billing", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "billingSupply", cascade = CascadeType.ALL)
   public Deposit getDeposit() {
     return deposit;
   }

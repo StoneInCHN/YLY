@@ -372,7 +372,6 @@ function checkinEditBill(billId){
 			        param.configKey = 'MEALTYPE';// 参数
 			    },
 			    onLoadSuccess:function(){
-			    	console.log($("#update_mealTypeId").val());
 			    	$('#update_mealType').combobox('setValue', $("#update_mealTypeId").val());
 			    },
 			    onChange:function(value){
@@ -392,10 +391,7 @@ function checkinEditBill(billId){
 							var mealPerDay = $('#update_mealPerDay').attr("data-value");
 							var periodMonMeal=$('#update_periodMonMeal').val();
 							var periodDayMeal=$('#update_periodDayMeal').val();
-//							console.log(periodMonMeal);
-//							console.log(mealPerMonth);
-//							console.log(periodDayMeal);
-//							console.log(mealPerDay);
+
 							if(periodMonMeal!="" && periodDayMeal!=""){
 								var mealAmount = periodMonMeal*mealPerMonth+periodDayMeal*mealPerDay;
 								console.log(mealAmount);

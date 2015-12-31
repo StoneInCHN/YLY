@@ -22,6 +22,7 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.BedNurseCharge;
 import com.yly.entity.Billing;
 import com.yly.entity.BillingAdjustment;
+import com.yly.entity.BillingSupplyment;
 import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
@@ -213,8 +214,6 @@ public class BillingController extends BaseController {
          if (updateBilling == null) {
            return Message.error("yly.checkin.bill.unchanged");
         }
-          
-
       }
     }
 
@@ -427,6 +426,27 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id, String path) {
     Billing record = billingService.find(id);
+    if (record.getBillingSupply()!=null) {
+      BillingSupplyment billingSupplyment = record.getBillingSupply();
+      if (billingSupplyment.getBedNurseCharge()!=null) {
+        BedNurseCharge bedNurseCharge = billingSupplyment.getBedNurseCharge();
+        record.setBedAmount(bedNurseCharge.getBedAmount());
+        record.setNurseAmount(bedNurseCharge.getNurseAmount());
+      }
+      
+      if (billingSupplyment.getDeposit()!=null) {
+        Deposit deposit = billingSupplyment.getDeposit();
+        record.setDepositAmount(deposit.getDepositAmount());
+      }
+      
+      if (billingSupplyment.getMealCharge()!=null) {
+        MealCharge mealCharge = billingSupplyment.getMealCharge();
+        record.setMealAmount(mealCharge.getMealAmount());
+      }
+      
+      record.setTotalAmount(billingSupplyment.getTotalAmount());
+    }
+    
     model.addAttribute("billing", record);
     return path + "/details";
   }

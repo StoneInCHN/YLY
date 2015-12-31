@@ -199,6 +199,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
           }
         }
         
+        billingSupplyment.setTotalAmount(editBill.getTotalAmount());
         originBill.setBillingSupply(billingSupplyment);
         if (LogUtil.isDebugEnabled(BillingServiceImpl.class)) {
           LogUtil.debug(BillingController.class, "Check In Charge Update paid Bill", "Bill Entity=%s",
