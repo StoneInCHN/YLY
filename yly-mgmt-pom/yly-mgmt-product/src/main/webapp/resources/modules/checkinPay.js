@@ -140,6 +140,19 @@ $(function(){
 			    modal: true,
 			    href:'../billing/details.jhtml?id='+rowData.id+'&path=checkinPay',
 			    buttons:[{
+					text:message("yly.common.print"),
+					iconCls:'icon-print',
+					handler:function(){
+					    var newWindow=window.open(message("yly.common.detail"),"_blank");
+					    var docStr = $('#checkinDetail').prop('outerHTML');
+					    console.info(docStr);
+					    newWindow.document.write(docStr);
+					    newWindow.document.close();
+					    newWindow.print();
+					    newWindow.close();
+						// $('#listEvaluating').dialog("close");
+					}
+			    },{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){

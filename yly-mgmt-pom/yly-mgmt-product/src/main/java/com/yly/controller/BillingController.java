@@ -478,10 +478,36 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/payPage", method = RequestMethod.GET)
   public String payPage(ModelMap model, Long id, String path) {
     Billing record = billingService.find(id);
+    BigDecimal paidAmount = record.getTotalAmount();
+    BigDecimal payAmount = new BigDecimal(0);
+    
+    if (record.getBillingSupply()!=null) {
+      BillingSupplyment billingSupplyment = record.getBillingSupply();
+      if (billingSupplyment.getBedNurseCharge()!=null) {
+        BedNurseCharge bedNurseCharge = billingSupplyment.getBedNurseCharge();
+        record.setBedAmount(bedNurseCharge.getBedAmount());
+        record.setNurseAmount(bedNurseCharge.getNurseAmount());
+        model.addAttribute("isBedNurseSupp", true);
+      }
+      
+      if (billingSupplyment.getDeposit()!=null) {
+        Deposit deposit = billingSupplyment.getDeposit();
+        record.setDepositAmount(deposit.getDepositAmount());
+        model.addAttribute("isDepositSupp", true);
+      }
+      
+      if (billingSupplyment.getMealCharge()!=null) {
+        MealCharge mealCharge = billingSupplyment.getMealCharge();
+        record.setMealAmount(mealCharge.getMealAmount());
+        model.addAttribute("isMealSupp", true);
+      }
+      
+      BigDecimal diffAmount = billingSupplyment.getTotalAmount().subtract(record.getTotalAmount());
+      payAmount = payAmount.add(diffAmount);   
+      
+    }
     if (record.getBillingAdjustment() != null && record.getBillingAdjustment().size() > 0) {
       if (record.getChargeStatus().equals(PaymentStatus.UNPAID_ADJUSTMENT)) {
-        BigDecimal paidAmount = record.getTotalAmount();
-        BigDecimal payAmount = new BigDecimal(0);
         for (BillingAdjustment billingAdjustment : record.getBillingAdjustment()) {
           if (billingAdjustment.getChargeStatus().equals(PaymentStatus.PAID)) {
             paidAmount = paidAmount.add(billingAdjustment.getAdjustmentAmount());
@@ -492,13 +518,13 @@ public class BillingController extends BaseController {
         model.addAttribute("paidAmount", paidAmount);
         record.setTotalAmount(payAmount);
       } else if (record.getChargeStatus().equals(PaymentStatus.UNPAID)) {
-        BigDecimal payAmount = record.getTotalAmount();
+        BigDecimal payUnpaidAmount = record.getTotalAmount();
         for (BillingAdjustment billingAdjustment : record.getBillingAdjustment()) {
           if (billingAdjustment.getChargeStatus().equals(PaymentStatus.UNPAID)) {
-            payAmount = payAmount.add(billingAdjustment.getAdjustmentAmount());
+            payUnpaidAmount = payUnpaidAmount.add(billingAdjustment.getAdjustmentAmount());
           }
         }
-        record.setTotalAmount(payAmount);
+        record.setTotalAmount(payUnpaidAmount);
       }
     }
 

@@ -23,15 +23,21 @@
 				    </select>
 	    		</td>
 	    	</tr>
+	    	<tr><td colspan=4><font color="red">${message("yly.checkin.changeBill.prompt")}</font></td></tr>
 	    	<tr>
 	    		<td colspan=4>
 	    			  <fieldset> 
-	    			  	<legend>${message("yly.charge.record.deposit")}:</legend>
+	    			    [#if isDepositSupp?? && isDepositSupp == "true"]
+	    			    	<legend><font color="red">${message("yly.charge.record.deposit")}:</font></legend>
+	    			    [#else]
+	    			    	<legend>${message("yly.charge.record.deposit")}:</legend>
+	    			    [/#if]
+	    			  	
 	    			  	<table class="table table-striped">
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.deposit.depositAmount}" data-options="disabled:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" value="${billing.depositAmount}" data-options="disabled:true,min:0,precision:2" />
 					    		</td>
 					    		<th>${message("yly.remark")}:</th>
 					    		<td width="250px">
@@ -46,7 +52,11 @@
 	    	 <tr>
 	    		<td colspan=4>
 	    			  <fieldset> 
-	    			  	<legend>${message("yly.charge.bedNurse.record")}:</legend>
+	    			    [#if isBedNurseSupp?? && isBedNurseSupp == "true"]
+	    			  		<legend><font color="red">${message("yly.charge.bedNurse.record")}:</font></legend>
+	    			  	[#else]
+	    			  		<legend>${message("yly.charge.bedNurse.record")}:</legend>
+	    			  	[/#if]
 	    			  	<table class="table table-striped">
 	    			  		<tr>
 					    		<th>${message("yly.common.charge.period")}:</th>
@@ -59,13 +69,13 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.bed")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.bedNurseCharge.bedAmount}" data-options="disabled:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" value="${billing.bedAmount}" data-options="disabled:true,min:0,precision:2" />
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.nurse")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.bedNurseCharge.nurseAmount}" data-options="disabled:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" value="${billing.nurseAmount}" data-options="disabled:true,min:0,precision:2" />
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>
@@ -82,8 +92,12 @@
 	    	[#if billing.elderlyInfo.mealFeeMonthlyPayment?? && billing.elderlyInfo.mealFeeMonthlyPayment=="true"]
 	    	<tr>
 	    		<td colspan=4>
-	    			  <fieldset> 
-	    			  	<legend>${message("yly.charge.meal.reocrd")}:</legend>
+	    		    <fieldset> 
+	    			  	[#if isMealSupp?? && isMealSupp == "true"]
+	    			  		<legend><font color="red">${message("yly.charge.meal.reocrd")}:</font></legend>
+	    			  	[#else]
+	    			  		<legend>${message("yly.charge.meal.reocrd")}:</legend>
+	    			  	[/#if]
 	    			  	<table class="table table-striped">
 	    			  		<tr>
 					    		<th>${message("yly.common.charge.period")}:</th>
