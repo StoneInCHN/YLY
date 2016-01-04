@@ -1,50 +1,110 @@
 //老人评估结果统计
-var reportElderlyLiveStatitics = {
-	colors : [ '#FF00FF', '#0000CD', '#ED561B', '#DDDF00', '#24CBE5',
-			'#64E572', '#FF9655', '#FFF263', '#6AF9C4' ],
-	credits : {
-		enabled : false
-	// 禁用版权信息
-	},
-	chart : {
-		renderTo : 'elderlyLiveStatiticsReportId',
-		plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-		plotShadow: true,
-		backgroundColor: {
-			linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-			stops: [
-				[0, 'rgb(255, 255, 255)'],
-				[1, 'rgb(240, 240, 255)']
-			]
-		},
-		options3d: {
-	        enabled: true,
-	        alpha: 45,
-	        beta: 0
-		}
-	},
-	title : {
-		text : '老人居住情况统计'
-	},
-	tooltip : {
-		pointFormat : '{series.name}:{point.y}</b>'
-	},
-	plotOptions : {
-		pie : {
-			allowPointSelect : false,
-			cursor : 'pointer',
-			depth: 20,
-			dataLabels : {
-				enabled : false
-			},
-			showInLegend : true
-		}
-	},
-	series : [ {
-		type : 'pie',
-		name : '间',
-		data : []
-	} ]
+ var colors = Highcharts.getOptions().colors;
+// Create the chart
+var reportElderlyLiveStatitics={
+                chart: {
+                    type: 'pie',
+                    renderTo:"elderlyLiveStatiticsReportId"
+                },
+                title: {
+                    text: '老人居住情况统计'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent market share'
+                    }
+                },
+                credits : {
+                    enabled : false
+                    // 禁用版权信息
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: false,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function () {
+                                return '<b>' + this.point.name + '</b>: ' + this.percentage.toFixed(3) + ' %';
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+
+                series: [{
+                    name: '房间总数',
+                    size: '80%',
+                    data:[],
+                    dataLabels: false,
+                    tooltip: {
+                        valueSuffix: '间'
+                    },
+                    point: {
+                        events: {
+                            legendItemClick: function() {
+                                return false;
+                            }
+                        }
+                    },
+                }, {
+                    name: '床位',
+                    data:[],
+                    size: '65%',
+                    innerSize: '0%',
+                    dataLabels: {
+                        formatter: function() {
+                            return this.y > 5 ? this.point.name : null;
+                        },
+                        color: 'white',
+                        distance: -30
+                    },
+                    tooltip: {
+                        valueSuffix: '张'
+                    },
+                    showInLegend: false
+                }]
 };
-loadDataPie(reportElderlyLiveStatitics,
-		'../../console/reportElderlyLiveStatitics/report.jhtml', [ '使用', '空闲'], [ 'inUsingZoomCount', 'totalZoomCount']);
+
+
+
+$.ajax({
+	url : "../../console/reportElderlyLiveStatitics/report.jhtml",
+	type : "post",
+	cache : false,
+	success : function(data) {
+		 if (data.length > 0) {
+			for (var i = 0; i < data.length; i++) {
+				
+				var brightness = 0.2 ;
+				
+				reportElderlyLiveStatitics.name=data[i].zoomType.configValue;
+				reportElderlyLiveStatitics.series[1].data.push(
+					{
+	                    name: '已使用',
+	                    y: data[i].inUsingCount,
+	                    color: Highcharts.Color(colors[i]).brighten(0.1).get()
+	                });
+				reportElderlyLiveStatitics.series[1].data.push(
+					{
+	                    name: '未使用',
+	                    y: data[i].totalCount-data[i].inUsingCount,
+	                    color: colors[i]
+	                    
+	                });
+				reportElderlyLiveStatitics.series[0].data.push({
+                    name: data[i].zoomType.configValue,
+                    y: data[i].totalCount,
+                    color: colors[i]
+                }
+				);
+			}
+
+		}
+		var chart = new Highcharts.Chart(reportElderlyLiveStatitics);
+	}
+
+});
+

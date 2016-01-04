@@ -1,6 +1,7 @@
 package com.yly.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,13 +29,22 @@ public class ReportElderlyLiveStatitics extends BaseEntity
    */
   private Long tenantID;
 
-  private int totalZoomCount;
+  /**
+   * 房间类型
+   */
+  private SystemConfig zoomType;
 
-  private int inUsingZoomCount;
+  /**
+   * 床位数
+   */
+  private int totalCount;
 
-  private Double inUsingRate;
+  /**
+   * 使用中
+   */
+  private int inUsingCount;
 
-  @Index (name = "report_elderly_live_statitics_tenantid")
+  @Index(name = "report_elderly_live_statitics_tenantid")
   public Long getTenantID ()
   {
     return tenantID;
@@ -46,36 +56,40 @@ public class ReportElderlyLiveStatitics extends BaseEntity
   }
 
   @JsonProperty
-  public int getTotalZoomCount ()
+  @ManyToOne
+  public SystemConfig getZoomType ()
   {
-    return totalZoomCount;
+    return zoomType;
   }
 
-  public void setTotalZoomCount (int totalZoomCount)
+  public void setZoomType (SystemConfig zoomType)
   {
-    this.totalZoomCount = totalZoomCount;
+    this.zoomType = zoomType;
+  }
+
+  @JsonProperty
+  public int getTotalCount ()
+  {
+    return totalCount;
+  }
+
+  public void setTotalCount (int totalCount)
+  {
+    this.totalCount = totalCount;
+  }
+
+  @JsonProperty
+  public int getInUsingCount ()
+  {
+    return inUsingCount;
+  }
+
+  public void setInUsingCount (int inUsingCount)
+  {
+    this.inUsingCount = inUsingCount;
   }
   
-  @JsonProperty
-  public int getInUsingZoomCount ()
-  {
-    return inUsingZoomCount;
-  }
 
-  public void setInUsingZoomCount (int inUsingZoomCount)
-  {
-    this.inUsingZoomCount = inUsingZoomCount;
-  }
 
-  @JsonProperty
-  public Double getInUsingRate ()
-  {
-    return inUsingRate;
-  }
-
-  public void setInUsingRate (Double inUsingRate)
-  {
-    this.inUsingRate = inUsingRate;
-  }
-
+  
 }
