@@ -341,7 +341,7 @@
 				        </td>  
 				    </tr>
 				    <tr >
-				    	<td >
+				    	<td colspan='2'>
 				    		<div id="elderlyMedicalReport" style="height:300px;width: 100%;">
 				    	</td>
 				    <tr>

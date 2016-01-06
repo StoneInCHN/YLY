@@ -2,6 +2,7 @@ package com.yly.framework.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.LockModeType;
 
@@ -160,4 +161,8 @@ public interface BaseDao<T, ID extends Serializable> {
    */
   List<T> searchList(Query query, Analyzer analyzer, org.apache.lucene.search.Filter filter);
    
+  /**
+   * 调用存储过程
+   */
+  void callProcedure(String procName,Object...args);
 }

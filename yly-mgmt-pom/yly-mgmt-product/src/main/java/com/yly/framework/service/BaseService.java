@@ -2,6 +2,7 @@ package com.yly.framework.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.search.Query;
@@ -201,4 +202,9 @@ public interface BaseService<T, ID extends Serializable>
    */
   void refreshIndex ();
 
+  /**
+   * 调用存储过程
+   * @param procName
+   */
+  void callProcedure (String procName, Object... param);
 }

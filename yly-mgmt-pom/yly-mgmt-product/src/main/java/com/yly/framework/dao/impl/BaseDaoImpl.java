@@ -669,4 +669,28 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
     }
     fullTextEntityManager.close ();
     }
+
+  @Override
+  public void callProcedure (String procName ,Object...args)
+  {
+    StringBuffer sb = new StringBuffer ();
+    sb.append ("{call "+procName+"(");
+    if (args != null && args.length > 0){
+      for (int i=0; i < args.length; i++){
+        if (i == 0){
+          sb.append ("?");
+        }else{
+          sb.append (",?");
+        }
+        
+      }
+    }
+    sb.append (")}");
+    javax.persistence.Query query = entityManager.createNativeQuery(sb.toString ());
+    for (int i=0; i < args.length; i++) {
+      query.setParameter(i+1, args[i]);
+    }
+    query.executeUpdate();    
+  }
+  
 }

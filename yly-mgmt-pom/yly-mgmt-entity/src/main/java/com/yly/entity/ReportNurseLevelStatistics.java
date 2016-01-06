@@ -2,10 +2,13 @@ package com.yly.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
@@ -45,6 +48,7 @@ public class ReportNurseLevelStatistics extends BaseEntity{
   private Date statisticsDate;
   
   @JsonProperty
+  @Temporal(TemporalType.DATE) 
   public Date getStatisticsDate() {
     return statisticsDate;
   }

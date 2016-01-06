@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -259,6 +260,12 @@ public class BaseServiceImpl<T, ID extends Serializable> implements BaseService<
   public void refreshIndex ()
   {
    baseDao.refreshIndex ();    
+  }
+
+  @Override
+  public void callProcedure (String procName,Object... args)
+  {
+    baseDao.callProcedure (procName,args);
   }
 
 }

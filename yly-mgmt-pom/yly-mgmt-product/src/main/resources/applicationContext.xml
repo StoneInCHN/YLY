@@ -155,5 +155,6 @@
 		<property name="queueCapacity" value="${task.queue_capacity}" />
 		<property name="keepAliveSeconds" value="${task.keep_alive_seconds}" />
 	</bean>
+	
 	<task:annotation-driven />
 </beans>

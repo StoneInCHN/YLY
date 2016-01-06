@@ -822,11 +822,21 @@ function loadDataColumn(id, url,categoryName, valueName, seriesName) {
 							id.series.push(value);
 						}
 					}
-					
-					for (var i = 0; i < data.length; i++) {
+					for(var k = 0;k < categoryValue.length; k++){
 						for(var j = 0; j<viewName.length; j++){
-							if(viewName[j] == data[i][seriesName].configValue){
-								id.series[j].data.push(data[i][valueName]);
+							//如果noDataFlag = false，表示该列没有数据，需要以0填充
+							var noDataFlag = false;
+							for (var i = 0; i < data.length; i++) {
+								var date = new Date(data[i][categoryName]).Format("yyyy年MM月");
+								if(viewName[j] == data[i][seriesName].configValue
+										&& date == categoryValue[k]){
+									noDataFlag = true;
+									id.series[j].data.push(data[i][valueName]);
+									break;
+								}
+							}
+							if(noDataFlag == false){
+								id.series[j].data.push(0);
 							}
 						}
 					}
