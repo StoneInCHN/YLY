@@ -47,9 +47,6 @@ var reportDonateStatistics = {
 			color : '#808080'
 		} ]
 	},
-	tooltip : {
-		valueSuffix : '人'
-	},
 	legend : {
 		layout : 'vertical',
 		align : 'right',
@@ -58,10 +55,16 @@ var reportDonateStatistics = {
 	},
 	series: [{
 		name:"钱",
-		data:[]
+		data:[],
+		tooltip: {
+			 valueSuffix : '元'
+		}
 	},{
 		name:"物",
-		data:[]
+		data:[],
+		tooltip: {
+			valueSuffix : '件'
+		}
 	}]
 };
 var chart = new Highcharts.Chart(reportDonateStatistics);

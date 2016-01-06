@@ -795,15 +795,17 @@ function loadDataColumn(id, url,categoryName, valueName, seriesName) {
 					var index = 0;
 					for(var j = 0; j<categoryValue.length; j++){
 						var total = 0 ;
+						var moneyValue = 0;
 						for(var i = 0; i < data.length; i++){
 							var category = new Date(data[i][categoryName]).Format("yyyy年MM月");
 							var type = data[i]['donateType'];
 							if(type == 'MONEY' && categoryValue[j] == category){
-								id.series[0].data.push(data[i].donateCount);
+								moneyValue = data[i].donateCount;
 							}else if(type == 'ITEM' && categoryValue[j] == category){
 								total = total+data[i].donateCount;
 							}
 						}
+						id.series[0].data.push(moneyValue);
 						id.series[1].data[index] = total;
 						index++;
 					}
@@ -824,20 +826,16 @@ function loadDataColumn(id, url,categoryName, valueName, seriesName) {
 					}
 					for(var k = 0;k < categoryValue.length; k++){
 						for(var j = 0; j<viewName.length; j++){
-							//如果noDataFlag = false，表示该列没有数据，需要以0填充
-							var noDataFlag = false;
+							//如果该分类没数据，用0填充
+							var viewValue = 0;
 							for (var i = 0; i < data.length; i++) {
 								var date = new Date(data[i][categoryName]).Format("yyyy年MM月");
 								if(viewName[j] == data[i][seriesName].configValue
 										&& date == categoryValue[k]){
-									noDataFlag = true;
-									id.series[j].data.push(data[i][valueName]);
-									break;
+									viewValue=data[i][valueName]
 								}
 							}
-							if(noDataFlag == false){
-								id.series[j].data.push(0);
-							}
+							id.series[j].data.push(viewValue);
 						}
 					}
 					
