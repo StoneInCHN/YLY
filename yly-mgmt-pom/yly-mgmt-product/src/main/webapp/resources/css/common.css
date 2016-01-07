@@ -98,3 +98,10 @@ fieldset .search-item button{
     border-bottom-width:1px;   
     border-left-width:0px;  
 }  
+
+.report-item{
+  margin-left: 10px;
+  margin-top: 10px;
+  border: 1px solid#b1b2b3;
+  padding: 5px;
+}

@@ -704,13 +704,15 @@ function exportData(control, form) {
 			});
 }
 
-function loadDataPie(id, url, nameArray, dataArray) {
+function loadDataPie(id, url,args, nameArray, dataArray) {
+	id.series[0].data = [];
 	$.ajax({
 		url : url,
 		type : "post",
+		data: args,
 		cache : false,
 		success : function(data) {
-
+			id.series[0].data=[];
 			if (data.length == 1) {
 				if (id.chart.renderTo == 'elderlyLiveStatiticsReportId') {
 					var value = [ nameArray[0], data[0]['inUsingZoomCount'] ];
@@ -846,5 +848,4 @@ function loadDataColumn(id, url,categoryName, valueName, seriesName) {
 		}
 
 	});
-
 }

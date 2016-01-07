@@ -29,6 +29,7 @@ public class ReportEvaluatingResult extends BaseEntity
    */
   private Long tenantID;
  
+  private Integer evaluatingFormId;
   /**
    * 评估结果名
    */
@@ -37,7 +38,7 @@ public class ReportEvaluatingResult extends BaseEntity
   /**
    * 人数
    */
-  private int elderlyCount;
+  private Integer elderlyCount;
   
   /**
    * 类型分全国卷和自定义卷
@@ -56,12 +57,12 @@ public class ReportEvaluatingResult extends BaseEntity
   }
 
   @JsonProperty
-  public int getElderlyCount ()
+  public Integer getElderlyCount ()
   {
     return elderlyCount;
   }
 
-  public void setElderlyCount (int elderlyCount)
+  public void setElderlyCount (Integer elderlyCount)
   {
     this.elderlyCount = elderlyCount;
   }
@@ -86,6 +87,17 @@ public class ReportEvaluatingResult extends BaseEntity
   public void setEvaluatingType (EvaluatingFormType evaluatingType)
   {
     this.evaluatingType = evaluatingType;
+  }
+
+  @JsonProperty
+  public Integer getEvaluatingFormId ()
+  {
+    return evaluatingFormId;
+  }
+
+  public void setEvaluatingFormId (Integer evaluatingFormId)
+  {
+    this.evaluatingFormId = evaluatingFormId;
   }
 
  

@@ -105,7 +105,7 @@ $(function(){
                  data: []
         }]
     };
-	loadDataPie(elderlyStatusReport,'../../console/reportElderlyStatus/list.jhtml',
+	loadDataPie(elderlyStatusReport,'../../console/reportElderlyStatus/list.jhtml',null,
 			['出院','在院','办理入院','办理出院','过世'],
 			['outNursingHome','inNursingHome','inProcessCheckin','inProcessCheckout','dead'])
 	//在院老人年龄段统计
@@ -143,7 +143,7 @@ $(function(){
             data: []
         }]
 	};
-	loadDataPie(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',
+	loadDataPie(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',null,
 			['60岁以下','61~65岁','66~70岁','71~75岁','76岁以上'],
 			['under60','range61To65','range66To70','range71To75','above76']);
 	//男女比例
@@ -179,7 +179,7 @@ $(function(){
             data: []
         }]
     };
-	loadDataPie(elderlyGenderRateReport,'../../console/reportElderlyGenderRate/list.jhtml',
+	loadDataPie(elderlyGenderRateReport,'../../console/reportElderlyGenderRate/list.jhtml',null,
 			['男','女'],
 			['male','female']);
 	//每月看病人数统计
