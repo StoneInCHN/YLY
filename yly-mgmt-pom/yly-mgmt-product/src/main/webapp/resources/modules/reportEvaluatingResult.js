@@ -123,7 +123,7 @@ var evaluatingResultReport = {
 	} ]
 };
 loadDataPie(evaluatingResultReport,
-		'../../console/reportEvaluatingResult/report.jhtml',null);
+		'../../console/reportEvaluatingResult/report.jhtml',null,null,null,'evaluatingResultName','elderlyCount');
 
 $("#reportEvaluatingResult-table-list").datagrid({
 	title:"评估结果统计",

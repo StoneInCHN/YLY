@@ -704,7 +704,7 @@ function exportData(control, form) {
 			});
 }
 
-function loadDataPie(id, url,args, nameArray, dataArray) {
+function loadDataPie(id, url,args, nameArray, dataArray,nameField,valueField) {
 	id.series[0].data = [];
 	$.ajax({
 		url : url,
@@ -713,7 +713,7 @@ function loadDataPie(id, url,args, nameArray, dataArray) {
 		cache : false,
 		success : function(data) {
 			id.series[0].data=[];
-			if (data.length == 1) {
+			if (data.length == 1 && nameArray != null && dataArray != null) {
 				if (id.chart.renderTo == 'elderlyLiveStatiticsReportId') {
 					var value = [ nameArray[0], data[0]['inUsingZoomCount'] ];
 					id.series[0].data.push(value);
@@ -728,10 +728,10 @@ function loadDataPie(id, url,args, nameArray, dataArray) {
 						id.series[0].data.push(value);
 					}
 				}
-			} else if (data.length > 1) {
+			} else {
 				for (var i = 0; i < data.length; i++) {
-					var value = [ data[i].evaluatingResultName,
-							data[i].elderlyCount ];
+					var value = [ data[i][nameField],
+							data[i][valueField] ];
 					id.series[0].data.push(value);
 				}
 

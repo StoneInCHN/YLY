@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
@@ -82,6 +84,7 @@ public class ReportDonateStatistics extends BaseEntity
   }
 
   @JsonProperty
+  @Temporal(TemporalType.DATE) 
   public Date getDonateStatisticsCycle ()
   {
     return donateStatisticsCycle;

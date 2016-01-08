@@ -107,7 +107,7 @@ $(function(){
     };
 	loadDataPie(elderlyStatusReport,'../../console/reportElderlyStatus/list.jhtml',null,
 			['出院','在院','办理入院','办理出院','过世'],
-			['outNursingHome','inNursingHome','inProcessCheckin','inProcessCheckout','dead'])
+			['outNursingHome','inNursingHome','inProcessCheckin','inProcessCheckout','dead'],null,null)
 	//在院老人年龄段统计
 	var elderlyAgeReport = {
 		colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
@@ -145,7 +145,7 @@ $(function(){
 	};
 	loadDataPie(elderlyAgeReport,'../../console/reportElderlyAgeStatus/list.jhtml',null,
 			['60岁以下','61~65岁','66~70岁','71~75岁','76岁以上'],
-			['under60','range61To65','range66To70','range71To75','above76']);
+			['under60','range61To65','range66To70','range71To75','above76'],null,null);
 	//男女比例
 	var elderlyGenderRateReport={
 		credits:{
@@ -181,7 +181,7 @@ $(function(){
     };
 	loadDataPie(elderlyGenderRateReport,'../../console/reportElderlyGenderRate/list.jhtml',null,
 			['男','女'],
-			['male','female']);
+			['male','female'],null,null);
 	//每月看病人数统计
 	 $(function () {
          $('#elderlyMedicalReport').highcharts({

@@ -71,3 +71,125 @@ var chart = new Highcharts.Chart(reportDonateStatistics);
 loadDataColumn(reportDonateStatistics,
 		'../../console/reportDonateStatistics/report.jhtml', 'donateStatisticsCycle',
 		'donateCount', 'donateName');
+
+//捐赠统计 饼图
+var donateDetailReport ={
+	colors: ['#DDDF00','#058DC7', '#50B432', '#ED561B',  '#000000', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+    chart: {
+    	renderTo: 'donateStatisticsReportPieId',
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        borderWidth: null
+        },
+    credits:{
+        enabled:false // 禁用版权信息
+    },
+    title: {
+        text: '捐赠详情'
+    },
+    tooltip: {
+    	  pointFormat:  '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    legend:{
+        labelFormatter:function(){
+            return this.name+':'+ this.y;
+        },
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+             type: 'pie',
+             name:'占比',
+             data: []
+    }]
+};
+
+$(function(){
+	$("#reportDonateStatistics-table-list").datagrid({
+		fitColumns:true,
+		pagination:true,
+		checkOnSelect:false,
+		url : "../../console/reportDonateStatistics/report.jhtml",
+		loadMsg:message("yly.common.loading"),
+		striped:true,
+		pagination:false,
+		columns:[
+			    [
+			     {title:"名称",field:"donateName",width:100,sortable:true},
+			     {title:"类型",field:"donateType",width:100,sortable:true,
+			    	 formatter: function(value,row,index){
+				    	 if(value == "ITEM"){
+				    		 return "物品";
+				    	 }else{
+				    		 return "金钱";
+				    	 }
+				    		 
+			    	  }
+			     },
+			     {title:"数量",field:"donateCount",width:100,sortable:true},
+			     {title:"统计周期",field:"donateStatisticsCycle",width:100,sortable:true,
+			    	 formatter: function(value,row,index){
+		    			if(value != null){
+		    				
+			    	  		return new Date(value).Format("yyyy年MM月");
+			    	  	}
+			    	  }
+			     }
+			 ]
+		],
+		rowStyler: function(index,row){
+			if (index % 2 == 0){
+				return 'background-color:#D4D4D4;';
+			}
+		}
+
+	});
+	
+//	var selectId = 0;
+	$('#reportDonateDate').combobox({    
+	    url:'../../console/reportDonateStatistics/report.jhtml',    
+	    valueField:'donateStatisticsCycleValue',
+	    textField:'donateStatisticsCycle',
+	    width:250,
+	    editable:false,
+	    onChange:function(value){
+	    },
+	    formatter: function(row){
+			var opts = $(this).combobox('options');
+			data = row[opts.textField];
+			row.donateStatisticsCycleValue = data;
+			row[opts.textField] =new Date(data).Format("yyyy年MM月");
+			return row[opts.textField];
+		},
+		loadFilter: function(data){
+			var opts = $(this).combobox('options');
+			var selectOptions = [];
+			for(var i = 0 ; i < data.length; i++){
+				var value = {"donateStatisticsCycle":data[i]['donateStatisticsCycle']}
+				var value2 = {"donateStatisticsCycle":data[i]['donateStatisticsCycle']}
+				if(selectOptions.indexOf(value) == -1){
+					selectOptions.push(value);
+				}
+			}
+			
+			
+			return selectOptions;
+		},
+	    onChange:function(value){
+	    	$("#reportDonateStatistics-table-list").datagrid("reload",{donateStatisticsCycle:value});
+	    	loadDataPie(donateDetailReport,
+	    			'../../console/reportDonateStatistics/report.jhtml', {donateStatisticsCycle:value},null,null,
+	    			'donateName','donateCount');
+	    }
+	});  
+	
+});
