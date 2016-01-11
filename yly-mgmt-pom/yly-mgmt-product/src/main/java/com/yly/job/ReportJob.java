@@ -16,8 +16,8 @@ import com.yly.service.ReportElderlyLiveStatiticsService;
 import com.yly.service.ReportProcedureService;
 import com.yly.utils.DateTimeUtils;
 
-//@Component
-//@Lazy(false)
+@Component
+@Lazy(false)
 public class ReportJob
 {
   
@@ -27,7 +27,7 @@ public class ReportJob
   @Resource(name = "reportProcedureServiceImpl")
   private ReportProcedureService reportProcedureService;
   
-  @Scheduled(cron="0/60 * *  * * ? ")   //每5秒执行一次  
+//  @Scheduled(cron="0/60 * *  * * ? ")   //每5秒执行一次  
   public void reprotNurseLevel()
   {
     
@@ -36,5 +36,26 @@ public class ReportJob
     LogUtil.debug (ReportJob.class, "reprotNurseLevel", "reprot data generate start !");
     reportProcedureService.callProcedure ("report_nurse_level_pr","1",DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
     LogUtil.debug (ReportJob.class, "reprotNurseLevel", "reprot data generate end!");
+  }
+//@Scheduled(cron="0/60 * *  * * ? ")   //每5秒执行一次  
+public void reportElderlyEvlauting()
+{
+  
+  Date currentDate = new Date ();
+  
+  LogUtil.debug (ReportJob.class, "reportElderlyEvlauting", "reprot data generate start !");
+  reportProcedureService.callProcedure ("report_elderly_evaluating_record_pr","1",DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+  LogUtil.debug (ReportJob.class, "reportElderlyEvlauting", "reprot data generate end!");
+}
+  
+//  @Scheduled(cron="0/10 * *  * * ? ")   //每5秒执行一次  
+  public void reprotDonateStatistics()
+  {
+    
+    Date currentDate = new Date ();
+    
+    LogUtil.debug (ReportJob.class, "reprotDonateStatistics", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_donate_statistics_pr","1",DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reprotDonateStatistics", "reprot data generate end!");
   }
 }

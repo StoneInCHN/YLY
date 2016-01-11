@@ -59,5 +59,5 @@ var reportRepairRecord = {
 };
 var chart = new Highcharts.Chart(reportRepairRecord);
 loadDataLine(reportRepairRecord,
-		'../../console/reportRepairRecord/report.jhtml', 'repairedStatiticsCycle',
+		'../../console/reportRepairRecord/report.jhtml',null, 'repairedStatiticsCycle',
 		[ 'repairedCount'], ['维修次数']);

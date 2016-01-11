@@ -63,5 +63,47 @@ var reportElderlyMedicalRecord = {
 };
 var chart = new Highcharts.Chart(reportElderlyMedicalRecord);
 loadDataLine(reportElderlyMedicalRecord,
-		'../../console/reportElderlyMedicalRecord/report.jhtml',
+		'../../console/reportElderlyMedicalRecord/report.jhtml',null,
 		'medicalStatiticsCycle', 'elderlyCount');
+
+$("#reportElderlyMedicalRecord-table-list").datagrid({
+	fitColumns:true,
+	pagination:true,
+	checkOnSelect:false,
+	url : "../../console/reportElderlyMedicalRecord/report.jhtml",
+	loadMsg:message("yly.common.loading"),
+	striped:true,
+	pagination:false,
+	columns:[
+		    [
+		     {title:"数量",field:"elderlyCount",width:100,sortable:true},
+		     {title:"统计周期",field:"medicalStatiticsCycle",width:100,sortable:true,
+		    	 formatter: function(value,row,index){
+	    			if(value != null){
+	    				
+		    	  		return new Date(value).Format("yyyy年MM月");
+		    	  	}
+		    	  }
+		     }
+		 
+		 ]
+	],
+	rowStyler: function(index,row){
+		if (index % 2 == 0){
+			return 'background-color:#D4D4D4;';
+		}
+	}
+
+});
+$("#report_elderly_medical_search_btn").click(function(){
+	  var _queryParams = $("#report_elderly_medical_search_form").serializeJSON();
+	  $('#reportElderlyMedicalRecord-table-list').datagrid('options').queryParams = _queryParams;
+	  reportElderlyMedicalRecord.series= [ {
+			name : '人数',
+			data : []
+		} ];
+	  loadDataLine(reportElderlyMedicalRecord,
+				'../../console/reportElderlyMedicalRecord/report.jhtml',_queryParams,
+				'medicalStatiticsCycle', 'elderlyCount');
+	  $("#reportElderlyMedicalRecord-table-list").datagrid('reload');
+	})

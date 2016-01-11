@@ -59,5 +59,5 @@ var reportBookingRegistration = {
 };
 var chart = new Highcharts.Chart(reportBookingRegistration);
 loadDataLine(reportBookingRegistration,
-		'../../console/reportBookingRegistration/report.jhtml', 'bookingDateStatitics',
+		'../../console/reportBookingRegistration/report.jhtml',null, 'bookingDateStatitics',
 		[ 'bookingCount'], ['预约人数']);

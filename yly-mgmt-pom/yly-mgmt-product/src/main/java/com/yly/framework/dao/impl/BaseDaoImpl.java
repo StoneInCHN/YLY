@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -344,23 +345,52 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
                   criteriaBuilder.notEqual(root.get(filter.getProperty()), filter.getValue()));
         }
       } else if (filter.getOperator() == Operator.gt && filter.getValue() != null) {
+        if (filter.getValue () instanceof Number){
         restrictions =
             criteriaBuilder.and(
                 restrictions,
                 criteriaBuilder.gt(root.<Number>get(filter.getProperty()),
                     (Number) filter.getValue()));
+        }else if (filter.getValue () instanceof Date)
+        {
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.greaterThan (root.<Date>get(filter.getProperty()),
+                      (Date) filter.getValue()));
+        }
       } else if (filter.getOperator() == Operator.lt && filter.getValue() != null) {
-        restrictions =
-            criteriaBuilder.and(
-                restrictions,
-                criteriaBuilder.lt(root.<Number>get(filter.getProperty()),
-                    (Number) filter.getValue()));
+        if (filter.getValue () instanceof Number)
+        {
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.lt(root.<Number>get(filter.getProperty()),
+                      (Number) filter.getValue()));
+        }else if(filter.getValue () instanceof Date){
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.lessThan (root.<Date>get(filter.getProperty()),
+                      (Date) filter.getValue()));
+        }
+       
       } else if (filter.getOperator() == Operator.ge && filter.getValue() != null) {
-        restrictions =
-            criteriaBuilder.and(
-                restrictions,
-                criteriaBuilder.ge(root.<Number>get(filter.getProperty()),
-                    (Number) filter.getValue()));
+        if (filter.getValue () instanceof Number)
+        {
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.ge(root.<Number>get(filter.getProperty()),
+                      (Number) filter.getValue()));
+        }else if (filter.getValue () instanceof Date)
+        {
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.greaterThanOrEqualTo (root.<Date>get(filter.getProperty()),
+                      (Date) filter.getValue()));
+        }         
       } else if (filter.getOperator() == Operator.le && filter.getValue() != null) {
         restrictions =
             criteriaBuilder.and(

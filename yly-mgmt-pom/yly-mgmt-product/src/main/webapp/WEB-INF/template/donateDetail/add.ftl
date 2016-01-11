@@ -26,7 +26,7 @@
 	    	<tr>
 	    		<th>${message("yly.donateDetail.donateItemType")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="donateItemTypeId" id="donateItemType" data-options="required:true" />   
+	    			 <input class="easyui-textbox" type="text" name="donateItemTypeId" id="donateItemType" />   
 	    		</td>
 	    		<th>${message("yly.donateDetail.units")}:</th>
 	    		<td>
@@ -36,7 +36,7 @@
 	    	<tr>
 	    		<th>${message("yly.remark")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="remark" data-options="required:true" validtype="length[0,30]"/>   
+	    			 <input class="easyui-textbox" type="text" name="remark" validtype="length[0,30]" data-options="multiline:true,height:90,width:300" />   
 	    		</td>
 	    	</tr>
 	    </table>

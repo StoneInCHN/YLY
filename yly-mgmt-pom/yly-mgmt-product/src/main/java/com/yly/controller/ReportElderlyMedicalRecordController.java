@@ -1,6 +1,7 @@
 package com.yly.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ReportElderlyMedicalRecord;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Pageable;
@@ -53,7 +56,7 @@ public class ReportElderlyMedicalRecordController extends BaseController
    */
   @RequestMapping (value = "/report", method = RequestMethod.POST)
   public @ResponseBody List<ReportElderlyMedicalRecord> list (Model model,
-      Pageable pageable)
+      Pageable pageable,Date beginDate, Date endDate)
   {
 
     //时间倒序
@@ -62,8 +65,27 @@ public class ReportElderlyMedicalRecordController extends BaseController
         Direction.asc);
     orderings.add (dateCycleOrdering);
 
+    List<Filter> filters = new ArrayList<Filter> ();
+    if (beginDate != null)
+    {
+      Filter startDateFilter = new Filter();
+      startDateFilter.setOperator (Operator.gt);
+      startDateFilter.setProperty ("medicalStatiticsCycle");
+      startDateFilter.setValue (beginDate);
+      filters.add (startDateFilter);
+    }
+    
+    if (endDate != null)
+    {
+      Filter endDateFilter = new Filter();
+      endDateFilter.setProperty ("medicalStatiticsCycle");
+      endDateFilter.setValue (endDate);
+      endDateFilter.setOperator (Operator.lt);
+      filters.add (endDateFilter);
+    }
+    
     List<ReportElderlyMedicalRecord> reportElderlyMedicalRecordList = reportElderlyMedicalRecordService
-        .findList (12, null, orderings, true, null);
+        .findList (12, filters, orderings, true, null);
     return reportElderlyMedicalRecordList;
   }
 }

@@ -58,5 +58,5 @@ var reportWaterElectricityRecord = {
 };
 var chart = new Highcharts.Chart(reportWaterElectricityRecord);
 loadDataLine(reportWaterElectricityRecord,
-		'../../console/reportWaterElectricityRecord/report.jhtml', 'waterElectricityStatiticsCycle',
+		'../../console/reportWaterElectricityRecord/report.jhtml',null, 'waterElectricityStatiticsCycle',
 		[ 'electricityCount', 'waterCount' ], [ '电费', '水费']);
