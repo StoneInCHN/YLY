@@ -61,3 +61,46 @@ loadDataLine(reportElderlyEvent,
 		'../../console/reportElderlyEvent/report.jhtml',null, 'eventStatiticsCycle',
 		[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
 				'一般事件' ]);
+
+$("#reportElderlyEvent-table-list").datagrid({
+	fitColumns:true,
+	pagination:true,
+	checkOnSelect:false,
+	url : "../../console/reportElderlyEvent/report.jhtml",
+	loadMsg:message("yly.common.loading"),
+	striped:true,
+	pagination:false,
+	columns:[
+		    [
+		     {title:"消极事件",field:"negativeEvent",width:100,sortable:true},
+		     {title:"一般事件",field:"normalEvent",width:100,sortable:true},
+		     {title:"积极事件",field:"positiveEvent",width:100,sortable:true},
+		     {title:"统计周期",field:"eventStatiticsCycle",width:100,sortable:true,
+		    	 formatter: function(value,row,index){
+	    			if(value != null){
+		    	  		return new Date(value).Format("yyyy年MM月");
+		    	  	}
+		    	  }
+		     }
+		 
+		 ]
+	],
+	rowStyler: function(index,row){
+		if (index % 2 == 0){
+			return 'background-color:#D4D4D4;';
+		}
+	}
+
+});
+$("#report_elderly_event_search_btn").click(function(){
+	  var _queryParams = $("#report_elderly_event_search_form").serializeJSON();
+	  $('#reportElderlyEvent-table-list').datagrid('options').queryParams = _queryParams;
+	  reportElderlyEvent.series= [];
+	  $("#reportElderlyEvent-table-list").datagrid('reload');
+	  loadDataLine(reportElderlyEvent,
+				'../../console/reportElderlyEvent/report.jhtml',_queryParams,
+				'eventStatiticsCycle',
+				[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
+						'一般事件' ]);
+	  
+	})
