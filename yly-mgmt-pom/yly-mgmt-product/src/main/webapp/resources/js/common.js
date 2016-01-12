@@ -742,14 +742,15 @@ function loadDataPie(id, url,args, nameArray, dataArray,nameField,valueField) {
 	});
 
 };
-function loadDataLine(id, url, categoryName, valueName, viewName) {
+function loadDataLine(id, url,args, categoryName, valueName, viewName) {
 	$.ajax({
 		url : url,
 		type : "post",
 		cache : false,
+		data: args,
 		success : function(data) {
-
 			if (data.length > 0) {
+				id.xAxis.categories = [];
 				if( valueName instanceof Array){
 					for(var j = 0; j< valueName.length;j++){
 						var value = new Object();

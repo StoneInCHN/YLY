@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
@@ -33,7 +35,7 @@ public class ReportRepairRecord extends BaseEntity
   /**
    * 维修次数
    */
-  private int repairedCount;
+  private Integer repairedCount;
   
   /**
    * 统计周期
@@ -52,17 +54,18 @@ public class ReportRepairRecord extends BaseEntity
   }
 
   @JsonProperty
-  public int getRepairedCount ()
+  public Integer getRepairedCount ()
   {
     return repairedCount;
   }
 
-  public void setRepairedCount (int repairedCount)
+  public void setRepairedCount (Integer repairedCount)
   {
     this.repairedCount = repairedCount;
   }
 
   @JsonProperty
+  @Temporal(TemporalType.DATE)
   public Date getRepairedStatiticsCycle ()
   {
     return repairedStatiticsCycle;

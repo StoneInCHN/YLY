@@ -61,3 +61,48 @@ var chart = new Highcharts.Chart(reportRepairRecord);
 loadDataLine(reportRepairRecord,
 		'../../console/reportRepairRecord/report.jhtml',null, 'repairedStatiticsCycle',
 		[ 'repairedCount'], ['维修次数']);
+
+$("#reportRepairRecord-table-list").datagrid({
+	fitColumns:true,
+	pagination:true,
+	checkOnSelect:false,
+	url : "../../console/reportRepairRecord/report.jhtml",
+	loadMsg:message("yly.common.loading"),
+	striped:true,
+	pagination:false,
+	columns:[
+		    [
+		     {title:"维修次数",field:"repairedCount",width:100,sortable:true,
+		    	 formatter: function(value,row,index){
+		    			if(value != null){
+		    				console.log(value);
+			    	  		return value;
+			    	  	}
+			    	  }},
+		     {title:"统计周期",field:"repairedStatiticsCycle",width:100,sortable:true,
+		    	 formatter: function(value,row,index){
+	    			if(value != null){
+	    				
+		    	  		return new Date(value).Format("yyyy年MM月");
+		    	  	}
+		    	  }
+		     }
+		 
+		 ]
+	],
+	rowStyler: function(index,row){
+		if (index % 2 == 0){
+			return 'background-color:#D4D4D4;';
+		}
+	}
+
+});
+$("#report_repair_record_search_btn").click(function(){
+	  var _queryParams = $("#report_repair_record_search_form").serializeJSON();
+	  $('#reportRepairRecord-table-list').datagrid('options').queryParams = _queryParams;
+	  reportRepairRecord.series= [ ];
+	  loadDataLine(reportRepairRecord,
+				'../../console/reportRepairRecord/report.jhtml',_queryParams,
+				'repairedStatiticsCycle',[ 'repairedCount'], ['维修次数']);
+	  $("#reportRepairRecord-table-list").datagrid('reload');
+	})

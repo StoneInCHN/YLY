@@ -1,6 +1,7 @@
 package com.yly.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ReportRepairRecord;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Pageable;
@@ -50,14 +53,35 @@ public class ReportRepairRecordController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/report", method = RequestMethod.POST)
-  public @ResponseBody List<ReportRepairRecord> list(Model model, Pageable pageable) {
+  public @ResponseBody List<ReportRepairRecord> list(Model model, Pageable pageable
+      ,Date beginDate, Date endDate) {
     
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
     Ordering dateCycleOrdering = new Ordering ("repairedStatiticsCycle",
         Direction.asc);
     orderings.add (dateCycleOrdering);
-    List<ReportRepairRecord>  reportRepairRecordList = reportRepairRecordService.findList (12, null, orderings, true,null);
+    
+    List<Filter> filters = new ArrayList<Filter> ();
+    if (beginDate != null)
+    {
+      Filter startDateFilter = new Filter();
+      startDateFilter.setOperator (Operator.gt);
+      startDateFilter.setProperty ("repairedStatiticsCycle");
+      startDateFilter.setValue (beginDate);
+      filters.add (startDateFilter);
+    }
+    
+    if (endDate != null)
+    {
+      Filter endDateFilter = new Filter();
+      endDateFilter.setProperty ("repairedStatiticsCycle");
+      endDateFilter.setValue (endDate);
+      endDateFilter.setOperator (Operator.lt);
+      filters.add (endDateFilter);
+    }
+    
+    List<ReportRepairRecord>  reportRepairRecordList = reportRepairRecordService.findList (12, filters, orderings, true,null);
     return reportRepairRecordList;
   }
 }
