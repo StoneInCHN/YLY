@@ -1,5 +1,6 @@
 package com.yly.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,14 @@ public interface BillingService extends ChargeRecordService<Billing, Long> {
     Billing updatePaidCheckInBill(Billing originBill,Billing editBill,Long mealTypeId,Boolean isMonthlyMeal);
 
     /**
-     * 生成老人日常月结算账单
+     * 根据各租户结算日期生成老人日常月结算账单
      */
     void genMonthlyBill();
+    
+    /**
+     * 按租户生成结算账单
+     * @param billDate
+     * @param tenantId
+     */
+    void genBillByTenantBillDate(Date billDate,Long tenantId);
 }

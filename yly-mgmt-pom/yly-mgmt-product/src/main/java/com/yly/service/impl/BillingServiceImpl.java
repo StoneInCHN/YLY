@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import javax.annotation.Resource;
 
@@ -37,6 +38,7 @@ import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.DateTimeUtils;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.GenTenantBill;
 import com.yly.utils.ToolsUtils;
 
 /**
@@ -49,6 +51,9 @@ import com.yly.utils.ToolsUtils;
 public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> implements
     BillingService {
 
+  @Resource(name = "threadPoolExecutor")
+  private Executor threadPoolExecutor;
+  
   @Resource(name = "billingDaoImpl")
   private BillingDao billingDao;
 
@@ -233,15 +238,18 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       for(SystemConfig config:systemConfigs){
         Integer billDay = Integer.parseInt(config.getConfigValue());
         if (billDay == c.get(Calendar.DAY_OF_MONTH)) {
-            genBillByTenantBillDate(c.getTime(),config.getTenantID());
+            GenTenantBill ex = new GenTenantBill(c.getTime(),config.getTenantID());
+            threadPoolExecutor.execute(ex);
         }
       }
       
   }
   
-  private void genBillByTenantBillDate(Date billDate,Long tenantId){
-      Date startDate = DateTimeUtils.getSpecifyTimeForDate(billDate,null,-1,1,null,null,null);
-     
-  }
+  
+  public void genBillByTenantBillDate(Date billDate,Long tenantId){
+    Date startDate = DateTimeUtils.getSpecifyTimeForDate(billDate,null,-1,1,null,null,null);
+   
+}
+  
 
 }
