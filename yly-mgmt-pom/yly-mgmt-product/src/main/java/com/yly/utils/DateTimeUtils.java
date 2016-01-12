@@ -124,15 +124,30 @@ public class DateTimeUtils implements Serializable {
   * 取特定日期的特定时间
   * @return
   */
-  public static Date getSpecifyTimeForDate(Date date,int h,int m,int s) {
+  public static Date getSpecifyTimeForDate(Date date,Integer year,Integer month,Integer day,Integer hour,Integer min,Integer second) {
     if (date == null) {
       return null;
     } 
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
-    calendar.set(Calendar.HOUR_OF_DAY, h);
-    calendar.set(Calendar.MINUTE, m);
-    calendar.set(Calendar.SECOND, s);
+    if (year!=null) {
+      calendar.add(Calendar.YEAR, year);
+    }
+    if (month!=null) {
+      calendar.add(Calendar.MONTH, month); 
+    }
+    if (day!=null) {
+      calendar.add(Calendar.DAY_OF_MONTH, day); 
+    }
+    if (hour!=null) {
+      calendar.add(Calendar.HOUR_OF_DAY, hour);
+    }
+    if (min!=null) {
+      calendar.add(Calendar.MINUTE, min);
+    }
+    if (second!=null) {
+      calendar.add(Calendar.SECOND, second);
+    }
     calendar.set(Calendar.MILLISECOND, 0);
     return new Date(calendar.getTimeInMillis());
   }

@@ -1,6 +1,8 @@
 package com.yly.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,8 @@ import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
 import com.yly.entity.NurseChargeConfig;
+import com.yly.entity.SystemConfig;
+import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.service.BedChargeConfigService;
@@ -29,7 +33,9 @@ import com.yly.service.BillingService;
 import com.yly.service.DepositService;
 import com.yly.service.MealChargeService;
 import com.yly.service.NurseChargeConfigService;
+import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
+import com.yly.utils.DateTimeUtils;
 import com.yly.utils.FieldFilterUtils;
 import com.yly.utils.ToolsUtils;
 
@@ -60,6 +66,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   
   @Resource(name = "mealChargeServiceImpl")
   private MealChargeService mealChargeService;
+  
+  @Resource(name = "systemConfigServiceImpl")
+  private SystemConfigService systemConfigService;
   
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
@@ -209,6 +218,30 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
         return billingDao.merge(originBill);
     }
     return null;
+  }
+
+  @Override
+  public void genMonthlyBill() {
+      List<Filter> filters = new ArrayList<Filter>();
+      Filter keyFilter = new Filter("configKey", Operator.eq, ConfigKey.BILLDAY);
+      Filter enableFilter = new Filter("isEnabled",Operator.eq,true);
+      filters.add(enableFilter);
+      filters.add(keyFilter);
+      List<SystemConfig> systemConfigs = systemConfigService.findList(null, filters, null);
+      Calendar c = Calendar.getInstance();
+      c.setTime(new Date());
+      for(SystemConfig config:systemConfigs){
+        Integer billDay = Integer.parseInt(config.getConfigValue());
+        if (billDay == c.get(Calendar.DAY_OF_MONTH)) {
+            genBillByTenantBillDate(c.getTime(),config.getTenantID());
+        }
+      }
+      
+  }
+  
+  private void genBillByTenantBillDate(Date billDate,Long tenantId){
+      Date startDate = DateTimeUtils.getSpecifyTimeForDate(billDate,null,-1,1,null,null,null);
+     
   }
 
 }

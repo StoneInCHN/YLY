@@ -36,4 +36,8 @@ public interface BillingService extends ChargeRecordService<Billing, Long> {
      */
     Billing updatePaidCheckInBill(Billing originBill,Billing editBill,Long mealTypeId,Boolean isMonthlyMeal);
 
+    /**
+     * 生成老人日常月结算账单
+     */
+    void genMonthlyBill();
 }
