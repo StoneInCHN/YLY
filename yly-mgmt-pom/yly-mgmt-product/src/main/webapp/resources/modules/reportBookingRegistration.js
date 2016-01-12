@@ -61,3 +61,33 @@ var chart = new Highcharts.Chart(reportBookingRegistration);
 loadDataLine(reportBookingRegistration,
 		'../../console/reportBookingRegistration/report.jhtml',null, 'bookingDateStatitics',
 		[ 'bookingCount'], ['预约人数']);
+
+$("#reportBookingRegistration-table-list").datagrid({
+	fitColumns:true,
+	pagination:true,
+	checkOnSelect:false,
+	url : "../../console/reportBookingRegistration/report.jhtml",
+	loadMsg:message("yly.common.loading"),
+	striped:true,
+	pagination:false,
+	columns:[
+		    [
+		     {title:"预约人数",field:"bookingCount",width:100,sortable:true},
+		     {title:"统计周期",field:"bookingDateStatitics",width:100,sortable:true,
+		    	 formatter: function(value,row,index){
+	    			if(value != null){
+	    				
+		    	  		return new Date(value).Format("yyyy年MM月");
+		    	  	}
+		    	  }
+		     }
+		 
+		 ]
+	],
+	rowStyler: function(index,row){
+		if (index % 2 == 0){
+			return 'background-color:#D4D4D4;';
+		}
+	}
+
+});

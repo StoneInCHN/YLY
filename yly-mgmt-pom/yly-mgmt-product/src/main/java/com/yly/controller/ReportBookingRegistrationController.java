@@ -57,7 +57,7 @@ public class ReportBookingRegistrationController extends BaseController {
     Ordering dateCycleOrdering = new Ordering ("bookingDateStatitics",
         Direction.asc);
     orderings.add (dateCycleOrdering);
-    List<ReportBookingRegistration>  reportBookingRegistrationList = reportBookingRegistrationService.findList (12, null, orderings, true,null);
+    List<ReportBookingRegistration>  reportBookingRegistrationList = reportBookingRegistrationService.findList (24, null, orderings, true,null);
     return reportBookingRegistrationList;
   }
 }
