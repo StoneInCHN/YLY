@@ -216,7 +216,7 @@
 		    		<li><a href="#" data-url="${base}/console/reportElderlyEvent/reportElderlyEvent.jhtml">老人事件统计</a></li>
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="reportWaterElectricityRecord"]
-		    		<li><a href="#" data-url="${base}/console/reportWaterElectricityRecord/reportWaterElectricityRecord.jhtml">水电费统计</a></li>
+		    		<li><a href="#" data-url="${base}/console/reportWaterElectricityRecord/reportWaterElectricityRecord.jhtml">水电统计</a></li>
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="reportNurseLevelStatistics"]
 		    		<li><a href="#" data-url="${base}/console/reportNurseLevelStatistics/reportNurseLevelStatistics.jhtml">护理级别统计</a></li>

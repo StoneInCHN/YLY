@@ -37,16 +37,13 @@ var reportWaterElectricityRecord = {
 		tickWidth : 1,
 		tickColor : '#000',
 		title : {
-			text : '费用'
+			text : '用量'
 		},
 		plotLines : [ {
 			value : 0,
 			width : 1,
 			color : '#808080'
 		} ]
-	},
-	tooltip : {
-		valueSuffix : '元'
 	},
 	legend : {
 		layout : 'vertical',
@@ -59,4 +56,45 @@ var reportWaterElectricityRecord = {
 var chart = new Highcharts.Chart(reportWaterElectricityRecord);
 loadDataLine(reportWaterElectricityRecord,
 		'../../console/reportWaterElectricityRecord/report.jhtml',null, 'waterElectricityStatiticsCycle',
-		[ 'electricityCount', 'waterCount' ], [ '电费', '水费']);
+		[ 'electricityCount', 'waterCount' ], [ '用电量(度)', '用水量(立方)']);
+
+$("#reportWaterElectricityRecord-table-list").datagrid({
+	fitColumns:true,
+	pagination:true,
+	checkOnSelect:false,
+	url : "../../console/reportWaterElectricityRecord/report.jhtml",
+	loadMsg:message("yly.common.loading"),
+	striped:true,
+	pagination:false,
+	columns:[
+		    [
+		     {title:"用水量（立方）",field:"waterCount",width:100,sortable:true},
+		     {title:"用电量（度）",field:"electricityCount",width:100,sortable:true},
+		     {title:"统计周期",field:"waterElectricityStatiticsCycle",width:100,sortable:true,
+		    	 formatter: function(value,row,index){
+	    			if(value != null){
+	    				
+		    	  		return new Date(value).Format("yyyy年MM月");
+		    	  	}
+		    	  }
+		     }
+		 
+		 ]
+	],
+	rowStyler: function(index,row){
+		if (index % 2 == 0){
+			return 'background-color:#D4D4D4;';
+		}
+	}
+
+});
+$("#report_water_electricity_record_search_btn").click(function(){
+	  var _queryParams = $("#report_water_electricity_record_search_form").serializeJSON();
+	  $('#reportWaterElectricityRecord-table-list').datagrid('options').queryParams = _queryParams;
+	  reportWaterElectricityRecord.series= [ ];
+	  loadDataLine(reportWaterElectricityRecord,
+				'../../console/reportWaterElectricityRecord/report.jhtml',_queryParams,
+				'waterElectricityStatiticsCycle',
+				[ 'electricityCount', 'waterCount' ], [ '用电量(度)', '用水量(立方)']);
+	  $("#reportWaterElectricityRecord-table-list").datagrid('reload');
+	})
