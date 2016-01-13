@@ -29,6 +29,14 @@ public class LogUtil {
   public static void debug(Class<?> clazz, String method, String format, Object... args) {
     writeLog(Level.DEBUG, clazz, method, format, args);
   }
+  
+  public static void error(Class<?> clazz, String method, String format, Object... args) {
+    writeLog(Level.ERROR, clazz, method, format, args);
+  }
+  
+  public static void warn(Class<?> clazz, String method, String format, Object... args) {
+    writeLog(Level.WARN, clazz, method, format, args);
+  }
 
   @SuppressWarnings("static-access")
   private static int toLevel(Level level) {

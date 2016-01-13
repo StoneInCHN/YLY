@@ -392,11 +392,19 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
                       (Date) filter.getValue()));
         }         
       } else if (filter.getOperator() == Operator.le && filter.getValue() != null) {
-        restrictions =
-            criteriaBuilder.and(
-                restrictions,
-                criteriaBuilder.le(root.<Number>get(filter.getProperty()),
-                    (Number) filter.getValue()));
+        if(filter.getValue() instanceof Date){
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.lessThanOrEqualTo(root.<Date>get(filter.getProperty()),
+                      (Date) filter.getValue()));
+        }else{
+          restrictions =
+              criteriaBuilder.and(
+                  restrictions,
+                  criteriaBuilder.le(root.<Number>get(filter.getProperty()),
+                      (Number) filter.getValue()));
+        }
       } else if (filter.getOperator() == Operator.like && filter.getValue() != null
           && filter.getValue() instanceof String) {
         restrictions =

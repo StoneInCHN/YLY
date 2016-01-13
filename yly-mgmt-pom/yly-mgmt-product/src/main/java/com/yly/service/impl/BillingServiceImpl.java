@@ -1,5 +1,6 @@
 package com.yly.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,15 +24,21 @@ import com.yly.entity.BillingSupplyment;
 import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
+import com.yly.entity.MealChargeConfig;
 import com.yly.entity.NurseChargeConfig;
 import com.yly.entity.SystemConfig;
+import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
+import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
+import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.service.BedChargeConfigService;
 import com.yly.service.BedNurseChargeService;
 import com.yly.service.BillingService;
 import com.yly.service.DepositService;
+import com.yly.service.ElderlyInfoService;
+import com.yly.service.MealChargeConfigService;
 import com.yly.service.MealChargeService;
 import com.yly.service.NurseChargeConfigService;
 import com.yly.service.SystemConfigService;
@@ -59,9 +66,15 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
 
   @Resource(name = "bedChargeConfigServiceImpl")
   private BedChargeConfigService bedChargeConfigService;
+  
+  @Resource(name = "elderlyInfoServiceImpl")
+  private ElderlyInfoService elderlyInfoService;
 
   @Resource(name = "nurseChargeConfigServiceImpl")
   private NurseChargeConfigService nurseChargeConfigService;
+  
+  @Resource(name = "mealChargeConfigServiceImpl")
+  private MealChargeConfigService mealChargeConfigService;
   
   @Resource(name = "depositServiceImpl")
   private DepositService depositService;
@@ -84,6 +97,22 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
     super.setBaseDao(billingDao);
   }
 
+  public Map<String, Object> getMealConfigByElderly(String[] properties,
+      ElderlyInfo elderlyInfo){
+    List<Filter> mealfilters = new ArrayList<Filter>();
+    Filter filter =
+        new Filter("chargeItem", Operator.eq, elderlyInfo.getMealType());
+    mealfilters.add(filter);
+    List<MealChargeConfig> mealChargeConfigs =
+        mealChargeConfigService.findList(null, mealfilters, null, true, null);
+    if (mealChargeConfigs != null && mealChargeConfigs.size() == 1) {
+      Map<String, Object> mealChargeMap =
+          FieldFilterUtils.filterEntityMap(properties, mealChargeConfigs.get(0));
+      return mealChargeMap;
+    }
+    return null;
+  }
+  
   @Override
   public List<Map<String, Object>> getBedNurseConfigByElderly(String[] properties,
       ElderlyInfo elderlyInfo) {
@@ -246,8 +275,89 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   }
   
   
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   public void genBillByTenantBillDate(Date billDate,Long tenantId){
     Date startDate = DateTimeUtils.getSpecifyTimeForDate(billDate,null,-1,1,null,null,null);
+    List<Filter> filters = new ArrayList<Filter>();
+    Filter statusFilter = new Filter("elderlyStatus", Operator.eq, ElderlyStatus.IN_NURSING_HOME);
+    filters.add(statusFilter);
+    List<ElderlyInfo> elderlyInfos = elderlyInfoService.findList(null, filters, null, true, null);
+    for (ElderlyInfo elderlyInfo : elderlyInfos) {
+          Billing billing = new Billing();
+          billing.setChargeStatus(PaymentStatus.UNPAID);
+          billing.setBillType(BillingType.DAILY);
+          billing.setElderlyInfo(elderlyInfo);
+          billing.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService
+              .getCurrentTenantOrgCode()));
+          billing.setTenantID(tenantId);
+         
+          String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
+          /**
+           * =====================================================================================================================
+           * 床位护理费
+           */
+          BedNurseCharge bedNurseCharge = new BedNurseCharge();
+          bedNurseCharge.setBilling(billing);
+          bedNurseCharge.setBillingNo(billing.getBillingNo());
+          bedNurseCharge.setElderlyInfo(elderlyInfo);
+          bedNurseCharge.setChargeStatus(billing.getChargeStatus());
+          bedNurseCharge.setTenantID(billing.getTenantID());
+          
+          List<Map<String, Object>> chargeMap = getBedNurseConfigByElderly(properties,elderlyInfo);
+          bedNurseCharge.setBedAmount(new BigDecimal(chargeMap.get(0).get("amountPerMonth").toString()));
+          bedNurseCharge.setNurseAmount(new BigDecimal(chargeMap.get(1).get("amountPerMonth").toString()));
+          
+          //如该结算周期内老人的床位护理费已在入院账单中缴纳,则生成状态为已缴费的床位护理费日常账单
+          List<Filter> dateFilters = new ArrayList<Filter>();
+          Filter elderFilter = new Filter("elderlyInfo", Operator.eq, elderlyInfo);
+          Filter sTimeFilter = new Filter("periodStartDate", Operator.ge, startDate);
+          Filter eTimeFilter = new Filter("periodEndDate", Operator.le, billDate);
+          dateFilters.add(sTimeFilter);
+          dateFilters.add(eTimeFilter);
+          dateFilters.add(elderFilter);
+          List<BedNurseCharge> existBedNurseCharges = bedNurseChargeService.findList(null, dateFilters, null, true, null);
+          if (existBedNurseCharges!=null) {
+            if (existBedNurseCharges.size()!=1) {
+              LogUtil.error(BillingServiceImpl.class, "ERROR:run monthly bill job,existBedNurseCharges size is not 1", "Tenant ID=%s,ElderlyInfo ID=%s,BillDate=%s",tenantId,elderlyInfo.getId(),billDate.toString());
+            }else {
+              bedNurseCharge.setChargeStatus(PaymentStatus.PAID);
+            }
+          }
+          billing.setBedNurseCharge(bedNurseCharge);
+          
+          
+          /**
+           *====================================================================================================================
+           * 伙食费
+           */
+          if (elderlyInfo.getMealFeeMonthlyPayment()) {
+              MealCharge mealCharge = new MealCharge();
+              mealCharge.setBilling(billing);
+              mealCharge.setBillingNo(billing.getBillingNo());
+              mealCharge.setElderlyInfo(elderlyInfo);
+              mealCharge.setChargeStatus(billing.getChargeStatus());
+              mealCharge.setTenantID(tenantId);
+              Map<String, Object> mealChargeConfigMap = getMealConfigByElderly(properties,elderlyInfo);
+              mealCharge.setMealAmount(new BigDecimal(mealChargeConfigMap.get("amountPerMonth").toString()));
+              
+              //如该结算周期内老人的伙食费已在入院账单中缴纳,则生成状态为已缴费的伙食费日常账单
+              List<MealCharge> existMealCharges = mealChargeService.findList(null, dateFilters, null, true, null);
+              if (existMealCharges!=null) {
+                if (existBedNurseCharges.size()!=1) {
+                  LogUtil.error(BillingServiceImpl.class, "ERROR:run monthly bill job,existBedNurseCharges size is not 1", "Tenant ID=%s,ElderlyInfo ID=%s,BillDate=%s",tenantId,elderlyInfo.getId(),billDate.toString());
+                }else {
+                  mealCharge.setChargeStatus(PaymentStatus.PAID);
+                }
+              }
+              billing.setMealCharge(mealCharge);
+          }
+        
+          /**
+           *====================================================================================================================
+           * 个性化服务费
+           */
+          
+    }
    
 }
   
