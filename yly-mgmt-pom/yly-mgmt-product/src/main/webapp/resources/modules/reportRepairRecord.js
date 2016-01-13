@@ -72,13 +72,7 @@ $("#reportRepairRecord-table-list").datagrid({
 	pagination:false,
 	columns:[
 		    [
-		     {title:"维修次数",field:"repairedCount",width:100,sortable:true,
-		    	 formatter: function(value,row,index){
-		    			if(value != null){
-		    				console.log(value);
-			    	  		return value;
-			    	  	}
-			    	  }},
+		     {title:"维修次数",field:"repairedCount",width:100,sortable:true},
 		     {title:"统计周期",field:"repairedStatiticsCycle",width:100,sortable:true,
 		    	 formatter: function(value,row,index){
 	    			if(value != null){

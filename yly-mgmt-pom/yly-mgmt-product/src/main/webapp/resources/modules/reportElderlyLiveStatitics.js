@@ -79,8 +79,7 @@ $.ajax({
 			for (var i = 0; i < data.length; i++) {
 				
 				var brightness = 0.2 ;
-				
-				reportElderlyLiveStatitics.name=data[i].zoomType.configValue;
+				reportElderlyLiveStatitics.name=data[i].roomType.configValue;
 				reportElderlyLiveStatitics.series[1].data.push(
 					{
 	                    name: '已使用',
@@ -95,7 +94,7 @@ $.ajax({
 	                    
 	                });
 				reportElderlyLiveStatitics.series[0].data.push({
-                    name: data[i].zoomType.configValue,
+                    name: data[i].roomType.configValue,
                     y: data[i].totalCount,
                     color: colors[i]
                 }

@@ -32,7 +32,7 @@ public class ReportElderlyLiveStatitics extends BaseEntity
   /**
    * 房间类型
    */
-  private SystemConfig zoomType;
+  private SystemConfig roomType;
 
   /**
    * 床位数
@@ -57,14 +57,14 @@ public class ReportElderlyLiveStatitics extends BaseEntity
 
   @JsonProperty
   @ManyToOne
-  public SystemConfig getZoomType ()
+  public SystemConfig getRoomType ()
   {
-    return zoomType;
+    return roomType;
   }
 
-  public void setZoomType (SystemConfig zoomType)
+  public void setRoomType (SystemConfig roomType)
   {
-    this.zoomType = zoomType;
+    this.roomType = roomType;
   }
 
   @JsonProperty
