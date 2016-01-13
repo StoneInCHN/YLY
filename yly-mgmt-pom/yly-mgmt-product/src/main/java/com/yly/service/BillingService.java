@@ -15,6 +15,15 @@ import com.yly.entity.ElderlyInfo;
  */
 public interface BillingService extends ChargeRecordService<Billing, Long> {
 	
+  
+   /**
+    * 根据老人获取伙食費用
+    * @param properties
+    * @param elderlyInfo
+    * @return
+    */
+   Map<String, Object> getMealConfigByElderly(String[] properties, ElderlyInfo elderlyInfo);
+   
 	/**
 	 * 根据老人获取床位护理费用
 	 * @param properties
