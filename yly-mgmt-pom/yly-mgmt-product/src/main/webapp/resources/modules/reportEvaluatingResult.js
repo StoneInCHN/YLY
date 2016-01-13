@@ -8,7 +8,7 @@ $(function(){
 	    editable:false,
 	    onChange:function(value){
 	    	loadDataPie(evaluatingResultReport,
-			'../../console/reportEvaluatingResult/report.jhtml',{evaluatingFormId:value});
+			'../../console/reportEvaluatingResult/report.jhtml',{evaluatingFormId:value},null,null,'evaluatingResultName','elderlyCount');
 	    	$("#reportEvaluatingResult-table-list").datagrid("reload",{evaluatingFormId:value});
 	    },
 	    loadFilter:function(data){
