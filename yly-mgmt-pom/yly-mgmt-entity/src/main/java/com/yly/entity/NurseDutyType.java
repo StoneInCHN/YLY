@@ -10,6 +10,11 @@ import org.hibernate.annotations.Index;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
+/**
+ * 护理员排班类型
+ * @author tanbiao
+ *
+ */
 @Entity
 @Table(name = "yly_nurse_duty_type")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_nurse_duty_type_sequence")

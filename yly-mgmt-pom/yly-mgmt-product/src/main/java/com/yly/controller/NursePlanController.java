@@ -1,5 +1,7 @@
 package com.yly.controller;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
-import com.yly.entity.Bed;
+import com.yly.entity.NursePlan;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.NursePlanService;
@@ -17,8 +19,8 @@ import com.yly.service.NursePlanService;
 @Controller("nursePlanController")
 public class NursePlanController extends BaseController {
 
+  @Resource(name="nursePlanServiceImpl")
   private NursePlanService nursePlanService;
-
 
 
   @RequestMapping(value = "/nursePlan", method = RequestMethod.GET)
@@ -27,8 +29,8 @@ public class NursePlanController extends BaseController {
   }
 
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Bed> list(Pageable pageable) {
-    return null;
+  public @ResponseBody Page<NursePlan> list(Pageable pageable) {
+    return nursePlanService.findPage(pageable, true);
   }
 
   /**
@@ -41,7 +43,7 @@ public class NursePlanController extends BaseController {
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
     model.addAttribute("nursePlan", nursePlanService.find(id));
-    return "nursePlan/nursePlan";
+    return "nursePlan/edit";
   }
 
   /**
@@ -51,15 +53,16 @@ public class NursePlanController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add(Bed bed, Long roomId) {
-    return null;
-
+  public @ResponseBody Message add(NursePlan nursePlan, Long roomId) {
+    nursePlanService.save(nursePlan, true);
+    return SUCCESS_MESSAGE;
   }
 
 
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(Bed bed, Long roomId) {
-    return null;
+  public @ResponseBody Message update(NursePlan nursePlan) {
+    nursePlanService.update(nursePlan, "tenantID","createDate");
+    return SUCCESS_MESSAGE;
 
   }
 

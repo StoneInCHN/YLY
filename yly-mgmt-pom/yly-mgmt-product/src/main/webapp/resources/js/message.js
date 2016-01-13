@@ -486,7 +486,16 @@ var messages = {
 	"yly.nurseDutyType.dutyEndTime":"结束时间",
 	"yly.nurseDutyType.dutyName":"班次名称",
 	"yly.nurseDutyType.order":"排序",
-	"yly.nurseDutyType.remark":"备注"
+	"yly.nurseDutyType.remark":"备注",
+	//护理计划
+	"yly.nursePlan.list":"护理计划列表",
+	"yly.nursePlan.add":"添加护理计划",
+	"yly.nursePlan.edit":"编辑护理计划",
+	"yly.nursePlan.planStartDate":"开始时间",
+	"yly.nursePlan.planEndDate":"结束时间",
+	"yly.nursePlan.planName":"计划名称",
+	"yly.nursePlan.planContent":"计划内容",
+	"yly.nursePlan.remark":"备注"
 };
 //多语言
 function message(code) {

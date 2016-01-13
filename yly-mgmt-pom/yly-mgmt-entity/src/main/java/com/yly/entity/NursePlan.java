@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -57,6 +58,7 @@ public class NursePlan extends BaseEntity{
 
   
   @Column(length=50)
+  @JsonProperty
   public String getRemark() {
     return remark;
   }
@@ -74,6 +76,7 @@ public class NursePlan extends BaseEntity{
     this.tenantID = tenantID;
   }
 
+  @JsonProperty
   public Date getPlanStartDate() {
     return planStartDate;
   }
@@ -82,6 +85,7 @@ public class NursePlan extends BaseEntity{
     this.planStartDate = planStartDate;
   }
 
+  @JsonProperty
   public Date getPlanEndDate() {
     return planEndDate;
   }
@@ -91,6 +95,7 @@ public class NursePlan extends BaseEntity{
   }
 
   @Column(length=200)
+  @JsonProperty
   public String getPlanContent() {
     return planContent;
   }
@@ -100,6 +105,7 @@ public class NursePlan extends BaseEntity{
   }
 
   @Column(length=30)
+  @JsonProperty
   public String getPlanName() {
     return planName;
   }
