@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Executor;
 
 import javax.annotation.Resource;
@@ -26,6 +28,8 @@ import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
 import com.yly.entity.MealChargeConfig;
 import com.yly.entity.NurseChargeConfig;
+import com.yly.entity.PersonalizedCharge;
+import com.yly.entity.PersonalizedRecord;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
@@ -90,6 +94,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
+  
+//  @Resource(name = "personalizedRecordServiceImpl")
+//  private PersonalizedRecordService personalizedRecordService;
 
   
   @Resource
@@ -323,6 +330,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
               bedNurseCharge.setChargeStatus(PaymentStatus.PAID);
             }
           }
+          billing.setBedAmount(bedNurseCharge.getBedAmount());
+          billing.setNurseAmount(bedNurseCharge.getNurseAmount());
           billing.setBedNurseCharge(bedNurseCharge);
           
           
@@ -349,6 +358,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
                   mealCharge.setChargeStatus(PaymentStatus.PAID);
                 }
               }
+              billing.setMealAmount(mealCharge.getMealAmount());
               billing.setMealCharge(mealCharge);
           }
         
@@ -356,7 +366,35 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
            *====================================================================================================================
            * 个性化服务费
            */
+          List<Filter> serviceFilters = new ArrayList<Filter>();
+          Filter sFilter = new Filter("serviceTime", Operator.le, startDate);
+          Filter eFilter = new Filter("serviceTime", Operator.ge, billDate);
+          dateFilters.add(sTimeFilter);
+          dateFilters.add(eTimeFilter);
+          dateFilters.add(elderFilter);
+          List<PersonalizedRecord> personalizedRecords = new ArrayList<PersonalizedRecord>();
+          if (personalizedRecords != null && personalizedRecords.size() > 0) {
+        	  PersonalizedCharge personalizedCharge = new PersonalizedCharge();
+              personalizedCharge.setBilling(billing);
+              personalizedCharge.setBillingNo(billing.getBillingNo());
+              personalizedCharge.setElderlyInfo(elderlyInfo);
+              personalizedCharge.setChargeStatus(billing.getChargeStatus());
+              personalizedCharge.setTenantID(tenantId);
+              BigDecimal serviceCharge = new BigDecimal(0);
+              for (PersonalizedRecord personalizedRecord : personalizedRecords) {
+            	  personalizedRecord.setPersonalizedCharge(personalizedCharge);
+            	  serviceCharge = serviceCharge.add(personalizedRecord.getPersonalizedNurse().getServicePrice());
+              }
+              Set<PersonalizedRecord> records = new HashSet<PersonalizedRecord>(personalizedRecords);
+              personalizedCharge.setPersonalizedRecords(records);
+              personalizedCharge.setPersonalizedAmount(serviceCharge);
+              
+              billing.setPersonalizedAmount(personalizedCharge.getPersonalizedAmount());
+              billing.setPersonalizedCharge(personalizedCharge);
+		  }
+         
           
+          billingDao.merge(billing);
     }
    
 }
