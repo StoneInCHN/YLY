@@ -312,6 +312,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
           bedNurseCharge.setElderlyInfo(elderlyInfo);
           bedNurseCharge.setChargeStatus(billing.getChargeStatus());
           bedNurseCharge.setTenantID(billing.getTenantID());
+          bedNurseCharge.setPeriodStartDate(startDate);
+          bedNurseCharge.setPeriodEndDate(billDate);
           
           List<Map<String, Object>> chargeMap = getBedNurseConfigByElderly(properties,elderlyInfo);
           bedNurseCharge.setBedAmount(new BigDecimal(chargeMap.get(0).get("amountPerMonth").toString()));
@@ -349,6 +351,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
               mealCharge.setElderlyInfo(elderlyInfo);
               mealCharge.setChargeStatus(billing.getChargeStatus());
               mealCharge.setTenantID(tenantId);
+              mealCharge.setPeriodStartDate(startDate);
+              mealCharge.setPeriodEndDate(billDate);
+              
               Map<String, Object> mealChargeConfigMap = getMealConfigByElderly(properties,elderlyInfo);
               mealCharge.setMealAmount(new BigDecimal(mealChargeConfigMap.get("amountPerMonth").toString()));
               
@@ -383,6 +388,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
               personalizedCharge.setElderlyInfo(elderlyInfo);
               personalizedCharge.setChargeStatus(billing.getChargeStatus());
               personalizedCharge.setTenantID(tenantId);
+              personalizedCharge.setPeriodStartDate(startDate);
+              personalizedCharge.setPeriodEndDate(billDate);
               BigDecimal serviceCharge = new BigDecimal(0);
               for (PersonalizedRecord personalizedRecord : personalizedRecords) {
             	  personalizedRecord.setPersonalizedCharge(personalizedCharge);

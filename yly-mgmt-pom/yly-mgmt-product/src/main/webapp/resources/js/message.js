@@ -78,6 +78,7 @@ var messages = {
 	"yly.charge.advance" : "预存款(元)",
 	"yly.charge.checkin" : "入院收费",
 	"yly.pay.checkin" : "入院缴费",
+	"yly.pay.dailyBill" : "日常缴费",
 	"yly.charge.checkoutPay" : "退住结算",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
