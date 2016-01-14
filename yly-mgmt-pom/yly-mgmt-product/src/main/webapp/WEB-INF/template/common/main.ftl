@@ -268,9 +268,6 @@
 		    		[@shiro.hasPermission name="checkinPay"]
 		    	    <li><a href="#" data-url="${base}/console/billing/checkinPay.jhtml">${message("yly.pay.checkin")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		[@shiro.hasPermission name="checkoutPay"]
-		    		<li><a href="#" data-url="${base}/console/billing/checkoutPay.jhtml">${message("yly.charge.checkout")}</a></li>
-		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="billing"]
 		    		<li><a href="#" data-url="${base}/console/billing/billing.jhtml">${message("yly.charge.billing")}</a></li>
 		    		[/@shiro.hasPermission]
