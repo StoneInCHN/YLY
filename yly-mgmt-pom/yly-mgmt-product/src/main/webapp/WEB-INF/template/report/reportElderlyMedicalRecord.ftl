@@ -20,6 +20,6 @@
 <div id="reportElderlyMedicalRecord">
 	<div id="elderlyMedicalRecordReportId" style="height:300px;width: 780px;">
 </div>
-<table id = "reportElderlyMedicalRecord-table-list" class="easyui-datagrid" >   
+<table id = "reportElderlyMedicalRecord-table-list" class="table table-striped" >   
 	</table>
 	</div>

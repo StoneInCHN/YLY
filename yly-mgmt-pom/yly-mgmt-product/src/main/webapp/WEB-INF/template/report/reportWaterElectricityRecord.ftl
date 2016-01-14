@@ -19,6 +19,6 @@
 <div id="reportWaterElectricityRecord">
 	<div id="waterElectricityRecordReportId" style="height:300px;width: 680px;">
 	</div>
-	<table id = "reportWaterElectricityRecord-table-list" class="easyui-datagrid" >   
+	<table id = "reportWaterElectricityRecord-table-list" class="table table-striped" >   
 	</table>
 </div>

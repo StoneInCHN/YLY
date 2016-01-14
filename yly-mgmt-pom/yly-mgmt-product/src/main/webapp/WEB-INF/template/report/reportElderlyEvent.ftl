@@ -19,6 +19,6 @@
 <div id="reportElderlyEvent">
 	<div id="elderlyEventReportId" style="height:300px;width: 680px;">
 	</div>
-	<table id = "reportElderlyEvent-table-list" class="easyui-datagrid" >   
+	<table id = "reportElderlyEvent-table-list" class="table table-striped" >   
 	</table>
 </div>

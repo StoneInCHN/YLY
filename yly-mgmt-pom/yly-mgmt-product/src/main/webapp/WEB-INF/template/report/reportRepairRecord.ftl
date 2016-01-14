@@ -19,6 +19,6 @@
 <div id="reportRepairRecord">
 	<div id="repairRecordReportId" style="height:300px;width: 680px;">
 	</div>
-	<table id = "reportRepairRecord-table-list" class="easyui-datagrid" >   
+	<table id = "reportRepairRecord-table-list" class="table table-striped" >   
 	</table>
 </div>

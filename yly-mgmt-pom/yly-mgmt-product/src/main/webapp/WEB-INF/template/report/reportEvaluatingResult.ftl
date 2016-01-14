@@ -7,6 +7,6 @@
 	</div>
 </div>
 <div class="report-item">
-	<table id = "reportEvaluatingResult-table-list" class="easyui-datagrid" >   
+	<table id = "reportEvaluatingResult-table-list" class="table table-striped" >   
 	</table>  
 </div>

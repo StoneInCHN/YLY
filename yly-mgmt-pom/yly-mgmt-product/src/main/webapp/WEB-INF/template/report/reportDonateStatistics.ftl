@@ -18,6 +18,6 @@
 <div class="report-item">
 	<label> 统计月份:</label>
    	<input id = "reportDonateDate" class="easyui-combobox" style="width:200px;margin-top:21px;"/>
-	<table id = "reportDonateStatistics-table-list" class="easyui-datagrid" >   
+	<table id = "reportDonateStatistics-table-list" class="table table-striped" >   
 	</table> 
 </div>
