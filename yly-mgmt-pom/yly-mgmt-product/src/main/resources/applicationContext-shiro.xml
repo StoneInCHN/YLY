@@ -79,6 +79,7 @@
 				/console/mealChargeConfig/** = perms["mealChargeRecord"]
 				/console/checkout/checkoutBill.jhtml = perms["checkoutCharge"]
 				/console/checkout/checkoutBillPay.jhtml = perms["checkoutPay"]
+				/console/checkout/checkoutBillAdjust.jhtml = perms["checkoutCharge"]
 			<!-- 黑名单 -->
 				/console/blackList/** = perms["blackList"]
 			<!-- 后勤管理 -->

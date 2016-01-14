@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 
@@ -70,7 +71,7 @@ public class BillingAdjustment extends BaseEntity {
   public void setBilling(Billing billing) {
     this.billing = billing;
   }
-
+  @JsonProperty
   @Column(precision = 12, scale = 2)
   public BigDecimal getAdjustmentAmount() {
     return adjustmentAmount;
@@ -79,7 +80,7 @@ public class BillingAdjustment extends BaseEntity {
   public void setAdjustmentAmount(BigDecimal adjustmentAmount) {
     this.adjustmentAmount = adjustmentAmount;
   }
-
+  @JsonProperty
   @Column(length = 20)
   public String getAdjustmentCause() {
     return adjustmentCause;
@@ -88,7 +89,7 @@ public class BillingAdjustment extends BaseEntity {
   public void setAdjustmentCause(String adjustmentCause) {
     this.adjustmentCause = adjustmentCause;
   }
-  
+  @JsonProperty
   @Column(length = 15)
   public String getOperator() {
     return operator;
@@ -97,7 +98,7 @@ public class BillingAdjustment extends BaseEntity {
   public void setOperator(String operator) {
     this.operator = operator;
   }
-
+  @JsonProperty
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }

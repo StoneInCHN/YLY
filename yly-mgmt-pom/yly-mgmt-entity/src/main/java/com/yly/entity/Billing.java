@@ -210,7 +210,7 @@ public class Billing extends BaseEntity {
   public void setBillType(BillingType billType) {
     this.billType = billType;
   }
-  
+  @JsonProperty
   @OneToMany(mappedBy = "billing",cascade=CascadeType.ALL)
   public Set<BillingAdjustment> getBillingAdjustment() {
     return billingAdjustment;

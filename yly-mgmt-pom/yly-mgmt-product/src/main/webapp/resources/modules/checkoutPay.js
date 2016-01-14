@@ -50,6 +50,8 @@ var checkoutPay_manager_tool = {
 								$('#addCheckoutPay_personalizedCharge_remark').textbox('setValue',billing.personalizedCharge.remark);
 								//$('#addCheckoutPay_advanceChargeAmount').numberbox('setValue',billing.advanceChargeAmount);
 								$('#addCheckoutPay_totalAmount').numberbox('setValue',billing.totalAmount);
+								
+								showAdjustment(billing,"addCheckoutPay_djustmentService");//显示调账信息
 							}
 						}});
 			    },
@@ -158,6 +160,8 @@ $(function(){
 								$('#viewCheckoutPay_personalizedCharge_remark').textbox('setValue',billing.personalizedCharge.remark);
 								$('#viewCheckoutPay_advanceChargeAmount').numberbox('setValue',billing.advanceChargeAmount);
 								$('#viewCheckoutPay_totalAmount').numberbox('setValue',billing.totalAmount);
+								
+								showAdjustment(billing,"viewCheckoutPay_djustmentService");//显示调账信息
 							}
 						}});
 			    },

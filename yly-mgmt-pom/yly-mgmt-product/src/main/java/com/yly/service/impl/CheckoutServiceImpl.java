@@ -29,6 +29,7 @@ import com.yly.entity.AdvanceCharge;
 import com.yly.entity.BedChargeConfig;
 import com.yly.entity.BedNurseCharge;
 import com.yly.entity.Billing;
+import com.yly.entity.BillingAdjustment;
 import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
@@ -416,12 +417,11 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   public void checkoutBillPayTransaction(Billing checkoutBill) throws Exception {
-  //之前该老人下所有的账单（包括入院办理账单和日常缴费账单）的状态都会改成 “已缴费”
+    //之前该老人下所有的账单（包括入院办理账单和日常缴费账单）的状态都会改成 “已缴费”
     ChargeSearchRequest chargeSearch = new ChargeSearchRequest();
     chargeSearch.setElderlyId(checkoutBill.getElderlyInfo().getId());
     chargeSearch.setBillingType(BillingType.CHECK_OUT);
     //chargeSearch.setStatus(PaymentStatus.UNPAID);
-
     List<Billing> allOtherBillings = searchListByFilter(chargeSearch);
     for (Billing otherBilling : allOtherBillings) {
       if (otherBilling.getDeposit() != null) {
@@ -458,7 +458,14 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
       
       billingService.update(otherBilling);
     }
-    
+    //之前的所有调整金额，状态都会改成 “已缴费”
+    if (checkoutBill.getBillingAdjustment() != null && checkoutBill.getBillingAdjustment().size() > 0) {
+      Set<BillingAdjustment> billingAdjustments = checkoutBill.getBillingAdjustment();
+      for (BillingAdjustment billingAdjustment : billingAdjustments) {
+        billingAdjustment.setChargeStatus(PaymentStatus.PAID);
+        billingAdjustment.setOperator(tenantAccountService.getCurrentUsername());
+      }
+    }
     //重置预存款
     if (checkoutBill.getAdvanceChargeAmount() != null) {
       checkoutBill.getElderlyInfo().setAdvanceChargeAmount(new BigDecimal(0));

@@ -141,7 +141,11 @@ var messages = {
 	"yly.checkout.confirm_checkoutPay_for_elderly":" {0}  办理退住结算，共缴费￥：{1}  ",
 	"yly.checkout.confirm_paymentType_amount":"请选择支付方式并核对金额！",
 	"yly.checkout.elderlyStatus.invalid":"非法操作，老人 {0} 已经出院或者已将办理出院了，不能再次办理出院！",
-	
+	"yly.checkout.elderlyStatus.invalid.adjustment":"非法操作，老人 {0} 已经出院，不能进行调账！",
+	"yly.charge.billing.adjustment":"调整金额",
+	"yly.charge.billing.adjustment.cause":"调账原因",
+	"yly.charge.billing.adjustment.amount":"调账金额",
+
 	
 	/**
 	 * charge config

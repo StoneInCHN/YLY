@@ -1,4 +1,5 @@
 <script src="${base}/resources/modules/checkoutPay.js"></script>
+<script src="${base}/resources/modules/checkout.js"></script>
 <style type="text/css">
 p
 {
@@ -80,22 +81,22 @@ text-align:center;
 	    	</tr>
 		</table>
 		</fieldset>		  	
-	   <fieldset> 
+	   <fieldset id="addCheckoutPay_bedNurseService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.bedNurse.record")}</legend>
 	    			  	<p><input class="easyui-numberbox"  id="addCheckoutPay_bedNurseAmount"  style="width:550px;" disabled=true data-options="min:0,precision:2"/></p>
 	    			  	<p><input class="easyui-textbox"  id="addCheckoutPay_bedNurseCharge_remark"  data-options="multiline:true,height:150,width:550" disabled=true /></p>
 	   </fieldset>
-	    <fieldset id="monthlyMeal" style="display:blank"> 
+	    <fieldset id="addCheckoutPay_mealService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.meal.reocrd")}</legend>
 	    			  	<p><input class="easyui-numberbox"  id="addCheckoutPay_mealAmount" value="${billing.mealAmount}" style="width:550px;" disabled=true data-options="min:0,precision:2"/></p>
 	    			  	<p><input class="easyui-textbox"  id="addCheckoutPay_mealCharge_remark"   data-options="multiline:true,height:150,width:550" disabled=true/></p>
 	    </fieldset>
-	   <fieldset id="personalizedService" style="display:blank"> 
+	   <fieldset id="addCheckoutPay_personalizedService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.personalized.service.record")}</legend>   			
 	    			  	<p><input class="easyui-numberbox"  id="addCheckoutPay_personalizedAmount"  style="width:550px;" disabled=true data-options="min:0,precision:2"/></p>
 	    			  	<p><input class="easyui-textbox" id="addCheckoutPay_personalizedCharge_remark"  data-options="multiline:true,height:150,width:550" disabled=true/></p>
 	    </fieldset>
-	    <fieldset id="waterElectricity" style="display:blank"> 
+	    <fieldset id="addCheckoutPay_waterElectricityService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.water.electricity.reocrd")}</legend>
 	    			  	<p>截止到办理出院，欠水（吨）：<input class="easyui-numberbox"   id="addCheckoutPay_waterCount"   style="width:90px;" disabled=true data-options="min:0,precision:1"/> 
 	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="addCheckoutPay_waterPrice" " style="width:35px;" disabled=true data-options="min:0,precision:2"/> / 吨]  
@@ -103,6 +104,8 @@ text-align:center;
 	    			  	<p>截止到办理出院，欠电（度）：<input class="easyui-numberbox"   id="addCheckoutPay_electricityCount"  style="width:90px;" disabled=true data-options="min:0,precision:1"/>
 	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="addCheckoutPay_electricityPrice" " style="width:35px;" disabled=true data-options="min:0,precision:2"/> / 度]  
 	    			  		&nbsp;&nbsp;&nbsp;&nbsp;电费小计：<input class="easyui-numberbox" id="addCheckoutPay_electricityAmount"  style="width:90px;" disabled=true data-options="min:0,precision:2"/> </p>	    			  		    			  	
+	    </fieldset>
+	    <fieldset id="addCheckoutPay_djustmentService" style="display:none"> 
 	    </fieldset>
 	     <table class="table table-striped">
 	    	<tr>
@@ -181,22 +184,22 @@ text-align:center;
 	    	</tr>
 		</table>
 		</fieldset>		  	
-	   <fieldset> 
+	   <fieldset id="viewCheckoutPay_bedNurseService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.bedNurse.record")}</legend>
 	    			  	<p><input class="easyui-numberbox"  id="viewCheckoutPay_bedNurseAmount"  style="width:550px;" readonly="readonly" data-options="min:0,precision:2"/></p>
 	    			  	<p><input class="easyui-textbox"  id="viewCheckoutPay_bedNurseCharge_remark"  data-options="multiline:true,height:150,width:550" readonly="readonly" /></p>
 	   </fieldset>
-	    <fieldset id="monthlyMeal" style="display:blank"> 
+	    <fieldset id="viewCheckoutPay_mealService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.meal.reocrd")}</legend>
 	    			  	<p><input class="easyui-numberbox"  id="viewCheckoutPay_mealAmount" value="${billing.mealAmount}" style="width:550px;" readonly="readonly" data-options="min:0,precision:2"/></p>
 	    			  	<p><input class="easyui-textbox"  id="viewCheckoutPay_mealCharge_remark"   data-options="multiline:true,height:150,width:550" readonly="readonly"/></p>
 	    </fieldset>
-	   <fieldset id="personalizedService" style="display:blank"> 
+	   <fieldset id="viewCheckoutPay_personalizedService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.personalized.service.record")}</legend>   			
 	    			  	<p><input class="easyui-numberbox"  id="viewCheckoutPay_personalizedAmount"  style="width:550px;" readonly="readonly" data-options="min:0,precision:2"/></p>
 	    			  	<p><input class="easyui-textbox" id="viewCheckoutPay_personalizedCharge_remark"  data-options="multiline:true,height:150,width:550" readonly="readonly"/></p>
 	    </fieldset>
-	    <fieldset id="waterElectricity" style="display:blank"> 
+	    <fieldset id="viewCheckoutPay_waterElectricityService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.water.electricity.reocrd")}</legend>
 	    			  	<p>截止到办理出院，欠水（吨）：<input class="easyui-numberbox"   id="viewCheckoutPay_waterCount"   style="width:90px;" data-options="required:true,min:0,precision:1"/> 
 	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="viewCheckoutPay_waterPrice" " style="width:35px;" data-options="required:true,editable:false,min:0,precision:2"/> / 吨]  
@@ -204,6 +207,8 @@ text-align:center;
 	    			  	<p>截止到办理出院，欠电（度）：<input class="easyui-numberbox"   id="viewCheckoutPay_electricityCount"  style="width:90px;" data-options="required:true,min:0,precision:1"/>
 	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="viewCheckoutPay_electricityPrice" " style="width:35px;" data-options="required:true,editable:false,min:0,precision:2"/> / 度]  
 	    			  		&nbsp;&nbsp;&nbsp;&nbsp;电费小计：<input class="easyui-numberbox" id="viewCheckoutPay_electricityAmount"  style="width:90px;" data-options="required:true,editable:false,min:0,precision:2"/> </p>	    			  		    			  	
+	    </fieldset>
+	   <fieldset id="viewCheckoutPay_djustmentService" style="display:none"> 
 	    </fieldset>
 	     <table class="table table-striped">
 	    	<tr>

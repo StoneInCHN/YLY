@@ -369,7 +369,7 @@ public class CheckoutController extends BaseController {
     return SUCCESS_MESSAGE;
   }
   /**
-   * 账单支付
+   * 退住结算账单支付
    * 
    * @param checkinBill
    * @param elderlyInfoID
@@ -459,7 +459,28 @@ public class CheckoutController extends BaseController {
     } 
     return SUCCESS_MESSAGE;
   }
-  
+  /**
+   * 退住结算账单生成后，为缴费时候可以进行调整金额
+   * @param billAdjust
+   * @param billId
+   * @return
+   */
+  @RequestMapping(value = "/checkoutBillAdjust", method = RequestMethod.POST)
+  public @ResponseBody Message checkoutBillAdjust(BillingAdjustment billAdjust, Long billId) {
+    Billing billing = billingService.find(billId);
+    billAdjust.setBilling(billing);
+    billAdjust.setChargeStatus(PaymentStatus.UNPAID);
+    billAdjust.setOperator(tenantAccountService.getCurrentUsername());
+    billing.getBillingAdjustment().add(billAdjust);
+    if (billAdjust.getAdjustmentAmount() != null && !billing.getChargeStatus().equals(PaymentStatus.PAID)) {
+       billing.setTotalAmount(billing.getTotalAmount().add(billAdjust.getAdjustmentAmount()));
+       billingService.update(billing);
+    }else {
+      return ERROR_MESSAGE;
+    }
+    
+    return SUCCESS_MESSAGE;
+  }
   /**
    * 返回账单List
    */

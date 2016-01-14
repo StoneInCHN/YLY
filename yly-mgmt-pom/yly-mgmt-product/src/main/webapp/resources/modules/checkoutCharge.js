@@ -69,6 +69,25 @@ var checkoutCharge_manager_tool = {
 			    }
 			});  
 		},
+		  adjustment:function(){
+		    	var _edit_row = $('#checkoutCharge-table-list').datagrid('getSelections');
+				if (_edit_row.length == 0) {
+					$.messager.alert(message("yly.common.prompt"),
+							message("yly.common.select.editRow"), 'warning');
+					return false;
+				}
+				if (_edit_row.length>1) {
+					$.messager.alert(message("yly.common.prompt"),
+							message("yly.common.select.editRow.unique"), 'warning');
+					return false;
+				}
+				
+				if(_edit_row[0].chargeStatus == "PAID"){
+					$.messager.alert(message("yly.common.prompt"),message("yly.checkout.elderlyStatus.invalid.adjustment",_edit_row[0].elderlyInfo.name), 'warning');
+				}else{
+					checkoutAdjustment(_edit_row[0].id);
+				}
+		      },
 		edit:function(){},
 		remove:function(){
 			listRemove('checkoutCharge-table-list','../checkoutCharge/delete.jhtml');
@@ -123,6 +142,9 @@ $(function(){
 								$('#viewCheckoutCharge_personalizedCharge_remark').textbox('setValue',billing.personalizedCharge.remark);
 								$('#viewCheckoutCharge_advanceChargeAmount').numberbox('setValue',billing.advanceChargeAmount);
 								$('#viewCheckoutCharge_totalAmount').numberbox('setValue',billing.totalAmount);
+								
+								showAdjustment(billing,"viewCheckoutCharge_djustmentService");//显示调账信息
+								
 							}
 						}});
 			    },
@@ -267,7 +289,73 @@ function useWaterElecCharge(){
 		$("#addCheckoutCharge_totalCharge").numberbox('setValue', parseFloat(totalCharge.val())+parseFloat(electricityAmount.val()));
 	}
 }
-
+function checkoutAdjustment(billId){
+	$('#addCheckoutAdjust').dialog({    
+	    title: message("yly.charge.billing.adjust"),    
+	    width: 450,    
+	    height: 300,
+	    modal: true,
+	    iconCls : 'icon-mini-edit',
+	    cache: false, 
+	    buttons:[{
+	    	text:message("yly.common.save"),
+	    	iconCls:'icon-save',
+			handler:function(){
+				var validate = $('#addCheckoutAdjust_form').form('validate');
+				if(validate){
+					$.ajax({
+						url:"../checkout/checkoutBillAdjust.jhtml",
+						type:"post",
+						data:$("#addCheckoutAdjust_form").serialize(),
+						beforeSend:function(){
+							$.messager.progress({
+								text:message("yly.common.saving")
+							});
+						},
+						success:function(result,response,status){
+							    showSuccessMsg(result.content);
+							    if(result.type == "success"){
+							    	$.messager.progress('close');
+									$('#addCheckoutAdjust').dialog("close");
+									$("#checkoutCharge-table-list").datagrid('reload');
+									$('#addCheckoutAdjust_form').form("reset");
+							    }
+								
+						},
+						error:function (XMLHttpRequest, textStatus, errorThrown) {
+							$.messager.progress('close');
+							alertErrorMsg();
+						}
+					});
+				};
+			}
+		},{
+			text:message("yly.common.cancel"),
+			iconCls:'icon-cancel',
+			handler:function(){
+				 $('#addCheckoutAdjust').dialog("close");
+				 $('#addCheckoutAdjust_form').form("reset");
+			}
+	    }],
+	    
+	    onOpen:function(){
+	    	$('#addCheckoutAdjust_form').show();
+	    	$('#addCheckout_billId').val(billId);
+	    	$("#addCheckout_adjustmentCause").combobox({    
+			    valueField:'configValue',    
+			    textField:'configValue',
+			    cache: true,
+			    url:'../systemConfig/findByConfigKey.jhtml',
+			    onBeforeLoad : function(param) {
+			        param.configKey = 'ADJUSTMENTCAUSE';// 参数
+			    }
+			});
+	    },
+	    onClose:function(){
+	        $('#addCheckoutAdjust_form').form("reset");
+	    }
+	}); 
+}
 /**
  * 老人账单查询功能
  * dataMap.id为老人id
