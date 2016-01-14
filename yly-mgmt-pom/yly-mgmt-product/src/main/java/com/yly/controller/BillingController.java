@@ -40,6 +40,7 @@ import com.yly.framework.paging.Pageable;
 import com.yly.json.request.ChargeSearchRequest;
 import com.yly.service.BillingService;
 import com.yly.service.ElderlyInfoService;
+import com.yly.service.PersonalizedChargeService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.FieldFilterUtils;
@@ -60,6 +61,9 @@ public class BillingController extends BaseController {
 
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
+  
+  @Resource(name = "personalizedChargeServiceImpl")
+  private PersonalizedChargeService personalizedChargeService;
 
 
   /**
@@ -71,6 +75,17 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/checkinPay", method = RequestMethod.GET)
   public String checkinPay(ModelMap model) {
     return "/checkinPay/checkin";
+  }
+  
+  /**
+   * 日常缴费
+   * 
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/dailyBill", method = RequestMethod.GET)
+  public String dailyBill(ModelMap model) {
+    return "/dailyBill/bill";
   }
 
   /**
@@ -450,6 +465,9 @@ public class BillingController extends BaseController {
     }
     
     model.addAttribute("billing", record);
+    if ("dailyBill".equals(path)) {
+      model.addAttribute("serviceDetails", personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
+    }
     return path + "/details";
   }
   
