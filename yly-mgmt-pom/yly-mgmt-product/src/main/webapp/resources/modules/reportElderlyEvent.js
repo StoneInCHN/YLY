@@ -56,11 +56,11 @@ var reportElderlyEvent = {
 	},
 	series : []
 };
-var chart = new Highcharts.Chart(reportElderlyEvent);
-loadDataLine(reportElderlyEvent,
-		'../../console/reportElderlyEvent/report.jhtml',null, 'eventStatiticsCycle',
-		[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
-				'一般事件' ]);
+//var chart = new Highcharts.Chart(reportElderlyEvent);
+//loadDataLine(reportElderlyEvent,
+//		'../../console/reportElderlyEvent/report.jhtml',null, 'eventStatiticsCycle',
+//		[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
+//				'一般事件' ]);
 
 $("#reportElderlyEvent-table-list").datagrid({
 	fitColumns:true,
@@ -89,18 +89,19 @@ $("#reportElderlyEvent-table-list").datagrid({
 		if (index % 2 == 0){
 			return 'background-color:#D4D4D4;';
 		}
+	},
+	onLoadSuccess:function(data){
+		reportElderlyEvent.series= [ ];
+		refreshLine(reportElderlyEvent,data.rows,
+				'eventStatiticsCycle',
+				[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
+						'一般事件' ]);
 	}
 
 });
 $("#report_elderly_event_search_btn").click(function(){
 	  var _queryParams = $("#report_elderly_event_search_form").serializeJSON();
 	  $('#reportElderlyEvent-table-list').datagrid('options').queryParams = _queryParams;
-	  reportElderlyEvent.series= [];
 	  $("#reportElderlyEvent-table-list").datagrid('reload');
-	  loadDataLine(reportElderlyEvent,
-				'../../console/reportElderlyEvent/report.jhtml',_queryParams,
-				'eventStatiticsCycle',
-				[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
-						'一般事件' ]);
 	  
 	})

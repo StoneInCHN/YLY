@@ -92,8 +92,6 @@ $(function(){
 			}
 		},
 		onLoadSuccess:function(data){
-			debugger;
-			console.log(data);
 			reportElderlyMedicalRecord.series= [ {
 			  name : '人数',
 			  data : []

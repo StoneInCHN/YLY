@@ -57,10 +57,6 @@ var reportRepairRecord = {
 	},
 	series : []
 };
-var chart = new Highcharts.Chart(reportRepairRecord);
-loadDataLine(reportRepairRecord,
-		'../../console/reportRepairRecord/report.jhtml',null, 'repairedStatiticsCycle',
-		[ 'repairedCount'], ['维修次数']);
 
 $("#reportRepairRecord-table-list").datagrid({
 	fitColumns:true,
@@ -88,15 +84,16 @@ $("#reportRepairRecord-table-list").datagrid({
 		if (index % 2 == 0){
 			return 'background-color:#D4D4D4;';
 		}
+	},onLoadSuccess:function(data){
+		reportRepairRecord.series= [ ];
+		refreshLine(reportRepairRecord,data.rows,
+				'repairedStatiticsCycle',
+				[ 'repairedCount'], ['维修次数']);
 	}
 
 });
 $("#report_repair_record_search_btn").click(function(){
 	  var _queryParams = $("#report_repair_record_search_form").serializeJSON();
 	  $('#reportRepairRecord-table-list').datagrid('options').queryParams = _queryParams;
-	  reportRepairRecord.series= [ ];
-	  loadDataLine(reportRepairRecord,
-				'../../console/reportRepairRecord/report.jhtml',_queryParams,
-				'repairedStatiticsCycle',[ 'repairedCount'], ['维修次数']);
 	  $("#reportRepairRecord-table-list").datagrid('reload');
 	})

@@ -57,10 +57,6 @@ var reportBookingRegistration = {
 	},
 	series : []
 };
-var chart = new Highcharts.Chart(reportBookingRegistration);
-loadDataLine(reportBookingRegistration,
-		'../../console/reportBookingRegistration/report.jhtml',null, 'bookingDateStatitics',
-		[ 'bookingCount'], ['预约人数']);
 
 $("#reportBookingRegistration-table-list").datagrid({
 	fitColumns:true,
@@ -88,6 +84,11 @@ $("#reportBookingRegistration-table-list").datagrid({
 		if (index % 2 == 0){
 			return 'background-color:#D4D4D4;';
 		}
-	}
+	},
+	onLoadSuccess:function(data){
+		reportBookingRegistration.series= [ ];
+			refreshLine(reportBookingRegistration,data.rows,
+					 'bookingDateStatitics',[ 'bookingCount'], ['预约人数']);
+		}
 
 });

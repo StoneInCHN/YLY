@@ -53,10 +53,6 @@ var reportWaterElectricityRecord = {
 	},
 	series : []
 };
-var chart = new Highcharts.Chart(reportWaterElectricityRecord);
-loadDataLine(reportWaterElectricityRecord,
-		'../../console/reportWaterElectricityRecord/report.jhtml',null, 'waterElectricityStatiticsCycle',
-		[ 'electricityCount', 'waterCount' ], [ '用电量(度)', '用水量(立方)']);
 
 $("#reportWaterElectricityRecord-table-list").datagrid({
 	fitColumns:true,
@@ -85,16 +81,16 @@ $("#reportWaterElectricityRecord-table-list").datagrid({
 		if (index % 2 == 0){
 			return 'background-color:#D4D4D4;';
 		}
+	},onLoadSuccess:function(data){
+		reportWaterElectricityRecord.series= [ ];
+		refreshLine(reportWaterElectricityRecord,data.rows,
+				'waterElectricityStatiticsCycle',
+				[ 'electricityCount', 'waterCount' ], [ '用电量(度)', '用水量(立方)']);
 	}
 
 });
 $("#report_water_electricity_record_search_btn").click(function(){
 	  var _queryParams = $("#report_water_electricity_record_search_form").serializeJSON();
 	  $('#reportWaterElectricityRecord-table-list').datagrid('options').queryParams = _queryParams;
-	  reportWaterElectricityRecord.series= [ ];
-	  loadDataLine(reportWaterElectricityRecord,
-				'../../console/reportWaterElectricityRecord/report.jhtml',_queryParams,
-				'waterElectricityStatiticsCycle',
-				[ 'electricityCount', 'waterCount' ], [ '用电量(度)', '用水量(立方)']);
 	  $("#reportWaterElectricityRecord-table-list").datagrid('reload');
 	})
