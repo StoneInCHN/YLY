@@ -8,10 +8,13 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
@@ -22,6 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.ElderlyEventType;
+import com.yly.lucene.DateBridgeImpl;
 
 /**
  * 老人事件记录表
@@ -81,8 +85,9 @@ public class ElderlyEventRecord extends BaseEntity {
   private String operator;
 
   @JsonProperty
+  @Temporal(TemporalType.DATE)
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @DateBridge(resolution = Resolution.DAY)
+  @FieldBridge(impl = DateBridgeImpl.class)
   public Date getEventDate() {
     return eventDate;
   }

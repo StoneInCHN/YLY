@@ -148,6 +148,16 @@ function listRemove(id, url) {
  * 老人查询功能
  */
 function searchElderlyInfo(id) {
+	if(id=="checkoutCharge"){//办理出院
+		var checkoutFlag = false;
+		if(!$("#addCheckoutCharge_checkoutNow").is(":checked") && $("#addCheckoutCharge_checkoutDate").val() == ""){
+			$.messager.alert(message("yly.common.prompt"),message("yly.checkout.keyin_checkout_date"),'warning');
+			checkoutFlag =  true;
+		}
+		if(checkoutFlag){
+			return;
+		}
+	}
 	$('#searchElderlyInfo')
 			.dialog(
 					{
@@ -179,6 +189,25 @@ function searchElderlyInfo(id) {
 												striped : true,
 												onDblClickRow : function(
 														rowIndex, rowData) {
+													if(id=="checkoutCharge"){//办理出院
+														if(rowData.elderlyStatus =="OUT_NURSING_HOME" || rowData.elderlyStatus =="IN_PROGRESS_CHECKOUT"){
+															$.messager.alert(message("yly.common.prompt"),message("yly.checkout.elderlyStatus.invalid",rowData.name),'warning');
+															return false;
+														}
+														
+														var dataMap ={};
+														dataMap.id = rowData.id; //老人id
+														dataMap.name = rowData.name; //老人姓名
+														dataMap.identifier = rowData.identifier; //老人编号
+														dataMap.bedLocation = rowData.bedLocation; //床位
+													 	if(rowData.nursingLevel != null){
+													 		dataMap.nursingLevel =rowData.nursingLevel.configValue; //护理级别
+														}
+													 	dataMap.advanceChargeAmount = rowData.advanceChargeAmount; //预存款
+														detectBillingUnderElderly(dataMap);//查找该老人下所有账单,并将账单明细加载到添加办理出院页面
+														$('#searchElderlyInfo').dialog("close");
+														return false;
+													}
 													$("#" + id + "ID").val(
 															rowData.id);
 													$("#" + id).textbox(

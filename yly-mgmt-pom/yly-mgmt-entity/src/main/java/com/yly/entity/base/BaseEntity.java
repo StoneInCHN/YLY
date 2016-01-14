@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.groups.Default;
 
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -70,6 +72,7 @@ public class BaseEntity implements Serializable {
   @JsonProperty
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequenceGenerator")
+  @Field(store = Store.NO, index = Index.UN_TOKENIZED)
   public Long getId() {
     return id;
   }

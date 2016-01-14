@@ -2,14 +2,13 @@ package com.yly.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -153,10 +152,7 @@ public class BillingSupplyment extends BaseEntity {
    */
   private String remark;
 
-  /**
-   * 支付记录
-   */
-  private Set<PaymentRecord> paymentRecords = new HashSet<PaymentRecord>();
+
 
   /**
    * 账单类型（入住缴费，退住结算，日常缴费的补充账单）
@@ -196,14 +192,7 @@ public class BillingSupplyment extends BaseEntity {
     this.billType = billType;
   }
 
-  @OneToMany(mappedBy = "billing",cascade=CascadeType.ALL)
-  public Set<PaymentRecord> getPaymentRecords() {
-    return paymentRecords;
-  }
 
-  public void setPaymentRecords(Set<PaymentRecord> paymentRecords) {
-    this.paymentRecords = paymentRecords;
-  }
 
   public PaymentType getPaymentType() {
     return paymentType;

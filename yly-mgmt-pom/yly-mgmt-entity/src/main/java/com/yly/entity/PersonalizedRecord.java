@@ -4,12 +4,22 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
+import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 
@@ -22,6 +32,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 @Entity
 @Table(name = "yly_personalized_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_personalized_record_sequence")
+@Indexed(index="chargeRecord/personalizedRecord")
 public class PersonalizedRecord extends BaseEntity {
 
   private static final long serialVersionUID = 8840662978230104889L;
@@ -71,7 +82,7 @@ public class PersonalizedRecord extends BaseEntity {
    */
   private PersonalizedCharge personalizedCharge;
   
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public PersonalizedCharge getPersonalizedCharge() {
     return personalizedCharge;
   }
@@ -97,7 +108,7 @@ public class PersonalizedRecord extends BaseEntity {
     this.nurseContent = nurseContent;
   }
   
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   public PersonalizedNurse getPersonalizedNurse() {
     return personalizedNurse;
   }
@@ -116,6 +127,7 @@ public class PersonalizedRecord extends BaseEntity {
   }
 
   @Index(name = "personalized_record_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -125,6 +137,7 @@ public class PersonalizedRecord extends BaseEntity {
   }
 
   @ManyToOne
+  @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -132,7 +145,9 @@ public class PersonalizedRecord extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-
+  
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @DateBridge(resolution = Resolution.DAY)
   public Date getServiceTime() {
     return serviceTime;
   }

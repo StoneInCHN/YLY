@@ -23,6 +23,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -200,6 +201,8 @@ public class Billing extends BaseEntity {
 
   @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
       analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Index(name = "billing_billType")
+  @JsonProperty
   public BillingType getBillType() {
     return billType;
   }
@@ -207,7 +210,7 @@ public class Billing extends BaseEntity {
   public void setBillType(BillingType billType) {
     this.billType = billType;
   }
-
+  
   @OneToMany(mappedBy = "billing",cascade=CascadeType.ALL)
   public Set<BillingAdjustment> getBillingAdjustment() {
     return billingAdjustment;
@@ -233,7 +236,7 @@ public class Billing extends BaseEntity {
   public void setPaymentType(PaymentType paymentType) {
     this.paymentType = paymentType;
   }
-
+  @JsonProperty
   @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public BedNurseCharge getBedNurseCharge() {
     return bedNurseCharge;
@@ -242,7 +245,7 @@ public class Billing extends BaseEntity {
   public void setBedNurseCharge(BedNurseCharge bedNurseCharge) {
     this.bedNurseCharge = bedNurseCharge;
   }
-
+  @JsonProperty
   @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public MealCharge getMealCharge() {
     return mealCharge;
@@ -251,8 +254,8 @@ public class Billing extends BaseEntity {
   public void setMealCharge(MealCharge mealCharge) {
     this.mealCharge = mealCharge;
   }
-
-  @OneToOne(mappedBy = "billing")
+  @JsonProperty
+  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public WaterElectricityCharge getWaterElectricityCharge() {
     return waterElectricityCharge;
   }
@@ -260,8 +263,8 @@ public class Billing extends BaseEntity {
   public void setWaterElectricityCharge(WaterElectricityCharge waterElectricityCharge) {
     this.waterElectricityCharge = waterElectricityCharge;
   }
-
-  @OneToOne(mappedBy = "billing")
+  @JsonProperty
+  @OneToOne(mappedBy = "billing",cascade=CascadeType.ALL)
   public PersonalizedCharge getPersonalizedCharge() {
     return personalizedCharge;
   }
@@ -325,7 +328,10 @@ public class Billing extends BaseEntity {
     this.operator = operator;
   }
 
+
   @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Index(name = "billing_chargestatus")
+  @JsonProperty
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
@@ -344,7 +350,7 @@ public class Billing extends BaseEntity {
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
-
+  @JsonProperty
   @ManyToOne
   @IndexedEmbedded
   public ElderlyInfo getElderlyInfo() {
@@ -429,6 +435,7 @@ public class Billing extends BaseEntity {
     this.depositAmount = depositAmount;
   }
 
+  @JsonProperty
   @OneToOne(mappedBy = "billing", cascade = CascadeType.ALL)
   public Deposit getDeposit() {
     return deposit;
@@ -437,7 +444,7 @@ public class Billing extends BaseEntity {
   public void setDeposit(Deposit deposit) {
     this.deposit = deposit;
   }
-
+  @JsonProperty
   @Column(precision = 12, scale = 2)
   public BigDecimal getTotalAmount() {
     return totalAmount;
@@ -446,7 +453,7 @@ public class Billing extends BaseEntity {
   public void setTotalAmount(BigDecimal totalAmount) {
     this.totalAmount = totalAmount;
   }
-
+  @JsonProperty
   @Column(precision = 12, scale = 2)
   public BigDecimal getAdvanceChargeAmount() {
     return advanceChargeAmount;

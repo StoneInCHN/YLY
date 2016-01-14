@@ -152,7 +152,9 @@ public class BillingController extends BaseController {
 
     String[] properties =
         {"id", "createDate", "elderlyInfo.name", "elderlyInfo.identifier",
-            "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel", "nurseAmount", "mealAmount",
+            "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel", "elderlyInfo.beHospitalizedDate", 
+            "elderlyInfo.outHospitalizedDate", "elderlyInfo.elderlyStatus",
+            "nurseAmount", "mealAmount",
             "depositAmount", "totalAmount", "bedAmount", "waterAmount", "electricityAmount",
             "personalizedAmount", "advanceChargeAmount", "payTime", "chargeStatus", "payStaff",
             "operator"};

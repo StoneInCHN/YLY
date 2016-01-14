@@ -121,7 +121,9 @@
 		    		[@shiro.hasPermission name="admission"]
 		    		<li><a href="#" data-url="${base}/console/admission/admission.jhtml">${message("yly.elderlyInfo.admission")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#" data-url="${base}/console/leave/leave.jhtml">${message("yly.elderlyInfo.leave")}</a></li>
+		    		[@shiro.hasPermission name="checkoutCharge"]
+		    		<li><a href="#" data-url="${base}/console/checkout/checkoutCharge.jhtml">${message("yly.charge.checkoutCharge")}</a></li>
+		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="checkinCharge"]
 		    		<li><a href="#" data-url="${base}/console/billing/checkinCharge.jhtml">${message("yly.charge.checkin")}</a></li>
 		    		[/@shiro.hasPermission]
@@ -290,8 +292,8 @@
 		    		[@shiro.hasPermission name="personalizedChargeRecord"]
 		    		<li><a href="#" data-url="${base}/console/personalizedChargeRecord/personalizedChargeRecord.jhtml">${message("yly.charge.personalized.service.record")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		[@shiro.hasPermission name="checkoutCharge"]
-		    		<li><a href="#" data-url="${base}/console/billing/checkoutCharge.jhtml">${message("yly.charge.checkout")}</a></li>
+		    		[@shiro.hasPermission name="checkoutPay"]
+		    		<li><a href="#" data-url="${base}/console/checkout/checkoutPay.jhtml">${message("yly.charge.checkoutPay")}</a></li>
 		    		[/@shiro.hasPermission]
 		    	</ul>       
 		    	[@shiro.hasPermission name="blackList"]   

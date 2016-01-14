@@ -3,6 +3,7 @@ package com.yly.json.request;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.yly.entity.BillingAdjustment;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -28,6 +29,11 @@ public class ChargeSearchRequest implements Serializable{
 	 */
 	private Date endDate;
 	/**
+	 * 老人id
+	 */
+	private Long elderlyId;
+	
+    /**
 	 * 老人姓名
 	 */
     private String realName;
@@ -56,14 +62,55 @@ public class ChargeSearchRequest implements Serializable{
      * 缴费账单类型
      */
     private BillingType billingType;
+    /**
+     * 是否立即办理出院
+     */
+    private Boolean checkoutNow;
+    /**
+     * 办理出院时间
+     */
+    private Date checkoutDate;
+    /**
+     * 是否使用预存款
+     */
+    private Boolean isAdvanceCharge;
+    /**
+     * 调账
+     */
+    private BillingAdjustment billingAdjustment;
     
-	public Boolean getIsCreateTime() {
+	public BillingAdjustment getBillingAdjustment() {
+      return billingAdjustment;
+    }
+	
+    public void setBillingAdjustment(BillingAdjustment billingAdjustment) {
+      this.billingAdjustment = billingAdjustment;
+    }
+  public Boolean getIsAdvanceCharge() {
+      return isAdvanceCharge;
+    }
+    public void setIsAdvanceCharge(Boolean isAdvanceCharge) {
+      this.isAdvanceCharge = isAdvanceCharge;
+    }
+    public Boolean getCheckoutNow() {
+      return checkoutNow;
+    }
+    public void setCheckoutNow(Boolean checkoutNow) {
+      this.checkoutNow = checkoutNow;
+    }
+    public Date getCheckoutDate() {
+      return checkoutDate;
+    }
+    public void setCheckoutDate(Date checkoutDate) {
+      this.checkoutDate = checkoutDate;
+    }
+    public Boolean getIsCreateTime() {
       return isCreateTime;
     }
     public void setIsCreateTime(Boolean isCreateTime) {
       this.isCreateTime = isCreateTime;
     }
-  public Boolean getIsTenant() {
+    public Boolean getIsTenant() {
 		return isTenant;
 	}
 	public void setIsTenant(Boolean isTenant) {
@@ -81,6 +128,12 @@ public class ChargeSearchRequest implements Serializable{
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+    public Long getElderlyId() {
+      return elderlyId;
+    }
+    public void setElderlyId(Long elderlyId) {
+      this.elderlyId = elderlyId;
+    }	
 	public String getRealName() {
 		return realName;
 	}

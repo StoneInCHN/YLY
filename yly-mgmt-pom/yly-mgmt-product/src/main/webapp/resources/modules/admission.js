@@ -382,7 +382,7 @@ $(function(){
 		      {title:message("yly.common.idcard"),field:"idcard",width:40,align:'center',sortable:true},
 		      {title:message("yly.common.bedRoom"),field:"bedLocation",width:30,align:'center',sortable:true},
 		      {title:message("yly.elderlyInfo.elderlyConsigner.consignerPhoneNumber"),field:"consignerPhoneNumber",width:20,align:'center',sortable:true,formatter: function(value,row,index){
-		    	  if(row !=  null){
+		    	  if(row !=  null && row.elderlyConsigner != null){
 		    		  return row.elderlyConsigner.consignerPhoneNumber;  
 		    	  }
 		      	}},

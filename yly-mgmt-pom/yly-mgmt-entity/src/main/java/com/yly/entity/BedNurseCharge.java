@@ -20,6 +20,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentType;
@@ -139,8 +140,8 @@ public class BedNurseCharge extends BaseEntity {
   public void setBillingNo(String billingNo) {
     this.billingNo = billingNo;
   }
-
-  @Column(length = 50)
+  @JsonProperty
+  @Column(length = 2000)
   public String getRemark() {
     return remark;
   }
@@ -182,7 +183,7 @@ public class BedNurseCharge extends BaseEntity {
   public void setOperator(String operator) {
     this.operator = operator;
   }
-
+  @JsonProperty
   @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
@@ -211,7 +212,7 @@ public class BedNurseCharge extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-
+  @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPeriodStartDate() {
@@ -221,7 +222,7 @@ public class BedNurseCharge extends BaseEntity {
   public void setPeriodStartDate(Date periodStartDate) {
     this.periodStartDate = periodStartDate;
   }
-
+  @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @FieldBridge(impl = DateBridgeImpl.class)
   public Date getPeriodEndDate() {
@@ -231,7 +232,7 @@ public class BedNurseCharge extends BaseEntity {
   public void setPeriodEndDate(Date periodEndDate) {
     this.periodEndDate = periodEndDate;
   }
-
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getBedAmount() {
     return bedAmount;
@@ -240,7 +241,7 @@ public class BedNurseCharge extends BaseEntity {
   public void setBedAmount(BigDecimal bedAmount) {
     this.bedAmount = bedAmount;
   }
-
+  @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getNurseAmount() {
     return nurseAmount;

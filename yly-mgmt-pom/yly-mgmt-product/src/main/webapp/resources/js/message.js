@@ -64,6 +64,7 @@ var messages = {
 	"yly.common.address":"地址",
 	"yly.common.print":"打印",
 	"yly.common.action":"操作",
+	"yly.common.dateFormatChina":"yyyy年MM月dd日",
 	
 	/**
 	 * charge manage
@@ -77,7 +78,7 @@ var messages = {
 	"yly.charge.advance" : "预存款(元)",
 	"yly.charge.checkin" : "入院收费",
 	"yly.pay.checkin" : "入院缴费",
-	"yly.charge.checkout" : "退住结算",
+	"yly.charge.checkoutPay" : "退住结算",
 	"yly.bedNurse.charge.record" : "床位护理费",
 	"yly.meal.charge.record" : "伙食费",
 	"yly.waterElectricity.charge.record" : "水电费",
@@ -108,7 +109,7 @@ var messages = {
 	"yly.charge.record.budgetType.cost" : "消费",
 	"yly.charge.advance.add" : "预缴款",
 	"yly.charge.record.list":"缴费列表",
-	"yly.charge.checkout.list":"结算列表",
+	"yly.charge.checkoutPay.list":"结算列表",
 	"yly.charge.record.perMonth":"月收费: ￥",	
 	"yly.charge.record.perDay":"日收费: ￥",
 	"yly.charge.billing.day.prefix":"每月",
@@ -118,7 +119,28 @@ var messages = {
 	"yly.charge.billing.adjust":"调整金额",
 	"yly.charge.billing.edit":"修改账单",
 	"yly.chargein.billing.isUpdated":"该账单缴费后已修改过，不允许再次修改!",
-	
+		"yly.checkout.charge.depositInfo":"押金： ￥ {0}  ({1})\n",
+	"yly.checkout.charge.bedAmountInfo":"床位费： ￥ {0}  ({1})\n",
+	"yly.checkout.charge.nurseAmountInfo":"护理费： ￥ {0}  ({1}) \n",
+	"yly.checkout.charge.mealAmountInfo":"伙食费： ￥ {0}  ({1}) \n",
+	"yly.checkout.charge.waterAmountInfo":"水费： ￥ {0}  ({1}) \n",
+	"yly.checkout.charge.electricityAmountInfo":"电费： ￥ {0}  ({1}) \n",
+	"yly.checkout.charge.personalizedAmountInfo":"个性化服务费： ￥ {0}  ({1}) \n",
+	"yly.checkout.charge.remarkInfo":"(备注：{0} ) \n",
+	"yly.checkout.charge.DateFromTo":"{0} 至 {1} ",
+	"yly.checkout.charge.null":"无",		
+	"yly.charge.PAID":"已缴费",
+	"yly.charge.UNPAID":"未缴费",
+	"yly.charge.UNPAID_ADJUSTMENT":"未缴费(调账)",
+	"yly.charge.REFUNDED":"已退款",   
+	"yly.checkout.charge.refundDeposit":"需要退押金",
+	"yly.checkout.charge.noDeposit":"无押金",
+	"yly.checkout.charge.no_billing":"该用户没有结算账单！",
+	"yly.checkout.keyin_checkout_date":"请先确定出院日期！",
+	"yly.checkout.confirm_checkoutCharge_for_elderly":"确认要给老人 {0}  办理出院？ ",
+	"yly.checkout.confirm_checkoutPay_for_elderly":" {0}  办理退住结算，共缴费￥：{1}  ",
+	"yly.checkout.confirm_paymentType_amount":"请选择支付方式并核对金额！",
+	"yly.checkout.elderlyStatus.invalid":"非法操作，老人 {0} 已经出院或者已将办理出院了，不能再次办理出院！",
 	
 	
 	/**

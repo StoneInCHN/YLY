@@ -1,117 +1,70 @@
-<form id="checkoutDetail_form" method="post">   
-		  <table class="table table-striped">
+	<form id="checkoutCharge_form" method="post" > 
+	     <table class="table table-striped">
 	    	<tr>
-	    		<th width="85px">${message("yly.common.elderly.name")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="elderlyInfoName" readonly=true value="${billing.elderlyInfo.name}" style="width:85px;"/>   
+	    			 出院日期: <input class="easyui-textbox"  value="${(billing.elderlyInfo.outHospitalizedDate?string("yyyy年MM月dd日"))!''}" data-options="width:150" readonly="readonly""  />
 	    		</td>
-	    		<th width="85px">${message("yly.common.elderly.identifier")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="elderlyInfoIdentifier" readonly=true value="${billing.elderlyInfo.identifier}" style="width:130px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.common.elderly.bedRoom")}:</th>
-	    		<td>
-	    			 <input class="easyui-textbox" type="text" name="elderlyInfoBedRoom"  readonly=true value="${billing.elderlyInfo.bedLocation}" style="width:180px;"/> 
-	    		</td>
-	    		<th>${message("yly.common.elderly.nurseLevel")}:</th>
-	    		<td>
-    			  	<select id="elderlyInfoNurseLevel" class="easyui-combobox" name="elderlyInfoNurseLevel" disabled="disabled" style="width:85px;">   
-						<option value="${billing.elderlyInfo.nursingLevel.id}" selected="selected">${billing.elderlyInfo.nursingLevel.configValue}</option>
-				    </select>
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.common.charge.invoiceNo")}:</th>
-	    		<td>
-	    			<input class="easyui-textbox" type="text" name="invoiceNo"  readonly=true value="${billing.invoiceNo}" style="width:150px;"/> 
-	    		</td>
-	    		<th>${message("yly.common.charge.billingNo")}:</th>
-	    		<td>
-	    			<input class="easyui-textbox" type="text" name="billingNo"  readonly=true value="${billing.billingNo}" style="width:150px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.charge.deposit.amount")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="depositAmount"  readonly=true [#if billing.depositAmount<0]value="${message("yly.checkout.refund",-billing.depositAmount)}"[#else]value="${message("yly.checkout.additional",billing.depositAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    		<th>${message("yly.charge.record.bed")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="bedAmount"  readonly=true [#if billing.bedAmount<0]value="${message("yly.checkout.refund",-billing.bedAmount)}"[#else]value="${message("yly.checkout.additional",billing.bedAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.charge.record.nurse")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="nurseAmount"  readonly=true [#if billing.nurseAmount<0]value="${message("yly.checkout.refund",-billing.nurseAmount)}"[#else]value="${message("yly.checkout.additional",billing.nurseAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    		<th>${message("yly.charge.record.meal")}:</th>
-	    		<td>
-	    			[#if billing.mealCharge?? && billing.mealCharge!=0]
-	    				<input class="easyui-textbox" type="text" name="mealAmount"  readonly=true [#if billing.mealAmount<0]value="${message("yly.checkout.refund",-billing.mealAmount)}"[#else]value="${message("yly.checkout.additional",billing.mealAmount)}"[/#if] style="width:100px;"/>
-	    			[#else]
-	    				${message("yly.charge.meal.not.monthly")}
-	    			[/#if]
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.charge.record.water")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="waterAmount"  readonly=true [#if billing.waterAmount<0]value="${message("yly.checkout.refund",-billing.waterAmount)}"[#else]value="${message("yly.checkout.additional",billing.waterAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    		<th>${message("yly.charge.record.electricity")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="electricityAmount"  readonly=true [#if billing.electricityAmount<0]value="${message("yly.checkout.refund",-billing.electricityAmount)}"[#else]value="${message("yly.checkout.additional",billing.electricityAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.charge.record.service.money")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="personalizedAmount"  readonly=true [#if billing.personalizedAmount<0]value="${message("yly.checkout.refund",-billing.personalizedAmount)}"[#else]value="${message("yly.checkout.additional",billing.personalizedAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    		<th>${message("yly.charge.record.advanceCharge.money")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="advanceChargeAmount"  readonly=true [#if billing.advanceChargeAmount<0]value="${message("yly.checkout.refund",-billing.advanceChargeAmount)}"[#else]value="${message("yly.checkout.additional",billing.advanceChargeAmount)}"[/#if] style="width:100px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.common.charge.totalAmount")}:</th>
-	    		<td>
-    			   <input class="easyui-textbox" type="text" name="totalAmount"  readonly=true [#if billing.totalAmount<0]value="${message("yly.checkout.refund",-billing.totalAmount)}"[#else]value="${message("yly.checkout.additional",billing.totalAmount)}"[/#if] style="width:100px;"/>
-	    		</td>
-	    		<th>${message("yly.common.charge.paymentType")}:</th>
-	    		<td>
-    			  	<select id="paymentType" class="easyui-combobox" name="paymentType" disabled="disabled" style="width:120px;">   
-						<option value="${billing.paymentType}" selected="selected">${message("yly.common.charge.paymentType.${billing.paymentType}")}</option>
-				    </select>
-	    		</td>
-	    	</tr>
-	    	
-	    	<tr>
-	    		<th>${message("yly.common.charge.status")}:</th>
-	    		<td>
-	    			<select id="chargeStatus" class="easyui-combobox" name="chargeStatus" disabled="disabled" style="width:85px;">   
-						<option value="${billing.chargeStatus}" selected="selected">${message("yly.common.charge.status.${billing.chargeStatus}")}</option>
-				    </select>
-	    		</td>
-	    		<th>${message("yly.common.charge.operator")}:</th>
-	    		<td>
-	    			  <input class="easyui-textbox" type="text" name="operator"  readonly=true value="${billing.operator}" style="width:85px;"/> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.common.charge.payTime")}:</th>
-	    		<td>
-	    			<input id="payTime" name="payTime" type="text" value="${billing.payTime}" class="easyui-datetimebox" style="width:150px;" disabled=true /> 
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<th>${message("yly.remark")}:</th>
-	    		<td colspan=3>
-	    			  <textarea  cols=60 rows=5 type="text" name="remark" readonly=true>${billing.remark}</textarea> 
+	    			
 	    		</td>
 	    	</tr>
 	    </table>
-</form>
+	    
+	  <fieldset> 
+	   <legend>老人基本信息:</legend>
+	    <table class="table table-striped">
+	    	<tr>
+	    		<td>
+	    			 ${message("yly.common.elderly")}: <input class="easyui-textbox"  value="${billing.elderlyInfo.name}" style="width:180px;" readonly="readonly" />
+	    		</td>
+	    		<td>
+	    			 老人${message("yly.common.elderly.identifier")}: <input class="easyui-textbox"  value="${billing.elderlyInfo.identifier}" style="width:180px;" readonly="readonly" />
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<td>
+	    			 ${message("yly.common.elderly.bedRoom")}: <input class="easyui-textbox"   value="${billing.elderlyInfo.bedLocation}" style="width:180px;" readonly="readonly" />
+	    		</td>
+	    		<td>
+	    			 ${message("yly.common.elderly.nurseLevel")}: <input class="easyui-textbox"   value="${billing.elderlyInfo.nursingLevel.configValue}" style="width:180px;" readonly="readonly" />
+	    		</td>
+	    	</tr>
+		</table>
+		</fieldset>		  	
+	   <fieldset> 
+	    			  	<legend>${message("yly.charge.bedNurse.record")}</legend>
+	    			  	<p><input class="easyui-textbox"  value="${billing.bedAmount + billing.nurseAmount}"  style="width:550px;" readonly="readonly" /></p>
+	    			  	<p><input class="easyui-textbox"   value="${billing.bedNurseCharge.remark?replace('     ', '\n' )}"  data-options="multiline:true,height:150,width:550" readonly="readonly" /></p>
+	   </fieldset>
+	    <fieldset id="monthlyMeal" style="display:blank"> 
+	    			  	<legend>${message("yly.charge.meal.reocrd")}</legend>
+	    			  	<p><input class="easyui-textbox"  value="${billing.mealAmount}" style="width:550px;" readonly="readonly"/></p>
+	    			  	<p><input class="easyui-textbox" id="mealCharge_remark"   data-options="multiline:true,height:150,width:550" readonly="readonly"/></p>
+	    </fieldset>
+	    <fieldset id="waterElectricity" style="display:blank"> 
+	    			  	<legend>${message("yly.charge.water.electricity.reocrd")}</legend>
+	    			  	<input type="hidden" id="addCheckoutCharge_waterCharge" name="waterElectricityCharge.waterAmount"/>
+	    			  	<input type="hidden" id="addCheckoutCharge_electricityCharge" name="waterElectricityCharge.electricityAmount"/>	 	    			  	
+	    			  	<p><input class="easyui-textbox"  value="${billing.waterAmount + billing.electricityAmount}" style="width:550px;" readonly="readonly" /></p>
+	    			  	<p><input class="easyui-textbox" value="${billing.waterElectricityCharge.remark}" data-options="multiline:true,height:150,width:550" readonly="readonly" /></p>
+	    </fieldset>
+	    	    <fieldset id="personalizedService" style="display:blank"> 
+	    			  	<legend>${message("yly.charge.personalized.service.record")}</legend>   			
+	    			  	<p><input class="easyui-textbox"  value="${billing.personalizedAmount}" style="width:550px;" readonly="readonly" /></p>
+	    			  	<p><input class="easyui-textbox" value="${billing.personalizedCharge.remark}"  data-options="multiline:true,height:150,width:550" readonly="readonly"/></p>
+	    </fieldset>
+	     <table class="table table-striped">
+	    	<tr>
+	    		<td>
+	    			
+	    			 使用了预存款: ￥ ${billing.advanceChargeAmount} 付款 
+	    			 
+	    		</td>
+	    		<td>
+	    			总金额(已扣除押金)：<input class="easyui-numberbox"  value="${billing.totalAmount}" style="width:120px;" readonly="readonly" />
+	    		</td>
+	    	</tr>
+	    </table>
+	    <br>
+	</form>
+

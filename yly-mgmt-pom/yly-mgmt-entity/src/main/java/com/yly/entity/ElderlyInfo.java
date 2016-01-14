@@ -227,18 +227,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 出院时间
    */
-  private Date outHospitalizedDate;
-  
-  @JsonProperty
-  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
-  @FieldBridge(impl = DateBridgeImpl.class)
-  public Date getOutHospitalizedDate() {
-    return outHospitalizedDate;
-  }
-
-  public void setOutHospitalizedDate(Date outHospitalizedDate) {
-    this.outHospitalizedDate = outHospitalizedDate;
-  }
+  private Date outHospitalizedDate;  
 
   /**
    * 居住情况
@@ -360,7 +349,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setBillings(Set<Billing> billings) {
     this.billings = billings;
   }
-
+  @JsonProperty
   @Column(precision = 12, scale = 2)
   public BigDecimal getAdvanceChargeAmount() {
     return advanceChargeAmount;
@@ -389,6 +378,7 @@ public class ElderlyInfo extends BaseEntity {
    * 
    * @return
    */
+  @JsonProperty
   @Transient
   public String getBedLocation() {
     StringBuffer str = new StringBuffer();
@@ -710,7 +700,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPaymentWay(PaymentWay paymentWay) {
     this.paymentWay = paymentWay;
   }
-
+  @JsonProperty
   @ManyToOne
   public SystemConfig getNursingLevel() {
     return nursingLevel;
@@ -769,6 +759,17 @@ public class ElderlyInfo extends BaseEntity {
 
   public void setBeHospitalizedDate(Date beHospitalizedDate) {
     this.beHospitalizedDate = beHospitalizedDate;
+  }
+  
+  @JsonProperty
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
+  @FieldBridge(impl = DateBridgeImpl.class)
+  public Date getOutHospitalizedDate() {
+    return outHospitalizedDate;
+  }
+
+  public void setOutHospitalizedDate(Date outHospitalizedDate) {
+    this.outHospitalizedDate = outHospitalizedDate;
   }
   @JsonProperty
   public LivingState getLivingState() {

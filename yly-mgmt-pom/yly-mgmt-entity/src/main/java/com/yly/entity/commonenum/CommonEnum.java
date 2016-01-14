@@ -266,7 +266,11 @@ public class CommonEnum {
     /**
      * 评估等级,13
      */
-    EVALUATINGLEVEL("评估等级");
+    EVALUATINGLEVEL("评估等级"),
+    /**
+     * 个性化服务,14
+     */
+    PERSONALIZED("个性化服务");
     
     private String keyName; 
     

@@ -27,7 +27,7 @@
 				/console/consultation/** = perms["consultation"]
 				/console/visitElderly/** = perms["visitElderly"]
 				/console/bookingRegistration/** = perms["bookingRegistration"]
-				/console/elderlyInfo/checkedInElderly。jhtml = perms["checkedInElderly"]
+				/console/elderlyInfo/checkedInElderly.jhtml = perms["checkedInElderly"]
 				<!-- 床位状态 -->
 			<!-- 出院入院 -->
 				/console/admission/** = perms["admission"]
@@ -76,6 +76,9 @@
 				/console/mealChargeRecord/** = perms["mealChargeRecord"]
 				/console/waterElectricityChargeRecord/** = perms["waterElectricityChargeRecord"]
 				/console/personalizedChargeRecord/** = perms["personalizedChargeRecord"]
+				/console/mealChargeConfig/** = perms["mealChargeRecord"]
+				/console/checkout/checkoutBill.jhtml = perms["checkoutCharge"]
+				/console/checkout/checkoutBillPay.jhtml = perms["checkoutPay"]
 			<!-- 黑名单 -->
 				/console/blackList/** = perms["blackList"]
 			<!-- 后勤管理 -->

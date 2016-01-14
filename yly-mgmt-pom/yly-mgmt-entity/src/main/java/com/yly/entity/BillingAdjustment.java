@@ -48,7 +48,19 @@ public class BillingAdjustment extends BaseEntity {
    * 缴纳状态
    */
   private PaymentStatus chargeStatus;
+  /**
+   * 备注
+   */
+  private String remark;
   
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
 
   @ManyToOne
   public Billing getBilling() {

@@ -506,11 +506,17 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
                   criteriaBuilder.like(root.<String>get(filter.getProperty()),
                       (String) filter.getValue()));
         } else if (filter.getOperator() == Operator.in && filter.getValue() != null) {
-          //改为传递多个参数 Object... values
-          Object[] objects = (Object[])filter.getValue();
-          restrictions =
-              criteriaBuilder.and(restrictions, root.get(filter.getProperty())
-                  .in(objects));
+          if (filter.getValue() instanceof Object[]) {
+            //传递多个参数 Object... values
+            Object[] objects = (Object[])filter.getValue();
+            restrictions =
+                criteriaBuilder.and(restrictions, root.get(filter.getProperty())
+                    .in(objects));
+          }else {
+            restrictions =
+                criteriaBuilder.and(restrictions, root.get(filter.getProperty())
+                    .in(filter.getValue()));
+          }
         } else if (filter.getOperator() == Operator.isNull) {
           restrictions = criteriaBuilder.and(restrictions, root.get(filter.getProperty()).isNull());
         } else if (filter.getOperator() == Operator.isNotNull) {

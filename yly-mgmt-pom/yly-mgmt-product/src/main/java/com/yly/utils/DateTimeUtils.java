@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 public class DateTimeUtils implements Serializable {
 
   private static final long serialVersionUID = 7708468758384338657L;
@@ -15,6 +16,7 @@ public class DateTimeUtils implements Serializable {
 
   public static final SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd");
   
+public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat("yyyy.MM.dd");
   public static final SimpleDateFormat filePostfixFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
   
   /**
@@ -331,7 +333,42 @@ public class DateTimeUtils implements Serializable {
     calendar.set(Calendar.MILLISECOND, 0);
     return calendar.getTime();
   }
-
+  /**
+   * 根据参数计算返回获取最近的时间
+   * type:类型，比如YEAR，MONTH...
+   * num:增加或减少的数量
+   * @return
+   */
+  public static Date getRecentDate(Date current, String type, int num){
+    Calendar calendar = Calendar.getInstance();
+    if (current == null) {
+      return null;
+    }
+    calendar.setTime(current);
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "YEAR")) {
+      calendar.add(Calendar.YEAR, num);
+    }
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "MONTH")) {
+      calendar.add(Calendar.MONTH, num);
+    }
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "DATE")) {
+      calendar.add(Calendar.DATE, num);
+    } 
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "HOUR_OF_DAY")) {
+      calendar.add(Calendar.HOUR_OF_DAY, num);
+    } 
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "MINUTE")) {
+      calendar.add(Calendar.MINUTE, num);
+    }
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "SECOND")) {
+      calendar.add(Calendar.SECOND, num);
+    }
+    if (StringUtils.endsWithIgnoreCase(type.trim(), "MILLISECOND")) {
+      calendar.add(Calendar.MILLISECOND, num);
+    }
+    return calendar.getTime();
+    
+  }
   /**
    * 判断string是否为有效日期格式
    * @param str
