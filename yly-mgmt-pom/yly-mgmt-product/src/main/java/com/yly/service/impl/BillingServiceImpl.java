@@ -45,6 +45,7 @@ import com.yly.service.ElderlyInfoService;
 import com.yly.service.MealChargeConfigService;
 import com.yly.service.MealChargeService;
 import com.yly.service.NurseChargeConfigService;
+import com.yly.service.PersonalizedRecordService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.DateTimeUtils;
@@ -95,8 +96,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
   
-//  @Resource(name = "personalizedRecordServiceImpl")
-//  private PersonalizedRecordService personalizedRecordService;
+  @Resource(name = "personalizedRecordServiceImpl")
+  private PersonalizedRecordService personalizedRecordService;
 
   
   @Resource
@@ -297,7 +298,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
           billing.setBillingNo(ToolsUtils.generateBillNo(tenantAccountService
               .getCurrentTenantOrgCode()));
           billing.setTenantID(tenantId);
-         
+          billing.setPeriodStartDate(startDate);
+          billing.setPeriodEndDate(billDate);
+          
           String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
           /**
            * =====================================================================================================================
@@ -369,10 +372,10 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
           List<Filter> serviceFilters = new ArrayList<Filter>();
           Filter sFilter = new Filter("serviceTime", Operator.le, startDate);
           Filter eFilter = new Filter("serviceTime", Operator.ge, billDate);
-          dateFilters.add(sTimeFilter);
-          dateFilters.add(eTimeFilter);
+          dateFilters.add(sFilter);
+          dateFilters.add(eFilter);
           dateFilters.add(elderFilter);
-          List<PersonalizedRecord> personalizedRecords = new ArrayList<PersonalizedRecord>();
+          List<PersonalizedRecord> personalizedRecords = personalizedRecordService.findList(null, serviceFilters, null, true, null);
           if (personalizedRecords != null && personalizedRecords.size() > 0) {
         	  PersonalizedCharge personalizedCharge = new PersonalizedCharge();
               personalizedCharge.setBilling(billing);

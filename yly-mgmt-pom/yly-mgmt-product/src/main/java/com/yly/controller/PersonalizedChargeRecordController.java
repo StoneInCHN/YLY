@@ -1,8 +1,6 @@
 package com.yly.controller;
 
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.PersonalizedCharge;
-import com.yly.entity.PersonalizedRecord;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.request.ChargeSearchRequest;
@@ -88,28 +85,7 @@ public class PersonalizedChargeRecordController extends BaseController {
   public String details(ModelMap model, Long id) {
     PersonalizedCharge record =  personalizedChargeService.find(id);
     model.addAttribute("personalizedCharge", record);
-    
-    List<Map<String, Object>> serviceDetails = new ArrayList<Map<String,Object>>();
-    for(PersonalizedRecord personalizedRecord:record.getPersonalizedRecords()){
-      Boolean flag=false;
-      Map<String, Object> serviceItem = new HashMap<String, Object>();
-      for(Map<String , Object> map:serviceDetails){
-        if (map.get("serviceName").equals(personalizedRecord.getNurseContent())) {
-            map.put("serviceCount", ((BigDecimal)map.get("serviceCount")).add(new BigDecimal(1)));
-            map.put("serviceAmount", ((BigDecimal)map.get("serviceUnitPrice")).multiply((BigDecimal)map.get("serviceCount")));
-            flag=true;
-            break;
-        }
-      }
-      if (flag) {
-        continue;
-      }
-      serviceItem.put("serviceName", personalizedRecord.getNurseContent());
-      serviceItem.put("serviceUnitPrice", personalizedRecord.getPersonalizedNurse().getServicePrice());
-      serviceItem.put("serviceAmount", personalizedRecord.getPersonalizedNurse().getServicePrice());
-      serviceItem.put("serviceCount", new BigDecimal(1));
-      serviceDetails.add(serviceItem);
-    }
+    List<Map<String, Object>> serviceDetails = personalizedChargeService.getServiceDetailsByBill(record);
     model.addAttribute("serviceDetails", serviceDetails);
     return "personalizedChargeRecord/details";
   }

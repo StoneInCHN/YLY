@@ -1,5 +1,6 @@
 package com.yly.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.yly.dao.PersonalizedChargeDao;
 import com.yly.entity.PersonalizedCharge;
+import com.yly.entity.PersonalizedRecord;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 import com.yly.json.request.WaterElectricitySearchRequest;
 import com.yly.service.PersonalizedChargeService;
@@ -177,5 +179,33 @@ public class PersonalizedChargeServiceImpl extends ChargeRecordServiceImpl<Perso
     }
     return mapList;
   
+  }
+  @Override
+  public List<Map<String, Object>> getServiceDetailsByBill(PersonalizedCharge record) {
+    if (record == null) {
+      return null;
+    }
+    List<Map<String, Object>> serviceDetails = new ArrayList<Map<String,Object>>();
+    for(PersonalizedRecord personalizedRecord:record.getPersonalizedRecords()){
+      Boolean flag=false;
+      Map<String, Object> serviceItem = new HashMap<String, Object>();
+      for(Map<String , Object> map:serviceDetails){
+        if (map.get("serviceName").equals(personalizedRecord.getNurseContent())) {
+            map.put("serviceCount", ((BigDecimal)map.get("serviceCount")).add(new BigDecimal(1)));
+            map.put("serviceAmount", ((BigDecimal)map.get("serviceUnitPrice")).multiply((BigDecimal)map.get("serviceCount")));
+            flag=true;
+            break;
+        }
+      }
+      if (flag) {
+        continue;
+      }
+      serviceItem.put("serviceName", personalizedRecord.getNurseContent());
+      serviceItem.put("serviceUnitPrice", personalizedRecord.getPersonalizedNurse().getServicePrice());
+      serviceItem.put("serviceAmount", personalizedRecord.getPersonalizedNurse().getServicePrice());
+      serviceItem.put("serviceCount", new BigDecimal(1));
+      serviceDetails.add(serviceItem);
+    }
+    return serviceDetails;
   }
 }

@@ -17,6 +17,8 @@ public interface PersonalizedChargeService extends ChargeRecordService<Personali
   int countByFilter(WaterElectricitySearchRequest waterElectricitySearch);
 
   List<PersonalizedCharge> searchListByFilter(WaterElectricitySearchRequest waterElectricitySearch);
+  
+  List<Map<String, Object>> getServiceDetailsByBill(PersonalizedCharge record);
 
   List<Map<String, String>> prepareMap(List<PersonalizedCharge> personalizedChargeList);
 

@@ -269,7 +269,7 @@
 		    	    <li><a href="#" data-url="${base}/console/billing/checkinPay.jhtml">${message("yly.pay.checkin")}</a></li>
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="billing"]
-		    		<li><a href="#" data-url="${base}/console/billing/billing.jhtml">${message("yly.charge.billing")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/billing/dailyBill.jhtml">${message("yly.charge.billing")}</a></li>
 		    		[/@shiro.hasPermission]
 		    		[@shiro.hasPermission name="advanceCharge"]
 		    		<li><a href="#" data-url="${base}/console/advanceCharge/advanceCharge.jhtml">${message("yly.charge.advance.manage")}</a></li>
