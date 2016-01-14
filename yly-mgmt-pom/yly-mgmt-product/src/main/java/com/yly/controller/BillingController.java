@@ -549,7 +549,10 @@ public class BillingController extends BaseController {
     }
 
     model.addAttribute("billing", record);
+    if ("dailyBill".equals(path)) {
+      model.addAttribute("serviceDetails", personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
+    }
     return path + "/pay";
   }
-
+  
 }

@@ -42,7 +42,7 @@
 </div>
 <div id="dailyBill_manager_tool">
 	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="dailyBill_manager_tool.add();">${message("yly.pay.checkin")}</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="dailyBill_manager_tool.add();">${message("yly.charge.billing")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

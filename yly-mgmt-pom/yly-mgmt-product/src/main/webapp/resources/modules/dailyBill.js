@@ -18,7 +18,7 @@ var dailyBill_manager_tool = {
 					return false;
 				}
 				$('#addDailyBillPay').dialog({    
-				    title: message("yly.pay.checkin"),    
+				    title: message("yly.pay.dailyBill"),    
 				    width: 650,    
 				    height: 650,
 				    modal: true,
