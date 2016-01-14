@@ -17,7 +17,7 @@ text-align:center;
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
-			    <input class="easyui-textbox" type="text" name="name" validtype="length[0,15]" style="width:75px;"/> 
+			    <input class="easyui-textbox" type="text" name="realName" validtype="length[0,15]" style="width:75px;"/> 
 			</div>
 	    	<div class="search-item">
 			    <label>账单${message("yly.common.charge.status")}:</label>
