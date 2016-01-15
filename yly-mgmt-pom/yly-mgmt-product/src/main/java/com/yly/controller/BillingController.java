@@ -28,6 +28,8 @@ import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
 import com.yly.entity.PaymentRecord;
 import com.yly.entity.SystemConfig;
+import com.yly.entity.WaterElectricityCharge;
+import com.yly.entity.WaterElectricityChargeConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
@@ -43,6 +45,7 @@ import com.yly.service.ElderlyInfoService;
 import com.yly.service.PersonalizedChargeService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
+import com.yly.service.WaterElectricityChargeConfigService;
 import com.yly.utils.FieldFilterUtils;
 import com.yly.utils.ToolsUtils;
 
@@ -61,9 +64,12 @@ public class BillingController extends BaseController {
 
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
-  
+
   @Resource(name = "personalizedChargeServiceImpl")
   private PersonalizedChargeService personalizedChargeService;
+
+  @Resource(name = "waterElectricityChargeConfigServiceImpl")
+  private WaterElectricityChargeConfigService waterElectricityChargeConfigService;
 
 
   /**
@@ -76,7 +82,7 @@ public class BillingController extends BaseController {
   public String checkinPay(ModelMap model) {
     return "/checkinPay/checkin";
   }
-  
+
   /**
    * 日常缴费
    * 
@@ -167,12 +173,11 @@ public class BillingController extends BaseController {
 
     String[] properties =
         {"id", "createDate", "elderlyInfo.name", "elderlyInfo.identifier",
-            "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel", "elderlyInfo.beHospitalizedDate", 
-            "elderlyInfo.outHospitalizedDate", "elderlyInfo.elderlyStatus",
-            "nurseAmount", "mealAmount",
-            "depositAmount", "totalAmount", "bedAmount", "waterAmount", "electricityAmount",
-            "personalizedAmount", "advanceChargeAmount", "payTime", "chargeStatus", "payStaff",
-            "operator"};
+            "elderlyInfo.bedLocation", "elderlyInfo.nursingLevel",
+            "elderlyInfo.beHospitalizedDate", "elderlyInfo.outHospitalizedDate",
+            "elderlyInfo.elderlyStatus", "nurseAmount", "mealAmount", "depositAmount",
+            "totalAmount", "bedAmount", "waterAmount", "electricityAmount", "personalizedAmount",
+            "advanceChargeAmount", "payTime", "chargeStatus", "payStaff", "operator"};
 
     List<Map<String, Object>> rows =
         FieldFilterUtils.filterCollectionMap(properties, page.getRows());
@@ -219,17 +224,20 @@ public class BillingController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/updateCheckinBill", method = RequestMethod.POST)
-  public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,Boolean isMonthlyMeal) {
+  public @ResponseBody Message updateChekcinBill(Billing checkinBill, Long mealTypeId,
+      Boolean isMonthlyMeal) {
     Billing originBilling = billingService.find(checkinBill.getId());
-    if (PaymentStatus.UNPAID.equals(originBilling.getChargeStatus())) {//未缴费的入院账单可以多次修改
-          billingService.updateUnpaidCheckInBill(originBilling, checkinBill);
-      } else {//已缴费的入院账单修改
-      if (originBilling.getBillingSupply() != null) {//在缴费后已经修改过一次的入院缴费账单不能再次修改
-          return Message.error("yly.checkin.billEdit.unable");
-      } else {//缴费后修改入院账单
-         Billing updateBilling = billingService.updatePaidCheckInBill(originBilling, checkinBill, mealTypeId, isMonthlyMeal);
-         if (updateBilling == null) {
-           return Message.error("yly.checkin.bill.unchanged");
+    if (PaymentStatus.UNPAID.equals(originBilling.getChargeStatus())) {// 未缴费的入院账单可以多次修改
+      billingService.updateUnpaidCheckInBill(originBilling, checkinBill);
+    } else {// 已缴费的入院账单修改
+      if (originBilling.getBillingSupply() != null) {// 在缴费后已经修改过一次的入院缴费账单不能再次修改
+        return Message.error("yly.checkin.billEdit.unable");
+      } else {// 缴费后修改入院账单
+        Billing updateBilling =
+            billingService.updatePaidCheckInBill(originBilling, checkinBill, mealTypeId,
+                isMonthlyMeal);
+        if (updateBilling == null) {
+          return Message.error("yly.checkin.bill.unchanged");
         }
       }
     }
@@ -262,7 +270,7 @@ public class BillingController extends BaseController {
         .getCurrentTenantOrgCode()));
     checkinBill.setOperator(tenantAccountService.getCurrentUsername());
     checkinBill.setTenantID(tenantAccountService.getCurrentTenantID());
-    //checkinBill.setPayTime(new Date());
+    // checkinBill.setPayTime(new Date());
     // 押金
     Deposit deposit = checkinBill.getDeposit();
     deposit.setBilling(checkinBill);
@@ -270,8 +278,8 @@ public class BillingController extends BaseController {
     deposit.setElderlyInfo(elderlyInfo);
     deposit.setChargeStatus(checkinBill.getChargeStatus());
     deposit.setInvoiceNo(checkinBill.getInvoiceNo());
-    //deposit.setPayTime(checkinBill.getPayTime());
-    //deposit.setPaymentType(checkinBill.getPaymentType());
+    // deposit.setPayTime(checkinBill.getPayTime());
+    // deposit.setPaymentType(checkinBill.getPaymentType());
     deposit.setOperator(checkinBill.getOperator());
     deposit.setTenantID(checkinBill.getTenantID());
     checkinBill.setDepositAmount(deposit.getDepositAmount());
@@ -283,8 +291,8 @@ public class BillingController extends BaseController {
     bedNurseCharge.setElderlyInfo(elderlyInfo);
     bedNurseCharge.setChargeStatus(checkinBill.getChargeStatus());
     bedNurseCharge.setInvoiceNo(checkinBill.getInvoiceNo());
-    //bedNurseCharge.setPayTime(checkinBill.getPayTime());
-    //bedNurseCharge.setPaymentType(checkinBill.getPaymentType());
+    // bedNurseCharge.setPayTime(checkinBill.getPayTime());
+    // bedNurseCharge.setPaymentType(checkinBill.getPaymentType());
     bedNurseCharge.setOperator(checkinBill.getOperator());
     bedNurseCharge.setTenantID(checkinBill.getTenantID());
     checkinBill.setBedAmount(bedNurseCharge.getBedAmount());
@@ -302,8 +310,8 @@ public class BillingController extends BaseController {
       mealCharge.setElderlyInfo(elderlyInfo);
       mealCharge.setChargeStatus(checkinBill.getChargeStatus());
       mealCharge.setInvoiceNo(checkinBill.getInvoiceNo());
-      //mealCharge.setPayTime(checkinBill.getPayTime());
-      //mealCharge.setPaymentType(checkinBill.getPaymentType());
+      // mealCharge.setPayTime(checkinBill.getPayTime());
+      // mealCharge.setPaymentType(checkinBill.getPaymentType());
       mealCharge.setOperator(checkinBill.getOperator());
       mealCharge.setTenantID(checkinBill.getTenantID());
       checkinBill.setMealAmount(mealCharge.getMealAmount());
@@ -330,42 +338,66 @@ public class BillingController extends BaseController {
    */
   @RequestMapping(value = "/billPay", method = RequestMethod.POST)
   public @ResponseBody Message billPay(Long billingId, String remark, PaymentType paymentType,
-      BigDecimal cardAmount, BigDecimal cashAmount, BigDecimal payTotalAmount) {
-    Billing checkinBill = billingService.find(billingId);
-    checkinBill.setPayStaff(tenantAccountService.getCurrentUsername());
-    checkinBill.setPaymentType(paymentType);
-    checkinBill.setRemark(remark);
-    checkinBill.setPayTime(new Date());
-    ElderlyInfo elderlyInfo = checkinBill.getElderlyInfo();
+      BigDecimal cardAmount, BigDecimal cashAmount, BigDecimal payTotalAmount,
+      String waterElectricity_remark, BigDecimal waterCount, BigDecimal waterAmount,
+      BigDecimal electricityCount, BigDecimal electricityAmount) {
+    Billing payBill = billingService.find(billingId);
+    payBill.setPayStaff(tenantAccountService.getCurrentUsername());
+    payBill.setPaymentType(paymentType);
+    payBill.setRemark(remark);
+    payBill.setPayTime(new Date());
+    ElderlyInfo elderlyInfo = payBill.getElderlyInfo();
     elderlyInfo.setElderlyStatus(ElderlyStatus.IN_NURSING_HOME);
 
     // 账单缴费 (case1:未调整金额或修改订单; case2:缴费之前调整了金额或修改订单)
-    if (checkinBill.getChargeStatus().equals(PaymentStatus.UNPAID)) {
-      if (checkinBill.getDeposit() != null) {
-        checkinBill.getDeposit().setChargeStatus(PaymentStatus.PAID);
-        checkinBill.getDeposit().setPayTime(checkinBill.getPayTime());
-        checkinBill.getDeposit().setPaymentType(checkinBill.getPaymentType());
+    if (payBill.getChargeStatus().equals(PaymentStatus.UNPAID)) {
+      if (payBill.getDeposit() != null) {
+        payBill.getDeposit().setChargeStatus(PaymentStatus.PAID);
+        payBill.getDeposit().setPayTime(payBill.getPayTime());
+        payBill.getDeposit().setPaymentType(payBill.getPaymentType());
       }
-      if (checkinBill.getBedNurseCharge() != null) {
-        checkinBill.getBedNurseCharge().setChargeStatus(PaymentStatus.PAID);
-        checkinBill.getBedNurseCharge().setPayTime(checkinBill.getPayTime());
-        checkinBill.getBedNurseCharge().setPaymentType(checkinBill.getPaymentType());
+      if (payBill.getBedNurseCharge() != null) {
+        payBill.getBedNurseCharge().setChargeStatus(PaymentStatus.PAID);
+        payBill.getBedNurseCharge().setPayTime(payBill.getPayTime());
+        payBill.getBedNurseCharge().setPaymentType(payBill.getPaymentType());
       }
-      if (checkinBill.getMealCharge() != null) {
-        checkinBill.getMealCharge().setChargeStatus(PaymentStatus.PAID);
-        checkinBill.getMealCharge().setPayTime(checkinBill.getPayTime());
-        checkinBill.getMealCharge().setPaymentType(checkinBill.getPaymentType());
+      if (payBill.getMealCharge() != null) {
+        payBill.getMealCharge().setChargeStatus(PaymentStatus.PAID);
+        payBill.getMealCharge().setPayTime(payBill.getPayTime());
+        payBill.getMealCharge().setPaymentType(payBill.getPaymentType());
+      }
+      if (payBill.getPersonalizedCharge() != null) {
+        payBill.getPersonalizedCharge().setChargeStatus(PaymentStatus.PAID);
+        payBill.getPersonalizedCharge().setPayTime(payBill.getPayTime());
+        payBill.getPersonalizedCharge().setPaymentType(payBill.getPaymentType());
+      }
+      if (waterAmount != null && electricityAmount != null) {
+        WaterElectricityCharge waterElectricityCharge = new WaterElectricityCharge();
+        waterElectricityCharge.setBilling(payBill);
+        waterElectricityCharge.setBillingNo(payBill.getBillingNo());
+        waterElectricityCharge.setElderlyInfo(elderlyInfo);
+        waterElectricityCharge.setTenantID(payBill.getTenantID());
+        waterElectricityCharge.setPeriodStartDate(payBill.getPeriodStartDate());
+        waterElectricityCharge.setPeriodEndDate(payBill.getPeriodEndDate());
+        waterElectricityCharge.setChargeStatus(PaymentStatus.PAID);
+        waterElectricityCharge.setPayTime(payBill.getPayTime());
+        waterElectricityCharge.setPaymentType(payBill.getPaymentType());
+        waterElectricityCharge.setElectricityCount(electricityCount);
+        waterElectricityCharge.setWaterCount(waterCount);
+        waterElectricityCharge.setElectricityAmount(electricityAmount);
+        waterElectricityCharge.setWaterAmount(waterAmount);
+        payBill.setWaterElectricityCharge(waterElectricityCharge);
       }
 
 
     }
-    // 账单缴费(case3:缴费之后修改订单或调整金额)
-    else if (checkinBill.getChargeStatus().equals(PaymentStatus.UNPAID_ADJUSTMENT)) {
+    // 账单缴费(case3:缴费之后修改订单或调整金额)--用于入院账单
+    else if (payBill.getChargeStatus().equals(PaymentStatus.UNPAID_ADJUSTMENT)) {
 
     }
 
     // 如果账单存在调整金额，设置调整金额记录为已付款
-    for (BillingAdjustment billingAdjustment : checkinBill.getBillingAdjustment()) {
+    for (BillingAdjustment billingAdjustment : payBill.getBillingAdjustment()) {
       if (!billingAdjustment.getChargeStatus().equals(PaymentStatus.PAID)) {
         billingAdjustment.setChargeStatus(PaymentStatus.PAID);
       }
@@ -375,30 +407,33 @@ public class BillingController extends BaseController {
     // 支付记录
     if (paymentType.equals(PaymentType.MIXTURE)) {// 混合支付 现金+卡
       PaymentRecord paymentRecordCard = new PaymentRecord();
-      paymentRecordCard.setBilling(checkinBill);
+      paymentRecordCard.setBilling(payBill);
       paymentRecordCard.setPaymentType(PaymentType.CARD);
       paymentRecordCard.setPayAmount(cardAmount);
-      checkinBill.getPaymentRecords().add(paymentRecordCard);
+      payBill.getPaymentRecords().add(paymentRecordCard);
 
       PaymentRecord paymentRecordCash = new PaymentRecord();
-      paymentRecordCash.setBilling(checkinBill);
+      paymentRecordCash.setBilling(payBill);
       paymentRecordCash.setPaymentType(PaymentType.CASH);
       paymentRecordCash.setPayAmount(cashAmount);
-      checkinBill.getPaymentRecords().add(paymentRecordCash);
+      payBill.getPaymentRecords().add(paymentRecordCash);
     } else {
       PaymentRecord paymentRecord = new PaymentRecord();
-      paymentRecord.setBilling(checkinBill);
-      paymentRecord.setPaymentType(checkinBill.getPaymentType());
+      paymentRecord.setBilling(payBill);
+      paymentRecord.setPaymentType(payBill.getPaymentType());
       paymentRecord.setPayAmount(payTotalAmount);
-      checkinBill.getPaymentRecords().add(paymentRecord);
+      payBill.getPaymentRecords().add(paymentRecord);
+      if (paymentType.equals(PaymentType.ADVANCE)) {
+
+      }
     }
 
-    checkinBill.setChargeStatus(PaymentStatus.PAID);
+    payBill.setChargeStatus(PaymentStatus.PAID);
     if (LogUtil.isDebugEnabled(BillingController.class)) {
       LogUtil.debug(BillingController.class, "Check In Charge", "Bill Entity=%s",
-          ToolsUtils.entityToString(checkinBill));
+          ToolsUtils.entityToString(payBill));
     }
-    billingService.update(checkinBill);
+    billingService.update(payBill);
     return SUCCESS_MESSAGE;
   }
 
@@ -443,36 +478,38 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id, String path) {
     Billing record = billingService.find(id);
-    if (record.getBillingSupply()!=null) {
+    if (record.getBillingSupply() != null) {
       BillingSupplyment billingSupplyment = record.getBillingSupply();
-      if (billingSupplyment.getBedNurseCharge()!=null) {
+      if (billingSupplyment.getBedNurseCharge() != null) {
         BedNurseCharge bedNurseCharge = billingSupplyment.getBedNurseCharge();
         record.setBedAmount(bedNurseCharge.getBedAmount());
         record.setNurseAmount(bedNurseCharge.getNurseAmount());
       }
-      
-      if (billingSupplyment.getDeposit()!=null) {
+
+      if (billingSupplyment.getDeposit() != null) {
         Deposit deposit = billingSupplyment.getDeposit();
         record.setDepositAmount(deposit.getDepositAmount());
       }
-      
-      if (billingSupplyment.getMealCharge()!=null) {
+
+      if (billingSupplyment.getMealCharge() != null) {
         MealCharge mealCharge = billingSupplyment.getMealCharge();
         record.setMealAmount(mealCharge.getMealAmount());
       }
-      
+
       record.setTotalAmount(billingSupplyment.getTotalAmount());
     }
-    
+
     model.addAttribute("billing", record);
     if ("dailyBill".equals(path)) {
-      model.addAttribute("serviceDetails", personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
+      model.addAttribute("serviceDetails",
+          personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
     }
     return path + "/details";
   }
-  
+
   /**
    * 入院账单是否已经在缴费后修改过一次，目前缴费后只允许修改一次
+   * 
    * @param model
    * @param id
    * @param path
@@ -481,12 +518,12 @@ public class BillingController extends BaseController {
   @RequestMapping(value = "/isChargeinBillUpdated", method = RequestMethod.GET)
   public @ResponseBody Boolean isChargeinBillUpdated(ModelMap model, Long id) {
     Billing record = billingService.find(id);
-    if (record.getBillingSupply()!=null) {
+    if (record.getBillingSupply() != null) {
       return true;
     }
     return false;
   }
-  
+
 
   /**
    * 支付页面详情
@@ -500,31 +537,31 @@ public class BillingController extends BaseController {
     Billing record = billingService.find(id);
     BigDecimal paidAmount = record.getTotalAmount();
     BigDecimal payAmount = new BigDecimal(0);
-    
-    if (record.getBillingSupply()!=null) {
+
+    if (record.getBillingSupply() != null) {
       BillingSupplyment billingSupplyment = record.getBillingSupply();
-      if (billingSupplyment.getBedNurseCharge()!=null) {
+      if (billingSupplyment.getBedNurseCharge() != null) {
         BedNurseCharge bedNurseCharge = billingSupplyment.getBedNurseCharge();
         record.setBedAmount(bedNurseCharge.getBedAmount());
         record.setNurseAmount(bedNurseCharge.getNurseAmount());
         model.addAttribute("isBedNurseSupp", true);
       }
-      
-      if (billingSupplyment.getDeposit()!=null) {
+
+      if (billingSupplyment.getDeposit() != null) {
         Deposit deposit = billingSupplyment.getDeposit();
         record.setDepositAmount(deposit.getDepositAmount());
         model.addAttribute("isDepositSupp", true);
       }
-      
-      if (billingSupplyment.getMealCharge()!=null) {
+
+      if (billingSupplyment.getMealCharge() != null) {
         MealCharge mealCharge = billingSupplyment.getMealCharge();
         record.setMealAmount(mealCharge.getMealAmount());
         model.addAttribute("isMealSupp", true);
       }
-      
+
       BigDecimal diffAmount = billingSupplyment.getTotalAmount().subtract(record.getTotalAmount());
-      payAmount = payAmount.add(diffAmount);   
-      
+      payAmount = payAmount.add(diffAmount);
+
     }
     if (record.getBillingAdjustment() != null && record.getBillingAdjustment().size() > 0) {
       if (record.getChargeStatus().equals(PaymentStatus.UNPAID_ADJUSTMENT)) {
@@ -550,9 +587,17 @@ public class BillingController extends BaseController {
 
     model.addAttribute("billing", record);
     if ("dailyBill".equals(path)) {
-      model.addAttribute("serviceDetails", personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
+      BigDecimal curAmount =
+          record.getBedAmount().add(record.getNurseAmount()).add(record.getMealAmount())
+              .add(record.getPersonalizedAmount());
+      model.addAttribute("currentAmount", curAmount);
+      model.addAttribute("serviceDetails",
+          personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
+      List<WaterElectricityChargeConfig> configs =
+          waterElectricityChargeConfigService.findAll(true);
+      model.addAttribute("waterElectricityConfig", configs.get(0));
     }
     return path + "/pay";
   }
-  
+
 }

@@ -69,6 +69,7 @@ var messages = {
 	/**
 	 * charge manage
 	 */
+	"yly.charge.advancePay.unavaliable" : "预存款不足，请选择其它支付方式",
 	"yly.charge.status.paid" : "已缴费",
 	"yly.charge.status.unpaid" : "未缴费",
 	"yly.charge.status.unpaid_adjustment" : "未缴费(调账)",

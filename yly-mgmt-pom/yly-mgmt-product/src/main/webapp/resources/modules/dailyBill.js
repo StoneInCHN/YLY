@@ -31,7 +31,17 @@ var dailyBill_manager_tool = {
 				    	iconCls:'icon-save',
 						handler:function(){
 							var validate = $('#addDailyBillPay_form').form('validate');
+							var payType = $("#paymentType").combobox('getValue');
+							if(payType == "ADVANCE"){
+								var advanceCharge = $("#dailyBill_advanceCharge").numberbox('getValue');
+							    var totalAmount = $("#dailyBillPay_totalAmount").numberbox('getValue');
+							    if(Number(totalAmount)>Number(advanceCharge)){
+									$.messager.alert(message("yly.common.prompt"),message("yly.charge.advancePay.unavaliable"), 'warning');
+									return;
+								}
+							}
 							if(validate){
+								
 								$.ajax({
 									url:"../billing/billPay.jhtml",
 									type:"post",
@@ -67,6 +77,30 @@ var dailyBill_manager_tool = {
 				    }],
 				    
 				    onLoad:function(){
+				    	function updateTotalAmount(){
+				    		var waterAmount = $('#waterAmount').numberbox('getValue');
+				    		var electricityAmount = $('#electricityAmount').numberbox('getValue');
+				    		var curAmount = $('#curAmount').val();
+				    		var totalAmount = Number(waterAmount)+Number(electricityAmount)+Number(curAmount);
+			    			$('#dailyBillPay_totalAmount').numberbox("setValue",totalAmount);
+				    		
+				    	}
+				    	
+				    	$("#waterCount").numberbox({
+				    		onChange:function(value){
+				    			var waterPrice = $("#waterPrice").html();
+				    			$("#waterAmount").numberbox('setValue',value*waterPrice);
+				    			updateTotalAmount();
+				    		}
+				    	});
+				    	$("#electricityCount").numberbox({
+				    		onChange:function(value){
+				    			var electricityPrice = $("#electricityPrice").html();
+				    			$("#electricityAmount").numberbox('setValue',value*electricityPrice);
+				    			updateTotalAmount();
+				    		}
+				    	});
+				    	
 				    	//支付方式
 				    	$('#paymentType').combobox({
 				    		onChange:function(value){
@@ -97,7 +131,7 @@ var dailyBill_manager_tool = {
 				    	$('#totalAmount_cash').numberbox({
 				    		onChange:function(value){
 				    			if($('#paymentType').combobox('getValue')=="MIXTURE"){
-				    				var totalAmount=$('#chargeinPay_totalAmount').numberbox('getValue');
+				    				var totalAmount=$('#dailyBillPay_totalAmount').numberbox('getValue');
 				    				$('#totalAmount_card').numberbox('setValue',totalAmount-value);
 				    			}
 				    			
