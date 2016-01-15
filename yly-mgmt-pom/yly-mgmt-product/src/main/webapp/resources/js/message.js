@@ -146,7 +146,12 @@ var messages = {
 	"yly.charge.billing.adjustment":"调整金额",
 	"yly.charge.billing.adjustment.cause":"调账原因",
 	"yly.charge.billing.adjustment.amount":"调账金额",
-
+	"yly.bedNurse.charge.label" : "床位护理费：￥ {0}",
+	"yly.meal.charge.label" : "伙食费：￥ {0}",
+	"yly.waterElectricity.charge.label" : "水电费：￥ {0}",
+	"yly.personalized.charge.label" : "个性化服务费：￥ {0}",
+	"yly.deposit.charge.label":"押金：￥ {0}",
+	"yly.waterElectricity.remark.label":"截止到办理出院，欠水（吨）：{0} \t [单价 ￥ {1}/ 吨] \t 水费小计：￥{2}\n截止到办理出院，欠电（度）：{3} \t [单价 ￥ {4}/ 度] \t 电费小计：￥{5}\n",
 	
 	/**
 	 * charge config

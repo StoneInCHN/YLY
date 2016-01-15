@@ -428,30 +428,45 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
         otherBilling.getDeposit().setChargeStatus(PaymentStatus.PAID);
         otherBilling.getDeposit().setPayTime(checkoutBill.getPayTime());
         otherBilling.getDeposit().setPaymentType(checkoutBill.getPaymentType());
+        otherBilling.getDeposit().setRemark(
+            otherBilling.getDeposit().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
 
       if (otherBilling.getBedNurseCharge() != null) {
         otherBilling.getBedNurseCharge().setChargeStatus(PaymentStatus.PAID);
         otherBilling.getBedNurseCharge().setPayTime(checkoutBill.getPayTime());
         otherBilling.getBedNurseCharge().setPaymentType(checkoutBill.getPaymentType());
+        otherBilling.getBedNurseCharge().setRemark(
+            otherBilling.getBedNurseCharge().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
 
       if (otherBilling.getMealCharge() != null) {
         otherBilling.getMealCharge().setChargeStatus(PaymentStatus.PAID);
         otherBilling.getMealCharge().setPayTime(checkoutBill.getPayTime());
         otherBilling.getMealCharge().setPaymentType(checkoutBill.getPaymentType());
+        otherBilling.getMealCharge().setRemark(
+            otherBilling.getMealCharge().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
 
       if (otherBilling.getWaterElectricityCharge() != null) {
         otherBilling.getWaterElectricityCharge().setChargeStatus(PaymentStatus.PAID);
         otherBilling.getWaterElectricityCharge().setPayTime(checkoutBill.getPayTime());
         otherBilling.getWaterElectricityCharge().setPaymentType(checkoutBill.getPaymentType());
+//        otherBilling.getWaterElectricityCharge().setRemark(
+//            otherBilling.getWaterElectricityCharge().getRemark().replaceAll(
+//                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
 
       if (otherBilling.getPersonalizedCharge() != null) {
         otherBilling.getPersonalizedCharge().setChargeStatus(PaymentStatus.PAID);
         otherBilling.getPersonalizedCharge().setPayTime(checkoutBill.getPayTime());
         otherBilling.getPersonalizedCharge().setPaymentType(checkoutBill.getPaymentType());
+        otherBilling.getPersonalizedCharge().setRemark(
+            otherBilling.getPersonalizedCharge().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
       
       otherBilling.setChargeStatus(PaymentStatus.PAID);

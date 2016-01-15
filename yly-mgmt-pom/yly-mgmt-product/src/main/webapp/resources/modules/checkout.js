@@ -1,18 +1,17 @@
-function showAdjustment(billing,fieldsetId){
+function showAdjustment(billing,elementId){
 	//显示调账信息
-	var adjustment_fieldset = $('#'+fieldsetId);
-	adjustment_fieldset.html("");
+	var adjustment_element = $('#'+elementId);
+	adjustment_element.html("");
 	var adjustmentHtml = "";
 	if(billing.billingAdjustment != null && billing.billingAdjustment.length > 0){
 		var adjustment = billing.billingAdjustment;
-		adjustmentHtml +='<legend>'+message("yly.charge.billing.adjustment")+'</legend>'+
-													'<table class="table table-striped">'+
+		adjustmentHtml +='<table>'+
 														'<tr>'+
-															'<th >'+message("yly.charge.billing.adjustment.cause")+'</th>'+
-															'<th>'+message("yly.charge.billing.adjustment.amount")+'</th>'+
-															'<th>'+message("yly.charge.record.status")+'</th>'+
-															'<th>'+message("yly.charge.record.operator")+'</th>'+
-															'<th>'+message("yly.charge.record.oprTime")+'</th>'+
+															'<th style="padding:4px 32px 4px 8px">'+message("yly.charge.billing.adjustment.cause")+'</th>'+
+															'<th style="padding:4px 32px 4px 8px">'+message("yly.charge.billing.adjustment.amount")+'</th>'+
+															'<th style="padding:4px 32px 4px 8px">'+message("yly.charge.record.status")+'</th>'+
+															'<th style="padding:4px 32px 4px 8px">'+message("yly.charge.record.operator")+'</th>'+
+															'<th style="padding:4px 32px 4px 8px">'+message("yly.charge.record.oprTime")+'</th>'+
 														'</tr>';
 		for(var i = 0; i < adjustment.length; i++){
 			var status = adjustment[i].chargeStatus;
@@ -27,17 +26,37 @@ function showAdjustment(billing,fieldsetId){
     	  		statusDisplay =  "<font color=#FF0000>"+message("yly.charge.status.unpaid_adjustment")+"</font>";
     	  	}
 			adjustmentHtml +='<tr>'+
-	  											'<td align=right>'+adjustment[i].adjustmentCause+'</td>'+
-	  											'<td align=right>'+adjustment[i].adjustmentAmount+'</td>'+
-	  											'<td align=right>'+statusDisplay+'</td>'+
-	  											'<td align=right>'+adjustment[i].operator+'</td>'+
-	  											'<td align=right>'+new Date(adjustment[i].createDate).Format("yyyy-MM-dd")+'</td>'+
+	  											'<td style="padding:4px 32px 4px 8px" align=right>'+adjustment[i].adjustmentCause+'</td>'+
+	  											'<td style="padding:4px 32px 4px 8px" align=right>'+adjustment[i].adjustmentAmount+'</td>'+
+	  											'<td style="padding:4px 32px 4px 8px" align=right>'+statusDisplay+'</td>'+
+	  											'<td style="padding:4px 32px 4px 8px" align=right>'+adjustment[i].operator+'</td>'+
+	  											'<td style="padding:4px 32px 4px 8px" align=right>'+new Date(adjustment[i].createDate).Format("yyyy-MM-dd")+'</td>'+
 	  										'</tr>';
 			
 		}
 		adjustmentHtml +='</table>';
 	}
 	//alert(adjustmentHtml);
-	adjustment_fieldset.append(adjustmentHtml);
-	adjustment_fieldset.show();
+	adjustment_element.append(adjustmentHtml);
+}
+function showElderlyInfo(billing,elementId){
+	//显示老人基本信息
+	var elderlyInfo_element = $('#'+elementId);
+	elderlyInfo_element.html("");
+	var elderlyInfoHtml = "";
+	if(billing.elderlyInfo != null){
+			elderlyInfoHtml +='<table>'+
+												'<tr>'+
+													'<td style="padding:4px 32px 4px 8px">'+message("yly.common.elderlyname")+": "+billing.elderlyInfo.name+'</td>'+
+													'<td style="padding:4px 32px 4px 8px">'+message("yly.elderlyInfo.identifier")+": "+billing.elderlyInfo.identifier+'</td>'+
+												'</tr>'+
+												'<tr>'+
+	  												'<td style="padding:4px 32px 4px 8px">'+message("yly.common.bedRoom")+": "+billing.elderlyInfo.bedLocation+'</td>'+
+	  												'<td style="padding:4px 32px 4px 8px">'+message("yly.common.nurseLevel")+": "+billing.elderlyInfo.nursingLevel.configValue+'</td>'+
+	  											'</tr>';
+		}
+		elderlyInfoHtml +='</table>';
+		//alert(elderlyInfoHtml);
+		elderlyInfo_element.append(elderlyInfoHtml);
+	
 }

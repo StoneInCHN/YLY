@@ -138,29 +138,24 @@ $(function(){
 						type : "get",
 						success : function(billing, status) {
 							if(billing != null){
-								$('#viewCheckoutPay_elderlyInfo_outHospitalizedDate').textbox('setValue',new Date(billing.elderlyInfo.outHospitalizedDate).
+								$('#viewCheckoutPay_elderlyInfo_outHospitalizedDate').html(new Date(billing.elderlyInfo.outHospitalizedDate).
 										Format(message("yly.common.dateFormatChina")));
-								$('#viewCheckoutPay_elderlyInfo_name').textbox('setValue',billing.elderlyInfo.name);
-								$('#viewCheckoutPay_elderlyInfo_identifier').textbox('setValue',billing.elderlyInfo.identifier);
-								$('#viewCheckoutPay_elderlyInfo_bedLocation').textbox('setValue',billing.elderlyInfo.bedLocation);
-								$('#viewCheckoutPay_elderlyInfo_nursingLevel_configValue').textbox('setValue',billing.elderlyInfo.nursingLevel.configValue);
-								$('#viewCheckoutPay_bedNurseAmount').numberbox('setValue', billing.bedNurseCharge.bedAmount+billing.bedNurseCharge.nurseAmount);
-								$('#viewCheckoutPay_bedNurseCharge_remark').textbox('setValue',billing.bedNurseCharge.remark);
-								$('#viewCheckoutPay_mealAmount').numberbox('setValue', billing.mealCharge.mealAmount);
-								$('#viewCheckoutPay_mealCharge_remark').textbox('setValue', billing.mealCharge.remark);
-								
-								$('#viewCheckoutPay_waterCount').numberbox('setValue',billing.waterElectricityCharge.waterCount);
-								$('#viewCheckoutPay_waterAmount').numberbox('setValue',billing.waterElectricityCharge.waterAmount);
-								$('#viewCheckoutPay_electricityCount').numberbox('setValue',billing.waterElectricityCharge.electricityCount);
-								$('#viewCheckoutPay_electricityAmount').numberbox('setValue',billing.waterElectricityCharge.electricityAmount);
-								$('#viewCheckoutPay_waterPrice').numberbox('setValue',billing.waterElectricityCharge.waterAmount/billing.waterElectricityCharge.waterCount);
-								$('#viewCheckoutPay_electricityPrice').numberbox('setValue',billing.waterElectricityCharge.electricityAmount/billing.waterElectricityCharge.electricityCount);
-								
-								$('#viewCheckoutPay_personalizedAmount').numberbox('setValue',billing.personalizedCharge.personalizedAmount);
-								$('#viewCheckoutPay_personalizedCharge_remark').textbox('setValue',billing.personalizedCharge.remark);
-								$('#viewCheckoutPay_advanceChargeAmount').numberbox('setValue',billing.advanceChargeAmount);
-								$('#viewCheckoutPay_totalAmount').numberbox('setValue',billing.totalAmount);
-								
+								showElderlyInfo(billing,"viewCheckoutPay_elderlyInfo_remark");//显示老人基本信息
+								$('#viewCheckoutPay_bedNurseAmount').html(message("yly.bedNurse.charge.label",(billing.bedNurseCharge.bedAmount+billing.bedNurseCharge.nurseAmount).toFixed(2)));
+								$('#viewCheckoutPay_bedNurseCharge_remark').html(billing.bedNurseCharge.remark);
+								$('#viewCheckoutPay_mealAmount').html(message("yly.meal.charge.label",billing.mealCharge.mealAmount.toFixed(2)));
+								$('#viewCheckoutPay_mealCharge_remark').html(billing.mealCharge.remark);
+								$('#viewCheckoutPay_waterElectricityAmount').html(message("yly.waterElectricity.charge.label",
+									   (billing.waterElectricityCharge.waterAmount+billing.waterElectricityCharge.electricityAmount).toFixed(2)));
+								$('#viewCheckoutPay_waterElectricity_remark').html(message("yly.waterElectricity.remark.label",
+										billing.waterElectricityCharge.waterCount.toFixed(1),(billing.waterElectricityCharge.waterAmount/billing.waterElectricityCharge.waterCount).toFixed(2),
+										billing.waterElectricityCharge.waterAmount.toFixed(2),billing.waterElectricityCharge.electricityAmount.toFixed(1),
+									   (billing.waterElectricityCharge.electricityAmount/billing.waterElectricityCharge.electricityCount).toFixed(2),billing.waterElectricityCharge.electricityAmount.toFixed(2)));						
+								$('#viewCheckoutPay_personalizedAmount').html(message("yly.personalized.charge.label",billing.personalizedCharge.personalizedAmount.toFixed(2)));
+								$('#viewCheckoutPay_personalizedCharge_remark').html(billing.personalizedCharge.remark);
+								$('#viewCheckoutPay_advanceChargeAmount').html(billing.advanceChargeAmount.toFixed(2));
+								$('#viewCheckoutPay_totalAmount').html(billing.totalAmount.toFixed(2));
+								$('#viewCheckoutPay_djustmentLable').html(message("yly.charge.billing.adjustment"));
 								showAdjustment(billing,"viewCheckoutPay_djustmentService");//显示调账信息
 							}
 						}});

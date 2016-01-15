@@ -5,7 +5,13 @@ p
 {
 text-align:center;
 }
-
+.printBill{
+	white-space:pre-wrap;
+	border:1px solid #b1b2b3;
+	border-radius:4px 4px 4px 4px;
+	padding:4px 12px;
+	text-align:left;
+}
 </style>
 <div>
 	  <fieldset>
@@ -152,74 +158,40 @@ text-align:center;
 	</form></div>
 <div id="checkoutPayDetail">
 	<form id="checkoutPay_form" method="post" class="form-table"> 
-	     <table class="table table-striped">
-	    	<tr>
-	    		<td>
-	    			 出院日期: <input class="easyui-textbox"  id="viewCheckoutPay_elderlyInfo_outHospitalizedDate"  data-options="width:150" readonly="readonly""  />
-	    		</td>
-	    		<td>
-	    			
-	    		</td>
-	    	</tr>
-	    </table>
-	    
-	  <fieldset> 
-	   <legend>老人基本信息:</legend>
-	    <table class="table table-striped">
-	    	<tr>
-	    		<td>
-	    			 ${message("yly.common.elderly")}: <input class="easyui-textbox"  id="viewCheckoutPay_elderlyInfo_name"  style="width:180px;" readonly="readonly" />
-	    		</td>
-	    		<td>
-	    			 老人${message("yly.common.elderly.identifier")}: <input class="easyui-textbox"  id="viewCheckoutPay_elderlyInfo_identifier"  style="width:180px;" readonly="readonly" />
-	    		</td>
-	    	</tr>
-	    	<tr>
-	    		<td>
-	    			 ${message("yly.common.elderly.bedRoom")}: <input class="easyui-textbox"   id="viewCheckoutPay_elderlyInfo_bedLocation"  style="width:180px;" readonly="readonly" />
-	    		</td>
-	    		<td>
-	    			 ${message("yly.common.elderly.nurseLevel")}: <input class="easyui-textbox"   id="viewCheckoutPay_elderlyInfo_nursingLevel_configValue"  style="width:180px;" readonly="readonly" />
-	    		</td>
-	    	</tr>
-		</table>
-		</fieldset>		  	
-	   <fieldset id="viewCheckoutPay_bedNurseService" style="display:blank"> 
-	    			  	<legend>${message("yly.charge.bedNurse.record")}</legend>
-	    			  	<p><input class="easyui-numberbox"  id="viewCheckoutPay_bedNurseAmount"  style="width:550px;" readonly="readonly" data-options="min:0,precision:2"/></p>
-	    			  	<p><input class="easyui-textbox"  id="viewCheckoutPay_bedNurseCharge_remark"  data-options="multiline:true,height:150,width:550" readonly="readonly" /></p>
-	   </fieldset>
-	    <fieldset id="viewCheckoutPay_mealService" style="display:blank"> 
-	    			  	<legend>${message("yly.charge.meal.reocrd")}</legend>
-	    			  	<p><input class="easyui-numberbox"  id="viewCheckoutPay_mealAmount" value="${billing.mealAmount}" style="width:550px;" readonly="readonly" data-options="min:0,precision:2"/></p>
-	    			  	<p><input class="easyui-textbox"  id="viewCheckoutPay_mealCharge_remark"   data-options="multiline:true,height:150,width:550" readonly="readonly"/></p>
-	    </fieldset>
-	   <fieldset id="viewCheckoutPay_personalizedService" style="display:blank"> 
-	    			  	<legend>${message("yly.charge.personalized.service.record")}</legend>   			
-	    			  	<p><input class="easyui-numberbox"  id="viewCheckoutPay_personalizedAmount"  style="width:550px;" readonly="readonly" data-options="min:0,precision:2"/></p>
-	    			  	<p><input class="easyui-textbox" id="viewCheckoutPay_personalizedCharge_remark"  data-options="multiline:true,height:150,width:550" readonly="readonly"/></p>
-	    </fieldset>
-	    <fieldset id="viewCheckoutPay_waterElectricityService" style="display:blank"> 
-	    			  	<legend>${message("yly.charge.water.electricity.reocrd")}</legend>
-	    			  	<p>截止到办理出院，欠水（吨）：<input class="easyui-numberbox"   id="viewCheckoutPay_waterCount"   style="width:90px;" data-options="required:true,min:0,precision:1"/> 
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="viewCheckoutPay_waterPrice" " style="width:35px;" data-options="required:true,editable:false,min:0,precision:2"/> / 吨]  
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;水费小计：<input class="easyui-numberbox" id="viewCheckoutPay_waterAmount"  style="width:90px;" data-options="required:true,editable:false,min:0,precision:2"/> </p> 
-	    			  	<p>截止到办理出院，欠电（度）：<input class="easyui-numberbox"   id="viewCheckoutPay_electricityCount"  style="width:90px;" data-options="required:true,min:0,precision:1"/>
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="viewCheckoutPay_electricityPrice" " style="width:35px;" data-options="required:true,editable:false,min:0,precision:2"/> / 度]  
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;电费小计：<input class="easyui-numberbox" id="viewCheckoutPay_electricityAmount"  style="width:90px;" data-options="required:true,editable:false,min:0,precision:2"/> </p>	    			  		    			  	
-	    </fieldset>
-	   <fieldset id="viewCheckoutPay_djustmentService" style="display:none"> 
-	    </fieldset>
-	     <table class="table table-striped">
-	    	<tr>
-	    		<td>
-	    			 使用了预存款: <input class="easyui-numberbox"  id="viewCheckoutPay_advanceChargeAmount" style="width:90px;" readonly=true" data-options="min:0,precision:2"/> 付款 
-	    		</td>
-	    		<td>
-	    			总金额(已扣除押金)：<input class="easyui-numberbox"  id="viewCheckoutPay_totalAmount"  style="width:120px;" readonly="readonly" data-options="min:0,precision:2"/>
-	    		</td>
-	    	</tr>
-	    </table>
+					 <p>
+	   	    		 <p style="text-align:left">出院日期: 
+	    			 <span  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;" id="viewCheckoutPay_elderlyInfo_outHospitalizedDate"></span>
+	    			 </p> 
+						<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_elderlyInfoLable">老人基本信息：</p>
+						<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_elderlyInfo_remark"></p>
+	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_bedNurseAmount"></p>
+	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_bedNurseCharge_remark"></p>
+	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_mealAmount"></p>
+	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_mealCharge_remark"></p>
+	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_personalizedAmount"></p>
+	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_personalizedCharge_remark"></p>
+	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_waterElectricityAmount"></p>
+	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_waterElectricity_remark"></p>
+	    				<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_djustmentLable"></p>
+	    				<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_djustmentService"></p>
+	    				<p>			  	    			  		    			  		    
+	    			 <table>
+	    			 	<tr>
+	    			 		<td style="padding:4px 32px 4px 0px">
+	    			 				使用了预存款: 
+	    			 				<span  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;width:90px" id="viewCheckoutPay_advanceChargeAmount"></span>
+	    			  				付款 
+	    			  		</td>
+	    			  		<td style="margin:4px;padding:4px 32px 4px 0px">
+	    			  				&nbsp;&nbsp;&nbsp;&nbsp;
+	    			  		</td>
+							<td style="padding:4px 32px 4px 0px">
+	    							总金额(已扣除押金)：
+	    							<span style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:right;width:90px"  id="viewCheckoutPay_totalAmount"></span>
+	    					</td>
+	    				</tr>
+	    			</table>
+
 	    <br>
 	</form></div>
 <div id="searchBilling"></div>
