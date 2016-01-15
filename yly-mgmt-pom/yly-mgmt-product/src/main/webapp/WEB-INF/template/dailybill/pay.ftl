@@ -1,6 +1,7 @@
 <form id="addDailyBillPay_form" method="post"> 
 	    <table class="table table-striped">
 	    	<input type="hidden" name="billingId" value="${billing.id}">
+	    	<input type="hidden" id="curAmount" value="${currentAmount}">
 	    	<tr>
 	    		<th width="90px">${message("yly.common.elderly.name")}:</th>
 	    		<td>
@@ -23,7 +24,22 @@
 				    </select>
 	    		</td>
 	    	</tr>
-	    	
+	    	<tr>
+	    		<th>${message("yly.common.charge.invoiceNo")}:</th>
+	    		<td>
+	    			<input class="easyui-textbox" type="text" name="invoiceNo"  readonly=true value="${billing.invoiceNo}" style="width:150px;" data-options="disabled:true"/> 
+	    		</td>
+	    		<th>${message("yly.common.charge.billingNo")}:</th>
+	    		<td>
+	    			<input class="easyui-textbox" type="text" name="billingNo"  readonly=true value="${billing.billingNo}" style="width:150px;" data-options="disabled:true"/> 
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.charge.record.advanceCharge.money")}:</th>
+	    		<td>
+	    			<input class="easyui-textbox" type="text" id="dailyBill_advanceCharge" name="advanceCharge"  readonly=true value="${billing.elderlyInfo.advanceChargeAmount}" style="width:150px;" data-options="disabled:true"/> 
+	    		</td>
+	    	</tr>
 	    	 <tr>
 	    		<td colspan=4>
 	    			  <fieldset> 
@@ -40,13 +56,13 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.bed")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.bedAmount}" data-options="disabled:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="dailyBedAmount" value="${billing.bedAmount}" data-options="disabled:true,min:0,precision:2" />
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.nurse")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.nurseAmount}" data-options="disabled:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="dailyNurseAmount" value="${billing.nurseAmount}" data-options="disabled:true,min:0,precision:2" />
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>
@@ -83,7 +99,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.common.charge.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.mealAmount}" data-options="min:0,precision:2,disabled:true" />
+					    			 <input class="easyui-numberbox" id="dailyMealAmount" value="${billing.mealAmount}" data-options="min:0,precision:2,disabled:true" />
 					    		</td>
 					    		
 	    			  		</tr>
@@ -115,7 +131,7 @@
 	    			  		<tr>
 	    			  			<th>${message("yly.charge.record.service.money")}:</th>
 					    		<td>
-					    			 <input class="easyui-numberbox" value="${billing.personalizedAmount}" data-options="disabled:true,min:0,precision:2" />
+					    			 <input class="easyui-numberbox" id="dailyServiceAmount" value="${billing.personalizedAmount}" data-options="disabled:true,min:0,precision:2" />
 					    		</td>
 	    			  		</tr>
 	    			  		<tr>
@@ -136,22 +152,73 @@
 						    			  		<th>${message("yly.common.charge.money")}</th>
 					    			  		</tr>
 					    			  		[#list serviceDetails as serviceItem]
-					    			  		   <tr>
-						    			  			<td>${serviceItem.serviceName}</td>
-						    			  			<td>${serviceItem.serviceUnitPrice}</td>
-						    			  			<td>${serviceItem.serviceCount}</td>
-						    			  			<td>${serviceItem.serviceAmount}</td>
-					    			  		   </tr> 
+					    			  		<tr>
+					    			  			<td>${serviceItem.serviceName}</td>
+					    			  			<td>${serviceItem.serviceUnitPrice}</td>
+					    			  			<td>${serviceItem.serviceCount}</td>
+					    			  			<td>${serviceItem.serviceAmount}</td>
+					    			  		</tr> 
 					    			  		[/#list]
 					    			  	</table>
 					    			  </fieldset>
-								   </td>
+								 </td>
 							</tr>
 	    			  	</table>
 	    			  </fieldset>
 	    		</td>
 	    	</tr>
 	    	[/#if]
+	    	<tr>
+	    		<td colspan=4>
+	    			  <fieldset> 
+	    			  	<legend>${message("yly.charge.record.water.electricity")}:</legend>
+	    			  	<table class="table table-striped">
+	    			  		<tr>
+					    		<th>${message("yly.common.charge.period")}:</th>
+					    		<td>
+					    			<input value="${billing.periodStartDate}" type="text" class="easyui-datebox" style="width:100px;" data-options="disabled:true"/>
+					    		    ──
+				    			    <input value="${billing.periodEndDate}" type="text" class="easyui-datebox" style="width:100px;" data-options="disabled:true"/>    
+					    		</td>
+					    	</tr>
+	    			  		<tr>
+	    			  			<th>${message("yly.remark")}:</th>
+					    		<td>
+					    			 <input class="easyui-textbox" name="waterElectricity_remark" style="width:400px" validtype="length[0,50]"/> 
+					    		</td>
+	    			  		</tr>
+	    			  		<tr>
+					    		<td colspan=2>
+					    			  <fieldset> 
+					    			  	<legend>${message("yly.charge.record.water.electricity.details")}</legend>
+					    			  	<table class="table table-striped">
+					    			  		<tr>
+					    			  			<th>${message("yly.charge.record.item")}</th>
+						    			  		<th>${message("yly.common.charge.unitPrice")}</th>
+						    			  		<th>${message("yly.charge.record.water.electricity.count")}</th>
+						    			  		<th>${message("yly.common.charge.money")}</th>
+					    			  		</tr>
+					    			  		
+					    			  		<tr>
+					    			  			<td>${message("yly.charge.water")}</td>
+					    			  			<td><span id="waterPrice">${waterElectricityConfig.waterUnitPrice}</span></td>
+					    			  			<td><input class="easyui-numberbox" name="waterCount" id="waterCount" style="width:50px" data-options="required:true,min:0,precision:2" /></td>
+					    			  			<td><input class="easyui-numberbox" name="waterAmount" id="waterAmount" style="width:50px" data-options="required:true,editable:false,min:0,precision:2" /></td>
+					    			  		</tr> 
+					    			  		<tr>
+					    			  			<td>${message("yly.charge.electricity")}</td>
+					    			  			<td><span id="electricityPrice">${waterElectricityConfig.electricityUnitPrice}</span></td>
+					    			  			<td><input class="easyui-numberbox" name="electricityCount" id="electricityCount" style="width:50px" data-options="required:true,min:0,precision:2" /></td>
+					    			  			<td><input class="easyui-numberbox" name="electricityAmount" id="electricityAmount" style="width:50px" data-options="required:true,editable:false,min:0,precision:2" /></td>
+					    			  		</tr> 
+					    			  	</table>
+					    			</fieldset>
+							   </td>
+							</tr>
+	    			  	</table>
+	    			  </fieldset>
+	    		</td>
+			</tr>
 	    	[#if billing.billingAdjustment?? && billing.billingAdjustment.size()>0]
 	    	<tr>
 	    		<td colspan=4>
@@ -193,7 +260,7 @@
 	    	<tr>
 	    		<th>${message("yly.common.charge.totalAmount.pay")}:</th>
 	    		<td colspan=3>
-	    			 <input class="easyui-numberbox" id="chargeinPay_totalAmount" name="payTotalAmount" data-options="required:true,editable:false,min:0,precision:2"/>
+	    			 <input class="easyui-numberbox" id="dailyBillPay_totalAmount" name="payTotalAmount" data-options="required:true,editable:false,min:0,precision:2"/>
 	    		</td>
 	    	</tr>
 	    	<tr>
