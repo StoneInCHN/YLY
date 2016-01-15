@@ -492,8 +492,7 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
         advanceCharge.setOperator(tenantAccountService.getCurrentUsername());
         advanceCharge.setBillingNo(checkoutBill.getBillingNo());
         advanceChargeService.save(advanceCharge, true);
-    } 
-    
+    }    
     billingService.update(checkoutBill);
     
   }

@@ -54,6 +54,7 @@ import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.service.WaterElectricityChargeConfigService;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.SpringUtils;
 import com.yly.utils.ToolsUtils;
 
 /**
@@ -388,17 +389,28 @@ public class CheckoutController extends BaseController {
     ElderlyInfo elderlyInfo = checkoutBill.getElderlyInfo();
     elderlyInfo.setElderlyStatus(ElderlyStatus.OUT_NURSING_HOME);   
 
-    // 账单缴费 (case1:未调整金额或修改订单; case2:缴费之前调整了金额或修改订单)
+    //重置退住结算各个子账单，把“未缴费”改成“已缴费”
     if (checkoutBill.getChargeStatus().equals(PaymentStatus.UNPAID)) {
+      if (checkoutBill.getDeposit() != null) {
+        checkoutBill.getDeposit().setRemark(
+            checkoutBill.getDeposit().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
+      }
       if (checkoutBill.getBedNurseCharge() != null) {
         checkoutBill.getBedNurseCharge().setChargeStatus(PaymentStatus.PAID);
         checkoutBill.getBedNurseCharge().setPayTime(checkoutBill.getPayTime());
         checkoutBill.getBedNurseCharge().setPaymentType(checkoutBill.getPaymentType());
+        checkoutBill.getBedNurseCharge().setRemark(
+            checkoutBill.getBedNurseCharge().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
       if (checkoutBill.getMealCharge() != null) {
         checkoutBill.getMealCharge().setChargeStatus(PaymentStatus.PAID);
         checkoutBill.getMealCharge().setPayTime(checkoutBill.getPayTime());
         checkoutBill.getMealCharge().setPaymentType(checkoutBill.getPaymentType());
+        checkoutBill.getMealCharge().setRemark(
+            checkoutBill.getMealCharge().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
       if (checkoutBill.getWaterElectricityCharge() != null) {
         checkoutBill.getWaterElectricityCharge().setChargeStatus(PaymentStatus.PAID);
@@ -409,6 +421,9 @@ public class CheckoutController extends BaseController {
         checkoutBill.getPersonalizedCharge().setChargeStatus(PaymentStatus.PAID);
         checkoutBill.getPersonalizedCharge().setPayTime(checkoutBill.getPayTime());
         checkoutBill.getPersonalizedCharge().setPaymentType(checkoutBill.getPaymentType());
+        checkoutBill.getPersonalizedCharge().setRemark(
+            checkoutBill.getPersonalizedCharge().getRemark().replaceAll(
+                SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
       }
 
     }
