@@ -401,7 +401,7 @@ public class ElderlyInfo extends BaseEntity {
     this.visitElderlyRecords = visitElderlyRecords;
   }
 
-  @OneToMany(mappedBy = "elderlyInfo")
+  @OneToMany(mappedBy = "elderlyInfo",cascade=CascadeType.ALL)
   public Set<AdvanceCharge> getAdvanceCharges() {
     return advanceCharges;
   }

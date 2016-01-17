@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.AdvanceCharge;
 import com.yly.entity.BedNurseCharge;
 import com.yly.entity.Billing;
 import com.yly.entity.BillingAdjustment;
@@ -31,6 +32,7 @@ import com.yly.entity.SystemConfig;
 import com.yly.entity.WaterElectricityCharge;
 import com.yly.entity.WaterElectricityChargeConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
+import com.yly.entity.commonenum.CommonEnum.BudgetType;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
 import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
@@ -424,7 +426,17 @@ public class BillingController extends BaseController {
       paymentRecord.setPayAmount(payTotalAmount);
       payBill.getPaymentRecords().add(paymentRecord);
       if (paymentType.equals(PaymentType.ADVANCE)) {
-
+    	  if (payTotalAmount.compareTo(elderlyInfo.getAdvanceChargeAmount())>1) {
+    		  	return Message.error("yly.charge.advancePay.unavaliable");
+		  }
+    	  AdvanceCharge advanceCharge = new AdvanceCharge();
+    	  elderlyInfo.setAdvanceChargeAmount(elderlyInfo.getAdvanceChargeAmount().subtract(payTotalAmount));
+    	  advanceCharge.setElderlyInfo(elderlyInfo);
+          advanceCharge.setBudgetType(BudgetType.COST);
+          advanceCharge.setPayTime(new Date());
+          advanceCharge.setOperator(tenantAccountService.getCurrentUsername());
+          advanceCharge.setBillingNo(payBill.getBillingNo());
+          elderlyInfo.getAdvanceCharges().add(advanceCharge);
       }
     }
 
