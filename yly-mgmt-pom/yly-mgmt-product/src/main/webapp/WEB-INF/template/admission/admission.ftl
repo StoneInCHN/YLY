@@ -5,11 +5,13 @@
 	    <form id="admission_search_form" class="search-form">
 	    	<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.identifier")}:</label>
-			    <input class="easyui-textbox" type="text" name="identifier" validtype="length[0,15]"  style="width:60px;"/>
+			    <input class="easyui-textbox" type="text" id="identifier_admission" name="identifier" validtype="length[0,15]"  style="width:60px;"/>
+			    <input type="hidden" id="identifierHidden_admission" name="identifierHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
-			    <input class="easyui-textbox" type="text" name="name" validtype="length[0,15]" style="width:75px;"/> 
+			    <input class="easyui-textbox" type="text" id="name_admission" name="name" validtype="length[0,15]" style="width:75px;"/> 
+			    <input type="hidden" id="nameHidden_admission" name="nameHidden">
 			</div>
 	    	
 	    	<div class="search-item">
@@ -33,17 +35,20 @@
 					label: 'DEAD',
 					value: '${message("yly.elderlyInfo.elderlyStatus.dead")}'
 				}],
-				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120"  name="elderlyStatus" style="width:100px;"/>
+				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120"  id="elderlyStatus_admission"name="elderlyStatus" style="width:100px;"/>
+				<input type="hidden" id="elderlyStatusHidden_admission" name="elderlyStatusHidden">
 			</div>
 	    
 	    
 			<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.checkinDate")}:</label>
-			    <input type="text" class="Wdate" id="beHospitalizedBeginDate" name="beHospitalizedBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'beHospitalizedEndDate\')}'});" />
+			    <input type="text" class="Wdate" id="beHospitalizedBeginDate_admission" name="beHospitalizedBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'beHospitalizedEndDate\')}'});" />
+			    <input type="hidden" id="beHospitalizedBeginDateHiden_admission" name="beHospitalizedBeginDateHiden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="beHospitalizedEndDate"  name="beHospitalizedEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beHospitalizedBeginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="beHospitalizedEndDate_admission"  name="beHospitalizedEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beHospitalizedBeginDate\')}'});"/>
+			   	<input type="hidden" id="beHospitalizedEndDateHidden_admission" name="beHospitalizedEndDateHidden">
 			</div>
 		</form>
 		<div class="search-item">

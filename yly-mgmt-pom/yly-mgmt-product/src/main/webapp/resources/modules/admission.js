@@ -429,6 +429,12 @@ $(function(){
 	 var _queryParams = $("#admission_search_form").serializeJSON();
 	  $('#admission-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#admission-table-list").datagrid('reload');
+		//隐藏域用于标记上次使用过的查询条件 
+		$("#identifierHidden_admission").val($("#identifier_admission").val());
+		$("#nameHidden_admission").val($("#name_admission").val());
+		$("#elderlyStatusHidden_admission").val($("#elderlyStatus_admission").combobox('getValue'));
+		$("#beHospitalizedBeginDateHiden_admission").val($("#beHospitalizedBeginDate_admission").val());
+		$("#beHospitalizedEndDateHidden_admission").val($("#beHospitalizedEndDate_admission").val());	
 	})
 	
 	$("#generateIdentifier_btn").click(function(){
