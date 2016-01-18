@@ -58,7 +58,46 @@ var reportNurseLevelStatistics = {
 	},
 	series: []
 };
-var chart = new Highcharts.Chart(reportNurseLevelStatistics);
-loadDataColumn(reportNurseLevelStatistics,
-		'../../console/reportNurseLevelStatistics/report.jhtml', 'statisticsDate',
-		'elderlyCount', 'nursingLevel');
+
+$(function(){
+	$("#reportNurseLevel-table-list").datagrid({
+		fitColumns:true,
+		pagination:true,
+		checkOnSelect:false,
+		url : "../../console/reportNurseLevelStatistics/report.jhtml",
+		loadMsg:message("yly.common.loading"),
+		striped:true,
+		pagination:false,
+		columns:[
+			    [
+			     {title:"护理级别",field:"nursingLevel.configValue",width:100,sortable:true},
+			     {title:"老人人数",field:"elderlyCount",width:100,sortable:true},
+			     {title:"数量",field:"donateCount",width:100,sortable:true},
+			     {title:"统计周期",field:"statisticsDate",width:100,sortable:true,
+			    	 formatter: function(value,row,index){
+		    			if(value != null){
+		    				
+			    	  		return new Date(value).Format("yyyy年MM月");
+			    	  	}
+			    	  }
+			     }
+			 ]
+		],
+		rowStyler: function(index,row){
+			if (index % 2 == 0){
+				return 'background-color:#D4D4D4;';
+			}
+		},
+		onLoadSuccess: function(data){
+			reportNurseLevelStatistics.series= [];
+			refreshColumn(reportNurseLevelStatistics,
+					data.rows, 'statisticsDate',
+					'elderlyCount', 'nursingLevel');
+		}
+	});
+	$("#report_nurse_level_search_btn").click(function(){
+		  var _queryParams = $("#report_nurse_level_search_form").serializeJSON();
+		  $('#reportNurseLevel-table-list').datagrid('options').queryParams = _queryParams;
+		  $("#reportNurseLevel-table-list").datagrid('reload');
+		})
+});

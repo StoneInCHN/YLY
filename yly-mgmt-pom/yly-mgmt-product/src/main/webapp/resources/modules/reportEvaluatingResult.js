@@ -7,8 +7,8 @@ $(function(){
 	    width:250,
 	    editable:false,
 	    onChange:function(value){
-	    	loadDataPie(evaluatingResultReport,
-			'../../console/reportEvaluatingResult/report.jhtml',{evaluatingFormId:value},null,null,'evaluatingResultName','elderlyCount');
+//	    	loadDataPie(evaluatingResultReport,
+//			'../../console/reportEvaluatingResult/report.jhtml',{evaluatingFormId:value},null,null,'evaluatingResultName','elderlyCount');
 	    	$("#reportEvaluatingResult-table-list").datagrid("reload",{evaluatingFormId:value});
 	    },
 	    loadFilter:function(data){
@@ -122,8 +122,6 @@ var evaluatingResultReport = {
 		data : []
 	} ]
 };
-loadDataPie(evaluatingResultReport,
-		'../../console/reportEvaluatingResult/report.jhtml',null,null,null,'evaluatingResultName','elderlyCount');
 
 $("#reportEvaluatingResult-table-list").datagrid({
 	title:"评估结果统计",
@@ -152,6 +150,15 @@ $("#reportEvaluatingResult-table-list").datagrid({
 		if (index % 2 == 0){
 			return 'background-color:#D4D4D4;';
 		}
+	},
+	onLoadSuccess:function(data){
+		evaluatingResultReport.series=[ {
+			type : 'pie',
+			name : '人数',
+			data : []
+		} ];
+		refreshPie(evaluatingResultReport,data.rows,
+				null,null,'evaluatingResultName','elderlyCount');
 	}
 
 });

@@ -150,6 +150,12 @@ $(function(){
 			if (index % 2 == 0){
 				return 'background-color:#D4D4D4;';
 			}
+		},
+		onLoadSuccess: function(data){
+			donateDetailReport.series= [{type: 'pie', name:'占比', data: []}];
+			refreshPie(donateDetailReport,data.rows,
+	    			null,null,
+	    			'donateName','donateCount');
 		}
 
 	});
@@ -180,15 +186,10 @@ $(function(){
 					selectOptions.push(value);
 				}
 			}
-			
-			
 			return selectOptions;
 		},
 	    onChange:function(value){
 	    	$("#reportDonateStatistics-table-list").datagrid("reload",{donateStatisticsCycle:value});
-	    	loadDataPie(donateDetailReport,
-	    			'../../console/reportDonateStatistics/report.jhtml', {donateStatisticsCycle:value},null,null,
-	    			'donateName','donateCount');
 	    }
 	});  
 	

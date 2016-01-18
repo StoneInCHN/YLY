@@ -56,11 +56,6 @@ var reportElderlyEvent = {
 	},
 	series : []
 };
-//var chart = new Highcharts.Chart(reportElderlyEvent);
-//loadDataLine(reportElderlyEvent,
-//		'../../console/reportElderlyEvent/report.jhtml',null, 'eventStatiticsCycle',
-//		[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
-//				'一般事件' ]);
 
 $("#reportElderlyEvent-table-list").datagrid({
 	fitColumns:true,

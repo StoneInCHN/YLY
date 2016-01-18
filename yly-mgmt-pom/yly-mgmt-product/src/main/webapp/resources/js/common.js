@@ -148,13 +148,15 @@ function listRemove(id, url) {
  * 老人查询功能
  */
 function searchElderlyInfo(id) {
-	if(id=="checkoutCharge"){//办理出院
+	if (id == "checkoutCharge") {// 办理出院
 		var checkoutFlag = false;
-		if(!$("#addCheckoutCharge_checkoutNow").is(":checked") && $("#addCheckoutCharge_checkoutDate").val() == ""){
-			$.messager.alert(message("yly.common.prompt"),message("yly.checkout.keyin_checkout_date"),'warning');
-			checkoutFlag =  true;
+		if (!$("#addCheckoutCharge_checkoutNow").is(":checked")
+				&& $("#addCheckoutCharge_checkoutDate").val() == "") {
+			$.messager.alert(message("yly.common.prompt"),
+					message("yly.checkout.keyin_checkout_date"), 'warning');
+			checkoutFlag = true;
 		}
-		if(checkoutFlag){
+		if (checkoutFlag) {
 			return;
 		}
 	}
@@ -189,23 +191,31 @@ function searchElderlyInfo(id) {
 												striped : true,
 												onDblClickRow : function(
 														rowIndex, rowData) {
-													if(id=="checkoutCharge"){//办理出院
-														if(rowData.elderlyStatus =="OUT_NURSING_HOME" || rowData.elderlyStatus =="IN_PROGRESS_CHECKOUT"){
-															$.messager.alert(message("yly.common.prompt"),message("yly.checkout.elderlyStatus.invalid",rowData.name),'warning');
+													if (id == "checkoutCharge") {// 办理出院
+														if (rowData.elderlyStatus == "OUT_NURSING_HOME"
+																|| rowData.elderlyStatus == "IN_PROGRESS_CHECKOUT") {
+															$.messager
+																	.alert(
+																			message("yly.common.prompt"),
+																			message(
+																					"yly.checkout.elderlyStatus.invalid",
+																					rowData.name),
+																			'warning');
 															return false;
 														}
-														
-														var dataMap ={};
-														dataMap.id = rowData.id; //老人id
-														dataMap.name = rowData.name; //老人姓名
-														dataMap.identifier = rowData.identifier; //老人编号
-														dataMap.bedLocation = rowData.bedLocation; //床位
-													 	if(rowData.nursingLevel != null){
-													 		dataMap.nursingLevel =rowData.nursingLevel.configValue; //护理级别
+
+														var dataMap = {};
+														dataMap.id = rowData.id; // 老人id
+														dataMap.name = rowData.name; // 老人姓名
+														dataMap.identifier = rowData.identifier; // 老人编号
+														dataMap.bedLocation = rowData.bedLocation; // 床位
+														if (rowData.nursingLevel != null) {
+															dataMap.nursingLevel = rowData.nursingLevel.configValue; // 护理级别
 														}
-													 	dataMap.advanceChargeAmount = rowData.advanceChargeAmount; //预存款
-														detectBillingUnderElderly(dataMap);//查找该老人下所有账单,并将账单明细加载到添加办理出院页面
-														$('#searchElderlyInfo').dialog("close");
+														dataMap.advanceChargeAmount = rowData.advanceChargeAmount; // 预存款
+														detectBillingUnderElderly(dataMap);// 查找该老人下所有账单,并将账单明细加载到添加办理出院页面
+														$('#searchElderlyInfo')
+																.dialog("close");
 														return false;
 													}
 													$("#" + id + "ID").val(
@@ -625,7 +635,7 @@ function formReset(formId, tableId) {
 	$('#' + tableId).datagrid('options').queryParams = _queryParams;
 }
 
-//返回指定长度字符串截取,超出部分不显示,以...作为后缀显示
+// 返回指定长度字符串截取,超出部分不显示,以...作为后缀显示
 function formatLongString(str, len) {
 	if (str != null && str != "" && len > 0) {
 		if (str.length > len) {
@@ -637,9 +647,9 @@ function formatLongString(str, len) {
 	}
 	return "";
 }
-//导出excel数据
+// 导出excel数据
 function exportData(control, form) {
-	//建议一次导出excel数据的最大值为500
+	// 建议一次导出excel数据的最大值为500
 	var maxSize = 500;
 	$
 			.ajax({
@@ -650,12 +660,12 @@ function exportData(control, form) {
 					if (result.count != null) {
 						var text = "";
 						if (result.count == 0) {
-							//"当前条件无可导出的数据。"
+							// "当前条件无可导出的数据。"
 							text = message("yly.common.notice.current_condition_no_export_data");
 							$.messager.alert(message("yly.common.notice"),
 									text, 'warning');
 						} else if (result.count <= maxSize) {
-							//"确定导出 {0}条记录？"
+							// "确定导出 {0}条记录？"
 							text = message(
 									"yly.common.notice.comfirm_export_data",
 									result.count);
@@ -678,7 +688,7 @@ function exportData(control, form) {
 
 											});
 						} else {
-							//"导出数据超过 "+maxSize+" 条数据，建议搜索查询条件以缩小查询范围，再导出。";
+							// "导出数据超过 "+maxSize+" 条数据，建议搜索查询条件以缩小查询范围，再导出。";
 							text = message(
 									"yly.common.notice.export_data_too_much_advice_use_filter",
 									maxSize);
@@ -688,7 +698,9 @@ function exportData(control, form) {
 											text,
 											function(r) {
 												if (!r) {
-													//"导出共有"+ result.count +"条数据，导出超过 "+maxSize+" 条数据可能需要您耐心等待，仍需操作请确定继续。";
+													// "导出共有"+ result.count
+													// +"条数据，导出超过 "+maxSize+"
+													// 条数据可能需要您耐心等待，仍需操作请确定继续。";
 													text = message(
 															"yly.common.notice.need_wait_export_too_much_data",
 															result.count,
@@ -733,15 +745,15 @@ function exportData(control, form) {
 			});
 }
 
-function loadDataPie(id, url,args, nameArray, dataArray,nameField,valueField) {
+function loadDataPie(id, url, args, nameArray, dataArray, nameField, valueField) {
 	id.series[0].data = [];
 	$.ajax({
 		url : url,
 		type : "post",
-		data: args,
+		data : args,
 		cache : false,
 		success : function(data) {
-			id.series[0].data=[];
+			id.series[0].data = [];
 			if (data.length == 1 && nameArray != null && dataArray != null) {
 				if (id.chart.renderTo == 'elderlyLiveStatiticsReportId') {
 					var value = [ nameArray[0], data[0]['inUsingZoomCount'] ];
@@ -759,8 +771,7 @@ function loadDataPie(id, url,args, nameArray, dataArray,nameField,valueField) {
 				}
 			} else {
 				for (var i = 0; i < data.length; i++) {
-					var value = [ data[i][nameField],
-							data[i][valueField] ];
+					var value = [ data[i][nameField], data[i][valueField] ];
 					id.series[0].data.push(value);
 				}
 
@@ -771,17 +782,17 @@ function loadDataPie(id, url,args, nameArray, dataArray,nameField,valueField) {
 	});
 
 };
-function loadDataLine(id, url,args, categoryName, valueName, viewName) {
+function loadDataLine(id, url, args, categoryName, valueName, viewName) {
 	$.ajax({
 		url : url,
 		type : "post",
 		cache : false,
-		data: args,
+		data : args,
 		success : function(data) {
 			if (data.length > 0) {
 				id.xAxis.categories = [];
-				if( valueName instanceof Array){
-					for(var j = 0; j< valueName.length;j++){
+				if (valueName instanceof Array) {
+					for (var j = 0; j < valueName.length; j++) {
 						var value = new Object();
 						value.name = viewName[j];
 						value.data = [];
@@ -791,11 +802,11 @@ function loadDataLine(id, url,args, categoryName, valueName, viewName) {
 				for (var i = 0; i < data.length; i++) {
 					id.xAxis.categories.push(new Date(data[i][categoryName])
 							.Format("yyyy年MM月"));
-					if( valueName instanceof Array){
-						for(var j = 0; j< valueName.length;j++){
+					if (valueName instanceof Array) {
+						for (var j = 0; j < valueName.length; j++) {
 							id.series[j].data.push(data[i][valueName[j]]);
 						}
-					}else{
+					} else {
 						id.series[0].data.push(data[i][valueName]);
 					}
 				}
@@ -806,84 +817,92 @@ function loadDataLine(id, url,args, categoryName, valueName, viewName) {
 	});
 
 }
-function loadDataColumn(id, url,categoryName, valueName, seriesName) {
+function loadDataColumn(id, url, categoryName, valueName, seriesName) {
 	$.ajax({
-		url : url,
-		type : "post",
-		cache : false,
-		success : function(data) {
+				url : url,
+				type : "post",
+				cache : false,
+				success : function(data) {
 
-			if (data.length > 0) {
-				var viewName = [];
-				var categoryValue = [];
-				
-				if(id.chart.renderTo == 'donateStatisticsReportId'){
-					for(var k = 0; k < data.length; k++){
-						var category = new Date(data[k][categoryName]).Format("yyyy年MM月");
-						if(categoryValue.indexOf(category) == -1){
-							categoryValue.push(category);
-						}
-					}
-					var index = 0;
-					for(var j = 0; j<categoryValue.length; j++){
-						var total = 0 ;
-						var moneyValue = 0;
-						for(var i = 0; i < data.length; i++){
-							var category = new Date(data[i][categoryName]).Format("yyyy年MM月");
-							var type = data[i]['donateType'];
-							if(type == 'MONEY' && categoryValue[j] == category){
-								moneyValue = data[i].donateCount;
-							}else if(type == 'ITEM' && categoryValue[j] == category){
-								total = total+data[i].donateCount;
-							}
-						}
-						id.series[0].data.push(moneyValue);
-						id.series[1].data[index] = total;
-						index++;
-					}
-				}else{
-					for(var k = 0; k < data.length; k++){
-						var name = data[k][seriesName].configValue;
-						var category = new Date(data[k][categoryName]).Format("yyyy年MM月");
-						if(categoryValue.indexOf(category) == -1){
-							categoryValue.push(category);
-						}
-						if(viewName.indexOf(name) == -1){
-							viewName.push(name);
-							var value = new Object();
-							value.name = name;
-							value.data = [];
-							id.series.push(value);
-						}
-					}
-					for(var k = 0;k < categoryValue.length; k++){
-						for(var j = 0; j<viewName.length; j++){
-							//如果该分类没数据，用0填充
-							var viewValue = 0;
-							for (var i = 0; i < data.length; i++) {
-								var date = new Date(data[i][categoryName]).Format("yyyy年MM月");
-								if(viewName[j] == data[i][seriesName].configValue
-										&& date == categoryValue[k]){
-									viewValue=data[i][valueName]
+					if (data.length > 0) {
+						var viewName = [];
+						var categoryValue = [];
+
+						if (id.chart.renderTo == 'donateStatisticsReportId') {
+							for (var k = 0; k < data.length; k++) {
+								var category = new Date(data[k][categoryName])
+										.Format("yyyy年MM月");
+								if (categoryValue.indexOf(category) == -1) {
+									categoryValue.push(category);
 								}
 							}
-							id.series[j].data.push(viewValue);
-						}
-					}
-					
-				}
-				id.xAxis.categories = categoryValue;
-			}
-			var chart = new Highcharts.Chart(id);
-		}
+							var index = 0;
+							for (var j = 0; j < categoryValue.length; j++) {
+								var total = 0;
+								var moneyValue = 0;
+								for (var i = 0; i < data.length; i++) {
+									var category = new Date(
+											data[i][categoryName])
+											.Format("yyyy年MM月");
+									var type = data[i]['donateType'];
+									if (type == 'MONEY'
+											&& categoryValue[j] == category) {
+										moneyValue = data[i].donateCount;
+									} else if (type == 'ITEM'
+											&& categoryValue[j] == category) {
+										total = total + data[i].donateCount;
+									}
+								}
+								id.series[0].data.push(moneyValue);
+								id.series[1].data[index] = total;
+								index++;
+							}
+						} else {
+							for (var k = 0; k < data.length; k++) {
+								var name = data[k][seriesName].configValue;
+								var category = new Date(data[k][categoryName])
+										.Format("yyyy年MM月");
+								if (categoryValue.indexOf(category) == -1) {
+									categoryValue.push(category);
+								}
+								if (viewName.indexOf(name) == -1) {
+									viewName.push(name);
+									var value = new Object();
+									value.name = name;
+									value.data = [];
+									id.series.push(value);
+								}
+							}
+							for (var k = 0; k < categoryValue.length; k++) {
+								for (var j = 0; j < viewName.length; j++) {
+									// 如果该分类没数据，用0填充
+									var viewValue = 0;
+									for (var i = 0; i < data.length; i++) {
+										var date = new Date(
+												data[i][categoryName])
+												.Format("yyyy年MM月");
+										if (viewName[j] == data[i][seriesName].configValue
+												&& date == categoryValue[k]) {
+											viewValue = data[i][valueName]
+										}
+									}
+									id.series[j].data.push(viewValue);
+								}
+							}
 
-	});
+						}
+						id.xAxis.categories = categoryValue;
+					}
+					var chart = new Highcharts.Chart(id);
+				}
+
+			});
 }
-function refreshLine(id,data,categoryName, valueName, viewName) {
+function refreshLine(id, data, categoryName, valueName, viewName) {
 	if (data.length > 0) {
 		id.xAxis.categories = [];
-		if( valueName instanceof Array){
-			for(var j = 0; j< valueName.length;j++){
+		if (valueName instanceof Array) {
+			for (var j = 0; j < valueName.length; j++) {
 				var value = new Object();
 				value.name = viewName[j];
 				value.data = [];
@@ -893,14 +912,110 @@ function refreshLine(id,data,categoryName, valueName, viewName) {
 		for (var i = 0; i < data.length; i++) {
 			id.xAxis.categories.push(new Date(data[i][categoryName])
 					.Format("yyyy年MM月"));
-			if( valueName instanceof Array){
-				for(var j = 0; j< valueName.length;j++){
+			if (valueName instanceof Array) {
+				for (var j = 0; j < valueName.length; j++) {
 					id.series[j].data.push(data[i][valueName[j]]);
 				}
-			}else{
+			} else {
 				id.series[0].data.push(data[i][valueName]);
 			}
 		}
 	}
 	var chart = new Highcharts.Chart(id);
 }
+function refreshPie(id, data, nameArray, dataArray, nameField, valueField) {
+	if (data.length == 1 && nameArray != null && dataArray != null) {
+		if (id.chart.renderTo == 'elderlyLiveStatiticsReportId') {
+			var value = [ nameArray[0], data[0]['inUsingZoomCount'] ];
+			id.series[0].data.push(value);
+			var free = [ nameArray[1],
+					data[0]['totalZoomCount'] - data[0]['inUsingZoomCount'] ];
+			id.series[0].data.push(free);
+		} else {
+			for (var i = 0; i < nameArray.length; i++) {
+				var value = [ nameArray[i], data[0][dataArray[i]] ];
+				id.series[0].data.push(value);
+			}
+		}
+	} else {
+		for (var i = 0; i < data.length; i++) {
+			var value = [ data[i][nameField], data[i][valueField] ];
+			id.series[0].data.push(value);
+		}
+
+	}
+	var chart = new Highcharts.Chart(id);
+}
+
+function refreshColumn(id, data, categoryName, valueName, seriesName) {
+		if (data.length > 0) {
+			var viewName = [];
+			var categoryValue = [];
+
+			if (id.chart.renderTo == 'donateStatisticsReportId') {
+				for (var k = 0; k < data.length; k++) {
+					var category = new Date(data[k][categoryName])
+							.Format("yyyy年MM月");
+					if (categoryValue.indexOf(category) == -1) {
+						categoryValue.push(category);
+					}
+				}
+				var index = 0;
+				for (var j = 0; j < categoryValue.length; j++) {
+					var total = 0;
+					var moneyValue = 0;
+					for (var i = 0; i < data.length; i++) {
+						var category = new Date(
+								data[i][categoryName])
+								.Format("yyyy年MM月");
+						var type = data[i]['donateType'];
+						if (type == 'MONEY'
+								&& categoryValue[j] == category) {
+							moneyValue = data[i].donateCount;
+						} else if (type == 'ITEM'
+								&& categoryValue[j] == category) {
+							total = total + data[i].donateCount;
+						}
+					}
+					id.series[0].data.push(moneyValue);
+					id.series[1].data[index] = total;
+					index++;
+				}
+			} else {
+				for (var k = 0; k < data.length; k++) {
+					var name = data[k][seriesName].configValue;
+					var category = new Date(data[k][categoryName])
+							.Format("yyyy年MM月");
+					if (categoryValue.indexOf(category) == -1) {
+						categoryValue.push(category);
+					}
+					if (viewName.indexOf(name) == -1) {
+						viewName.push(name);
+						var value = new Object();
+						value.name = name;
+						value.data = [];
+						id.series.push(value);
+					}
+				}
+				for (var k = 0; k < categoryValue.length; k++) {
+					for (var j = 0; j < viewName.length; j++) {
+						// 如果该分类没数据，用0填充
+						var viewValue = 0;
+						for (var i = 0; i < data.length; i++) {
+							var date = new Date(
+									data[i][categoryName])
+									.Format("yyyy年MM月");
+							if (viewName[j] == data[i][seriesName].configValue
+									&& date == categoryValue[k]) {
+								viewValue = data[i][valueName]
+							}
+						}
+						id.series[j].data.push(viewValue);
+					}
+				}
+
+			}
+			id.xAxis.categories = categoryValue;
+		}
+		var chart = new Highcharts.Chart(id);
+	}
