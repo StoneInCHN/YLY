@@ -77,7 +77,7 @@ var checkoutPay_manager_tool = {
 												},
 												success:function(result,response,status){
 													    showSuccessMsg(result.content);
-													    console.log(result);
+													    close_addCheckoutPay_dialog();
 													    if(result.type == "success"){
 													    	$.messager.progress('close');
 															$('#addCheckoutPay').dialog("close");
@@ -140,6 +140,7 @@ $(function(){
 							if(billing != null){
 								$('#viewCheckoutPay_elderlyInfo_outHospitalizedDate').html(new Date(billing.elderlyInfo.outHospitalizedDate).
 										Format(message("yly.common.dateFormatChina")));
+								$('#viewCheckoutPay_elderlyInfoLable').html(message("yly.common.elderlyInfo"));
 								showElderlyInfo(billing,"viewCheckoutPay_elderlyInfo_remark");//显示老人基本信息
 								$('#viewCheckoutPay_bedNurseAmount').html(message("yly.bedNurse.charge.label",(billing.bedNurseCharge.bedAmount+billing.bedNurseCharge.nurseAmount).toFixed(2)));
 								$('#viewCheckoutPay_bedNurseCharge_remark').html(billing.bedNurseCharge.remark);
@@ -177,7 +178,7 @@ $(function(){
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#checkoutPayDetail').dialog("close");
+						close_viewCheckoutPay_dialog();
 					}
 			    }]
 			});   
@@ -312,30 +313,28 @@ $(function(){
 	});
 });
 
-function clearCheckoutText(){
-	$('#addCheckoutPay_elderlyInfo_outHospitalizedDate').textbox('setValue',null);
-	$('#addCheckoutPay_elderlyInfo_name').textbox('setValue',null);
-	$('#addCheckoutPay_elderlyInfo_identifier').textbox('setValue',null);
-	$('#addCheckoutPay_elderlyInfo_bedLocation').textbox('setValue',null);
-	$('#addCheckoutPay_elderlyInfo_nursingLevel_configValue').textbox('setValue',null);
-	$('#addCheckoutPay_bedNurseAmount').numberbox('setValue', null);
-	$('#addCheckoutPay_bedNurseCharge_remark').textbox('setValue',null);
-	$('#addCheckoutPay_mealAmount').numberbox('setValue', null);
-	$('#addCheckoutPay_mealCharge_remark').textbox('setValue', null);
-	
-	$('#addCheckoutPay_waterCount').numberbox('setValue',null);
-	$('#addCheckoutPay_waterAmount').numberbox('setValue',null);
-	$('#addCheckoutPay_electricityCount').numberbox('setValue',null);
-	$('#addCheckoutPay_electricityAmount').numberbox('setValue',null);
-	$('#addCheckoutPay_waterPrice').numberbox('setValue',null);
-	$('#addCheckoutPay_electricityPrice').numberbox('setValue',null);
-	
-	$('#addCheckoutPay_personalizedAmount').numberbox('setValue',null);
-	$('#addCheckoutPay_personalizedCharge_remark').textbox('setValue',null);
-	$('#addCheckoutPay_totalAmount').numberbox('setValue',null);
-	
+function clearAddCheckoutPayText(){
+		$("input").each(function(){
+		   $(this).val(null);
+		});
+		$("textarea").each(function(){
+			   $(this).val(null);
+		});		
 }
 function close_addCheckoutPay_dialog(){
-	clearCheckoutText();
+	clearAddCheckoutPayText();
 	$('#addCheckoutPay').dialog("close");
+}
+function clearViewCheckoutPayText(){
+	alert("clearViewCheckoutPayText");
+	$("p[title=viewCheckoutPay]").each(function(){
+	   $(this).html(null);
+	});
+	$("span[title=viewCheckoutPay]").each(function(){
+		   $(this).html(null);
+	});		
+}
+function close_viewCheckoutPay_dialog(){
+	clearViewCheckoutPayText();
+	$('#checkoutPayDetail').dialog("close");
 }

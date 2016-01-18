@@ -5,13 +5,6 @@ p
 {
 text-align:center;
 }
-.printBill{
-	white-space:pre-wrap;
-	border:1px solid #b1b2b3;
-	border-radius:4px 4px 4px 4px;
-	padding:4px 12px;
-	text-align:left;
-}
 </style>
 <div>
 	  <fieldset>
@@ -159,27 +152,27 @@ text-align:center;
 <div id="checkoutPayDetail">
 	<form id="checkoutPay_form" method="post" class="form-table"> 
 					 <p>
-	   	    		 <p style="text-align:left">出院日期: 
-	    			 <span  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;" id="viewCheckoutPay_elderlyInfo_outHospitalizedDate"></span>
+	   	    		 <p style="text-align:left">出院日期：
+	    			 <span title="viewCheckoutPay"  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;" id="viewCheckoutPay_elderlyInfo_outHospitalizedDate"></span>
 	    			 </p> 
-						<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_elderlyInfoLable">老人基本信息：</p>
-						<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_elderlyInfo_remark"></p>
-	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_bedNurseAmount"></p>
-	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_bedNurseCharge_remark"></p>
-	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_mealAmount"></p>
-	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_mealCharge_remark"></p>
-	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_personalizedAmount"></p>
-	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_personalizedCharge_remark"></p>
-	    			  	<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_waterElectricityAmount"></p>
-	    			  	<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_waterElectricity_remark"></p>
-	    				<p style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_djustmentLable"></p>
-	    				<p style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_djustmentService"></p>
+						<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_elderlyInfoLable"></p>
+						<p title="viewCheckoutPay" style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_elderlyInfo_remark"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_bedNurseAmount"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_bedNurseCharge_remark"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_mealAmount"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;" id="viewCheckoutPay_mealCharge_remark"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_personalizedAmount"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_personalizedCharge_remark"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;" id="viewCheckoutPay_waterElectricityAmount"></p>
+	    			  	<p title="viewCheckoutPay" style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_waterElectricity_remark"></p>
+	    				<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_djustmentLable"></p>
+	    				<p title="viewCheckoutPay" style="white-space:pre-wrap;border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:4px 12px;text-align:left;"  id="viewCheckoutPay_djustmentService"></p>
 	    				<p>			  	    			  		    			  		    
 	    			 <table>
 	    			 	<tr>
 	    			 		<td style="padding:4px 32px 4px 0px">
 	    			 				使用了预存款: 
-	    			 				<span  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;width:90px" id="viewCheckoutPay_advanceChargeAmount"></span>
+	    			 				<span title="viewCheckoutPay"  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;width:90px" id="viewCheckoutPay_advanceChargeAmount"></span>
 	    			  				付款 
 	    			  		</td>
 	    			  		<td style="margin:4px;padding:4px 32px 4px 0px">
@@ -187,11 +180,10 @@ text-align:center;
 	    			  		</td>
 							<td style="padding:4px 32px 4px 0px">
 	    							总金额(已扣除押金)：
-	    							<span style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:right;width:90px"  id="viewCheckoutPay_totalAmount"></span>
+	    							<span title="viewCheckoutPay" style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:right;width:90px"  id="viewCheckoutPay_totalAmount"></span>
 	    					</td>
 	    				</tr>
 	    			</table>
-
 	    <br>
 	</form></div>
 <div id="searchBilling"></div>

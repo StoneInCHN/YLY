@@ -65,6 +65,7 @@ var messages = {
 	"yly.common.print":"打印",
 	"yly.common.action":"操作",
 	"yly.common.dateFormatChina":"yyyy年MM月dd日",
+	"yly.common.elderlyInfo":"老人基本信息",
 	
 	/**
 	 * charge manage
@@ -153,6 +154,7 @@ var messages = {
 	"yly.personalized.charge.label" : "个性化服务费：￥ {0}",
 	"yly.deposit.charge.label":"押金：￥ {0}",
 	"yly.waterElectricity.remark.label":"截止到办理出院，欠水（吨）：{0} \t [单价 ￥ {1}/ 吨] \t 水费小计：￥{2}\n截止到办理出院，欠电（度）：{3} \t [单价 ￥ {4}/ 度] \t 电费小计：￥{5}\n",
+	"yly.checkout.outHospitalizedDate":"出院日期: ",
 	
 	/**
 	 * charge config

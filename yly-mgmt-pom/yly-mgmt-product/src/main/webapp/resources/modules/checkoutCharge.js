@@ -33,7 +33,7 @@ var checkoutCharge_manager_tool = {
 												success:function(result,response,status){
 													$.messager.progress('close');
 													showSuccessMsg(result.content);
-													closedialog();
+													close_addCheckoutCharge_dialog
 													$("#checkoutCharge-table-list").datagrid('reload');
 												},
 												error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -50,7 +50,7 @@ var checkoutCharge_manager_tool = {
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						closedialog();
+						close_addCheckoutCharge_dialog
 					}
 			    }],
 			    onOpen:function(){
@@ -65,7 +65,7 @@ var checkoutCharge_manager_tool = {
 					});
 			    },
 			    onClose:function(){
-			    	
+			    	close_addCheckoutCharge_dialog
 			    }
 			});  
 		},
@@ -152,7 +152,7 @@ $(function(){
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#checkoutChargeDetail').dialog("close");
+						 close_viewCheckoutCharge_dialog();
 					}
 			    }]
 			});   
@@ -219,18 +219,7 @@ $(function(){
 		    	  	}
 		      	}}		      
 		   ]
-		],
-		onLoadSuccess:function(data){
-	           $(".tips-span").tooltip({
-	        	   position: 'top',
-	               onShow: function(){
-	                   $(this).tooltip('tip').css({ 
-	                       width:'300'
-	                   });
-	               }
-	           });
-	        }
-
+		]
 	});
 	
 	$("#checkoutCharge_search_btn").click(function(){
@@ -525,36 +514,33 @@ function checkoutNow(){
 	}
 }
 
-function clearCheckoutText(){
-	$("#addCheckoutCharge_elderlyInfoID").val(null);
-	$("#addCheckoutCharge_elderlyName").textbox('setValue',null);
-	$("#addCheckoutCharge_elderlyIdentifier").textbox('setValue',null);
-	$("#addCheckoutCharge_bedRoom").textbox('setValue',null);
-	$("#addCheckoutCharge_nurseLevel").textbox('setValue',null);
-	$("#addCheckoutCharge_advanceChargeAmount").numberbox('setValue',null);
-	$("#addCheckoutCharge_totalDepositCharge").numberbox('setValue',null);
-	$("#addCheckoutCharge_totalBedNurseCharge").numberbox('setValue',null);
-	$("#addCheckoutCharge_totalMealCharge").numberbox('setValue',null);
-	$("#addCheckoutCharge_totalPersonalizedServiceCharge").numberbox('setValue',null);
-	$("#addCheckoutCharge_totalCharge").numberbox('setValue',null);
-	$("#addCheckoutCharge_depositRemark").textbox('setValue',null);
-	$("#addCheckoutCharge_bedNurseRemark").textbox('setValue',null);
-	$("#addCheckoutCharge_mealRemark").textbox('setValue',null);
-	$("#addCheckoutCharge_personalizedServiceRemark").textbox('setValue',null);
-	$("#addCheckoutCharge_totalChargeWithoutAdvance").val(null);
-	$("#addCheckoutCharge_bedCharge").val(null);
-	$("#addCheckoutCharge_nurseCharge").val(null);
-	$("#addCheckoutCharge_waterCount").numberbox('setValue',null);
-	$("#addCheckoutCharge_waterAmount").numberbox('setValue',null);
-	$("#addCheckoutCharge_electricityCount").numberbox('setValue',null);
-	$("#addCheckoutCharge_electricityAmount").numberbox('setValue',null);
+function clearAddCheckoutChargeText(){
+		$("input").each(function(){
+		   $(this).val(null);
+		});
+		$("textarea").each(function(){
+			   $(this).val(null);
+		});	
 }
-function closedialog(){
+function close_addCheckoutCharge_dialog(){
 	$("#addCheckoutCharge_checkoutNow").show();
 	$("#addCheckoutCharge_checkoutDate").show();
 	$("#addCheckoutCharge_checkoutNow").removeAttr("disabled"); 
 	$("#addCheckoutCharge_checkoutDate").removeAttr("disabled"); 
 	$("#addCheckoutCharge_checkoutDate").val(null);
-	clearCheckoutText();
+	clearAddCheckoutChargeText();
 	 $('#addCheckoutCharge').dialog("close");
+}
+function clearViewCheckoutChargeText(){
+	$("input").each(function(){
+	   $(this).val(null);
+	});
+	$("textarea").each(function(){
+		   $(this).val(null);
+		});	
+	$('#viewCheckoutCharge_djustmentService').html(null);
+}
+function close_viewCheckoutCharge_dialog(){
+	clearViewCheckoutText();
+	$('#checkoutChargeDetail').dialog("close");
 }
