@@ -857,40 +857,7 @@ function loadDataColumn(id, url, categoryName, valueName, seriesName) {
 								id.series[1].data[index] = total;
 								index++;
 							}
-						} else {
-							for (var k = 0; k < data.length; k++) {
-								var name = data[k][seriesName].configValue;
-								var category = new Date(data[k][categoryName])
-										.Format("yyyy年MM月");
-								if (categoryValue.indexOf(category) == -1) {
-									categoryValue.push(category);
-								}
-								if (viewName.indexOf(name) == -1) {
-									viewName.push(name);
-									var value = new Object();
-									value.name = name;
-									value.data = [];
-									id.series.push(value);
-								}
-							}
-							for (var k = 0; k < categoryValue.length; k++) {
-								for (var j = 0; j < viewName.length; j++) {
-									// 如果该分类没数据，用0填充
-									var viewValue = 0;
-									for (var i = 0; i < data.length; i++) {
-										var date = new Date(
-												data[i][categoryName])
-												.Format("yyyy年MM月");
-										if (viewName[j] == data[i][seriesName].configValue
-												&& date == categoryValue[k]) {
-											viewValue = data[i][valueName]
-										}
-									}
-									id.series[j].data.push(viewValue);
-								}
-							}
-
-						}
+						} 
 						id.xAxis.categories = categoryValue;
 					}
 					var chart = new Highcharts.Chart(id);

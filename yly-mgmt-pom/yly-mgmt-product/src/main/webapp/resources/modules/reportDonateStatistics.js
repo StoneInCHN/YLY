@@ -160,15 +160,12 @@ $(function(){
 
 	});
 	
-//	var selectId = 0;
 	$('#reportDonateDate').combobox({    
 	    url:'../../console/reportDonateStatistics/report.jhtml',    
 	    valueField:'donateStatisticsCycleValue',
 	    textField:'donateStatisticsCycle',
 	    width:250,
 	    editable:false,
-	    onChange:function(value){
-	    },
 	    formatter: function(row){
 			var opts = $(this).combobox('options');
 			data = row[opts.textField];
@@ -177,12 +174,18 @@ $(function(){
 			return row[opts.textField];
 		},
 		loadFilter: function(data){
+			
 			var opts = $(this).combobox('options');
 			var selectOptions = [];
 			for(var i = 0 ; i < data.length; i++){
 				var value = {"donateStatisticsCycle":data[i]['donateStatisticsCycle']}
-				var value2 = {"donateStatisticsCycle":data[i]['donateStatisticsCycle']}
-				if(selectOptions.indexOf(value) == -1){
+				var flag = false;
+				$.each(selectOptions, function(j) {     
+				    if(selectOptions[j]  = data[i]['donateStatisticsCycle']){
+				    	flag = true;
+				    }          
+				});
+				if(falg == false){
 					selectOptions.push(value);
 				}
 			}
