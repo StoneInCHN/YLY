@@ -1,6 +1,8 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -23,6 +25,8 @@ import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.Notification;
+import com.yly.framework.ordering.Ordering;
+import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
@@ -168,6 +172,23 @@ public class NotificationController extends BaseController
   public String details(ModelMap model, Long id) {
     Notification notification = notificationService.find(id);
     model.addAttribute("notification", notification);
+    return "notification/details";
+  }
+  
+  @RequestMapping(value = "/showOnMain", method = RequestMethod.GET)
+  public @ResponseBody List<Notification> showOnMain(ModelMap model) {
+    
+    List<Ordering> orders = new ArrayList<Ordering> ();
+    
+    Ordering ordering =new Ordering ();
+    ordering.setProperty ("createDate");
+    ordering.setDirection (Direction.desc);
+    return notificationService.findList (4, null, orders, true, null);
+  }
+  @RequestMapping(value = "/showOne", method = RequestMethod.GET)
+  public String showOne(ModelMap model, Long id) {
+    
+    model.put ("notification", notificationService.find (id));
     return "notification/details";
   }
 }

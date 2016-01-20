@@ -44,7 +44,7 @@ $(function(){
 				}); 
 			}
 		}
-	})
+	});
 	
 	$("#selectRoom").click(function(){
 		$("#searchElderlyInfo").dialog({    
@@ -183,60 +183,135 @@ $(function(){
 			['男','女'],
 			['male','female'],null,null);
 	//每月看病人数统计
-	 $(function () {
-         $('#elderlyMedicalReport').highcharts({
-        	 colors:['#004B97'],
-        	 chart:{
-        		 backgroundColor: {
-         			linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-         			stops: [
-         				[0, 'rgb(255, 255, 255)'],
-         				[1, 'rgb(240, 240, 255)']
-         			]
-         		},
-         		plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-         		plotBorderWidth: 1
-        	 },
-             title: {
-                 text: '每月看病人数统计',
-                 x: -20 //center
-             },
-             credits:{
-                 enabled:false // 禁用版权信息
-             },
-             xAxis: {
-            	 gridLineWidth: 1,
-         		 lineColor: '#000',
-                 categories: ['一月', '二月', '三月', '四月', '五月', '六月','七月', '八月', '九月', '十月', '十一月', '十二月']
-             },
-             yAxis: {
-            	 minorTickInterval: 'auto',
-         		lineColor: '#000',
-         		lineWidth: 1,
-         		tickWidth: 1,
-         		tickColor: '#000',
-                 title: {
-                     text: '人数'
-                 },
-                 plotLines: [{
-                     value: 0,
-                     width: 1,
-                     color: '#808080'
-                 }]
-             },
-             tooltip: {
-                 valueSuffix: '人'
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle',
-                 borderWidth: 0
-             },
-             series: [{
-                 name: '人数',
-                 data: [7, 8, 9, 14, 18, 21, 250, 26, 10, 180, 13, 9]
-             }]
-         });
-     });
+	var elderLivingMainReport={
+		colors: ['#50B432', '#058DC7', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+        chart: {
+        	renderTo: 'elderlyLivingMainReportId',
+            type: 'column'
+        },
+        credits:{
+            enabled:false // 禁用版权信息
+        },
+        title: {
+            text: '居住情况'
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            min: 0,
+
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+            align: 'right',
+            x: -70,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            formatter: function() {
+                return '<b>'+ this.x +'</b><br/>'+
+                    this.series.name +': '+ this.y +'<br/>'+
+                    'Total: '+ this.point.stackTotal;
+            }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                },
+                pointWidth: 20
+            }
+        },
+        series: [ {
+            name: '未使用',
+            data: []
+        },
+        {
+            name: '已使用',
+            data: []
+        }]
+    };
+	var chart = new Highcharts.Chart(elderLivingMainReport);
+	$.ajax({
+		url : "../../console/reportElderlyLiveStatitics/report.jhtml",
+		type : "post",
+		cache : false,
+		success : function(data) {
+			 if (data.length > 0) {
+				for (var i = 0; i < data.length; i++) {
+					
+					elderLivingMainReport.series[0].data.push(data[i].totalCount-data[i].inUsingCount);
+					elderLivingMainReport.series[1].data.push(data[i].inUsingCount);
+					elderLivingMainReport.xAxis.categories.push(data[i].roomType.configValue);
+				}
+
+			}
+			var chart = new Highcharts.Chart(elderLivingMainReport);
+		}
+
+	});
+	//右侧通知栏信息
+	$.ajax({
+		url : "../../console/notification/showOnMain.jhtml",
+		type : "get",
+		cache : false,
+		success : function(data) {
+			for(var i=0 ; i<data.length; i++){
+				var content = formatLongString(data[i].content, 20)
+				$("#notify-content")
+				.append('<li class="news-item">'+data[i].content+ '<a href="#" data-url="../../console/notification/showOne.jhtml?id='+data[i].id+'" style="float:right">Read more...</a></li>');	
+			}
+			
+			$(".notify").bootstrapNews({
+		        newsPerPage: 4,
+		        autoplay: true,
+				pauseOnHover: true,
+				navigation: false,
+		        direction: 'down',
+		        newsTickerInterval: 2000,
+		        onToDo: function () {
+		            //console.log(this);
+		        }
+		    });
+			
+			/**
+			 *绑定右侧点击事件 
+			 */
+			$("#notify-content .news-item a").click(function(){
+				var _this = $(this);
+				var _url = _this.attr("data-url");
+				if($('#manager-tabs').tabs("exists","通知消息")){
+					$('#manager-tabs').tabs("select","通知消息");
+
+					// 调用 'refresh' 方法更新选项卡面板的内容
+					var tab = $('#manager-tabs').tabs('getSelected');  // 获取选择的面板
+					tab.panel('refresh', _url);
+				}else{
+					$('#manager-tabs').tabs('add',{    
+					    title:"通知消息",    
+					    href:_url,    
+					    closable:true      
+					}); 
+				}
+			});
+		}
+
+	});
+	
+	
 })

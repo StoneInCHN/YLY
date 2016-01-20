@@ -317,9 +317,21 @@
 		    		<li><a href="#" >${message("yly.personnel.vacate")}</a></li>
 		    	</ul>    
     </div>
-    <!--<div class="right-content" data-options="region:'east',title:'通知公告'" >
+   <div class="right-content" data-options="region:'east',title:'公告',split:true" >
+   		<div id="calendar-panel" class="easyui-panel" title="日历"     
+	        style="width:200px;height:250px;padding:10px;background:#fafafa;"   
+	        data-options="collapsible:true">
+                <div id="cc" class="easyui-calendar" style="width:180px;height:200px;"></div>  
+         </div>
+         <div id="notify" class="easyui-panel" title="通知"     
+	        style="width:200px;height:400px;padding:10px;background:#fafafa;"   
+	        data-options="collapsible:true">
+               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 180px;">
+			 </ul>
+         </div>  
+	</div>  
     </div>
-    -->   
+  
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   
 		    <div title="起始页" style="padding:20px;">   
@@ -329,19 +341,19 @@
 		        -->
 		        <table border="0" >
 				        <td style="float:right">
-				        	<div id="elderlyStatusReportId" style="height:300px;width:380px">
+				        	<div id="elderlyStatusReportId" style="height:300px;width:280px">
 				        </td>
 				        
 				         <td>
-				            <div id="elderlyAgeReportId" style="height:300px;width: 380px;">
+				            <div id="elderlyAgeReportId" style="height:300px;width: 280px;">
 				        </td>
 				         <td>
 				            <div id="elderlyGenderRateReportId" style="height:300px;width: 280px;">
 				        </td>  
 				    </tr>
 				    <tr >
-				    	<td colspan='2'>
-				    		<div id="elderlyMedicalReport" style="height:300px;width: 100%;">
+				    	<td colspan='3'>
+				    		<div id="elderlyLivingMainReportId" style="height:350px;width: 680px;">
 				    	</td>
 				    <tr>
 				</table>
@@ -370,6 +382,7 @@
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
+	<script src="${base}/resources/js/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
     <script src="${base}/resources/js/multiplefileUpload.js"></script>
     <script type="text/javascript" src="${base}/resources/js/jquery.easing.1.3.js"></script>

@@ -85,6 +85,7 @@ public class Notification extends BaseEntity{
   }
 
   @Column(length = 1000)
+  @JsonProperty
   public String getContent() {
     return content;
   }

@@ -201,8 +201,19 @@
   background-color:#0081c2;
   color:#ffffff;
 }
-
-
+.right-content{
+	width:220px;
+}
+.left-content>ul {
+	display:none;
+}
+.news-item
+{
+    padding:4px 4px;
+    margin:0px;
+    border-bottom:1px dotted #555;
+    height:50px; 
+}
 .main-content{
 	
 }
