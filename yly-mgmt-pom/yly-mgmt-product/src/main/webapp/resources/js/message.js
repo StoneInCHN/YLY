@@ -122,7 +122,7 @@ var messages = {
 	"yly.charge.billing.adjust":"调整金额",
 	"yly.charge.billing.edit":"修改账单",
 	"yly.chargein.billing.isUpdated":"该账单缴费后已修改过，不允许再次修改!",
-		"yly.checkout.charge.depositInfo":"押金： ￥ {0}  ({1})\n",
+	"yly.checkout.charge.depositInfo":"押金： ￥ {0}  ({1})\n",
 	"yly.checkout.charge.bedAmountInfo":"床位费： ￥ {0}  ({1})\n",
 	"yly.checkout.charge.nurseAmountInfo":"护理费： ￥ {0}  ({1}) \n",
 	"yly.checkout.charge.mealAmountInfo":"伙食费： ￥ {0}  ({1}) \n",
@@ -142,6 +142,7 @@ var messages = {
 	"yly.checkout.keyin_checkout_date":"请先确定出院日期！",
 	"yly.checkout.confirm_checkoutCharge_for_elderly":"确认要给老人 {0}  办理出院？ ",
 	"yly.checkout.confirm_checkoutPay_for_elderly":" {0}  办理退住结算，共缴费￥：{1}  ",
+	"yly.checkout.dialog.title":"办理退住结算",
 	"yly.checkout.confirm_paymentType_amount":"请选择支付方式并核对金额！",
 	"yly.checkout.elderlyStatus.invalid":"非法操作，老人 {0} 已经出院或者已将办理出院了，不能再次办理出院！",
 	"yly.checkout.elderlyStatus.invalid.adjustment":"非法操作，老人 {0} 已经出院，不能进行调账！",
@@ -155,6 +156,8 @@ var messages = {
 	"yly.deposit.charge.label":"押金：￥ {0}",
 	"yly.waterElectricity.remark.label":"截止到办理出院，欠水（吨）：{0} \t [单价 ￥ {1}/ 吨] \t 水费小计：￥{2}\n截止到办理出院，欠电（度）：{3} \t [单价 ￥ {4}/ 度] \t 电费小计：￥{5}\n",
 	"yly.checkout.outHospitalizedDate":"出院日期: ",
+	"yly.checkout.charge":"办理出院",
+	"yly.charge.billing.status":"账单状态",
 	
 	/**
 	 * charge config

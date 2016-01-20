@@ -19,7 +19,7 @@ text-align:center;
 			    <input class="easyui-textbox" type="text" name="realName" validtype="length[0,15]" style="width:75px;"/> 
 			</div>
 	    	<div class="search-item">
-			    <label>账单${message("yly.common.charge.status")}:</label>
+			    <label>${message("yly.charge.billing.status")}:</label>
 			   	<input class="easyui-combobox" type="text" prompt="${message("yly.common.please.select")}" name="status" id="status" panelHeight="50px"
 			   	data-options="
 					valueField: 'value',
@@ -51,7 +51,7 @@ text-align:center;
 	     <table class="table table-striped">
 	    	<tr>
 	    		<td>
-	    			 出院日期: <input class="easyui-textbox"  id="addCheckoutPay_elderlyInfo_outHospitalizedDate"  data-options="width:150" disabled=true "  />
+	    			 ${message("yly.checkout.elderly.outHospitalizedDate")}: <input class="easyui-textbox"  id="addCheckoutPay_elderlyInfo_outHospitalizedDate"  data-options="width:150" disabled=true "  />
 	    		</td>
 	    		<td>
 	    			
@@ -60,14 +60,14 @@ text-align:center;
 	    </table>
 	    
 	  <fieldset> 
-	   <legend>老人基本信息:</legend>
+	   <legend>${message("yly.common.elderly.information")}:</legend>
 	    <table class="table table-striped">
 	    	<tr>
 	    		<td>
 	    			 ${message("yly.common.elderly")}: <input class="easyui-textbox"  id="addCheckoutPay_elderlyInfo_name"  style="width:180px;" disabled=true />
 	    		</td>
 	    		<td>
-	    			 老人${message("yly.common.elderly.identifier")}: <input class="easyui-textbox"  id="addCheckoutPay_elderlyInfo_identifier"  style="width:180px;" disabled=true />
+	    			 ${message("yly.common.elderly")}${message("yly.common.elderly.identifier")}: <input class="easyui-textbox"  id="addCheckoutPay_elderlyInfo_identifier"  style="width:180px;" disabled=true />
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -97,18 +97,18 @@ text-align:center;
 	    </fieldset>
 	    <fieldset id="addCheckoutPay_waterElectricityService" style="display:blank"> 
 	    			  	<legend>${message("yly.charge.water.electricity.reocrd")}</legend>
-	    			  	<p>截止到办理出院，欠水（吨）：<input class="easyui-numberbox"   id="addCheckoutPay_waterCount"   style="width:90px;" disabled=true data-options="min:0,precision:1"/> 
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="addCheckoutPay_waterPrice" " style="width:35px;" disabled=true data-options="min:0,precision:2"/> / 吨]  
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;水费小计：<input class="easyui-numberbox" id="addCheckoutPay_waterAmount"  style="width:90px;" disabled=true data-options="min:0,precision:2"/> </p> 
-	    			  	<p>截止到办理出院，欠电（度）：<input class="easyui-numberbox"   id="addCheckoutPay_electricityCount"  style="width:90px;" disabled=true data-options="min:0,precision:1"/>
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[单价 ￥<input class="easyui-numberbox" id="addCheckoutPay_electricityPrice" " style="width:35px;" disabled=true data-options="min:0,precision:2"/> / 度]  
-	    			  		&nbsp;&nbsp;&nbsp;&nbsp;电费小计：<input class="easyui-numberbox" id="addCheckoutPay_electricityAmount"  style="width:90px;" disabled=true data-options="min:0,precision:2"/> </p>	    			  		    			  	
+	    			  	<p>${message("yly.checkout.need_pay.water.count")}：<input class="easyui-numberbox"   id="addCheckoutPay_waterCount"   style="width:90px;" disabled=true data-options="min:0,precision:1"/> 
+	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[${message("yly.charge.unit.price.label")}<input class="easyui-numberbox" id="addCheckoutPay_waterPrice" " style="width:35px;" disabled=true data-options="min:0,precision:2"/> / ${message("yly.charge.ton")}] 
+	    			  		&nbsp;&nbsp;&nbsp;&nbsp;${message("yly.charge.water.sum.amount")}：<input class="easyui-numberbox" id="addCheckoutPay_waterAmount"  style="width:90px;" disabled=true data-options="min:0,precision:2"/> </p> 
+	    			  	<p>${message("yly.checkout.need_pay.electricity.count")}：<input class="easyui-numberbox"   id="addCheckoutPay_electricityCount"  style="width:90px;" disabled=true data-options="min:0,precision:1"/>
+	    			  		&nbsp;&nbsp;&nbsp;&nbsp;[${message("yly.charge.unit.price.label")}<input class="easyui-numberbox" id="addCheckoutPay_electricityPrice" " style="width:35px;" disabled=true data-options="min:0,precision:2"/> / ${message("yly.charge.degree")}]  
+	    			  		&nbsp;&nbsp;&nbsp;&nbsp;${message("yly.charge.electricity.sum.amount")}：<input class="easyui-numberbox" id="addCheckoutPay_electricityAmount"  style="width:90px;" disabled=true data-options="min:0,precision:2"/> </p>	    			  		    			  	
 	    </fieldset>
 	    <fieldset id="addCheckoutPay_djustmentService" style="display:none"> 
 	    </fieldset>
 	     <table class="table table-striped">
 	    	<tr>
-	    		<th>总金额:</th>
+	    		<th>${message("yly.charge.totalAmount")}:</th>
 	    		<td>
 	    			<input class="easyui-numberbox"  id="addCheckoutPay_totalAmount" name="payTotalAmount" style="width:90px;" data-options="min:0,precision:2"/>
 	    		</td>
@@ -152,7 +152,7 @@ text-align:center;
 <div id="checkoutPayDetail">
 	<form id="checkoutPay_form" method="post" class="form-table"> 
 					 <p>
-	   	    		 <p style="text-align:left">出院日期：
+	   	    		 <p style="text-align:left">${message("yly.checkout.elderly.outHospitalizedDate")}：
 	    			 <span title="viewCheckoutPay"  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;" id="viewCheckoutPay_elderlyInfo_outHospitalizedDate"></span>
 	    			 </p> 
 						<p title="viewCheckoutPay" style="white-space:pre-wrap;margin:16px 4px 0px 4px;padding:2px 12px;text-align:left;"  id="viewCheckoutPay_elderlyInfoLable"></p>
@@ -171,15 +171,15 @@ text-align:center;
 	    			 <table>
 	    			 	<tr>
 	    			 		<td style="padding:4px 32px 4px 0px">
-	    			 				使用了预存款: 
+	    			 				${message("yly.checkout.use.advanceChargeAmount")}: 
 	    			 				<span title="viewCheckoutPay"  style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:left;width:90px" id="viewCheckoutPay_advanceChargeAmount"></span>
-	    			  				付款 
+	    			  				${message("yly.charge.pay")}
 	    			  		</td>
 	    			  		<td style="margin:4px;padding:4px 32px 4px 0px">
 	    			  				&nbsp;&nbsp;&nbsp;&nbsp;
 	    			  		</td>
 							<td style="padding:4px 32px 4px 0px">
-	    							总金额(已扣除押金)：
+	    							${message("yly.charge.totalAmount.without_deposit")}：
 	    							<span title="viewCheckoutPay" style="border:1px solid #b1b2b3;border-radius:4px 4px 4px 4px;margin:4px;padding:1px 4px;text-align:right;width:90px"  id="viewCheckoutPay_totalAmount"></span>
 	    					</td>
 	    				</tr>

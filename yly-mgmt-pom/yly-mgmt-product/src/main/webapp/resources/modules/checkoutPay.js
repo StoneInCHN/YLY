@@ -116,7 +116,7 @@ var checkoutPay_manager_tool = {
 $(function(){
 	
 	$("#checkoutPay-table-list").datagrid({
-		title:"办理退住结算",
+		title:message("yly.checkout.dialog.title"),
 		fitColumns:true,
 		toolbar:"#checkoutPay_manager_tool",
 		url:'../billing/list.jhtml?billingType=CHECK_OUT',  

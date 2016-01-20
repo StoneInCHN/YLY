@@ -98,7 +98,7 @@ var checkoutCharge_manager_tool = {
 $(function(){
 	
 	$("#checkoutCharge-table-list").datagrid({
-		title:"办理出院的老人",
+		title:message("yly.checkout.charge"),
 		fitColumns:true,
 		toolbar:"#checkoutCharge_manager_tool",
 		url:'../billing/list.jhtml?billingType=CHECK_OUT',  
@@ -183,7 +183,7 @@ $(function(){
 		      //总额(元)
 		      {title:message("yly.charge.record.totalAmount"),field:"totalAmount",width:20,align:'center',sortable:true},
 		      //状态
-		      {title:"账单状态",field:"chargeStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
+		      {title:message("yly.charge.billing.status"),field:"chargeStatus",width:20,align:'center',sortable:true,formatter: function(value,row,index){
 		    	  	if(value == "PAID"){
 		    	  		return "<font color=#7CCD7C>"+message("yly.charge.status.paid")+"</font>";
 		    	  	}
