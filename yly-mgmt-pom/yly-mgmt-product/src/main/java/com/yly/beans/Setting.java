@@ -83,7 +83,11 @@ public class Setting implements Serializable {
     
     /** 图片上传路径 */
     private String profilePictureUploadPath;
-    
+
+    /**
+     * 通知图片上传路径
+     */
+    private String notifyPictureUploadPath;
     /** 相册上传路径 */
     private String albumUploadPath;
     /**
@@ -303,6 +307,22 @@ public class Setting implements Serializable {
     @Length(max = 200)
     public String getImageUploadPath() {
         return imageUploadPath;
+    }
+
+    /**
+     * 获取通知图片上传路径
+     * @return
+     */
+    @NotEmpty
+    @Length(max = 200)
+    public String getNotifyPictureUploadPath ()
+    {
+      return notifyPictureUploadPath;
+    }
+
+    public void setNotifyPictureUploadPath (String notifyPictureUploadPath)
+    {
+      this.notifyPictureUploadPath = notifyPictureUploadPath;
     }
 
     /**

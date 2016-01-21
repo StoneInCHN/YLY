@@ -2,8 +2,8 @@ var notification_manager_tool = {
 			add:function(){
 				$('#addNotification').dialog({
 				    title: message("yly.notification.add"),    
-				    width: 500,    
-				    height: 400,
+				    width: 700,    
+				    height: 600,
 				    iconCls:'icon-mini-add',
 				    cache: false, 
 				    buttons:[{
@@ -45,6 +45,32 @@ var notification_manager_tool = {
 				    }],
 				    onOpen:function(){
 				    	$('#addNotification_form').show();
+				    	var editor = KindEditor.create('#add_notification_content', {
+							resizeType : 1,
+							width : '400px',
+							height:'300px',
+							allowPreviewEmoticons : false,
+							items: [
+									"source", "|", "undo", "redo", "|", "preview", "print", "template", "cut", "copy", "paste",
+									"plainpaste", "wordpaste", "|", "justifyleft", "justifycenter", "justifyright",
+									"justifyfull", "insertorderedlist", "insertunorderedlist", "indent", "outdent", "subscript",
+									"superscript", "clearhtml", "quickformat", "selectall", "|", "fullscreen", "/",
+									"formatblock", "fontname", "fontsize", "|", "forecolor", "hilitecolor", "bold",
+									"italic", "underline", "strikethrough", "lineheight", "removeformat", "|", "image", "multiimage",
+									"table", "hr", "emoticons",  "pagebreak",
+									"anchor", "link", "unlink"
+								],
+							allowImageRemote : false,
+							showRemote : false,
+							allowFileManager: true,
+							filePostName: "file",
+							uploadJson:  "../../console/file/uploadNotificationPicutre.jhtml",
+							urlType:'relative',
+							afterBlur:function(){ 
+					            this.sync(); 
+					        }
+						});
+				    	editor.sync();
 				    }
 				});  
 				
@@ -57,8 +83,8 @@ var notification_manager_tool = {
 				}
 				var _dialog = $('#editNotification').dialog({    
 					title: message("yly.common.edit"),   
-				    width: 500,    
-				    height: 400,    
+				    width: 700,    
+				    height: 600,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
 				    href:'../notification/edit.jhtml?id='+_edit_row.id,
@@ -96,7 +122,34 @@ var notification_manager_tool = {
 						}
 				    }],onLoad:function(){
 				    	$('#editNotification_form').show();
-				    },
+				    	var editor = KindEditor.create('#edit_notification_content', {
+							resizeType : 1,
+							width : '400px',
+							height:'300px',
+							allowPreviewEmoticons : false,
+							items: [
+									"source", "|", "undo", "redo", "|", "preview", "print", "template", "cut", "copy", "paste",
+									"plainpaste", "wordpaste", "|", "justifyleft", "justifycenter", "justifyright",
+									"justifyfull", "insertorderedlist", "insertunorderedlist", "indent", "outdent", "subscript",
+									"superscript", "clearhtml", "quickformat", "selectall", "|", "fullscreen", "/",
+									"formatblock", "fontname", "fontsize", "|", "forecolor", "hilitecolor", "bold",
+									"italic", "underline", "strikethrough", "lineheight", "removeformat", "|", "image", "multiimage",
+									"table", "hr", "emoticons",  "pagebreak",
+									"anchor", "link", "unlink"
+								],
+							allowImageRemote : false,
+							showRemote : false,
+							allowFileManager: true,
+							filePostName: "file",
+							uploadJson:  "../../console/file/uploadNotificationPicutre.jhtml",
+							urlType:'relative',
+							afterBlur:function(){ 
+					            this.sync(); 
+					        }
+						});	 
+				    	
+				    	editor.sync();
+				    }
 				});
 				$('#editNotification_form').show();
 			},
@@ -105,37 +158,7 @@ var notification_manager_tool = {
 			}
 	};
 $(function(){
-	if(typeof(KindEditor) != "undefined") {
-		KindEditor.ready(function(K) {
-			editor = K.create("#editor_id", {
-				items: [
-					"source", "|", "undo", "redo", "|", "preview", "print", "template", "cut", "copy", "paste",
-					"plainpaste", "wordpaste", "|", "justifyleft", "justifycenter", "justifyright",
-					"justifyfull", "insertorderedlist", "insertunorderedlist", "indent", "outdent", "subscript",
-					"superscript", "clearhtml", "quickformat", "selectall", "|", "fullscreen", "/",
-					"formatblock", "fontname", "fontsize", "|", "forecolor", "hilitecolor", "bold",
-					"italic", "underline", "strikethrough", "lineheight", "removeformat", "|", "image", "multiimage",
-					"table", "hr", "emoticons",  "pagebreak",
-					"anchor", "link", "unlink"
-				],
-				width:780,
-				height:400,
-				resizeType : 1,
-				allowPreviewEmoticons : false,
-				allowImageUpload : true,
-				allowImageRemote : false,
-				showRemote : false,
-				allowFileManager: true,
-				filePostName: "file",
-				uploadJson:  "/operate/file/upload",
-				urlType:'relative',
-				afterBlur:function(){ 
-		            this.sync(); 
-		        }    
-			});
-			editor.sync();
-		});
-	};
+
 	$("#notification-table-list").datagrid({
 		title:message("yly.notification.list"),
 		fitColumns:true,

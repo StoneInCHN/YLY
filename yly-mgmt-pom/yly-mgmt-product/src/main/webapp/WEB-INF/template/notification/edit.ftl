@@ -21,7 +21,8 @@
 	    	<tr>
 	    		<th>${message("yly.notification.content")}:</th>
 	    		<td colspan="3">
-	    			 <input class="easyui-textbox" value ="${notification.content}" name="content" id= "content" data-options="required:true,multiline:true" style="height:200px;width:300px"/>   
+	    			<textarea id= "edit_notification_content"  
+	    			 style="height:200px;width:300px" name="content">${notification.content}</textarea>
 	    		</td>
 	    	</tr>
 	    </table>
