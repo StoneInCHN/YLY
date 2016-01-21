@@ -28,6 +28,7 @@ import com.yly.entity.Deposit;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.MealCharge;
 import com.yly.entity.PaymentRecord;
+import com.yly.entity.PersonalizedRecord;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.WaterElectricityCharge;
 import com.yly.entity.WaterElectricityChargeConfig;
@@ -372,6 +373,9 @@ public class BillingController extends BaseController {
         payBill.getPersonalizedCharge().setChargeStatus(PaymentStatus.PAID);
         payBill.getPersonalizedCharge().setPayTime(payBill.getPayTime());
         payBill.getPersonalizedCharge().setPaymentType(payBill.getPaymentType());
+        for (PersonalizedRecord record : payBill.getPersonalizedCharge().getPersonalizedRecords()) {
+          record.setChargeStatus(PaymentStatus.UNPAID);
+        }
       }
       if (waterAmount != null && electricityAmount != null) {
         WaterElectricityCharge waterElectricityCharge = new WaterElectricityCharge();
@@ -426,17 +430,18 @@ public class BillingController extends BaseController {
       paymentRecord.setPayAmount(payTotalAmount);
       payBill.getPaymentRecords().add(paymentRecord);
       if (paymentType.equals(PaymentType.ADVANCE)) {
-    	  if (payTotalAmount.compareTo(elderlyInfo.getAdvanceChargeAmount())>1) {
-    		  	return Message.error("yly.charge.advancePay.unavaliable");
-		  }
-    	  AdvanceCharge advanceCharge = new AdvanceCharge();
-    	  elderlyInfo.setAdvanceChargeAmount(elderlyInfo.getAdvanceChargeAmount().subtract(payTotalAmount));
-    	  advanceCharge.setElderlyInfo(elderlyInfo);
-          advanceCharge.setBudgetType(BudgetType.COST);
-          advanceCharge.setPayTime(new Date());
-          advanceCharge.setOperator(tenantAccountService.getCurrentUsername());
-          advanceCharge.setBillingNo(payBill.getBillingNo());
-          elderlyInfo.getAdvanceCharges().add(advanceCharge);
+        if (payTotalAmount.compareTo(elderlyInfo.getAdvanceChargeAmount()) > 1) {
+          return Message.error("yly.charge.advancePay.unavaliable");
+        }
+        AdvanceCharge advanceCharge = new AdvanceCharge();
+        elderlyInfo.setAdvanceChargeAmount(elderlyInfo.getAdvanceChargeAmount().subtract(
+            payTotalAmount));
+        advanceCharge.setElderlyInfo(elderlyInfo);
+        advanceCharge.setBudgetType(BudgetType.COST);
+        advanceCharge.setPayTime(new Date());
+        advanceCharge.setOperator(tenantAccountService.getCurrentUsername());
+        advanceCharge.setBillingNo(payBill.getBillingNo());
+        elderlyInfo.getAdvanceCharges().add(advanceCharge);
       }
     }
 
