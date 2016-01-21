@@ -467,11 +467,24 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
         otherBilling.getPersonalizedCharge().setRemark(
             otherBilling.getPersonalizedCharge().getRemark().replaceAll(
                 SpringUtils.getMessage("yly.charge.unpaid.label"), SpringUtils.getMessage("yly.charge.paid.label")));
+        Set<PersonalizedRecord> personalizedRecords = otherBilling.getPersonalizedCharge().getPersonalizedRecords();
+        if (personalizedRecords.size() > 0) {
+          for (PersonalizedRecord personalizedRecord : personalizedRecords) {
+            personalizedRecord.setChargeStatus(PaymentStatus.PAID);
+          }
+        }
       }
       
       otherBilling.setChargeStatus(PaymentStatus.PAID);
       
       billingService.update(otherBilling);
+    }
+    //个性化服务record记录，状态改成“已缴费”
+    Set<PersonalizedRecord> personalizedRecords = checkoutBill.getPersonalizedCharge().getPersonalizedRecords();
+    if (personalizedRecords.size() > 0) {
+      for (PersonalizedRecord personalizedRecord : personalizedRecords) {
+        personalizedRecord.setChargeStatus(PaymentStatus.PAID);
+      }
     }
     //之前的所有调整金额，状态都会改成 “已缴费”
     if (checkoutBill.getBillingAdjustment() != null && checkoutBill.getBillingAdjustment().size() > 0) {
