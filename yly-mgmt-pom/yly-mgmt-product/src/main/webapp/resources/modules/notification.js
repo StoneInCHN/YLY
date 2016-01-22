@@ -170,8 +170,8 @@ $(function(){
 		onDblClickRow : function (rowIndex, rowData){
 			$('#notificationDetail').dialog({    
 			    title: message("yly.common.detail"),    
-			    width: 500,    
-			    height: 400, 
+			    width: 600,    
+			    height: 500, 
 			    cache: false,
 			    modal: true,
 			    href:'../notification/details.jhtml?id='+rowData.id,

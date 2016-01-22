@@ -1,4 +1,4 @@
-<form id="editNotification_form" method="post">   
+<form id="editNotification_form" method="post" stype="margin-top: 10px">   
 	 <input type="hidden" name="id" id="id" value="${notification.id}">   
     <table class="table table-striped"  border="0">
 	    	<tr>

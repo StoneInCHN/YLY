@@ -189,6 +189,6 @@ public class NotificationController extends BaseController
   public String showOne(ModelMap model, Long id) {
     
     model.put ("notification", notificationService.find (id));
-    return "notification/details";
+    return "notification/showNotify";
   }
 }
