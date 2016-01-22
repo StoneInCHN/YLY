@@ -120,7 +120,9 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
       uploadPath = setting.getProfilePictureUploadPath();
     } else if(fileType == FileType.ALBUM){
       uploadPath = setting.getAlbumUploadPath();
-    }
+    } else if (fileType == FileType.NOTIFY_PICTURE){
+      uploadPath = setting.getNotifyPictureUploadPath ();
+    }      
     try {
       Map<String, Object> model = new HashMap<String, Object>();
 //      model.put("uuid", UUID.randomUUID().toString());
@@ -178,6 +180,8 @@ public class FileServiceImpl  implements FileService, ServletContextAware{
       uploadPath = setting.getProfilePictureUploadPath();
     } else if(fileType == FileType.ALBUM){
       uploadPath = setting.getAlbumUploadPath();
+    }else if (fileType == FileType.NOTIFY_PICTURE){
+      uploadPath = setting.getImageUploadPath ();
     }
     try {
       Map<String, Object> model = new HashMap<String, Object>();

@@ -22,7 +22,12 @@ public class FileInfo {
       MEDIA,
 
       /** 文件 */
-      FILE
+      FILE,
+      
+      /**
+       * 通知图片
+       */
+      NOTIFY_PICTURE
   }
 
   /**

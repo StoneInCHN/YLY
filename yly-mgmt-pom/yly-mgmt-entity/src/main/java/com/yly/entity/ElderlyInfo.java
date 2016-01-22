@@ -55,7 +55,7 @@ import com.yly.lucene.DateBridgeImpl;
 @Entity
 @Table(name = "yly_elderly_info")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_elderly_info_sequence")
-@Indexed(index="elderlyInfo")
+@Indexed(index = "elderlyInfo")
 public class ElderlyInfo extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
@@ -123,7 +123,7 @@ public class ElderlyInfo extends BaseEntity {
    * 删除标记
    */
   private DeleteStatus deleteStatus;
-  
+
   /**
    * 老人状态
    */
@@ -223,11 +223,11 @@ public class ElderlyInfo extends BaseEntity {
    * 入院时间
    */
   private Date beHospitalizedDate;
-  
+
   /**
    * 出院时间
    */
-  private Date outHospitalizedDate;  
+  private Date outHospitalizedDate;
 
   /**
    * 居住情况
@@ -284,7 +284,7 @@ public class ElderlyInfo extends BaseEntity {
    * 账单
    */
   private Set<Billing> billings = new HashSet<Billing>();
-  
+
   /**
    * 床位护理费
    */
@@ -310,7 +310,7 @@ public class ElderlyInfo extends BaseEntity {
    * 预存款
    */
   private Set<AdvanceCharge> advanceCharges = new HashSet<AdvanceCharge>();
-  
+
   /**
    * 老人探望记录
    */
@@ -340,7 +340,36 @@ public class ElderlyInfo extends BaseEntity {
    * 预存款金额
    */
   private BigDecimal advanceChargeAmount = new BigDecimal(0);
-  
+
+  /**
+   * 床位变更记录
+   */
+  private Set<BedChangeRecord> bedChangeRecords = new HashSet<BedChangeRecord>();
+
+  /**
+   * 护理级别变更记录
+   */
+  private Set<NurseLevelChangeRecord> nurseLevelChangeRecords =
+      new HashSet<NurseLevelChangeRecord>();
+
+  @OneToMany(mappedBy = "elderlyInfo", cascade = CascadeType.ALL)
+  public Set<NurseLevelChangeRecord> getNurseLevelChangeRecords() {
+    return nurseLevelChangeRecords;
+  }
+
+  public void setNurseLevelChangeRecords(Set<NurseLevelChangeRecord> nurseLevelChangeRecords) {
+    this.nurseLevelChangeRecords = nurseLevelChangeRecords;
+  }
+
+  @OneToMany(mappedBy = "elderlyInfo", cascade = CascadeType.ALL)
+  public Set<BedChangeRecord> getBedChangeRecords() {
+    return bedChangeRecords;
+  }
+
+  public void setBedChangeRecords(Set<BedChangeRecord> bedChangeRecords) {
+    this.bedChangeRecords = bedChangeRecords;
+  }
+
   @OneToMany(mappedBy = "elderlyInfo")
   public Set<Billing> getBillings() {
     return billings;
@@ -349,6 +378,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setBillings(Set<Billing> billings) {
     this.billings = billings;
   }
+
   @JsonProperty
   @Column(precision = 12, scale = 2)
   public BigDecimal getAdvanceChargeAmount() {
@@ -401,7 +431,7 @@ public class ElderlyInfo extends BaseEntity {
     this.visitElderlyRecords = visitElderlyRecords;
   }
 
-  @OneToMany(mappedBy = "elderlyInfo",cascade=CascadeType.ALL)
+  @OneToMany(mappedBy = "elderlyInfo", cascade = CascadeType.ALL)
   public Set<AdvanceCharge> getAdvanceCharges() {
     return advanceCharges;
   }
@@ -456,7 +486,8 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @Index(name = "elderly_info_tenantid")
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -498,7 +529,8 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getIdentifier() {
     return identifier;
   }
@@ -509,7 +541,8 @@ public class ElderlyInfo extends BaseEntity {
 
   @JsonProperty
   @Column(length = 15)
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getName() {
     return name;
   }
@@ -526,6 +559,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setGender(Gender gender) {
     this.gender = gender;
   }
+
   @JsonProperty
   @Column(length = 50)
   public String getPlaceOfOrigin() {
@@ -535,6 +569,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPlaceOfOrigin(String placeOfOrigin) {
     this.placeOfOrigin = placeOfOrigin;
   }
+
   @JsonProperty
   @Column(length = 10)
   public String getNation() {
@@ -572,6 +607,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setBirthday(Date birthday) {
     this.birthday = birthday;
   }
+
   @JsonProperty
   @Column(length = 25)
   public String getSocialInsuranceNumber() {
@@ -590,6 +626,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setEvaluatingResult(SystemConfig evaluatingResult) {
     this.evaluatingResult = evaluatingResult;
   }
+
   @JsonProperty
   public Float getEvaluatingScore() {
     return evaluatingScore;
@@ -628,6 +665,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPersonnelCategory(SystemConfig personnelCategory) {
     this.personnelCategory = personnelCategory;
   }
+
   @JsonProperty
   @Column(length = 150)
   public String getRegisteredResidence() {
@@ -647,6 +685,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setResidentialAddress(String residentialAddress) {
     this.residentialAddress = residentialAddress;
   }
+
   @JsonProperty
   @Column(length = 120)
   public String getOriginalCompany() {
@@ -656,6 +695,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setOriginalCompany(String originalCompany) {
     this.originalCompany = originalCompany;
   }
+
   @JsonProperty
   @Column(length = 20)
   public String getPosition() {
@@ -665,6 +705,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPosition(String position) {
     this.position = position;
   }
+
   @JsonProperty
   @Column(length = 150)
   public String getHonors() {
@@ -674,6 +715,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setHonors(String honors) {
     this.honors = honors;
   }
+
   @JsonProperty
   @Column(length = 150)
   public String getHobbies() {
@@ -683,6 +725,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setHobbies(String hobbies) {
     this.hobbies = hobbies;
   }
+
   @JsonProperty
   @Column(length = 150)
   public String getPersonalHabits() {
@@ -692,6 +735,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPersonalHabits(String personalHabits) {
     this.personalHabits = personalHabits;
   }
+
   @JsonProperty
   public PaymentWay getPaymentWay() {
     return paymentWay;
@@ -700,6 +744,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPaymentWay(PaymentWay paymentWay) {
     this.paymentWay = paymentWay;
   }
+
   @JsonProperty
   @ManyToOne
   public SystemConfig getNursingLevel() {
@@ -717,6 +762,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setMealFeeMonthlyPayment(Boolean mealFeeMonthlyPayment) {
     this.mealFeeMonthlyPayment = mealFeeMonthlyPayment;
   }
+
   @JsonProperty
   public EducationLevel getEducationLevel() {
     return educationLevel;
@@ -725,6 +771,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setEducationLevel(EducationLevel educationLevel) {
     this.educationLevel = educationLevel;
   }
+
   @JsonProperty
   public PoliticalOutlook getPoliticalOutlook() {
     return politicalOutlook;
@@ -733,6 +780,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPoliticalOutlook(PoliticalOutlook politicalOutlook) {
     this.politicalOutlook = politicalOutlook;
   }
+
   @JsonProperty
   public Religion getReligion() {
     return religion;
@@ -741,6 +789,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setReligion(Religion religion) {
     this.religion = religion;
   }
+
   @JsonProperty
   public MarriageState getMarriageState() {
     return marriageState;
@@ -760,7 +809,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setBeHospitalizedDate(Date beHospitalizedDate) {
     this.beHospitalizedDate = beHospitalizedDate;
   }
-  
+
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @FieldBridge(impl = DateBridgeImpl.class)
@@ -771,6 +820,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setOutHospitalizedDate(Date outHospitalizedDate) {
     this.outHospitalizedDate = outHospitalizedDate;
   }
+
   @JsonProperty
   public LivingState getLivingState() {
     return livingState;
@@ -779,6 +829,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setLivingState(LivingState livingState) {
     this.livingState = livingState;
   }
+
   @JsonProperty
   public MedicalExpPaymentWay getMedicalExpPaymentWay() {
     return medicalExpPaymentWay;
@@ -787,6 +838,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setMedicalExpPaymentWay(MedicalExpPaymentWay medicalExpPaymentWay) {
     this.medicalExpPaymentWay = medicalExpPaymentWay;
   }
+
   @JsonProperty
   public BigDecimal getMonthlyIncome() {
     return monthlyIncome;
@@ -795,6 +847,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setMonthlyIncome(BigDecimal monthlyIncome) {
     this.monthlyIncome = monthlyIncome;
   }
+
   @JsonProperty
   public SourceOfIncome getSourceOfIncome() {
     return sourceOfIncome;
@@ -839,6 +892,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setPrescriptions(Set<Prescription> prescriptions) {
     this.prescriptions = prescriptions;
   }
+
   @JsonProperty
   public HousingInfo getHousingInfo() {
     return housingInfo;
@@ -856,7 +910,7 @@ public class ElderlyInfo extends BaseEntity {
   public void setDeleteStatus(DeleteStatus deleteStatus) {
     this.deleteStatus = deleteStatus;
   }
-  
+
   @Index(name = "elderly_info_elderlystatus")
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)

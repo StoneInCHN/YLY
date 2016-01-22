@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
+
 public class DateTimeUtils implements Serializable {
 
   private static final long serialVersionUID = 7708468758384338657L;
@@ -15,74 +16,78 @@ public class DateTimeUtils implements Serializable {
       new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   public static final SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-  
-public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+
+  public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat("yyyy.MM.dd");
   public static final SimpleDateFormat filePostfixFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-  
+
   /**
-   * 格式化时间  
+   * 格式化时间
+   * 
    * @param date
    * @return format string
    */
-  public static String getSimpleFormatString(SimpleDateFormat sf, Date date){
-      return sf.format(date);
+  public static String getSimpleFormatString(SimpleDateFormat sf, Date date) {
+    return sf.format(date);
   }
 
   // public static void main(String args[]){
   // System.out.println(getLastWeek()+"--"+getLastMonth());
   // }
-  
+
   /**
    * 获取账单结算日期距起始日期的天数（不满一个月）
+   * 
    * @param currentDate
    * @return
    */
-  public static Integer getBillDays(Date currentDate,int billDay){
-	  Calendar calendar = Calendar.getInstance();
-	    if (currentDate == null) {
-	      return null;
-	    }
-	    calendar.setTime(currentDate);
-	    calendar.add(Calendar.DATE,-1);//日期，整数往后推,负数往前移动 
-	    if (calendar.get(Calendar.DATE) > billDay) {
-	    	 //获取当前月最后一天
-	    	 Calendar ca = Calendar.getInstance();    
-	         ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));
-	    	return ca.get(Calendar.DATE)-calendar.get(Calendar.DATE)+billDay;
-	    }else if(calendar.get(Calendar.DATE) < billDay) {
-			return billDay-calendar.get(Calendar.DATE);
-		}
-	  
-	return 0;
-	  
-  }
-  /**
-   * 获取账单结算日期
-   * @param currentDate
-   * @return
-   */
-  public static Date getBillDate(Date currentDate,int billDay){
+  public static Integer getBillDays(Date currentDate, int billDay) {
     Calendar calendar = Calendar.getInstance();
     if (currentDate == null) {
       return null;
     }
     calendar.setTime(currentDate);
-    calendar.add(Calendar.DATE,-1);//日期，整数往后推,负数往前移动 
+    calendar.add(Calendar.DATE, -1);// 日期，整数往后推,负数往前移动
+    if (calendar.get(Calendar.DATE) > billDay) {
+      // 获取当前月最后一天
+      Calendar ca = Calendar.getInstance();
+      ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));
+      return ca.get(Calendar.DATE) - calendar.get(Calendar.DATE) + billDay;
+    } else if (calendar.get(Calendar.DATE) < billDay) {
+      return billDay - calendar.get(Calendar.DATE);
+    }
+
+    return 0;
+
+  }
+
+  /**
+   * 获取账单结算日期
+   * 
+   * @param currentDate
+   * @return
+   */
+  public static Date getBillDate(Date currentDate, int billDay) {
+    Calendar calendar = Calendar.getInstance();
+    if (currentDate == null) {
+      return null;
+    }
+    calendar.setTime(currentDate);
+    calendar.add(Calendar.DATE, -1);// 日期，整数往后推,负数往前移动
     if (calendar.get(Calendar.DATE) == billDay) {
-      calendar.add(Calendar.MONTH,1);//月份
-      
-    }else if(calendar.get(Calendar.DATE) > billDay){
-      calendar.add(Calendar.MONTH,2);
+      calendar.add(Calendar.MONTH, 1);// 月份
+
+    } else if (calendar.get(Calendar.DATE) > billDay) {
+      calendar.add(Calendar.MONTH, 2);
       calendar.set(Calendar.DATE, billDay);
-    }else {
-      calendar.add(Calendar.MONTH,1);
+    } else {
+      calendar.add(Calendar.MONTH, 1);
       calendar.set(Calendar.DATE, billDay);
     }
-      
+
     return new Date(calendar.getTimeInMillis());
-    
+
   }
-  
+
   /**
    * 取当天(短日期类型)
    */
@@ -101,17 +106,17 @@ public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat
 
 
   /**
-   * 取当天零点零分零秒
+   * 取零点零分零秒
    */
-  public static String getTodayStart() {
+  public static Date getDayStart(Date date) {
     Calendar calendar = Calendar.getInstance();
-    // 如果没有这种设定的话回去系统的当期的时间
+    calendar.setTime(date);
     calendar.set(Calendar.HOUR_OF_DAY, 0);
     calendar.set(Calendar.MINUTE, 0);
     calendar.set(Calendar.SECOND, 0);
     calendar.set(Calendar.MILLISECOND, 0);
-    Date date = new Date(calendar.getTimeInMillis());
-    return longDateFormat.format(date);
+
+    return calendar.getTime();
   }
 
   /**
@@ -122,38 +127,40 @@ public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat
     return shortDateFormat.format(date) + " 00:00:00";
   }
 
- /**
-  * 取特定日期的特定时间
-  * @return
-  */
-  public static Date getSpecifyTimeForDate(Date date,Integer year,Integer month,Integer day,Integer hour,Integer min,Integer second) {
+  /**
+   * 取特定日期的特定时间
+   * 
+   * @return
+   */
+  public static Date getSpecifyTimeForDate(Date date, Integer year, Integer month, Integer day,
+      Integer hour, Integer min, Integer second) {
     if (date == null) {
       return null;
-    } 
+    }
     Calendar calendar = Calendar.getInstance();
     calendar.setTime(date);
-    if (year!=null) {
+    if (year != null) {
       calendar.add(Calendar.YEAR, year);
     }
-    if (month!=null) {
-      calendar.add(Calendar.MONTH, month); 
+    if (month != null) {
+      calendar.add(Calendar.MONTH, month);
     }
-    if (day!=null) {
-      calendar.add(Calendar.DAY_OF_MONTH, day); 
+    if (day != null) {
+      calendar.add(Calendar.DAY_OF_MONTH, day);
     }
-    if (hour!=null) {
+    if (hour != null) {
       calendar.add(Calendar.HOUR_OF_DAY, hour);
     }
-    if (min!=null) {
+    if (min != null) {
       calendar.add(Calendar.MINUTE, min);
     }
-    if (second!=null) {
+    if (second != null) {
       calendar.add(Calendar.SECOND, second);
     }
     calendar.set(Calendar.MILLISECOND, 0);
     return new Date(calendar.getTimeInMillis());
   }
-  
+
   /**
    * 取当天零点零分零秒
    */
@@ -274,8 +281,8 @@ public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat
 
     return (date.getTime() - mydate.getTime()) / (24 * 60 * 60 * 1000);
   }
-  
-  
+
+
   /**
    * 两个时间之间的天数
    */
@@ -333,13 +340,13 @@ public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat
     calendar.set(Calendar.MILLISECOND, 0);
     return calendar.getTime();
   }
+
   /**
-   * 根据参数计算返回获取最近的时间
-   * type:类型，比如YEAR，MONTH...
-   * num:增加或减少的数量
+   * 根据参数计算返回获取最近的时间 type:类型，比如YEAR，MONTH... num:增加或减少的数量
+   * 
    * @return
    */
-  public static Date getRecentDate(Date current, String type, int num){
+  public static Date getRecentDate(Date current, String type, int num) {
     Calendar calendar = Calendar.getInstance();
     if (current == null) {
       return null;
@@ -353,10 +360,10 @@ public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat
     }
     if (StringUtils.endsWithIgnoreCase(type.trim(), "DATE")) {
       calendar.add(Calendar.DATE, num);
-    } 
+    }
     if (StringUtils.endsWithIgnoreCase(type.trim(), "HOUR_OF_DAY")) {
       calendar.add(Calendar.HOUR_OF_DAY, num);
-    } 
+    }
     if (StringUtils.endsWithIgnoreCase(type.trim(), "MINUTE")) {
       calendar.add(Calendar.MINUTE, num);
     }
@@ -367,54 +374,51 @@ public static final SimpleDateFormat shortPointDateFormat = new SimpleDateFormat
       calendar.add(Calendar.MILLISECOND, num);
     }
     return calendar.getTime();
-    
+
   }
+
   /**
    * 判断string是否为有效日期格式
+   * 
    * @param str
    * @return
    */
-  public static boolean isValidDate (String str)
-  {
+  public static boolean isValidDate(String str) {
     boolean convertSuccess = true;
     // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
-    SimpleDateFormat format = new SimpleDateFormat ("yyyyMMdd");
-    try
-    {
+    SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+    try {
       // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
-      format.setLenient (false);
-      format.parse (str);
-    }
-    catch (ParseException e)
-    {
+      format.setLenient(false);
+      format.parse(str);
+    } catch (ParseException e) {
       // e.printStackTrace();
       // 如果throw java.text.ParseException或者NullPointerException，就说明格式不对
       convertSuccess = false;
     }
     return convertSuccess;
   }
-  
+
   /**
    * Date 转String
+   * 
    * @param date 需要转换日期
    * @param format 格式，默认yyyy/MM/dd
    * @return
    */
-  public static String convertDateToString (Date date,String format)
-  {
+  public static String convertDateToString(Date date, String format) {
     // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
-    if (format == null)
-    {
+    if (format == null) {
       format = "yyyyMMdd";
     }
-    if(date == null){
+    if (date == null) {
       return null;
     }
-    SimpleDateFormat sdf = new SimpleDateFormat (format);
-      // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
-    sdf.setLenient (false);
-    String strDate=sdf.format (date);
-   
+    SimpleDateFormat sdf = new SimpleDateFormat(format);
+    // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+    sdf.setLenient(false);
+    String strDate = sdf.format(date);
+
     return strDate;
   }
 }

@@ -1,6 +1,24 @@
+/**
+			 *绑定右侧点击事件 
+			 */
+			function clickNotificationNews(event) {
+				var _this = $(event.target);
+				var _url = _this.attr("data-url");
+				if($('#manager-tabs').tabs("exists","通知消息")){
+					$('#manager-tabs').tabs("select","通知消息");
+
+					// 调用 'refresh' 方法更新选项卡面板的内容
+					var tab = $('#manager-tabs').tabs('getSelected');  // 获取选择的面板
+					tab.panel('refresh', _url);
+				}else{
+					$('#manager-tabs').tabs('add',{    
+					    title:"通知消息",    
+					    href:_url,    
+					    closable:true      
+					}); 
+				}
+			};
 $(function(){
-	
-	
 	/**
 	 *初始化右侧的选项卡
 	 */
@@ -271,10 +289,11 @@ $(function(){
 		type : "get",
 		cache : false,
 		success : function(data) {
+			
 			for(var i=0 ; i<data.length; i++){
-				var content = formatLongString(data[i].content, 20)
+				var title = formatLongString(data[i].title, 5)
 				$("#notify-content")
-				.append('<li class="news-item">'+data[i].content+ '<a href="#" data-url="../../console/notification/showOne.jhtml?id='+data[i].id+'" style="float:right">Read more...</a></li>');	
+				.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/notification/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');	
 			}
 			
 			$(".notify").bootstrapNews({
@@ -283,32 +302,21 @@ $(function(){
 				pauseOnHover: true,
 				navigation: false,
 		        direction: 'down',
-		        newsTickerInterval: 2000,
-		        onToDo: function () {
-		            //console.log(this);
-		        }
-		    });
-			
-			/**
-			 *绑定右侧点击事件 
-			 */
-			$("#notify-content .news-item a").click(function(){
-				var _this = $(this);
-				var _url = _this.attr("data-url");
-				if($('#manager-tabs').tabs("exists","通知消息")){
-					$('#manager-tabs').tabs("select","通知消息");
+		        newsTickerInterval: 4000,
+		        onReset:function(){
+		        	console.log('reset')
+		        },
+		        onNext:function(){
+		        	console.log('next')	
+		        },
+		        onPrev:function(){
+		        	console.log('onPrev')
+		        } ,
+		        onToDo:function(){
+		        	console.log('onToDo')
+		        } 
 
-					// 调用 'refresh' 方法更新选项卡面板的内容
-					var tab = $('#manager-tabs').tabs('getSelected');  // 获取选择的面板
-					tab.panel('refresh', _url);
-				}else{
-					$('#manager-tabs').tabs('add',{    
-					    title:"通知消息",    
-					    href:_url,    
-					    closable:true      
-					}); 
-				}
-			});
+		    });
 		}
 
 	});

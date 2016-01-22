@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<yly>
-		<setting name="siteUrl" value="http://localhost:8080/yly-mgmt-product" />
+		<setting name="siteUrl" value="http://localhost:8081/yly-mgmt-product" />
 		<setting name="emailPattern" value="^[a-z0-9A-Z]+([-_.][a-z0-9A-Z]+)*@([a-z0-9A-Z]+[-.])+[a-zA-Z]{2,5}$" />
 		<setting name="captchaTypes" value="LOGIN,OTHER" />
 		<!-- 邮件相关配置 -->
@@ -23,6 +23,7 @@
 		<setting name="fileUploadPath" value="/upload/file/${.now?string('yyyyMM')}/" />
 		<setting name="profilePictureUploadPath" value="/upload/image/${orgCode}/${identifier}/profile picture/" />
 		<setting name="albumUploadPath" value="/upload/image/${orgCode}/${identifier}/album/${albumName}/" />
+		<setting name="notifyPictureUploadPath" value="/upload/image/${orgCode}/${identifier}/notify picture/" />
 		<!-- cookie相关配置 -->
 		<setting name="cookiePath" value="/" />
 		<setting name="cookieDomain" value="" />

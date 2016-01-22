@@ -1,14 +1,8 @@
-<script src="${base}/resources/js/common.js"></script>
-<script src="${base}/resources/modules/notification.js"></script>
-<script src="${base}/resources/js/kindeditor/kindeditor.js"></script>
-<script charset="utf-8" src="${base}/resources/js/kindeditor/lang/zh_CN.js"></script>
-<link href="${base}/resources/js/kindeditor/examples/index.css" rel="stylesheet" />
-<script  src="${base}/resources/js/kindeditor/kindeditor.js"></script>
-<script  src="${base}/resources/js/kindeditor/kindeditor-all.js"></script>
-<script  src="${base}/resources/js/kindeditor/kindeditor-all-min.js"></script>
+<link rel="stylesheet" type="text/css"href="${base}/resources/js/kindeditor/themes/default/default.css" >
 <script  src="${base}/resources/js/kindeditor/kindeditor-min.js"></script>
 <script  src="${base}/resources/js/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
+<script src="${base}/resources/modules/notification.js"></script>
 <div>
 	  <fieldset>
 	    <legend>${message("yly.fixedAssets.search")}</legend>
@@ -36,7 +30,7 @@
 	<div class="tool-button">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain=true onclick="notification_manager_tool.add();">添加</a>
 		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain=true onclick="notification_manager_tool.edit();">修改</a>
-		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="physicalExamination_manager_tool.remove();">删除</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain=true onclick="notification_manager_tool.remove();">删除</a>
 	</div>
 	<div class="tool-filter"></div>
 </div>
@@ -63,7 +57,8 @@
 	    	<tr>
 	    		<th>${message("yly.notification.content")}:</th>
 	    		<td colspan="3">
-	    			 <textarea name="content" class="easyui-kindeditor" id= "notification_content"  style="height:200px;width:300px" ></textarea>   
+	    			 <textarea id= "add_notification_content"  
+	    			 style="height:200px;width:300px" name="content"></textarea>   
 	    		</td>
 	    	</tr>
 	    </table>

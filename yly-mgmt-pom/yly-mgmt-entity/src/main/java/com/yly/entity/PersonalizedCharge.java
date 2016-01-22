@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -37,7 +38,7 @@ import com.yly.lucene.DateBridgeImpl;
 @Entity
 @Table(name = "yly_personalized_charge")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_personalized_charge_sequence")
-@Indexed(index="chargeRecord/personalizedCharge")
+@Indexed(index = "chargeRecord/personalizedCharge")
 public class PersonalizedCharge extends BaseEntity {
 
   private static final long serialVersionUID = 8840662978230104889L;
@@ -51,7 +52,7 @@ public class PersonalizedCharge extends BaseEntity {
    * 老人
    */
   private ElderlyInfo elderlyInfo;
-  
+
   /**
    * 支付方式
    */
@@ -66,7 +67,7 @@ public class PersonalizedCharge extends BaseEntity {
    * 缴费时间
    */
   private Date payTime;
-  
+
   /**
    * 服务费金额
    */
@@ -81,7 +82,7 @@ public class PersonalizedCharge extends BaseEntity {
    * 缴纳状态
    */
   private PaymentStatus chargeStatus;
-  
+
   /**
    * 备注
    */
@@ -91,17 +92,17 @@ public class PersonalizedCharge extends BaseEntity {
    * 账单号
    */
   private String billingNo;
-  
+
   /**
    * 个性化服务记录
    */
   private Set<PersonalizedRecord> personalizedRecords = new HashSet<PersonalizedRecord>();
-  
+
   /**
    * 所属账单
    */
   private Billing billing;
-  
+
   /***
    * 收费开始时间
    */
@@ -111,12 +112,12 @@ public class PersonalizedCharge extends BaseEntity {
    * 收费结束时间
    */
   private Date periodEndDate;
-  
+
   /**
    * 所属补充账单
    */
   private BillingSupplyment billingSupply;
-  
+
   @OneToOne
   public BillingSupplyment getBillingSupply() {
     return billingSupply;
@@ -125,6 +126,7 @@ public class PersonalizedCharge extends BaseEntity {
   public void setBillingSupply(BillingSupplyment billingSupply) {
     this.billingSupply = billingSupply;
   }
+
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @FieldBridge(impl = DateBridgeImpl.class)
@@ -135,6 +137,7 @@ public class PersonalizedCharge extends BaseEntity {
   public void setPeriodStartDate(Date periodStartDate) {
     this.periodStartDate = periodStartDate;
   }
+
   @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @FieldBridge(impl = DateBridgeImpl.class)
@@ -163,7 +166,7 @@ public class PersonalizedCharge extends BaseEntity {
     this.billing = billing;
   }
 
-  @OneToMany(mappedBy="personalizedCharge")
+  @OneToMany(mappedBy = "personalizedCharge", cascade = CascadeType.MERGE)
   public Set<PersonalizedRecord> getPersonalizedRecords() {
     return personalizedRecords;
   }
@@ -171,7 +174,7 @@ public class PersonalizedCharge extends BaseEntity {
   public void setPersonalizedRecords(Set<PersonalizedRecord> personalizedRecords) {
     this.personalizedRecords = personalizedRecords;
   }
-  
+
   @Column(length = 30)
   public String getBillingNo() {
     return billingNo;
@@ -180,6 +183,7 @@ public class PersonalizedCharge extends BaseEntity {
   public void setBillingNo(String billingNo) {
     this.billingNo = billingNo;
   }
+
   @JsonProperty
   @Column(length = 2000)
   public String getRemark() {
@@ -215,8 +219,10 @@ public class PersonalizedCharge extends BaseEntity {
   public void setOperator(String operator) {
     this.operator = operator;
   }
+
   @JsonProperty
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
@@ -226,7 +232,8 @@ public class PersonalizedCharge extends BaseEntity {
   }
 
   @Index(name = "personalized_charge_tenantid")
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+      analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -244,6 +251,7 @@ public class PersonalizedCharge extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
+
   @JsonProperty
   @Column(nullable = false, precision = 12, scale = 2)
   public BigDecimal getPersonalizedAmount() {
