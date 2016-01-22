@@ -57,7 +57,7 @@ public class NursePlan extends BaseEntity{
   private String planName;
 
   
-  @Column(length=50)
+  @Column(length=200)
   @JsonProperty
   public String getRemark() {
     return remark;

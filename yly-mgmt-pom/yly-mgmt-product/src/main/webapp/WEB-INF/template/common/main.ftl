@@ -257,7 +257,7 @@
 		    		<li><a href="#" data-url="${base}/console/nurseSchedule/nurseSchedule.jhtml">${message("yly.nurse.schedule")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/nursePlan/nursePlan.jhtml">${message("yly.nurse.plan")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.modify")}</a></li>
-		    		<li><a href="#">${message("yly.nurse.personal")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/personalizedNurse/personalizedNurse.jhtml">${message("yly.nurse.personal")}</a></li>
 		    	</ul>
 		    	[@shiro.hasPermission name="volunteer"]  
 		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">

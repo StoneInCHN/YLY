@@ -17,3 +17,23 @@ $.extend($.fn.validatebox.defaults.rules, {
 	        message : '身份证号码格式不正确' 
 	    }
 })
+
+//最小长度
+$.extend($.fn.validatebox.defaults.rules, {    
+    minLength: {    
+        validator: function(value, param){    
+            return value.length >= param[0];    
+        },    
+        message: '最少输入{0}为'   
+    }    
+}); 
+
+//最大长度
+$.extend($.fn.validatebox.defaults.rules, {    
+    maxLength: {    
+        validator: function(value, param){    
+            return value.length < param[0];    
+        },    
+        message: '最多输入 {0}位'   
+    }    
+}); 

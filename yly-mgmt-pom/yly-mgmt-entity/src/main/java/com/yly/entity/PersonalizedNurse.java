@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -44,6 +45,11 @@ public class PersonalizedNurse extends BaseEntity {
    * 登记时间
    */
   private Date applyTime;
+  
+  /**
+   * 护理级别 
+   */
+  private SystemConfig nurseLevel;
 
   /**
    * 服务总次数
@@ -81,6 +87,7 @@ public class PersonalizedNurse extends BaseEntity {
   
   
   @Column(nullable = false, precision = 12, scale = 2)
+  @JsonProperty
   public BigDecimal getServicePrice() {
     return servicePrice;
   }
@@ -98,7 +105,8 @@ public class PersonalizedNurse extends BaseEntity {
     this.personalizedRecords = personalizedRecords;
   }
 
-  @Column(length = 50)
+  @Column(length = 200)
+  @JsonProperty
   public String getRemark() {
     return remark;
   }
@@ -108,6 +116,7 @@ public class PersonalizedNurse extends BaseEntity {
   }
 
   @Column(length = 15)
+  @JsonProperty
   public String getOperator() {
     return operator;
   }
@@ -117,6 +126,7 @@ public class PersonalizedNurse extends BaseEntity {
   }
 
   @Index(name = "personalized_nurse_tenantid")
+  @JsonProperty
   public Long getTenantID() {
     return tenantID;
   }
@@ -134,6 +144,7 @@ public class PersonalizedNurse extends BaseEntity {
     this.elderlyInfo = elderlyInfo;
   }
 
+  @JsonProperty
   public Date getApplyTime() {
     return applyTime;
   }
@@ -142,6 +153,7 @@ public class PersonalizedNurse extends BaseEntity {
     this.applyTime = applyTime;
   }
 
+  @JsonProperty
   public Integer getSumCount() {
     return sumCount;
   }
@@ -158,7 +170,8 @@ public class PersonalizedNurse extends BaseEntity {
     this.usedCount = usedCount;
   }
   
-  @Column(length=20)
+  @Column(length=50)
+  @JsonProperty
   public String getNurseContent() {
     return nurseContent;
   }
@@ -167,4 +180,16 @@ public class PersonalizedNurse extends BaseEntity {
     this.nurseContent = nurseContent;
   }
 
+  @Column(length=10)
+  @JsonProperty
+  public SystemConfig getNurseLevel() {
+    return nurseLevel;
+  }
+
+  public void setNurseLevel(SystemConfig nurseLevel) {
+    this.nurseLevel = nurseLevel;
+  }
+
+  
+  
 }

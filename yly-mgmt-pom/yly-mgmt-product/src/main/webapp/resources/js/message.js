@@ -533,7 +533,21 @@ var messages = {
 	"yly.nursePlan.planEndDate":"结束时间",
 	"yly.nursePlan.planName":"计划名称",
 	"yly.nursePlan.planContent":"计划内容",
-	"yly.nursePlan.remark":"备注"
+	"yly.nursePlan.remark":"备注",
+	
+	//个性化护理
+	"yly.personalizedNurse.list":"个性化护理列表",
+	"yly.personalizedNurse.add":"添加个性化护理",
+	"yly.personalizedNurse.edit":"个性化护理编辑",
+	"yly.personalizedNurse.elderlyInfo":"老人",
+	"yly.personalizedNurse.applyTime":"登记时间",
+	"yly.personalizedNurse.sumCount":"服务总次数",
+	"yly.personalizedNurse.usedCount":"已使用次数",
+	"yly.personalizedNurse.nurseContent":"护理内容",
+	"yly.personalizedNurse.operator":"经办人",
+	"yly.personalizedNurse.servicePrice":"服务单价",
+    "yly.personalizedNurse.remark":"备注",
+    "yly.personalizedNurse.nurseLevel":"护理级别"
 };
 //多语言
 function message(code) {

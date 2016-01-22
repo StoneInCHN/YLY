@@ -18,19 +18,19 @@
 	    	<tr>
 	    		<th>${message("yly.nursePlan.planName")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox"  name="planName" data-options="required:true" />   
+	    			 <input class="easyui-validatebox"  name="planName" data-options="required:true" validType="minLength[10]"/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.nursePlan.planContent")}:</th>
 	    		<td>
-	    			 <input class="easyui-textbox"  name="planContent" data-options="required:true,multiline:true,height:100" />   
+	    			 <input class="easyui-textbox"  name="planContent" data-options="required:true,multiline:true,height:100" validType:'maxLength[200]'/>   
 	    		</td>
 	    	</tr>
 	    	<tr>
 	    		<th>${message("yly.nursePlan.remark")}:</th>
 	    		<td>
-	    			  <input class="easyui-textbox"  name="remark" data-options="multiline:true,height:100" /> 
+	    			  <input class="easyui-textbox"  name="remark" data-options="multiline:true,height:100,validType:'maxLength[200]'" /> 
 	    		</td>
 	    	</tr>
 	    </table>
