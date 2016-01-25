@@ -277,7 +277,6 @@ $(function(){
 					elderLivingMainReport.series[1].data.push(data[i].inUsingCount);
 					elderLivingMainReport.xAxis.categories.push(data[i].roomType.configValue);
 				}
-
 			}
 			var chart = new Highcharts.Chart(elderLivingMainReport);
 		}
@@ -302,20 +301,7 @@ $(function(){
 				pauseOnHover: true,
 				navigation: false,
 		        direction: 'down',
-		        newsTickerInterval: 4000,
-		        onReset:function(){
-		        	console.log('reset')
-		        },
-		        onNext:function(){
-		        	console.log('next')	
-		        },
-		        onPrev:function(){
-		        	console.log('onPrev')
-		        } ,
-		        onToDo:function(){
-		        	console.log('onToDo')
-		        } 
-
+		        newsTickerInterval: 4000
 		    });
 		}
 

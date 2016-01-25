@@ -529,6 +529,8 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       //elderlyEvaluatingRecord.setOperator(tenantAccountService.getCurrentUsername());//设置操作人员
       elderlyEvaluatingRecord.setStaffID("");//设置操作人员员工号
       elderlyEvaluatingRecord.setEvaluatingDate(new Date());//评估基准时间就是当前时间
+      //设置评估表最终结果等级        
+      elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
       elderlyEvaluatingRecordService.save(elderlyEvaluatingRecord);
       /**
        * 依次保存每个项的评估选择结果
@@ -552,8 +554,6 @@ public class ElderlyEvaluatingRecordController extends BaseController {
       if (StringUtils.isNotBlank(formLevel) && StringUtils.isNotBlank(sectionsResult)) {
         //设置模块总分和等级(json字符串)
         elderlyEvaluatingRecord.setSectionsResult(sectionsResult);
-        //设置评估表最终结果等级        
-        elderlyEvaluatingRecord.setEvaluatingResult(formLevel);
         elderlyEvaluatingRecordService.update(elderlyEvaluatingRecord);
       }        
       return SUCCESS_MESSAGE;

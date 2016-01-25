@@ -470,9 +470,9 @@ public class BillingController extends BaseController {
     if (systemConfigs != null && systemConfigs.size() > 0) {
       model.addAttribute("billDay", systemConfigs.get(0).get("configValue"));
     }
-    if (record.getChargeStatus().equals(PaymentStatus.PAID)) {
-
-    }
+    // if (record.getChargeStatus().equals(PaymentStatus.PAID)) {
+    //
+    // }
     String[] properties = {"chargeItem.configValue", "amountPerDay", "amountPerMonth"};
     model.addAttribute("bedNurseConfig",
         billingService.getBedNurseConfigByElderly(properties, record.getElderlyInfo()));
@@ -607,6 +607,13 @@ public class BillingController extends BaseController {
       BigDecimal curAmount =
           record.getBedAmount().add(record.getNurseAmount()).add(record.getMealAmount())
               .add(record.getPersonalizedAmount());
+      if (record.getBillingAdjustment() != null && record.getBillingAdjustment().size() > 0) {
+        for (BillingAdjustment billingAdjustment : record.getBillingAdjustment()) {
+          if (billingAdjustment.getChargeStatus().equals(PaymentStatus.UNPAID)) {
+            curAmount = curAmount.add(billingAdjustment.getAdjustmentAmount());
+          }
+        }
+      }
       model.addAttribute("currentAmount", curAmount);
       model.addAttribute("serviceDetails",
           personalizedChargeService.getServiceDetailsByBill(record.getPersonalizedCharge()));
