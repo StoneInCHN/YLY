@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -110,6 +111,17 @@ public class TenantUser extends BaseEntity {
    */
   private Set<TenantAccount> tenantAccounts = new HashSet<TenantAccount>();
   
+  private Set<NurseArrangement> nurseArrangements = new HashSet<NurseArrangement>();
+   
+  @OneToMany(mappedBy = "nurseAssistant")
+  public Set<NurseArrangement> getNurseArrangements() {
+    return nurseArrangements;
+  }
+
+  public void setNurseArrangements(Set<NurseArrangement> nurseArrangements) {
+    this.nurseArrangements = nurseArrangements;
+  }
+
   @OneToMany(mappedBy="tenantUser")
   public Set<TenantAccount> getTenantAccounts() {
     return tenantAccounts;

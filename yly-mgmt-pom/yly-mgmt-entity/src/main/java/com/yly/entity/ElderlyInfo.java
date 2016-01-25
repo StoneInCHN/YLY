@@ -269,6 +269,10 @@ public class ElderlyInfo extends BaseEntity {
    */
   private Set<ElderlyEvaluatingRecord> elderlyEvaluatingRecords =
       new HashSet<ElderlyEvaluatingRecord>();
+  /**
+   * 护理安排
+   */
+  private Set<NurseArrangement> nurseArrangements = new HashSet<NurseArrangement>();
 
   /**
    * 相册
@@ -503,6 +507,14 @@ public class ElderlyInfo extends BaseEntity {
 
   public void setElderlyEvaluatingRecords(Set<ElderlyEvaluatingRecord> elderlyEvaluatingRecords) {
     this.elderlyEvaluatingRecords = elderlyEvaluatingRecords;
+  }
+  @OneToMany(mappedBy = "elderlyInfo", fetch = FetchType.LAZY)
+  public Set<NurseArrangement> getNurseArrangements() {
+    return nurseArrangements;
+  }
+
+  public void setNurseArrangements(Set<NurseArrangement> nurseArrangements) {
+    this.nurseArrangements = nurseArrangements;
   }
 
   @JsonProperty
