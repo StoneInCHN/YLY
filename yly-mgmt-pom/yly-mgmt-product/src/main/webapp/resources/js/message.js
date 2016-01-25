@@ -547,7 +547,8 @@ var messages = {
 	"yly.personalizedNurse.operator":"经办人",
 	"yly.personalizedNurse.servicePrice":"服务单价",
     "yly.personalizedNurse.remark":"备注",
-    "yly.personalizedNurse.nurseLevel":"护理级别"
+    "yly.personalizedNurse.nurseLevel":"护理级别",
+    "yly.personalizedNurse.personalized":"服务项目"
 };
 //多语言
 function message(code) {

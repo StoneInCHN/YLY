@@ -19,6 +19,7 @@ import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.json.response.PersonalizedChargeConfigResponse;
 import com.yly.service.PersonalizedChargeConfigService;
 
 @Controller("personalizedChargeConfigController")
@@ -27,10 +28,11 @@ public class PersonalizedChargeConfigController extends BaseController {
 
   @Resource(name = "personalizedChargeConfigServiceImpl")
   private PersonalizedChargeConfigService personalizedChargeConfigService;
-  
-  
+
+
   /**
    * 列表页面
+   * 
    * @param model
    * @return
    */
@@ -41,21 +43,23 @@ public class PersonalizedChargeConfigController extends BaseController {
 
   /**
    * 列表数据
+   * 
    * @param pageable
    * @param model
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<PersonalizedChargeConfig> list(Pageable pageable, ModelMap model) {
-    
-    return personalizedChargeConfigService.findPage(pageable,true);
+
+    return personalizedChargeConfigService.findPage(pageable, true);
   }
 
 
   /**
    * 编辑页面
+   * 
    * @param model
-   * @param 
+   * @param
    * @return
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -63,36 +67,41 @@ public class PersonalizedChargeConfigController extends BaseController {
     model.addAttribute("personalizedChargeConfig", personalizedChargeConfigService.find(id));
     return "/personalizedChargeConfig/edit";
   }
-  
+
   /**
    * 添加
+   * 
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public @ResponseBody Message add(PersonalizedChargeConfig personalizedChargeConfig) {
     List<Filter> filters = new ArrayList<Filter>();
-    Filter itemFilter = new Filter("chargeItem",Operator.eq,personalizedChargeConfig.getChargeItem());
+    Filter itemFilter =
+        new Filter("chargeItem", Operator.eq, personalizedChargeConfig.getChargeItem());
     filters.add(itemFilter);
-    List<PersonalizedChargeConfig> personalizedChargeConfigs = personalizedChargeConfigService.findList(null, filters, null, true, null);
-    if (personalizedChargeConfigs!=null && personalizedChargeConfigs.size()>0) {
+    List<PersonalizedChargeConfig> personalizedChargeConfigs =
+        personalizedChargeConfigService.findList(null, filters, null, true, null);
+    if (personalizedChargeConfigs != null && personalizedChargeConfigs.size() > 0) {
       return Message.error("yly.personalizedCharge.config.duplicate");
-   }
-    personalizedChargeConfigService.save(personalizedChargeConfig,true);
+    }
+    personalizedChargeConfigService.save(personalizedChargeConfig, true);
     return SUCCESS_MESSAGE;
   }
-  
+
   /**
    * 更新
+   * 
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
   public @ResponseBody Message update(PersonalizedChargeConfig personalizedChargeConfig) {
-    personalizedChargeConfigService.update(personalizedChargeConfig,"chargeItem","tenantID");
+    personalizedChargeConfigService.update(personalizedChargeConfig, "chargeItem", "tenantID");
     return SUCCESS_MESSAGE;
   }
-  
+
   /**
    * 删除
+   * 
    * @param ids
    * @return
    */
@@ -104,6 +113,22 @@ public class PersonalizedChargeConfigController extends BaseController {
       personalizedChargeConfigService.delete(ids);
     }
     return SUCCESS_MESSAGE;
+  }
+
+  @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+  public @ResponseBody List<PersonalizedChargeConfigResponse> findAll() {
+    List<PersonalizedChargeConfigResponse> responses =
+        new ArrayList<PersonalizedChargeConfigResponse>();
+    List<PersonalizedChargeConfig> lists = personalizedChargeConfigService.findAll(true);
+    if (lists.size() > 0) {
+      for (PersonalizedChargeConfig personalizedChargeConfig : lists) {
+        PersonalizedChargeConfigResponse configResponse = new PersonalizedChargeConfigResponse();
+        configResponse.setId(personalizedChargeConfig.getId());
+        configResponse.setText(personalizedChargeConfig.getChargeItem());
+        responses.add(configResponse);
+      }
+    }
+    return responses;
   }
 
 }
