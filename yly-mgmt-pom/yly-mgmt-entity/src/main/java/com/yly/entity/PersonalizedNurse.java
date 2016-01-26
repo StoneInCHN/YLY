@@ -49,7 +49,7 @@ public class PersonalizedNurse extends BaseEntity {
   /**
    * 护理级别 
    */
-  private SystemConfig nurseLevel;
+  private PersonalizedChargeConfig personalized;
 
   /**
    * 服务总次数
@@ -136,6 +136,7 @@ public class PersonalizedNurse extends BaseEntity {
   }
 
   @ManyToOne
+  @JsonProperty
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -162,6 +163,7 @@ public class PersonalizedNurse extends BaseEntity {
     this.sumCount = sumCount;
   }
 
+  @JsonProperty
   public Integer getUsedCount() {
     return usedCount;
   }
@@ -180,16 +182,15 @@ public class PersonalizedNurse extends BaseEntity {
     this.nurseContent = nurseContent;
   }
 
-  @Column(length=10)
+  @ManyToOne
   @JsonProperty
-  public SystemConfig getNurseLevel() {
-    return nurseLevel;
+  public PersonalizedChargeConfig getPersonalized() {
+    return personalized;
   }
 
-  public void setNurseLevel(SystemConfig nurseLevel) {
-    this.nurseLevel = nurseLevel;
+  public void setPersonalized(PersonalizedChargeConfig personalized) {
+    this.personalized = personalized;
   }
-
   
   
 }

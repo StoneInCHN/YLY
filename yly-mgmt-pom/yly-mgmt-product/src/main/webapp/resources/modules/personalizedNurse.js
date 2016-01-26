@@ -3,6 +3,7 @@
 		$("#personalizedNurse-table-list").datagrid({
 			title:message("yly.personalizedNurse.list"),
 			fitColumns:true,
+			fit:true,
 			url:'../personalizedNurse/list.jhtml',  
 			pagination:true,
 			loadMsg:message("yly.common.loading"),
@@ -57,18 +58,13 @@
 						}],
 						onOpen:function(){
 						    	$('#addPersonalizedNurse_form').show();
-						    	$("#addPersonalizedNurse_form_elderlyInfo").click(function(){
-						    		searchElderlyInfo("addPersonalizedNurse_form_elderlyInfo");
-						    	});
-						    	$("#addPersonalizedNurse_form_nurseLevel").combobox({    
+						    	$("#addPersonalizedNurse_form_personalized").combobox({    
 								    valueField:'id',    
-								    textField:'configValue',
+								    textField:'text',
 								    cache: true,
+								    method:"GET",
 								    prompt:message("yly.common.please.select"),
-								    url:'../systemConfig/findByConfigKey.jhtml',
-								    onBeforeLoad : function(param) {
-								        param.configKey = 'PERSONALIZED';// 参数
-								    }
+								    url:'../personalizedChargeConfig/findAll.jhtml'
 								});
 						},
 						onClose:function(){
@@ -108,11 +104,11 @@
 											});
 										},
 										success:function(result,response,status){
+											debugger;
 											$.messager.progress('close');
 											showSuccessMsg(result.content);
-											$('#editPersonalizedNurse_form').form('reset');
 											$('#editPersonalizedNurse').dialog("close");
-											$("#personalizedNurse-table-list").treegrid('reload');
+											$("#personalizedNurse-table-list").datagrid('reload');
 										},
 										error:function (XMLHttpRequest, textStatus, errorThrown) {
 											$.messager.progress('close');
@@ -129,8 +125,16 @@
 							}
 						}],
 						onLoad:function(){
-				    	
-				},
+							$("#editPersonalizedNurse_form_personalized").combobox({    
+							    valueField:'id',    
+							    textField:'text',
+							    cache: true,
+							    method:"GET",
+							    prompt:message("yly.common.please.select"),
+							    url:'../personalizedChargeConfig/findAll.jhtml'
+							});
+							$('#editPersonalizedNurse_form_personalized').combobox('setValue', $("#editPersonalizedNurse_form_personalizedID").val());
+						},
 					})
 				}
 			},'-',{
@@ -181,7 +185,20 @@
 			columns:[
 			   [
 			      {field:'ck',checkbox:true},
-			      {title:message("yly.personalizedNurse.elderlyInfo"),field:"elderlyInfo",width:100,sortable:true},
+			      {title:message("yly.personalizedNurse.elderlyInfo"),field:"elderlyInfo",width:100,sortable:true,formatter: function(value,row,index){
+						if(value && value.name){
+							return value.name;
+						}else{
+							
+						}
+			      	}},
+			       {title:message("yly.personalizedNurse.personalized"),field:"personalized",width:100,sortable:true,formatter: function(value,row,index){
+						if(value && value.chargeItem){
+							return value.chargeItem;
+						}else{
+							
+						}
+			      	}},
 			      {title:message("yly.personalizedNurse.applyTime"),field:"applyTime",width:100,sortable:true,formatter: function(value,row,index){
 						return new Date(value).Format("yyyy-MM-dd");
 					}},
@@ -189,6 +206,7 @@
 			      {title:message("yly.personalizedNurse.usedCount"),field:"usedCount",width:100,sortable:true},
 			      {title:message("yly.personalizedNurse.operator"),field:"operator",width:100,sortable:true},
 			      {title:message("yly.personalizedNurse.nurseContent"),field:"nurseContent",width:100,sortable:true},
+			      {title:message("yly.personalizedNurse.servicePrice"),field:"servicePrice",width:100,sortable:true},
 			      {title:message("yly.personalizedNurse.remark"),field:"remark",width:100,sortable:true},
 			      {title:message("yly.common.createDate"),field:"createDate",width:100,sortable:true,formatter: function(value,row,index){
 						return new Date(value).Format("yyyy-MM-dd");

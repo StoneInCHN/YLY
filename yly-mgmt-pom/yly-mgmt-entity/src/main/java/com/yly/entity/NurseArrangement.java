@@ -51,7 +51,7 @@ public class NurseArrangement extends BaseEntity{
    */
   private Date nurseEndDate;
   /**
-   * 护理计划名称
+   * 护理名称
    */
   private String nurseName;
   /**

@@ -547,6 +547,7 @@ var messages = {
 	"yly.personalizedNurse.operator":"经办人",
 	"yly.personalizedNurse.servicePrice":"服务单价",
     "yly.personalizedNurse.remark":"备注",
+<<<<<<< HEAD
     
     //护理员安排
     "yly.nurseArrangement.list":"护理员安排列表",
@@ -558,6 +559,8 @@ var messages = {
     "yly.nurseArrangement.addNurse":"添加护理员安排",
     "yly.nurseArrangementRecord.list":"护理员护理明细",
     "yly.nurseArrangement.nurseServiceTime":"护理执行时间"
+=======
+>>>>>>> branch 'master' of git@github.com:StoneInCHN/YLY.git
     "yly.personalizedNurse.nurseLevel":"护理级别",
     "yly.personalizedNurse.personalized":"服务项目"
 };

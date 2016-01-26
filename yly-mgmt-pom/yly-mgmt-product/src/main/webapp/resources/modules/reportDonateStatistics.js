@@ -181,11 +181,11 @@ $(function(){
 				var value = {"donateStatisticsCycle":data[i]['donateStatisticsCycle']}
 				var flag = false;
 				$.each(selectOptions, function(j) {     
-				    if(selectOptions[j]  = data[i]['donateStatisticsCycle']){
+				    if(selectOptions[j].donateStatisticsCycle  = data[i]['donateStatisticsCycle']){
 				    	flag = true;
 				    }          
 				});
-				if(falg == false){
+				if(flag == false){
 					selectOptions.push(value);
 				}
 			}

@@ -16,8 +16,10 @@ import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.NurseArrangement;
 import com.yly.entity.ElderlyInfo;
+import com.yly.entity.NurseArrangementRecord;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.NurseArrangementRecordService;
 import com.yly.service.NurseArrangementService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
@@ -35,7 +37,9 @@ public class NurseArrangementController extends BaseController {
 
   @Resource(name = "nurseArrangementServiceImpl")
   private NurseArrangementService nurseArrangementService;
-
+  @Resource(name = "nurseArrangementRecordServiceImpl")
+  private NurseArrangementRecordService nurseArrangementRecordService;
+  
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
 
@@ -71,7 +75,23 @@ public class NurseArrangementController extends BaseController {
     }
     return nurseArrangementPage;
   }
-
+  /**
+   * 查询护理明细list
+   * 
+   * @param pageable
+   * @return
+   */
+  @RequestMapping(value = "/recordList", method = RequestMethod.POST)
+  public @ResponseBody Page<NurseArrangementRecord> recordList(String keysOfElderlyName, Pageable pageable) {
+    Page<NurseArrangementRecord> nurseArrangementRecords = null;
+    if (keysOfElderlyName == null) {
+      nurseArrangementRecords = nurseArrangementRecordService.findPage(pageable, true);
+    } else {
+      //nurseArrangementPage = nurseArrangementService.searchPageByFilter(keysOfElderlyName, pageable);
+    }   
+    return nurseArrangementRecords;
+  }
+  
   @RequestMapping(value = "/findAll", method = RequestMethod.POST)
   public @ResponseBody List<Map<String, Object>> findAll() {
     String[] propertys = {"id", "buildingName"};

@@ -113,6 +113,7 @@
 			toolbar:"#building_manager_tool",
 			url:'../building/list.jhtml',  
 			pagination:true,
+			fit:true,
 			loadMsg:message("yly.common.loading"),
 			striped:true,
 			columns:[

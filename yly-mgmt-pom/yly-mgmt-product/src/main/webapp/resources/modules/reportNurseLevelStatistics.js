@@ -70,9 +70,15 @@ $(function(){
 		pagination:false,
 		columns:[
 			    [
-			     {title:"护理级别",field:"nursingLevel.configValue",width:100,sortable:true},
+			     {title:"护理级别",field:"nursingLevel",width:100,sortable:true,
+			    	 formatter: function(value,row,index){
+		    			if(value != null){
+		    				
+			    	  		return value.configValue;
+			    	  	}
+			    	  }
+			     },
 			     {title:"老人人数",field:"elderlyCount",width:100,sortable:true},
-			     {title:"数量",field:"donateCount",width:100,sortable:true},
 			     {title:"统计周期",field:"statisticsDate",width:100,sortable:true,
 			    	 formatter: function(value,row,index){
 		    			if(value != null){

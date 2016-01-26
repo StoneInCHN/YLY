@@ -17,7 +17,7 @@ var reportElderlyEvent = {
 		plotBorderWidth : 1
 	},
 	title : {
-		text : '每月看病人数统计',
+		text : '老人事件统计',
 		x : -20
 	// center
 	},
@@ -77,7 +77,6 @@ $("#reportElderlyEvent-table-list").datagrid({
 		    	  	}
 		    	  }
 		     }
-		 
 		 ]
 	],
 	rowStyler: function(index,row){
@@ -92,7 +91,6 @@ $("#reportElderlyEvent-table-list").datagrid({
 				[ 'positiveEvent', 'negativeEvent', 'normalEvent' ], [ '积极事件', '消极事件',
 						'一般事件' ]);
 	}
-
 });
 $("#report_elderly_event_search_btn").click(function(){
 	  var _queryParams = $("#report_elderly_event_search_form").serializeJSON();
