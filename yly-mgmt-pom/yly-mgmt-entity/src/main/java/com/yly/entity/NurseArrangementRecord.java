@@ -36,11 +36,19 @@ public class NurseArrangementRecord extends BaseEntity{
    * 租户ID
    */
   private Long tenantID;
-  
+  /**
+   * 护理名称
+   */
+  private String nurseName;
   /**
    * 护理执行时间
    */
   private Date nurseServiceTime;
+  /**
+   * 老人姓名
+   */
+  private String elderlyName;
+  
   /**
    * 护理员姓名
    */
@@ -62,6 +70,7 @@ public class NurseArrangementRecord extends BaseEntity{
   public void setTenantID(Long tenantID) {
     this.tenantID = tenantID;
   }
+  @JsonProperty
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @DateBridge(resolution = Resolution.DAY)
   public Date getNurseServiceTime() {
@@ -93,6 +102,21 @@ public class NurseArrangementRecord extends BaseEntity{
   public void setRemark(String remark) {
     this.remark = remark;
   }
-  
+  @JsonProperty
+  @Column(length=50)  
+  public String getElderlyName() {
+    return elderlyName;
+  }
+  public void setElderlyName(String elderlyName) {
+    this.elderlyName = elderlyName;
+  }
+  @JsonProperty
+  @Column(length=50)
+  public String getNurseName() {
+    return nurseName;
+  }
+  public void setNurseName(String nurseName) {
+    this.nurseName = nurseName;
+  }
   
 }

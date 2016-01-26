@@ -153,7 +153,7 @@ $(function(){
 						return new Date(value).Format("yyyy-MM-dd");
 			   }},
 		      {title:message("yly.nurseArrangement.nurseAssistant"),field:"nurseAssistantName",width:"10%",align:'center',formatter:function(value,row,index){
-		    	  return row.TenantUser.realName;
+		    	  return row.nurseAssistant.realName;
 		      }},
 			  {title:message("yly.common.remark"),field:"remark",width:"15%",align:'center',formatter:function(value,row,index){
 					return  formatLongString(value,50);
@@ -198,11 +198,11 @@ $(function(){
 		columns:[
 		   [
 		      {field:'ck',checkbox:true},
-		      {title:message("yly.common.elderlyname"),field:"elderlyInfoName",width:"15%",align:'center',formatter:function(value,row,index){
-		    	  return row.nurseArrangement.elderlyInfo.name;
+		      {title:message("yly.common.elderlyname"),field:"elderlyName",width:"15%",align:'center',formatter:function(value,row,index){
+		    	  return formatLongString(value,20);
 		      }},
 		      {title:message("yly.nurseArrangement.nurseName"),field:"nurseName",width:"15%",align:'center',formatter:function(value,row,index){
-		    	  return  formatLongString(row.nurseArrangement.nurseName,20);
+		    	  return  formatLongString(value,20);
 		      }},		 			      
 		      {title:message("yly.nurseArrangement.nurseServiceTime"),field:"nurseServiceTime",width:"20%",align:'center',sortable:true,formatter: function(value,row,index){
 					return new Date(value).Format("yyyy-MM-dd");
@@ -309,23 +309,14 @@ $(function(){
 		columns:[
 		   [
 			{field : 'ck',checkbox : true},
-			{title : message("yly.elderlyinfo.identifier"),field : "staffID",width :"30%",align : 'center',sortable : true},
-			{title : message("yly.common.elderlyname"),field : "realname",width :"30%",align : 'center',sortable : true},		
-			{title : message("yly.elderly.status"),field : "staffStatus",width :"30%",align : 'center',sortable : true,formatter : function(value, row,index) {
-					if (value == "IN_NURSING_HOME") {
-						return message("yly.elderly.status.in_nursing_home");
+			{title : message("yly.nurseArrangement.nurseAssistant.staffID"),field : "staffID",width :"30%",align : 'center',sortable : true},
+			{title : message("yly.nurseArrangement.nurseAssistant"),field : "realName",width :"30%",align : 'center',sortable : true},		
+			{title : message("yly.nurseArrangement.nurseAssistant.staffStatus"),field : "staffStatus",width :"30%",align : 'center',sortable : true,formatter : function(value, row,index) {
+					if (value == "INSERVICE") {
+						return message("yly.tenantUser.staffStatus.inService");
 					}
-					if (value == "OUT_NURSING_HOME") {
-						return message("yly.elderly.status.out_nursing_home");
-					}
-					if (value == "IN_PROGRESS_CHECKIN") {
-						return message("yly.elderly.status.in_progress_checkin");
-					}
-					if (value == "IN_PROGRESS_CHECKOUT") {
-						return message("yly.elderly.status.in_progress_checkout");
-					}
-					if (value == "DEAD") {
-						return message("yly.elderly.status.dead");
+					if (value == "OUTSERVICE") {
+						return message("yly.tenantUser.staffStatus.outService");
 					}
 				}
 			} 
