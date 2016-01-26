@@ -352,7 +352,7 @@ function checkoutAdjustment(billId){
 function detectBillingUnderElderly(dataMap){
 	 $("#addCheckoutCharge_checkoutNow").attr("disabled","disabled"); 
 	 $("#addCheckoutCharge_checkoutDate").attr("disabled","disabled"); 
-	 clearCheckoutText();	
+	 clearAddCheckoutChargeText();	
 	 $("#addCheckoutCharge_elderlyInfoID").val(dataMap.id); // 隐藏域 老人id
 	 $("#addCheckoutCharge_elderlyName").textbox('setValue',dataMap.name); // 老人姓名
 	 $("#addCheckoutCharge_elderlyIdentifier").textbox('setValue',dataMap.identifier); // 老人编号
