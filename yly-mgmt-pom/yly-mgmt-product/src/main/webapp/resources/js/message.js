@@ -559,7 +559,17 @@ var messages = {
     "yly.nurseArrangementRecord.list":"护理员护理明细",
     "yly.nurseArrangement.nurseServiceTime":"护理执行时间",
     "yly.personalizedNurse.nurseLevel":"护理级别",
-    "yly.personalizedNurse.personalized":"服务项目"
+    "yly.personalizedNurse.personalized":"服务项目",
+    //personalizedRecord
+    "yly.personalizedRecord.serviceTime":"服务时间",
+    "yly.personalizedRecord.elderlyInfo":"老人",
+    "yly.personalizedRecord.operator":"服务护工",
+    "yly.personalizedRecord.personalizedNurse":"服务项目",
+    "yly.personalizedRecord.chargeStatus":"计费状态",
+    "yly.personalizedRecord.nurseContent":"护理内容",
+    "yly.personalizedRecord.remark":"备注",
+    "yly.personalizedRecord.list":"个性化护理详细记录列表"
+    
 };
 //多语言
 function message(code) {

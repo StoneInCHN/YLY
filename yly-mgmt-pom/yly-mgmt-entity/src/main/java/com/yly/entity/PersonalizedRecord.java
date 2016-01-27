@@ -55,7 +55,7 @@ public class PersonalizedRecord extends BaseEntity {
   /**
    * 服务护工
    */
-  private String serviceNurse;
+  private String operator;
 
   /**
    * 备注
@@ -83,6 +83,7 @@ public class PersonalizedRecord extends BaseEntity {
   private PersonalizedCharge personalizedCharge;
   
   @ManyToOne(fetch = FetchType.LAZY)
+  @JsonProperty
   public PersonalizedCharge getPersonalizedCharge() {
     return personalizedCharge;
   }
@@ -91,6 +92,7 @@ public class PersonalizedRecord extends BaseEntity {
     this.personalizedCharge = personalizedCharge;
   }
 
+  @JsonProperty
   public PaymentStatus getChargeStatus() {
     return chargeStatus;
   }
@@ -100,6 +102,7 @@ public class PersonalizedRecord extends BaseEntity {
   }
 
   @Column(length=20)
+  @JsonProperty
   public String getNurseContent() {
     return nurseContent;
   }
@@ -109,6 +112,7 @@ public class PersonalizedRecord extends BaseEntity {
   }
   
   @ManyToOne(fetch = FetchType.LAZY)
+  @JsonProperty
   public PersonalizedNurse getPersonalizedNurse() {
     return personalizedNurse;
   }
@@ -118,6 +122,7 @@ public class PersonalizedRecord extends BaseEntity {
   }
 
   @Column(length = 50)
+  @JsonProperty
   public String getRemark() {
     return remark;
   }
@@ -127,7 +132,6 @@ public class PersonalizedRecord extends BaseEntity {
   }
 
   @Index(name = "personalized_record_tenantid")
-  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -138,6 +142,7 @@ public class PersonalizedRecord extends BaseEntity {
 
   @ManyToOne
   @IndexedEmbedded
+  @JsonProperty
   public ElderlyInfo getElderlyInfo() {
     return elderlyInfo;
   }
@@ -148,6 +153,7 @@ public class PersonalizedRecord extends BaseEntity {
   
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @DateBridge(resolution = Resolution.DAY)
+  @JsonProperty
   public Date getServiceTime() {
     return serviceTime;
   }
@@ -156,13 +162,14 @@ public class PersonalizedRecord extends BaseEntity {
     this.serviceTime = serviceTime;
   }
 
-  @Column(length = 15)
-  public String getServiceNurse() {
-    return serviceNurse;
+  @JsonProperty
+  @Column(length=30)
+  public String getOperator() {
+    return operator;
   }
 
-  public void setServiceNurse(String serviceNurse) {
-    this.serviceNurse = serviceNurse;
+  public void setOperator(String operator) {
+    this.operator = operator;
   }
   
   
