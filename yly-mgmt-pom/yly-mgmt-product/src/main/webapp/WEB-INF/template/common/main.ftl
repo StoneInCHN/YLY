@@ -253,7 +253,7 @@
 		    	</ul>     
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
 		    		<li><a href="#" data-url="${base}/console/nurseDutyType/nurseDutyType.jhtml">${message("yly.nurse.nurseDutyType")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/nurseArrangement/nurseArrangement.jhtml">${message("yly.nurse.arrange")}</a></li>
+					<li><a href="#" data-url="${base}/console/nurseArrangement/nurseArrangement.jhtml">${message("yly.nurse.arrange")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/nurseSchedule/nurseSchedule.jhtml">${message("yly.nurse.schedule")}</a></li>
 		    		<li><a href="#" data-url="${base}/console/nursePlan/nursePlan.jhtml">${message("yly.nurse.plan")}</a></li>
 		    		<li><a href="#">${message("yly.nurse.modify")}</a></li>
@@ -313,7 +313,7 @@
 		    		[@shiro.hasPermission name="position"]
 		    		<li><a href="#" data-url="${base}/console/position/position.jhtml">${message("yly.personnel.position")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#" >${message("yly.personnel.tenantuser")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/tenantUser/tenantUser.jhtml">${message("yly.personnel.tenantuser")}</a></li>
 		    		<li><a href="#" >${message("yly.personnel.vacate")}</a></li>
 		    	</ul>    
     </div>
@@ -324,11 +324,17 @@
                 <div id="cc" class="easyui-calendar" style="width:180px;height:200px;"></div>  
          </div>
          <div id="notify" class="easyui-panel" title="通知"     
-	        style="width:200px;height:400px;padding:10px;background:#fafafa;"   
+	        style="width:200px;height:200px;padding:10px;background:#fafafa;"   
 	        data-options="collapsible:true">
                <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 180px;">
 			 </ul>
-         </div>  
+         </div>
+          <div id="message" class="easyui-panel" title="业内消息"     
+	        style="width:200px;height:200px;padding:10px;background:#fafafa;"   
+	        data-options="collapsible:true">
+               <ul id="message-content" style="overflow-y: hidden; height: 180px;">
+			 </ul>
+         </div>    
 	</div>  
     </div>
   
@@ -340,6 +346,11 @@
 		        <button id="selectRoom">选房</button>
 		        -->
 		        <table border="0" >
+		        	<tr style="height:70px">
+		        		<td colspan='3'>
+		        		</td>
+		        	</tr>
+		        	<tr>
 				        <td style="float:right">
 				        	<div id="elderlyStatusReportId" style="height:300px;width:280px">
 				        </td>
@@ -348,12 +359,46 @@
 				            <div id="elderlyAgeReportId" style="height:300px;width: 280px;">
 				        </td>
 				         <td>
-				            <div id="elderlyGenderRateReportId" style="height:300px;width: 280px;">
+				         	<div id="elderlyLivingMainReportId" style="height:300px;width: 280px;">
 				        </td>  
 				    </tr>
 				    <tr >
-				    	<td colspan='3'>
-				    		<div id="elderlyLivingMainReportId" style="height:350px;width: 680px;">
+				    	<td colspan='2'>
+				    		<div id="elderlyStatusInReportId" style="height:300px;width: 580px;">
+				    	</td>
+				    	<td>
+				    		<div class="mini-widget" style="height:130px;width: 220px;">
+				                <div class="mini-widget-heading clearfix">
+				                  <div class="pull-left">本月老人</div>
+				                  <div class="pull-right"></div>
+				                </div>
+				                <div class="mini-widget-body clearfix">
+				                  <div id="elderlyNewComming"class="pull-left number">	                    
+				                  </div>
+				                  <div class="pull-right">
+				                  	环比：<div id="increasePercent"></div>
+				                  </div>
+				                </div>
+             				 </div>
+             				 <div class="mini-widget" style="height:130px;width: 220px;">
+				                <div class="mini-widget-heading clearfix">
+				                  <div class="pull-left">男女比例</div>
+				                </div>
+				                <div class="mini-widget-body clearfix">
+				                	<ul>
+				                		<li>
+				                		  <span class="glyphicon glyphicon-user male"></span>
+						                  <span id="elderlyGenderMale" class="pull-right number"></span>
+						                  <span class="clearfix"></span>
+				                		</li>
+				                		<li>
+				                		  <span class="glyphicon glyphicon-user female"></span>
+						                  <span id="elderlyGenderFemale" class="pull-right number"></span>
+						                  <span class="clearfix"></span>
+				                		</li>
+				                	</ul>
+				                </div>
+             				 </div>
 				    	</td>
 				    <tr>
 				</table>

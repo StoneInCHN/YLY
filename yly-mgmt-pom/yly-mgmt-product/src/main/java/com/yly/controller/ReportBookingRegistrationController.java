@@ -1,6 +1,7 @@
 package com.yly.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ReportBookingRegistrationService;
+import com.yly.utils.ReportDataComparator;
 
 /**
  * Controller - 老人事件报表
@@ -55,9 +57,11 @@ public class ReportBookingRegistrationController extends BaseController {
     //时间倒序
     List<Ordering> orderings = new ArrayList<Ordering> ();
     Ordering dateCycleOrdering = new Ordering ("bookingDateStatitics",
-        Direction.asc);
+        Direction.desc);
     orderings.add (dateCycleOrdering);
     List<ReportBookingRegistration>  reportBookingRegistrationList = reportBookingRegistrationService.findList (24, null, orderings, true,null);
+    ReportDataComparator comparator =new ReportDataComparator ("bookingDateStatitics");
+    Collections.sort (reportBookingRegistrationList, comparator);
     return reportBookingRegistrationList;
   }
 }
