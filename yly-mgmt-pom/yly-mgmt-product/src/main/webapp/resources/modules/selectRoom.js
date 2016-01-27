@@ -1,5 +1,5 @@
 $(function() {
-	$('#roomTreeForChangeRoom').tree({    
+	$('#roomTreeForSelectRoom').tree({    
 	    url:'../room/findAll.jhtml', 
 	    queryParams:{
 	    	isSelect:false
@@ -41,7 +41,7 @@ $(function() {
 		  fit:true,
 		  border:false,
 		  title: '床位图展示',
-		  href:'../room/bedImgShow.jhtml',
+		  href:'../selectRoom/bedImgShow.jhtml',
 		  loadingMessage:message("yly.common.loading"),
 		  onLoad:function(){    
 			  $('.wminimize').click(
