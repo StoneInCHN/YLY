@@ -333,7 +333,7 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
           for (PersonalizedRecord personalizedRecord : personalizedRecords) {
             PersonalizedNurse personalizedNurse = personalizedRecord.getPersonalizedNurse();
             personalizedRemark.append(personalizedDetail(personalizedRecord.getServiceTime(),
-                personalizedRecord.getServiceNurse(), personalizedNurse.getServicePrice(), personalizedRecord.getNurseContent()));
+                personalizedRecord.getOperator(), personalizedNurse.getServicePrice(), personalizedRecord.getNurseContent()));
           }
         }
       }
@@ -351,7 +351,7 @@ public class CheckoutServiceImpl extends BaseServiceImpl<Billing, Long> implemen
           PersonalizedNurse personalizedNurse = personalizedRecord.getPersonalizedNurse();
           personalizedAmount = personalizedAmount.add(personalizedNurse.getServicePrice());//一次费用
           personalizedRemark.append(personalizedDetail(personalizedRecord.getServiceTime(),
-              personalizedRecord.getServiceNurse(), personalizedNurse.getServicePrice(), personalizedRecord.getNurseContent()));
+              personalizedRecord.getOperator(), personalizedNurse.getServicePrice(), personalizedRecord.getNurseContent()));
         }
       }
     }
