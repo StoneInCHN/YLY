@@ -2,7 +2,7 @@
 
 <div class="easyui-layout" data-options="fit:true">
       <div data-options="region:'west',split:true" style="width:300px" title="过滤">
-             <div id="calendar-panel" class="easyui-panel" title="老人信息"    style="width:293px;height:400px;background:#fafafa;"  data-options="collapsible:true">
+             <div id="elderlyInfo-panel" class="easyui-panel" title="老人信息"    style="width:293px;height:400px;background:#fafafa;"  data-options="collapsible:true">
 		        <fieldset style="padding:5px 0px 4px 4px;margin:0px">
 			        <form id="elderlyInfo_search_form" class="search-form">
 				    	<div class="search-item">
@@ -20,7 +20,7 @@
 				</fieldset>
                 <table id="elderlyInfoSearch-table-list"></table>
          </div>
-         <div id="notify" class="easyui-panel" title="护理员信息"  style="width:293px;height:400px;background:#fafafa;"  data-options="collapsible:true">
+         <div id="nurseAssistant-panel" class="easyui-panel" title="护理员信息"  style="width:293px;height:400px;background:#fafafa;"  data-options="collapsible:true">
 			        <fieldset style="padding:5px 0px 4px 4px;margin:0px">
 				        <form id="nurseAssistant_search_form" class="search-form">
 					    	<div class="search-item">
@@ -40,7 +40,7 @@
          </div>  
      </div>
 	<div data-options="region:'center'" >
-		<div class="easyui-panel" data-options="border:false">
+		<div class="easyui-panel" style="height:400px;background:#fafafa;" data-options="border:false">
 			 <fieldset>
 			    <legend>护理员安排查询</legend>
 			    <form id="nurseArrangement_search_form" class="search-form">
@@ -70,6 +70,8 @@
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" plain=true onclick="nurseArrangement_manager_tool.remove();">${message("yly.button.delete")}</a>
 				</div>				
 			</div> 
+			</div> 
+			<div class="easyui-panel" style="height:400px;background:#fafafa;" data-options="border:false">
 			<fieldset>
 			    <legend>护理员护理明细查询</legend>
 			    <form id="nurseArrangementRecord_search_form" class="search-form">
@@ -90,6 +92,7 @@
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="nurseArrangementRecord_manager_tool.edit();">${message("yly.button.update")}</a>
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" plain=true onclick="nurseArrangementRecord_manager_tool.remove();">${message("yly.button.delete")}</a>
 				</div>				
+			</div> 
 			</div> 
 		</div>        
     </div>
