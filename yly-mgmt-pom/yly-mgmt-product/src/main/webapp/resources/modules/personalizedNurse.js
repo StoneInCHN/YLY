@@ -3,9 +3,10 @@
 		$("#personalizedNurse-table-list").datagrid({
 			title:message("yly.personalizedNurse.list"),
 			fitColumns:true,
-			fit:true,
+			//fit:true,
 			url:'../personalizedNurse/list.jhtml',  
 			pagination:true,
+			singleSelect:true,
 			loadMsg:message("yly.common.loading"),
 			striped:true,
 			toolbar: [{
@@ -215,8 +216,20 @@
 						return new Date(value).Format("yyyy-MM-dd");
 					}}
 			   ]
-			]
-	
+			],
+			onDblClickRow:function(rowIndex, rowData){
+				console.log(rowIndex);
+				console.log(rowData);
+				
+				$("#incluedPersonalizedRecord").show();
+				$("#incluedPersonalizedRecord").panel({
+					href:'../personalizedRecord/personalizedRecord.jhtml',    
+				    onLoad:function(){    
+				        alert('loaded successfully');    
+				    }  
+				})
+				
+			}
 		});
 })
 	
