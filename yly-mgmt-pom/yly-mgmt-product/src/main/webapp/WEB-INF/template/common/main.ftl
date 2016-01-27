@@ -114,7 +114,7 @@
 		    		[@shiro.hasPermission name="checkedInElderly"]
 		    		<li><a href="#" data-url="${base}/console/elderlyInfo/checkedInElderly.jhtml">${message("yly.elderlyInfo.checkedInElderly")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#" data-url="${base}/console/room/changeRoom.jhtml">床位状态</a></li>
+		    		<li><a href="#" data-url="${base}/console/selectRoom/selectRoom.jhtml">床位状态</a></li>
 		    		<li><a href="#">科室信息</a></li>
 		    	</ul>
 		        <ul title="${message("yly.elderlyInfo.AdmissionAndLeave")}" id="admissionAndLeave">
