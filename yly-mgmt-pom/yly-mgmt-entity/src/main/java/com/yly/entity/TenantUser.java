@@ -302,6 +302,7 @@ public class TenantUser extends BaseEntity {
   }
 
   @Index(name="tenant_user_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
