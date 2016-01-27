@@ -59,7 +59,7 @@
 	</form>
 </div>
 <div id="editPersonalizedNurse"></div>  
-
-
+<div id="incluedPersonalizedRecord"> </div>  
+</div>  
 
 

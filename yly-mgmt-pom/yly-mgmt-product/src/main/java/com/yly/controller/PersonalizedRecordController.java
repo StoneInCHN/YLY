@@ -1,5 +1,8 @@
 package com.yly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,8 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.PersonalizedRecord;
 import com.yly.entity.TenantUser;
+import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
@@ -39,9 +44,24 @@ public class PersonalizedRecordController extends BaseController {
   }
 
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<PersonalizedRecord> list(Pageable pageable) {
-    return personalizedRecordService.findPage(pageable);
+  public @ResponseBody Page<PersonalizedRecord> list(Pageable pageable ,Long nurseId) {
+    Page<PersonalizedRecord> pages;
+    if (nurseId !=null) {
+      List<Filter> filters = new ArrayList<Filter>();
+      Filter filter = new Filter();
+      filter.setProperty("personalizedNurse");
+      filter.setOperator(Operator.eq);
+      filter.setValue(nurseId);
+      filters.add(filter);
+      pageable.setFilters(filters);
+      pages=personalizedRecordService.findPage(pageable,true);
+    }else{
+      List<PersonalizedRecord> records = new ArrayList<PersonalizedRecord>();
+      pages = new Page<PersonalizedRecord>(records, 0, pageable);
+    }
+    return pages;
   }
+
 
   /**
    * 编辑
