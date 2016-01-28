@@ -10,14 +10,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
-import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
-import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -32,7 +30,7 @@ import com.yly.entity.commonenum.CommonEnum.PaymentStatus;
 @Entity
 @Table(name = "yly_personalized_record")
 @SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_personalized_record_sequence")
-@Indexed(index="chargeRecord/personalizedRecord")
+@Indexed(index = "chargeRecord/personalizedRecord")
 public class PersonalizedRecord extends BaseEntity {
 
   private static final long serialVersionUID = 8840662978230104889L;
@@ -66,22 +64,22 @@ public class PersonalizedRecord extends BaseEntity {
    * 个性化服务项目
    */
   private PersonalizedNurse personalizedNurse;
-  
+
   /**
    * 缴纳状态
    */
   private PaymentStatus chargeStatus;
-  
+
   /**
    * 护理内容
    */
   private String nurseContent;
-  
+
   /**
    * 个性化服务收费记录
    */
   private PersonalizedCharge personalizedCharge;
-  
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonProperty
   public PersonalizedCharge getPersonalizedCharge() {
@@ -101,7 +99,7 @@ public class PersonalizedRecord extends BaseEntity {
     this.chargeStatus = chargeStatus;
   }
 
-  @Column(length=20)
+  @Column(length = 20)
   @JsonProperty
   public String getNurseContent() {
     return nurseContent;
@@ -110,7 +108,7 @@ public class PersonalizedRecord extends BaseEntity {
   public void setNurseContent(String nurseContent) {
     this.nurseContent = nurseContent;
   }
-  
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonProperty
   public PersonalizedNurse getPersonalizedNurse() {
@@ -150,7 +148,7 @@ public class PersonalizedRecord extends BaseEntity {
   public void setElderlyInfo(ElderlyInfo elderlyInfo) {
     this.elderlyInfo = elderlyInfo;
   }
-  
+
   @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO)
   @DateBridge(resolution = Resolution.DAY)
   @JsonProperty
@@ -163,7 +161,7 @@ public class PersonalizedRecord extends BaseEntity {
   }
 
   @JsonProperty
-  @Column(length=30)
+  @Column(length = 30)
   public String getOperator() {
     return operator;
   }
@@ -171,6 +169,6 @@ public class PersonalizedRecord extends BaseEntity {
   public void setOperator(String operator) {
     this.operator = operator;
   }
-  
-  
+
+
 }
