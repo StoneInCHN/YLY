@@ -156,7 +156,7 @@
 		    		[@shiro.hasPermission name="bed"]
 		    		<li><a href="#" data-url="${base}/console/bed/bed.jhtml">${message("yly.residential.bed")}</a></li>
 		    		[/@shiro.hasPermission]
-		    		<li><a href="#">${message("yly.residential.changeRoom")}</a></li>
+		    		<li><a href="#" data-url="${base}/console/changeRoom/changeRoom.jhtml">${message("yly.residential.changeRoom")}</a></li>
 		    	</ul>
 		    	 <ul title="健康管理" id="health">
 		    		<li><a href="#" data-url="${base}/console/medicalRecord/medicalRecord.jhtml">病历档案</a></li>

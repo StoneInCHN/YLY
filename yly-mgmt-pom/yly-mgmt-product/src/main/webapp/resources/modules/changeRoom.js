@@ -3,7 +3,7 @@ $(function(){
 	$("#checkedInElderly-table-list").datagrid({
 		title:message("yly.elderlyinfo.record"),
 		fitColumns:true,
-		url:'../elderlyInfo/list.jhtml',  
+		url:'../changeRoom/list.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
@@ -13,7 +13,7 @@ $(function(){
 			    width: 1200,    
 			    height: 700, 
 			    cache: false,   
-			    href:'../elderlyInfo/details.jhtml?id='+rowData.id,
+			    href:'../changeRoom/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
@@ -66,9 +66,6 @@ $(function(){
 		    	  	if(value == "DEAD"){
 		    	  		return  message("yly.elderly.status.dead");
 		    	  	}
-		    	  	if(value == "IN_PROGRESS_CHECKIN_BILL"){
-		    	  		return  "入院办理(已出账单未交费)";
-		    	  	}
 		    	  	if(value == "IN_PROGRESS_EVALUATING"){
 		    	  		return  "通过入院评估";
 		    	  	}
@@ -92,12 +89,6 @@ $(function(){
 	 var _queryParams = $("#checkedInElderly_search_form").serializeJSON();
 	  $('#checkedInElderly-table-list').datagrid('options').queryParams = _queryParams;  
 	  $("#checkedInElderly-table-list").datagrid('reload');
-		//隐藏域用于标记上次使用过的查询条件 
-		$("#identifierHidden").val($("#identifier").val());
-		$("#nameHidden").val($("#name").val());
-		$("#elderlyStatusHidden").val($("#elderlyStatus").combobox('getValue'));
-		$("#beHospitalizedBeginDateHidden").val($("#beHospitalizedBeginDate").val());
-		$("#beHospitalizedEndDateHidden").val($("#beHospitalizedEndDate").val());	
 	})
 })
 

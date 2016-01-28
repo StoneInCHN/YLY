@@ -62,7 +62,7 @@ public class ElderlyInfoController extends BaseController {
   }
 
   /**
-   * 查询咨询记录
+   * 查询在院老人记录
    * 
    * @param beginDate
    * @param endDate
