@@ -29,6 +29,7 @@ import com.yly.framework.paging.Pageable;
 import com.yly.service.EvaluatingFormService;
 import com.yly.service.ReportEvaluatingResultService;
 import com.yly.utils.FieldFilterUtils;
+import com.yly.utils.ReportDataComparator;
 
 /**
  * Controller - 老人评估结果统计报表
@@ -107,11 +108,12 @@ public class ReportEvaluatingResultController extends BaseController {
     
     List<Ordering> orderings = new ArrayList<Ordering> ();
     
-    Ordering order = new Ordering ("evaluatingResultName", Direction.asc);
+    Ordering order = new Ordering ("evaluatingResultName", Direction.desc);
     
     orderings.add (order);
     
     List<ReportEvaluatingResult>  reportEvluatingResultList = reportEvaluatingResultService.findList (null, filters, orderings, true,null);
+    
     return reportEvluatingResultList;
   }
   

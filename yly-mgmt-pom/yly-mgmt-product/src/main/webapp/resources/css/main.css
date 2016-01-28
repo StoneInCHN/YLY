@@ -278,3 +278,131 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
 .wminimize {
 	cursor: pointer
 }
+
+.mini-widget {
+  margin: 0 0 25px 0;
+  display: block;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; }
+  .mini-widget .mini-widget-heading {
+    padding: 7px 15px;
+    -webkit-border-radius: 2px 2px 0 0;
+    -moz-border-radius: 2px 2px 0 0;
+    border-radius: 2px 2px 0 0;
+    text-transform: uppercase;
+    text-align: center;
+    background: #c0c0c0;
+    color: white; }
+    .mini-widget .mini-widget-heading .pull-right {
+      color: white;
+      opacity: 0.7;
+      -webkit-transition: All 0.5s ease-in;
+      -moz-transition: All 0.5s ease-in;
+      -ms-transition: All 0.5s ease-in;
+      -o-transition: All 0.5s ease-in;
+      transition: All 0.5s ease-in; }
+      .mini-widget .mini-widget-heading .pull-right i {
+        line-height: 100%;
+        margin-right: 2px; }
+  .mini-widget .mini-widget-body {
+    padding: 5px 5px 0px 5px;;
+    font-size: 10px;
+    font-weight: 300;
+    background: #808080; }
+    .mini-widget .mini-widget-body i {
+      color: #5fa9d9;
+      -webkit-transition: All 0.5s ease-in;
+      -moz-transition: All 0.5s ease-in;
+      -ms-transition: All 0.5s ease-in;
+      -o-transition: All 0.5s ease-in;
+      transition: All 0.5s ease-in;
+      font-size: 30px;
+      line-height: 30px; }
+      .mini-widget .mini-widget-body .female {
+      color: #ff0080;
+      -webkit-transition: All 0.5s ease-in;
+      -moz-transition: All 0.5s ease-in;
+      -ms-transition: All 0.5s ease-in;
+      -o-transition: All 0.5s ease-in;
+      transition: All 0.5s ease-in;
+      font-size: 30px;
+      line-height: 30px; }
+      .mini-widget .mini-widget-body .male {
+      color: #5fa9d9;
+      -webkit-transition: All 0.5s ease-in;
+      -moz-transition: All 0.5s ease-in;
+      -ms-transition: All 0.5s ease-in;
+      -o-transition: All 0.5s ease-in;
+      transition: All 0.5s ease-in;
+      font-size: 30px;
+      line-height: 30px; }
+    .mini-widget .mini-widget-body .number {
+      font-size: 20px;
+      line-height: 24px;
+      color: white; }
+    .mini-widget .mini-widget-body .fa-arrow-down{
+ 	color:green!important;
+    }
+    .mini-widget .mini-widget-body .fa-arrow-up{
+ 	color:#ff0000!important;
+    }
+  .mini-widget .mini-widget-footer {
+    color: white;
+    background: #246895;
+    padding: 5px 15px;
+    -webkit-border-radius: 0 0 2px 2px;
+    -moz-border-radius: 0 0 2px 2px;
+    border-radius: 0 0 2px 2px;
+    position: relative; }
+    .mini-widget .mini-widget-footer i {
+      float: right;
+      position: relative;
+      top: 2px;
+      display: none; }
+
+.mini-widget-red .mini-widget-heading {
+  background: #f63131;
+  color: white; }
+  .mini-widget-red .mini-widget-heading .pull-right {
+    color: white; }
+.mini-widget-red .mini-widget-body {
+  background: #ea0a0a; }
+  .mini-widget-red .mini-widget-body i {
+    color: #f86262; }
+  .mini-widget-red .mini-widget-body .number {
+    color: white; }
+.mini-widget-red .mini-widget-footer {
+  color: white;
+  background: #d10909; }
+
+.mini-widget-green .mini-widget-heading {
+  background: #74b749;
+  color: white; }
+  .mini-widget-green .mini-widget-heading .pull-right {
+    color: white; }
+.mini-widget-green .mini-widget-body {
+  background: #5d933a; }
+  .mini-widget-green .mini-widget-body i {
+    color: #90c56e; }
+  .mini-widget-green .mini-widget-body .number {
+    color: white; }
+.mini-widget-green .mini-widget-footer {
+  color: white;
+  background: #518133; }
+
+.mini-widget-grey .mini-widget-heading {
+  background: #666666;
+  color: white; }
+  .mini-widget-grey .mini-widget-heading .pull-right {
+    color: white; }
+.mini-widget-grey .mini-widget-body {
+  background: #4d4d4d; }
+  .mini-widget-grey .mini-widget-body  i{
+    color: gray; }
+  .mini-widget-grey .mini-widget-body .number {
+    color: white; }
+.mini-widget-grey .mini-widget-footer {
+  color: white;
+  background: #404040; }
+  

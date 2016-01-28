@@ -1,8 +1,12 @@
 package com.yly.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Index;
 
@@ -48,6 +52,9 @@ public class ReportElderlyStatus extends BaseEntity
    */
   private int dead;
 
+  private Date statisticsDate;
+  
+  
   @Index (name = "report_elderly_status_tenantid")
   public Long getTenantID ()
   {
@@ -114,4 +121,17 @@ public class ReportElderlyStatus extends BaseEntity
     this.inProcessCheckout = inProcessCheckout;
   }
 
+  @JsonProperty
+  @Temporal(TemporalType.DATE)
+  public Date getStatisticsDate ()
+  {
+    return statisticsDate;
+  }
+
+  public void setStatisticsDate (Date statisticsDate)
+  {
+    this.statisticsDate = statisticsDate;
+  }
+
+  
 }
