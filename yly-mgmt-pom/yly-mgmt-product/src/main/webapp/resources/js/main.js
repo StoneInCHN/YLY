@@ -108,6 +108,13 @@ $(function(){
 	var elderlyStatusReport ={
 		colors: ['#DDDF00','#058DC7', '#50B432', '#ED561B',  '#000000', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
         chart: {
+        	backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgb(220, 220, 220)'],
+    				[1, 'rgb(211, 211, 211)']
+    			]
+    		},
         	renderTo: 'elderlyStatusReportId',
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -154,6 +161,13 @@ $(function(){
             enabled:false // 禁用版权信息
         },
         chart: {
+        	backgroundColor: {
+    			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+    			stops: [
+    				[0, 'rgb(220, 220, 220)'],
+    				[1, 'rgb(211, 211, 211)']
+    			]
+    		},
         	renderTo: 'elderlyAgeReportId',
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -191,6 +205,13 @@ $(function(){
 	// Create the chart
 	var elderLivingMainReport={
 	                chart: {
+	                	backgroundColor: {
+	            			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	            			stops: [
+	            				[0, 'rgb(220, 220, 220)'],
+	            				[1, 'rgb(211, 211, 211)']
+	            			]
+	            		},
 	                    type: 'pie',
 	                    renderTo:"elderlyLivingMainReportId"
 	                },
@@ -296,15 +317,13 @@ $(function(){
 			colors : [ '#004B97' ],
 			chart : {
 				renderTo : 'elderlyStatusInReportId',
-				backgroundColor : {
-					linearGradient : {
-						x1 : 0,
-						y1 : 0,
-						x2 : 1,
-						y2 : 1
-					},
-					stops : [ [ 0, 'rgb(255, 255, 255)' ], [ 1, 'rgb(240, 240, 255)' ] ]
-				},
+				backgroundColor: {
+        			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        			stops: [
+        				[0, 'rgb(220, 220, 220)'],
+        				[1, 'rgb(211, 211, 211)']
+        			]
+        		},
 				plotBackgroundColor : 'rgba(255, 255, 255, .9)',
 				plotBorderWidth : 1
 			},

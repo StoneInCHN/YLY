@@ -317,26 +317,6 @@
 		    		<li><a href="#" >${message("yly.personnel.vacate")}</a></li>
 		    	</ul>    
     </div>
-   <div class="right-content" data-options="region:'east',title:'公告',split:true" >
-   		<div id="calendar-panel" class="easyui-panel" title="日历"     
-	        style="width:200px;height:250px;padding:10px;background:#fafafa;"   
-	        data-options="collapsible:true">
-                <div id="cc" class="easyui-calendar" style="width:180px;height:200px;"></div>  
-         </div>
-         <div id="notify" class="easyui-panel" title="通知"     
-	        style="width:200px;height:200px;padding:10px;background:#fafafa;"   
-	        data-options="collapsible:true">
-               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 180px;">
-			 </ul>
-         </div>
-          <div id="message" class="easyui-panel" title="业内消息"     
-	        style="width:200px;height:200px;padding:10px;background:#fafafa;"   
-	        data-options="collapsible:true">
-               <ul id="message-content" style="overflow-y: hidden; height: 180px;">
-			 </ul>
-         </div>    
-	</div>  
-    </div>
   
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   
@@ -345,29 +325,34 @@
 		        
 		        <button id="selectRoom">选房</button>
 		        -->
-		        <table border="0" >
-		        	<tr style="height:70px">
-		        		<td colspan='3'>
-		        		</td>
-		        	</tr>
-		        	<tr>
-				        <td style="float:right">
-				        	<div id="elderlyStatusReportId" style="height:300px;width:280px">
-				        </td>
-				        
-				         <td>
-				            <div id="elderlyAgeReportId" style="height:300px;width: 280px;">
-				        </td>
-				         <td>
-				         	<div id="elderlyLivingMainReportId" style="height:300px;width: 280px;">
-				        </td>  
-				    </tr>
-				    <tr >
-				    	<td colspan='2'>
-				    		<div id="elderlyStatusInReportId" style="height:300px;width: 580px;">
-				    	</td>
-				    	<td>
-				    		<div class="mini-widget" style="height:130px;width: 220px;">
+			        <div class="row">
+			        		<div class="col-md-12">test</div>
+			        </div>
+			        <div class="row">
+					        <div class="col-md-3" >
+					        	<div id="elderlyStatusReportId" style="height:300px;width:260px;"></div>
+					        </div>
+					        
+					         <div class="col-md-3">
+					            <div id="elderlyAgeReportId" style="height:300px;width:260px;"></div>
+					        </div>
+					         <div class="col-md-3">
+					         	<div id="elderlyLivingMainReportId" style="height:300px;width:260px;"></div>
+					        </div>
+					        <div class="col-md-3">
+						        <div id="calendar-panel" class="easyui-panel" title="日历"     
+							        style="width:200px;height:220px;padding:1px;background:#fafafa;"   
+							        data-options="collapsible:true">
+						                <div id="cc" class="easyui-calendar" style="width:100%;height:100%;"></div>  
+						         </div>  
+					         </div>
+					    </div>
+					    <div class="row">
+				    	<div class="col-md-6">
+				    		<div id="elderlyStatusInReportId" style="height:300px;width: 520px;"></div>
+				    	</div>
+				    	<div class="col-md-3">
+				    		<div class="mini-widget" style="height:80px;width: 260px;margin-top:30px;">
 				                <div class="mini-widget-heading clearfix">
 				                  <div class="pull-left">本月老人</div>
 				                  <div class="pull-right"></div>
@@ -380,18 +365,18 @@
 				                  </div>
 				                </div>
              				 </div>
-             				 <div class="mini-widget" style="height:130px;width: 220px;">
+             				 <div class="mini-widget" style="height:80px;width: 260px;">
 				                <div class="mini-widget-heading clearfix">
 				                  <div class="pull-left">男女比例</div>
 				                </div>
 				                <div class="mini-widget-body clearfix">
 				                	<ul>
-				                		<li>
+				                		<li style="list-style-type:none">
 				                		  <span class="glyphicon glyphicon-user male"></span>
 						                  <span id="elderlyGenderMale" class="pull-right number"></span>
 						                  <span class="clearfix"></span>
 				                		</li>
-				                		<li>
+				                		<li style="list-style-type:none">
 				                		  <span class="glyphicon glyphicon-user female"></span>
 						                  <span id="elderlyGenderFemale" class="pull-right number"></span>
 						                  <span class="clearfix"></span>
@@ -399,10 +384,23 @@
 				                	</ul>
 				                </div>
              				 </div>
-				    	</td>
-				    <tr>
-				</table>
-		    </div>
+				    	</div><!--end col-->
+				    	<div class="col-md-3">
+				    		 <div id="notify" class="easyui-panel" title="通知"     
+						        style="width:200px;height:180px;padding:1px;background:#fafafa;"   
+						        data-options="collapsible:true">
+					               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 160px;">
+								 </ul>
+					         </div>
+					          <div id="message" class="easyui-panel" title="业内消息"     
+						        style="width:200px;height:180px;padding:1px;background:#fafafa;"   
+						        data-options="collapsible:true">
+					               <ul id="message-content" style="overflow-y: hidden; height: 120px;">
+								 </ul>
+					         </div> 
+				    	</div>
+				    </div>
+				  </div>
 		    </div>    
 		</div> 
     </div>    
