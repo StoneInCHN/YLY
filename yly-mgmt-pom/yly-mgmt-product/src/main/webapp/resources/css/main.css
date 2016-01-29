@@ -292,7 +292,7 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
     border-radius: 2px 2px 0 0;
     text-transform: uppercase;
     text-align: center;
-    background: #c0c0c0;
+    background:#808080;
     color: white; }
     .mini-widget .mini-widget-heading .pull-right {
       color: white;
@@ -309,7 +309,7 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
     padding: 5px 5px 0px 5px;;
     font-size: 10px;
     font-weight: 300;
-    background: #808080; }
+    background: #c0c0c0; }
     .mini-widget .mini-widget-body i {
       color: #5fa9d9;
       -webkit-transition: All 0.5s ease-in;
@@ -342,11 +342,33 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
       line-height: 24px;
       color: white; }
     .mini-widget .mini-widget-body .fa-arrow-down{
- 	color:green!important;
+ 		color:green!important;
     }
     .mini-widget .mini-widget-body .fa-arrow-up{
- 	color:#ff0000!important;
+ 		color:#ff0000!important;
     }
+    .mini-widget .mini-widget-body .content{
+	 	color:#c0c0c0!important;
+	  	text-align: center;
+    }
+    
+    
+    .mini-widget .navstart{
+	 	background:#039ce7!important;
+	 	height:80px;
+	 	font-size: xx-large;
+    }
+    .mini-widget .navinprocess{
+	 	background:#0076ae!important;
+	 	height:80px;
+	 	font-size: xx-large;
+    }
+    .mini-widget .navend{
+	 	background:#0057ae!important;
+	 	height:80px;
+	 	font-size: xx-large;
+    }
+    
   .mini-widget .mini-widget-footer {
     color: white;
     background: #246895;

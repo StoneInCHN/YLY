@@ -326,7 +326,35 @@
 		        <button id="selectRoom">选房</button>
 		        -->
 			        <div class="row">
-			        		<div class="col-md-12">test</div>
+			        		<div class="col-md-4">
+			        			<div class="mini-widget" style="width: 90%;">
+				                	<div class="mini-widget-body navstart clearfix">
+				                		<div class="fa fa-book">
+				                			<div class="pull-right content"><a href="#" style="text-decoration:none" data-url="${base}/console/admission/admission.jhtml">办理入院</a></div>
+				                		</div>
+				                	</div>
+				                </div>
+             				 </div>
+			        		<div class="col-md-4">
+			        			<div class="mini-widget" style="width: 90%;">
+				                	<div class="mini-widget-body navinprocess clearfix">
+				                		<div class="fa fa-stethoscope">
+				                			<div class="pull-right content"><a href="#" style="text-decoration:none" data-url="${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml">入院评估</a></div>
+				                		</div>
+				                	</div>
+				                 </div>
+             				 </div>
+             				 <div class="col-md-4">
+			        			<div class="mini-widget" style="width: 90%;">
+				                	<div class="mini-widget-body navend clearfix">
+				                		<div class="fa fa-rmb">
+				                		<div class="pull-right content">
+						                  	<a href="#" style="text-decoration:none" data-url="${base}/console/billing/checkinPay.jhtml">入院缴费</a>
+						                  </div>
+						                 </div>
+				                	</div>
+				                 </div>
+             				 </div>
 			        </div>
 			        <div class="row">
 					        <div class="col-md-3" >
@@ -372,12 +400,12 @@
 				                <div class="mini-widget-body clearfix">
 				                	<ul>
 				                		<li style="list-style-type:none">
-				                		  <span class="glyphicon glyphicon-user male"></span>
+				                		  <span class="fa fa-male  male"></span>
 						                  <span id="elderlyGenderMale" class="pull-right number"></span>
 						                  <span class="clearfix"></span>
 				                		</li>
 				                		<li style="list-style-type:none">
-				                		  <span class="glyphicon glyphicon-user female"></span>
+				                		  <span class="fa fa-female female"></span>
 						                  <span id="elderlyGenderFemale" class="pull-right number"></span>
 						                  <span class="clearfix"></span>
 				                		</li>
