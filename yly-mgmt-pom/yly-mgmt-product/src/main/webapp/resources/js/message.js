@@ -315,7 +315,10 @@ var messages = {
 	"yly.blacklist.name":"黑名单老人名字",
 	"yly.blacklist.geracomium":"所属养老院",
 	"yly.blacklist.casue":"加入黑名单原因",
-	"yly.blacklist.add":"加入黑名单",		
+	"yly.blacklist.add":"加入黑名单",
+	
+	//换房
+	"yly.residential.changeRoom.elderly":"请选择换房老人",
 		
 	//老人管理
 	"yly.elderlyInfo.common.operator":"记录人",
@@ -556,10 +559,14 @@ var messages = {
     "yly.nurseArrangement.nurseName":"护理名称",
     "yly.nurseArrangement.nursingLevel":"护理级别",
     "yly.nurseArrangement.addNurse":"添加护理员安排",
+    "yly.nurseArrangement.addNurseRecord":"添加护理员安排明细",
     "yly.nurseArrangementRecord.list":"护理员护理明细",
     "yly.nurseArrangement.nurseServiceTime":"护理执行时间",
     "yly.nurseArrangement.nurseAssistant.staffID":"员工号",
     "yly.nurseArrangement.nurseAssistant.staffStatus":"员工状态",
+    "yly.nurseArrangement.search":"护理员安排查询",
+    
+    
     "yly.personalizedNurse.nurseLevel":"护理级别",
     "yly.personalizedNurse.personalized":"服务项目",
     //personalizedRecord

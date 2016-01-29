@@ -34,6 +34,7 @@ import com.yly.entity.NurseChargeConfig;
 import com.yly.entity.NurseLevelChangeRecord;
 import com.yly.entity.PersonalizedCharge;
 import com.yly.entity.PersonalizedRecord;
+import com.yly.entity.ReportChargeStatistics;
 import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
@@ -55,6 +56,7 @@ import com.yly.service.MealChargeService;
 import com.yly.service.NurseChargeConfigService;
 import com.yly.service.NurseLevelChangeRecordService;
 import com.yly.service.PersonalizedRecordService;
+import com.yly.service.ReportChargeStatisticsService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.utils.DateTimeUtils;
@@ -114,7 +116,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
 
   @Resource(name = "bedChangeRecordServiceImpl")
   private BedChangeRecordService bedChangeRecordService;
-
+  
+  @Resource(name = "reportChargeStatisticsServiceImpl")
+  private ReportChargeStatisticsService reportChargeStatisticsService;
 
   @Resource
   public void setBaseDao(BillingDao billingDao) {
@@ -315,6 +319,14 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
     Filter statusFilter = new Filter("elderlyStatus", Operator.eq, ElderlyStatus.IN_NURSING_HOME);
     filters.add(statusFilter);
     List<ElderlyInfo> elderlyInfos = elderlyInfoService.findList(null, filters, null, true, null);
+    
+    //报表数据
+    ReportChargeStatistics reportChargeStatistics = new ReportChargeStatistics ();
+    BigDecimal totalBedCharge = new BigDecimal (0);
+    BigDecimal totalNurseCharge = new BigDecimal (0);
+    BigDecimal totalMealCharge = new BigDecimal (0);
+    BigDecimal totalPersonalizedCharge = new BigDecimal (0);
+    
     for (ElderlyInfo elderlyInfo : elderlyInfos) {
       Billing billing = new Billing();
       billing.setChargeStatus(PaymentStatus.UNPAID);
@@ -346,6 +358,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       bedNurseCharge.setNurseAmount(new BigDecimal(chargeMap.get(1).get("amountPerMonth")
           .toString()));
 
+      
+      
       // 如该结算周期内老人的床位护理费已在入院账单中缴纳,则生成状态为已缴费的床位护理费日常账单
       List<Filter> dateFilters = new ArrayList<Filter>();
       Filter elderFilter = new Filter("elderlyInfo", Operator.eq, elderlyInfo);
@@ -370,6 +384,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       billing.setNurseAmount(bedNurseCharge.getNurseAmount());
       billing.setBedNurseCharge(bedNurseCharge);
 
+      
       // 计算老人换房后差价
       List<Ordering> orderings = new ArrayList<Ordering>();
       Ordering ordering = new Ordering();
@@ -497,11 +512,21 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
         billing.setPersonalizedAmount(personalizedCharge.getPersonalizedAmount());
         billing.setPersonalizedCharge(personalizedCharge);
       }
-
-
+      totalBedCharge=totalBedCharge.add (billing.getBedAmount ());
+      totalNurseCharge = totalNurseCharge.add (billing.getNurseAmount ());
+      totalMealCharge = totalMealCharge.add (billing.getMealAmount ());
+      totalPersonalizedCharge = totalPersonalizedCharge.add (billing.getPersonalizedAmount ());
+      
       billingDao.merge(billing);
     }
-
+    
+    //保存报表数据到数据库
+    reportChargeStatistics.setBedCharge (totalBedCharge);
+    reportChargeStatistics.setMealCharge (totalMealCharge);
+    reportChargeStatistics.setNurseCharge (totalNurseCharge);
+    reportChargeStatistics.setPersionalizedCharge (totalPersonalizedCharge);
+    reportChargeStatistics.setStatisticsDate (billDate);
+    reportChargeStatisticsService.save (reportChargeStatistics, true);
   }
 
   public BigDecimal calDiffPriceBed(Long days, Bed oldBed, Bed newBed) {

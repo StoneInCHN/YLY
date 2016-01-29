@@ -17,12 +17,14 @@ import com.yly.controller.base.BaseController;
 import com.yly.entity.NurseArrangement;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.NurseArrangementRecord;
+import com.yly.entity.TenantUser;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.NurseArrangementRecordService;
 import com.yly.service.NurseArrangementService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.TenantAccountService;
+import com.yly.service.TenantUserService;
 import com.yly.utils.FieldFilterUtils;
 
 /**
@@ -45,7 +47,9 @@ public class NurseArrangementController extends BaseController {
 
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
-
+  
+  @Resource(name = "tenantUserServiceImpl")
+  private TenantUserService tenantUserService;
   /**
    * 列表页面
    * 
@@ -64,14 +68,15 @@ public class NurseArrangementController extends BaseController {
    * @return
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<NurseArrangement> list(String keysOfElderlyName, Date beginDate,
-      Date endDate, Pageable pageable) {
+  public @ResponseBody Page<NurseArrangement> list(String nurseNameSearch, Date nurseStartDateSearch,
+      Date nurseEndDateSearch, Long elderlyIDSearch, Long nurseAssistantIDSearch, Pageable pageable) {
     Page<NurseArrangement> nurseArrangementPage = null;
-    if (keysOfElderlyName == null && beginDate == null && endDate == null) {
+    if (nurseNameSearch == null && nurseStartDateSearch == null && nurseEndDateSearch == null &&
+        elderlyIDSearch == null&& nurseAssistantIDSearch == null) {
       nurseArrangementPage = nurseArrangementService.findPage(pageable, true);
     } else {
-      nurseArrangementPage = nurseArrangementService.searchPageByFilter(keysOfElderlyName, beginDate, endDate,
-          pageable);
+      nurseArrangementPage = nurseArrangementService.searchPageByFilter(nurseNameSearch, nurseStartDateSearch, nurseEndDateSearch,
+          elderlyIDSearch, nurseAssistantIDSearch, pageable, true);
     }
     return nurseArrangementPage;
   }
@@ -81,13 +86,15 @@ public class NurseArrangementController extends BaseController {
    * @param pageable
    * @return
    */
-  @RequestMapping(value = "/recordList", method = RequestMethod.POST)
-  public @ResponseBody Page<NurseArrangementRecord> recordList(String keysOfElderlyName, Pageable pageable) {
+  @RequestMapping(value = "/listRecord", method = RequestMethod.POST)
+  public @ResponseBody Page<NurseArrangementRecord> listRecord(String nurseNameSearchForRecord, Long nurseArrangemenIDSearch, 
+      Pageable pageable) {
     Page<NurseArrangementRecord> nurseArrangementRecords = null;
-    if (keysOfElderlyName == null) {
+    if (nurseNameSearchForRecord == null && nurseArrangemenIDSearch == null) {
       nurseArrangementRecords = nurseArrangementRecordService.findPage(pageable, true);
     } else {
-      //nurseArrangementPage = nurseArrangementService.searchPageByFilter(keysOfElderlyName, pageable);
+      nurseArrangementRecords = nurseArrangementRecordService.searchPageByFilter(nurseNameSearchForRecord, 
+          nurseArrangemenIDSearch, pageable, true);
     }   
     return nurseArrangementRecords;
   }
@@ -100,62 +107,130 @@ public class NurseArrangementController extends BaseController {
 
 
   /**
-   * 编辑
+   * 编辑护理员安排
    * 
    * @param model
    * @param id
    * @return
    */
   @RequestMapping(value = "/detail", method = RequestMethod.GET)
-  public String edit(ModelMap model, Long id, String handle) {
+  public String detail(ModelMap model, Long id, String handle) {
     if (id != null && handle != null) {
       model.addAttribute("nurseArrangement", nurseArrangementService.find(id));
       return "nurseArrangement/" + handle;
     }
     return "";
   }
-
   /**
-   * 添加
+   * 编辑护理员管理明细
+   * 
+   * @param model
+   * @param id
+   * @return
+   */
+  @RequestMapping(value = "/detailRecord", method = RequestMethod.GET)
+  public String detailRecord(ModelMap model, Long id, String handle) {
+    if (id != null && handle != null) {
+      model.addAttribute("nurseArrangementRecord", nurseArrangementRecordService.find(id));
+      return "nurseArrangement/" + handle;
+    }
+    return "";
+  }
+  
+  /**
+   * 添加护理员安排
    * 
    * @param nurseArrangement
    * @return
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message save(NurseArrangement nurseArrangement, Long elderlyInfoID) {
-    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-    if (elderlyInfo != null && nurseArrangement != null) {
-      nurseArrangement.setTenantID(tenantAccountService.getCurrentTenantID());
-      if (nurseArrangement.getElderlyInfo() != null) {
+  public @ResponseBody Message add(NurseArrangement nurseArrangement) {
+    if (nurseArrangement.getElderlyInfo() != null && nurseArrangement.getElderlyInfo().getId() != null && 
+        nurseArrangement.getNurseAssistant() != null && nurseArrangement.getNurseAssistant().getId() != null) {
+      ElderlyInfo elderlyInfo = elderlyInfoService.find(nurseArrangement.getElderlyInfo().getId());
+      TenantUser nurseAssistant = tenantUserService.find(nurseArrangement.getNurseAssistant().getId());
+      if (elderlyInfo != null && nurseAssistant != null) {
+        nurseArrangement.setTenantID(tenantAccountService.getCurrentTenantID());
+        nurseArrangement.setElderlyInfo(elderlyInfo);
+        nurseArrangement.setNurseAssistant(nurseAssistant);
         nurseArrangementService.save(nurseArrangement);
         return SUCCESS_MESSAGE;
       }
     }
-    return ERROR_MESSAGE;
+    return ERROR_MESSAGE; 
   }
-
   /**
-   * 更新
+   * 添加护理员管理明细
+   * 
+   * @param nurseArrangement
+   * @return
+   */
+  @RequestMapping(value = "/addRecord", method = RequestMethod.POST)
+  public @ResponseBody Message addRecord(NurseArrangementRecord nurseArrangementRecord, Long nurseArrangementID) {
+    if (nurseArrangementID != null) {
+      NurseArrangement nurseArrangementDB = nurseArrangementService.find(nurseArrangementID);
+      if (nurseArrangementDB != null) {
+        nurseArrangementRecord.setTenantID(tenantAccountService.getCurrentTenantID());
+        nurseArrangementRecord.setNurseArrangement(nurseArrangementDB);
+        nurseArrangementRecord.setElderlyName(nurseArrangementDB.getElderlyInfo().getName());
+        nurseArrangementRecord.setNurseOperator(nurseArrangementDB.getNurseAssistant().getRealName());
+        if (nurseArrangementRecord.getNurseServiceTime() == null) {
+          nurseArrangementRecord.setNurseServiceTime(new Date());
+        }
+        nurseArrangementRecordService.save(nurseArrangementRecord);
+        return SUCCESS_MESSAGE;
+      }
+    }
+    return ERROR_MESSAGE; 
+  }
+  
+  /**
+   * 更新护理员安排
    * 
    * @param nurseArrangement
    * @param elderlyInfoID
    * @return
    */
   @RequestMapping(value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update(NurseArrangement nurseArrangement, Long elderlyInfoID) {
-    ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoID);
-    if (elderlyInfo != null) {
-      nurseArrangement.setTenantID(tenantAccountService.getCurrentTenantID());
-      nurseArrangementService.update(nurseArrangement, "createDate");
-      return SUCCESS_MESSAGE;
+  public @ResponseBody Message update(NurseArrangement nurseArrangement) {
+    if (nurseArrangement.getId() != null &&
+        nurseArrangement.getElderlyInfo() != null && nurseArrangement.getElderlyInfo().getId() != null && 
+        nurseArrangement.getNurseAssistant() != null && nurseArrangement.getNurseAssistant().getId() != null) {
+      NurseArrangement nurseArrangementDB = nurseArrangementService.find(nurseArrangement.getId());
+      if (nurseArrangementDB != null) {
+        nurseArrangement.setTenantID(tenantAccountService.getCurrentTenantID());
+        nurseArrangementService.update(nurseArrangement, "createDate");
+        return SUCCESS_MESSAGE;
+      }else {
+        return ERROR_MESSAGE;
+      }
     }
     return ERROR_MESSAGE;
   }
-
-
-
   /**
-   * 删除
+   * 更新护理员管理明细
+   * 
+   * @param nurseArrangement
+   * @param elderlyInfoID
+   * @return
+   */
+  @RequestMapping(value = "/updateRecord", method = RequestMethod.POST)
+  public @ResponseBody Message updateRecord(NurseArrangementRecord nurseArrangementRecord) {
+    if (nurseArrangementRecord.getId() != null) {
+      NurseArrangementRecord nurseArrangementRecordDB = nurseArrangementRecordService.find(nurseArrangementRecord.getId());
+      if (nurseArrangementRecordDB != null) {
+        nurseArrangementRecord.setTenantID(tenantAccountService.getCurrentTenantID());
+        nurseArrangementRecord.setNurseArrangement(nurseArrangementRecordDB.getNurseArrangement());
+        nurseArrangementRecordService.update(nurseArrangementRecord, "createDate");
+        return SUCCESS_MESSAGE;
+      }else {
+        return ERROR_MESSAGE;
+      }
+    }
+    return ERROR_MESSAGE;
+  }
+  /**
+   * 删除护理员安排
    * 
    * @param ids
    * @return
@@ -171,5 +246,33 @@ public class NurseArrangementController extends BaseController {
       }
     }
     return SUCCESS_MESSAGE;
+  }
+  /**
+   * 删除护理员安排
+   * 
+   * @param ids
+   * @return
+   */
+  @RequestMapping(value = "/deleteRecord", method = RequestMethod.POST)
+  public @ResponseBody Message deleteRecord(Long[] ids) {
+    if (ids != null) {
+      for (Long id : ids) {
+        NurseArrangementRecord nurseArrangementRecord = nurseArrangementRecordService.find(id);
+        if (nurseArrangementRecord != null) {
+          nurseArrangementRecordService.delete(ids);
+        }
+      }
+    }
+    return SUCCESS_MESSAGE;
+  }
+  /**
+   * 护理员安排公共搜索页面
+   * 
+   * @param model
+   * @return
+   */
+  @RequestMapping(value = "/nurseArrangementSearch", method = RequestMethod.GET)
+  public String nurseArrangementSearch(ModelMap model) {
+    return "/common/nurseArrangementSearch";
   }
 }

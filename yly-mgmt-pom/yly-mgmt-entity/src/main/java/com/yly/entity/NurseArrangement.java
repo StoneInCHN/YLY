@@ -15,11 +15,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -80,6 +82,8 @@ public class NurseArrangement extends BaseEntity{
   private Set<NurseArrangementRecord> nurseArrangementRecords = new HashSet<NurseArrangementRecord>();
   
   @Index(name="nurse_arrangement_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+  analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -106,6 +110,7 @@ public class NurseArrangement extends BaseEntity{
   }
   @JsonProperty
   @Column(length=50)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED,analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getNurseName() {
     return nurseName;
   }

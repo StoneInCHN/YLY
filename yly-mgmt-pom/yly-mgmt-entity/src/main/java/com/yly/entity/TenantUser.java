@@ -178,6 +178,7 @@ public class TenantUser extends BaseEntity {
 
   @Column(length=30)
   @JsonProperty
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getStaffID() {
     return staffID;
   }
@@ -311,7 +312,7 @@ public class TenantUser extends BaseEntity {
     this.tenantID = tenantID;
   }
 
-  @Column(length=2)
+  @Field(index = org.hibernate.search.annotations.Index.UN_TOKENIZED, store = Store.NO, analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Boolean getIsJoinNurse() {
     return isJoinNurse;
   }

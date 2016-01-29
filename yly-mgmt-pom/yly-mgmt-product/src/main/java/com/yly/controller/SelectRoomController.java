@@ -18,18 +18,24 @@ import com.yly.entity.Room;
 import com.yly.service.BuildingService;
 import com.yly.service.RoomService;
 
+/**
+ * 房间选择
+ * 
+ * @author shijun
+ *
+ */
 @Controller("selectRoomController")
 @RequestMapping("console/selectRoom")
 public class SelectRoomController extends BaseController {
-  
+
   @Resource(name = "buildingServiceImpl")
-  public BuildingService buildingService;
-  
+  private BuildingService buildingService;
+
   @Resource(name = "roomServiceImpl")
-  public RoomService roomService;
-  
+  private RoomService roomService;
+
   @RequestMapping(value = "/selectRoom", method = RequestMethod.GET)
-  public String changeRoom() {
+  public String selectRoom() {
 
     return "selectRoom/selectRoom";
   }

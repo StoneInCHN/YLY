@@ -1,4 +1,4 @@
-<script src="${base}/resources/modules/checkedInElderly.js"></script>
+<script src="${base}/resources/modules/changeRoom.js"></script>
 <div>
 	  <fieldset>
 	    <legend>${message("yly.elderlyInfo.search")}</legend>
@@ -6,12 +6,10 @@
 	    	<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.identifier")}:</label>
 			    <input class="easyui-textbox" type="text" id="identifier" name="identifier" validtype="length[0,15]"  style="width:60px;"/>
-			    <input type="hidden" id="identifierHidden" name="identifierHidden">
 			</div>
 			<div class="search-item">
 			    <label> ${message("yly.elderly.name")}:</label>
 			    <input class="easyui-textbox" type="text" id="name" name="name" validtype="length[0,15]" style="width:75px;"/> 
-			    <input type="hidden" id="nameHidden" name="nameHidden">
 			</div>
 	    	
 	    	<div class="search-item">
@@ -36,19 +34,16 @@
 					value: '${message("yly.elderlyInfo.elderlyStatus.dead")}'
 				}],
 				prompt:'${message("yly.common.please.select")}',panelMaxHeight:120"  id="elderlyStatus" name="elderlyStatus" style="width:100px;"/>
-				<input type="hidden" id="elderlyStatusHidden" name="elderlyStatusHidden">
 			</div>
 	    
 	    
 			<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.checkinDate")}:</label>
 			    <input type="text" class="Wdate" id="beHospitalizedBeginDate" name="beHospitalizedBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'beHospitalizedEndDate\')}'});" />
-			    <input type="hidden" id="beHospitalizedBeginDateHidden" name="beHospitalizedBeginDateHiden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
 			   	<input type="text" class="Wdate" id="beHospitalizedEndDate"  name="beHospitalizedEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beHospitalizedBeginDate\')}'});"/>
-			   	<input type="hidden" id="beHospitalizedEndDateHidden" name="beHospitalizedEndDateHidden">
 			</div>
 		</form>
 		<div class="search-item">
@@ -56,9 +51,9 @@
 	    </div>
 	  </fieldset>
 </div>
-<div id="checkedInElderly_manager_tool">
+<div id="changeRoom_manager_tool">
 	<div class="tool-button">
-		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" onclick="exportData('elderlyInfo','checkedInElderly_search_form');">导出</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain=true onclick="changeRoom_manager_tool.changeRoom();">${message("yly.residential.changeRoom.action")}</a>
 	</div>
 	<div class="tool-filter"></div>
 </div> 

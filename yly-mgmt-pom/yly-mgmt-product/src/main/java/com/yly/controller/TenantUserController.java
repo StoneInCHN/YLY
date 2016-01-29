@@ -71,10 +71,10 @@ public class TenantUserController extends BaseController
   {
     return "common/commonTenantUserSearch";
   }
-  @RequestMapping (value = "/list", method = RequestMethod.POST)
+  @RequestMapping (value = "/list", method = {RequestMethod.POST,RequestMethod.GET})
   public @ResponseBody Page<TenantUser> list (Pageable pageable, ModelMap model,
       Date beginDate, Date endDate, String realNameSearch, String staffStatusSearch,
-      String departmentSearchId, String positionSearchId)
+      String departmentSearchId, String positionSearchId, String staffIDSearch, Boolean isJoinNurseSearch)
   {
     String startDateStr = null;
     String endDateStr = null;
@@ -128,6 +128,16 @@ public class TenantUserController extends BaseController
       TermQuery positionQuery = new TermQuery(new Term("position.id", positionSearchId));  
       query.add (positionQuery,Occur.MUST);
     }
+    //过滤员工号
+    if(staffIDSearch != null){
+      TermQuery positionQuery = new TermQuery(new Term("staffID", staffIDSearch));  
+      query.add (positionQuery,Occur.MUST);
+    }
+    if(isJoinNurseSearch != null){
+      TermQuery positionQuery = new TermQuery(new Term("isJoinNurse", isJoinNurseSearch.toString()));  
+      query.add (positionQuery,Occur.MUST);
+    }
+    
     //过滤状态
     if (staffStatusSearch != null)
     {
@@ -146,7 +156,8 @@ public class TenantUserController extends BaseController
       }
     }
     if (nameQuery != null || rangeQuery != null || 
-        departmentSearchId != null || positionSearchId != null || staffStatusSearch != null)
+        departmentSearchId != null || positionSearchId != null || 
+        staffStatusSearch != null || staffIDSearch != null || isJoinNurseSearch != null)
     {
       return tenantUserService.search (query, pageable, analyzer,filter,true);
     }

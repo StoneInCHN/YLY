@@ -40,26 +40,44 @@ public class NurseArrangementServiceImpl extends BaseServiceImpl<NurseArrangemen
   }
 
   @Override
-  public Page<NurseArrangement> searchPageByFilter(String keysOfElderlyName, Date beginDate,
-      Date endDate, Pageable pageable) {
+  public Page<NurseArrangement> searchPageByFilter(String nurseNameSearch, Date nurseStartDateSearch,
+      Date nurseEndDateSearch, Long elderlyIDSearch, Long nurseAssistantIDSearch, Pageable pageable, Boolean isTenant) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
     try {
       BooleanQuery query = new BooleanQuery();
-      if (keysOfElderlyName != null) {
-        String text = QueryParser.escape(keysOfElderlyName);
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+      if (isTenant) {
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        Query queryTenantID = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
+        query.add(queryTenantID, Occur.MUST);
+      }
+      if (nurseNameSearch != null) {
+        String text = QueryParser.escape(nurseNameSearch);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "nurseName", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
-      if (beginDate != null || endDate != null) {
+      if (nurseStartDateSearch != null) {
         TermRangeQuery tQuery =
-            new TermRangeQuery("eventDate", DateTimeUtils.convertDateToString(beginDate, null),
-                DateTimeUtils.convertDateToString(endDate, null), beginDate != null, endDate != null);
+            new TermRangeQuery("nurseStartDate", DateTimeUtils.convertDateToString(nurseStartDateSearch, null),null, true, true);
         query.add(tQuery, Occur.MUST);
       }
-
+      if(nurseEndDateSearch != null){
+        TermRangeQuery tQuery =
+            new TermRangeQuery("nurseEndDate", null, DateTimeUtils.convertDateToString(nurseEndDateSearch, null), true, true);
+        query.add(tQuery, Occur.MUST);
+      }
+      if(elderlyIDSearch != null){
+          QueryParser queryParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.id", analyzer);
+          Query queryElderlyInfoID = queryParser.parse(elderlyIDSearch.toString());
+          query.add(queryElderlyInfoID, Occur.MUST);
+      }
+      if(nurseAssistantIDSearch != null){
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "nurseAssistant.id", analyzer);
+        Query queryNurseAssistantID = queryParser.parse(nurseAssistantIDSearch.toString());
+        query.add(queryNurseAssistantID, Occur.MUST);
+      }
       return nurseArrangementDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {
       e.printStackTrace();
