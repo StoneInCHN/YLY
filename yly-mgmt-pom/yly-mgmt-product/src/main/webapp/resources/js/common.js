@@ -191,6 +191,18 @@ function searchElderlyInfo(id) {
 												striped : true,
 												onDblClickRow : function(
 														rowIndex, rowData) {
+													if(id.indexOf("NurseArrangement") != -1){//护理员安排
+														var dataMap = {};
+														dataMap.id = rowData.id; // 老人id
+														dataMap.name = rowData.name; // 老人姓名
+														dataMap.bedLocation = rowData.bedLocation; // 床位
+														if (rowData.nursingLevel != null) {
+															dataMap.nursingLevel = rowData.nursingLevel.configValue; // 护理级别
+														}
+														populateElderlyInfo(id, dataMap);// 将老人基本信息加载到添加护理员安排页面
+														$('#searchElderlyInfo').dialog("close");
+														return false;
+													}
 													if (id == "checkoutCharge") {// 办理出院
 														if (rowData.elderlyStatus == "OUT_NURSING_HOME"
 																|| rowData.elderlyStatus == "IN_PROGRESS_CHECKOUT") {
@@ -214,8 +226,7 @@ function searchElderlyInfo(id) {
 														}
 														dataMap.advanceChargeAmount = rowData.advanceChargeAmount; // 预存款
 														detectBillingUnderElderly(dataMap);// 查找该老人下所有账单,并将账单明细加载到添加办理出院页面
-														$('#searchElderlyInfo')
-																.dialog("close");
+														$('#searchElderlyInfo').dialog("close");
 														return false;
 													}
 													$("#" + id + "ID").val(
@@ -429,6 +440,18 @@ function searchTenantUser(id) {
 												striped : true,
 												onDblClickRow : function(
 														rowIndex, rowData) {
+													if(id.indexOf("NurseArrangement") != -1){//护理员安排
+														if(id.indexOf("add")==0){//以add开头
+															$("#addNurseArrangement_nurseAssistantID").val(rowData.id); // 隐藏域 护理员id
+															$("#addNurseArrangement_nurseAssistantName").textbox('setValue',rowData.realName); 
+														}
+														if(id.indexOf("edit")==0){//以edit开头
+															$("#editNurseArrangement_nurseAssistantID").val(rowData.id); // 隐藏域 护理员id
+															$("#editNurseArrangement_nurseAssistantName").textbox('setValue',rowData.realName); 
+														}
+														$('#searchTenantUser').dialog("close");
+														return false;
+													}
 													$("#" + id + "ID").val(
 															rowData.id);
 													$("#" + id).textbox(
@@ -538,6 +561,93 @@ function searchTenantUser(id) {
 											})
 						}
 					});
+
+}
+//查询护理员安排
+function searchNurseArrangement(id){
+	$('#searchNurseArrangement').dialog({
+						title : message("yly.nurseArrangement.search"),
+						width : 1000,
+						height : 500,
+						modal : true,
+						cache : false,
+						href : '../nurseArrangement/nurseArrangementSearch.jhtml',
+						buttons : [ {
+							text : message("yly.common.cancel"),
+							iconCls : 'icon-cancel',
+							handler : function() {
+								$('#searchNurseArrangement').dialog("close");
+							}
+						} ],
+						onLoad : function() {
+							/**
+							 * 此datagrid 用户展示护理员管理数据,并且提供查询功能
+							 */
+							$("#common-nurseArrangement-table-list").datagrid({
+												title : message("yly.elderlyinfo"),
+												fitColumns : true,
+												url : '../nurseArrangement/list.jhtml',
+												pagination : true,
+												loadMsg : message("yly.common.loading"),
+												striped : true,
+												onDblClickRow : function(rowIndex, rowData) {
+													if(id.indexOf("NurseArrangementRecord") != -1){
+														var dataMap = {};
+														dataMap.id = rowData.id; //护理员安排 id
+														dataMap.nurseName = rowData.nurseName; // 护理名称
+														dataMap.nurseStartDate = rowData.nurseStartDate;//护理开始日期
+														dataMap.nurseEndDate = rowData.nurseEndDate;//护理结束日期
+														dataMap.nursingLevel = rowData.nursingLevel;//护理级别
+														dataMap.bedLocation = rowData.bedLocation;//床位位置
+														if (rowData.nurseAssistant != null) {
+															dataMap.nurseAssistantName = rowData.nurseAssistant.realName; // 护理员名字
+														}
+														if (rowData.elderlyInfo != null) {
+															dataMap.elderlyInfoName = rowData.elderlyInfo.name; // 老人名字
+														}														  
+														populateNurseArrangement(id, dataMap);// 将护理员安排信息加载到添加护理员安排明细页面
+														$('#searchNurseArrangement').dialog("close");
+														return false;
+													}
+												},
+												columns : [ [
+														      {field:'ck',checkbox:true},
+														      {title:message("yly.common.elderlyname"),field:"elderlyInfoName",width:"10%",align:'center',formatter:function(value,row,index){
+														    	  return row.elderlyInfo.name;
+														      }},
+														      {title:message("yly.nurseArrangement.nurseName"),field:"nurseName",width:"10%",align:'center',formatter:function(value,row,index){
+														    	  return  formatLongString(value,20);
+														      }},		 
+														      {title:message("yly.nurseArrangement.nursingLevel"),field:"nursingLevel",width:"10%",align:'center',formatter:function(value,row,index){
+														    	  return  formatLongString(value,20);
+														      }},	
+														      {title:message("yly.elderlyinfo.bed"),field:"bedLocation",width:"15%",align:'center',formatter:function(value,row,index){
+														    	  return  formatLongString(value,20);
+														      }},			      
+														      {title:message("yly.nurseArrangement.nurseStartDate"),field:"nurseStartDate",width:"14%",align:'center',sortable:true,formatter: function(value,row,index){
+																	return new Date(value).Format("yyyy-MM-dd");
+															  }},
+															  {title:message("yly.nurseArrangement.nurseEndDate"),field:"nurseEndDate",width:"14%",align:'center',sortable:true,formatter: function(value,row,index){
+																		return new Date(value).Format("yyyy-MM-dd");
+															   }},
+														      {title:message("yly.nurseArrangement.nurseAssistant"),field:"nurseAssistantName",width:"10%",align:'center',formatter:function(value,row,index){
+														    	  return row.nurseAssistant.realName;
+														      }},
+															  {title:message("yly.common.remark"),field:"remark",width:"15%",align:'center',formatter:function(value,row,index){
+																	return  formatLongString(value,50);
+															  }}
+												             ] ]
+											});
+
+							$("#common_nurseArrangement_search_btn").click(
+											function() {
+												var _queryParams = $("#common_nurseArrangement_search_form").serializeJSON();
+												$('#common-nurseArrangement-table-list').datagrid('options').queryParams = _queryParams;
+												$("#common-nurseArrangement-table-list").datagrid('reload');
+											})
+						}
+					});
+
 
 }
 function searchRoles(id) {

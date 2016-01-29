@@ -40,23 +40,32 @@ public class NurseArrangementServiceImpl extends BaseServiceImpl<NurseArrangemen
   }
 
   @Override
-  public Page<NurseArrangement> searchPageByFilter(String keysOfElderlyName, Date beginDate,
-      Date endDate, Pageable pageable) {
+  public Page<NurseArrangement> searchPageByFilter(String nurseNameSearch, Date nurseStartDateSearch,
+      Date nurseEndDateSearch, Pageable pageable, Boolean isTenant) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
     try {
       BooleanQuery query = new BooleanQuery();
-      if (keysOfElderlyName != null) {
-        String text = QueryParser.escape(keysOfElderlyName);
-        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.name", analyzer);
+      if (isTenant) {
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "tenantID", analyzer);
+        Query queryTenantID = queryParser.parse(tenantAccountService.getCurrentTenantID().toString());
+        query.add(queryTenantID, Occur.MUST);
+      }
+      if (nurseNameSearch != null) {
+        String text = QueryParser.escape(nurseNameSearch);
+        QueryParser filterParser = new QueryParser(Version.LUCENE_35, "nurseName", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
       }
-      if (beginDate != null || endDate != null) {
+      if (nurseStartDateSearch != null) {
         TermRangeQuery tQuery =
-            new TermRangeQuery("eventDate", DateTimeUtils.convertDateToString(beginDate, null),
-                DateTimeUtils.convertDateToString(endDate, null), beginDate != null, endDate != null);
+            new TermRangeQuery("nurseStartDate", DateTimeUtils.convertDateToString(nurseStartDateSearch, null),null, true, true);
+        query.add(tQuery, Occur.MUST);
+      }
+      if(nurseEndDateSearch != null){
+        TermRangeQuery tQuery =
+            new TermRangeQuery("nurseEndDate", null, DateTimeUtils.convertDateToString(nurseEndDateSearch, null), true, true);
         query.add(tQuery, Occur.MUST);
       }
 

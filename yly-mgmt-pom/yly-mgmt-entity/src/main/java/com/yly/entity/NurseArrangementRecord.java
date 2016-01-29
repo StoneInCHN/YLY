@@ -10,11 +10,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.DateBridge;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Resolution;
 import org.hibernate.search.annotations.Store;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
@@ -64,6 +67,8 @@ public class NurseArrangementRecord extends BaseEntity{
   private String remark;
   
   @Index(name="nurse_arrangement_record_tenantid")
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.UN_TOKENIZED,
+  analyzer = @Analyzer(impl = IKAnalyzer.class))
   public Long getTenantID() {
     return tenantID;
   }
@@ -87,7 +92,10 @@ public class NurseArrangementRecord extends BaseEntity{
   public void setNurseOperator(String nurseOperator) {
     this.nurseOperator = nurseOperator;
   }
+  
+  @JsonProperty
   @ManyToOne(fetch = FetchType.LAZY)
+  @IndexedEmbedded
   public NurseArrangement getNurseArrangement() {
     return nurseArrangement;
   }
@@ -112,6 +120,7 @@ public class NurseArrangementRecord extends BaseEntity{
   }
   @JsonProperty
   @Column(length=50)
+  @Field(store = Store.NO, index = org.hibernate.search.annotations.Index.TOKENIZED,analyzer = @Analyzer(impl = IKAnalyzer.class))
   public String getNurseName() {
     return nurseName;
   }
