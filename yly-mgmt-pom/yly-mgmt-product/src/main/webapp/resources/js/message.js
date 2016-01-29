@@ -570,7 +570,8 @@ var messages = {
     "yly.personalizedRecord.chargeStatus":"计费状态",
     "yly.personalizedRecord.nurseContent":"护理内容",
     "yly.personalizedRecord.remark":"备注",
-    "yly.personalizedRecord.list":"个性化护理详细记录列表"
+    "yly.personalizedRecord.list":"个性化护理详细记录列表",
+    "yly.personalizedRecord.add":"添加个性化护理详情"
     
 };
 //多语言

@@ -15,6 +15,7 @@ import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
+import com.yly.entity.PersonalizedNurse;
 import com.yly.entity.PersonalizedRecord;
 import com.yly.entity.TenantUser;
 import com.yly.framework.filter.Filter;
@@ -22,6 +23,7 @@ import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
+import com.yly.service.PersonalizedNurseService;
 import com.yly.service.PersonalizedRecordService;
 import com.yly.service.TenantUserService;
 
@@ -38,8 +40,12 @@ public class PersonalizedRecordController extends BaseController {
   @Resource(name = "tenantUserServiceImpl")
   private TenantUserService tenantUserService;
 
+  @Resource(name="personalizedNurseServiceImpl")
+  private PersonalizedNurseService personalizedNurseService;
+  
   @RequestMapping(value = "/personalizedRecord", method = RequestMethod.GET)
-  public String personalizedRecord() {
+  public String personalizedRecord(ModelMap map ,Long nurseId) {
+    map.addAttribute("personalizedNurse", personalizedNurseService.find(nurseId));
     return "personalizedRecord/personalizedRecord";
   }
 
@@ -72,7 +78,7 @@ public class PersonalizedRecordController extends BaseController {
    */
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public String edit(ModelMap model, Long id) {
-    model.addAttribute("personalizedRecord", personalizedRecordService.find(id));
+    model.addAttribute("personalizedRecord",personalizedRecordService.find(id) );
     return "personalizedRecord/edit";
   }
 
@@ -84,7 +90,7 @@ public class PersonalizedRecordController extends BaseController {
    */
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public @ResponseBody Message add(PersonalizedRecord personalizedRecord, Long elderlyInfoId,
-      Long operatorId) {
+      Long operatorId,Long personalizedNurseId) {
     try {
       if (elderlyInfoId != null) {
         ElderlyInfo elderlyInfo = elderlyInfoService.find(elderlyInfoId);
@@ -94,7 +100,10 @@ public class PersonalizedRecordController extends BaseController {
         TenantUser tenantUser = tenantUserService.find(operatorId);
         personalizedRecord.setOperator(tenantUser.getRealName());
       }
-
+      if(personalizedNurseId !=null){
+        PersonalizedNurse personalizedNurse = personalizedNurseService.find(personalizedNurseId);
+        personalizedRecord.setPersonalizedNurse(personalizedNurse);
+      }
       personalizedRecordService.save(personalizedRecord, true);
 
       return SUCCESS_MESSAGE;
@@ -121,7 +130,7 @@ public class PersonalizedRecordController extends BaseController {
         personalizedRecord.setOperator(tenantUser.getRealName());
       }
 
-      personalizedRecordService.update(personalizedRecord, "tenantID");
+      personalizedRecordService.update(personalizedRecord, "tenantID","personalizedNurse");
 
       return SUCCESS_MESSAGE;
     } catch (Exception e) {

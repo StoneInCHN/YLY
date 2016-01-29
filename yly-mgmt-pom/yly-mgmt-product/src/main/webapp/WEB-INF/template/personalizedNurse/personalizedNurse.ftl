@@ -1,5 +1,5 @@
 <script type="text/javascript"  src="${base}/resources/modules/personalizedNurse.js"></script>
-<table id="personalizedNurse-table-list"></table>
+<table id="personalizedNurse-table-list" style="height:350px" ></table>
 <div id="addPersonalizedNurse">
 	<form id="addPersonalizedNurse_form" method="post" class="form-table">   
 	    <table class="table table-striped">
@@ -59,7 +59,7 @@
 	</form>
 </div>
 <div id="editPersonalizedNurse"></div>  
-<div id="incluedPersonalizedRecord"> </div>  
+<div id="incluedPersonalizedRecord" class="easyui-panel" style="height:300px"> </div>  
 </div>  
 
 

@@ -218,17 +218,8 @@
 			   ]
 			],
 			onDblClickRow:function(rowIndex, rowData){
-				console.log(rowIndex);
-				console.log(rowData);
-				
-				$("#incluedPersonalizedRecord").show();
-				$("#incluedPersonalizedRecord").panel({
-					href:'../personalizedRecord/personalizedRecord.jhtml',    
-				    onLoad:function(){    
-				        alert('loaded successfully');    
-				    }  
-				})
-				
+				var nurseId = rowData.id;
+				$('#incluedPersonalizedRecord').panel('refresh','../personalizedRecord/personalizedRecord.jhtml?nurseId='+nurseId);
 			}
 		});
 })

@@ -429,12 +429,15 @@ function searchTenantUser(id) {
 												striped : true,
 												onDblClickRow : function(
 														rowIndex, rowData) {
+													
+													debugger;
+													
 													$("#" + id + "ID").val(
 															rowData.id);
 													$("#" + id).textbox(
 															'setValue',
 															rowData.realName);
-													if ($("#identifier")) {
+													if ($("#identifier").length >0) {
 														$("#identifier")
 																.val(
 																		rowData.identifier);

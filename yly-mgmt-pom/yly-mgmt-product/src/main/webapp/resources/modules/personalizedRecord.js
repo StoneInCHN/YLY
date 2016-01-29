@@ -1,10 +1,13 @@
 
 	$(function(){
+		
+		var nurseId =$("#personalizedRecord-table-list").attr("data-nurseId") ;
+		
 		$("#personalizedRecord-table-list").datagrid({
 			title:message("yly.personalizedRecord.list"),
 			fitColumns:true,
 			fit:true,
-			url:'../personalizedRecord/list.jhtml',  
+			url:'../personalizedRecord/list.jhtml?nurseId='+nurseId,  
 			pagination:true,
 			loadMsg:message("yly.common.loading"),
 			striped:true,
@@ -12,6 +15,9 @@
 				text:message("yly.common.add"),
 				iconCls: 'icon-add',
 				handler: function(){
+					
+					$("#addPersonalizedRecord").show();
+					
 					$("#addPersonalizedRecord").dialog({    
 					    title:message("yly.personalizedRecord.add"),   
 					    width: 350,    
@@ -53,89 +59,16 @@
 							text:message("yly.common.cancel"),
 							iconCls:'icon-cancel',
 							handler:function(){
-								 $('#addPersonalizedRecord').dialog("close");
+								$('#addPersonalizedRecord_form').form('reset');
+								$('#addPersonalizedRecord').dialog("close");
+								$("#addPersonalizedRecord").hide();
 							}
 						}],
-						onOpen:function(){
-						    	$('#addPersonalizedRecord_form').show();
-						    	$("#addPersonalizedRecord_form_personalized").combobox({    
-								    valueField:'id',    
-								    textField:'text',
-								    cache: true,
-								    method:"GET",
-								    prompt:message("yly.common.please.select"),
-								    url:'../personalizedChargeConfig/findAll.jhtml'
-								});
-						},
 						onClose:function(){
 						    	$('#addPersonalizedRecord_form').form('reset');
+						    	$("#addPersonalizedRecord").hide();
 						}
 					});
-				}
-			},'-',{
-				text:message("yly.common.edit"),
-				iconCls: 'icon-edit',
-				handler: function(){
-					var _edit_row = $('#personalizedRecord-table-list').datagrid('getSelected');
-					if( _edit_row == null ){
-						$.messager.alert(message("yly.common.prompt"),message("yly.common.select.editRow"),'warning');    
-						return false;
-					}
-					$("#editPersonalizedRecord").dialog({
-						width:350,
-						height:350,
-						iconCls:'icon-mini-edit',
-						title:message("yly.nursePlan.edit"),
-						href:'../personalizedRecord/edit.jhtml?id='+_edit_row.id,
-						modal: true,
-					    buttons:[{
-					    	text:message("yly.common.save"),
-					    	iconCls:'icon-save',
-							handler:function(){
-								var validate = $('#editPersonalizedRecord_form').form('validate');
-								if(validate){
-									$.ajax({
-										url:"../personalizedRecord/update.jhtml",
-										type:"post",
-										data:$("#editPersonalizedRecord_form").serialize(),
-										beforeSend:function(){
-											$.messager.progress({
-												text:message("yly.common.saving")
-											});
-										},
-										success:function(result,response,status){
-											debugger;
-											$.messager.progress('close');
-											showSuccessMsg(result.content);
-											$('#editPersonalizedRecord').dialog("close");
-											$("#personalizedRecord-table-list").datagrid('reload');
-										},
-										error:function (XMLHttpRequest, textStatus, errorThrown) {
-											$.messager.progress('close');
-											alertErrorMsg();
-										}
-									});
-								};
-							}
-						},{
-							text:message("yly.common.cancel"),
-							iconCls:'icon-cancel',
-							handler:function(){
-								 $('#editPersonalizedRecord').dialog("close");
-							}
-						}],
-						onLoad:function(){
-							$("#editPersonalizedRecord_form_personalized").combobox({    
-							    valueField:'id',    
-							    textField:'text',
-							    cache: true,
-							    method:"GET",
-							    prompt:message("yly.common.please.select"),
-							    url:'../personalizedChargeConfig/findAll.jhtml'
-							});
-							$('#editPersonalizedRecord_form_personalized').combobox('setValue', $("#editPersonalizedRecord_form_personalizedID").val());
-						},
-					})
 				}
 			},'-',{
 				text:message("yly.common.remove"),
@@ -169,7 +102,7 @@
 											var resultMsg = result.content;
 											if (response == "success") {
 												showSuccessMsg(resultMsg);
-												$("#personalizedRecord-table-list").treegrid('reload');
+												$("#personalizedRecord-table-list").datagrid('reload');
 											} else {
 												alertErrorMsg();
 											}
@@ -188,12 +121,14 @@
 			      {title:message("yly.personalizedRecord.elderlyInfo"),field:"elderlyInfo",width:100,sortable:true,formatter: function(value,row,index){
 						if(value && value.name){
 							return value.name;
-						}else{
-							
 						}
+						return ""
 			      	}},
 			       {title:message("yly.personalizedRecord.personalizedNurse"),field:"personalizedNurse",width:100,sortable:true,formatter: function(value,row,index){
-			    	   return value;
+			    	   if(value && value.personalized && value.personalized.chargeItem){
+			    		   return value.personalized.chargeItem;
+			    	   }
+			    	   return "";
 			      	}},
 			      {title:message("yly.personalizedRecord.serviceTime"),field:"serviceTime",width:100,sortable:true,formatter: function(value,row,index){
 						return new Date(value).Format("yyyy-MM-dd");
