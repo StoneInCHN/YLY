@@ -232,6 +232,9 @@
 		    		[@shiro.hasPermission name="reportBookingRegistration"]
 		    		<li><a href="#" data-url="${base}/console/reportBookingRegistration/reportBookingRegistration.jhtml">预约登记统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportChargeStatistics"]
+		    		<li><a href="#" data-url="${base}/console/reportChargeStatistics/reportChargeStatistics.jhtml">缴费统计</a></li>
+		    		[/@shiro.hasPermission]
 		    		
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
@@ -438,7 +441,7 @@
     <div id="searchAlbum"></div>
     <div id = "searchRoles"></div>
     <div id = "searchTenantUser"></div>
-    
+    <div id = "searchNurseArrangement"></div>
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="${base}/resources/js/jquery.min.js"></script>
