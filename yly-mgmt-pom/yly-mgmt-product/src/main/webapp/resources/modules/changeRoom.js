@@ -3,6 +3,7 @@ $(function(){
 	$("#checkedInElderly-table-list").datagrid({
 		title:message("yly.elderlyinfo.record"),
 		fitColumns:true,
+		toolbar:"#changeRoom_manager_tool",
 		url:'../changeRoom/list.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
@@ -84,6 +85,20 @@ $(function(){
 	        }
 
 	});
+	
+	
+	changeRoom_manager_tool = {
+			changeRoom:function(){
+				var _selected_row = $('#checkedInElderly-table-list').datagrid('getSelected');
+				if( _selected_row == null ){
+					$.messager.alert(message("yly.common.prompt"),message("yly.residential.changeRoom.elderly"),'warning');
+					return false;
+				}else{
+					selectRoom();
+				}
+			}
+	}
+	
 	
 	$("#checkedInElderly_search_btn").click(function(){
 	 var _queryParams = $("#checkedInElderly_search_form").serializeJSON();

@@ -315,7 +315,10 @@ var messages = {
 	"yly.blacklist.name":"黑名单老人名字",
 	"yly.blacklist.geracomium":"所属养老院",
 	"yly.blacklist.casue":"加入黑名单原因",
-	"yly.blacklist.add":"加入黑名单",		
+	"yly.blacklist.add":"加入黑名单",
+	
+	//换房
+	"yly.residential.changeRoom.elderly":"请选择换房老人",
 		
 	//老人管理
 	"yly.elderlyInfo.common.operator":"记录人",

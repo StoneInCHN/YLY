@@ -434,6 +434,7 @@
     </div>    
     
     <div id="searchElderlyInfo"></div>
+    <div id="selectRoom"></div>
     <div id="searchAlbum"></div>
     <div id = "searchRoles"></div>
     <div id = "searchTenantUser"></div>

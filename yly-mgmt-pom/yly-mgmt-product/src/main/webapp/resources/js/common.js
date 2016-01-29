@@ -986,3 +986,21 @@ function refreshColumn(id, data, categoryName, valueName, seriesName) {
 		}
 		var chart = new Highcharts.Chart(id);
 	}
+
+function selectRoom(){
+	$("#selectRoom").dialog({    
+	    title: '选床',    
+	    width: 1000,    
+	    height: 500,    
+	    closed: false,    
+	    cache: true,    
+	    href: '../selectRoom/selectRoom.jhtml',    
+	    modal: true,
+	    onLoad:function(){
+	    	 
+	    },
+	    onClose:function(){
+	    	$('#selectRoom').empty;  
+	    }
+	}); 
+}
