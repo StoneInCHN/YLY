@@ -232,6 +232,9 @@
 		    		[@shiro.hasPermission name="reportBookingRegistration"]
 		    		<li><a href="#" data-url="${base}/console/reportBookingRegistration/reportBookingRegistration.jhtml">预约登记统计</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="reportChargeStatistics"]
+		    		<li><a href="#" data-url="${base}/console/reportChargeStatistics/reportChargeStatistics.jhtml">缴费统计</a></li>
+		    		[/@shiro.hasPermission]
 		    		
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
