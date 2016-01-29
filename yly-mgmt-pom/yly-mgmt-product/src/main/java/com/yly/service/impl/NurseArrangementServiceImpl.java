@@ -41,7 +41,7 @@ public class NurseArrangementServiceImpl extends BaseServiceImpl<NurseArrangemen
 
   @Override
   public Page<NurseArrangement> searchPageByFilter(String nurseNameSearch, Date nurseStartDateSearch,
-      Date nurseEndDateSearch, Pageable pageable, Boolean isTenant) {
+      Date nurseEndDateSearch, Long elderlyIDSearch, Long nurseAssistantIDSearch, Pageable pageable, Boolean isTenant) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
@@ -68,7 +68,16 @@ public class NurseArrangementServiceImpl extends BaseServiceImpl<NurseArrangemen
             new TermRangeQuery("nurseEndDate", null, DateTimeUtils.convertDateToString(nurseEndDateSearch, null), true, true);
         query.add(tQuery, Occur.MUST);
       }
-
+      if(elderlyIDSearch != null){
+          QueryParser queryParser = new QueryParser(Version.LUCENE_35, "elderlyInfo.id", analyzer);
+          Query queryElderlyInfoID = queryParser.parse(elderlyIDSearch.toString());
+          query.add(queryElderlyInfoID, Occur.MUST);
+      }
+      if(nurseAssistantIDSearch != null){
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "nurseAssistant.id", analyzer);
+        Query queryNurseAssistantID = queryParser.parse(nurseAssistantIDSearch.toString());
+        query.add(queryNurseAssistantID, Occur.MUST);
+      }
       return nurseArrangementDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {
       e.printStackTrace();

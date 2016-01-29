@@ -14,5 +14,5 @@ import com.yly.framework.service.BaseService;
  *
  */
 public interface NurseArrangementRecordService extends BaseService<NurseArrangementRecord, Long> {
-  Page<NurseArrangementRecord> searchPageByFilter(String nurseNameSearch, Pageable pageable, Boolean isTenant);
+  Page<NurseArrangementRecord> searchPageByFilter(String nurseNameSearch, Long nurseArrangemenIDSearch, Pageable pageable, Boolean isTenant);
 }

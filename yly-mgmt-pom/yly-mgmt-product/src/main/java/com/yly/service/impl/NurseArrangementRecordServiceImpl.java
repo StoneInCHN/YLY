@@ -37,7 +37,8 @@ public class NurseArrangementRecordServiceImpl extends BaseServiceImpl<NurseArra
   }
 
   @Override
-  public Page<NurseArrangementRecord> searchPageByFilter(String nurseNameSearch, Pageable pageable, Boolean isTenant) {
+  public Page<NurseArrangementRecord> searchPageByFilter(String nurseNameSearch, Long nurseArrangemenIDSearch,
+      Pageable pageable, Boolean isTenant) {
     IKAnalyzer analyzer = new IKAnalyzer();
     analyzer.setMaxWordLength(true);
 
@@ -54,6 +55,11 @@ public class NurseArrangementRecordServiceImpl extends BaseServiceImpl<NurseArra
         QueryParser filterParser = new QueryParser(Version.LUCENE_35, "nurseName", analyzer);
         Query filterQuery = filterParser.parse(text);
         query.add(filterQuery, Occur.MUST);
+      }
+      if(nurseArrangemenIDSearch != null){
+        QueryParser queryParser = new QueryParser(Version.LUCENE_35, "nurseArrangement.id", analyzer);
+        Query queryNurseArrangemenID = queryParser.parse(nurseArrangemenIDSearch.toString());
+        query.add(queryNurseArrangemenID, Occur.MUST);
       }
       return nurseArrangementRecordDao.search(query, pageable, analyzer, null);
     } catch (Exception e) {

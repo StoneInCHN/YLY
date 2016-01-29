@@ -56,6 +56,8 @@
 					    <label>${message("yly.to")}:</label>
 					   	<input type="text" class="Wdate" id="nurseEndDate"  name="nurseEndDateSearch"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'nurseStartDate\')}'});"/>
 					</div>
+					<input type="hidden" name="elderlyIDSearch" id="elderlyIDSearch">  
+					<input type="hidden" name="nurseAssistantIDSearch" id="nurseAssistantIDSearch">  
 				</form>
 				<div class="search-item">
 			  	  <button id="nurseArrangement_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>
@@ -79,6 +81,7 @@
 					   <label>护理名称:</label>
 					   <input type="text" class="easyui-textbox"  data-options="prompt:'请输入关键字...'"  name="nurseNameSearchForRecord" validtype="length[0,50]" style="width:110px;"/>
 					</div>
+					<input type="hidden" name="nurseArrangemenIDSearch" id="nurseArrangemenIDSearch">
 				</form>
 				<div class="search-item">
 			  	  <button id="nurseArrangementRecord_search_btn" class="easyui-linkbutton" data-options="iconCls:'icon-search'">${message("yly.search")}</button>

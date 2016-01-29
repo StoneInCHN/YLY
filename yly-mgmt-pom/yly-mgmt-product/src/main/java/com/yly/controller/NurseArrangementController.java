@@ -69,13 +69,14 @@ public class NurseArrangementController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<NurseArrangement> list(String nurseNameSearch, Date nurseStartDateSearch,
-      Date nurseEndDateSearch, Pageable pageable) {
+      Date nurseEndDateSearch, Long elderlyIDSearch, Long nurseAssistantIDSearch, Pageable pageable) {
     Page<NurseArrangement> nurseArrangementPage = null;
-    if (nurseNameSearch == null && nurseStartDateSearch == null && nurseEndDateSearch == null) {
+    if (nurseNameSearch == null && nurseStartDateSearch == null && nurseEndDateSearch == null &&
+        elderlyIDSearch == null&& nurseAssistantIDSearch == null) {
       nurseArrangementPage = nurseArrangementService.findPage(pageable, true);
     } else {
       nurseArrangementPage = nurseArrangementService.searchPageByFilter(nurseNameSearch, nurseStartDateSearch, nurseEndDateSearch,
-          pageable, true);
+          elderlyIDSearch, nurseAssistantIDSearch, pageable, true);
     }
     return nurseArrangementPage;
   }
@@ -85,13 +86,15 @@ public class NurseArrangementController extends BaseController {
    * @param pageable
    * @return
    */
-  @RequestMapping(value = "/recordList", method = RequestMethod.POST)
-  public @ResponseBody Page<NurseArrangementRecord> recordList(String nurseNameSearchForRecord, Pageable pageable) {
+  @RequestMapping(value = "/listRecord", method = RequestMethod.POST)
+  public @ResponseBody Page<NurseArrangementRecord> listRecord(String nurseNameSearchForRecord, Long nurseArrangemenIDSearch, 
+      Pageable pageable) {
     Page<NurseArrangementRecord> nurseArrangementRecords = null;
-    if (nurseNameSearchForRecord == null) {
+    if (nurseNameSearchForRecord == null && nurseArrangemenIDSearch == null) {
       nurseArrangementRecords = nurseArrangementRecordService.findPage(pageable, true);
     } else {
-      nurseArrangementRecords = nurseArrangementRecordService.searchPageByFilter(nurseNameSearchForRecord, pageable, true);
+      nurseArrangementRecords = nurseArrangementRecordService.searchPageByFilter(nurseNameSearchForRecord, 
+          nurseArrangemenIDSearch, pageable, true);
     }   
     return nurseArrangementRecords;
   }

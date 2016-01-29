@@ -220,6 +220,33 @@ $(function(){
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
+		checkOnSelect:true,
+		onSelect:function(rowIndex,rowData){
+			var selected_rows = $('#nurseArrangement-table-list').datagrid('getSelections');
+			if(selected_rows.length > 1){//取消其他行的选择，模拟singleSelect属性，因为singleSelect属性和checkOnSelect属性冲突，不能直接引用
+				for(var i=0;i<selected_rows.length;i++){
+					if(rowData.id != selected_rows[i].id){
+						var rowIndex=$('#nurseArrangement-table-list').datagrid('getRowIndex',selected_rows[i]);
+						$("#nurseArrangement-table-list").datagrid("unselectRow", rowIndex);
+					}
+				}
+			}
+			//选中一个老人，右侧的护理员安排根据老人过滤
+			$('#nurseArrangemenIDSearch').val(rowData.id);
+			  var _queryParams = $("#nurseArrangementRecord_search_form").serializeJSON();
+			  $('#nurseArrangementRecord-table-list').datagrid('options').queryParams = _queryParams;  
+			  $("#nurseArrangementRecord-table-list").datagrid('reload');	
+		},
+		onUnselect:function(rowIndex,rowData){
+			var selected_rows = $('#nurseArrangement-table-list').datagrid('getSelections');
+			if(selected_rows.length == 0){//取消选中当前行
+				//取消选中一个老人，还原右侧的护理员安排根据老人过滤
+				  $('#nurseArrangemenIDSearch').val(null);
+				  var _queryParams = $("#nurseArrangementRecord_search_form").serializeJSON();
+				  $('#nurseArrangementRecord-table-list').datagrid('options').queryParams = _queryParams;  
+				  $("#nurseArrangementRecord-table-list").datagrid('reload');
+			}
+		},
 		onDblClickRow : function (rowIndex, rowData){
 			$('#view_nurseArrangement').dialog({    
 			    title: message("yly.common.detail"),    
@@ -271,7 +298,6 @@ $(function(){
 		  var _queryParams = $("#nurseArrangement_search_form").serializeJSON();
 		  $('#nurseArrangement-table-list').datagrid('options').queryParams = _queryParams;  
 		  $("#nurseArrangement-table-list").datagrid('reload');
-			
 		})
 });
 //护理员安排明细
@@ -280,7 +306,7 @@ $(function(){
 		title:message("yly.nurseArrangementRecord.list"),
 		fitColumns:true,
 		toolbar:"#nurseArrangementRecord_manager_tool",
-		url:'../nurseArrangement/recordList.jhtml',  
+		url:'../nurseArrangement/listRecord.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
@@ -336,6 +362,33 @@ $(function(){
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
+		checkOnSelect:true,
+		onSelect:function(rowIndex,rowData){
+			var selected_rows = $('#elderlyInfoSearch-table-list').datagrid('getSelections');
+			if(selected_rows.length > 1){//取消其他行的选择，模拟singleSelect属性，因为singleSelect属性和checkOnSelect属性冲突，不能直接引用
+				for(var i=0;i<selected_rows.length;i++){
+					if(rowData.id != selected_rows[i].id){
+						var rowIndex=$('#elderlyInfoSearch-table-list').datagrid('getRowIndex',selected_rows[i]);
+						$("#elderlyInfoSearch-table-list").datagrid("unselectRow", rowIndex);
+					}
+				}
+			}
+			//选中一个老人，右侧的护理员安排根据老人过滤
+			$('#elderlyIDSearch').val(rowData.id);
+			  var _queryParams = $("#nurseArrangement_search_form").serializeJSON();
+			  $('#nurseArrangement-table-list').datagrid('options').queryParams = _queryParams;  
+			  $("#nurseArrangement-table-list").datagrid('reload');
+		},
+		onUnselect:function(rowIndex,rowData){
+			var selected_rows = $('#elderlyInfoSearch-table-list').datagrid('getSelections');
+			if(selected_rows.length == 0){//取消选中当前行
+				//取消选中一个老人，还原右侧的护理员安排根据老人过滤
+				$('#elderlyIDSearch').val(null);
+				  var _queryParams = $("#nurseArrangement_search_form").serializeJSON();
+				  $('#nurseArrangement-table-list').datagrid('options').queryParams = _queryParams;  
+				  $("#nurseArrangement-table-list").datagrid('reload');
+			}
+		},
 		onDblClickRow : function (rowIndex, rowData){
 			$('#view_elderlyInfo').dialog({    
 			    title: message("yly.common.detail"),    
@@ -395,6 +448,33 @@ $(function(){
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
+		checkOnSelect:true,
+		onSelect:function(rowIndex,rowData){
+			var selected_rows = $('#nurseAssistantSearch-table-list').datagrid('getSelections');
+			if(selected_rows.length > 1){//取消其他行的选择，模拟singleSelect属性，因为singleSelect属性和checkOnSelect属性冲突，不能直接引用
+				for(var i=0;i<selected_rows.length;i++){
+					if(rowData.id != selected_rows[i].id){
+						var rowIndex=$('#nurseAssistantSearch-table-list').datagrid('getRowIndex',selected_rows[i]);
+						$("#nurseAssistantSearch-table-list").datagrid("unselectRow", rowIndex);
+					}
+				}
+			}
+			//选中一个老人，右侧的护理员安排根据老人过滤
+			$('#nurseAssistantIDSearch').val(rowData.id);
+			  var _queryParams = $("#nurseArrangement_search_form").serializeJSON();
+			  $('#nurseArrangement-table-list').datagrid('options').queryParams = _queryParams;  
+			  $("#nurseArrangement-table-list").datagrid('reload');			
+		},
+		onUnselect:function(rowIndex,rowData){
+			var selected_rows = $('#nurseAssistantSearch-table-list').datagrid('getSelections');
+			if(selected_rows.length == 0){//取消选中当前行
+				//取消选中一个老人，还原右侧的护理员安排根据老人过滤
+				  $('#nurseAssistantIDSearch').val(null);
+				  var _queryParams = $("#nurseArrangement_search_form").serializeJSON();
+				  $('#nurseArrangement-table-list').datagrid('options').queryParams = _queryParams;  
+				  $("#nurseArrangement-table-list").datagrid('reload');
+			}
+		},
 		onDblClickRow : function (rowIndex, rowData){
 			$('#view_nurseAssistant').dialog({    
 			    title: message("yly.common.detail"),    
