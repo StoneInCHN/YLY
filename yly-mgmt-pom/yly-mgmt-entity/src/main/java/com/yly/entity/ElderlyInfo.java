@@ -649,7 +649,7 @@ public class ElderlyInfo extends BaseEntity {
   }
 
   @JsonProperty
-  @OneToOne(mappedBy = "elderlyInfo")
+  @OneToOne(mappedBy = "elderlyInfo",cascade=CascadeType.ALL)
   public Bed getBed() {
     return bed;
   }

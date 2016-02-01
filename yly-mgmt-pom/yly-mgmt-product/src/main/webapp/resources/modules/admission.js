@@ -47,6 +47,8 @@ var admission_manager_tool = {
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
+						 $('#bed_ID').val(null);
+						 $('#bed_description').textbox("setValue",null);
 						 $('#addAdmission').dialog("close");
 					}
 			    }],

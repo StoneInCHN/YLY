@@ -67,11 +67,18 @@ $(function() {
 				  }else{
 					  switch(type)
 					  {
+					  	// 选房 
 						  case "1":
-						   // 执行代码块 1
+							   if($(this).attr("data-bedId")!=null && $(this).attr("data-bedDescription")!=null){
+								   if($("#bed_description")){
+									   $("#bed_ID").val($(this).attr("data-bedId"));
+									   $("#bed_description").textbox("setValue",$(this).attr("data-bedDescription"));
+									   $('#selectRoom').dialog("close");
+								   }
+							   }
 						    break;
+						 //换房
 						  case "2":
-						   // 执行代码块 2
 							  var alertMsg = "确认要将 ["+elderlyName+"] 从 ["+bedNumber+"] 号床换到 ["+bedNumberCur+"] 号床吗?"
 							  $.messager.confirm('换房确认', alertMsg, function(r){
 									if (r){
@@ -86,7 +93,6 @@ $(function() {
 					  }
 				  }
 			  })
-			  
 		 }  
 	});  
 })

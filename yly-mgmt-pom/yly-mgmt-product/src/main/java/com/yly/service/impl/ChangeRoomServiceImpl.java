@@ -31,7 +31,7 @@ public class ChangeRoomServiceImpl implements ChangeRoomService {
   private BedChangeRecordService bedChangeRecordService;
 
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-  public void changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId) {
+  public Boolean changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId) {
 
     /**
      * 查询老人信息,现有床位和更换的床位
@@ -44,33 +44,39 @@ public class ChangeRoomServiceImpl implements ChangeRoomService {
 
     if (elderlyInfo != null && originalBed != null && newBed != null) {
 
-      /**
-       * 退出原来的床位
-       */
-      originalBed.setElderlyInfo(null);
-      originalBed.setUsageState(UsageState.UNAPPROPRIATED);
+      try {
 
-      bedService.update(originalBed);
+        /**
+         * 退出原来的床位
+         */
+        originalBed.setElderlyInfo(null);
+        originalBed.setUsageState(UsageState.UNAPPROPRIATED);
 
-      /**
-       * 设置新的床位
-       */
-      elderlyInfo.setBed(newBed);
-      elderlyInfoService.update(elderlyInfo);
+        bedService.update(originalBed);
 
-      /**
-       * 添加换房记录
-       */
+        /**
+         * 设置新的床位
+         */
+        elderlyInfo.setBed(newBed);
+        elderlyInfoService.update(elderlyInfo);
 
-      BedChangeRecord bedChangeRecord = new BedChangeRecord();
+        /**
+         * 添加换房记录
+         */
 
-      bedChangeRecord.setChangeDate(new Date());
-      bedChangeRecord.setElderlyInfo(elderlyInfo);
-      bedChangeRecord.setNewBed(newBed);
-      bedChangeRecord.setOldBed(originalBed);
+        BedChangeRecord bedChangeRecord = new BedChangeRecord();
 
-      bedChangeRecordService.save(bedChangeRecord);
+        bedChangeRecord.setChangeDate(new Date());
+        bedChangeRecord.setElderlyInfo(elderlyInfo);
+        bedChangeRecord.setNewBed(newBed);
+        bedChangeRecord.setOldBed(originalBed);
+
+        bedChangeRecordService.save(bedChangeRecord);
+      } catch (Exception ex) {
+        return false;
+      }
+      
     }
-
+    return true;
   }
 }

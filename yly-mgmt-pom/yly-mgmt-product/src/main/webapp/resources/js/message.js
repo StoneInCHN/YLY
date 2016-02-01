@@ -238,6 +238,7 @@ var messages = {
 	
 	//elderlyinfo
 	"yly.admission.add":"办理入院",
+	"yly.addmission.bed.search":"床位查询",
 	"yly.elderlyinfo":"老人信息",
 	"yly.elderly.status":"老人状态",
 	"yly.elderly.status.in_nursing_home":"在院",
