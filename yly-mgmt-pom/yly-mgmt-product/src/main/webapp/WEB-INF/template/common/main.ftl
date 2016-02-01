@@ -444,6 +444,7 @@
     <div id = "searchRoles"></div>
     <div id = "searchTenantUser"></div>
     <div id = "searchNurseArrangement"></div>
+    <div id = "searchBed"></div>
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="${base}/resources/js/jquery.min.js"></script>

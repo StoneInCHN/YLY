@@ -63,8 +63,14 @@ $(function() {
 			  })
 			   $(".bed-item-nobody").on("click",function(){
 				//  alert("nobody");
+				   if($(this).attr("data-bedId")!=null && $(this).attr("data-bedDescription")!=null){
+					   if($("#bed_description")){
+						   $("#bed_ID").val($(this).attr("data-bedId"));
+						   $("#bed_description").textbox("setValue",$(this).attr("data-bedDescription"));
+						   $('#selectRoom').dialog("close");
+					   }
+				   }
 			  })
-			  
 		 }  
 	});  
 })

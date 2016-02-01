@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yly.beans.FileInfo.FileType;
 import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
+import com.yly.entity.Bed;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
@@ -27,6 +28,7 @@ import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.BedService;
 import com.yly.service.ElderlyInfoService;
 import com.yly.service.FileService;
 import com.yly.service.SystemConfigService;
@@ -53,6 +55,9 @@ public class AdmissionController extends BaseController {
 
   @Resource(name = "fileServiceImpl")
   private FileService fileService;
+  
+  @Resource(name = "bedServiceImpl")
+  private BedService bedService;
 
   /**
    * 列表页面
@@ -136,10 +141,20 @@ public class AdmissionController extends BaseController {
        * 设置老人状态
        */
       elderlyInfo.setElderlyStatus(ElderlyStatus.IN_PROGRESS_CHECKIN);
-
-      elderlyInfoService.save(elderlyInfo);
+      
+      if(elderlyInfo.getBed() != null && elderlyInfo.getBed().getId() != null){//办理入院的时候选择了床位
+          Bed bed = bedService.find(elderlyInfo.getBed().getId());
+          if (bed != null) {
+            bed.setElderlyInfo(elderlyInfo);
+            elderlyInfo.setBed(bed);
+            elderlyInfoService.save(elderlyInfo);
+          }else{
+            return Message.error("yly.elderlyInfo.choose.bed.error");
+          }                   
+      }else {
+        return Message.error("yly.elderlyInfo.choose.bed.error");
+      }
     }
-
     return SUCCESS_MESSAGE;
   }
 
