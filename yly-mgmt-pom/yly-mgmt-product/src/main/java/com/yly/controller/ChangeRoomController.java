@@ -94,11 +94,15 @@ public class ChangeRoomController extends BaseController {
    * @param newBedId
    * @return
    */
+  @RequestMapping(value = "/changeToNewRoom", method = RequestMethod.POST)
   public @ResponseBody Message changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId) {
 
-    changeRoomService.changeRoom(elderlyInfoId, originalBedId, newBedId);
-
-    return SUCCESS_MESSAGE;
+    Boolean rest = changeRoomService.changeRoom(elderlyInfoId, originalBedId, newBedId);
+    if(rest){
+      return SUCCESS_MESSAGE;  
+    }else{
+      return ERROR_MESSAGE;
+    }
   }
 
 }

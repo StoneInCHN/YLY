@@ -16,6 +16,6 @@ public interface ChangeRoomService {
    * @param originalBedId
    * @param newBedId
    */
-  public void changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId);
+  public Boolean changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId);
 
 }
