@@ -321,11 +321,11 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
     List<ElderlyInfo> elderlyInfos = elderlyInfoService.findList(null, filters, null, true, null);
     
     //报表数据
-    ReportChargeStatistics reportChargeStatistics = new ReportChargeStatistics ();
-    BigDecimal totalBedCharge = new BigDecimal (0);
-    BigDecimal totalNurseCharge = new BigDecimal (0);
-    BigDecimal totalMealCharge = new BigDecimal (0);
-    BigDecimal totalPersonalizedCharge = new BigDecimal (0);
+//    ReportChargeStatistics reportChargeStatistics = new ReportChargeStatistics ();
+//    BigDecimal totalBedCharge = new BigDecimal (0);
+//    BigDecimal totalNurseCharge = new BigDecimal (0);
+//    BigDecimal totalMealCharge = new BigDecimal (0);
+//    BigDecimal totalPersonalizedCharge = new BigDecimal (0);
     
     for (ElderlyInfo elderlyInfo : elderlyInfos) {
       Billing billing = new Billing();
@@ -512,21 +512,21 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
         billing.setPersonalizedAmount(personalizedCharge.getPersonalizedAmount());
         billing.setPersonalizedCharge(personalizedCharge);
       }
-      totalBedCharge=totalBedCharge.add (billing.getBedAmount ());
-      totalNurseCharge = totalNurseCharge.add (billing.getNurseAmount ());
-      totalMealCharge = totalMealCharge.add (billing.getMealAmount ());
-      totalPersonalizedCharge = totalPersonalizedCharge.add (billing.getPersonalizedAmount ());
+//      totalBedCharge=totalBedCharge.add (billing.getBedAmount ());
+//      totalNurseCharge = totalNurseCharge.add (billing.getNurseAmount ());
+//      totalMealCharge = totalMealCharge.add (billing.getMealAmount ());
+//      totalPersonalizedCharge = totalPersonalizedCharge.add (billing.getPersonalizedAmount ());
       
       billingDao.merge(billing);
     }
     
     //保存报表数据到数据库
-    reportChargeStatistics.setBedCharge (totalBedCharge);
-    reportChargeStatistics.setMealCharge (totalMealCharge);
-    reportChargeStatistics.setNurseCharge (totalNurseCharge);
-    reportChargeStatistics.setPersionalizedCharge (totalPersonalizedCharge);
-    reportChargeStatistics.setStatisticsDate (billDate);
-    reportChargeStatisticsService.save (reportChargeStatistics, true);
+//    reportChargeStatistics.setBedCharge (totalBedCharge);
+//    reportChargeStatistics.setMealCharge (totalMealCharge);
+//    reportChargeStatistics.setNurseCharge (totalNurseCharge);
+//    reportChargeStatistics.setPersionalizedCharge (totalPersonalizedCharge);
+//    reportChargeStatistics.setStatisticsDate (billDate);
+//    reportChargeStatisticsService.save (reportChargeStatistics, true);
   }
 
   public BigDecimal calDiffPriceBed(Long days, Bed oldBed, Bed newBed) {

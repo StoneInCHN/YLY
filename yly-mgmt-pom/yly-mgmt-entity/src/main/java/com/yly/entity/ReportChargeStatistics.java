@@ -54,9 +54,10 @@ public class ReportChargeStatistics extends BaseEntity
   private BigDecimal persionalizedCharge;
 
   /**
-   * 水电费
+   * 预存款
    */
-  private BigDecimal waterElectricityCharge;
+  private BigDecimal advanceCharge;
+  
   /**
    * 统计月份
    */
@@ -118,17 +119,6 @@ public class ReportChargeStatistics extends BaseEntity
   }
 
   @JsonProperty
-  public BigDecimal getWaterElectricityCharge ()
-  {
-    return waterElectricityCharge;
-  }
-
-  public void setWaterElectricityCharge (BigDecimal waterElectricityCharge)
-  {
-    this.waterElectricityCharge = waterElectricityCharge;
-  }
-
-  @JsonProperty
   @Temporal (TemporalType.DATE)
   public Date getStatisticsDate ()
   {
@@ -140,4 +130,16 @@ public class ReportChargeStatistics extends BaseEntity
     this.statisticsDate = statisticsDate;
   }
 
+  @JsonProperty
+  public BigDecimal getAdvanceCharge ()
+  {
+    return advanceCharge;
+  }
+
+  public void setAdvanceCharge (BigDecimal advanceCharge)
+  {
+    this.advanceCharge = advanceCharge;
+  }
+
+  
 }

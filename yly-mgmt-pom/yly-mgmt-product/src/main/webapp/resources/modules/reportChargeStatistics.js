@@ -70,9 +70,9 @@ $("#reportChargeStatistics-table-list").datagrid({
 		    [
 		     {title:"床位费",field:"bedCharge",width:100,sortable:true},
 		     {title:"护理费",field:"nurseCharge",width:100,sortable:true},
-		     {title:"水电费",field:"waterElectricityCharge",width:100,sortable:true},
 		     {title:"个性化服务费",field:"persionalizedCharge",width:100,sortable:true},
 		     {title:"伙食费",field:"mealCharge",width:100,sortable:true},
+		     {title:"预存款",field:"advanceCharge",width:100,sortable:true},
 		     {title:"统计周期",field:"statisticsDate",width:100,sortable:true,
 		    	 formatter: function(value,row,index){
 	    			if(value != null){
@@ -89,12 +89,11 @@ $("#reportChargeStatistics-table-list").datagrid({
 			return 'background-color:#D4D4D4;';
 		}
 	},onLoadSuccess:function(data){
-		debugger;
 		reportChargeStatistics.series= [ ];
 		refreshLine(reportChargeStatistics,data.rows,
 				'statisticsDate',
-				[ 'bedCharge', 'nurseCharge', 'waterElectricityCharge','persionalizedCharge','mealCharge' ],
-				[ '床位费', '护理费','水电费','个性化服务费','伙食费' ]);
+				[ 'bedCharge', 'nurseCharge','persionalizedCharge','mealCharge','advanceCharge' ],
+				[ '床位费', '护理费','个性化服务费','伙食费','预存款' ]);
 	}
 
 });

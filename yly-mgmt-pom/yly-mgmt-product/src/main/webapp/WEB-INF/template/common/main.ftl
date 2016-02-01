@@ -235,7 +235,9 @@
 		    		[@shiro.hasPermission name="reportChargeStatistics"]
 		    		<li><a href="#" data-url="${base}/console/reportChargeStatistics/reportChargeStatistics.jhtml">缴费统计</a></li>
 		    		[/@shiro.hasPermission]
-		    		
+		    		[@shiro.hasPermission name="reportAdvanceCharge"]
+		    		<li><a href="#" data-url="${base}/console/reportAdvanceCharge/reportAdvanceCharge.jhtml">缴费统计</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>
 		    	<ul title="${message("yly.charge.congfig")}" id="chargeConfig">
 		    		[@shiro.hasPermission name="bedChargeConfig"]
