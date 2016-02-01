@@ -1,9 +1,13 @@
 package com.yly.service.impl;
 
 import java.util.Date;
+
 import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.yly.entity.Bed;
 import com.yly.entity.BedChangeRecord;
 import com.yly.entity.ElderlyInfo;
@@ -19,6 +23,8 @@ import com.yly.service.ElderlyInfoService;
  * @author shijun
  *
  */
+
+@Service("changeRoomServiceImpl")
 public class ChangeRoomServiceImpl implements ChangeRoomService {
 
   @Resource(name = "elderlyInfoServiceImpl")
