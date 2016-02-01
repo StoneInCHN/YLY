@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ReportChargeStatistics;
-import com.yly.entity.ReportRepairRecord;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.ordering.Ordering;
