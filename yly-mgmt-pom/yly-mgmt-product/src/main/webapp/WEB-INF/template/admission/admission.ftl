@@ -502,7 +502,7 @@
 	    	</tr>
 	    	</table>
 	    	<table class="table table-striped table-bordered">
-	    	<caption><h5>${message("yly.elderlyInfo.evaluatingResult")}</h5></caption>
+	    	<caption><h5>${message("yly.elderlyInfo.others")}</h5></caption>
 	    	<tr>
 	    		<th>${message("yly.elderlyInfo.evaluatingResult")}:</th>
 	    		<td>
@@ -516,6 +516,12 @@
 	    		<th>${message("yly.elderlyInfo.nursingLevel")}:</th>
 	    		<td>
 	    			  <input class="easyui-combobox" id="nursingLevelId"  name="nursingLevelId" style="width:120px;" data-options="editable:false" >   
+	    		</td>
+	    		<th>${message("yly.elderlyInfo.choose.bed")}:</th>
+	    		<td>
+	    			<input type="hidden" id="bed_ID" name="bed.id"/>
+	    			 <input class="easyui-textbox" type="text" id="bed_description"  readonly="readonly"  data-options="required:true" style="width:200px;"/>  
+	    			 <a href="#" class="easyui-linkbutton" onclick="selectRoom()" iconCls="icon-search" plain=true"></a>
 	    		</td>
 	    	</tr>
 	    </table>
