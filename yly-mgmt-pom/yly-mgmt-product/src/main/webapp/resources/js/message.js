@@ -578,8 +578,9 @@ var messages = {
     "yly.personalizedRecord.nurseContent":"护理内容",
     "yly.personalizedRecord.remark":"备注",
     "yly.personalizedRecord.list":"个性化护理详细记录列表",
-    "yly.personalizedRecord.add":"添加个性化护理详情"
+    "yly.personalizedRecord.add":"添加个性化护理详情",
     
+    "yly.residential.changeRoom.action":"换房"
 };
 //多语言
 function message(code) {

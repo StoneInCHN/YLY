@@ -8,6 +8,25 @@ $(function(){
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
+		toolbar:[{
+			text:message("yly.residential.changeRoom.action"),
+			iconCls: 'icon-reload',
+			handler:function(){
+				var _selected_row = $('#checkedInElderly-table-list').datagrid('getSelected');
+				if( _selected_row == null ){
+					$.messager.alert(message("yly.common.prompt"),message("yly.residential.changeRoom.elderly"),'warning');
+					return false;
+				}else{
+					console.log(_selected_row)
+					selectRoom({
+						type:2,
+						elderlyId:_selected_row.id,
+						elderlyName:_selected_row.name,
+						bedNumber:"1021"
+					});
+				}
+			}
+		}],
 		onDblClickRow : function (rowIndex, rowData){
 			$('#checkedInElderlyDetail').dialog({    
 			    title: message("yly.common.detail"),    
@@ -85,20 +104,6 @@ $(function(){
 	        }
 
 	});
-	
-	
-	changeRoom_manager_tool = {
-			changeRoom:function(){
-				var _selected_row = $('#checkedInElderly-table-list').datagrid('getSelected');
-				if( _selected_row == null ){
-					$.messager.alert(message("yly.common.prompt"),message("yly.residential.changeRoom.elderly"),'warning');
-					return false;
-				}else{
-					selectRoom();
-				}
-			}
-	}
-	
 	
 	$("#checkedInElderly_search_btn").click(function(){
 	 var _queryParams = $("#checkedInElderly_search_form").serializeJSON();

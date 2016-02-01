@@ -11,23 +11,16 @@ $(function() {
 	        var isLeaf = tree('isLeaf', node.target); 
 	        if (node.attributes && node.attributes.isBuilding) {  
 				if(node.id){
-	        		//$('#bed_table_list').datagrid('load',{buildingId:node.id});
 					$('#bedImgShowPanel').panel('open').panel('refresh',{buildingId:node.id});
-					
-					
 	        	}else{
-	        		//$('#bed_table_list').datagrid('reload',{});
 	        		$('#bedImgShowPanel').panel('open').panel('refresh',{});
 	        	}
 	        }else if(node.attributes && node.attributes.rootNode){
-	        	//$('#bed_table_list').datagrid('reload',{});
 	        	$('#bedImgShowPanel').panel('open').panel('refresh',{});
 	        }else if(node.attributes && node.attributes.roomNode){
 	        	if(node.id){
-	        		//$('#bed_table_list').datagrid('load',{roomId:node.id});
 	        		$('#bedImgShowPanel').panel('open').panel('refresh',{roomId:node.id});
 	        	}else{
-	        		//$('#bed_table_list').datagrid('reload',{});
 	        		$('#bedImgShowPanel').panel('open').panel('refresh',{});
 	        	}
 	        }else{
@@ -62,7 +55,36 @@ $(function() {
 				 // alert("somebody");
 			  })
 			   $(".bed-item-nobody").on("click",function(){
-				//  alert("nobody");
+				   var $this = $(this);
+				   var type =  $("#selectRoom").attr("data-type");
+				   var elderlyId = $("#selectRoom").attr("data-elderly-id");
+				   var elderlyName = $("#selectRoom").attr("data-elderly-name");
+				   var bedNumber = $("#selectRoom").attr("data-elderly-bedNumber");
+				   var bedNumberCur = $this.attr("data-bedNumber");
+				   var bedIdCur =$this.attr("data-bedId");
+				  if(!type){
+					  return ;
+				  }else{
+					  switch(type)
+					  {
+						  case "1":
+						   // 执行代码块 1
+						    break;
+						  case "2":
+						   // 执行代码块 2
+							  var alertMsg = "确认要将 ["+elderlyName+"] 从 ["+bedNumber+"] 号床换到 ["+bedNumberCur+"] 号床吗?"
+							  $.messager.confirm('换房确认', alertMsg, function(r){
+									if (r){
+									    // 退出操作;
+										alert("选房成功")
+									}
+								});
+
+						    break;
+						  default:
+						   return ;
+					  }
+				  }
 			  })
 			  
 		 }  

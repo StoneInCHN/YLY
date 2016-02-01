@@ -1097,7 +1097,7 @@ function refreshColumn(id, data, categoryName, valueName, seriesName) {
 		var chart = new Highcharts.Chart(id);
 	}
 
-function selectRoom(){
+function selectRoom(option){
 	$("#selectRoom").dialog({    
 	    title: '选床',    
 	    width: 1000,    
@@ -1107,10 +1107,21 @@ function selectRoom(){
 	    href: '../selectRoom/selectRoom.jhtml',    
 	    modal: true,
 	    onLoad:function(){
-	    	 
+	    	if(option.type){
+	    		$("#selectRoom").attr("data-type",option.type);
+	    		
+	    		if(option.type == 1){
+	    			//第一次选房
+	    		}else if(option.type == 2){
+	    			$("#selectRoom").attr("data-elderly-id",option.elderlyId);
+	    			$("#selectRoom").attr("data-elderly-name",option.elderlyName);
+	    			$("#selectRoom").attr("data-elderly-bedNumber",option.bedNumber);
+	    		}
+	    	}
 	    },
 	    onClose:function(){
 	    	$('#selectRoom').empty;  
+	    	$("#selectRoom").attr("data-type","");
 	    }
 	}); 
 }

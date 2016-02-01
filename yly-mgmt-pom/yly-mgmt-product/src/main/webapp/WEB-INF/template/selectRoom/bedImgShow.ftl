@@ -16,7 +16,7 @@
 				   			<li>
 				   				<h4>${roomNumber}房间</h4>
 				   				[#list room.beds as bed]
-					   				<div [#if bed.elderlyInfo]class="bed-item-somebody" data-elderlyId="${bed.elderlyInfo.id}" [#else] class="bed-item-nobody" data-bedId="${bed.id}[/#if] ">
+					   				<div [#if bed.elderlyInfo]class="bed-item-somebody" data-elderlyId="${bed.elderlyInfo.id}" [#else] class="bed-item-nobody" [/#if] " data-bedId="${bed.id}" data-bedNumber="${bed.bedNumber}">
 					   					<a href="javascript:;"><img [#if bed.elderlyInfo]src="${base}/resources/images/somebody-48.png"[#else] src="${base}/resources/images/nobody-48.png"[/#if] style="width:48px;height:48px" >
 				   					<h7>${bed.bedNumber}</h7>
 				   					<p>[#if bed.elderlyInfo]${bed.elderlyInfo.name}[#else]未占用[/#if]</p></a>

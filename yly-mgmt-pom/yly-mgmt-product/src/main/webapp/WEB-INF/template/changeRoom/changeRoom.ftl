@@ -51,11 +51,5 @@
 	    </div>
 	  </fieldset>
 </div>
-<div id="changeRoom_manager_tool">
-	<div class="tool-button">
-		<a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain=true onclick="changeRoom_manager_tool.changeRoom();">${message("yly.residential.changeRoom.action")}</a>
-	</div>
-	<div class="tool-filter"></div>
-</div> 
 <table id="checkedInElderly-table-list"></table>
 <div id="checkedInElderlyDetail"></div>
