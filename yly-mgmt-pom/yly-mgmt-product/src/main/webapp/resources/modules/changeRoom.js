@@ -22,7 +22,9 @@ $(function(){
 						type:2,
 						elderlyId:_selected_row.id,
 						elderlyName:_selected_row.name,
-						bedNumber:"1021"
+						bedNumber:_selected_row.bed.bedNumber,
+						originalBedId:_selected_row.bed.id,
+						tableId:"#checkedInElderly-table-list"
 					});
 				}
 			}

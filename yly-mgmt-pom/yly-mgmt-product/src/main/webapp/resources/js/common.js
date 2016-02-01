@@ -1096,7 +1096,17 @@ function refreshColumn(id, data, categoryName, valueName, seriesName) {
 		}
 		var chart = new Highcharts.Chart(id);
 	}
-
+/**
+ * 
+ * @param option{
+ *  type 调用类型 1:选房 2:换房
+ *  elderlyId 老人ID
+ *  elderlyName 老人姓名
+ *  bedNumber 床位编号
+ *  originalBedId 床位id
+ *  tableId 关闭panel是需要刷新gridlist时的tableId  格式 #tableId
+ * }
+ */
 function selectRoom(option){
 	$("#selectRoom").dialog({    
 	    title: '选床',    
@@ -1109,19 +1119,27 @@ function selectRoom(option){
 	    onLoad:function(){
 	    	if(option.type){
 	    		$("#selectRoom").attr("data-type",option.type);
-	    		
 	    		if(option.type == 1){
 	    			//第一次选房
 	    		}else if(option.type == 2){
 	    			$("#selectRoom").attr("data-elderly-id",option.elderlyId);
 	    			$("#selectRoom").attr("data-elderly-name",option.elderlyName);
-	    			$("#selectRoom").attr("data-elderly-bedNumber",option.bedNumber);
+	    			$("#selectRoom").attr("data-elderly-bed-number",option.bedNumber);
+	    			$("#selectRoom").attr("data-original-bed-id",option.originalBedId);
 	    		}
 	    	}
 	    },
 	    onClose:function(){
 	    	$('#selectRoom').empty;  
 	    	$("#selectRoom").attr("data-type","");
+	    	
+	    	if(option.type){
+	    		$("#selectRoom").attr("data-type",option.type);
+	    		if(option.tableId){
+	    			$(option.tableId).datagrid('reload');
+	    		}
+	    	}
+	    	
 	    }
 	}); 
 }

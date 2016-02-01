@@ -66,6 +66,9 @@ public class ChangeRoomServiceImpl implements ChangeRoomService {
         elderlyInfo.setBed(newBed);
         elderlyInfoService.update(elderlyInfo);
 
+        newBed.setElderlyInfo(elderlyInfo);
+        newBed.setUsageState(UsageState.OCCUPIED);
+        bedService.update(newBed);
         /**
          * 添加换房记录
          */

@@ -12,16 +12,31 @@ $(function() {
 	        if (node.attributes && node.attributes.isBuilding) {  
 				if(node.id){
 					$('#bedImgShowPanel').panel('open').panel('refresh',{buildingId:node.id});
+					$('#bedImgShowPanel').panel({
+						queryParams:{buildingId:node.id}
+					})
 	        	}else{
 	        		$('#bedImgShowPanel').panel('open').panel('refresh',{});
+	        		$('#bedImgShowPanel').panel({
+						queryParams:{}
+					})
 	        	}
 	        }else if(node.attributes && node.attributes.rootNode){
 	        	$('#bedImgShowPanel').panel('open').panel('refresh',{});
+	        	$('#bedImgShowPanel').panel({
+					queryParams:{}
+				})
 	        }else if(node.attributes && node.attributes.roomNode){
 	        	if(node.id){
 	        		$('#bedImgShowPanel').panel('open').panel('refresh',{roomId:node.id});
+	        		$('#bedImgShowPanel').panel({
+						queryParams:{roomId:node.id}
+					})
 	        	}else{
 	        		$('#bedImgShowPanel').panel('open').panel('refresh',{});
+	        		$('#bedImgShowPanel').panel({
+						queryParams:{}
+					})
 	        	}
 	        }else{
 	        	return false;
@@ -59,9 +74,10 @@ $(function() {
 				   var type =  $("#selectRoom").attr("data-type");
 				   var elderlyId = $("#selectRoom").attr("data-elderly-id");
 				   var elderlyName = $("#selectRoom").attr("data-elderly-name");
-				   var bedNumber = $("#selectRoom").attr("data-elderly-bedNumber");
-				   var bedNumberCur = $this.attr("data-bedNumber");
-				   var bedIdCur =$this.attr("data-bedId");
+				   var bedNumber = $("#selectRoom").attr("data-elderly-bed-number");
+				   var originalBedId =$("#selectRoom").attr("data-original-bed-id");
+				   var bedNumberCur = $this.attr("data-bed-number");
+				   var bedIdCur =$this.attr("data-bed-id");
 				  if(!type){
 					  return ;
 				  }else{
@@ -82,8 +98,33 @@ $(function() {
 							  var alertMsg = "确认要将 ["+elderlyName+"] 从 ["+bedNumber+"] 号床换到 ["+bedNumberCur+"] 号床吗?"
 							  $.messager.confirm('换房确认', alertMsg, function(r){
 									if (r){
-									    // 退出操作;
-										alert("选房成功")
+										$.ajax({
+											url:"../changeRoom/changeToNewRoom.jhtml",
+											type:"post",
+											data:{
+												"elderlyInfoId":elderlyId,
+												"originalBedId":originalBedId,
+												"newBedId":bedIdCur
+											},
+											beforeSend:function(){
+												$.messager.progress({
+													text:message("yly.common.saving")
+												});
+											},
+											success:function(result,response,status){
+													$.messager.progress('close');
+													showSuccessMsg(result.content);
+													$("#selectRoom").attr("data-elderly-id",elderlyId);
+									    			$("#selectRoom").attr("data-elderly-name",elderlyName);
+									    			$("#selectRoom").attr("data-elderly-bed-number",bedNumberCur);
+									    			$("#selectRoom").attr("data-original-bed-id",bedIdCur);
+													$('#bedImgShowPanel').panel('refresh');
+											},
+											error:function (XMLHttpRequest, textStatus, errorThrown) {
+												$.messager.progress('close');
+												alertErrorMsg();
+											}
+										});
 									}
 								});
 

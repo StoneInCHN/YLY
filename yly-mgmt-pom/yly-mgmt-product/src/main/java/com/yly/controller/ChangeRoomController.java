@@ -96,7 +96,6 @@ public class ChangeRoomController extends BaseController {
    */
   @RequestMapping(value = "/changeToNewRoom", method = RequestMethod.POST)
   public @ResponseBody Message changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId) {
-
     Boolean rest = changeRoomService.changeRoom(elderlyInfoId, originalBedId, newBedId);
     if(rest){
       return SUCCESS_MESSAGE;  
