@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yly.beans.Message;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ElderlyInfo;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
@@ -19,6 +20,7 @@ import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
+import com.yly.service.ChangeRoomService;
 import com.yly.service.ElderlyInfoService;
 
 @Controller("changeRoomController")
@@ -28,6 +30,8 @@ public class ChangeRoomController extends BaseController {
   @Resource(name = "elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
   
+  @Resource(name = "changeRoomServiceImpl")
+  private ChangeRoomService changeRoomService;
 
   /**
    * 跳转到changeRoom页面并且列出所有老人信息
@@ -80,6 +84,21 @@ public class ChangeRoomController extends BaseController {
     ElderlyInfo elderlyInfo = elderlyInfoService.find(id);
     model.addAttribute("elderlyInfo", elderlyInfo);
     return "changeRoom/details";
+  }
+  
+  /**
+   * 换房
+   * 
+   * @param elderlyId
+   * @param originalBedId
+   * @param newBedId
+   * @return
+   */
+  public @ResponseBody Message changeRoom(Long elderlyInfoId, Long originalBedId, Long newBedId) {
+
+    changeRoomService.changeRoom(elderlyInfoId, originalBedId, newBedId);
+
+    return SUCCESS_MESSAGE;
   }
 
 }
