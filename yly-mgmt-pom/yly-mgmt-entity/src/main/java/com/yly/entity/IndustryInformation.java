@@ -18,15 +18,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
- * 通知公告
+ * 业内资讯
  * @author sujinxuan
  *
  */
 @Entity
-@Table(name = "yly_notification")
-@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_notification_sequence")
-@Indexed(index="notification")
-public class Notification extends BaseEntity{
+@Table(name = "yly_industry_information")
+@SequenceGenerator(name = "sequenceGenerator", sequenceName = "yly_industry_information_sequence")
+@Indexed(index="industryInformation")
+public class IndustryInformation extends BaseEntity{
 
   
   private static final long serialVersionUID = 7085075064841785833L;
@@ -95,7 +95,7 @@ public class Notification extends BaseEntity{
     this.content = content;
   }
 
-  @Index(name="notification_tenantid")
+  @Index(name="industry_information_tenantid")
   public Long getTenantID() {
     return tenantID;
   }

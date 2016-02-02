@@ -24,13 +24,13 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.yly.beans.Message;
 import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
-import com.yly.entity.Notification;
+import com.yly.entity.IndustryInformation;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.service.ElderlyInfoService;
-import com.yly.service.NotificationService;
+import com.yly.service.IndustryInformationService;
 import com.yly.utils.DateTimeUtils;
 
 /**
@@ -38,25 +38,25 @@ import com.yly.utils.DateTimeUtils;
  * @author huyong
  *
  */
-@Controller ("notificationController")
-@RequestMapping ("console/notification")
-public class NotificationController extends BaseController
+@Controller ("industryInformation")
+@RequestMapping ("console/industryInformation")
+public class IndustryInformationController extends BaseController
 {
 
-  @Resource (name = "notificationServiceImpl")
-  private NotificationService notificationService;
+  @Resource (name = "industryInformationServiceImpl")
+  private IndustryInformationService industryInformationService;
   @Resource(name="elderlyInfoServiceImpl")
   private ElderlyInfoService elderlyInfoService;
 
 
-  @RequestMapping (value = "/notification", method = RequestMethod.GET)
+  @RequestMapping (value = "/industryInformation", method = RequestMethod.GET)
   public String list (ModelMap model)
   {
-    return "notification/notification";
+    return "industryInformation/industryInformation";
   }
 
   @RequestMapping (value = "/list", method = RequestMethod.POST)
-  public @ResponseBody Page<Notification> list (String name,String title,Date beginDate, Date endDate, Pageable pageable, ModelMap model)
+  public @ResponseBody Page<IndustryInformation> list (String title,String operator,Date beginDate, Date endDate, Pageable pageable, ModelMap model)
   {
     String startDateStr = null;
     String endDateStr = null;
@@ -81,9 +81,9 @@ public class NotificationController extends BaseController
     {
       endDateStr = DateTimeUtils.convertDateToString (endDate, null);
     }
-    if (name != null)
+    if (operator != null)
     {
-      String text = QueryParser.escape (name);
+      String text = QueryParser.escape (operator);
         try
         {
           nameQuery = nameParser.parse (text);
@@ -91,8 +91,8 @@ public class NotificationController extends BaseController
           
           if (LogUtil.isDebugEnabled (FixedAssetsController.class))
           {
-            LogUtil.debug (FixedAssetsController.class, "search", "Search assetName: "
-                + name );
+            LogUtil.debug (FixedAssetsController.class, "search", "Search operator: "
+                + operator );
           }
         }
         catch (ParseException e)
@@ -111,8 +111,8 @@ public class NotificationController extends BaseController
           
           if (LogUtil.isDebugEnabled (FixedAssetsController.class))
           {
-            LogUtil.debug (FixedAssetsController.class, "search", "Search title: "
-                + title );
+            LogUtil.debug (FixedAssetsController.class, "search", "Search operator: "
+                + operator );
           }
         }
         catch (ParseException e)
@@ -121,6 +121,7 @@ public class NotificationController extends BaseController
         }
         
     }
+    
     if (startDateStr != null || endDateStr != null)
     {
       rangeQuery = new TermRangeQuery ("publishTime", startDateStr, endDateStr, true, true);
@@ -134,9 +135,9 @@ public class NotificationController extends BaseController
     }
     if (nameQuery != null || rangeQuery != null || titleQuery != null)
     {
-      return notificationService.search (query, pageable, analyzer,filter);
+      return industryInformationService.search (query, pageable, analyzer,filter);
     }
-    return notificationService.findPage (pageable);
+    return industryInformationService.findPage (pageable);
   }
 
   /**
@@ -149,21 +150,21 @@ public class NotificationController extends BaseController
   @RequestMapping (value = "/edit", method = RequestMethod.GET)
   public String edit (ModelMap model, Long id)
   {
-    model.put ("notification", notificationService.find (id));
-    return "notification/edit";
+    model.put ("industryInformation", industryInformationService.find (id));
+    return "industryInformation/edit";
   }
 
   @RequestMapping (value = "/add", method = RequestMethod.POST)
-  public @ResponseBody Message add (Notification notification)
+  public @ResponseBody Message add (IndustryInformation industryInformation)
   {
-    notificationService.save (notification,true);
+    industryInformationService.save (industryInformation,true);
     return SUCCESS_MESSAGE;
   }
 
   @RequestMapping (value = "/update", method = RequestMethod.POST)
-  public @ResponseBody Message update (Notification notification)
+  public @ResponseBody Message update (IndustryInformation industryInformation)
   {
-    notificationService.update (notification,"createDate");
+    industryInformationService.update (industryInformation,"createDate");
     return SUCCESS_MESSAGE;
   }
 
@@ -179,7 +180,7 @@ public class NotificationController extends BaseController
     {
       // 检查是否能被删除
       // if()
-      notificationService.delete (ids);
+      industryInformationService.delete (ids);
     }
     return SUCCESS_MESSAGE;
   }
@@ -192,25 +193,25 @@ public class NotificationController extends BaseController
    */
   @RequestMapping(value = "/details", method = RequestMethod.GET)
   public String details(ModelMap model, Long id) {
-    Notification notification = notificationService.find(id);
-    model.addAttribute("notification", notification);
-    return "notification/details";
+    IndustryInformation industryInformation = industryInformationService.find(id);
+    model.addAttribute("industryInformation", industryInformation);
+    return "industryInformation/details";
   }
   
   @RequestMapping(value = "/showOnMain", method = RequestMethod.GET)
-  public @ResponseBody List<Notification> showOnMain(ModelMap model) {
+  public @ResponseBody List<IndustryInformation> showOnMain(ModelMap model) {
     
     List<Ordering> orders = new ArrayList<Ordering> ();
     
     Ordering ordering =new Ordering ();
     ordering.setProperty ("createDate");
     ordering.setDirection (Direction.desc);
-    return notificationService.findList (4, null, orders, true, null);
+    return industryInformationService.findList (4, null, orders, true, null);
   }
   @RequestMapping(value = "/showOne", method = RequestMethod.GET)
   public String showOne(ModelMap model, Long id) {
     
-    model.put ("notification", notificationService.find (id));
-    return "notification/showNotify";
+    model.put ("industryInformation", industryInformationService.find (id));
+    return "industryInformation/showNotify";
   }
 }

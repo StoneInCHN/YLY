@@ -95,7 +95,29 @@ $(function(){
 			}
 			
 			$(".notify").bootstrapNews({
-		        newsPerPage: 4,
+		        newsPerPage: 3,
+		        autoplay: true,
+				pauseOnHover: true,
+				navigation: false,
+		        direction: 'down',
+		        newsTickerInterval: 4000
+		    });
+		}
+	});
+	//右侧通知栏信息
+	$.ajax({
+		url : "../../console/industryInformation/showOnMain.jhtml",
+		type : "get",
+		cache : false,
+		success : function(data) {
+			for(var i=0 ; i<data.length; i++){
+				var title = formatLongString(data[i].title, 5)
+				$("#industryInformation-content")
+				.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/industryInformation/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');	
+			}
+			
+			$(".industryInformation").bootstrapNews({
+		        newsPerPage: 3,
 		        autoplay: true,
 				pauseOnHover: true,
 				navigation: false,

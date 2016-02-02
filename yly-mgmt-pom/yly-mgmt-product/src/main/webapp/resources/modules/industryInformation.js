@@ -1,7 +1,7 @@
-var notification_manager_tool = {
+var industryInformation_manager_tool = {
 			add:function(){
-				$('#addNotification').dialog({
-				    title: message("yly.notification.add"),    
+				$('#addIndustryInformation').dialog({
+				    title: message("yly.industryInformation.add"),    
 				    width: 700,    
 				    height: 600,
 				    iconCls:'icon-mini-add',
@@ -10,12 +10,12 @@ var notification_manager_tool = {
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#addNotification_form').form('validate');
+							var validate = $('#addIndustryInformation_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../notification/add.jhtml",
+									url:"../industryInformation/add.jhtml",
 									type:"post",
-									data:$("#addNotification_form").serialize(),
+									data:$("#addIndustryInformation_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -25,9 +25,9 @@ var notification_manager_tool = {
 										$.messager.progress('close');
 										if(response == "success"){
 											showSuccessMsg(result.content);
-											$('#addNotification').dialog("close");
-											$('#addNotification_form').form('reset');
-											$("#notification-table-list").datagrid('reload');
+											$('#addIndustryInformation').dialog("close");
+											$('#addIndustryInformation_form').form('reset');
+											$("#industryInformation-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();
 										}
@@ -39,13 +39,13 @@ var notification_manager_tool = {
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#addNotification').dialog("close");
-							 $('#addNotification_form').form('reset');
+							 $('#addIndustryInformation').dialog("close");
+							 $('#addIndustryInformation_form').form('reset');
 						}
 				    }],
 				    onOpen:function(){
-				    	$('#addNotification_form').show();
-				    	var editor = KindEditor.create('#add_notification_content', {
+				    	$('#addIndustryInformation_form').show();
+				    	var editor = KindEditor.create('#add_industry_information_content', {
 							resizeType : 1,
 							width : '400px',
 							height:'300px',
@@ -76,28 +76,28 @@ var notification_manager_tool = {
 				
 			},
 			edit:function(){
-				var _edit_row = $('#notification-table-list').datagrid('getSelected');
+				var _edit_row = $('#industryInformation-table-list').datagrid('getSelected');
 				if( _edit_row == null ){
 					$.messager.alert(message("yly.common.select.editRow"));
 					return false;
 				}
-				var _dialog = $('#editNotification').dialog({    
+				var _dialog = $('#editIndustryInformation').dialog({    
 					title: message("yly.common.edit"),   
 				    width: 700,    
 				    height: 600,    
 				    modal: true,
 				    iconCls:'icon-mini-edit',
-				    href:'../notification/edit.jhtml?id='+_edit_row.id,
+				    href:'../industryInformation/edit.jhtml?id='+_edit_row.id,
 				    buttons:[{
 				    	text:message("yly.common.save"),
 				    	iconCls:'icon-save',
 						handler:function(){
-							var validate = $('#editNotification_form').form('validate');
+							var validate = $('#editIndustryInformation_form').form('validate');
 							if(validate){
 								$.ajax({
-									url:"../notification/update.jhtml",
+									url:"../industryInformation/update.jhtml",
 									type:"post",
-									data:$("#editNotification_form").serialize(),
+									data:$("#editIndustryInformation_form").serialize(),
 									beforeSend:function(){
 										$.messager.progress({
 											text:message("yly.common.saving")
@@ -106,9 +106,9 @@ var notification_manager_tool = {
 									success:function(result,response,status){
 										$.messager.progress('close');
 											showSuccessMsg(result.content);
-											$('#editNotification').dialog("close");
-											$('#editNotification_form').form('reset');
-											$("#notification-table-list").datagrid('reload');
+											$('#editIndustryInformation').dialog("close");
+											$('#editIndustryInformation_form').form('reset');
+											$("#industryInformation-table-list").datagrid('reload');
 									}
 								});
 							};
@@ -117,12 +117,12 @@ var notification_manager_tool = {
 						text:message("yly.common.cancel"),
 						iconCls:'icon-cancel',
 						handler:function(){
-							 $('#editNotification').dialog("close");
-							 $('#editNotification_form').form('reset');
+							 $('#editIndustryInformation').dialog("close");
+							 $('#editIndustryInformation_form').form('reset');
 						}
 				    }],onLoad:function(){
-				    	$('#editNotification_form').show();
-				    	var editor = KindEditor.create('#edit_notification_content', {
+				    	$('#editIndustryInformation_form').show();
+				    	var editor = KindEditor.create('#edit_industryInformation_content', {
 							resizeType : 1,
 							width : '400px',
 							height:'300px',
@@ -151,35 +151,35 @@ var notification_manager_tool = {
 				    	editor.sync();
 				    }
 				});
-				$('#editNotification_form').show();
+				$('#editIndustryInformation_form').show();
 			},
 			remove:function(){
-				listRemove('notification-table-list','../notification/delete.jhtml');
+				listRemove('industryInformation-table-list','../industryInformation/delete.jhtml');
 			}
 	};
 $(function(){
 
-	$("#notification-table-list").datagrid({
-		title:message("yly.notification.list"),
+	$("#industryInformation-table-list").datagrid({
+		title:message("yly.industryInformation.list"),
 		fitColumns:true,
-		toolbar:"#notification_manager_tool",
-		url:'../notification/list.jhtml',  
+		toolbar:"#industryInformation_manager_tool",
+		url:'../industryInformation/list.jhtml',  
 		pagination:true,
 		loadMsg:message("yly.common.loading"),
 		striped:true,
 		onDblClickRow : function (rowIndex, rowData){
-			$('#notificationDetail').dialog({    
+			$('#industryInformationDetail').dialog({    
 			    title: message("yly.common.detail"),    
 			    width: 600,    
 			    height: 500, 
 			    cache: false,
 			    modal: true,
-			    href:'../notification/details.jhtml?id='+rowData.id,
+			    href:'../industryInformation/details.jhtml?id='+rowData.id,
 			    buttons:[{
 					text:message("yly.common.cancel"),
 					iconCls:'icon-cancel',
 					handler:function(){
-						 $('#notificationDetail').dialog("close");
+						 $('#industryInformationDetail').dialog("close");
 					}
 			    }]
 			});   
@@ -198,10 +198,10 @@ $(function(){
 
 	});
 
-	$("#notification-search-btn").click(function(){
-	  var _queryParams = $("#notification-search-form").serializeJSON();
-	  $('#notification-table-list').datagrid('options').queryParams = _queryParams;  
-	  $("#notification-table-list").datagrid('reload');
+	$("#industryInformation-search-btn").click(function(){
+	  var _queryParams = $("#industryInformation-search-form").serializeJSON();
+	  $('#industryInformation-table-list').datagrid('options').queryParams = _queryParams;  
+	  $("#industryInformation-table-list").datagrid('reload');
 	})
 	
 	 

@@ -493,6 +493,9 @@ var messages = {
 	"yly.notification.publishTime":"发布时间",
 	"yly.notification.list":"通知列表",
 	"yly.notification.add":"添加通知公告",
+	
+	"yly.industryInformation.list":"业内咨询列表",
+	"yly.industryInformation.add":"添加资讯",
 	// 租户用户
 	"yly.tenantAccount.add":"添加用户",
 	"yly.tenantAccount.userName":"用户名",

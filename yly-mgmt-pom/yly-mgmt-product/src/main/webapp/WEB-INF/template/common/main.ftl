@@ -178,7 +178,12 @@
 		    		[@shiro.hasPermission name="donateRecord"]
 		    		<li><a href="#" data-url="${base}/console/donateRecord/donateRecord.jhtml">捐赠管理</a></li>
 		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="notification"]
 		    		<li><a href="#" data-url="${base}/console/notification/notification.jhtml" >通知公告</a></li>
+		    		[/@shiro.hasPermission]
+		    		[@shiro.hasPermission name="industryInformation"]
+		    		<li><a href="#" data-url="${base}/console/industryInformation/industryInformation.jhtml" >业内资讯</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>
 		    	<ul title="系统管理" id="system">
 		    		[@shiro.hasPermission name="tenantUser"]
@@ -425,10 +430,10 @@
 					               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 160px;">
 								 </ul>
 					         </div>
-					          <div id="message" class="easyui-panel" title="业内消息"     
+					          <div id="industryInformation" class="easyui-panel" title="业内资讯"     
 						        style="width:200px;height:180px;padding:1px;background:#fafafa;"   
 						        data-options="collapsible:true">
-					               <ul id="message-content" style="overflow-y: hidden; height: 120px;">
+					               <ul id="industryInformation-content" class="industryInformation" style="overflow-y: hidden; height: 120px;">
 								 </ul>
 					         </div> 
 				    	</div>
