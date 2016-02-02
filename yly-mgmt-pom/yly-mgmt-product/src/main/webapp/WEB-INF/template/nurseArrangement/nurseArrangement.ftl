@@ -7,11 +7,11 @@
 			        <form id="elderlyInfo_search_form" class="search-form">
 				    	<div class="search-item">
 						   <label>姓名:</label>
-						   <input type="text" class="easyui-textbox"   id="elderlyName" name="name" validtype="length[0,10]" style="width:65px;"/>
+						   <input type="text" class="easyui-textbox"   id="elderlyName" name="name" validtype="length[0,10]" style="width:64px;"/>
 						</div>
 						<div class="search-item">
 						   <label>编号:</label>
-						   <input type="text" class="easyui-textbox"  id="elderlyIdentifier" name="identifier" validtype="length[0,10]" style="width:65px;"/>
+						   <input type="text" class="easyui-textbox"  id="elderlyIdentifier" name="identifier" validtype="length[0,10]" style="width:60px;"/>
 						</div>
 					</form>
 					<div class="search-item">

@@ -521,7 +521,7 @@
 	    		<td>
 	    			<input type="hidden" id="bed_ID" name="bed.id"/>
 	    			 <input class="easyui-textbox" type="text" id="bed_description"  readonly="readonly"  data-options="required:true" style="width:200px;"/>  
-	    			 <a href="#" class="easyui-linkbutton" onclick="selectRoom()" iconCls="icon-search" plain=true"></a>
+	    			 <a href="#" class="easyui-linkbutton" onclick="selectRoom({type:1})" iconCls="icon-search" plain=true"></a>
 	    		</td>
 	    	</tr>
 	    </table>

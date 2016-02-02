@@ -353,6 +353,7 @@ public class ElderlyInfo extends BaseEntity {
   /**
    * 护理级别变更记录
    */
+  @OneToMany(mappedBy = "elderlyInfo", cascade = CascadeType.ALL)
   private Set<NurseLevelChangeRecord> nurseLevelChangeRecords =
       new HashSet<NurseLevelChangeRecord>();
 

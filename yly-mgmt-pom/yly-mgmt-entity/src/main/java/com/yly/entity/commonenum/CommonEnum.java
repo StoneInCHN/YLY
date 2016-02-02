@@ -1090,6 +1090,24 @@ public class CommonEnum {
     DISABLE
 
   }
+  /**
+   * 护理级别变更记录的状态
+   * 
+   * @author luzhang
+   *
+   */
+  public enum NurseChangeStatus {
+
+    /**
+     * 启用
+     */
+    ENABLE,
+    /**
+     * 已废弃
+     */
+    DISABLE
+
+  }
   
   /**
    * 床位使用状态

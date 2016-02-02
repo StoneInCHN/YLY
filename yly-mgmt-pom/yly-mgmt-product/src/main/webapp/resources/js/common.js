@@ -191,6 +191,22 @@ function searchElderlyInfo(id) {
 												striped : true,
 												onDblClickRow : function(
 														rowIndex, rowData) {
+													if(id.indexOf("NurseChange") != -1){//护理变更
+														if(id.indexOf("add")==0){//以add开头
+															 $("#addNurseChange_elderlyInfoID").val(rowData.id); // 隐藏域 老人id
+															 $("#addNurseChange_elderlyName").textbox('setValue',rowData.name); // 老人姓名
+															 $("#addNurseChange_elderlyName_Temp").textbox('setValue',rowData.name); // 老人姓名
+															 $("#addNurseChange_oldNurseLevel").combobox('select',rowData.nursingLevel.id); // 护理级别
+														}
+														if(id.indexOf("edit")==0){//以add开头
+															 $("#editNurseChange_elderlyInfoID").val(rowData.id); // 隐藏域 老人id
+															 $("#editNurseChange_elderlyName").textbox('setValue',rowData.name); // 老人姓名
+															 $("#editNurseChange_elderlyName_Temp").textbox('setValue',rowData.name); // 老人姓名
+															 $("#editNurseChange_oldNurseLevel").combobox('select',rowData.nursingLevel.id); // 护理级别
+														}
+														$('#searchElderlyInfo').dialog("close");
+														return false;
+													}
 													if(id.indexOf("NurseArrangement") != -1){//护理员安排
 														var dataMap = {};
 														dataMap.id = rowData.id; // 老人id

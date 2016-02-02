@@ -569,6 +569,13 @@ var messages = {
     "yly.nurseArrangement.nurseAssistant.staffID":"员工号",
     "yly.nurseArrangement.nurseAssistant.staffStatus":"员工状态",
     "yly.nurseArrangement.search":"护理员安排查询",
+    //护理变更
+    "yly.nurseChange.addNurseChange":"添加护理变更",
+    "yly.nurseChange.list":"护理变更记录列表",
+    "yly.nurseChange.oldNurseLevel":"变更前护理级别",
+    "yly.nurseChange.newNurseLevel":"变更后护理级别",
+    "yly.nurseChange.changeDate":"变更日期",
+    "yly.nurseChange.nurseChangeStatus":"变更记录的状态",
     
     
     "yly.personalizedNurse.nurseLevel":"护理级别",

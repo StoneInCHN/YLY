@@ -60,7 +60,7 @@ var nurseArrangement_manager_tool = {
 					return false;
 				}
 				var _dialog = $('#edit_nurseArrangement').dialog({    
-				    title: "编辑",     
+				    title: message("yly.common.edit"),     
 				    width: 650,    
 				    height: 500, 
 				    modal: true,
