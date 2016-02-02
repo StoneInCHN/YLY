@@ -36,6 +36,7 @@ import com.yly.entity.PersonalizedCharge;
 import com.yly.entity.PersonalizedRecord;
 import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;
+import com.yly.entity.TenantInfo;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
 import com.yly.entity.commonenum.CommonEnum.ConfigKey;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
@@ -336,9 +337,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       billing.setChargeStatus(PaymentStatus.UNPAID);
       billing.setBillType(BillingType.DAILY);
       billing.setElderlyInfo(elderlyInfo);
-
-      billing
-          .setBillingNo(ToolsUtils.generateBillNo(tenantInfoService.find(tenantId).getOrgCode()));
+      TenantInfo tenantInfo = tenantInfoService.find(tenantId);
+      billing.setBillingNo(ToolsUtils.generateBillNo(tenantInfo.getOrgCode()));
       billing.setTenantID(tenantId);
       billing.setPeriodStartDate(startDate);
       billing.setPeriodEndDate(billDate);
