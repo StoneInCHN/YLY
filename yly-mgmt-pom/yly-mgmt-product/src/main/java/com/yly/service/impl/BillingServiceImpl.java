@@ -34,7 +34,6 @@ import com.yly.entity.NurseChargeConfig;
 import com.yly.entity.NurseLevelChangeRecord;
 import com.yly.entity.PersonalizedCharge;
 import com.yly.entity.PersonalizedRecord;
-import com.yly.entity.ReportChargeStatistics;
 import com.yly.entity.Room;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.BillingType;
@@ -59,6 +58,7 @@ import com.yly.service.PersonalizedRecordService;
 import com.yly.service.ReportChargeStatisticsService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
+import com.yly.service.TenantInfoService;
 import com.yly.utils.DateTimeUtils;
 import com.yly.utils.FieldFilterUtils;
 import com.yly.utils.GenTenantBill;
@@ -108,6 +108,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   @Resource(name = "tenantAccountServiceImpl")
   private TenantAccountService tenantAccountService;
 
+  @Resource(name = "tenantInfoServiceImpl")
+  private TenantInfoService tenantInfoService;
+
   @Resource(name = "personalizedRecordServiceImpl")
   private PersonalizedRecordService personalizedRecordService;
 
@@ -116,7 +119,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
 
   @Resource(name = "bedChangeRecordServiceImpl")
   private BedChangeRecordService bedChangeRecordService;
-  
+
   @Resource(name = "reportChargeStatisticsServiceImpl")
   private ReportChargeStatisticsService reportChargeStatisticsService;
 
@@ -300,14 +303,15 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
     for (SystemConfig config : systemConfigs) {
       Integer billDay = Integer.parseInt(config.getConfigValue());
       if (billDay == c.get(Calendar.DAY_OF_MONTH)) {
-        GenTenantBill ex = new GenTenantBill(c.getTime(), config.getTenantID());
+        // genBillByTenantBillDate(c.getTime(), config.getTenantID());
+        GenTenantBill ex = new GenTenantBill(c.getTime(), config.getTenantID(), this);
         threadPoolExecutor.execute(ex);
       }
     }
 
   }
 
-
+  @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   public void genBillByTenantBillDate(Date billDate, Long tenantId) {
     Date startDate = DateTimeUtils.getSpecifyTimeForDate(billDate, null, -1, 1, null, null, null);
@@ -319,21 +323,22 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
     Filter statusFilter = new Filter("elderlyStatus", Operator.eq, ElderlyStatus.IN_NURSING_HOME);
     filters.add(statusFilter);
     List<ElderlyInfo> elderlyInfos = elderlyInfoService.findList(null, filters, null, true, null);
-    
-    //报表数据
-//    ReportChargeStatistics reportChargeStatistics = new ReportChargeStatistics ();
-//    BigDecimal totalBedCharge = new BigDecimal (0);
-//    BigDecimal totalNurseCharge = new BigDecimal (0);
-//    BigDecimal totalMealCharge = new BigDecimal (0);
-//    BigDecimal totalPersonalizedCharge = new BigDecimal (0);
-    
+
+    // 报表数据
+    // ReportChargeStatistics reportChargeStatistics = new ReportChargeStatistics ();
+    // BigDecimal totalBedCharge = new BigDecimal (0);
+    // BigDecimal totalNurseCharge = new BigDecimal (0);
+    // BigDecimal totalMealCharge = new BigDecimal (0);
+    // BigDecimal totalPersonalizedCharge = new BigDecimal (0);
+
     for (ElderlyInfo elderlyInfo : elderlyInfos) {
       Billing billing = new Billing();
       billing.setChargeStatus(PaymentStatus.UNPAID);
       billing.setBillType(BillingType.DAILY);
       billing.setElderlyInfo(elderlyInfo);
+
       billing
-          .setBillingNo(ToolsUtils.generateBillNo(tenantAccountService.getCurrentTenantOrgCode()));
+          .setBillingNo(ToolsUtils.generateBillNo(tenantInfoService.find(tenantId).getOrgCode()));
       billing.setTenantID(tenantId);
       billing.setPeriodStartDate(startDate);
       billing.setPeriodEndDate(billDate);
@@ -358,8 +363,8 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       bedNurseCharge.setNurseAmount(new BigDecimal(chargeMap.get(1).get("amountPerMonth")
           .toString()));
 
-      
-      
+
+
       // 如该结算周期内老人的床位护理费已在入院账单中缴纳,则生成状态为已缴费的床位护理费日常账单
       List<Filter> dateFilters = new ArrayList<Filter>();
       Filter elderFilter = new Filter("elderlyInfo", Operator.eq, elderlyInfo);
@@ -370,7 +375,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       dateFilters.add(elderFilter);
       List<BedNurseCharge> existBedNurseCharges =
           bedNurseChargeService.findList(null, dateFilters, null, true, null);
-      if (existBedNurseCharges != null) {
+      if (existBedNurseCharges != null && existBedNurseCharges.size() > 0) {
         if (existBedNurseCharges.size() != 1) {
           LogUtil.error(BillingServiceImpl.class,
               "ERROR:run monthly bill job,existBedNurseCharges size is not 1",
@@ -384,7 +389,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       billing.setNurseAmount(bedNurseCharge.getNurseAmount());
       billing.setBedNurseCharge(bedNurseCharge);
 
-      
+
       // 计算老人换房后差价
       List<Ordering> orderings = new ArrayList<Ordering>();
       Ordering ordering = new Ordering();
@@ -464,7 +469,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
         // 如该结算周期内老人的伙食费已在入院账单中缴纳,则生成状态为已缴费的伙食费日常账单
         List<MealCharge> existMealCharges =
             mealChargeService.findList(null, dateFilters, null, true, null);
-        if (existMealCharges != null) {
+        if (existMealCharges != null && existMealCharges.size() > 0) {
           if (existBedNurseCharges.size() != 1) {
             LogUtil.error(BillingServiceImpl.class,
                 "ERROR:run monthly bill job,existBedNurseCharges size is not 1",
@@ -485,9 +490,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       List<Filter> serviceFilters = new ArrayList<Filter>();
       Filter sFilter = new Filter("serviceTime", Operator.le, startDate);
       Filter eFilter = new Filter("serviceTime", Operator.ge, billDate);
-      dateFilters.add(sFilter);
-      dateFilters.add(eFilter);
-      dateFilters.add(elderFilter);
+      serviceFilters.add(sFilter);
+      serviceFilters.add(eFilter);
+      serviceFilters.add(elderFilter);
       List<PersonalizedRecord> personalizedRecords =
           personalizedRecordService.findList(null, serviceFilters, null, true, null);
       if (personalizedRecords != null && personalizedRecords.size() > 0) {
@@ -512,21 +517,21 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
         billing.setPersonalizedAmount(personalizedCharge.getPersonalizedAmount());
         billing.setPersonalizedCharge(personalizedCharge);
       }
-//      totalBedCharge=totalBedCharge.add (billing.getBedAmount ());
-//      totalNurseCharge = totalNurseCharge.add (billing.getNurseAmount ());
-//      totalMealCharge = totalMealCharge.add (billing.getMealAmount ());
-//      totalPersonalizedCharge = totalPersonalizedCharge.add (billing.getPersonalizedAmount ());
-      
-      billingDao.merge(billing);
+      // totalBedCharge=totalBedCharge.add (billing.getBedAmount ());
+      // totalNurseCharge = totalNurseCharge.add (billing.getNurseAmount ());
+      // totalMealCharge = totalMealCharge.add (billing.getMealAmount ());
+      // totalPersonalizedCharge = totalPersonalizedCharge.add (billing.getPersonalizedAmount ());
+
+      billingDao.persist(billing);
     }
-    
-    //保存报表数据到数据库
-//    reportChargeStatistics.setBedCharge (totalBedCharge);
-//    reportChargeStatistics.setMealCharge (totalMealCharge);
-//    reportChargeStatistics.setNurseCharge (totalNurseCharge);
-//    reportChargeStatistics.setPersionalizedCharge (totalPersonalizedCharge);
-//    reportChargeStatistics.setStatisticsDate (billDate);
-//    reportChargeStatisticsService.save (reportChargeStatistics, true);
+
+    // 保存报表数据到数据库
+    // reportChargeStatistics.setBedCharge (totalBedCharge);
+    // reportChargeStatistics.setMealCharge (totalMealCharge);
+    // reportChargeStatistics.setNurseCharge (totalNurseCharge);
+    // reportChargeStatistics.setPersionalizedCharge (totalPersonalizedCharge);
+    // reportChargeStatistics.setStatisticsDate (billDate);
+    // reportChargeStatisticsService.save (reportChargeStatistics, true);
   }
 
   public BigDecimal calDiffPriceBed(Long days, Bed oldBed, Bed newBed) {

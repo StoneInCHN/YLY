@@ -109,7 +109,7 @@ public class PersonalizedRecord extends BaseEntity {
     this.nurseContent = nurseContent;
   }
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JsonProperty
   public PersonalizedNurse getPersonalizedNurse() {
     return personalizedNurse;
