@@ -393,60 +393,108 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
       // 计算老人换房后差价
       List<Ordering> orderings = new ArrayList<Ordering>();
       Ordering ordering = new Ordering();
-      ordering.setDirection(Direction.desc);
+      ordering.setDirection(Direction.asc);
       ordering.setProperty("createDate");
 
       List<Filter> elderlyFilters = new ArrayList<Filter>();
       elderlyFilters.add(elderFilter);
       List<BedChangeRecord> bedChangeRecords =
           bedChangeRecordService.findList(null, elderlyFilters, orderings);
-      if (bedChangeRecords != null && bedChangeRecords.size() > 0) {
-        BedChangeRecord bedChangeRecord = bedChangeRecords.get(0);
-        if (!elderlyInfo.getBed().getId().equals(bedChangeRecord.getNewBed().getId())) {// 上个结算周期内存在更换房间情况
-          Long diffDays =
-              (billDate.getTime() - bedChangeRecord.getChangeDate().getTime())
-                  / (1000 * 60 * 60 * 24) + 1;
-          BigDecimal diffPrice =
-              calDiffPriceConfig(ConfigKey.ROOMTYPE, diffDays, bedChangeRecord.getOldBed()
-                  .getRoom().getRoomType(), bedChangeRecord.getNewBed().getRoom().getRoomType());
-
+      if (bedChangeRecords != null && bedChangeRecords.size() > 0) {// 上个结算周期内存在换房情况
+        Long diffDays;
+        BigDecimal diffPrice = new BigDecimal(0);
+        for (int i = 0; i < bedChangeRecords.size(); i++) {
           BillingAdjustment billAdjust = new BillingAdjustment();
           billAdjust.setBilling(billing);
           billAdjust.setChargeStatus(billing.getChargeStatus());
-          billAdjust.setAdjustmentAmount(diffPrice);
+          if (bedChangeRecords.size() == i + 1) {// 最后一次换房记录
+            BedChangeRecord bedChangeRecord = bedChangeRecords.get(i);
+            if (!elderlyInfo.getBed().getId().equals(bedChangeRecord.getNewBed().getId())) {
+              diffDays =
+                  (billDate.getTime() - bedChangeRecord.getChangeDate().getTime())
+                      / (1000 * 60 * 60 * 24) + 1;
+              diffPrice =
+                  calDiffPriceConfig(ConfigKey.ROOMTYPE, diffDays, bedChangeRecords.get(0)
+                      .getOldBed().getRoom().getRoomType(), bedChangeRecord.getNewBed().getRoom()
+                      .getRoomType());
+
+            } else {// error:最后一次换房记录中的最新床位同老人现在的床位不同
+              LogUtil.error(BillingServiceImpl.class,
+                  "ERROR:In last bed change record,The new bed is different from elderly's bed",
+                  "Tenant ID=%s,ElderlyInfo ID=%s,BedChangeRecord ID=%s", tenantId,
+                  elderlyInfo.getId(), bedChangeRecord.getId());
+            }
+          } else {
+            diffDays =
+                (bedChangeRecords.get(i + 1).getChangeDate().getTime() - bedChangeRecords.get(i)
+                    .getChangeDate().getTime())
+                    / (1000 * 60 * 60 * 24);
+            diffPrice =
+                calDiffPriceConfig(ConfigKey.ROOMTYPE, diffDays, bedChangeRecords.get(0)
+                    .getOldBed().getRoom().getRoomType(), bedChangeRecords.get(i).getNewBed()
+                    .getRoom().getRoomType());
+
+          }
+
           billAdjust.setAdjustmentCause(SpringUtils.getMessage("yly.bedNurse.change",
-              getBedLocation(bedChangeRecord.getOldBed()),
-              getBedLocation(bedChangeRecord.getNewBed()), bedChangeRecord.getChangeDate()));
+              getBedLocation(bedChangeRecords.get(i).getOldBed()), getBedLocation(bedChangeRecords
+                  .get(i).getNewBed()), bedChangeRecords.get(i).getChangeDate()));
+          billAdjust.setAdjustmentAmount(diffPrice);
           billing.getBillingAdjustment().add(billAdjust);
+
         }
 
       }
 
+
+      // 计算老人护理级别变更后差价
       List<NurseLevelChangeRecord> nurseChangeRecords =
           nurseLevelChangeRecordService.findList(null, elderlyFilters, orderings);
-      if (nurseChangeRecords != null && nurseChangeRecords.size() > 0) {
-        NurseLevelChangeRecord nurseChangeRecord = nurseChangeRecords.get(0);
-        if (!elderlyInfo.getNursingLevel().getId()
-            .equals(nurseChangeRecord.getNewNurseLevel().getId())) {// 上个结算周期内存在更换护理级别情况
-          Long diffDays =
-              (billDate.getTime() - nurseChangeRecord.getChangeDate().getTime())
-                  / (1000 * 60 * 60 * 24) + 1;
-          BigDecimal diffPrice =
-              calDiffPriceConfig(ConfigKey.ROOMTYPE, diffDays,
-                  nurseChangeRecord.getOldNurseLevel(), nurseChangeRecord.getNewNurseLevel());
-
+      if (nurseChangeRecords != null && nurseChangeRecords.size() > 0) {// 上个结算周期内存在更换护理级别情况
+        Long diffDays;
+        BigDecimal diffPrice = new BigDecimal(0);
+        for (int i = 0; i < nurseChangeRecords.size(); i++) {
           BillingAdjustment billAdjust = new BillingAdjustment();
           billAdjust.setBilling(billing);
           billAdjust.setChargeStatus(billing.getChargeStatus());
-          billAdjust.setAdjustmentAmount(diffPrice);
+          if (nurseChangeRecords.size() == i + 1) {
+            NurseLevelChangeRecord nurseChangeRecord = nurseChangeRecords.get(i);
+            if (!elderlyInfo.getNursingLevel().getId()
+                .equals(nurseChangeRecord.getNewNurseLevel().getId())) {
+              diffDays =
+                  (billDate.getTime() - nurseChangeRecord.getChangeDate().getTime())
+                      / (1000 * 60 * 60 * 24) + 1;
+              diffPrice =
+                  calDiffPriceConfig(ConfigKey.NURSELEVEL, diffDays, nurseChangeRecords.get(0)
+                      .getOldNurseLevel(), nurseChangeRecord.getNewNurseLevel());
+            } else {// error:最后一次更换护理级别记录中的最新护理级别同老人现在的护理级别不同
+              LogUtil
+                  .error(
+                      BillingServiceImpl.class,
+                      "ERROR:In last nurse level change record,The new nurse level is different from elderly's nurse level",
+                      "Tenant ID=%s,ElderlyInfo ID=%s,NurseLevelChangeRecord ID=%s", tenantId,
+                      elderlyInfo.getId(), nurseChangeRecord.getId());
+            }
+          } else {
+            diffDays =
+                (nurseChangeRecords.get(i + 1).getChangeDate().getTime() - nurseChangeRecords
+                    .get(i).getChangeDate().getTime())
+                    / (1000 * 60 * 60 * 24);
+            diffPrice =
+                calDiffPriceConfig(ConfigKey.NURSELEVEL, diffDays, nurseChangeRecords.get(0)
+                    .getOldNurseLevel(), nurseChangeRecords.get(i).getNewNurseLevel());
+
+          }
           billAdjust.setAdjustmentCause(SpringUtils.getMessage("yly.bedNurse.change",
-              nurseChangeRecord.getOldNurseLevel().getConfigValue(), nurseChangeRecord
-                  .getNewNurseLevel().getConfigValue(), nurseChangeRecord.getChangeDate()));
+              nurseChangeRecords.get(i).getOldNurseLevel().getConfigValue(), nurseChangeRecords
+                  .get(i).getNewNurseLevel().getConfigValue(), nurseChangeRecords.get(i)
+                  .getChangeDate()));
+          billAdjust.setAdjustmentAmount(diffPrice);
           billing.getBillingAdjustment().add(billAdjust);
-
-
         }
       }
+
+
 
       /**
        * ==========================================================================================
