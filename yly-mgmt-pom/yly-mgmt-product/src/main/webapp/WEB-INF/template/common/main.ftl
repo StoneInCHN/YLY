@@ -100,7 +100,7 @@
 		</ul>
 	</div>   
     <div class="footer" data-options="region:'south',split:true,noheader:true" ></div>   
-    <div class="left-content" data-options="region:'west',title:'导航菜单',split:true" >
+    <div class="left-content" data-options="region:'west',title:'导航菜单',split:true,width:115" >
 		    	<ul title="${message("yly.visitelderly.visitorRegistration")}" id="visitor">
 		    		[@shiro.hasPermission name="consultation"]
 		    		<li><a href="#" data-url="${base}/console/consultation/consultation.jhtml">${message("yly.consultation.record")}</a></li>
@@ -330,66 +330,31 @@
   
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   
-		    <div title="起始页" style="padding:20px;">   
-		        <!--<p>欢迎来到管理系统</p>
-		        
-		        <button id="selectRoom">选房</button>
-		        -->
-			        <div class="row">
-			        		<div class="col-md-4">
-			        			<div class="mini-widget" style="width: 90%;">
-				                	<div class="mini-widget-body navstart clearfix">
-				                		<div class="fa fa-book">
-				                			<div class="pull-right content"><a href="#" style="text-decoration:none" data-url="${base}/console/admission/admission.jhtml">办理入院</a></div>
-				                		</div>
-				                	</div>
-				                </div>
-             				 </div>
-			        		<div class="col-md-4">
-			        			<div class="mini-widget" style="width: 90%;">
-				                	<div class="mini-widget-body navinprocess clearfix">
-				                		<div class="fa fa-stethoscope">
-				                			<div class="pull-right content"><a href="#" style="text-decoration:none" data-url="${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml">入院评估</a></div>
-				                		</div>
-				                	</div>
-				                 </div>
-             				 </div>
-             				 <div class="col-md-4">
-			        			<div class="mini-widget" style="width: 90%;">
-				                	<div class="mini-widget-body navend clearfix">
-				                		<div class="fa fa-rmb">
-				                		<div class="pull-right content">
-						                  	<a href="#" style="text-decoration:none" data-url="${base}/console/billing/checkinPay.jhtml">入院缴费</a>
-						                  </div>
-						                 </div>
-				                	</div>
-				                 </div>
-             				 </div>
-			        </div>
-			        <div class="row">
-					        <div class="col-md-3" >
-					        	<div id="elderlyStatusReportId" style="height:300px;width:260px;"></div>
-					        </div>
-					        
-					         <div class="col-md-3">
-					            <div id="elderlyAgeReportId" style="height:300px;width:260px;"></div>
-					        </div>
-					         <div class="col-md-3">
-					         	<div id="elderlyLivingMainReportId" style="height:300px;width:260px;"></div>
-					        </div>
-					        <div class="col-md-3">
-						        <div id="calendar-panel" class="easyui-panel" title="日历"     
-							        style="width:200px;height:220px;padding:1px;background:#fafafa;"   
-							        data-options="collapsible:true">
-						                <div id="cc" class="easyui-calendar" style="width:100%;height:100%;"></div>  
-						         </div>  
-					         </div>
-					    </div>
-					    <div class="row">
-				    	<div class="col-md-6">
-				    		<div id="elderlyStatusInReportId" style="height:300px;width: 520px;"></div>
+		    <div title="起始页" style="padding:20px;">
+		    	<div class="row">
+					<div class="col-md-9">
+				        <div class="row">
+				        	<div class="col-md-12 shortcutNavigation">
+				        		<a href ="#"><img onclick="shortcutNavigation('办理入院','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/admission.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院评估','${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml')" src="${base}/resources/images/evaluating.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院缴费','${base}/console/billing/checkinCharge.jhtml')" src="${base}/resources/images/checkinCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('日常缴费','${base}/console/billing/dailyBill.jhtml')" src="${base}/resources/images/normalCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('退住结算','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/checkoutCharge.png"/></a>
+				        	</div>
+				        </div>
+						<div class="row" style="padding-top:12px;">
+								<div class="col-md-4" style="text-algin:center">
+									<div id="elderlyStatusReportId" style="height:300px;width:260px;"></div>
+								</div>
+								
+								 <div class="col-md-4">
+									<div id="elderlyAgeReportId" style="height:300px;width:260px;"></div>
+								</div>
+								 <div class="col-md-4">
+									<div id="elderlyLivingMainReportId" style="height:300px;width:260px;"></div>
+								</div>
+						</div>
+						<div class="row" style="padding-top:12px;">
+				    	<div class="col-md-8">
+				    		<div id="elderlyStatusInReportId" style="height:300px;width: 524px;"></div>
 				    	</div>
-				    	<div class="col-md-3">
+				    	<div class="col-md-4">
 				    		<div class="mini-widget" style="height:80px;width: 260px;margin-top:30px;">
 				                <div class="mini-widget-heading clearfix">
 				                  <div class="pull-left">本月老人</div>
@@ -423,9 +388,18 @@
 				                </div>
              				 </div>
 				    	</div><!--end col-->
-				    	<div class="col-md-3">
-				    		 <div id="notify" class="easyui-panel" title="通知"     
-						        style="width:200px;height:180px;padding:1px;background:#fafafa;"   
+				    	
+				    	</div>
+						</div>
+						<div class="pull-right" style="padding-right:20px">
+							<div id="calendar-panel" class="easyui-panel" title="日历"     
+											style="width:200px;height:220px;padding:10px;background:#fafafa;"   
+											data-options="collapsible:true">
+												<div id="cc" class="easyui-calendar" style="width:100%;height:100%;"></div>  
+							</div>
+										 
+							<div id="notify" class="easyui-panel" title="通知"     
+						        style="width:200px;height:180px;padding:10px;pbackground:#fafafa;"   
 						        data-options="collapsible:true">
 					               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 160px;">
 								 </ul>
@@ -436,11 +410,11 @@
 					               <ul id="industryInformation-content" class="industryInformation" style="overflow-y: hidden; height: 120px;">
 								 </ul>
 					         </div> 
-				    	</div>
-				    </div>
+						</div>
+					</div>
 				  </div>
 		    </div>    
-		</div> 
+		</div>  
     </div>    
     
     <div id="searchElderlyInfo"></div>

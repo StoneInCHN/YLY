@@ -18,6 +18,22 @@ function clickNotificationNews(event) {
 		}); 
 	}
 };
+/**
+ *绑定流程点击事件 
+ */
+function shortcutNavigation(title,data_url){
+	if(title){
+		if($('#manager-tabs').tabs("exists",title)){
+			$('#manager-tabs').tabs("select",title)
+		}else{
+			$('#manager-tabs').tabs('add',{    
+			    title:title,    
+			    href:data_url,    
+			    closable:true      
+			}); 
+		}
+	}
+};
 $(function(){
 	/**
 	 *初始化右侧的选项卡
@@ -64,38 +80,21 @@ $(function(){
 		}
 	});
 	
-	/**
-	 *绑定流程点击事件 
-	 */
-	$(".content a").click(function(){
-		var _this = $(this);
-		var _url = _this.attr("data-url");
-		if(_this.text()){
-			if($('#manager-tabs').tabs("exists",_this.text())){
-				$('#manager-tabs').tabs("select",_this.text())
-			}else{
-				$('#manager-tabs').tabs('add',{    
-				    title:_this.text(),    
-				    href:_url,    
-				    closable:true      
-				}); 
-			}
-		}
-	});
+	
 	//右侧通知栏信息
 	$.ajax({
 		url : "../../console/notification/showOnMain.jhtml",
 		type : "get",
 		cache : false,
 		success : function(data) {
-			for(var i=0 ; i<data.length; i++){
+			for(var i=0 ; i<2; i++){
 				var title = formatLongString(data[i].title, 5)
 				$("#notify-content")
 				.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/notification/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');	
 			}
 			
 			$(".notify").bootstrapNews({
-		        newsPerPage: 3,
+		        newsPerPage: 2,
 		        autoplay: true,
 				pauseOnHover: true,
 				navigation: false,
@@ -110,14 +109,14 @@ $(function(){
 		type : "get",
 		cache : false,
 		success : function(data) {
-			for(var i=0 ; i<data.length; i++){
+			for(var i=0 ; i<2; i++){
 				var title = formatLongString(data[i].title, 5)
 				$("#industryInformation-content")
 				.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/industryInformation/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');	
 			}
 			
 			$(".industryInformation").bootstrapNews({
-		        newsPerPage: 3,
+		        newsPerPage: 2,
 		        autoplay: true,
 				pauseOnHover: true,
 				navigation: false,

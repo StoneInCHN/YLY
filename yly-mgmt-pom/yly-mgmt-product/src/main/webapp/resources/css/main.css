@@ -304,7 +304,7 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
     padding: 5px 5px 0px 5px;;
     font-size: 10px;
     font-weight: 300;
-    background: #c0c0c0; }
+    background: #D3D3D3; }
     .mini-widget .mini-widget-body i {
       color: #5fa9d9;
       -webkit-transition: All 0.5s ease-in;
@@ -335,7 +335,7 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
     .mini-widget .mini-widget-body .number {
       font-size: 20px;
       line-height: 24px;
-      color: white; }
+      color: #0080c0; }
     .mini-widget .mini-widget-body .fa-arrow-down{
  		color:green!important;
     }
@@ -422,4 +422,7 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
 .mini-widget-grey .mini-widget-footer {
   color: white;
   background: #404040; }
-  
+.shortcutNavigation img {
+  width: 110px;
+  height: 85px;
+}
