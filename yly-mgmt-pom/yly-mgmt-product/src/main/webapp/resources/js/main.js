@@ -54,10 +54,19 @@ $(function(){
 	})
 	
 	$("#dropdownMenu1").dropdown();
-	 
+	//初始化显示首页，隐藏菜单栏
+	$('.easyui-layout').layout('collapse','west');
+	
 	$("#nav-wrap > ul >li >a").click(function(){
+		
 		var $this = $(this);
 		$(".left-content > ul").hide();
+		if($this.text()=="首页"){
+			$('.easyui-layout').layout('collapse','west');
+		}else{
+			$('.easyui-layout').layout('expand','west');
+		}
+		
 		$($this.attr("href")).show();
 	})
 	
