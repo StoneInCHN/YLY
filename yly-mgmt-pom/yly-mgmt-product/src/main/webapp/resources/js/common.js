@@ -1137,6 +1137,9 @@ function selectRoom(option){
 	    		$("#selectRoom").attr("data-type",option.type);
 	    		if(option.type == 1){
 	    			//第一次选房
+	    			$("#selectRoom").attr("data-bed-input-id",option.bedInputId);
+	    			//$("#"+option.bedInputId+"_text").textbox("setValue","你好");
+	    			
 	    		}else if(option.type == 2){
 	    			$("#selectRoom").attr("data-elderly-id",option.elderlyId);
 	    			$("#selectRoom").attr("data-elderly-name",option.elderlyName);

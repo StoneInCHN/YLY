@@ -519,9 +519,9 @@
 	    		</td>
 	    		<th>${message("yly.elderlyInfo.choose.bed")}:</th>
 	    		<td>
-	    			<input type="hidden" id="bed_ID" name="bed.id"/>
-	    			 <input class="easyui-textbox" type="text" id="bed_description"  readonly="readonly"  data-options="required:true" style="width:200px;"/>  
-	    			 <a href="#" class="easyui-linkbutton" onclick="selectRoom({type:1})" iconCls="icon-search" plain=true"></a>
+	    			<input type="hidden" id="add_admission_bed_ID" name="bed.id"/>
+	    			 <input class="easyui-textbox" type="text" id="add_admission_bed_text"  readonly="readonly"  data-options="required:true" style="width:200px;"/>  
+	    			 <a href="#" id="add_admission_bed_btn" ></a>
 	    		</td>
 	    	</tr>
 	    </table>

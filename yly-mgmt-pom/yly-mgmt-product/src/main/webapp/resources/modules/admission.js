@@ -451,6 +451,17 @@ $(function(){
 			}
 		});
 	})
+	
+	
+	$('#add_admission_bed_btn').linkbutton({    
+	    iconCls: 'icon-search',
+	    onClick:function(){
+	    	selectRoom({
+	    		type:1,
+	    		bedInputId:"add_admission_bed"
+	    	})
+	    }
+	}); 
 	 
 })
 

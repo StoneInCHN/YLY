@@ -85,13 +85,10 @@ $(function() {
 					  {
 					  	// 选房 
 						  case "1":
-							   if($(this).attr("data-bedId")!=null && $(this).attr("data-bedDescription")!=null){
-								   if($("#bed_description")){
-									   $("#bed_ID").val($(this).attr("data-bedId"));
-									   $("#bed_description").textbox("setValue",$(this).attr("data-bedDescription"));
-									   $('#selectRoom').dialog("close");
-								   }
-							   }
+							  var inputId = $("#selectRoom").attr("data-bed-input-id");
+							  $("#"+inputId+"_ID").val(bedIdCur);
+							  $("#"+inputId+"_text").textbox("setValue",$(this).attr("data-bedDescription"));
+							  $('#selectRoom').dialog("close");
 						    break;
 						 //换房
 						  case "2":
