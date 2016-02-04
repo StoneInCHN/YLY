@@ -112,7 +112,7 @@ $(function(){
 			for(var i=0 ; i<2; i++){
 				var title = formatLongString(data[i].title, 5)
 				$("#industryInformation-content")
-				.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/industryInformation/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');	
+				.append('<li class="news-item">'+title+ '<a href="../../console/industryInformation/showOne.jhtml?id='+data[i].id+'" style="float:right" target="_blank">Read more...</a></li>');	
 			}
 			
 			$(".industryInformation").bootstrapNews({
