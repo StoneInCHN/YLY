@@ -1,71 +1,39 @@
-<link href='${base}/resources/css/fullcalendar.css' rel='stylesheet' />
-<link href='${base}/resources/css/nurseDutyType.css' rel='stylesheet' />
-<script src='${base}/resources/js/moment.min.js'></script>
-<script src='${base}/resources/js/jquery-ui.custom.min.js'></script>
-<script src='${base}/resources/js/fullcalendar.min.js'></script>
-<script src='${base}/resources/js/fullcalendar/lang/zh-cn.js'></script>
-<div id='nursePlanWrap'>
-    <div id='nursePlan-events'>
-        <h4>排班类型</h4>
-        [#list nurseDutyTypes as nurseDutyType] 
-				<div class='fc-event'>${nurseDutyType.dutyName}</div>
-		[/#list]
-        <p>
-            <input type='checkbox' id='drop-remove' />
-            <label for='drop-remove'>拖拽后移除</label>
-        </p>
-    </div>
-
-    <div id='nursePlanCalendar'></div>
-
-    <div style='clear:both'></div>
-
+<script type="text/javascript"  src="${base}/resources/modules/nurseSchedule.js"></script>
+<table id="nurseSchedule-table-list"></table>
+<div id="addNurseSchedule">
+	<form id="addNurseSchedule_form" method="post" class="form-table">   
+	    <table class="table table-striped">
+	    	<tr>
+	    		<th>${message("yly.nurseSchedule.dutyStartTime")}:</th>
+	    		<td>
+	    			 <input class="easyui-datebox"  name="dutyStartTime" data-options="required:true" />   
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.nurseSchedule.dutyEndTime")}:</th>
+	    		<td>
+	    			 <input class="easyui-datebox"  name="dutyEndTime" data-options="required:true" />   
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.nurseSchedule.dutyType")}:</th>
+	    		<td>
+	    			 <input class="easyui-combobox" id="addNurseSchedule_form_dutyType"  name="dutyTypeId" data-options="required:true" />   
+	    		</td>
+	    	</tr>
+	    	<tr>
+	    		<th>${message("yly.nurseSchedule.dutyStaff")}:</th>
+	    		<td>
+	    			 <input type="hidden" id="addNurseSchedule_form_dutyStaffID" name="dutyStaffId"/>
+	    			 <input class="easyui-textbox" type="text" id="addNurseSchedule_form_dutyStaff"  readonly="readonly"  data-options="required:true" style="width:130px;"/>  
+	    			 <a href="#" id="addNurseSchedule_form_dutyStaff_btn" ></a>  
+	    		</td>
+	    	</tr>
+	    </table>
+	</form>
 </div>
-  <script>
-
-        $(document).ready(function() {
+<div id="editNurseSchedule"></div>  
 
 
-            /* initialize the external events
-             -----------------------------------------------------------------*/
-
-            $('#nursePlan-events .fc-event').each(function() {
-
-                // store data so the calendar knows to render an event upon drop
-                $(this).data('event', {
-                    title: $.trim($(this).text()), // use the element's text as the event title
-                    stick: true // maintain when user navigates (see docs on the renderEvent method)
-                });
-                $(this).dragable({
-                    zIndex: 999,
-                    revert: true,      // will cause the event to go back to its
-                    revertDuration: 0  //  original position after the drag
-                });
-
-            });
 
 
-            /* initialize the calendar
-             -----------------------------------------------------------------*/
-
-            $('#nursePlanCalendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar
-                drop: function() {
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
-                }
-            });
-
-
-        });
-
-    </script>

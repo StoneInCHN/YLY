@@ -577,6 +577,14 @@ var messages = {
     "yly.nurseChange.changeDate":"变更日期",
     "yly.nurseChange.nurseChangeStatus":"变更记录的状态",
     
+    //nurseSchedule
+    "yly.nurseSchedule.add":"添加值班安排",
+    "yly.nurseSchedule.list":"值班安排列表",
+    "yly.nurseSchedule.edit":"编辑值班安排",
+    "yly.nurseSchedule.dutyStartTime":"排班开始时间",
+    "yly.nurseSchedule.dutyEndTime":"排班结束时间",
+    "yly.nurseSchedule.dutyType":"值班类型",
+    "yly.nurseSchedule.dutyStaff":"值班人姓名",
     
     "yly.personalizedNurse.nurseLevel":"护理级别",
     "yly.personalizedNurse.personalized":"服务项目",

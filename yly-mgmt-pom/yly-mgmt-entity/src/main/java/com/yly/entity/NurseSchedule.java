@@ -6,11 +6,13 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Index;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yly.entity.base.BaseEntity;
 
 /**
@@ -51,13 +53,14 @@ public class NurseSchedule extends BaseEntity{
    */
   private String dutyStaff;
   
+  private TenantUser tenantUser;
   
   /**
    * 表单实例
    */
  // private Set<TenantUser> tenantUsers = new HashSet<TenantUser>();
   
-  
+  @JsonProperty
   public Date getDutyStartTime() {
     return dutyStartTime;
   }
@@ -66,6 +69,7 @@ public class NurseSchedule extends BaseEntity{
     this.dutyStartTime = dutyStartTime;
   }
 
+  @JsonProperty
   public Date getDutyEndTime() {
     return dutyEndTime;
   }
@@ -74,7 +78,9 @@ public class NurseSchedule extends BaseEntity{
     this.dutyEndTime = dutyEndTime;
   }
   
-  @Column(length=10)
+  @ManyToOne
+  //@Column(length=10)
+  @JsonProperty
   public NurseDutyType getDutyType() {
     return dutyType;
   }
@@ -84,6 +90,7 @@ public class NurseSchedule extends BaseEntity{
   }
 
   @Column(length=50)
+  @JsonProperty
   public String getDutyStaff() {
     return dutyStaff;
   }
@@ -101,12 +108,14 @@ public class NurseSchedule extends BaseEntity{
     this.tenantID = tenantID;
   }
 
- /* public Set<TenantUser> getTenantUsers() {
-    return tenantUsers;
+  @ManyToOne
+  @JsonProperty
+  public TenantUser getTenantUser() {
+    return tenantUser;
   }
 
-  public void setTenantUsers(Set<TenantUser> tenantUsers) {
-    this.tenantUsers = tenantUsers;
-  }*/
+  public void setTenantUser(TenantUser tenantUser) {
+    this.tenantUser = tenantUser;
+  }
   
 }
