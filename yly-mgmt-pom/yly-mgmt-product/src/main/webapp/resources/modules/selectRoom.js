@@ -78,6 +78,7 @@ $(function() {
 				   var originalBedId =$("#selectRoom").attr("data-original-bed-id");
 				   var bedNumberCur = $this.attr("data-bed-number");
 				   var bedIdCur =$this.attr("data-bed-id");
+				   var bedDescription =$(this).attr("data-bedDescription");
 				  if(!type){
 					  return ;
 				  }else{
@@ -85,10 +86,16 @@ $(function() {
 					  {
 					  	// 选房 
 						  case "1":
-							  var inputId = $("#selectRoom").attr("data-bed-input-id");
-							  $("#"+inputId+"_ID").val(bedIdCur);
-							  $("#"+inputId+"_text").textbox("setValue",$(this).attr("data-bedDescription"));
-							  $('#selectRoom').dialog("close");
+							  var alertMsg = "确认要选择["+bedNumberCur+"] 号床吗?"
+							  $.messager.confirm('选房确认', alertMsg, function(r){
+									if (r){
+										debugger
+										 var inputId = $("#selectRoom").attr("data-bed-input-id");
+										  $("#"+inputId+"_ID").val(bedIdCur);
+										  $("#"+inputId+"_text").textbox("setValue",bedDescription);
+										  $('#selectRoom').dialog("close");
+									}
+								});
 						    break;
 						 //换房
 						  case "2":

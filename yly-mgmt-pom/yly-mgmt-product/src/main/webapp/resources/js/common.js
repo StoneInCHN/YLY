@@ -1121,6 +1121,7 @@ function refreshColumn(id, data, categoryName, valueName, seriesName) {
  *  bedNumber 床位编号
  *  originalBedId 床位id
  *  tableId 关闭panel是需要刷新gridlist时的tableId  格式 #tableId
+ *  bedInputId 选房时用于保存选房结果的ID
  * }
  */
 function selectRoom(option){
