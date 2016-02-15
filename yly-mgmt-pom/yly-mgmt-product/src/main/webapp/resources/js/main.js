@@ -141,9 +141,9 @@ $(function(){
         	backgroundColor: {
     			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
     			stops: [
-    				[0, 'rgb(220, 220, 220)'],
-    				[1, 'rgb(211, 211, 211)']
-    			]
+        				[0, 'rgb(250, 250, 250)'],
+        				[1, 'rgb(221, 221, 221)']
+        			]
     		},
         	renderTo: 'elderlyStatusReportId',
             plotBackgroundColor: null,
@@ -161,12 +161,14 @@ $(function(){
         	  pointFormat:  '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         legend:{
+        	y: 20, //间隔x轴的间隔
             labelFormatter:function(){
                 return this.name+':'+ this.y;
             },
         },
         plotOptions: {
             pie: {
+            	size:'150px',
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
@@ -194,8 +196,8 @@ $(function(){
         	backgroundColor: {
     			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
     			stops: [
-    				[0, 'rgb(220, 220, 220)'],
-    				[1, 'rgb(211, 211, 211)']
+    				[0, 'rgb(250, 250, 250)'],
+    				[1, 'rgb(221, 221, 221)']
     			]
     		},
         	renderTo: 'elderlyAgeReportId',
@@ -212,6 +214,7 @@ $(function(){
         },
         plotOptions: {
         	 pie: {
+        		 size:'150px',
                  allowPointSelect: true,
                  cursor: 'pointer',
                  dataLabels: {
@@ -238,9 +241,9 @@ $(function(){
 	                	backgroundColor: {
 	            			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
 	            			stops: [
-	            				[0, 'rgb(220, 220, 220)'],
-	            				[1, 'rgb(211, 211, 211)']
-	            			]
+	                				[0, 'rgb(250, 250, 250)'],
+	                				[1, 'rgb(221, 221, 221)']
+	                			]
 	            		},
 	                    type: 'pie',
 	                    renderTo:"elderlyLivingMainReportId"
@@ -259,6 +262,7 @@ $(function(){
 	                },
 	                plotOptions: {
 	                    pie: {
+	                    	size:'150px',
 	                        allowPointSelect: false,
 	                        cursor: 'pointer',
 	                        dataLabels: {
@@ -275,7 +279,7 @@ $(function(){
 
 	                series: [{
 	                    name: '床位',
-	                    size: '80%',
+	                    size:'150px',
 	                    data:[],
 	                    dataLabels: false,
 	                    tooltip: {
@@ -291,7 +295,7 @@ $(function(){
 	                }, {
 	                    name: '床位',
 	                    data:[],
-	                    size: '50%',
+	                    size: '100px',
 	                    innerSize: '0%',
 	                    dataLabels: {
 	                        formatter: function() {
@@ -350,9 +354,9 @@ $(function(){
 				backgroundColor: {
         			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
         			stops: [
-        				[0, 'rgb(220, 220, 220)'],
-        				[1, 'rgb(211, 211, 211)']
-        			]
+            				[0, 'rgb(250, 250, 250)'],
+            				[1, 'rgb(221, 221, 221)']
+            		]
         		},
 				plotBackgroundColor : 'rgba(255, 255, 255, .9)',
 				plotBorderWidth : 1

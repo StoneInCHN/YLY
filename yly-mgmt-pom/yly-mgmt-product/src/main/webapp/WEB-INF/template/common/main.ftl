@@ -330,7 +330,7 @@
   
     <div class="main-content" data-options="region:'center'">
     	<div id="manager-tabs">   
-		    <div title="起始页" style="padding:20px;">
+		    <div title="起始页" style="padding:10px;">
 		    	<div class="row">
 					<div class="col-md-9">
 				        <div class="row">
@@ -340,22 +340,22 @@
 				        </div>
 						<div class="row" style="padding-top:12px;">
 								<div class="col-md-4" style="text-algin:center">
-									<div id="elderlyStatusReportId" style="height:300px;width:260px;"></div>
+									<div id="elderlyStatusReportId" style="height:300px;"></div>
 								</div>
 								
 								 <div class="col-md-4">
-									<div id="elderlyAgeReportId" style="height:300px;width:260px;"></div>
+									<div id="elderlyAgeReportId" style="height:300px;"></div>
 								</div>
 								 <div class="col-md-4">
-									<div id="elderlyLivingMainReportId" style="height:300px;width:260px;"></div>
+									<div id="elderlyLivingMainReportId" style="height:300px;"></div>
 								</div>
 						</div>
 						<div class="row" style="padding-top:12px;">
 				    	<div class="col-md-8">
-				    		<div id="elderlyStatusInReportId" style="height:300px;width: 524px;"></div>
+				    		<div id="elderlyStatusInReportId" style="height:300px;"></div>
 				    	</div>
 				    	<div class="col-md-4">
-				    		<div class="mini-widget" style="height:80px;width: 260px;margin-top:30px;">
+				    		<div class="mini-widget" style="height:80px;margin-top:30px;">
 				                <div class="mini-widget-heading clearfix">
 				                  <div class="pull-left">本月老人</div>
 				                  <div class="pull-right"></div>
@@ -368,7 +368,7 @@
 				                  </div>
 				                </div>
              				 </div>
-             				 <div class="mini-widget" style="height:80px;width: 260px;">
+             				 <div class="mini-widget" style="height:80px;">
 				                <div class="mini-widget-heading clearfix">
 				                  <div class="pull-left">男女比例</div>
 				                </div>
