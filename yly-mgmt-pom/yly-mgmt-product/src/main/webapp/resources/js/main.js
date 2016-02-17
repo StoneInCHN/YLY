@@ -141,8 +141,8 @@ $(function(){
         	backgroundColor: {
     			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
     			stops: [
-    				[0, 'rgb(220, 220, 220)'],
-    				[1, 'rgb(211, 211, 211)']
+    				[0, 'rgb(250, 250, 250)'],
+    				[1, 'rgb(221, 221, 221)']
     			]
     		},
         	renderTo: 'elderlyStatusReportId',
@@ -194,8 +194,8 @@ $(function(){
         	backgroundColor: {
     			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
     			stops: [
-    				[0, 'rgb(220, 220, 220)'],
-    				[1, 'rgb(211, 211, 211)']
+    				[0, 'rgb(250, 250, 250)'],
+    				[1, 'rgb(221, 221, 221)']
     			]
     		},
         	renderTo: 'elderlyAgeReportId',
@@ -238,8 +238,8 @@ $(function(){
 	                	backgroundColor: {
 	            			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
 	            			stops: [
-	            				[0, 'rgb(220, 220, 220)'],
-	            				[1, 'rgb(211, 211, 211)']
+	            				[0, 'rgb(250, 250, 250)'],
+	            				[1, 'rgb(221, 221, 221)']
 	            			]
 	            		},
 	                    type: 'pie',
@@ -350,8 +350,8 @@ $(function(){
 				backgroundColor: {
         			linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
         			stops: [
-        				[0, 'rgb(220, 220, 220)'],
-        				[1, 'rgb(211, 211, 211)']
+        				[0, 'rgb(250, 250, 250)'],
+        				[1, 'rgb(221, 221, 221)']
         			]
         		},
 				plotBackgroundColor : 'rgba(255, 255, 255, .9)',
