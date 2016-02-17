@@ -25,7 +25,7 @@
       <link rel="stylesheet" type="text/css" href="${base}/resources/css/evaluting.css">
   </head>
 
-  <body class="easyui-layout">   
+  <body class="easyui-layout" >   
 	<div class="header" data-options="region:'north',split:true,noheader:true,collapse:'west'">
 		<div class="logo">后台管理中心</div>
 		<div id="nav-wrap" class="nav-wrap"  style="width:730px">

@@ -5,6 +5,9 @@ body{
 .layout-panel-north{
 	overflow:visible !important;
 }
+body{
+	min-width: 1024px;
+}
 .header{
 	height:55px;
 	background-color:#0285b3;
