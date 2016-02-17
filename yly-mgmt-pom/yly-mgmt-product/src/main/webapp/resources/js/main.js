@@ -18,6 +18,7 @@ function clickNotificationNews(event) {
 		}); 
 	}
 };
+
 /**
  *绑定流程点击事件 
  */
@@ -35,6 +36,16 @@ function shortcutNavigation(title,data_url){
 	}
 };
 $(function(){
+	function resetHighcharts(){
+		var elderlyStatusReportId = $('#elderlyStatusReportId').highcharts();
+		elderlyStatusReportId.reflow();
+		var elderlyAgeReportId = $('#elderlyAgeReportId').highcharts();
+		elderlyAgeReportId.reflow();
+		var elderlyLivingMainReportId = $('#elderlyLivingMainReportId').highcharts();
+		elderlyLivingMainReportId.reflow();
+		var elderlyStatusInReportId = $('#elderlyStatusInReportId').highcharts();
+		elderlyStatusInReportId.reflow();
+	}
 	/**
 	 *初始化右侧的选项卡
 	 */
@@ -63,6 +74,7 @@ $(function(){
 		$(".left-content > ul").hide();
 		if($this.text()=="首页"){
 			$('.easyui-layout').layout('collapse','west');
+			$('#manager-tabs').tabs("select",'起始页');
 		}else{
 			$('.easyui-layout').layout('expand','west');
 		}
@@ -145,11 +157,13 @@ $(function(){
         				[1, 'rgb(221, 221, 221)']
         			]
     		},
+    		borderRadius: 15,
         	renderTo: 'elderlyStatusReportId',
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
-            borderWidth: null
+            borderWidth: null,
+            panning: false
         },
         credits:{
             enabled:false // 禁用版权信息
@@ -161,10 +175,13 @@ $(function(){
         	  pointFormat:  '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         legend:{
-        	y: 20, //间隔x轴的间隔
+        	itemMarginBottom:0,
             labelFormatter:function(){
                 return this.name+':'+ this.y;
             },
+            itemStyle: {
+            	itemWidth: 100
+            }
         },
         plotOptions: {
             pie: {
@@ -200,17 +217,25 @@ $(function(){
     				[1, 'rgb(221, 221, 221)']
     			]
     		},
+    		borderRadius: 15,
         	renderTo: 'elderlyAgeReportId',
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
             borderWidth: null,
+            panning: true
         },
         title: {
             text: '在院老人年龄段统计'
         },
         tooltip: {
             pointFormat: '{series.name}:{point.y}</b>'
+        },
+        legend:{
+        	itemWidth: 80,
+        	 itemStyle: {
+                 lineHeight: '10px'
+             }
         },
         plotOptions: {
         	 pie: {
@@ -245,6 +270,7 @@ $(function(){
 	                				[1, 'rgb(221, 221, 221)']
 	                			]
 	            		},
+	            		borderRadius: 15,
 	                    type: 'pie',
 	                    renderTo:"elderlyLivingMainReportId"
 	                },
@@ -259,6 +285,10 @@ $(function(){
 	                credits : {
 	                    enabled : false
 	                    // 禁用版权信息
+	                },
+	                legend:{
+	                	 itemWidth: 80,
+	                	 width:80
 	                },
 	                plotOptions: {
 	                    pie: {

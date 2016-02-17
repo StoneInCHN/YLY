@@ -25,7 +25,7 @@
       <link rel="stylesheet" type="text/css" href="${base}/resources/css/evaluting.css">
   </head>
 
-  <body class="easyui-layout">   
+  <body class="easyui-layout" >   
 	<div class="header" data-options="region:'north',split:true,noheader:true,collapse:'west'">
 		<div class="logo">后台管理中心</div>
 		<div id="nav-wrap" class="nav-wrap"  style="width:730px">
@@ -332,84 +332,88 @@
     	<div id="manager-tabs">   
 		    <div title="起始页" style="padding:10px;">
 		    	<div class="row">
-					<div class="col-md-9">
+					<div class="col-md-10">
 				        <div class="row">
 				        	<div class="col-md-12 shortcutNavigation">
 				        		<a href ="#"><img onclick="shortcutNavigation('办理入院','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/admission.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院评估','${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml')" src="${base}/resources/images/evaluating.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院缴费','${base}/console/billing/checkinCharge.jhtml')" src="${base}/resources/images/checkinCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('日常缴费','${base}/console/billing/dailyBill.jhtml')" src="${base}/resources/images/normalCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('退住结算','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/checkoutCharge.png"/></a>
 				        	</div>
 				        </div>
 						<div class="row" style="padding-top:12px;">
-								<div class="col-md-4" style="text-algin:center">
-									<div id="elderlyStatusReportId" style="height:300px;"></div>
-								</div>
-								
-								 <div class="col-md-4">
-									<div id="elderlyAgeReportId" style="height:300px;"></div>
-								</div>
-								 <div class="col-md-4">
-									<div id="elderlyLivingMainReportId" style="height:300px;"></div>
-								</div>
+							<div class="col-md-4" style="text-algin:center">
+								<div id="elderlyStatusReportId" style="height:280px;"></div>
+							</div>
+							 <div class="col-md-4">
+								<div id="elderlyAgeReportId" style="height:280px;"></div>
+							</div>
+							 <div class="col-md-4">
+								<div id="elderlyLivingMainReportId" style="height:280px;"></div>
+							</div>
 						</div>
 						<div class="row" style="padding-top:12px;">
-				    	<div class="col-md-8">
-				    		<div id="elderlyStatusInReportId" style="height:300px;"></div>
-				    	</div>
-				    	<div class="col-md-4">
-				    		<div class="mini-widget" style="height:80px;margin-top:30px;">
-				                <div class="mini-widget-heading clearfix">
-				                  <div class="pull-left">本月老人</div>
-				                  <div class="pull-right"></div>
-				                </div>
-				                <div class="mini-widget-body clearfix">
-				                  <div id="elderlyNewComming"class="pull-left number">	                    
-				                  </div>
-				                  <div class="pull-right">
-				                  	环比：<div id="increasePercent"></div>
-				                  </div>
-				                </div>
-             				 </div>
-             				 <div class="mini-widget" style="height:80px;">
-				                <div class="mini-widget-heading clearfix">
-				                  <div class="pull-left">男女比例</div>
-				                </div>
-				                <div class="mini-widget-body clearfix">
-				                	<ul>
-				                		<li style="list-style-type:none">
-				                		  <span class="fa fa-male  male"></span>
-						                  <span id="elderlyGenderMale" class="pull-right number"></span>
-						                  <span class="clearfix"></span>
-				                		</li>
-				                		<li style="list-style-type:none">
-				                		  <span class="fa fa-female female"></span>
-						                  <span id="elderlyGenderFemale" class="pull-right number"></span>
-						                  <span class="clearfix"></span>
-				                		</li>
-				                	</ul>
-				                </div>
-             				 </div>
-				    	</div><!--end col-->
-				    	
-				    	</div>
-						</div>
-						<div class="pull-right" style="padding-right:20px">
-							<div id="calendar-panel" class="easyui-panel" title="日历"     
-											style="width:200px;height:220px;padding:10px;background:#fafafa;"   
-											data-options="collapsible:true">
-												<div id="cc" class="easyui-calendar" style="width:100%;height:100%;"></div>  
+					    	<div class="col-md-8">
+					    		<div id="elderlyStatusInReportId" style="height:280px;"></div>
+					    	</div>
+					    	<div class="col-md-4">
+					    		<div class="mini-widget" style="height:80px;margin-top:30px;">
+					                <div class="mini-widget-heading clearfix">
+					                  <div class="pull-left">本月老人</div>
+					                  <div class="pull-right"></div>
+					                </div>
+					                <div class="mini-widget-body clearfix">
+					                  <div id="elderlyNewComming"class="pull-left number">	                    
+					                  </div>
+					                  <div class="pull-right">
+					                  	环比：<div id="increasePercent"></div>
+					                  </div>
+					                </div>
+	             				 </div>
+	             				 <div class="mini-widget" style="height:80px;">
+					                <div class="mini-widget-heading clearfix">
+					                  <div class="pull-left">男女比例</div>
+					                </div>
+					                <div class="mini-widget-body clearfix">
+					                	<ul>
+					                		<li style="list-style-type:none">
+					                		  <span class="fa fa-male  male"></span>
+							                  <span id="elderlyGenderMale" class="pull-right number"></span>
+							                  <span class="clearfix"></span>
+					                		</li>
+					                		<li style="list-style-type:none">
+					                		  <span class="fa fa-female female"></span>
+							                  <span id="elderlyGenderFemale" class="pull-right number"></span>
+							                  <span class="clearfix"></span>
+					                		</li>
+					                	</ul>
+					                </div>
+             				 	</div>
+				    		</div><!--end col-->
+				    	</div><!-- end row-->
+					</div><!--end col-->
+					<div class="col-md-2">
+						<div class="row">
+							<div class="row pull-right" style="padding-right:10px;padding-top:10px">
+								<div id="calendar-panel" class="easyui-panel" title="日历"     
+												style="width:190px;height:220px;padding:10px;background:#fafafa;"   
+												data-options="collapsible:true">
+													<div id="cc" class="easyui-calendar" style="width:100%;height:100%;"></div>  
+								</div>
 							</div>
-										 
-							<div id="notify" class="easyui-panel" title="通知"     
-						        style="width:200px;height:180px;padding:10px;pbackground:#fafafa;"   
-						        data-options="collapsible:true">
-					               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 160px;">
-								 </ul>
-					         </div>
-					          <div id="industryInformation" class="easyui-panel" title="业内资讯"     
-						        style="width:200px;height:180px;padding:1px;background:#fafafa;"   
-						        data-options="collapsible:true">
-					               <ul id="industryInformation-content" class="industryInformation" style="overflow-y: hidden; height: 120px;">
-								 </ul>
-					         </div> 
+							<div class="row pull-right" style="padding-right:10px;padding-top:10px">	 
+								<div id="notify" class="easyui-panel" title="通知"     
+							        style="width:190px;height:180px;padding:10px;pbackground:#fafafa;"   
+							        data-options="collapsible:true">
+						               <ul id="notify-content" class="notify" style="overflow-y: hidden; height: 160px;">
+									 </ul>
+						         </div>
+						     </div>
+						     <div class="row pull-right" style="padding-right:10px;padding-top:10px">
+						          <div id="industryInformation" class="easyui-panel" title="业内资讯"     
+							        style="width:190px;height:180px;padding:1px;background:#fafafa;"   
+							        data-options="collapsible:true">
+						               <ul id="industryInformation-content" class="industryInformation" style="overflow-y: hidden; height: 120px;">
+									 </ul>
+						         </div>
+						     </div> 
 						</div>
 					</div>
 				  </div>
