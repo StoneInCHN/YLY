@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -147,7 +148,23 @@ public String main(ModelMap model,  HttpSession session) {
     data.put("exponent", Base64.encodeBase64String(publicKey.getPublicExponent().toByteArray()));
     return data;
   }
+  @RequestMapping(value ="/changePassword",method = RequestMethod.GET)
+  public String changePassword(){
+    return "common/changePassword";
+  }
   
+  @RequestMapping(value ="/savePassword",method = RequestMethod.POST)
+  public @ResponseBody Message savePassword(String oldPassword, String newPassword){
+    TenantAccount tenantAccount = tenantAccountService.getCurrent();
+    String newEnPassword = DigestUtils.md5Hex(newPassword);
+    if (!newEnPassword.equals (tenantAccount.getPassword ()))
+    {
+      return Message.error ("旧密码有误");
+    }
+    tenantAccount.setPassword (newEnPassword);
+    tenantAccountService.update (tenantAccount);
+    return SUCCESS_MESSAGE;
+  }
   /**
    * 公钥
    */

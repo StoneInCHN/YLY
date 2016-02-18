@@ -35,6 +35,7 @@ function shortcutNavigation(title,data_url){
 		}
 	}
 };
+
 $(function(){
 	function resetHighcharts(){
 		var elderlyStatusReportId = $('#elderlyStatusReportId').highcharts();
@@ -473,4 +474,56 @@ $(function(){
 				}
 				
 			}});
+		/**
+		 * 修改密码事件
+		 */
+		$("#changePasswordHref").click(function(){
+			$('#changePassword').dialog({
+			    title: "修改密码",//message("yly.drugsInfo.add"),    
+			    width: 500,    
+			    height: 480,
+			    iconCls:'icon-mini-add',
+			    href:'../common/changePassword.jhtml',
+			    cache: false, 
+			    buttons:[{
+			    	text:message("yly.common.save"),
+			    	iconCls:'icon-save',
+					handler:function(){
+						debugger;
+						var validate = $('#changePassword_form').form('validate');
+						if(validate){
+							$.ajax({
+								url:"../common/savePassword.jhtml",
+								type:"post",
+								data:$("#changePassword_form").serialize(),
+								beforeSend:function(){
+									$.messager.progress({
+										text:message("yly.common.saving")
+									});
+								},
+								success:function(result,response,status){
+									$.messager.progress('close');
+									if(response == "success"){
+										showSuccessMsg(result.content);
+										$('#changePassword').dialog("close");
+									}else{
+										alertErrorMsg();
+									}
+								}
+							});
+						};
+					}
+				},{
+					text:message("yly.common.cancel"),
+					iconCls:'icon-cancel',
+					handler:function(){
+						 $('#changePassword').dialog("close");
+					}
+			    }],
+			    onOpen:function(){
+			    	$('#changePassword').show();
+			    },
+			
+			});
+		});
 })
