@@ -159,7 +159,7 @@ public String main(ModelMap model,  HttpSession session) {
     String newEnPassword = DigestUtils.md5Hex(newPassword);
     if (!newEnPassword.equals (tenantAccount.getPassword ()))
     {
-      return Message.error ("旧密码有误");
+      return Message.error ("yly.tenantAccount.oldPasswordError");
     }
     tenantAccount.setPassword (newEnPassword);
     tenantAccountService.update (tenantAccount);
