@@ -221,17 +221,19 @@ body{
 	padding:0;
 	/* min-width:970px; */
 }
-
 .main-content-left{
      height: 100%;
      margin:0;
-     padding:0 230px 0 0;
+     padding:0 240px 0 0;
 }
-.report{
-	margin:30px 0;
+.shortcutNavigation{
+	margin:0px;
+}
+.index-report{
+	margin:30px 0 0 0;
 	padding:0;
 }
-.report .report-item{
+.index-report-item{
 	background: -moz-linear-gradient(top, #FAFAFA 0%, #DDDDDD 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FAFAFA), color-stop(100%,#DDDDDD));
     background: -webkit-linear-gradient(top, #FAFAFA 0%,#DDDDDD 100%);
@@ -240,17 +242,21 @@ body{
     background: linear-gradient(to bottom, #FAFAFA 0%,#DDDDDD 100%);
 	text-algin:center;
 	border:none;
+	padding:0;
+	margin:0;
+	border-right: 3px solid #ffffff;
 }
-.report .report-item >div{
+.index-report-item >div{
 	margin:0 auto;
 	height:300px;
 	width:260px;
 }
+
 .main-content-right{
      position: absolute;
      right: 0;
      top: 30px;
-     width: 230px;
+     width: 240px;
      height: 100%;
      padding:0 10px;
 }

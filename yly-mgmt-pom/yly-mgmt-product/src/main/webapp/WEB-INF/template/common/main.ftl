@@ -332,17 +332,17 @@
     	<div id="manager-tabs">   
 		    <div title="起始页">
 					<div class="main-content-left">
-				        <div class="col-md-12 shortcutNavigation">
+				        <div class="shortcutNavigation">
 				        	<a href ="#"><img onclick="shortcutNavigation('办理入院','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/admission.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院评估','${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml')" src="${base}/resources/images/evaluating.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院缴费','${base}/console/billing/checkinCharge.jhtml')" src="${base}/resources/images/checkinCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('日常缴费','${base}/console/billing/dailyBill.jhtml')" src="${base}/resources/images/normalCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('退住结算','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/checkoutCharge.png"/></a>
 				        </div>
-						<div class="row report">
-								<div class="col-md-4 report-item">
+						<div class="index-report">
+								<div class="col-md-4 index-report-item">
 									<div id="elderlyStatusReportId"></div>
 								</div>
-								 <div class="col-md-4 report-item" >
+								 <div class="col-md-4 index-report-item">
 									<div id="elderlyAgeReportId"></div>
 								</div>
-								 <div class="col-md-4 report-item">
+								 <div class="col-md-4 index-report-item">
 									<div id="elderlyLivingMainReportId"></div>
 								</div>
 						</div>
