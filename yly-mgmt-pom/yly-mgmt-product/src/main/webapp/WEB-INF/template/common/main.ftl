@@ -84,6 +84,8 @@
 				<a id="nav-switcherset" href="#" class="router nav-switcherset off"><span class="middlehelper">设置</span><span><i class="fa fa-cog"></i></span></a>
 			</ul>
 		</div>
+		<div class="welcome pull-right">
+		<marquee scrollamount='2'>欢迎 ${tenantAccount.userName}登录！</marquee></div>
 		<ul class="user-profile">
 		    <li  class="dropdown" >
 				  <a class="btn  dropdiown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

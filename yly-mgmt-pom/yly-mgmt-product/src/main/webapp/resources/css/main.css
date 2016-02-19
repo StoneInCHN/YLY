@@ -8,6 +8,12 @@ body{
 body{
 	min-width: 1024px;
 }
+body .welcome{
+	color:#ffffff;
+	font-size: 20px;
+	padding-top:12px;
+	padding-right:100px;
+}
 .header{
 	height:55px;
 	background-color:#0285b3;
