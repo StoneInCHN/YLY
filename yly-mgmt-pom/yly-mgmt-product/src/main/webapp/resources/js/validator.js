@@ -36,4 +36,13 @@ $.extend($.fn.validatebox.defaults.rules, {
         },    
         message: '最多输入 {0}位'   
     }    
-}); 
+});
+
+$.extend($.fn.validatebox.defaults.rules, {    
+    passwordEequals: {    
+        validator: function(value,param){    
+            return value == $(param[0]).val();    
+        },    
+        message: '密码不一致'   
+    }    
+});

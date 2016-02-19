@@ -91,8 +91,7 @@
 				   
 				  </a>
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				    <li><a href="#">个人信息</a></li>
-				     <li><a href="#">修改密码</a></li>
+				     <li><a href="#" id="changePasswordHref">修改密码</a></li>
 				    <li role="separator" class="divider"></li>
 				    <li><a href="${base}/console/common/logout.jhtml">退出</a></li>
 				  </ul>
@@ -374,21 +373,22 @@
     <div id = "searchTenantUser"></div>
     <div id = "searchNurseArrangement"></div>
     <div id = "searchBed"></div>
+    <div id = "changePassword">
+    </div>
     <!-- JavaScript-->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="${base}/resources/js/jquery.min.js"></script>
     <script type="text/javascript" src="${base}/resources/js/jquery.serializejson.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/highcharts.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/common.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/message.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/main.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/dropdown.js"></script>
-	<script type="text/javascript" src="${base}/resources/js/validator.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/datePicker/WdatePicker.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/webuploader.min.js"></script>
-	<script type="text/javascript" src="${base}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${base}/resources/js/kindeditor/kindeditor-min.js"></script>
 	<script src="${base}/resources/js/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
 	<script src="${base}/resources/js/fileUploadCommon.js"></script>
