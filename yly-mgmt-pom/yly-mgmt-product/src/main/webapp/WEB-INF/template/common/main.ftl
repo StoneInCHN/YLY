@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="YLY养老院管理系统">
+    <meta name="author" content="YLY">
     <link rel="icon" href="${base}/resources/images/favicon.ico">
     <title>管理中心</title>
     <link href="${base}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +21,10 @@
  	<link rel="stylesheet" type="text/css"href="${base}/resources/css/newAlbum_style.css" >
  	<link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/_shared/css/style.css">
     <link rel="stylesheet" type="text/css" href="${base}/resources/jcarousel/connected-carousels/jcarousel.connected-carousels.css">
-      <link rel="stylesheet" type="text/css" href="${base}/resources/css/evaluting.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/css/evaluting.css">
+	<!--[if lt IE 9]>
+    <script type="text/javascript" src="${base}/resources/js/respond.1.4.2.min.js"></script>
+    <![endif]-->
   </head>
 
   <body class="easyui-layout" >   
@@ -336,7 +338,7 @@
 				        <div class="shortcutNavigation">
 				        	<a href ="#"><img onclick="shortcutNavigation('办理入院','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/admission.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院评估','${base}/console/elderlyEvaluatingRecord/elderlyEvaluatingRecord.jhtml')" src="${base}/resources/images/evaluating.png"/></a><a href ="#"><img onclick="shortcutNavigation('入院缴费','${base}/console/billing/checkinCharge.jhtml')" src="${base}/resources/images/checkinCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('日常缴费','${base}/console/billing/dailyBill.jhtml')" src="${base}/resources/images/normalCharge.png"/></a><a href ="#"><img onclick="shortcutNavigation('退住结算','${base}/console/admission/admission.jhtml')" src="${base}/resources/images/checkoutCharge.png"/></a>
 				        </div>
-						<div class="index-report">
+						<div class="row index-report">
 								<div class="col-md-4 index-report-item">
 									<div id="elderlyStatusReportId"></div>
 								</div>
@@ -346,6 +348,38 @@
 								 <div class="col-md-4 index-report-item">
 									<div id="elderlyLivingMainReportId"></div>
 								</div>
+						</div>
+						<div class="row index-report">
+								<div class="col-md-8 index-report-item">
+						    		<div id="elderlyStatusInReportId" style="height:300px;width: 524px;"></div>
+						    	</div>
+						    	<div class="col-md-4">
+				    				<div class="mini-widget" style="height:80px;width: 260px;margin-top:30px;">
+						                <div class="mini-widget-heading clearfix">本月老人</div>
+						                <div class="mini-widget-body clearfix">
+						                  <div id="elderlyNewComming"class="pull-left number"></div>
+						                  <div class="pull-right">
+						                  	环比：<div id="increasePercent"></div>
+						                  </div>
+						                </div>
+             				 	</div>
+	             				 <div class="mini-widget" style="height:80px;width: 260px;">
+					                <div class="mini-widget-heading ">男女比例</div>
+					                <div class="mini-widget-body">
+					                	<ul>
+					                		<li>
+					                		  <span class="fa fa-male  male"></span>
+							                  <span id="elderlyGenderMale" class="pull-right number"></span>
+					                		</li>
+					                		<li >
+					                		  <span class="fa fa-female female"></span>
+							                  <span id="elderlyGenderFemale" class="pull-right number"></span>
+					                		</li>
+					                	</ul>
+					                </div>
+	             				 </div>
+				    	</div><!--end col-->
+						
 						</div>
 					</div>
 					<div class="main-content-right">

@@ -12,7 +12,7 @@ body .welcome{
 	color:#ffffff;
 	font-size: 20px;
 	padding-top:12px;
-	padding-right:100px;
+	padding-right:50px;
 }
 .header{
 	height:55px;
@@ -399,8 +399,12 @@ ul.room-item>li>div>a, ul.room-item>li>div>a:hover {
 	 	color:#c0c0c0!important;
 	  	text-align: center;
     }
-    
-    
+    .mini-widget-body ul{
+    	list-style-type:none;
+    }
+     .mini-widget-body ul >li{
+    	padding:0 50px;
+    }
     .mini-widget .navstart{
 	 	background:#039ce7!important;
 	 	height:80px;
