@@ -45,6 +45,7 @@ import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.ordering.Ordering;
 import com.yly.framework.ordering.Ordering.Direction;
+import com.yly.job.ReportJob;
 import com.yly.service.BedChangeRecordService;
 import com.yly.service.BedChargeConfigService;
 import com.yly.service.BedNurseChargeService;
@@ -57,6 +58,7 @@ import com.yly.service.NurseChargeConfigService;
 import com.yly.service.NurseLevelChangeRecordService;
 import com.yly.service.PersonalizedRecordService;
 import com.yly.service.ReportChargeStatisticsService;
+import com.yly.service.ReportProcedureService;
 import com.yly.service.SystemConfigService;
 import com.yly.service.TenantAccountService;
 import com.yly.service.TenantInfoService;
@@ -123,6 +125,9 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
 
   @Resource(name = "reportChargeStatisticsServiceImpl")
   private ReportChargeStatisticsService reportChargeStatisticsService;
+  
+  @Resource(name = "reportProcedureServiceImpl")
+  private ReportProcedureService reportProcedureService;
 
   @Resource
   public void setBaseDao(BillingDao billingDao) {
@@ -315,6 +320,7 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
   @Override
   @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
   public void genBillByTenantBillDate(Date billDate, Long tenantId) {
+    Date currentDate = new Date ();
     Date startDate = DateTimeUtils.getSpecifyTimeForDate(billDate, null, -1, 1, null, null, null);
     Date nextBillDate =
         DateTimeUtils.getSpecifyTimeForDate(billDate, null, 1, null, null, null, null);
@@ -580,6 +586,43 @@ public class BillingServiceImpl extends ChargeRecordServiceImpl<Billing, Long> i
     // reportChargeStatistics.setPersionalizedCharge (totalPersonalizedCharge);
     // reportChargeStatistics.setStatisticsDate (billDate);
     // reportChargeStatisticsService.save (reportChargeStatistics, true);
+    
+    
+    //护理级别
+    LogUtil.debug (ReportJob.class, "reprotNurseLevel", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_nurse_level_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reprotNurseLevel", "reprot data generate end!");
+    
+    //捐赠统计
+    LogUtil.debug (ReportJob.class, "reprotDonateStatistics", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_donate_statistics_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reprotDonateStatistics", "reprot data generate end!");
+    
+    //老人评估
+    LogUtil.debug (ReportJob.class, "reportElderlyEvlauting", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_elderly_evaluating_record_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reportElderlyEvlauting", "reprot data generate end!");
+    
+    //老人事件
+    LogUtil.debug (ReportJob.class, "reportElderlyEvent", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_elderly_event_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reportElderlyEvent", "reprot data generate end!");
+    
+    //老人病历
+    LogUtil.debug (ReportJob.class, "reportElderlyMedical", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_elderly_medical_record_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reportElderlyMedical", "reprot data generate end!");
+    
+    //维修统计
+    LogUtil.debug (ReportJob.class, "reportRepairRecord", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_repair_record_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reportRepairRecord", "reprot data generate end!");
+    
+    //水电统计
+    LogUtil.debug (ReportJob.class, "reportWaterElectricityRecord", "reprot data generate start !");
+    reportProcedureService.callProcedure ("report_water_electricity_record_pr",tenantId,DateTimeUtils.convertDateToString (currentDate, "YYYY-MM-DD"));
+    LogUtil.debug (ReportJob.class, "reportWaterElectricityRecord", "reprot data generate end!");
+    
   }
 
   public BigDecimal calDiffPriceBed(Long days, Bed oldBed, Bed newBed) {
