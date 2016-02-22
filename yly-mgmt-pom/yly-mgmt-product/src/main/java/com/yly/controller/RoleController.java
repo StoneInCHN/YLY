@@ -21,6 +21,7 @@ import com.yly.common.log.LogUtil;
 import com.yly.controller.base.BaseController;
 import com.yly.entity.ConfigMeta;
 import com.yly.entity.Role;
+import com.yly.entity.commonenum.CommonEnum.TreeNodeState;
 import com.yly.framework.paging.Page;
 import com.yly.framework.paging.Pageable;
 import com.yly.json.response.TreeNodeResponse;
@@ -69,7 +70,7 @@ public class RoleController extends BaseController {
    */
   @RequestMapping(value = "/list", method = RequestMethod.POST)
   public @ResponseBody Page<Role> list(Model model, Pageable pageable) {
-    return roleService.findPage(pageable);
+    return roleService.findPage (pageable, true);
   }
 
   /**
@@ -169,6 +170,7 @@ public class RoleController extends BaseController {
           treeNodeResponse.setChecked(false);
         }
         treeNodeResponse.setIconCls("icon-large-chart");
+        treeNodeResponse.setState (TreeNodeState.closed);
         
         
         //配置子节点（function）
@@ -186,9 +188,14 @@ public class RoleController extends BaseController {
             treeNodeResponseChild.setChecked(false);
           }
           treeNodeResponseChild.setIconCls("icon-large-shapes");
+          
+          treeNodeResponseChild.setState (TreeNodeState.closed);
+          
           if (treeNodeResponse != null && treeNodeResponse.getChildren() != null) {
             childList = treeNodeResponse.getChildren();
           }
+          
+          
           childList.add(treeNodeResponseChild);
           treeNodeResponse.setChildren(childList);
         }

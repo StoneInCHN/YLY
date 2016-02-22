@@ -20,6 +20,8 @@ var role_manager_tool = {
 			    	    animate:true,
 			    	    lines:true
 			    	});
+			    	$('#roleTreeAuth').tree('collapseAll');
+
 			    },
 				buttons:[{
 			    	text:message("yly.common.save"),
@@ -27,7 +29,7 @@ var role_manager_tool = {
 					handler:function(){
 							//console.log($('input:checkbox[name=auth_id]:checked'));
 							var selectedList = $('#roleTreeAuth').tree('getChecked', ['checked','indeterminate']);
-							
+							debugger;
 							var _ids = [];
 							for(var i=0; i< selectedList.length; i++){
 								_ids[i] = selectedList[i].id;
@@ -123,7 +125,6 @@ var role_manager_tool = {
 				$.messager.alert(message("yly.common.notice"),message("yly.common.select.editRow"));  
 				return false;
 			}
-			console.log("tttttttttt");
 			var _dialog = $('#editRole').dialog({
 			    title: message("yly.common.edit"),     
 			    width: 370,    

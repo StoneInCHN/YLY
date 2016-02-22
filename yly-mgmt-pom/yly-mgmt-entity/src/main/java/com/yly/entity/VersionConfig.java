@@ -37,11 +37,6 @@ public class VersionConfig extends BaseEntity
   private Set<TenantInfo> tenantInfos;
 
   /**
-   * 租户ID
-   */
-  private Long tenantID;
-
-  /**
    * 版本状态
    */
   private VersionStatus versionStatus;
@@ -76,16 +71,6 @@ public class VersionConfig extends BaseEntity
   public void setTenantInfos (Set<TenantInfo> tenantInfos)
   {
     this.tenantInfos = tenantInfos;
-  }
-
-  public Long getTenantID ()
-  {
-    return tenantID;
-  }
-
-  public void setTenantID (Long tenantID)
-  {
-    this.tenantID = tenantID;
   }
 
   public VersionStatus getVersionStatus ()

@@ -110,9 +110,11 @@ $(function(){
 		cache : false,
 		success : function(data) {
 			for(var i=0 ; i<2; i++){
-				var title = formatLongString(data[i].title, 5)
-				$("#notify-content")
-				.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/notification/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');	
+				if(data[i]!=undefined ){
+					var title = formatLongString(data[i].title, 5)
+					$("#notify-content")
+					.append('<li class="news-item">'+title+ '<a href="#" data-url="../../console/notification/showOne.jhtml?id='+data[i].id+'" style="float:right" onClick="clickNotificationNews(event)">Read more...</a></li>');
+				}
 			}
 			
 			$(".notify").bootstrapNews({
@@ -132,9 +134,11 @@ $(function(){
 		cache : false,
 		success : function(data) {
 			for(var i=0 ; i<2; i++){
-				var title = formatLongString(data[i].title, 5)
-				$("#industryInformation-content")
-				.append('<li class="news-item">'+title+ '<a href="../../console/industryInformation/showOne.jhtml?id='+data[i].id+'" style="float:right" target="_blank">Read more...</a></li>');	
+				if(data[i]!=undefined ){
+					var title = formatLongString(data[i].title, 5)
+					$("#industryInformation-content")
+					.append('<li class="news-item">'+title+ '<a href="../../console/industryInformation/showOne.jhtml?id='+data[i].id+'" style="float:right" target="_blank">Read more...</a></li>');
+				}
 			}
 			
 			$(".industryInformation").bootstrapNews({
