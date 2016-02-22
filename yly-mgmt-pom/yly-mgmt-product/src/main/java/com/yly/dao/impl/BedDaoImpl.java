@@ -8,6 +8,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 
+
 import org.springframework.stereotype.Repository;
 
 import com.yly.dao.BedDao;
@@ -22,7 +23,7 @@ import com.yly.framework.paging.Pageable;
 public class BedDaoImpl extends BaseDaoImpl<Bed, Long> implements BedDao {
 
   @Override
-  public Page<Bed> findPage(Building building, Room room, Pageable page) {
+  public Page<Bed> findPage(Building building, Room room, Pageable page,Long tenantId) {
     
     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     CriteriaQuery<Bed> criteriaQuery = criteriaBuilder.createQuery(Bed.class);
@@ -47,6 +48,9 @@ public class BedDaoImpl extends BaseDaoImpl<Bed, Long> implements BedDao {
       }else{
         return null;
       }
+    }
+    if(tenantId !=null){
+      restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.equal(root.get("tenantID"), tenantId));
     }
     criteriaQuery.where(restrictions);
     return super.findPage(criteriaQuery, page);

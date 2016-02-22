@@ -16,5 +16,5 @@ public interface BedDao extends BaseDao<Bed, Long> {
    * @param page
    * @return
    */
-  Page<Bed> findPage(Building building, Room room, Pageable page);
+  Page<Bed> findPage(Building building, Room room, Pageable page,Long tenantId);
 }

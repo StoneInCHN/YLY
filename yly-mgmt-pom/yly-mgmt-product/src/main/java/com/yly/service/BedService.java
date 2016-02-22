@@ -17,6 +17,6 @@ public interface BedService extends BaseService<Bed, Long> {
    * @param page
    * @return
    */
-  Page<Bed> findPage(Building building, Room room, Pageable page);
+  Page<Bed> findPage(Building building, Room room, Pageable page,Boolean isTenant);
   
 }

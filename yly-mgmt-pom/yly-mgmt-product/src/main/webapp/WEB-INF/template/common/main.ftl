@@ -45,12 +45,9 @@
 				[@shiro.hasPermission name="chargeManage"]
 				<li><a href="#chargeManage"><i class="fa fa-jpy fa-1x"></i>${message("yly.charge.manage")}</a></li>
 				[/@shiro.hasPermission]
-				<!--
 				[@shiro.hasPermission name="nurseManage"]
 				<li><a href="#nurseManage"><i class="fa fa-hand-paper-o fa-1x"></i>${message("yly.nurseManage.config")}</a></li>
 				[/@shiro.hasPermission]
-				-->
-				<li><a href="#nurseManage"><i class="fa fa-hand-paper-o fa-1x"></i>${message("yly.nurseManage.config")}</a></li>
 				[@shiro.hasPermission name="volunteerMain"]
 				<li><a href="#volunteerMain"><i class="fa fa-gift fa-1x"></i>${message("yly.volunteer.config")}</a></li>
 				[/@shiro.hasPermission]
@@ -265,13 +262,25 @@
 		    		[/@shiro.hasPermission]
 		    	</ul>     
 		    	<ul title="${message("yly.nurseManage.config")}" id="nurseManage">
+		    		[@shiro.hasPermission name="nurseDutyType"]
 		    		<li><a href="#" data-url="${base}/console/nurseDutyType/nurseDutyType.jhtml">${message("yly.nurse.nurseDutyType")}</a></li>
+					[/@shiro.hasPermission]
+					[@shiro.hasPermission name="nurseArrangement"]
 					<li><a href="#" data-url="${base}/console/nurseArrangement/nurseArrangement.jhtml">${message("yly.nurse.arrange")}</a></li>
-		    		<li><a href="#" data-url="${base}/console/nurseSchedule/nurseSchedule.jhtml">${message("yly.nurse.schedule")}</a></li>
+		    		[/@shiro.hasPermission]
+					[@shiro.hasPermission name="nurseSchedule"]
+					<li><a href="#" data-url="${base}/console/nurseSchedule/nurseSchedule.jhtml">${message("yly.nurse.schedule")}</a></li>
+		    		[/@shiro.hasPermission]
+					[@shiro.hasPermission name="nursePlan"]
 		    		<li><a href="#" data-url="${base}/console/nursePlan/nursePlan.jhtml">${message("yly.nurse.plan")}</a></li>
-		    		<li><a href="#"data-url="${base}/console/nurseLevelChangeRecord/nurseLevelChangeRecord.jhtml">${message("yly.nurse.modify")}</a></li>
+		    		[/@shiro.hasPermission]
+					[@shiro.hasPermission name="nurseLevelChangeRecord"]
+					<li><a href="#"data-url="${base}/console/nurseLevelChangeRecord/nurseLevelChangeRecord.jhtml">${message("yly.nurse.modify")}</a></li>
+		    		[/@shiro.hasPermission]
+					[@shiro.hasPermission name="personalizedNurse"]
 		    		<li><a href="#" data-url="${base}/console/personalizedNurse/personalizedNurse.jhtml">${message("yly.nurse.personal")}</a></li>
-		    	</ul>
+		    		[/@shiro.hasPermission]
+				</ul>
 		    	[@shiro.hasPermission name="volunteer"]  
 		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>

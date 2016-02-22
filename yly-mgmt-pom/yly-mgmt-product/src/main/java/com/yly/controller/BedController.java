@@ -48,7 +48,7 @@ public class BedController extends BaseController {
     if (roomId !=null) {
       room = roomService.find(roomId);
     }
-    return bedService.findPage(building, room, pageable);
+    return bedService.findPage(building, room, pageable,true);
   }
 
   /**
