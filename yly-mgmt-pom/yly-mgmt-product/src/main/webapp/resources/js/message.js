@@ -446,6 +446,7 @@ var messages = {
 	"yly.fixedAssets.assetTime":"录入时间",
 	"yly.fixedAssets.add":"固定资产添加",
 	//租户用户
+	"yly.tenantUser.search":"用户查询",
 	"yly.tenantUser.list":"用户列表",
 	"yly.tenantUser.realName":"姓名",
 	"yly.tenantUser.gender":"性别",

@@ -161,7 +161,7 @@ public class TenantUserController extends BaseController
     {
       return tenantUserService.search (query, pageable, analyzer,filter,true);
     }
-      return tenantUserService.findPage (pageable);
+      return tenantUserService.findPage (pageable,true);
     
   }
 
