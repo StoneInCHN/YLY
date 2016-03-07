@@ -198,6 +198,7 @@
 		    		[@shiro.hasPermission name="operationLog"]
 		    		<li><a href="#" data-url="${base}/console/operationLog/operationLog.jhtml">系统日志</a></li>
 		    		[/@shiro.hasPermission]
+					<li><a href="#" data-url="${base}/console/importData/importData.jhtml">导入数据</a></li>
 		    	</ul>
 		    	<ul title="统计报表" id="statisticalReports">
 		    		<!--[@shiro.hasPermission name="reportElderlyStatus"]

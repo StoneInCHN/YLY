@@ -126,7 +126,7 @@ public class ExportExcel extends Thread {
       }
       try {
           workbook.write(out);//将excel工作簿写入到输出流中
-          workbook.close();//关闭
+          //workbook.close();//关闭
 
       } catch (IOException e) {
          e.printStackTrace();
