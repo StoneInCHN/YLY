@@ -189,7 +189,7 @@ public class RoleController extends BaseController {
           }
           treeNodeResponseChild.setIconCls("icon-large-shapes");
           
-          treeNodeResponseChild.setState (TreeNodeState.closed);
+          treeNodeResponseChild.setState (TreeNodeState.open);
           
           if (treeNodeResponse != null && treeNodeResponse.getChildren() != null) {
             childList = treeNodeResponse.getChildren();
