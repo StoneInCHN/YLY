@@ -282,11 +282,13 @@
 		    		<li><a href="#" data-url="${base}/console/personalizedNurse/personalizedNurse.jhtml">${message("yly.nurse.personal")}</a></li>
 		    		[/@shiro.hasPermission]
 				</ul>
-		    	[@shiro.hasPermission name="volunteer"]  
-		    	<ul title="${message("yly.volunteer.config")}" id="volunteer">
+		    	
+		    	<ul title="${message("yly.volunteer.config")}" id="volunteerMain">
+		    		[@shiro.hasPermission name="volunteer"]  
 		    		<li><a href="#" data-url="${base}/console/volunteer/volunteer.jhtml">${message("yly.volunteer.manage")}</a></li>
+		    		[/@shiro.hasPermission]
 		    	</ul>   
-		    	[/@shiro.hasPermission]
+		    	
 		    	<ul title="${message("yly.charge.manage")}" id="chargeManage">
 		    		[@shiro.hasPermission name="checkinPay"]
 		    	    <li><a href="#" data-url="${base}/console/billing/checkinPay.jhtml">${message("yly.pay.checkin")}</a></li>
