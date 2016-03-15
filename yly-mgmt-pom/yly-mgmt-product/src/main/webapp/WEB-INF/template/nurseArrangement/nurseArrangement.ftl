@@ -143,11 +143,11 @@
 	    	<tr>
 	    		<th>开始日期: </th>	
 	    		<td>
-	    			 <input type="text" class="Wdate" id="addNurseArrangement_nurseStartDate" name="nurseStartDate"  onclick="WdatePicker({maxDate: '#F{$dp.$D(\'addNurseArrangement_nurseEndDate\')}'});" />
+	    			 <input class="easyui-datebox" id="addNurseArrangement_nurseStartDate" name="nurseStartDate"  data-options="required:true" />
 	    		</td>
 	    		<th>结束日期: </th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="addNurseArrangement_nurseEndDate"  name="nurseEndDate"  onclick="WdatePicker({minDate: '#F{$dp.$D(\'addNurseArrangement_nurseStartDate\')}'});"/>
+	    			 <input class="easyui-datebox"  id="addNurseArrangement_nurseEndDate"  name="nurseEndDate"  data-options="required:true" />
 	    		</td>
 	    	</tr>
 	    	<tr>
@@ -181,13 +181,11 @@
 	    	<tr>
 	    		<th>开始日期: </th>	
 	    		<td>
-	    			 <input type="text" class="Wdate" id="addNurseArrangementRecord_nurseStartDate"  data-options="required:true,editable:false" 
-	    			 							onclick="WdatePicker({maxDate: '#F{$dp.$D(\'addNurseArrangementRecord_nurseEndDate\')}'});" />
+	    			 <input type="text" class="Wdate" id="addNurseArrangementRecord_nurseStartDate"  data-options="required:true,editable:false" />
 	    		</td>
 	    		<th>结束日期: </th>
 	    		<td>
-	    			 <input type="text" class="Wdate" id="addNurseArrangementRecord_nurseEndDate"  data-options="required:true,editable:false" 
-	    			 							onclick="WdatePicker({minDate: '#F{$dp.$D(\'addNurseArrangementRecord_nurseStartDate\')}'});"/>
+	    			 <input type="text" class="Wdate" id="addNurseArrangementRecord_nurseEndDate"  data-options="required:true,editable:false" />
 	    		</td>
 	    	</tr>
 	    	<tr>

@@ -11,7 +11,6 @@
 					<a href="javascript:void(0);"  class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="room_manager_tool.add();">${message("yly.button.add")}</a>
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="room_manager_tool.edit();">${message("yly.button.update")}</a>
 					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" plain=true onclick="room_manager_tool.remove();">${message("yly.button.delete")}</a>
-					<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-redo',plain:true" plain=true >导出</a>
 				</div>
 				<div class="tool-filter"></div>
 			</div> 

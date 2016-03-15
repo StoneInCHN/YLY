@@ -12,27 +12,29 @@ var nurseArrangement_manager_tool = {
 				    	iconCls:'icon-save',
 				    	handler:function(){
 							var validate = $('#addNurseArrangement_form').form('validate');
-							if(validate){								
-								$.ajax({
-									url:"../nurseArrangement/add.jhtml",
-									type:"post",
-									data:$("#addNurseArrangement_form").serialize(),
-									beforeSend:function(){
-										$.messager.progress({
-											text:message("yly.common.saving")
-										});
-									},
-									success:function(result,response,status){
-										$.messager.progress('close');
-										showSuccessMsg(result.content);
-										$('#add_nurseArrangement').dialog("close");
-										$("#nurseArrangement-table-list").datagrid('reload');
-									},
-									error:function (XMLHttpRequest, textStatus, errorThrown) {
-										$.messager.progress('close');
-										alertErrorMsg();
-									}
-								});
+							if(validate){				
+								if(limitStartEndDate('addNurseArrangement_nurseStartDate','addNurseArrangement_nurseEndDate')){
+									$.ajax({
+										url:"../nurseArrangement/add.jhtml",
+										type:"post",
+										data:$("#addNurseArrangement_form").serialize(),
+										beforeSend:function(){
+											$.messager.progress({
+												text:message("yly.common.saving")
+											});
+										},
+										success:function(result,response,status){
+											$.messager.progress('close');
+											showSuccessMsg(result.content);
+											$('#add_nurseArrangement').dialog("close");
+											$("#nurseArrangement-table-list").datagrid('reload');
+										},
+										error:function (XMLHttpRequest, textStatus, errorThrown) {
+											$.messager.progress('close');
+											alertErrorMsg();
+										}
+									});
+								}
 							};
 						}
 					},{
@@ -52,6 +54,11 @@ var nurseArrangement_manager_tool = {
 			},
 			remove:function(){
 				listRemove('nurseArrangement-table-list','../nurseArrangement/delete.jhtml');
+//				$.messager.confirm(message("yly.common.confirm"),message("yly.nurseArrangement.delete.comfirm"), function(r) {
+//					if (r) {
+//					$("#nurseArrangementRecord-table-list").datagrid('reload');
+//					}
+//				});
 			},
 			edit:function(){
 				var _edit_row = $('#nurseArrangement-table-list').datagrid('getSelected');
@@ -118,7 +125,11 @@ var nurseArrangementRecord_manager_tool = {
 			    	iconCls:'icon-save',
 			    	handler:function(){
 						var validate = $('#addNurseArrangementRecord_form').form('validate');
-						if(validate){								
+						if(validate){			
+				    		if($("#addNurseArrangementRecord_nurseServiceTime") == null || $("#addNurseArrangementRecord_nurseServiceTime").val() == ""){
+				    			$.messager.alert(message("yly.common.prompt"),message("yly.nurseArrangement.service.time.not_null"),'warning');  
+				    			return;
+				    		}
 							$.ajax({
 								url:"../nurseArrangement/addRecord.jhtml",
 								type:"post",
@@ -556,3 +567,4 @@ function populateNurseArrangement(id, dataMap){
 			$("#editNurseArrangementRecord_nursingLevel").textbox('setValue',dataMap.nursingLevel); //护理级别
 		}
 }
+
