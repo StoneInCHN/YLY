@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.yly.dao.DepartmentDao;
 import com.yly.entity.Department;
 import com.yly.framework.filter.Filter;
+import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.service.impl.BaseServiceImpl;
 import com.yly.service.DepartmentService;
 import com.yly.service.TenantAccountService;
@@ -40,7 +41,12 @@ public class DepartmentServiceImpl extends BaseServiceImpl<Department, Long> imp
   @Override
   public List<Map<String, Object>> findAllDepartments() {
     List<Filter> filters = new ArrayList<Filter>();
-
+    Filter tenantIdFilter= new Filter();
+    tenantIdFilter.setValue (tenantAccountService.getCurrentTenantID ());
+    tenantIdFilter.setProperty ("tenantID");
+    tenantIdFilter.setOperator (Operator.eq);
+    filters.add (tenantIdFilter);
+    
     List<Department> departmentList = departmentDao.findList(null, null, filters, null);
     String[] propertys = {"id", "name"};
     return FieldFilterUtils.filterCollectionMap(propertys, departmentList);

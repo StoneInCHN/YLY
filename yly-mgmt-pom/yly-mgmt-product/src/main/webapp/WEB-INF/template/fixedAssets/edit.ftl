@@ -70,7 +70,7 @@
 	    	
 	    		<th>${message("yly.fixedAssets.assetsType")}:</th>
 	    		<td>
-				      <select id="assetsType" class="easyui-combobox" name="dosageUnit" style="width:100px;">   
+				      <select id="assetsType" class="easyui-combobox" name="assetsType" style="width:100px;">   
 						<option value="BUILDING" [#if fixedAssets.assetsType == 'BUILDING'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.buiding")}</option>
 						<option value="PRODUCTION" [#if fixedAssets.assetsType == 'PRODUCTION'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.production")}</option>
 						<option value="VEHICLE" [#if fixedAssets.assetsType == 'VEHICLE'] selected = "selected"[/#if]>${message("yly.fixedAssets.assetsType.vehicle")}</option> 
