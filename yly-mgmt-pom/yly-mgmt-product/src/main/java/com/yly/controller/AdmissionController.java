@@ -87,6 +87,7 @@ public class AdmissionController extends BaseController {
     if (elderlyInfo.getIdentifier() != null || elderlyInfo.getName() != null
         || elderlyInfo.getElderlyStatus() != null || beHospitalizedBeginDate != null
         || beHospitalizedEndDate != null) {
+      elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
       return elderlyInfoService.searchElderlyInfo(beHospitalizedBeginDate, beHospitalizedEndDate, elderlyInfo, pageable);
     }
 

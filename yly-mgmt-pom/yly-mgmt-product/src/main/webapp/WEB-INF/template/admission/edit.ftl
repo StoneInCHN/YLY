@@ -504,6 +504,10 @@
 	    		<td>
 	    			  <input class="easyui-combobox" id="nursingLevelEditId"  name="nursingLevelEditId" value="${elderlyInfo.nursingLevel.id}" style="width:120px;" data-options="editable:false" >   
 	    		</td>
+	    		<th>${message("yly.elderlyInfo.choose.bed")}:</th>
+	    		<td>
+	    			 <input class="easyui-textbox"  id="bedEditId"  value="${elderlyInfo.bedLocation}"  style="width:200px;" data-options="editable:false"/>  
+	    		</td>
 	    	</tr>
 	    </table>
 </form>

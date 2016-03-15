@@ -323,6 +323,10 @@
 	    		<td>
 	    			  <input class="easyui-textbox"  name="nursingLevelId" type="text"  value="${elderlyInfo.nursingLevel.configValue}" readonly=true style="width:120px;"/>
 	    		</td>
+	    		<th>${message("yly.elderlyInfo.choose.bed")}:</th>
+	    		<td>
+	    			 <input class="easyui-textbox"   value="${elderlyInfo.bedLocation}"  style="width:200px;" readonly=true/>  
+	    		</td>
 	    	</tr>
 	    </table>
 </form>
