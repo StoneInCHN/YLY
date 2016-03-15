@@ -35,12 +35,12 @@ var reportElderlyLiveStatitics={
                 },
 
                 series: [{
-                    name: '房间总数',
+                    name: '床位',
                     size: '80%',
                     data:[],
                     dataLabels: false,
                     tooltip: {
-                        valueSuffix: '间'
+                        valueSuffix: '张'
                     },
                     point: {
                         events: {

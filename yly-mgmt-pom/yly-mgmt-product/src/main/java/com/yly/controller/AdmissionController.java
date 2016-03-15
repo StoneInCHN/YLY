@@ -24,6 +24,7 @@ import com.yly.entity.ElderlyInfo;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
+import com.yly.entity.commonenum.CommonEnum.UsageState;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
@@ -146,6 +147,7 @@ public class AdmissionController extends BaseController {
           Bed bed = bedService.find(elderlyInfo.getBed().getId());
           if (bed != null) {
             bed.setElderlyInfo(elderlyInfo);
+            bed.setUsageState(UsageState.OCCUPIED);
             elderlyInfo.setBed(bed);
             elderlyInfoService.save(elderlyInfo);
           }else{
