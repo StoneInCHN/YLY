@@ -69,6 +69,7 @@ $(function(){
 	//初始化显示首页，隐藏菜单栏
 	$('.easyui-layout').layout('collapse','west');
 	
+	var westLayour = $('.easyui-layout').layout('panel','west');
 	$("#nav-wrap > ul >li >a").click(function(){
 		
 		var $this = $(this);
@@ -76,8 +77,12 @@ $(function(){
 		if($this.text()=="首页"){
 			$('.easyui-layout').layout('collapse','west');
 			$('#manager-tabs').tabs("select",'起始页');
+			
+			westLayour.hide();
 		}else{
+			
 			$('.easyui-layout').layout('expand','west');
+			westLayour.show();
 		}
 		
 		$($this.attr("href")).show();

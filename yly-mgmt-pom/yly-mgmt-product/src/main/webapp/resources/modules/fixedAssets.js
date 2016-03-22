@@ -91,7 +91,7 @@ $(function(){
 										$.messager.progress('close');
 										if(response == "success"){
 											showSuccessMsg(result.content);
-											$('#addFixedAssets').dialog("close").form("reset");
+											$('#addFixedAssets').dialog("close");
 											$("#fixedAssets-table-list").datagrid('reload');
 										}else{
 											alertErrorMsg();

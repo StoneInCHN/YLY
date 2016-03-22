@@ -66,6 +66,7 @@ var messages = {
 	"yly.common.action":"操作",
 	"yly.common.dateFormatChina":"yyyy年MM月dd日",
 	"yly.common.elderlyInfo":"老人基本信息",
+	"yly.common.startDate.before.endDate":"开始日期应该小于结束日期",
 	
 	/**
 	 * charge manage
@@ -570,6 +571,12 @@ var messages = {
     "yly.nurseArrangement.nurseAssistant.staffID":"员工号",
     "yly.nurseArrangement.nurseAssistant.staffStatus":"员工状态",
     "yly.nurseArrangement.search":"护理员安排查询",
+    "yly.nurseArrangement.bedLocation.invalid":"该老人的床位信息为空，不能对其进行护理员安排！",
+    "yly.nurseArrangement.nursingLevel.invalid":"该老人的护理等级为空，不能对其进行护理员安排！",
+    "yly.nurseArrangement.service.time.not_null":"执行时间不能为空！",
+   // "yly.nurseArrangement.delete.comfirm":"护理员安排及其护理员护理明细已经删除！",
+    
+    
     //护理变更
     "yly.nurseChange.addNurseChange":"添加护理变更",
     "yly.nurseChange.list":"护理变更记录列表",

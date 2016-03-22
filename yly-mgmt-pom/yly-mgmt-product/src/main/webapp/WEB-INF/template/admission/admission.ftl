@@ -32,6 +32,9 @@
 					label: 'IN_PROGRESS_CHECKOUT',
 					value: '${message("yly.elderlyInfo.elderlyStatus.in_progress_checkout")}'
 				},{
+					label: 'IN_PROGRESS_EVALUATING',
+					value: '${message("yly.elderlyInfo.in.progress.evaluating")}'
+				},{
 					label: 'DEAD',
 					value: '${message("yly.elderlyInfo.elderlyStatus.dead")}'
 				}],
@@ -42,12 +45,12 @@
 	    
 			<div class="search-item">
 			    <label> ${message("yly.elderlyInfo.checkinDate")}:</label>
-			    <input type="text" class="Wdate" id="beHospitalizedBeginDate_admission" name="beHospitalizedBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'beHospitalizedEndDate\')}'});" />
+			    <input type="text" class="Wdate" id="beHospitalizedBeginDate_admission" name="beHospitalizedBeginDate" onclick="WdatePicker({maxDate: '#F{$dp.$D(\'beHospitalizedEndDate_admission\')}'});" />
 			    <input type="hidden" id="beHospitalizedBeginDateHiden_admission" name="beHospitalizedBeginDateHiden">
 			</div>
 			<div class="search-item">
 			    <label>${message("yly.to")}:</label>
-			   	<input type="text" class="Wdate" id="beHospitalizedEndDate_admission"  name="beHospitalizedEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beHospitalizedBeginDate\')}'});"/>
+			   	<input type="text" class="Wdate" id="beHospitalizedEndDate_admission"  name="beHospitalizedEndDate" onclick="WdatePicker({minDate: '#F{$dp.$D(\'beHospitalizedBeginDate_admission\')}'});"/>
 			   	<input type="hidden" id="beHospitalizedEndDateHidden_admission" name="beHospitalizedEndDateHidden">
 			</div>
 		</form>

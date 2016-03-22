@@ -24,6 +24,7 @@ import com.yly.entity.ElderlyInfo;
 import com.yly.entity.SystemConfig;
 import com.yly.entity.commonenum.CommonEnum.DeleteStatus;
 import com.yly.entity.commonenum.CommonEnum.ElderlyStatus;
+import com.yly.entity.commonenum.CommonEnum.UsageState;
 import com.yly.framework.filter.Filter;
 import com.yly.framework.filter.Filter.Operator;
 import com.yly.framework.paging.Page;
@@ -86,6 +87,7 @@ public class AdmissionController extends BaseController {
     if (elderlyInfo.getIdentifier() != null || elderlyInfo.getName() != null
         || elderlyInfo.getElderlyStatus() != null || beHospitalizedBeginDate != null
         || beHospitalizedEndDate != null) {
+      elderlyInfo.setDeleteStatus(DeleteStatus.NOT_DELETED);
       return elderlyInfoService.searchElderlyInfo(beHospitalizedBeginDate, beHospitalizedEndDate, elderlyInfo, pageable);
     }
 
@@ -146,6 +148,7 @@ public class AdmissionController extends BaseController {
           Bed bed = bedService.find(elderlyInfo.getBed().getId());
           if (bed != null) {
             bed.setElderlyInfo(elderlyInfo);
+            bed.setUsageState(UsageState.OCCUPIED);
             elderlyInfo.setBed(bed);
             elderlyInfoService.save(elderlyInfo);
           }else{

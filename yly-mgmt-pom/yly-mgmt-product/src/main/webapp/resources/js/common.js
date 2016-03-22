@@ -208,6 +208,14 @@ function searchElderlyInfo(id) {
 														return false;
 													}
 													if(id.indexOf("NurseArrangement") != -1){//护理员安排
+														if(rowData.bedLocation == null){
+															$.messager.alert(message("yly.common.prompt"),message("yly.nurseArrangement.bedLocation.invalid"),'warning');  
+															return false;
+														}
+														if(rowData.nursingLevel == null   ||  rowData.nursingLevel.configValue == null){
+															$.messager.alert(message("yly.common.prompt"),message("yly.nurseArrangement.nursingLevel.invalid"),'warning');  
+															return false;
+														}														
 														var dataMap = {};
 														dataMap.id = rowData.id; // 老人id
 														dataMap.name = rowData.name; // 老人姓名
@@ -425,6 +433,10 @@ function searchElderlyInfo(id) {
 }
 // 查询用户
 function searchTenantUser(id) {
+	var tenantUserListUrl = "../tenantUser/list.jhtml";
+	if(id.indexOf("NurseArrangement") != -1){//护理员安排
+		tenantUserListUrl = "../tenantUser/list.jhtml?isJoinNurseSearch=true";
+	}
 	$('#searchTenantUser')
 			.dialog(
 					{
@@ -450,7 +462,7 @@ function searchTenantUser(id) {
 											{
 												title : message("yly.elderlyinfo"),
 												fitColumns : true,
-												url : '../tenantUser/list.jhtml',
+												url : tenantUserListUrl,
 												pagination : true,
 												loadMsg : message("yly.common.loading"),
 												striped : true,
@@ -1162,4 +1174,16 @@ function selectRoom(option){
 	    	
 	    }
 	}); 
+}
+//开始日期应该小于结束日期
+function limitStartEndDate(startId, endId){
+	if($('#'+startId) && $('#'+endId)){
+		var startDate = new Date($('#'+startId).datebox('getValue'));
+		var endDate = new Date($('#'+endId).datebox('getValue'));
+		if(startDate>endDate){
+			$.messager.alert(message("yly.common.prompt"),message("yly.common.startDate.before.endDate"),'warning');  
+			return false;
+		}
+	}
+	return true;
 }
